@@ -2,32 +2,35 @@
 namespace symbiose\sale\product;
 use qinoa\orm\Model;
 
-class ProductAttribute extends Model {
+class PackLine extends Model {
     public static function getColumns() {
         /**
-         * A Product Attrribute corresponds to the value of an attribute available for a Product of a given Family.
-         * It is equivalent to the M2M table between Product and Option (the possible values for the attribtues are limited by OptionValue).
+         * A Pack Line corresponds to the relation between a 'pack' product (bundle) and another product that it includes.
+         * It is equivalent of M2M table between Product and itself.
          */
-
         return [
-            'product_id' => [
+            'parent_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'symbiose\sale\product\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
-            'option_id' => [
+            'child_product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Option',
-                'description'       => "Product Option this attribute relates to.",
+                'foreign_object'    => 'symbiose\sale\product\Product',
+                'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
-            'option_value_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\OptionValue',
-                'description'       => "Value of this attribute for the selected option.",
-                'required'          => true
-            ]
+            'has_own_qty' => [
+                'type'              => 'boolean',
+                'description'       => "Does product have its own quantity (whatever the quantityt applied to the parent product)?"
+            ],
+            'own_qty' => [
+                'type'              => 'integer',
+                'description'       => "Self assigned quantity for this product.",
+                'visible'           => ['has_own_qty', '=', true]
+            ],
+
         ];
     }
 }

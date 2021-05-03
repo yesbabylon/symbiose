@@ -21,15 +21,19 @@ class Instance extends \qinoa\orm\Model {
                 'type'              => 'string',
                 'description'       => "memo to identify server (tech specs, hosting plan, ...)"
             ],
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'symbiose\inventory\asset\Product'
+            ],
             'server_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'symbiose\inventory\asset\Server'
-            ],            
+            ],
             'software' => [
                 'type'              => 'one2many',            
                 'foreign_object'    => 'symbiose\inventory\asset\Software', 
                 'foreign_field'     => 'instance_id'
-            ],            
+            ],
             'access' => [
                 'type'              => 'one2many',            
                 'foreign_object'    => 'symbiose\inventory\Access', 

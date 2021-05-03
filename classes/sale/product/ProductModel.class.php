@@ -11,7 +11,7 @@ class ProductModel extends Model {
     public static function getColumns() {
         /**
          * Product Models act as common denominator for products variants (referred to as "Products").
-         * Product Models are the objects used for catalogs generation: If, for instance, a picture is related to a Product, it is associated on the Product Model level.
+         * These objects are used for catalogs generation: for instance, if a picture is related to a Product, it is associated on the Product Model level.
          * A Product Model has at minimum one variant, which means at minimum one SKU.
          */
 
@@ -28,22 +28,32 @@ class ProductModel extends Model {
                 'required'          => true
             ],
             'selling_accounting_rule_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule'
             ],
             'buying_accounting_rule_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule'
             ],            
             'can_buy' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be purchassed?",
-                'required'          => true
+                'default'           => false
             ],
             'can_sell' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be sold?",
-                'required'          => true
+                'default'           => true
             ],
             'is_pack' => [
                 'type'              => 'boolean',
-                'description'       => "Is this a bundle of other products?"
+                'description'       => "Is this a bundle of other products?",
+                'default'           => false
+            ],
+            'has_own_price' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the pack just a bundle template or an actual catalog product with its own price?',
+                'visible'           => ['is_pack', '=', true]
             ],
             'type' => [
                 'type'              => 'string',
@@ -62,9 +72,20 @@ class ProductModel extends Model {
             ],
             'schedule_type' => [
                 'type'              => 'string',
-                'selection'         => ['day', 'moment', 'range'],
+                'selection'         => ['time', 'timerange'],
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
+            'schedule_default_value' => [
+                'type'              => 'string',
+                'description'       => 'Multipurpose string representing the default value of the schedule according to its type (time, timerange).',
+                'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
+            ],
+            'schedule_offset' => [
+                'type'              => 'integer',
+                'description'       => 'Default number of days to set-off the service from the sojourn start date.',
+                'default'           => 0,
+                'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
+            ],            
             'tracking_type' => [
                 'type'              => 'string',
                 'selection'         => ['none', 'batch', 'sku', 'upc'],
@@ -99,9 +120,4 @@ class ProductModel extends Model {
         ];
     }
 
-    public static function getDefaults() {
-        return [
-            'is_pack'    => function() { return false; }
-        ];
-    }        
 }

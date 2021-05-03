@@ -39,11 +39,11 @@ class Access extends \qinoa\orm\Model {
             ],
             'server_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\inventory\asset\Server'
+                'foreign_object'    => 'symbiose\inventory\asset\Server'
             ],
             'instance_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\inventory\asset\Instance'
+                'foreign_object'    => 'symbiose\inventory\asset\Instance'
             ],
             
         ];

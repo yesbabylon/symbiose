@@ -1,13 +1,14 @@
 <?php
 namespace symbiose\business\relation;
 
-use symbiose\identity\Organisation;
+use symbiose\identity\Contact;
 
 
-class Customer extends Organisation {
-    /**
-     *
-     */
+class Employee extends Contact {
+
+    public static function getName() {
+        return 'Employee';
+    }
     
     public static function getColumns() {
         return [
@@ -18,16 +19,18 @@ class Customer extends Organisation {
             ],
             'email' => [
                 'type'              => 'string',
+                'usage'             => 'email',                
                 'description'       => "Email address of the contact",
                 'required'          => true
             ],
             'phone' => [
                 'type'              => 'string',
+                'usage'             => 'phone',
                 'description'       => "Phone number of the contact, if any"
             ],            
             'function' => [
                 'type'              => 'string',
-                'description'       => "Role of the contact within the organisation (e.g. 'CEO', 'secreatary')"
+                'description'       => "Role of the contact within the organisation (e.g. 'CEO', 'secretary')"
             ],
             'organisation_id' => [
                 'type'              => 'many2one',
