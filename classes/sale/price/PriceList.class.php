@@ -20,6 +20,12 @@ class PriceList extends Model {
                 'type'              => 'datetime',
                 'description'       => "End of validity period."
             ],
+            'price_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'symbiose\sale\price\Price',
+                'foreign_field'     => 'price_list_id',
+                'description'       => "Prices that are related to this list, if any.",
+            ],
             'price_list_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'symbiose\sale\price\PriceListCategory',

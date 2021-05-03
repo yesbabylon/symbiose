@@ -18,6 +18,10 @@ class Service extends \qinoa\orm\Model {
                 'type'              => 'string',
                 'description'       => "short description of the service"
             ],
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'symbiose\inventory\asset\Product'
+            ],
             'access_id' => [
                 'type'              => 'one2many',            
                 'foreign_object'    => 'symbiose\inventory\Access', 

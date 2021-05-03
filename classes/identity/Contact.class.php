@@ -7,30 +7,65 @@ class Contact extends Model {
         /**
          *
          */
-
         return [
             'name' => [
+                'type'             => 'alias',
+                'alias'            => 'display_name'
+            ],
+            'display_name' => [
+                'type'              => 'computed',
+                'function'          => 'symbiose\identity\Contact::getDisplayName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The display name of the contact (concatenation of first and last names).'
+            ],
+            'firstname' => [
                 'type'              => 'string',
-                'description'       => "Full name of the contact (must be a person, not a role)",
+                'description'       => "Full name of the contact (must be a person, not a role).",
                 'required'          => true                
+            ],
+            'lastname' => [
+                'type'              => 'string',
+                'description'       => 'Reference contact surname.'
+            ],
+            'gender' => [
+                'type'              => 'string',
+                'selection'         => ['M' => 'Male', 'F' => 'Female'],
+                'description'       => 'Reference contact gender.'
+            ],
+            'title' => [
+                'type'              => 'string',
+                'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
+                'description'       => 'Reference contact gender.'
             ],
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',                
-                'description'       => "Email address of the contact",
+                'description'       => "Email address of the contact.",
                 'required'          => true
             ],
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'description'       => "Phone number of the contact, if any"
+                'description'       => "Phone number of the contact, if any."
             ],            
              'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'symbiose\identity\Organisation',
-                'description'       => "The organisation the contact belongs to",
+                'description'       => "The organisation the contact belongs to.",
                 'required'          => true
             ]
         ];
+    }
+
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(__CLASS__, $oids, ['firstname', 'lastname']);
+        foreach($res as $oid => $odata) {
+            $display_name = "{$odata['firstname']} {$odata['lastname']}";
+            $result[$oid] = $display_name;
+        }
+        return $result;              
     }
 }
