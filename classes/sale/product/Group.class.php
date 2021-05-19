@@ -18,7 +18,7 @@ class Group extends Model {
                 'type'              => 'many2many', 
                 'foreign_object'    => 'symbiose\sale\product\ProductModel', 
                 'foreign_field'     => 'group_ids', 
-                'rel_table'         => 'symbiose_sale_prooduct_rel_productmodel_group', 
+                'rel_table'         => 'symbiose_sale_product_rel_productmodel_group', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'group_id'
             ]

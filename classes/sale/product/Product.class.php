@@ -11,17 +11,19 @@ class Product extends Model {
          */
 
         return [
-            'name' => [
-                'type'              => 'alias',
-                'alias'             => 'sku'
+            'name' => 
+                'type'              => 'string',
+                'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
+                'required'          => true
             ],
             'sku' => [
                 'type'              => 'string',
-                'description'       => "SKU code (Stock Keeping Unit) used as internal reference."
+                'description'       => "SKU code (Stock Keeping Unit) used as internal reference. Must be unique.",
+                'unique'            => true
             ],
             'description' => [
-                'type'              => 'string',
-                'description'       => "Short description of the variant."
+                'type'              => 'text',
+                'description'       => "Description of the variant (specifics)."
             ],
             'product_model_id' => [
                 'type'              => 'many2one',
@@ -33,9 +35,4 @@ class Product extends Model {
         ];
     }
 
-    public static function getUnique() {
-        return [
-            ['sku']
-        ];
-    }   
 }

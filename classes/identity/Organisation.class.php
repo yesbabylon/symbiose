@@ -12,7 +12,7 @@ class Organisation extends Model {
         return [
             'name' => [
                 'type'          => 'string',
-                'description'   => 'Display name. A short name to be used as a memo for identifying the organisation (e.g. an acronym).',
+                'description'   => 'Display name. A short name to be used as a memo for identifying the organisation type (e.g. an acronym).',
                 'required'      => true
             ],
             'type' => [
