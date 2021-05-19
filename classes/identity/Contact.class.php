@@ -5,7 +5,7 @@ use qinoa\orm\Model;
 class Contact extends Model {
     public static function getColumns() {
         /**
-         *
+         * A Contact is a natural person that is related to an Organisation.
          */
         return [
             'name' => [
@@ -19,6 +19,38 @@ class Contact extends Model {
                 'store'             => true,
                 'description'       => 'The display name of the contact (concatenation of first and last names).'
             ],
+            'type' => [
+                'type'          => 'string',
+                'selection'     => ['contact', 'invoice', 'delivery', 'other'],
+                'description'   => 'Role of the contact.',
+                'default'       => 'contact'
+            ],
+
+            /*
+                Description of the Contact address
+            */
+            'address_street' => [
+                'type'          => 'string',
+                'description'   => 'Street and number.'
+            ],
+            'address_dispatch' => [
+                'type'          => 'string',
+                'description'   => 'Optional info for mail dispatch (appartment, box, floor, ...).'
+            ],
+            'address_city' => [
+                'type'          => 'string',
+                'description'   => 'City.'
+            ],
+            'address_zip' => [
+                'type'          => 'string',
+                'description'   => 'Postal code.'
+            ],
+            'address_country' => [
+                'type'          => 'string',
+                'usage'         => 'country/iso-3166:2',
+                'description'   => 'Country.' 
+            ],
+
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
@@ -41,8 +73,7 @@ class Contact extends Model {
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',                
-                'description'       => "Email address of the contact.",
-                'required'          => true
+                'description'       => "Email address of the contact."
             ],
             'phone' => [
                 'type'              => 'string',

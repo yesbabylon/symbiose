@@ -52,7 +52,7 @@ class ProductModel extends Model {
             ],
             'has_own_price' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the pack just a bundle template or an actual catalog product with its own price?',
+                'description'       => 'Is the pack a bundle of products with their related prices, or a catalog product of its own with specific price?',
                 'visible'           => ['is_pack', '=', true]
             ],
             'type' => [

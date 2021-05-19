@@ -3,6 +3,11 @@ namespace symbiose\sale\product;
 use qinoa\orm\Model;
 
 class Family extends Model {
+
+	public static function getName() {
+        return "Product Family";
+    }
+
     public static function getColumns() {
         /**
          * A Product Family is a group of goods produced under the same brand.
