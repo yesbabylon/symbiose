@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\sale\product;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class Category extends Model {
     public static function getColumns() {

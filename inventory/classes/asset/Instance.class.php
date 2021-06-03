@@ -1,8 +1,8 @@
 <?php
 namespace symbiose\inventory\asset;
+use equal\orm\Model;
 
-
-class Instance extends \qinoa\orm\Model {
+class Instance extends Model {
     public static function getColumns() {
         /**
         *

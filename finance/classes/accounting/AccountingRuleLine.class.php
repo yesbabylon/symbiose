@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\finance\accounting;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class AccountingRuleLine extends Model {
     

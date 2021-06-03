@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\sale\product;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class ProductModel extends Model {
     

@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\finance\tax;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class VatRule extends Model {
     

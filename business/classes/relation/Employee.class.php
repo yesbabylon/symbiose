@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\business\relation;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class Employee extends Model {
 
