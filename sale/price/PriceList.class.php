@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\sale\price;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class PriceList extends Model {
     public static function getColumns() {

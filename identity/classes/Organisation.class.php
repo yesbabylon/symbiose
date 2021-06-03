@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\identity;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class Organisation extends Model {
 

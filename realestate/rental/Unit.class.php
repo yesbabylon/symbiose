@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\realestate\rental;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class Unit extends Model {
     public static function getColumns() {

@@ -1,6 +1,6 @@
 <?php
 namespace symbiose\identity;
-use qinoa\orm\Model;
+use equal\orm\Model;
 
 class Contact extends Model {
     public static function getColumns() {
