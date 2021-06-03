@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\inventory\asset;
+namespace inventory\asset;
 use equal\orm\Model;
 
 class Server extends Model {
@@ -28,7 +28,7 @@ class Server extends Model {
             ],
             'access' => [
                 'type'              => 'one2many',            
-                'foreign_object'    => 'symbiose\inventory\Access', 
+                'foreign_object'    => 'inventory\Access', 
                 'foreign_field'     => 'server_id'
             ]
         ];

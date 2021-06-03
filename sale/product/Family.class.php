@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class Family extends Model {
@@ -22,13 +22,13 @@ class Family extends Model {
             ],
             'children_ids' => [ 
                 'type'              => 'one2many', 
-                'foreign_object'    => 'symbiose\sale\product\Family', 
+                'foreign_object'    => 'sale\product\Family', 
                 'foreign_field'     => 'parent_id'
             ],
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Product Family which current family belongs to, if any.",
-                'foreign_object'    => 'symbiose\sale\product\Family'
+                'foreign_object'    => 'sale\product\Family'
             ]
 
         ];

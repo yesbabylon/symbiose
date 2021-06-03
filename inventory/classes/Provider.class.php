@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\inventory;
+namespace inventory;
 use equal\orm\Model;
 
 class Provider extends Model {

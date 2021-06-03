@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\identity;
+namespace identity;
 use equal\orm\Model;
 
 class Contact extends Model {
@@ -14,7 +14,7 @@ class Contact extends Model {
             ],
             'display_name' => [
                 'type'              => 'computed',
-                'function'          => 'symbiose\identity\Contact::getDisplayName',
+                'function'          => 'identity\Contact::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the contact (concatenation of first and last names).'
@@ -86,7 +86,7 @@ class Contact extends Model {
             ],            
              'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => "The organisation the contact belongs to.",
                 'required'          => true
             ]

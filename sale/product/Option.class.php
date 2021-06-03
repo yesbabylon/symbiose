@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class Option extends Model {
@@ -18,7 +18,7 @@ class Option extends Model {
             ],
             'family_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Family',
+                'foreign_object'    => 'sale\product\Family',
                 'description'       => "Product Family this option belongs to.",
                 'required'          => true
             ]

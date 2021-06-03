@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class PackLine extends Model {
@@ -11,13 +11,13 @@ class PackLine extends Model {
         return [
             'parent_product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Product',
+                'foreign_object'    => 'sale\product\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
             'child_product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Product',
+                'foreign_object'    => 'sale\product\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],

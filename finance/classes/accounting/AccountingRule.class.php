@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\finance\accounting;
+namespace finance\accounting;
 use equal\orm\Model;
 
 class AccountingRule extends Model {
@@ -32,7 +32,7 @@ class AccountingRule extends Model {
             ],
             'accounting_rule_line_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'symbiose\finance\accounting\AccountingRuleLine',
+                'foreign_object'    => 'finance\accounting\AccountingRuleLine',
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Lines that are related to this rule."
             ]

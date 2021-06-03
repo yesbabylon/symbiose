@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\identity;
+namespace identity;
 use equal\orm\Model;
 
 class Establishment extends Model {
@@ -45,7 +45,7 @@ class Establishment extends Model {
             ],  
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => "The organisation the establishment belongs to",
                 'required'          => true
             ]

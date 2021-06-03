@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\finance\tax;
+namespace finance\tax;
 use equal\orm\Model;
 
 class VatRule extends Model {

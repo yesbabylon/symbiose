@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class Category extends Model {
@@ -15,9 +15,9 @@ class Category extends Model {
             ],
             'product_model_ids' => [ 
                 'type'              => 'many2many', 
-                'foreign_object'    => 'symbiose\sale\product\ProductModel', 
+                'foreign_object'    => 'sale\product\ProductModel', 
                 'foreign_field'     => 'category_ids', 
-                'rel_table'         => 'symbiose_sale_prooduct_rel_productmodel_category', 
+                'rel_table'         => 'sale_product_rel_productmodel_category', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'category_id'
             ]

@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\business\relation;
+namespace business\relation;
 use equal\orm\Model;
 
 class Partner extends Model {
@@ -13,7 +13,7 @@ class Partner extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'symbiose\business\relation\Partner::getDisplayName',
+                'function'          => 'business\relation\Partner::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the partner (related organisation name).'
@@ -21,7 +21,7 @@ class Partner extends Model {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => 'The targeted organisation (the partner).' 
             ],
 

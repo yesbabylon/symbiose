@@ -1,7 +1,7 @@
 <?php
 namespace lodging\identity;
 
-class Center extends \symbiose\identity\Establishment {
+class Center extends \identity\Establishment {
 
     public static function getName() {
         return 'Center';

@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\inventory;
+namespace inventory;
 use equal\orm\Model;
 
 class Access extends Model {
@@ -39,11 +39,11 @@ class Access extends Model {
             ],
             'server_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\inventory\asset\Server'
+                'foreign_object'    => 'inventory\asset\Server'
             ],
             'instance_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\inventory\asset\Instance'
+                'foreign_object'    => 'inventory\asset\Instance'
             ],
             
         ];
