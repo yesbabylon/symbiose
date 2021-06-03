@@ -4,60 +4,22 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace identity;
+namespace booking;
 use equal\orm\Model;
 
-class Contact extends Model {
+class CompositionItem extends Model {
     public static function getColumns() {
+
         /**
-         * A Contact is a natural person that is related to an Organisation.
+         * Composition items are details about a person that is part of a booking and stays at least one night.
          */
         return [
             'name' => [
-                'type'             => 'alias',
-                'alias'            => 'display_name'
-            ],
-            'display_name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Contact::getDisplayName',
+                'function'          => 'booking\CompositionItem::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
-                'description'       => 'The display name of the contact (concatenation of first and last names).'
-            ],
-            'type' => [
-                'type'          => 'string',
-                'selection'     => ['contact', 'invoice', 'delivery', 'other'],
-                'description'   => 'Role of the contact.',
-                'default'       => 'contact'
-            ],
-
-            /*
-                Description of the Contact address
-            */
-            'address_street' => [
-                'type'          => 'string',
-                'description'   => 'Street and number.'
-            ],
-            'address_dispatch' => [
-                'type'          => 'string',
-                'description'   => 'Optional info for mail dispatch (appartment, box, floor, ...).'
-            ],
-            'address_city' => [
-                'type'          => 'string',
-                'description'   => 'City.'
-            ],
-            'address_zip' => [
-                'type'          => 'string',
-                'description'   => 'Postal code.'
-            ],
-            'address_state' => [
-                'type'          => 'string',
-                'description'   => 'State or region.'
-            ],
-            'address_country' => [
-                'type'          => 'string',
-                'usage'         => 'country/iso-3166:2',
-                'description'   => 'Country.' 
+                'description'       => 'The display name of the person (concatenation of first and last names).'
             ],
 
             'firstname' => [
@@ -77,8 +39,14 @@ class Contact extends Model {
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
-                'description'       => 'Reference contact title.'
+                'description'       => 'Reference contact gender.'
             ],
+            'date_of_birth' => [
+                'type'          => 'date',
+                'description'   => 'Date of birth of the person.'
+            ],
+
+            /* in some cases we need additional contact details */
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',                
@@ -88,11 +56,12 @@ class Contact extends Model {
                 'type'              => 'string',
                 'usage'             => 'phone',
                 'description'       => "Phone number of the contact, if any."
-            ],            
-             'organisation_id' => [
+            ],
+
+             'rental_unit_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
-                'description'       => "The organisation the contact belongs to.",
+                'foreign_object'    => 'realestate\RentalUnit',
+                'description'       => "The rental unit the person is assigned to.",
                 'required'          => true
             ]
         ];

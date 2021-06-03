@@ -32,7 +32,7 @@ class Partner extends Model {
 
             'relation' => [
                 'type'              => 'string',
-                'selection'         => [ 'invoice', 'delivery', 'other' ],
+                'selection'         => [ 'customer', 'provider', 'invoice', 'delivery', 'other' ],
                 'description'       => 'The kind of partnership that exists between the organisations.' 
             ],
 
