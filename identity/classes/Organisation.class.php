@@ -88,7 +88,11 @@ class Organisation extends Model {
             ],
             'address_zip' => [
                 'type'          => 'string',
-                'description'   => 'Postal code of the headquarters address.'
+                'description'   => 'Postal code of the headquarters address.'                
+            ],
+            'address_state' => [
+                'type'          => 'string',
+                'description'   => 'State the headquarters address.'
             ],
             'address_country' => [
                 'type'          => 'string',

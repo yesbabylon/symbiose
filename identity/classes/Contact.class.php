@@ -45,6 +45,10 @@ class Contact extends Model {
                 'type'          => 'string',
                 'description'   => 'Postal code.'
             ],
+            'address_state' => [
+                'type'          => 'string',
+                'description'   => 'State or region.'
+            ],
             'address_country' => [
                 'type'          => 'string',
                 'usage'         => 'country/iso-3166:2',
