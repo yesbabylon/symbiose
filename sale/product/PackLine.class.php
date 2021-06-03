@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class ProductAttribute extends Model {
@@ -12,19 +12,19 @@ class ProductAttribute extends Model {
         return [
             'product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Product',
+                'foreign_object'    => 'sale\product\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
             'option_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\Option',
+                'foreign_object'    => 'sale\product\Option',
                 'description'       => "Product Option this attribute relates to.",
                 'required'          => true
             ],
             'option_value_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\OptionValue',
+                'foreign_object'    => 'sale\product\OptionValue',
                 'description'       => "Value of this attribute for the selected option.",
                 'required'          => true
             ]

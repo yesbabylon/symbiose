@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\finance\accounting;
+namespace finance\accounting;
 use equal\orm\Model;
 
 class AccountingRuleLine extends Model {
@@ -40,12 +40,12 @@ class AccountingRuleLine extends Model {
             ],
             'accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule',
+                'foreign_object'    => 'finance\accounting\AccountingRule',
                 'description'       => "Accounting rule this line is related to."
             ],
             'vat_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\finance\tax\VatRule',
+                'foreign_object'    => 'finance\tax\VatRule',
                 'description'       => "VAT rule this line is related to."
             ]
 

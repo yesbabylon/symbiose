@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class Product extends Model {
@@ -27,7 +27,7 @@ class Product extends Model {
             ],
             'product_model_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\product\ProductModel',
+                'foreign_object'    => 'sale\product\ProductModel',
                 'description'       => "Product Model of this variant.",
                 'required'          => true
             ]

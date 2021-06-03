@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\product;
+namespace sale\product;
 use equal\orm\Model;
 
 class ProductModel extends Model {
@@ -24,16 +24,16 @@ class ProductModel extends Model {
             'family_id' => [
                 'type'              => 'many2one',
                 'description'       => "Product Family which current product belongs to.",
-                'foreign_object'    => 'symbiose\sale\product\Family',
+                'foreign_object'    => 'sale\product\Family',
                 'required'          => true
             ],
             'selling_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule'
             ],
             'buying_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule'
             ],            
             'can_buy' => [
                 'type'              => 'boolean',
@@ -101,17 +101,17 @@ class ProductModel extends Model {
             ],
             'group_ids' => [ 
                 'type'              => 'many2many',
-                'foreign_object'    => 'symbiose\sale\product\Group',
+                'foreign_object'    => 'sale\product\Group',
                 'foreign_field'     => 'productmodel_ids',
-                'rel_table'         => 'symbiose_sale_prooduct_rel_productmodel_group',
+                'rel_table'         => 'sale_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id'
             ],
             'category_ids' => [ 
                 'type'              => 'many2many',
-                'foreign_object'    => 'symbiose\sale\product\Category',
+                'foreign_object'    => 'sale\product\Category',
                 'foreign_field'     => 'productmodel_ids',
-                'rel_table'         => 'symbiose_sale_prooduct_rel_productmodel_category',
+                'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',
                 'rel_local_key'     => 'productmodel_id'
             ]            

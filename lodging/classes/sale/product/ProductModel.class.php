@@ -2,7 +2,7 @@
 namespace lodging\sale\product;
 
 
-class ProductModel extends \symbiose\sale\product\ProductModel {
+class ProductModel extends \sale\product\ProductModel {
 
 	public static function getName() {
         return "Product Model";

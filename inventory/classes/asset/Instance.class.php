@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\inventory\asset;
+namespace inventory\asset;
 use equal\orm\Model;
 
 class Instance extends Model {
@@ -23,20 +23,20 @@ class Instance extends Model {
             ],
             'product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\inventory\asset\Product'
+                'foreign_object'    => 'inventory\asset\Product'
             ],
             'server_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\inventory\asset\Server'
+                'foreign_object'    => 'inventory\asset\Server'
             ],
             'software' => [
                 'type'              => 'one2many',            
-                'foreign_object'    => 'symbiose\inventory\asset\Software', 
+                'foreign_object'    => 'inventory\asset\Software', 
                 'foreign_field'     => 'instance_id'
             ],
             'access' => [
                 'type'              => 'one2many',            
-                'foreign_object'    => 'symbiose\inventory\Access', 
+                'foreign_object'    => 'inventory\Access', 
                 'foreign_field'     => 'instance_id'
             ]
             

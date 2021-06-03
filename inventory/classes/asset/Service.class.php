@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\inventory\asset;
+namespace inventory\asset;
 use equal\orm\Model;
 
 class Service extends Model {
@@ -10,7 +10,7 @@ class Service extends Model {
         return [
             'provider_id' => [
                 'type'              => 'one2many',            
-                'foreign_object'    => 'symbiose\inventory\Provider', 
+                'foreign_object'    => 'inventory\Provider', 
                 'foreign_field'     => 'service_id',
                 'description'       => "name of the company providing the service"
             ],
@@ -20,11 +20,11 @@ class Service extends Model {
             ],
             'product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\inventory\asset\Product'
+                'foreign_object'    => 'inventory\asset\Product'
             ],
             'access_id' => [
                 'type'              => 'one2many',            
-                'foreign_object'    => 'symbiose\inventory\Access', 
+                'foreign_object'    => 'inventory\Access', 
                 'foreign_field'     => 'server_id'
             ]
         ];

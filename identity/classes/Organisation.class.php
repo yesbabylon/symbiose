@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\identity;
+namespace identity;
 use equal\orm\Model;
 
 class Organisation extends Model {
@@ -142,40 +142,40 @@ class Organisation extends Model {
             */
             'children_id' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'foreign_field'     => 'parent_id',
                 'description'       => 'Children organisations owned by the company, if any.' 
             ],
             'parent_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => 'Parent company of which the organisation is a branch, if any.' 
             ],
             'contacts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'symbiose\identity\Contact',
+                'foreign_object'    => 'identity\Contact',
                 'foreign_field'     => 'organisation_id',
                 'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.' 
             ],
             'employees_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'symbiose\identity\Employee',
+                'foreign_object'    => 'identity\Employee',
                 'foreign_field'     => 'organisation_id',
                 'description'       => 'List of employees of the organisation, if any.' 
             ],
             'customers_ids' => [ 
                 'type'              => 'many2many', 
-                'foreign_object'    => 'symbiose\sale\product\Organisation', 
+                'foreign_object'    => 'sale\product\Organisation', 
                 'foreign_field'     => 'providers_ids', 
-                'rel_table'         => 'symbiose_sale_prooduct_rel_organisation_organisation', 
+                'rel_table'         => 'sale_product_rel_organisation_organisation', 
                 'rel_foreign_key'   => 'provider_id',
                 'rel_local_key'     => 'customer_id'
             ],
             'providers_ids' => [
                 'type'              => 'many2many', 
-                'foreign_object'    => 'symbiose\sale\product\Organisation', 
+                'foreign_object'    => 'sale\product\Organisation', 
                 'foreign_field'     => 'customers_ids', 
-                'rel_table'         => 'symbiose_sale_prooduct_rel_organisation_organisation', 
+                'rel_table'         => 'sale_product_rel_organisation_organisation', 
                 'rel_foreign_key'   => 'customer_id',
                 'rel_local_key'     => 'provider_id'
             ]

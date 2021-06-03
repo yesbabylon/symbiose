@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\price;
+namespace sale\price;
 use equal\orm\Model;
 
 class Price extends Model {
@@ -23,7 +23,7 @@ class Price extends Model {
             ],
             'price_list_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\price\PriceList',
+                'foreign_object'    => 'sale\price\PriceList',
                 'description'       => "Price List to which beliongs this price.",
                 'required'          => true
             ],
@@ -34,7 +34,7 @@ class Price extends Model {
             ],            
             'selling_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\finance\accounting\AccountingRule',
+                'foreign_object'    => 'finance\accounting\AccountingRule',
                 'visible'           => ['has_own_accounting_rule', '=', true]                
             ],
         ];

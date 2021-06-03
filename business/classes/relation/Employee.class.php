@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\business\relation;
+namespace business\relation;
 use equal\orm\Model;
 
 class Employee extends Model {
@@ -12,19 +12,19 @@ class Employee extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'symbiose\business\relation\Employee::getDisplayName',
+                'function'          => 'business\relation\Employee::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the employee (concatenation of first and last names).'
             ],
             'contact_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Contact',
+                'foreign_object'    => 'identity\Contact',
                 'description'       => 'The contact that holds the details of the employee.' 
             ],
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => 'The organisation the employee works for.'             
             ],
             'position' => [

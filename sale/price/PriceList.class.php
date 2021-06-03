@@ -1,5 +1,5 @@
 <?php
-namespace symbiose\sale\price;
+namespace sale\price;
 use equal\orm\Model;
 
 class PriceList extends Model {
@@ -22,13 +22,13 @@ class PriceList extends Model {
             ],
             'price_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'symbiose\sale\price\Price',
+                'foreign_object'    => 'sale\price\Price',
                 'foreign_field'     => 'price_list_id',
                 'description'       => "Prices that are related to this list, if any.",
             ],
             'price_list_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'symbiose\sale\price\PriceListCategory',
+                'foreign_object'    => 'sale\price\PriceListCategory',
                 'description'       => "Category this list is related to, if any.",
             ]
             
