@@ -9,12 +9,15 @@ namespace lodging\sale\product;
 
 class Family extends \sale\product\Family {
 
-    public static function getColumns() {
-        /**
-         * A Product Family is a group of goods produced under the same brand.
-         * Families support hierarchy.
-         */
+    public static function getName() {
+        return "Product Family";
+    }
 
+    public static function getDescription() {
+        return "A Product Family is a group of goods produced under the same brand. Families support hierarchy.";
+    }    
+
+    public static function getColumns() {
         return [
             'centers_ids' => [ 
                 'type'              => 'many2many', 

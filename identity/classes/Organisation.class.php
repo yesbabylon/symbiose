@@ -9,6 +9,10 @@ use equal\orm\Model;
 
 class Organisation extends Model {
 
+    public static function getName() {
+        return "Organisation";
+    }
+
     public static function getDescription() {
         return "Holds the core information describing the organisation, either natural or legal person.";
     }

@@ -8,12 +8,12 @@ namespace realestate;
 use equal\orm\Model;
 
 class RentalUnit extends Model {
-    public static function getColumns() {
-        /**
-         * A Product Family is a group of goods produced under the same brand.
-         * Families support hierarchy.
-         */
 
+    public static function getDescription() {
+        return "A rental unit is a ressource that can be rented to a customer.";
+    }
+
+    public static function getColumns() {
         return [
             'name' => [
                 'type'              => 'string',

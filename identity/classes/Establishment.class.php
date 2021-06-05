@@ -8,13 +8,18 @@ namespace identity;
 use equal\orm\Model;
 
 class Establishment extends Model {
+    
+    public static function getName() {
+        return "Establishment unit";
+    }    
+
     public static function getColumns() {
 
         return [
             'name' => [
-                'type'              => 'string',
-                'description'       => "Name of the establishment unit.",
-                'required'          => true
+                'type'          => 'string',
+                'description'   => "Name of the establishment unit.",
+                'required'      => true
             ],
             'phone' => [
                 'type'          => 'string',
