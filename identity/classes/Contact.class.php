@@ -8,10 +8,16 @@ namespace identity;
 use equal\orm\Model;
 
 class Contact extends Model {
+
+    public static function getName() {
+        return "VAT Rule";
+    }
+
+    public static function getDescription() {
+        return "A Contact is a natural person that is related to an Organisation.";
+    }
+
     public static function getColumns() {
-        /**
-         * A Contact is a natural person that is related to an Organisation.
-         */
         return [
             'name' => [
                 'type'             => 'alias',

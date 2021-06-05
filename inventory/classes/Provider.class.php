@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace inventory;
+
 use equal\orm\Model;
 
 class Provider extends Model {

@@ -12,7 +12,11 @@ class Employee extends Model {
     public static function getName() {
         return 'Employee';
     }
-    
+
+    public static function getDescription() {
+        return "An employee is a natural person working for an Organisation.";
+    }
+
     public static function getColumns() {
         return [
             'name' => [
