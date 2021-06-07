@@ -49,13 +49,15 @@ class Establishment extends Model {
                 'type'          => 'string',
                 'description'   => 'Postal code of the estalishment address.'
             ],
+            
             'registration_number' => [
                 'type'          => 'string',
                 'description'   => 'Establishment registration number (establishment unit number), if any.'
-            ],  
+            ],
+
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
+                'foreign_object'    => 'identity\Identity',
                 'description'       => "The organisation the establishment belongs to",
                 'required'          => true
             ]
