@@ -16,7 +16,7 @@ class Product extends Model {
          */
 
         return [
-            'name' => 
+            'name' => [
                 'type'              => 'string',
                 'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
                 'required'          => true
