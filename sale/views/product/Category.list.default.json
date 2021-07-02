@@ -1,0 +1,17 @@
+{
+    "name": "Categories",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "25%"
+            }
+        ]
+    }
+}

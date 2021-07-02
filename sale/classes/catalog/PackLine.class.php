@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\product;
+namespace sale\catalog;
 use equal\orm\Model;
 
 class PackLine extends Model {
@@ -16,13 +16,13 @@ class PackLine extends Model {
         return [
             'parent_product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\product\Product',
+                'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
             'child_product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\product\Product',
+                'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],

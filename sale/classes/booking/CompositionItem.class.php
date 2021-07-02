@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace booking;
+namespace sale\booking;
 use equal\orm\Model;
 
 class CompositionItem extends Model {
@@ -16,7 +16,7 @@ class CompositionItem extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'booking\CompositionItem::getDisplayName',
+                'function'          => 'sale\booking\CompositionItem::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the person (concatenation of first and last names).'
@@ -27,20 +27,18 @@ class CompositionItem extends Model {
                 'description'       => "Full name of the contact (must be a person, not a role).",
                 'required'          => true                
             ],
+
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.'
             ],
+
             'gender' => [
                 'type'              => 'string',
-                'selection'         => ['M' => 'Male', 'F' => 'Female'],
+                'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.'
             ],
-            'title' => [
-                'type'              => 'string',
-                'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
-                'description'       => 'Reference contact gender.'
-            ],
+
             'date_of_birth' => [
                 'type'          => 'date',
                 'description'   => 'Date of birth of the person.'
@@ -52,6 +50,7 @@ class CompositionItem extends Model {
                 'usage'             => 'email',                
                 'description'       => "Email address of the contact."
             ],
+
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
@@ -72,8 +71,7 @@ class CompositionItem extends Model {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['firstname', 'lastname']);
         foreach($res as $oid => $odata) {
-            $display_name = "{$odata['firstname']} {$odata['lastname']}";
-            $result[$oid] = $display_name;
+            $result[$oid] = "{$odata['firstname']} {$odata['lastname']}";
         }
         return $result;              
     }

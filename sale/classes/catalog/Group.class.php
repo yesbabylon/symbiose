@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\product;
+namespace sale\catalog;
 use equal\orm\Model;
 
 class Group extends Model {
@@ -21,7 +21,7 @@ class Group extends Model {
             ],
             'product_model_ids' => [ 
                 'type'              => 'many2many', 
-                'foreign_object'    => 'sale\product\ProductModel', 
+                'foreign_object'    => 'sale\catalog\ProductModel', 
                 'foreign_field'     => 'group_ids', 
                 'rel_table'         => 'sale_product_rel_productmodel_group', 
                 'rel_foreign_key'   => 'productmodel_id',

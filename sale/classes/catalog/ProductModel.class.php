@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\product;
+namespace sale\catalog;
 use equal\orm\Model;
 
 class ProductModel extends Model {
@@ -29,7 +29,7 @@ class ProductModel extends Model {
             'family_id' => [
                 'type'              => 'many2one',
                 'description'       => "Product Family which current product belongs to.",
-                'foreign_object'    => 'sale\product\Family',
+                'foreign_object'    => 'sale\catalog\Family',
                 'required'          => true
             ],
             'selling_accounting_rule_id' => [
@@ -106,7 +106,7 @@ class ProductModel extends Model {
             ],
             'group_ids' => [ 
                 'type'              => 'many2many',
-                'foreign_object'    => 'sale\product\Group',
+                'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'productmodel_ids',
                 'rel_table'         => 'sale_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
@@ -114,7 +114,7 @@ class ProductModel extends Model {
             ],
             'category_ids' => [ 
                 'type'              => 'many2many',
-                'foreign_object'    => 'sale\product\Category',
+                'foreign_object'    => 'sale\catalog\Category',
                 'foreign_field'     => 'productmodel_ids',
                 'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',

@@ -28,11 +28,7 @@ class Type extends Model {
                 'description'       => 'Short name of the booking type.',
                 'required'          => true
             ],
-            
-            'description' => [
-                'type'              => 'string',
-                'description'       => "Reason of the booking."
-            ],
+
 /*            
             'stat_id' => [
                 'type'              => 'many2one',
@@ -45,7 +41,7 @@ class Type extends Model {
 
             'product_categories_ids' => [ 
                 'type'              => 'many2many', 
-                'foreign_object'    => 'sale\product\Category', 
+                'foreign_object'    => 'sale\catalog\Category', 
                 'foreign_field'     => 'booking_types_ids', 
                 'rel_table'         => 'sale_rel_productcategory_bookingtype', 
                 'rel_foreign_key'   => 'productcategory_id',

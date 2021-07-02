@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace booking;
+namespace sale\booking;
 use equal\orm\Model;
 
 class Composition extends Model {
@@ -22,16 +22,18 @@ class Composition extends Model {
                 'store'             => true,
                 'description'       => 'Composition name is based on the related booking (customer and date).'
             ],
+
             'booking_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'booking\Booking',
+                'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'The booking the composition relates to.' 
             ],
+
             'booking_line_group_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'booking\BookingLineGroup',
+                'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'description'       => 'The group of the booking the composition relates to.'             
-            ],
+            ]
 
         ];
     }
