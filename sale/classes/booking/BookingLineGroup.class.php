@@ -7,36 +7,35 @@
 namespace sale\booking;
 use equal\orm\Model;
 
-class BookingFollowup extends Model {
+class BookingLineGroup extends Model {
 
     public static function getName() {
-        return "Followup";
+        return "Booking line group";
     }
 
     public static function getDescription() {
-        return "Followup entries are notes created by users to ease the internal communication related to bookings.";
+        return "Booking line groups are related to a booking and describe one or more sojourns and their related consumptions.";
     }
 
     public static function getColumns() {
         return [
 
-            'creator' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\User',
-                'description'       => 'User who created the entry.',
-            ],
 
-            'message' => [
-                'type'              => 'text',
-                'description'       => "Communication regarding the booking."
+            'booking_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\BookingLine',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => 'Booking lines that belong to the group.'
             ],
 
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
-                'description'       => 'Booking the adapter relates to.',
+                'description'       => 'Booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true
             ]
+
+
         ];
     }
 

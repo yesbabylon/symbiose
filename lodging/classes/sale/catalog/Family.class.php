@@ -4,10 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace lodging\sale\product;
+namespace lodging\sale\catalog;
 
 
-class Family extends \sale\product\Family {
+class Family extends \sale\catalog\Family {
 
     public static function getName() {
         return "Product Family";

@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\product;
+namespace sale\catalog;
 use equal\orm\Model;
 
 class Product extends Model {
@@ -32,7 +32,7 @@ class Product extends Model {
             ],
             'product_model_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\product\ProductModel',
+                'foreign_object'    => 'sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
                 'required'          => true
             ]

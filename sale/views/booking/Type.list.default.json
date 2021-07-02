@@ -1,0 +1,12 @@
+{
+    "name": "Types",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "5%"
+            }
+        ]
+    }
+}

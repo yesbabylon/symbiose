@@ -4,10 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace lodging\sale\product;
+namespace lodging\sale\catalog;
 
 
-class ProductModel extends \sale\product\ProductModel {
+class ProductModel extends \sale\catalog\ProductModel {
 
 	public static function getName() {
         return "Product Model";
@@ -67,14 +67,14 @@ class ProductModel extends \sale\product\ProductModel {
             // a product either refers to a specific rental unit, or to a category of rental units (both allowing to find matching units for a given period and a capacity)
             'rental_unit_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\sale\product\Family',
+                'foreign_object'    => 'equal\sale\catalog\Family',
                 'description'       => "Rental Unit Category this Product related to, if any.",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'category'] ]
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\sale\product\Family',
+                'foreign_object'    => 'equal\sale\catalog\Family',
                 'description'       => "Specific Rental Unit this Product related to, if any",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'unit'] ]
             ],

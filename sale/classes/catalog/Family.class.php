@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\product;
+namespace sale\catalog;
 use equal\orm\Model;
 
 class Family extends Model {
@@ -27,13 +27,13 @@ class Family extends Model {
             ],
             'children_ids' => [ 
                 'type'              => 'one2many', 
-                'foreign_object'    => 'sale\product\Family', 
+                'foreign_object'    => 'sale\catalog\Family', 
                 'foreign_field'     => 'parent_id'
             ],
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Product Family which current family belongs to, if any.",
-                'foreign_object'    => 'sale\product\Family'
+                'foreign_object'    => 'sale\catalog\Family'
             ]
 
         ];
