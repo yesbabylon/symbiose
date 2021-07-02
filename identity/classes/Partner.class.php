@@ -12,6 +12,10 @@ class Partner extends Model {
     public static function getName() {
         return 'Partner';
     }
+
+    public static function getDescription() {
+        return "A Partner describes a relationship between two Identities (contact, employee, customer, provider, payer, other).";
+    }
     
     public static function getColumns() {
         return [
@@ -27,7 +31,7 @@ class Partner extends Model {
             'owner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'I'],                
+                'domain'            => ['type', '<>', 'I'],
                 'description'       => 'The organisation which the targeted identity is a partner of.'
             ],
 
@@ -37,10 +41,19 @@ class Partner extends Model {
                 'description'       => 'The targeted identity (the partner).' 
             ],
 
+            // if partner is a contact (ex. referenced by reference_partner_id), use a 'position' info
             'partner_position' => [
                 'type'              => 'string',
                 'description'       => 'Position of the reference contact (natural person) within the organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['relationship', '=', 'contact'] ]
+            ],
+
+            // if partner is a customer, it can be assigned to a rate class
+            'customer_rate_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => 'Rate class that applies to the customer.',
+                'visible'           => [ ['relationship', '=', 'customer'] ]
             ],
 
             'relationship' => [
@@ -54,10 +67,10 @@ class Partner extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $employees = $om->read(__CLASS__, $oids, ['organisation_id.name']);
+        $employees = $om->read(__CLASS__, $oids, ['partner_identity_id.name']);
         foreach($employees as $oid => $odata) {
-            $result[$oid] = $odata['organisation_id.name'];
+            $result[$oid] = $odata['partner_identity_id.name'];
         }
-        return $result;              
+        return $result;
     }    
 }

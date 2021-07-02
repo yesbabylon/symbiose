@@ -18,6 +18,7 @@ class Category extends Model {
                 'description'       => "Name of the product category (used for all variants).",
                 'required'          => true
             ],
+            
             'product_model_ids' => [ 
                 'type'              => 'many2many', 
                 'foreign_object'    => 'sale\product\ProductModel', 
@@ -25,7 +26,16 @@ class Category extends Model {
                 'rel_table'         => 'sale_product_rel_productmodel_category', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'category_id'
-            ]
+            ],
+
+            'booking_types_ids' => [ 
+                'type'              => 'many2many', 
+                'foreign_object'    => 'sale\product\Category', 
+                'foreign_field'     => 'product_categories_ids', 
+                'rel_table'         => 'sale_rel_productcategory_bookingtype', 
+                'rel_local_key'     => 'productcategory_id',
+                'rel_foreign_key'   => 'bookingtype_id'
+            ]            
         ];
     }
 }

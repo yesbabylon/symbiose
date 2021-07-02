@@ -29,7 +29,7 @@ class Price extends Model {
             'price_list_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\PriceList',
-                'description'       => "Price List to which beliongs this price.",
+                'description'       => "Price List to which belongs this price.",
                 'required'          => true
             ],
             'has_own_accounting_rule' => [

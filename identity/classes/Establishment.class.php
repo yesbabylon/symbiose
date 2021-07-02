@@ -58,7 +58,7 @@ class Establishment extends Model {
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation the establishment belongs to",
+                'description'       => "The organisation the establishment belongs to.",
                 'required'          => true
             ]
         ];

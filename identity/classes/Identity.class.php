@@ -11,9 +11,6 @@ use equal\orm\Model;
  * This class is meant to be used as an interface for other entities (organisation and partner).
  * An identity is either a legal or natural person (Legal persons are Organisations).
  * An organisation usually has several partners of various kind (contact, employee, provider, customer, ...).
- * Partners are Identity objects as well.
- * A Partner always relates to an organisation.
- * A user is always attached to a Partner.
  */
 class Identity extends Model {
 
@@ -49,6 +46,8 @@ class Identity extends Model {
                                         'NP' => 'non-profit',
                                         'PA' => 'public-administration'
                 ],
+                'default'           => 'I',
+                'onchange'          => 'identity\Identity::onchangeType',
                 'description'       => 'Type of organisation.',
                 'required'          => true
             ],
@@ -58,8 +57,8 @@ class Identity extends Model {
             */
             'legal_name' => [
                 'type'              => 'string',
-                'description'       => 'Full name of the organisation (legal business name).',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'description'       => 'Full name of the Identity.',
+                'visible'           => [ ['type', '<>', 'I'] ]                
             ],
             'short_name' => [
                 'type'          => 'string',
@@ -67,20 +66,19 @@ class Identity extends Model {
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
             'description' => [
-                'type'              => 'string',
-                'description'       => 'A short reminder to help user identify the organisation (e.g. "Human Resources Consultancy Firm").',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'type'              => 'text',
+                'description'       => 'A short reminder to help user identify the organisation (e.g. "Human Resources Consultancy Firm").'
             ],
-            'has_VAT' => [  
-                'type'              => 'string',
+            'has_vat' => [  
+                'type'              => 'boolean',
                 'default'           => true,
                 'description'       => 'Does the this organisation have a VAT number?',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
-            'VAT_number' => [
+            'vat_number' => [
                 'type'              => 'string',
                 'description'       => 'Value Added Tax identification number, if any.',
-                'visible'           => [ ['has_VAT', '=', true], ['type', '<>', 'I'] ]
+                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'] ]
             ],
             'registration_number' => [
                 'type'              => 'string',
@@ -178,7 +176,8 @@ class Identity extends Model {
             'address_country' => [
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',
-                'description'       => 'Country.' 
+                'description'       => 'Country.',
+                'default'           => 'BE'
             ],
 
             /*
@@ -197,12 +196,19 @@ class Identity extends Model {
             ],
             // Companies can also have an official website.
             'website' => [
-                'type'          => 'string',
-                'usage'         => 'url',
-                'description'   => 'Organisation main official website URL, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]                
+                'type'              => 'string',
+                'usage'             => 'url',
+                'description'       => 'Organisation main official website URL, if any.',
+                'visible'           => [ ['type', '<>', 'I'] ]
             ],  
 
+            // an identity can have several addresses
+            'addresses_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'identity\Address',
+                'foreign_field'     => 'identity_id',
+                'description'       => 'List of addresses related to the identity.',
+            ],
 
             /*
                 For organisations, there is a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
@@ -211,11 +217,20 @@ class Identity extends Model {
             'reference_partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'contact'],                
-                'description'       => 'Contact (natural person) that can legally represent the organisation.' ,
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'domain'            => ['relationship', '=', 'contact'],
+                'description'       => 'Contact (natural person) that can legally represent the organisation.',
+                'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
             ],
 
+            /*
+                For individuals, the identity might be related to a user.
+            */
+            'user_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => 'User associated to this identity.',
+                'visible'           => [ ['type', '=', 'I'] ]
+            ],
 
             /*
                 Contact details.
@@ -251,7 +266,8 @@ class Identity extends Model {
             'lang' => [
                 'type'              => 'string',
                 'usage'             => 'language/iso-639:2',
-                'description'       => 'Prefered spoken language.'
+                'description'       => 'Prefered spoken language.',
+                'default'           => 'fr'
             ],
 
 
@@ -271,9 +287,19 @@ class Identity extends Model {
             $display_name = self::_computeDisplayName($odata, $lang);
             $result[$oid] = $display_name;
         }
-        return $result;              
+        return $result;
     }
 
+    public static function onchangeType($om, $oids, $lang) {
+        $res = $om->read(__CLASS__, $oids, ['type', 'firstname', 'lastname']);
+        foreach($res as $oid => $odata) {
+            if( isset($odata['type']) ) {
+                if($odata['type'] == 'I' ) {
+                    $om->write(__CLASS__, $oid, [ 'display_name' => null ], $lang);
+                }
+            }    
+        }
+    }
 
     public static function _computeDisplayName($fields, $lang) {
         $parts = [];
@@ -319,9 +345,9 @@ class Identity extends Model {
                     }
                 ],
                 'too_short' => [
-                    'message'       => 'Firstname must be 2 chars long at minimum.',
+                    'message'       => 'Legal name must be minimum 2 chars long.',
                     'function'      => function ($firstname, $values) {
-                        return (bool) (strlen($firstname) >= 2);
+                        return !( isset($values['type']) && $values['type'] != 'I' && strlen($legal_name) < 2);
                     }
                 ]
             ],
