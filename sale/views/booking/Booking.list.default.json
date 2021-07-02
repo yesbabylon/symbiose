@@ -1,0 +1,22 @@
+{
+    "name": "Booking list",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "5%"
+            },
+            {
+                "type": "field",            
+                "value": "customer_id",
+                "width": "15%"
+            },    
+            {
+                "type": "field",            
+                "value": "center_id",
+                "width": "15%"
+            }
+        ]
+    }
+}

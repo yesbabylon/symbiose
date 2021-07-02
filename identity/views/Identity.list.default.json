@@ -1,0 +1,28 @@
+{
+    "name": "Identity list",
+    "description": "This view is intended for displaying basic listing of existing identities.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "5%"
+            },
+            {
+                "type": "field",            
+                "value": "type",
+                "width": "10%"
+            },    
+            {
+                "type": "field",            
+                "value": "legal_name",
+                "width": "10%"
+            },
+            {
+                "type": "field",            
+                "value": "website",
+                "width": "35%"
+            }        
+        ]
+    }
+}

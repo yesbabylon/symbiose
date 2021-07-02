@@ -1,0 +1,24 @@
+{
+    "name": "Contacts",
+    "description": "Listing of existing contacts Partners.",
+    "domain": ["relationship", "=", "contact"],
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "partner_position",
+                "width": "20%"
+            },    
+            {
+                "type": "field",            
+                "value": "relationship",
+                "width": "20%"
+            }
+        ]
+    }
+}

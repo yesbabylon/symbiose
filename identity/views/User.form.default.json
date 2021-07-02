@@ -1,0 +1,43 @@
+{
+    "name": "User",
+    "description": "Basic form for displaying a User",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "login",
+                                                "width": "100%",
+                                                "readonly": true,
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "identity_id",
+                                                "width": "100%"                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "validated",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

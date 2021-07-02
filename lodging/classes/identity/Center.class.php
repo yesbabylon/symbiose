@@ -22,29 +22,20 @@ class Center extends \identity\Establishment {
             /*
                 The manager is stored as part of the Center object.
             */
-            'manager_firstname' => [
-                'type'          => 'string',
-                'description'   => 'Reference contact forename.'
+            'manager_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Partner',
+                'domain'            => ['relationship', '=', 'employee'],
+                'description'       => 'List of employees of the organisation, if any.' 
             ],
-            'manager_lastname' => [
-                'type'          => 'string',
-                'description'   => 'Reference contact surname.'
-            ],
-            'manager_gender' => [
-                'type'          => 'string',
-                'selection'     => ['M' => 'Male', 'F' => 'Female'],
-                'description'   => 'Reference contact gender.'
-            ],
-            'manager_phone' => [
-                'type'          => 'string',
-                'usage'         => 'phone',
-                'description'   => 'Official contact phone number.' 
-            ],
-            'manager_email' => [
-                'type'          => 'string',
-                'usage'         => 'email',
-                'description'   => 'Official contact email address.' 
-            ],              
+
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'domain'            => ['type', '<>', 'I'],
+                'description'       => 'The parent organisation of the Center.' 
+            ],            
+
         ];
     }
 }
