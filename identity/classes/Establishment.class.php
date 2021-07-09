@@ -21,21 +21,28 @@ class Establishment extends Model {
                 'description'   => "Name of the establishment unit.",
                 'required'      => true
             ],
+
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The organisation the establishment belongs to.",
+                'required'          => true
+            ],
+
             'phone' => [
                 'type'          => 'string',
                 'description'   => 'Official contact phone number.' 
             ],
+
             'email' => [
                 'type'          => 'string',
                 'description'   => 'Official contact email address.' 
             ],            
-            'address_country' => [
-                'type'          => 'string',
-                'description'   => 'Country in which the establishment is located.' 
-            ],
+
             'address_street' => [
                 'type'          => 'string',
-                'description'   => 'Street and number of the estalishment address.'
+                'description'   => 'Street and number of the estalishment address.',
+                'required'      => true
             ],
             'address_dispatch' => [
                 'type'          => 'string',
@@ -45,9 +52,20 @@ class Establishment extends Model {
                 'type'          => 'string',
                 'description'   => 'City in which estalishment is located.'
             ],
+
             'address_zip' => [
                 'type'          => 'string',
                 'description'   => 'Postal code of the estalishment address.'
+            ],
+
+            'address_state' => [
+                'type'              => 'string',
+                'description'       => 'State or region.'
+            ],
+
+            'address_country' => [
+                'type'          => 'string',
+                'description'   => 'Country in which the establishment is located.' 
             ],
             
             'registration_number' => [
@@ -55,12 +73,7 @@ class Establishment extends Model {
                 'description'   => 'Establishment registration number (establishment unit number), if any.'
             ],
 
-            'organisation_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation the establishment belongs to.",
-                'required'          => true
-            ]
+
         ];
     }
 }

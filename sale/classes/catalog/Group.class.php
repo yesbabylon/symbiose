@@ -19,10 +19,10 @@ class Group extends Model {
                 'description'       => "Name of the product model group (used for all variants).",
                 'required'          => true
             ],
-            'product_model_ids' => [ 
+            'product_models_ids' => [ 
                 'type'              => 'many2many', 
                 'foreign_object'    => 'sale\catalog\ProductModel', 
-                'foreign_field'     => 'group_ids', 
+                'foreign_field'     => 'groups_ids', 
                 'rel_table'         => 'sale_product_rel_productmodel_group', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'group_id'

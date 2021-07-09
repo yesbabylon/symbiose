@@ -24,10 +24,10 @@ class Category extends Model {
                 'description'       => "Short string describing the purpose and usage of the category."
             ],
             
-            'product_model_ids' => [ 
+            'product_models_ids' => [ 
                 'type'              => 'many2many', 
                 'foreign_object'    => 'sale\catalog\ProductModel', 
-                'foreign_field'     => 'category_ids', 
+                'foreign_field'     => 'categories_ids', 
                 'rel_table'         => 'sale_product_rel_productmodel_category', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'category_id',

@@ -61,27 +61,29 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'boolean',
                 'description'       => 'Is the product a ni? (meals might be part of the board / included services of the stay).',
                 'default'           => false,
-                'visible'           => [ ['type', '=', 'service'], , ['is_meal', '=', false] ] 
+                'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
             ],
 
             // a product either refers to a specific rental unit, or to a category of rental units (both allowing to find matching units for a given period and a capacity)
             'rental_unit_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\sale\catalog\Family',
+                'foreign_object'    => 'lodging\sale\catalog\Family',
                 'description'       => "Rental Unit Category this Product related to, if any.",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'category'] ]
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'equal\sale\catalog\Family',
+                'foreign_object'    => 'lodging\sale\catalog\Family',
                 'description'       => "Specific Rental Unit this Product related to, if any",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'unit'] ]
             ],
 
+/*
+// #todo            
             'stat_rule_id' => [
             ]
-
+*/
 
         ];
     }

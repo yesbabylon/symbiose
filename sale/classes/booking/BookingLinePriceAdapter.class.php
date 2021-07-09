@@ -26,6 +26,13 @@ class BookingLinePriceAdapter extends Model {
                 'description'       => 'Booking the adapter relates to.',
                 'required'          => true
             ],
+
+            'booking_line_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingLine',
+                'description'       => 'Booking Line the adapter relates to.',
+                'required'          => true
+            ],
             
             'is_manual_discount' => [
                 'type'              => 'boolean',

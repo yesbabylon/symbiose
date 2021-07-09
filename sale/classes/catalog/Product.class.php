@@ -21,22 +21,34 @@ class Product extends Model {
                 'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
                 'required'          => true
             ],
+
             'sku' => [
                 'type'              => 'string',
                 'description'       => "SKU code (Stock Keeping Unit) used as internal reference. Must be unique.",
                 'unique'            => true
             ],
+
             'description' => [
                 'type'              => 'text',
                 'description'       => "Description of the variant (specifics)."
             ],
+
             'product_model_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
                 'required'          => true
-            ]
+            ],
+
             // if the organisation uses price-lists, the price is to be found in the Price object related to the product SKU
+
+            'prices_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\price\Price',
+                'foreign_field'     => 'product_id',
+                'description'       => "Prices that are related to this product.",
+            ],
+
         ];
     }
 

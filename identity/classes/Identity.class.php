@@ -48,8 +48,7 @@ class Identity extends Model {
                 ],
                 'default'           => 'I',
                 'onchange'          => 'identity\Identity::onchangeType',
-                'description'       => 'Type of organisation.',
-                'required'          => true
+                'description'       => 'Type of organisation.'
             ],
 
             /*
@@ -58,12 +57,14 @@ class Identity extends Model {
             'legal_name' => [
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
-                'visible'           => [ ['type', '<>', 'I'] ]                
+                'visible'           => [ ['type', '<>', 'I'] ],
+                'onchange'          => 'identity\Identity::onchangeName'
             ],
             'short_name' => [
                 'type'          => 'string',
-                'description'   => 'Usual name to be used as a memo for identifying the organisation type (i.e. an acronym or short name).',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'description'   => 'Usual name to be used as a memo for identifying the organisation (acronym or short name).',
+                'visible'           => [ ['type', '<>', 'I'] ],
+                'onchange'          => 'identity\Identity::onchangeName'
             ],
             'description' => [
                 'type'              => 'text',
@@ -239,13 +240,17 @@ class Identity extends Model {
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => [ ['type', '=', 'I'] ],
+                'onchange'          => 'identity\Identity::onchangeName'
             ],
+
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => [ ['type', '=', 'I'] ]                
+                'visible'           => [ ['type', '=', 'I'] ],
+                'onchange'          => 'identity\Identity::onchangeName'               
             ],
+
             'gender' => [
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
@@ -288,6 +293,10 @@ class Identity extends Model {
             $result[$oid] = $display_name;
         }
         return $result;
+    }
+
+    public static function onchangeName($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
     }
 
     public static function onchangeType($om, $oids, $lang) {
@@ -346,7 +355,7 @@ class Identity extends Model {
                 ],
                 'too_short' => [
                     'message'       => 'Legal name must be minimum 2 chars long.',
-                    'function'      => function ($firstname, $values) {
+                    'function'      => function ($legal_name, $values) {
                         return !( isset($values['type']) && $values['type'] != 'I' && strlen($legal_name) < 2);
                     }
                 ]
@@ -370,12 +379,15 @@ class Identity extends Model {
                 'too_short' => [
                     'message'       => 'Firstname must be 2 chars long at minimum.',
                     'function'      => function ($firstname, $values) {
-                        return (bool) (strlen($firstname) >= 2);
+                        return !( isset($values['type']) && $values['type'] == 'I' && strlen($firstname) < 2);
                     }
                 ],
                 'invalid_chars' => [
                     'message'       => 'Firstname must contain only naming glyphs.',
                     'function'      => function ($firstname, $values) {
+                        if( isset($values['type']) && $values['type'] != 'I' ) {
+                            return true;
+                        }
                         return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $firstname));                        
                     }
                 ]
