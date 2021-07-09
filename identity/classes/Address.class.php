@@ -62,26 +62,31 @@ class Address extends Model {
                 'description'       => 'Street and number.',
                 'onchange'          => 'identity\Address::onchangeAddress'
             ],
+
             'address_dispatch' => [
                 'type'              => 'string',
                 'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).',
                 'onchange'          => 'identity\Address::onchangeAddress'
             ],
+
             'address_city' => [
                 'type'              => 'string',
                 'description'       => 'City.',
                 'onchange'          => 'identity\Address::onchangeAddress'
             ],
+            
             'address_zip' => [
                 'type'              => 'string',
                 'description'       => 'Postal code.',
                 'onchange'          => 'identity\Address::onchangeAddress'
             ],
+
             'address_state' => [
                 'type'              => 'string',
                 'description'       => 'State or region.',
                 'onchange'          => 'identity\Address::onchangeAddress'
             ],
+
             'address_country' => [
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',

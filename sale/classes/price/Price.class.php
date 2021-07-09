@@ -18,30 +18,36 @@ class Price extends Model {
                 'usage'             => 'amount/money',
                 'required'          => true
             ],
+
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['simple', 'computed']
             ],
+
             'description' => [
                 'type'              => 'string',
                 'description'       => "Short description of the variant."
             ],
+
             'price_list_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\PriceList',
-                'description'       => "Price List to which belongs this price.",
+                'description'       => "The Price List the price belongs to.",
                 'required'          => true
             ],
-            'has_own_accounting_rule' => [
-                'type'              => 'boolean',
-                'description'       => 'Does the price have a specific accounting rule that overrides the product own rule?',
-                'default'           => false
-            ],            
-            'selling_accounting_rule_id' => [
+
+            'accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule',
-                'visible'           => ['has_own_accounting_rule', '=', true]                
+                'foreign_object'    => 'finance\accounting\AccountingRule'
             ],
+
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\Product',
+                'description'       => "The Product the price applies to.",
+                'required'          => true
+            ],
+            
         ];
     }
 

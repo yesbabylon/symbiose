@@ -83,26 +83,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "has_vat",
-                                                "width": "50%",
-                                                "label": "Subject to VAT",
-                                                "help": "Do the company have a VAT number?"
-                                            },                                                                                        
-                                            {
-                                                "type": "field",
-                                                "value": "vat_number",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "registration_number",
                                                 "width": "50%"
                                             },
-                                            {
-                                                "type": "field",
-                                                "value": "title",
-                                                "width": "50%"
-                                            },                                            
                                             {
                                                 "type": "field",
                                                 "value": "citizen_identification",
@@ -110,19 +93,36 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date_of_birth",
+                                                "value": "lang",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_vat",
+                                                "width": "50%",
+                                                "label": "Subject to VAT",
+                                                "help": "Do the company have a VAT number?"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_number",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "title",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "gender",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "lang",
-                                                "width": "50%"
-                                            }                                            
+                                                "value": "date_of_birth",
+                                                "width": "33%"
+                                            }
                                         ]
                                     },
                                     {
@@ -156,13 +156,30 @@
                                                 "width": "100%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "reference_partner_id",
+                                                "label": "Person of reference",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "user_id",
+                                                "width": "100%"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
                         ]
                     },
                     {
-                        "label": "Address",
+                        "label": "Main address",
                         "id": "identity_address",
                         "rows": [
                             {

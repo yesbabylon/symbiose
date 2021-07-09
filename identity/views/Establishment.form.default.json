@@ -1,0 +1,105 @@
+{
+    "name": "Establishment",
+    "description": "Basic form for displaying an Establishment.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "organisation_id",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "registration_number",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "address_street",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_dispatch",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_city",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_zip",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_state",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "address_country",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "phone",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "email",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }                                    
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }            
+        ]
+    }
+}
