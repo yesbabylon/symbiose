@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General info",
+                        "id": "booking_info",
                         "rows": [
                             {
                                 "columns": [
@@ -50,15 +52,40 @@
                                                 "width": "100%"                                                
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Contacts",
+                        "id": "booking_contacts",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "contacts_ids",
                                                 "width": "100%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Contracts",
+                        "id": "booking_contracts",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "contracts_ids",
@@ -70,6 +97,7 @@
                             }
                         ]
                     }
+
                 ]
             }
         ]
