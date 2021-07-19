@@ -34,6 +34,11 @@
                                                 "type": "field",
                                                 "value": "partner_position",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_rate_class_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

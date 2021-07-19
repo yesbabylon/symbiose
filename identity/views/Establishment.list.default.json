@@ -20,6 +20,11 @@
             },
             {
                 "type": "field",
+                "value": "address_city",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "phone",
                 "width": "10%"
             },

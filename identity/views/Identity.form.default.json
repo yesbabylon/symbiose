@@ -17,7 +17,7 @@
                                                 "value": "legal_name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "header": false
                                                 }
                                             },
                                             {
@@ -25,7 +25,7 @@
                                                 "value": "firstname",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "header": false
                                                 }
                                             },
                                             {
@@ -33,7 +33,7 @@
                                                 "value": "lastname",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "header": false
                                                 }
                                             }
                                         ]

@@ -10,6 +10,16 @@
             },
             {
                 "type": "field",            
+                "value": "partner_identity_id",
+                "width": "20%"
+            },  
+            {
+                "type": "field",            
+                "value": "owner_identity_id",
+                "width": "20%"
+            }, 
+            {
+                "type": "field",            
                 "value": "partner_position",
                 "width": "20%"
             },    
