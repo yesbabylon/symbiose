@@ -27,22 +27,7 @@
                 "type": "field",            
                 "value": "email",
                 "width": "15%"
-            },
-            {
-                "type": "field",            
-                "value": "has_vat",
-                "width": "5%"
-            },
-            {
-                "type": "field",            
-                "value": "address_street",
-                "width": "20%"
-            },
-            {
-                "type": "field",            
-                "value": "address_city",
-                "width": "20%"
-            }   
+            } 
         ]
     }
 }

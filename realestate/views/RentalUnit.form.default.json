@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "Rental Units",
     "layout": {
         "groups": [
             {
@@ -13,7 +13,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
+                                                "value": "name",
                                                 "width": "50%",
                                                 "widget": {
                                                     "header": true
@@ -26,28 +26,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_payer_organisation",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
+                                                "value": "can_rent",
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     },
@@ -56,13 +36,33 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "type",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "category",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "capacity",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_children",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "children_ids",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "parent_id",
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     }

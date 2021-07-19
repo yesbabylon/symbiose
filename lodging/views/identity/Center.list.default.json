@@ -1,0 +1,17 @@
+{
+    "name": "Center",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "manager_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "organisation_id",
+                "width": "15%"
+            }
+        ]
+    }
+}

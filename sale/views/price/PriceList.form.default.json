@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Price Lists",
     "layout": {
         "groups": [
             {
@@ -21,18 +21,28 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "date_from",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "width": "50%"                                                
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "prices_ids",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "value": "price_list_category_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -42,6 +52,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

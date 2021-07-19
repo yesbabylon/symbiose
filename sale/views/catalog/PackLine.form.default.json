@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "PackLine",
     "layout": {
         "groups": [
             {
@@ -13,25 +13,22 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_models_ids",
+                                                "value": "parent_product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "child_product_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "own_qty",
                                                 "width": "50%"
                                             }
                                         ]

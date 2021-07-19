@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Option",
     "layout": {
         "groups": [
             {
@@ -26,12 +26,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "family_id",
                                                 "width": "50%"
                                             }
                                         ]

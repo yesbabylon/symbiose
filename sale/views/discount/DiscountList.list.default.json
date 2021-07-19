@@ -1,25 +1,25 @@
 {
-    "name": "Products",
+    "name": "Discount List",
     "layout": {
         "items": [
             {
-                "type": "field",
+                "type": "field",            
                 "value": "name",
                 "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "valid_from",
+                "width": "20%"
             },
             {
-                "type": "field",
-                "value": "sku",
+                "type": "field",            
+                "value": "valid_until",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "product_model_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "description",
+                "value": "discounts_ids",
                 "width": "20%"
             }
         ]

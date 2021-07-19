@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Accounting Rules",
     "layout": {
         "groups": [
             {
@@ -21,17 +21,22 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "type",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
+                                                "value": "description",
+                                                "width": "100%"                                                
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "accounting_rule_line_ids",
                                                 "width": "50%"
                                             }
                                         ]
@@ -42,6 +47,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

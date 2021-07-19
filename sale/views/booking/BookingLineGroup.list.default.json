@@ -1,0 +1,17 @@
+{
+    "name": "Booking Line Groups",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "booking_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",            
+                "value": "booking_lines_ids",
+                "width": "20%"
+            }
+        ]
+    }
+}

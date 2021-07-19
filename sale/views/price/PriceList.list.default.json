@@ -1,25 +1,30 @@
 {
-    "name": "Products",
+    "name": "Price List",
     "layout": {
         "items": [
             {
-                "type": "field",
+                "type": "field",            
                 "value": "name",
                 "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "date_from",
+                "width": "20%"
             },
             {
-                "type": "field",
-                "value": "sku",
+                "type": "field",            
+                "value": "date_to",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "product_model_id",
+                "value": "prices_ids",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "description",
+                "value": "price_list_category_id",
                 "width": "20%"
             }
         ]

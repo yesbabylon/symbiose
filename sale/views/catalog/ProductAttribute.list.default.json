@@ -1,25 +1,20 @@
 {
-    "name": "Products",
+    "name": "Product Attributes",
     "layout": {
         "items": [
             {
                 "type": "field",
-                "value": "name",
+                "value": "product_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "sku",
+                "value": "option_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "product_model_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "description",
+                "value": "option_value_id",
                 "width": "20%"
             }
         ]

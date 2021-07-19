@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "Product",
     "layout": {
         "groups": [
             {
@@ -13,40 +13,20 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "width": "50%",
+                                                "value": "name",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "center_id",
-                                                "width": "50%"
+                                                "value": "sku",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_payer_organisation",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
                                                 "width": "100%"                                                
                                             }
                                         ]
@@ -56,13 +36,13 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
-                                                "width": "100%"
+                                                "value": "product_model_id",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "prices_ids",
+                                                "width": "50%"
                                             }
                                         ]
                                     }

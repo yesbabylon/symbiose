@@ -1,25 +1,25 @@
 {
-    "name": "Products",
+    "name": "Composition Items",
     "layout": {
         "items": [
             {
-                "type": "field",
+                "type": "field",            
                 "value": "name",
                 "width": "20%"
             },
             {
-                "type": "field",
-                "value": "sku",
+                "type": "field",            
+                "value": "email",
                 "width": "20%"
             },
             {
-                "type": "field",
-                "value": "product_model_id",
+                "type": "field",            
+                "value": "phone",
                 "width": "20%"
             },
             {
-                "type": "field",
-                "value": "description",
+                "type": "field",            
+                "value": "rental_unit_id",
                 "width": "20%"
             }
         ]

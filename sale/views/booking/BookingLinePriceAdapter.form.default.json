@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Booking Line Price Adapter",
     "layout": {
         "groups": [
             {
@@ -13,25 +13,32 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_models_ids",
+                                                "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "booking_line_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_manual_discount",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "discount_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "value",
                                                 "width": "50%"
                                             }
                                         ]
@@ -42,6 +49,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

@@ -1,0 +1,27 @@
+{
+    "name": "Accounting Rule Line List",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "label",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "account",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "section",
+                "width": "20%"
+            }
+        ]
+    }
+}

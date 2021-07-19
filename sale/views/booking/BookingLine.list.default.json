@@ -1,30 +1,35 @@
 {
-    "name": "Booking list",
+    "name": "Booking Followups",
     "layout": {
         "items": [
             {
                 "type": "field",            
-                "value": "name",
-                "width": "5%"
+                "value": "booking_id",
+                "width": "10%"
             },
             {
                 "type": "field",            
-                "value": "customer_id",
-                "width": "15%"
-            },    
-            {
-                "type": "field",            
-                "value": "center_id",
-                "width": "15%"
+                "value": "booking_line_group_id",
+                "width": "10%"
             },
             {
                 "type": "field",            
-                "value": "type_id",
+                "value": "product_id",
                 "width": "15%"
             },
             {
                 "type": "field",            
-                "value": "status",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",            
+                "value": "order",
+                "width": "15%"
+            },
+            {
+                "type": "field",            
+                "value": "price",
                 "width": "15%"
             }
         ]

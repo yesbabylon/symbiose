@@ -1,0 +1,12 @@
+{
+    "name": "Contracts",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "booking_id",
+                "width": "20%"
+            }
+        ]
+    }
+}
