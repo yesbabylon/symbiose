@@ -1,0 +1,22 @@
+{
+    "name": "Discount List",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "rate_min",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "rate_max",
+                "width": "20%"
+            }
+        ]
+    }
+}

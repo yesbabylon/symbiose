@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Discounts",
     "layout": {
         "groups": [
             {
@@ -21,18 +21,18 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
+                                                "value": "rate_min",
+                                                "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
+                                                "value": "rate_max",
+                                                "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "value": "discount_list_id",
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     }
@@ -42,6 +42,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

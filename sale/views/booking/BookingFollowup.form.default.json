@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Booking Followup",
     "layout": {
         "groups": [
             {
@@ -13,26 +13,21 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
+                                                "value": "creator",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "message",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "value": "booking_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -42,6 +37,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

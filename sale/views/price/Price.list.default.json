@@ -1,0 +1,27 @@
+{
+    "name": "Price List",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "type",
+                "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "price",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "description",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

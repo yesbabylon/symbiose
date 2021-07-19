@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "Prices",
     "layout": {
         "groups": [
             {
@@ -13,41 +13,21 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "width": "50%",
+                                                "value": "price",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "center_id",
-                                                "width": "50%"
+                                                "value": "type",
+                                                "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_payer_organisation",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     },
@@ -56,13 +36,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "price_list_id",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "accounting_rule_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

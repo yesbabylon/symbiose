@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Vat Rules",
     "layout": {
         "groups": [
             {
@@ -21,18 +21,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "rate",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "value": "type",
+                                                "width": "100%"                                                
                                             }
                                         ]
                                     }
@@ -42,6 +37,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

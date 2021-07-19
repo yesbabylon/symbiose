@@ -1,0 +1,17 @@
+{
+    "name": "Booking Followups",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "creator",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "message",
+                "width": "30%"
+            }
+        ]
+    }
+}

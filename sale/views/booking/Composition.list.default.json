@@ -1,0 +1,22 @@
+{
+    "name": "Compositions",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "booking_line_group_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

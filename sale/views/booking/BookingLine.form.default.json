@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "Booking Line",
     "layout": {
         "groups": [
             {
@@ -13,41 +13,43 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "center_id",
+                                                "value": "booking_line_group_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
+                                                "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "has_payer_organisation",
+                                                "value": "product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
+                                                "value": "price_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "free_qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -56,13 +58,23 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "payment_mode",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rate",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "price_adapters_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

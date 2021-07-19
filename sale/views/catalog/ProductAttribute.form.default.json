@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Product Attribute",
     "layout": {
         "groups": [
             {
@@ -13,7 +13,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
+                                                "value": "product_id",
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": true
@@ -21,18 +21,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_models_ids",
+                                                "value": "option_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "value": "option_value_id",
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     }
@@ -42,6 +37,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

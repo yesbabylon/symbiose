@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "ProductModel",
     "layout": {
         "groups": [
             {
@@ -13,41 +13,36 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "width": "50%",
+                                                "value": "qty_accounting_method",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "center_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
+                                                "value": "rental_unit_assignement",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
+                                                "value": "rental_unit_category_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "has_payer_organisation",
+                                                "value": "rental_unit_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
+                                                "value": "duration",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "capacity",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -56,13 +51,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "has_duration",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "is_meal",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_accomodation",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -72,6 +72,6 @@
                     }
                 ]
             }
-        ]
+       ]
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Booking",
+    "name": "Composition Item",
     "layout": {
         "groups": [
             {
@@ -13,41 +13,31 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "width": "50%",
+                                                "value": "name",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "center_id",
+                                                "value": "firstname",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
+                                                "value": "lastname",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "has_payer_organisation",
+                                                "value": "gender",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
+                                                "value": "date_of_birth",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -56,13 +46,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
-                                                "width": "100%"
+                                                "value": "email",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
+                                                "value": "phone",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rental_unit_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

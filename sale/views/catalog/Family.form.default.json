@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Family",
     "layout": {
         "groups": [
             {
@@ -21,17 +21,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_models_ids",
+                                                "value": "children_ids",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "parent_id",
                                                 "width": "50%"
                                             }
                                         ]

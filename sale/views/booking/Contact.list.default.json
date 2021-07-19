@@ -1,0 +1,17 @@
+{
+    "name": "Contacts",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "type",
+                "width": "20%"
+            }
+        ]
+    }
+}

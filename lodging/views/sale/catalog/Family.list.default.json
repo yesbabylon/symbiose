@@ -1,0 +1,12 @@
+{
+    "name": "Family",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "centers_ids",
+                "width": "100%"
+            }
+        ]
+    }
+}

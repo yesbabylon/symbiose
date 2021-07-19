@@ -1,0 +1,17 @@
+{
+    "name": "Discount Categories List",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            }, 
+            {
+                "type": "field",            
+                "value": "description",
+                "width": "80%"
+            }
+        ]
+    }
+}

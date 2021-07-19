@@ -1,0 +1,42 @@
+{
+    "name": "Product Models",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "family_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "can_buy",
+                "width": "5%"
+            },
+            {
+                "type": "field",
+                "value": "is_pack",
+                "width": "5%"
+            },
+            {
+                "type": "field",
+                "value": "description_delivery",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "description_receipt",
+                "width": "25%"
+            }
+        ]
+    }
+}

@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Center",
     "layout": {
         "groups": [
             {
@@ -13,25 +13,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_models_ids",
+                                                "value": "manager_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "booking_types_ids",
+                                                "value": "organisation_id",
                                                 "width": "50%"
                                             }
                                         ]
