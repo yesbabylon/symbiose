@@ -17,14 +17,14 @@ class Discount extends Model {
                 'required'          => true
             ],
 
-            'rate_max' => [
-                'type'              => 'float',
-                'description'       => "Maximum possible value of the discount."
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Context the discount is meant to be used."
             ],
 
-            'rate_min' => [
+            'value' => [
                 'type'              => 'float',
-                'description'       => "Guaranteed minimal discount, if any.",
+                'description'       => "Discount value.",
                 'default'           => 0.0
             ],
 
@@ -35,6 +35,22 @@ class Discount extends Model {
                 'required'          => true
             ],
 
+            'type' => [
+                'type'              => 'string',
+                'selection'         => [ 
+                    'amount',           // discount is a fixed value
+                    'percent',          // discount is a rate to be applied
+                    'freebie'           // discount is a count of free products
+                ],
+                'description'       => 'The kind of contact, based on its responsibilities.'
+            ],            
+
+            'conditions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\discount\Condition',
+                'foreign_field'     => 'discount_id',
+                'description'       => 'The conditions that apply to the discount.'
+            ],            
         ];
     }
 

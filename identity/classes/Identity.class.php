@@ -99,7 +99,7 @@ class Identity extends Model {
             /*
                 Relational fields specific to organisations: children organisations and parent company, if any
             */
-            'children_id' => [
+            'children_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',

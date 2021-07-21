@@ -4,10 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\price;
+namespace sale\season;
 use equal\orm\Model;
 
-class PriceListCategory extends Model {
+class SeasonCategory extends Model {
     public static function getColumns() {
         /**
          */
@@ -18,11 +18,11 @@ class PriceListCategory extends Model {
                 'description'       => "Short label to ease identification of the list."
             ],
             
-            'price_list_ids' => [
+            'seasons_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\price\PriceList',
-                'foreign_field'     => 'price_list_category_id',
-                'description'       => "Lists that are related to this category, if any."
+                'foreign_object'    => 'sale\season\Season',
+                'foreign_field'     => 'season_category_id',
+                'description'       => "Seasons that are related to this category, if any."
             ]            
         ];
     }

@@ -4,10 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace realestate;
+namespace sale\autosale;
 use equal\orm\Model;
 
-class Property extends \identity\Establishment {
+class AutosaleCategory extends Model {
 
     public static function getColumns() {
 
@@ -15,10 +15,10 @@ class Property extends \identity\Establishment {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the property.",
-                'required'          => true
-            ]
+                'description'       => "Name of the automatic sale category."
+            ],
 
         ];
-    }    
+    }
+
 }

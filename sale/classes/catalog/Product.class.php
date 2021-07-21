@@ -10,7 +10,7 @@ use equal\orm\Model;
 class Product extends Model {
     public static function getColumns() {
         /**
-         * A Product is a variant of a Product Model. And there is always at least one Product for a given Product Model.
+         * A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.
          * Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).
          * A SKU code identifies a product with all its specific characteristics.
          */
@@ -18,16 +18,22 @@ class Product extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
+                'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
                 'required'          => true
             ],
 
             'sku' => [
                 'type'              => 'string',
-                'description'       => "SKU code (Stock Keeping Unit) used as internal reference. Must be unique.",
+                'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
                 'unique'            => true
             ],
 
+            'ean' => [
+                'type'              => 'string',
+                'usage'             => 'uri/urn:ean',
+                'description'       => "IAN/EAN code for barcode generation."
+            ],
+            
             'description' => [
                 'type'              => 'text',
                 'description'       => "Description of the variant (specifics)."

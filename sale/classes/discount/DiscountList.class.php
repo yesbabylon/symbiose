@@ -14,6 +14,7 @@ class DiscountList extends Model {
         return [
             'name' => [
                 'type'              => 'string',
+                'description'       => "Short memo for the list (ex. discounts 2025).",
                 'required'          => true
             ],
 
@@ -36,8 +37,15 @@ class DiscountList extends Model {
 
             'discount_list_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\discount\Category',
-                'description'       => 'The category the discount list belongs to.',
+                'foreign_object'    => 'sale\discount\DiscountListCategory',
+                'description'       => 'The category the list belongs to.',
+                'required'          => true
+            ],
+
+            'discount_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\discount\DiscountClass',
+                'description'       => 'The discount class the list belongs to.',
                 'required'          => true
             ],
 

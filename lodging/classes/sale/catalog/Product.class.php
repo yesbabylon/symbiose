@@ -4,21 +4,22 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace realestate;
-use equal\orm\Model;
+namespace lodging\sale\catalog;
 
-class Property extends \identity\Establishment {
 
+class Product extends \sale\catalog\Product {
     public static function getColumns() {
 
         return [
 
-            'name' => [
-                'type'              => 'string',
-                'description'       => "Name of the property.",
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'description'       => "Product Model of this variant.",
                 'required'          => true
-            ]
+            ],
 
         ];
-    }    
+    }
+
 }

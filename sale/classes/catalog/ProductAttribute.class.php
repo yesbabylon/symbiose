@@ -15,18 +15,21 @@ class ProductAttribute extends Model {
          */
 
         return [
+
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
             ],
+
             'option_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Option',
                 'description'       => "Product Option this attribute relates to.",
                 'required'          => true
             ],
+            
             'option_value_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\OptionValue',

@@ -56,6 +56,12 @@ class ProductModel extends Model {
                 'default'           => true
             ],
 
+            'cost' => [
+                'type'              => 'boolean',
+                'description'       => 'Buying cost.',
+                'visible'           => ['can_buy', '=', true]
+            ],
+
             'is_pack' => [
                 'type'              => 'boolean',
                 'description'       => "Is this a bundle of other products?",
@@ -64,7 +70,7 @@ class ProductModel extends Model {
 
             'has_own_price' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the pack a bundle of products with their related prices, or a catalog product of its own with specific price?',
+                'description'       => 'Has the bundle its own price, or do we use each product price?',
                 'visible'           => ['is_pack', '=', true]
             ],
 
@@ -100,11 +106,11 @@ class ProductModel extends Model {
 
             'schedule_offset' => [
                 'type'              => 'integer',
-                'description'       => 'Default number of days to set-off the service from the sojourn start date.',
+                'description'       => 'Default number of days to set-off the service from a sojourn start date.',
                 'default'           => 0,
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
-            
+
             'tracking_type' => [
                 'type'              => 'string',
                 'selection'         => ['none', 'batch', 'sku', 'upc'],
@@ -137,7 +143,14 @@ class ProductModel extends Model {
                 'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',
                 'rel_local_key'     => 'productmodel_id'
-            ]
+            ],
+
+            'products_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\Product',
+                'foreign_field'     => 'product_model_id',
+                'description'       => "Product variants that are related to this model.",
+            ],
             
         ];
     }

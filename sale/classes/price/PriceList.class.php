@@ -19,12 +19,12 @@ class PriceList extends Model {
             ],
 
             'date_from' => [
-                'type'              => 'datetime',
+                'type'              => 'date',
                 'description'       => "Sart of validity period."
             ],
 
             'date_to' => [
-                'type'              => 'datetime',
+                'type'              => 'date',
                 'description'       => "End of validity period."
             ],
 

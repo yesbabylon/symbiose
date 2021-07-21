@@ -25,17 +25,42 @@ class Family extends Model {
                 'description'       => "Name of the product family. A family is a group of goods produced under the same brand.",
                 'required'          => true
             ],
+
             'children_ids' => [ 
                 'type'              => 'one2many', 
                 'foreign_object'    => 'sale\catalog\Family', 
                 'foreign_field'     => 'parent_id'
             ],
+
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Product Family which current family belongs to, if any.",
                 'foreign_object'    => 'sale\catalog\Family'
+            ],
+
+            'path' => [
+                'type'              => 'computed',
+                'function'          => 'sale\catalog\Family::getPath',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'Full path of the family with ancestors.'
             ]
+
 
         ];
     }
+
+    public static function getPath($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(__CLASS__, $oids, ['name', 'parent_id']);
+        foreach($res as $oid => $odata) {
+            if($odata['parent_id']) {
+                $result[$oid] = self::getPath($om, (array) $odata['parent_id'], $lang).'/'.$odata['name'];
+            }
+            else {
+                $result[$oid] = $odata['name'];
+            }
+        }
+        return $result;
+    }    
 }

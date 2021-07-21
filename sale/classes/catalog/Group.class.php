@@ -19,6 +19,7 @@ class Group extends Model {
                 'description'       => "Name of the product model group (used for all variants).",
                 'required'          => true
             ],
+
             'product_models_ids' => [ 
                 'type'              => 'many2many', 
                 'foreign_object'    => 'sale\catalog\ProductModel', 
@@ -26,7 +27,14 @@ class Group extends Model {
                 'rel_table'         => 'sale_product_rel_productmodel_group', 
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'group_id'
+            ],
+
+            'family_id' => [
+                'type'              => 'many2one',
+                'description'       => "Product Family which current group belongs to.",
+                'foreign_object'    => 'sale\catalog\Family'
             ]
+
         ];
     }
 }

@@ -18,6 +18,7 @@ class Family extends \sale\catalog\Family {
     }    
 
     public static function getColumns() {
+        
         return [
             'centers_ids' => [ 
                 'type'              => 'many2many', 

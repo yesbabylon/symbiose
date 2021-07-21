@@ -26,16 +26,60 @@ class Center extends \identity\Establishment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'domain'            => ['relationship', '=', 'employee'],
-                'description'       => 'List of employees of the organisation, if any.' 
+                'description'       => 'List of employees of the organisation, if any.'
             ],
 
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'domain'            => ['type', '<>', 'I'],
-                'description'       => 'The parent organisation of the Center.' 
+                'description'       => 'The parent organisation of the Center.'
+            ],
+
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'domain'            => ['type', '<>', 'I'],
+                'description'       => 'The parent organisation of the Center.'
+            ],
+
+            'price_list_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\PriceListCategory',
+                'description'       => "Price list category used by the center.",
+                'required'          => true                
+            ],
+
+            'discount_list_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\discount\DiscountListCategory',
+                'description'       => 'Discount list category used by the center.',
+                'required'          => true
+            ],
+
+            'season_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\season\SeasonCategory',
+                'description'       => "Season category used by the center.",
+                'required'          => true
             ],            
 
+            'categories_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\identity\CenterCategory',
+                'foreign_field'     => 'centers_ids',
+                'rel_table'         => 'lodging_identity_rel_center_category',
+                'rel_foreign_key'   => 'category_id',
+                'rel_local_key'     => 'center_id',
+                'description'       => 'List of categories the center belgons to, if any.'
+            ],
+
+            'rental_units_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\realestate\RentalUnit',
+                'foreign_field'     => 'center_id',
+                'description'       => 'List of rental units of the center.'
+            ],
         ];
     }
 }
