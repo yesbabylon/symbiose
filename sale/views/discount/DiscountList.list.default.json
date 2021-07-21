@@ -19,6 +19,7 @@
             },
             {
                 "type": "field",
+                "label": "Discount",
                 "value": "discounts_ids",
                 "width": "20%"
             }

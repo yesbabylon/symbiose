@@ -3,12 +3,14 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",       
+                "label": "Booking",     
                 "value": "booking_id",
                 "width": "10%"
             },
             {
-                "type": "field",            
+                "type": "field",    
+                "label": "Booking Lines",        
                 "value": "booking_lines_ids",
                 "width": "20%"
             }

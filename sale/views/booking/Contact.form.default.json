@@ -13,6 +13,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "50%"
                                             },

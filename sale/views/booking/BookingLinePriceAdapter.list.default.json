@@ -3,12 +3,14 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",   
+                "label": "Booking",         
                 "value": "booking_id",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",     
+                "label": "Booking Line",       
                 "value": "booking_line_id",
                 "width": "20%"
             },
@@ -23,7 +25,8 @@
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",    
+                "label": "Discount",        
                 "value": "discount_id",
                 "width": "20%"
             }

@@ -9,6 +9,7 @@
             },
             {
                 "type": "field",
+                "label": "Product Model",
                 "value": "product_models_ids",
                 "width": "20%"
             }

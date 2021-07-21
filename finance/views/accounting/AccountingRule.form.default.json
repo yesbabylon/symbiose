@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "accounting_rules_section",
                         "rows": [
                             {
                                 "columns": [
@@ -27,17 +29,27 @@
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"                                                
+                                                "width": "100%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Accounting Rule Lines",
+                        "id": "accounting_rulelines",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "accounting_rule_line_ids",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }

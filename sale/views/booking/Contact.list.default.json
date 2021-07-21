@@ -3,7 +3,8 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",    
+                "label": "Booking",        
                 "value": "booking_id",
                 "width": "20%"
             },

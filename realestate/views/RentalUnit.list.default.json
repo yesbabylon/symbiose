@@ -3,7 +3,8 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",  
+                "label": "Center",      
                 "value": "center_id",
                 "width": "20%"
             }, 

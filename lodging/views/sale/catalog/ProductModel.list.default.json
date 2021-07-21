@@ -4,21 +4,25 @@
         "items": [
             {
                 "type": "field",
+                "label": "Quantity Accounting Method",
                 "value": "qty_accounting_method",
                 "width": "40%"
             },
             {
                 "type": "field",
+                "label": "Duration",
                 "value": "has_duration",
                 "width": "20%"
             },
             {
                 "type": "field",
+                "label": "Meal",
                 "value": "is_meal",
                 "width": "20%"
             },
             {
                 "type": "field",
+                "label": "Accomodation",
                 "value": "is_accomodation",
                 "width": "20%"
             }

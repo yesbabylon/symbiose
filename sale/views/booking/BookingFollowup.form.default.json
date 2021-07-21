@@ -26,6 +26,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "100%"
                                             }

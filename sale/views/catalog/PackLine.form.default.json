@@ -13,21 +13,25 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Parent's Product",
                                                 "value": "parent_product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Child's Product",
                                                 "value": "child_product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Has Quantity",
                                                 "value": "has_own_qty",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Product Quantity",
                                                 "value": "own_qty",
                                                 "width": "50%"
                                             }

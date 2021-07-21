@@ -13,6 +13,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Quantity Accounting Method",
                                                 "value": "qty_accounting_method",
                                                 "width": "100%",
                                                 "widget": {
@@ -26,12 +27,8 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Rental Unit Category",
                                                 "value": "rental_unit_category_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "rental_unit_id",
                                                 "width": "50%"
                                             },
                                             {
@@ -43,6 +40,12 @@
                                                 "type": "field",
                                                 "value": "capacity",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Rental Unit",
+                                                "value": "rental_unit_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -51,18 +54,21 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Duration",
                                                 "value": "has_duration",
-                                                "width": "100%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Meal",
                                                 "value": "is_meal",
-                                                "width": "100%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Accomodation",
                                                 "value": "is_accomodation",
-                                                "width": "100%"
+                                                "width": "30%"
                                             }
                                         ]
                                     }

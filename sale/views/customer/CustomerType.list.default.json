@@ -9,8 +9,13 @@
             }, 
             {
                 "type": "field",            
+                "value": "rate_class_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
                 "value": "description",
-                "width": "80%"
+                "width": "60%"
             }
         ]
     }

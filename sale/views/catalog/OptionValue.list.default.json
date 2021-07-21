@@ -9,6 +9,7 @@
             },
             {
                 "type": "field",
+                "label": "Option",
                 "value": "option_id",
                 "width": "20%"
             },

@@ -14,6 +14,7 @@
             },
             {
                 "type": "field",
+                "label": "Product Model",
                 "value": "product_model_id",
                 "width": "20%"
             },
