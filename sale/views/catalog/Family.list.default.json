@@ -9,12 +9,14 @@
             },
             {
                 "type": "field",
-                "value": "children_ids",
+                "label": "Parent",
+                "value": "parent_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "parent_id",
+                "label": "Children",
+                "value": "children_ids",
                 "width": "20%"
             }
         ]

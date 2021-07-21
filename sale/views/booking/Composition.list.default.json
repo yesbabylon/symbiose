@@ -8,12 +8,14 @@
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",    
+                "label": "Booking",        
                 "value": "booking_id",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",      
+                "label": "Line Booking Group",      
                 "value": "booking_line_group_id",
                 "width": "20%"
             }

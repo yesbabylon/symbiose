@@ -36,16 +36,19 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Price List",
                                                 "value": "price_list_id",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Accounting Rule",
                                                 "value": "accounting_rule_id",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Product",
                                                 "value": "product_id",
                                                 "width": "100%"
                                             }

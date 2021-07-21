@@ -9,12 +9,14 @@
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",   
+                "label": "Partner Identity",         
                 "value": "partner_identity_id",
                 "width": "20%"
             },  
             {
-                "type": "field",            
+                "type": "field",    
+                "label": "Owner Identity",        
                 "value": "owner_identity_id",
                 "width": "20%"
             }, 

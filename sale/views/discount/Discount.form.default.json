@@ -21,16 +21,19 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Minimum Rate",
                                                 "value": "rate_min",
                                                 "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Maximum Rate",
                                                 "value": "rate_max",
                                                 "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Discount List",
                                                 "value": "discount_list_id",
                                                 "width": "50%"                                                
                                             }

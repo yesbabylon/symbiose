@@ -13,21 +13,25 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Booking Line",
                                                 "value": "booking_line_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Manual Discount",
                                                 "value": "is_manual_discount",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "discount",
                                                 "value": "discount_id",
                                                 "width": "50%"
                                             },

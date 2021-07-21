@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General info",
+                        "id": "product_model",
                         "rows": [
                             {
                                 "columns": [
@@ -26,16 +28,19 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Family",
                                                 "value": "family_id",
                                                 "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Buying Accounting Rule",
                                                 "value": "buying_accounting_rule_id",
                                                 "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Selling Accounting Rule",
                                                 "value": "selling_accounting_rule_id",
                                                 "width": "50%"                                                
                                             },
@@ -58,16 +63,6 @@
                                                 "type": "field",
                                                 "value": "has_own_price",
                                                 "width": "50%"                                                
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description_delivery",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description_receipt",
-                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -106,9 +101,49 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "description_delivery",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description_receipt",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Groups",
+                        "id": "groups_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
                                                 "value": "groups_ids",
                                                 "width": "100%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Categories",
+                        "id": "categories_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "categories_ids",

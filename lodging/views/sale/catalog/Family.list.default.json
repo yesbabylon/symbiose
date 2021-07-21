@@ -4,8 +4,9 @@
         "items": [
             {
                 "type": "field",
+                "label": "Centers",
                 "value": "centers_ids",
-                "width": "100%"
+                "width": "20%"
             }
         ]
     }

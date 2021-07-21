@@ -93,6 +93,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Language",
                                                 "value": "lang",
                                                 "width": "50%"
                                             },

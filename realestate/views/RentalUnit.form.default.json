@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "rental_units",
                         "rows": [
                             {
                                 "columns": [
@@ -21,13 +23,20 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Center",
                                                 "value": "center_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Rentable",
                                                 "value": "can_rent",
                                                 "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -36,33 +45,45 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "category",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "capacity",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Children",
                                                 "value": "has_children",
                                                 "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "children_ids",
-                                                "width": "50%"                                                
-                                            },
-                                            {
-                                                "type": "field",
+                                                "label": "Parent",
                                                 "value": "parent_id",
                                                 "width": "50%"                                                
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Children",
+                        "id": "children_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "children_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

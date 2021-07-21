@@ -8,7 +8,8 @@
                 "width": "20%"
             }, 
             {
-                "type": "field",            
+                "type": "field",     
+                "label": "Price List",       
                 "value": "price_list_ids",
                 "width": "20%"
             }

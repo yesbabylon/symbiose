@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General info",
+                        "id": "booking_line",
                         "rows": [
                             {
                                 "columns": [
@@ -13,42 +15,38 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Line Booking Group",
                                                 "value": "booking_line_group_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Product",
                                                 "value": "product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Price",
                                                 "value": "price_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Quanity",
                                                 "value": "qty",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Free Quantity",
                                                 "value": "free_qty",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "order",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price",
                                                 "width": "50%"
                                             }
                                         ]
@@ -63,6 +61,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Paid",
                                                 "value": "is_paid",
                                                 "width": "50%"
                                             },
@@ -71,6 +70,31 @@
                                                 "value": "vat_rate",
                                                 "width": "100%"
                                             },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Price Adapter",
+                        "id": "price_adapter",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "price_adapters_ids",

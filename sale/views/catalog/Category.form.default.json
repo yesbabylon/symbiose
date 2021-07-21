@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "Categories",
+                        "id": "categories_id",
                         "rows": [
                             {
                                 "columns": [
@@ -23,16 +25,46 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Product Models",
+                        "id": "product_models",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "product_models_ids",
-                                                "width": "50%"
-                                            },
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Booking Types",
+                        "id": "booking_types",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "booking_types_ids",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }

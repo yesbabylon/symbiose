@@ -5,6 +5,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "family_section",
                         "rows": [
                             {
                                 "columns": [
@@ -21,13 +23,29 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "children_ids",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
+                                                "label": "Parent",
                                                 "value": "parent_id",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Children",
+                        "id": "children_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "children_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

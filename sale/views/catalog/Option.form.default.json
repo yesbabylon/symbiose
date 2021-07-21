@@ -26,6 +26,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Family",
                                                 "value": "family_id",
                                                 "width": "50%"
                                             }

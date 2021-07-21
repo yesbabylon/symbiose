@@ -21,11 +21,13 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Line Booking Groupe",
                                                 "value": "booking_line_group_id",
                                                 "width": "50%"
                                             }

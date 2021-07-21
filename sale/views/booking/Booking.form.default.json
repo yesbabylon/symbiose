@@ -15,6 +15,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "50%",
                                                 "widget": {
@@ -23,6 +24,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Center",
                                                 "value": "center_id",
                                                 "width": "50%"
                                             },
@@ -33,6 +35,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Type",
                                                 "value": "type_id",
                                                 "width": "100%"
                                             },
@@ -43,6 +46,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Organisation of Payer",
                                                 "value": "has_payer_organisation",
                                                 "width": "50%"
                                             },
