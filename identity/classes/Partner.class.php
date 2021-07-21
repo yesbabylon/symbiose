@@ -48,20 +48,26 @@ class Partner extends Model {
                 'visible'           => [ ['relationship', '=', 'contact'] ]
             ],
 
-            // if partner is a customer, it can be assigned to a rate class
-            'customer_rate_class_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => 'Rate class that applies to the customer.',
-                'visible'           => [ ['relationship', '=', 'customer'] ]
-            ],
-
             'relationship' => [
                 'type'              => 'string',
                 'selection'         => [ 'contact', 'employee', 'customer', 'provider', 'payer', 'other' ],
                 'description'       => 'The kind of partnership that exists between the identities.' 
             ],
 
+            // if partner is a customer, it can be assigned to a rate class
+            'customer_rate_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => 'Rate class that applies to the customer.',
+                'visible'           => ['relationship', '=', 'customer']
+            ],
+
+            'customer_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\CustomerType',
+                'description'       => 'Type of customer (map with rate classes).',
+                'visible'           => ['relationship', '=', 'customer']
+            ],            
         ];
     }
 

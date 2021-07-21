@@ -30,7 +30,7 @@ class Address extends Model {
                 'function'          => 'identity\Address::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
-                'description'       => 'The display name of the adress.'
+                'description'       => 'The display name of the address.'
             ],
 
             'identity_name' => [

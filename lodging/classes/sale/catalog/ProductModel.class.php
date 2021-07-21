@@ -79,11 +79,12 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'unit'] ]
             ],
 
-/*
-// #todo            
-            'stat_rule_id' => [
-            ]
-*/
+            'products_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\catalog\Product',
+                'foreign_field'     => 'product_model_id',
+                'description'       => "Product variants that are related to this model.",
+            ],
 
         ];
     }

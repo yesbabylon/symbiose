@@ -24,35 +24,38 @@ class AccountingRuleLine extends Model {
                 'type'              => 'alias',
                 'alias'             => 'label'
             ],
+
             'label' => [
                 'type'              => 'string',
                 'description'       => "Code of the line to serve as memo.",
                 'required'          => true                
             ],
+
             'account' => [
                 'type'              => 'string',
                 'description'       => "Code of the related account.",
                 'required'          => true
             ],
+
             'section' => [
                 'type'              => 'string',
                 'description'       => "Code of the related analytical accounting section."
             ],
+            
             'share' => [
                 'type'              => 'float',
-                'usage'             => 'amount/percentage',
-                'description'       => "Share of the line, in percent (sum of lines must be 100%)."
+                'usage'             => 'amount/percent',
+                'description'       => "Share of the line, in percent (lines sum must be 100%).",
+                'default'           => 1.0
             ],
+
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
                 'description'       => "Accounting rule this line is related to."
             ],
-            'vat_rule_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'finance\tax\VatRule',
-                'description'       => "VAT rule this line is related to."
-            ]
+
+
 
         ];
     }

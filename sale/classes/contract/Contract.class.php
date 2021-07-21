@@ -47,7 +47,14 @@ class Contract extends Model {
                 'type'              => 'date', 
                 'description'       => 'Date after which the contract lapses if it has not been approved.',
                 'visible'           => [ 'status', 'in', ['pending', 'sent'] ]
-            ]
+            ],
+
+            'customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Partner',
+                'domain'            => ['relationship', '=', 'customer'],                
+                'description'       => 'The customer the contract relates to.',
+            ],
 
 
         ];

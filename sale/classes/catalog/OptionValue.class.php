@@ -17,10 +17,12 @@ class OptionValue extends Model {
                 'type'              => 'string',
                 'description'       => "The possible value for the related option."
             ],
+            
             'description' => [
                 'type'              => 'string',
                 'description'       => "Short description of the value."
             ],
+
             'option_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Option',

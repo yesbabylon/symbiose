@@ -25,22 +25,31 @@ class AccountingRule extends Model {
                 'description'       => "Name of the accounting rule.",
                 'required'          => true
             ],
+
             'description' => [
                 'type'              => 'string',
                 'description'       => "Short description of the rule to serve as memo."
             ],
+
             'type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",
                 'selection'         => ['purchase', 'sale'],
                 'required'          => true
             ],
+
             'accounting_rule_line_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\AccountingRuleLine',
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Lines that are related to this rule."
-            ]
+            ],
+
+            'vat_rule_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\tax\VatRule',
+                'description'       => "VAT rule this line is related to."
+            ]            
         ];
     }
 

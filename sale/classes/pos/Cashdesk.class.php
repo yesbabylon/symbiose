@@ -4,21 +4,21 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace realestate;
+namespace sale\pos;
 use equal\orm\Model;
 
-class Property extends \identity\Establishment {
+class Cashdesk extends Model {
 
     public static function getColumns() {
 
         return [
-
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the property.",
+                'description'       => "Short mnemo to identify the desk.",
                 'required'          => true
-            ]
+            ],
 
         ];
-    }    
+    }
+
 }

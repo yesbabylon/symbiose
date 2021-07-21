@@ -7,10 +7,10 @@
 namespace sale\discount;
 use equal\orm\Model;
 
-class Category extends Model {
+class DiscountListCategory extends Model {
 
     public static function getName() {
-        return "Discount category";
+        return "Discount lsit category";
     }
 
     public static function getDescription() {
@@ -32,7 +32,15 @@ class Category extends Model {
             'description' => [
                 'type'              => 'string',
                 'description'       => "Reason of the booking."
-            ]
+            ],
+
+            'discount_lists_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\discount\DiscountList',
+                'foreign_field'     => 'discount_list_category_id',
+                'description'       => 'The discount lists that are assigned to the category.'
+            ],
+
 
         ];
     }

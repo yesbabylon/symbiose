@@ -4,21 +4,22 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace realestate;
-use equal\orm\Model;
+namespace sale\booking;
 
-class Property extends \identity\Establishment {
+class Funding extends \sale\pay\Funding {
 
     public static function getColumns() {
 
         return [
 
-            'name' => [
-                'type'              => 'string',
-                'description'       => "Name of the property.",
+            'booking_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Booking',
+                'description'       => 'Booking the contract relates to.',
                 'required'          => true
             ]
 
         ];
-    }    
+    }
+
 }

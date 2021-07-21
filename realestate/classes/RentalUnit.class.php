@@ -21,12 +21,6 @@ class RentalUnit extends Model {
                 'required'          => true
             ],
 
-            'center_id' => [
-                'type'              => 'many2one',
-                'description'       => "Center which current unit belongs to, if any.",
-                'foreign_object'    => 'lodging\identity\Center'
-            ],
-
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['building', 'bedroom', 'bed', 'meetingroom', 'room'],
@@ -60,7 +54,8 @@ class RentalUnit extends Model {
                 'type'              => 'one2many', 
                 'description'       => "The list of rental units the current unit can be divided into, if any (i.e. a dorm might be rent as individual beds).",
                 'foreign_object'    => 'realestate\RentalUnit', 
-                'foreign_field'     => 'parent_id'
+                'foreign_field'     => 'parent_id',
+                'visible'           => ['has_children', '=', true]
             ],
             
             'parent_id' => [

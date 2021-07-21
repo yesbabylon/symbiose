@@ -4,30 +4,42 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\customer;
+namespace sale\discount;
 use equal\orm\Model;
 
-class CustomerType extends Model {
+class Condition extends Model {
 
     public static function getColumns() {
+
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Mnemonic of the customer type.",
                 'required'          => true
             ],
 
-            'description' => [
+            'operand' => [
                 'type'              => 'string',
-                'description'       => "Short description of the customer type."
-            ],
-            
-            'rate_class_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => "The rate class that applies to this type of customer.",
                 'required'          => true
             ],
+
+            'operator' => [
+                'type'              => 'string',
+                'required'          => true
+            ],
+
+            'value' => [
+                'type'              => 'string',
+                'required'          => true
+            ],
+
+            'discount_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\discount\Discount',
+                'description'       => 'The discount list the discount belongs to.',
+                'required'          => true
+            ],
+
+
         ];
     }
 
