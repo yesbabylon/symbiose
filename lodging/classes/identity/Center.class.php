@@ -64,6 +64,13 @@ class Center extends \identity\Establishment {
                 'required'          => true
             ],            
 
+            'template_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'communication\TemplateCategory',
+                'description'       => "Template category used by the center.",
+                'required'          => true
+            ],            
+
             'categories_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'lodging\identity\CenterCategory',
@@ -80,6 +87,15 @@ class Center extends \identity\Establishment {
                 'foreign_field'     => 'center_id',
                 'description'       => 'List of rental units of the center.'
             ],
+
+            'product_families_ids' => [ 
+                'type'              => 'many2many', 
+                'foreign_object'    => 'lodging\sale\catalog\Family', 
+                'foreign_field'     => 'centers_ids', 
+                'rel_table'         => 'sale_product_family_rel_identity_center', 
+                'rel_foreign_key'   => 'family_id',
+                'rel_local_key'     => 'center_id'
+            ]            
         ];
     }
 }

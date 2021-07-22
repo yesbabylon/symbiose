@@ -57,7 +57,7 @@ class CompositionItem extends Model {
                 'description'       => "Phone number of the contact, if any."
             ],
 
-             'rental_unit_id' => [
+            'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the person is assigned to.",

@@ -25,6 +25,11 @@ class Contact extends \identity\Identity {
     public static function getColumns() {
 
         return [
+            'creator' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => 'User who created the entry.',
+            ],
 
             'booking_id' => [
                 'type'              => 'many2one',

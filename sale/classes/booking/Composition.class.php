@@ -12,7 +12,11 @@ class Composition extends Model {
     public static function getName() {
         return 'Composition';
     }
-    
+
+    public static function getDescription() {
+        return "A Composition is an exhaustive list of persons that participate to a sojourn related to a Booking.";
+    }
+        
     public static function getColumns() {
         return [
             'name' => [

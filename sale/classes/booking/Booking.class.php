@@ -12,10 +12,16 @@ class Booking extends Model {
 
     public static function getColumns() {
         return [
+            'creator' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => 'User who created the entry.',
+            ],
+
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\booking\Booking::getDisplayName',
-                'result_type'       => 'string'
+                'result_type'       => 'string',
+                'function'          => 'sale\booking\Booking::getDisplayName'
             ],
             
             'description' => [
@@ -38,6 +44,14 @@ class Booking extends Model {
                 'required'          => true
             ],
 
+            'price_total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money',
+                'function'          => 'sale\booking\Booking::getPriceTotal',
+                'description'       => 'Total price (vat incl.) of the booking.'
+            ],
+
 // #todo            
             // origin ID (OTA)
 
@@ -49,24 +63,22 @@ class Booking extends Model {
                 'description'       => 'List of contacts related to the booking, if any.' 
             ],
 
-            // contracts_id
+            'has_contract' => [
+                'type'              => 'boolean',
+                'description'       => "Has a contract been generated yet? Flag is reset in case of changes before the sojourn.",
+                'default'           => false
+            ],
+
             'contracts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contract',
                 'foreign_field'     => 'booking_id',                
                 'description'       => 'List of contacts related to the booking, if any.' 
             ],
-
-
-            'has_contract' => [
-                'type'              => 'boolean',
-                'description'       => "Flag to know if a contract has been generated. Reset in case of changes before the sojourn.",
-                'default'           => false
-            ],
-                        
+            
             'type_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\Type',
+                'foreign_object'    => 'sale\booking\BookingType',
                 'description'       => "The customer to whom the booking relates to.",
                 'required'          => true
             ],
@@ -80,12 +92,16 @@ class Booking extends Model {
 
 // #todo : make those fields computed (based on dates from booking line groups)
             'date_from' => [
-                'type'              => 'datetime',
-            ],
-            'date_to' => [
-                'type'              => 'datetime',
+                'type'              => 'computed',
+                'result_type'       => 'datetime',
+                'function'          => 'sale\booking\Booking::getDateFrom'
             ],
 
+            'date_to' => [
+                'type'              => 'computed',
+                'result_type'       => 'datetime',
+                'function'          => 'sale\booking\Booking::getDateTo'
+            ],
 
             'has_payer_organisation' => [
                 'type'              => 'boolean',
@@ -98,9 +114,8 @@ class Booking extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'visible'           => [ 'has_payer_organisation', '=', true ],
                 'domain'            => [ ['owner_identity_id', '=', 'object.customer_id'], ['relationship', '=', 'payer'] ],                
-                'description'       => "The partner to whom the invoices have to be sent."
+                'description'       => "The partner whom the invoices have to be sent to."
             ],
-
             
         ];
     }
@@ -112,6 +127,19 @@ class Booking extends Model {
             $result[$oid] = date("Y-m-d", $odata['created'])." - {$odata['customer_id.name']}";
         }
         return $result;              
-    }       
+    }
+
+    // #todo
+    public static function getDateFrom($om, $oids, $lang) {
+
+    }
+
+    public static function getDateTo($om, $oids, $lang) {
+
+    }
+    
+    public static function getPriceTotal($om, $oids, $lang) {
+
+    }
 
 }
