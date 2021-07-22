@@ -14,9 +14,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Name of Partner",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Identity of Partner",
                                                 "value": "partner_identity_id",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }

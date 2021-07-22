@@ -13,6 +13,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Quantity Accounting Method",
                                                 "value": "qty_accounting_method",
                                                 "width": "100%",

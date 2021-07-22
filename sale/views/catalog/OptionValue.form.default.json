@@ -13,8 +13,17 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "value",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }

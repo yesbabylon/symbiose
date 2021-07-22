@@ -13,6 +13,21 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Status",
+                                                "value": "status",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "50%",

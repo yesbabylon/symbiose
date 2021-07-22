@@ -4,6 +4,12 @@
         "items": [
             {
                 "type": "field",
+                "label": "Name",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "label": "Parent's Product",
                 "value": "parent_product_id",
                 "width": "20%"
@@ -24,7 +30,7 @@
                 "type": "field",
                 "label": "Product Quantity",
                 "value": "own_qty",
-                "width": "60%"
+                "width": "20%"
             }
         ]
     }
