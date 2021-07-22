@@ -1,0 +1,24 @@
+{
+    "name": "Center Categories",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Centers",
+                "value": "centers_ids",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Rental Units",
+                "value": "rental_units_ids",
+                "width": "20%"
+            }
+        ]
+    }
+}

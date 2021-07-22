@@ -1,0 +1,30 @@
+{
+    "name": "Operation Lines",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Operation",
+                "value": "operation_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Product",
+                "value": "product_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Booking Line",
+                "value": "booking_line_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

@@ -1,12 +1,12 @@
 {
-    "name": "Booking",
+    "name": "Payment",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "booking_info",
+                        "label": "General Info",
+                        "id": "payment_section",
                         "rows": [
                             {
                                 "columns": [
@@ -15,54 +15,57 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Center",
-                                                "value": "center_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "amount",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "communication",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receipt_date",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_method",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_origin",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Statement Line",
+                                                "value": "statement_line_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Operation",
+                                                "value": "operation_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Voucher Reference",
+                                                "value": "voucher_ref",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Type",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Organisation of Payer",
-                                                "value": "has_payer_organisation",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
                                             }
                                         ]
                                     }
@@ -71,8 +74,8 @@
                         ]
                     },
                     {
-                        "label": "Contacts",
-                        "id": "booking_contacts",
+                        "label": "Fundings",
+                        "id": "fundings_section",
                         "rows": [
                             {
                                 "columns": [
@@ -81,28 +84,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "fundings_ids",
                                                 "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Contracts",
-                        "id": "booking_contracts",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
                                             }
                                         ]
                                     }

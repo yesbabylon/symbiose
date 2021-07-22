@@ -1,0 +1,22 @@
+{
+    "name": "Bank Statements",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "reference_name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            }
+        ]
+    }
+}

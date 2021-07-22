@@ -1,0 +1,32 @@
+{
+    "name": "Payment Deadlines",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "amount_share",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "delay_from_event",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "delay_count",
+                "width": "20%"
+            }
+        ]
+    }
+}

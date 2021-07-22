@@ -1,12 +1,12 @@
 {
-    "name": "Booking",
+    "name": "Operation",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "booking_info",
+                        "label": "General Info",
+                        "id": "operation_section",
                         "rows": [
                             {
                                 "columns": [
@@ -15,7 +15,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
@@ -24,45 +23,40 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Center",
-                                                "value": "center_id",
+                                                "label": "User",
+                                                "value": "user_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Cashdesk",
+                                                "value": "cashdesk_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "total",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Type",
-                                                "value": "type_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
+                                                "value": "amount_paid",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Organisation of Payer",
-                                                "value": "has_payer_organisation",
+                                                "value": "amount_returned",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "payer_organisation_id",
-                                                "width": "100%"                                                
                                             }
                                         ]
                                     }
@@ -71,8 +65,8 @@
                         ]
                     },
                     {
-                        "label": "Contacts",
-                        "id": "booking_contacts",
+                        "label": "Payments",
+                        "id": "payments_section",
                         "rows": [
                             {
                                 "columns": [
@@ -81,28 +75,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contacts_ids",
+                                                "value": "payments_ids",
                                                 "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Contracts",
-                        "id": "booking_contracts",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"                                                
                                             }
                                         ]
                                     }

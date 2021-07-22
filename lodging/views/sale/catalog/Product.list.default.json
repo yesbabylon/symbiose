@@ -1,0 +1,18 @@
+{
+    "name": "Product",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Product Model",
+                "value": "product_model_id",
+                "width": "20%"
+            }
+        ]
+    }
+}
