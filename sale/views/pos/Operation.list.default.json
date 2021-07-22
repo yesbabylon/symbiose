@@ -1,0 +1,28 @@
+{
+    "name": "Operations",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "User",
+                "value": "user_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

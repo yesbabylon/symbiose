@@ -1,0 +1,27 @@
+{
+    "name": "Conditions",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "operand",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "operator",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "20%"
+            }
+        ]
+    }
+}

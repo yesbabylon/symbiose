@@ -1,0 +1,17 @@
+{
+    "name": "Season Year",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "year",
+                "width": "20%"
+            }
+        ]
+    }
+}

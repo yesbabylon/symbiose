@@ -1,0 +1,40 @@
+{
+    "name": "Consumption",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Product",
+                "value": "product_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Rental Unit",
+                "value": "rental_unit_id",
+                "width": "10%"
+            }
+        ]
+    }
+}

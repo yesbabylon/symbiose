@@ -1,0 +1,28 @@
+{
+    "name": "Fundings",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Amount Due",
+                "value": "due_amount",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "due_date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "10%"
+            }
+        ]
+    }
+}

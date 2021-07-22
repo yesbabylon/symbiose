@@ -1,0 +1,28 @@
+{
+    "name": "Payments",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "receipt_date",
+                "width": "50%"
+            },
+            {
+                "type": "field",
+                "value": "payment_method",
+                "width": "50%"
+            }
+        ]
+    }
+}
