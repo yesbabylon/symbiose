@@ -7,7 +7,7 @@
 namespace sale\booking;
 use equal\orm\Model;
 
-class Type extends Model {
+class BookingType extends Model {
 
     public static function getName() {
         return "Booking type";

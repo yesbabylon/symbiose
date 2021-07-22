@@ -50,7 +50,7 @@ class BookingLine extends Model {
             ],
 
             'qty' => [
-                'type'              => 'integer',
+                'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
                 'required'          => true
             ],
@@ -98,7 +98,7 @@ class BookingLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'VAT rate that applies to this line.',
-                'function'          => 'sale\booking\BookingLine::getVat',
+                'function'          => 'sale\booking\BookingLine::getVatRate',
             ]            
         ];
     }
@@ -126,7 +126,7 @@ class BookingLine extends Model {
         return $result;
     }
 
-    public static function getVat($om, $oids, $lang) {
+    public static function getVatRate($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule.rate']);
         foreach($lines as $oid => $odata) {
@@ -139,7 +139,7 @@ class BookingLine extends Model {
         return [
             'qty' =>  [
                 'lte_zero' => [
-                    'message'       => 'Quantity must be a positive integer.',
+                    'message'       => 'Quantity must be a positive value.',
                     'function'      => function ($qty, $values) {
                         return ($qty <= 0);
                     }    

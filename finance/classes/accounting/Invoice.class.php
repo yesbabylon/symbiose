@@ -24,29 +24,35 @@ class Invoice extends Model {
                 'type'              => 'alias',
                 'alias'             => "number"
             ],
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => ['proforma', 'invoice'],
-            ],            
+            ],
+
             'number' => [
-                'type'              => 'string',
-                'function'          => 'identity\Partner::getDisplayName',
+                'type'              => 'computed',
+                'function'          => 'finance\accounting\Invoice::getNumber',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
             ],
+
             'is_paid' => [
                 'type'              => 'boolean',
                 'default'           => false,
                 'description'       => "Flag to mark the invoice as fully paid.",
             ],
+
             'date' => [
-                'type'              => 'datetime'
+                'type'              => 'datetime',
+                'description'       => 'Creation date of the invoice.'
             ],
+
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'description'       => "Organisation which has to pay for the goods or services related to the sale."
+                'description'       => "Organisation which has to pay for the goods and services related to the sale."
             ]
         ];
     }

@@ -19,7 +19,66 @@ class BookingLineGroup extends Model {
 
     public static function getColumns() {
         return [
+            'name' => [
+                'type'              => 'string',
+                'description'       => 'Mnemo for the group.'
+            ],
 
+            'order' => [
+                'type'              => 'integer',
+                'description'       => 'Order of the group in the list.',
+                'default'           => 1
+            ],
+
+            'has_pack' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group relates to a pack?',
+                'default'           => false
+            ],
+
+            'pack_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\Product',
+                'description'       => 'Pack (product) the group relates to, if any.',
+                'visible'           => ['has_pack', '=', true]
+            ],
+
+            'is_locked' => [
+                'type'              => 'boolean',
+                'description'       => 'Are modifications disabled for the group?',
+                'default'           => false
+            ],            
+
+            'date_from' => [
+                'type'              => 'datetime',
+                'description'       => "Time of arrival."
+            ],
+
+            'date_to' => [
+                'type'              => 'datetime',
+                'description'       => "Time of departure."
+            ],
+
+            'sojourn_type' => [
+                'type'              => 'string',
+                'selection'         => ['GA', 'GG'],
+                'default'           => 'GG',
+                'description'       => 'The kind of sojourn the group is about.',
+            ],
+
+            'nb_pers' => [
+                'type'              => 'integer',
+                'description'       => 'Amount of persons this group is about.',
+                'default'           => 1
+            ],
+
+            /* a booking can be split into several groups on which distinct rate classes apply */
+            'rate_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => "The rate class that applies to the group.",
+                'required'          => true
+            ],
 
             'booking_lines_ids' => [
                 'type'              => 'one2many',
@@ -34,6 +93,10 @@ class BookingLineGroup extends Model {
                 'description'       => 'Booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true
             ]
+
+
+
+
 
 
         ];
