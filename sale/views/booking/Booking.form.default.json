@@ -15,6 +15,15 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "50%",

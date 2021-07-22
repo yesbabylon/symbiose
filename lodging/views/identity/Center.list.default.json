@@ -4,14 +4,14 @@
         "items": [
             {
                 "type": "field",
-                "label": "Manager",
-                "value": "manager_id",
+                "label": "Manager Name",
+                "value": "name",
                 "width": "15%"
             },
             {
                 "type": "field",
-                "label": "Organization",
-                "value": "organisation_id",
+                "label": "Organization Name",
+                "value": "organisation_name",
                 "width": "15%"
             }
         ]
