@@ -1,0 +1,19 @@
+{
+	"name": "Propriété",
+	"plural": "Propriétés",
+	"description": "Les propriétés qui existent.",
+	"model": {
+		"name":{"label":"Nom de la propriété."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

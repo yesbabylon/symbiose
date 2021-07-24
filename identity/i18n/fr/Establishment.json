@@ -1,0 +1,29 @@
+{
+	"name": "Unité d'établissement",
+	"plural": "Unités d'établissement",
+	"description": "Une entreprise ou une autre organisation, ou le lieu où une organisation exerce ses activités.",
+	"model": {
+		"name":{"label":"Nom de l'établissement."},
+		"organisation_id":{"label":"L'organisation à laquelle appartient l'établissement."},
+        "phone":{"label":"Numéro de téléphone de contact officiel."},
+        "email":{"label":"Adresse e-mail de contact officielle."},
+        "address_street":{"label":"Rue et numéro de l'adresse d'établissement."},
+        "address_dispatch":{"label":"Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."},
+        "address_city":{"label":"Ville dans laquelle se situe l'établissement."},
+        "address_zip":{"label":"Code postal de l'adresse d'établissement."},
+        "address_state":{"label":"État ou région."},
+        "address_country":{"label":"Pays dans lequel se situe l'établissement."},
+        "registration_number":{"label":"Establishment registration number (establishment unit number), if any."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+	
+	}
+}
