@@ -1,0 +1,24 @@
+{
+	"name": "Facture",
+	"plural": "Factures",
+	"description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
+	"model": {
+		"name":{"label":"Nom de la facture."},
+		"status":{"label":"Choix de facture."},
+		"number":{"label":"Numéro de la facture, selon la logique d'organisation."},
+        "is_paid":{"label":"Indicateur pour marquer la facture comme entièrement payée."},
+        "date":{"label":"Date de création de la facture."},
+        "partner_id":{"label":"Organisation qui doit payer les biens et services liés à la vente."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+	
+	}
+}

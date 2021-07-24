@@ -1,0 +1,29 @@
+{
+	"name": "Addresse",
+	"plural": "Addresses",
+	"description": "Une adresse est un emplacement physique auquel une identité peut être contactée.",
+	"model": {
+		"name":{"label":"Nom de l'utilisateur."},
+		"display_name":{"label":"Le nom d'affichage de l'adresse."},
+        "identity_name":{"label":"Nom d'affichage de l'identité associée."},
+        "identity_id":{"label":"L'identité à laquelle l'adresse se rapporte."},
+        "role":{"label":"L'objectif principal pour lequel l'adresse doit être préférée."},
+        "address_street":{"label":"Rue et numéro."},
+        "address_dispatch":{"label":"Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."},
+        "address_city":{"label":"Ville."},
+        "address_zip":{"label":"Code Postal."},
+        "address_state":{"label":"État ou région."},
+        "address_country":{"label":"Pays."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+	
+	}
+}
