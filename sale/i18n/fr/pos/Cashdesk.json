@@ -3,7 +3,7 @@
 	"plural": "Caisses",
 	"description": "",
 	"model": {
-		"name":{"label":"Mnémo court pour identifier le bureau."}
+		"name":{"label":"Nom du caissier"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

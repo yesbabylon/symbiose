@@ -1,0 +1,23 @@
+{
+	"name": "Liste de catégorie de vente automatique",
+	"plural": "Listes de catégories de vente automatique",
+	"description": "",
+	"model": {
+		"name":{"label":"Identification"},
+        "date_from":{"label":"Dater de"},
+        "date_to":{"label":"Dater à"},
+        "autosale_lines_ids":{"label":"Lignes de vente automatique"},
+        "autosale_category_id":{"label":"Catégorie de vente automatique"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

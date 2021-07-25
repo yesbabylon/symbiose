@@ -1,0 +1,33 @@
+{
+	"name": "Réservation",
+	"plural": "Réservations",
+	"description": "",
+	"model": {
+		"name":{"label":"Nom de la personne"},
+        "creator":{"label":"Créateur"},
+        "description":{"label":"Description"},
+        "customer_id":{"label":"Client"},
+        "center_id":{"label":"Centre"},
+        "price_total":{"label":"Prix total"},
+        "contacts_ids":{"label":"Contacts"},
+        "has_contract":{"label":"A un contrat"},
+        "contracts_ids":{"label":"Contrats"},
+        "type_id":{"label":"Type"},
+        "status":{"label":"Statut"},
+        "date_from":{"label":"Date de"},
+        "date_to":{"label":"Date à"},
+        "has_payer_organisation":{"label":"A un organisme payeur"},
+        "payer_organisation_id":{"label":"Organisme payeur"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

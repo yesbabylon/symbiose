@@ -3,15 +3,15 @@
 	"plural": "Centres",
 	"description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
 	"model": {
-		"manager_id":{"label":"Liste des employés de l'organisation, le cas échéant."},
-        "organisation_id":{"label":"L'organisation mère du Centre."},
-        "price_list_category_id":{"label":"Catégorie de liste de prix utilisée par le centre."},
-        "discount_list_category_id":{"label":"Catégorie de liste de remise utilisée par le centre."},
-        "season_category_id":{"label":"Catégorie de saison utilisée par le centre."},
-        "template_category_id":{"label":"Catégorie de modèle utilisée par le centre."},
-        "categories_ids":{"label":"Liste des catégories auxquelles appartient le centre, le cas échéant."},
-        "rental_units_ids":{"label":"Liste des unités locatives du centre."},
-        "product_families_ids":{"label":"Liste des produits pour les familles du centre."}
+		"manager_id":{"label":"Directeur"},
+        "organisation_id":{"label":"Organisation"},
+        "price_list_category_id":{"label":"Catégorie de liste de prix"},
+        "discount_list_category_id":{"label":"Catégorie de liste de remise"},
+        "season_category_id":{"label":"Catégorie de saison"},
+        "template_category_id":{"label":"Catégorie de modèle"},
+        "categories_ids":{"label":"Catégories"},
+        "rental_units_ids":{"label":"Unités locatives"},
+        "product_families_ids":{"label":"Produits pour les familles du centre."}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

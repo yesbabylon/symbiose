@@ -3,14 +3,14 @@
 	"plural": "Line de factures",
 	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
-		"invoice_line_group_id":{"label":"Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur facture)."},
-		"invoice_id":{"label":"Facture à laquelle la ligne est liée."},
-		"product_id":{"label":"Le produit (SKU) auquel la ligne se rapporte."},
-        "price":{"label":"Prix ​​du produit lié à la ligne."},
-        "vat_rate":{"label":"Taux de TVA à appliquer."},
-        "qty":{"label":"Quantité de produit."},
-        "free_qty":{"label":"Quantité gratuite."},
-        "discount":{"label":"Montant total de la remise à appliquer, le cas échéant."}
+		"invoice_line_group_id":{"label":"Groupe de lignes de facture"},
+		"invoice_id":{"label":"Facture"},
+		"product_id":{"label":"Produit"},
+        "price":{"label":"Prix"},
+        "vat_rate":{"label":"Taux de TVA"},
+        "qty":{"label":"Quantité"},
+        "free_qty":{"label":"Quantité gratuite"},
+        "discount":{"label":"Remise"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

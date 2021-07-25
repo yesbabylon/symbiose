@@ -1,0 +1,24 @@
+{
+	"name": "Liste de remise",
+	"plural": "Listes de remise",
+	"description": "",
+	"model": {
+		"name":{"label":"Identification"},
+        "valid_from":{"label":"Valide à partir de"},
+        "valid_until":{"label":"Valable jusque"},
+        "discounts_ids":{"label":"Remises"},
+        "discount_list_category_id":{"label":"Catégorie de liste de remise"},
+        "discount_class_id":{"label":"Classe de remise"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

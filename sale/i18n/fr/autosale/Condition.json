@@ -1,0 +1,23 @@
+{
+	"name": "Condition",
+	"plural": "Conditions",
+	"description": "",
+	"model": {
+		"name":{"label":"Identification"},
+        "operand":{"label":"Opérande"},
+        "operator":{"label":"Opérateur"},
+        "value":{"label":"Valeur"},
+        "autosale_line_id":{"label":"Ligne de vente automatique"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

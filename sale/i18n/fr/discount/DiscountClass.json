@@ -1,0 +1,24 @@
+{
+	"name": "Classe de remise",
+	"plural": "Classes de remise",
+	"description": "",
+	"model": {
+		"name":{"label":"Identification"},
+        "description":{"label":"Description"},
+        "rate_min":{"label":"Taux min"},
+        "rate_max":{"label":"Taux max"},
+        "rate_class_id":{"label":"Classe tarifaire"},
+        "discount_lists_ids":{"label":"Liste de remise"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

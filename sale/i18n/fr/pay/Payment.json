@@ -1,0 +1,28 @@
+{
+	"name": "Paiement",
+	"plural": "Paiements",
+	"description": "",
+	"model": {
+        "customer_id":{"label":"Client"},
+        "amount":{"label":"montant"},
+        "communication":{"label":"Communication"},
+        "receipt_date":{"label":"Date de réception"},
+        "payment_method":{"label":"Mode de paiement"},
+        "payment_origin":{"label":"Origine de paiment"},
+        "operation_id":{"label":"Operation"},
+        "statement_line_id":{"label":"Ligne de déclaration"},
+        "voucher_ref":{"label":"Référence du bon"},
+        "fundings_ids":{"label":"Financements"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

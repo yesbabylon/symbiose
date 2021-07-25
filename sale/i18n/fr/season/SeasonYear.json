@@ -3,8 +3,8 @@
 	"plural": "Les années de saison",
 	"description": "Les catégories de saison de l'année.",
 	"model": {
-		"name":{"label":"Etiquette courte pour faciliter l'identification de la liste."},
-        "year":{"label":"Année à laquelle s'applique la saison."}
+		"name":{"label":"Identification"},
+        "year":{"label":"Année"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

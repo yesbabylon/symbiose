@@ -1,0 +1,30 @@
+{
+	"name": "Groupe de lignes de réservation",
+	"plural": "Groupes de lignes de réservation",
+	"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
+	"model": {
+		"name":{"label":"Nom du groupe"},
+        "order":{"label":"ordre"},
+        "has_pack":{"label":"A pack"},
+        "pack_id":{"label":"Pack"},
+        "is_locked":{"label":"Est verrouillé"},
+        "date_from":{"label":"Date de"},
+        "date_to":{"label":"Date à"},
+        "sojourn_type":{"label":"Type de séjour"},
+        "nb_pers":{"label":"Nombre de personne"},
+        "rate_class_id":{"label":"Classe tarifaire"},
+        "booking_lines_ids":{"label":"Ligne de réservation"},
+        "booking_id":{"label":"Réservation"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}
