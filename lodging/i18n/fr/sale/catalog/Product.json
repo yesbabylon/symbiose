@@ -1,0 +1,19 @@
+{
+	"name": "Produit",
+	"plural": "Produits",
+	"description": "Les produits offert",
+	"model": {
+		"product_model_id":{"label":"Produit Modèle de cette variante."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

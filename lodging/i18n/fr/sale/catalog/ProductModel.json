@@ -1,0 +1,28 @@
+{
+	"name": "Produit",
+	"plural": "Produits",
+	"description": "Informations relatives au produit.",
+	"model": {
+		"qty_accounting_method":{"label":"La façon dont la quantité de produit doit être calculée (par unité [par défaut], par personne ou par logement [ressource])."},
+        "rental_unit_assignement":{"label":"La manière dont le produit est affecté à une unité de location (une unité spécifique, une catégorie spécifique ou en fonction de la capacité)."},
+        "has_duration":{"label":"Le produit a-t-il une durée spécifique?"},
+        "duration":{"label":"Informations supplémentaires sur la durée du service (en jours), utilisées à des fins de planification."},
+        "capacity":{"label":"Informations supplémentaires sur la capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants)."},
+        "is_meal":{"label":"Le produit est-il un repas ? (les repas peuvent faire partie de la pension / services inclus du séjour)."},
+        "is_accomodation":{"label":"La façon dont la quantité de produit doit être calculée (par unité [par défaut], par personne ou par logement [ressource])."},
+        "rental_unit_category_id":{"label":"Unité de location Catégorie à laquelle ce produit est lié, le cas échéant."},
+        "rental_unit_id":{"label":"Unité de location spécifique à laquelle ce produit est lié, le cas échéant."},
+        "products_ids":{"label":"Variantes de produit liées à ce modèle."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}
