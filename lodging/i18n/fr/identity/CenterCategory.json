@@ -1,0 +1,21 @@
+{
+	"name": "Catégorie centrale",
+	"plural": "Catégories centrale",
+	"description": "La liste des catégories des centres.",
+	"model": {
+		"name":{"label":"Nom de catégorie."},
+        "centers_ids":{"label":"Liste des catégories auxquelles appartient le centre, le cas échéant."},
+        "rental_units_ids":{"label":"Liste des unités locatives liées à la catégorie."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

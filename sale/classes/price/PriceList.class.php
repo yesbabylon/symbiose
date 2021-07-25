@@ -20,7 +20,7 @@ class PriceList extends Model {
 
             'date_from' => [
                 'type'              => 'date',
-                'description'       => "Sart of validity period."
+                'description'       => "Start of validity period."
             ],
 
             'date_to' => [

@@ -1,0 +1,26 @@
+{
+	"name": "Prix",
+	"plural": "Prix",
+	"description": "Le prix du produit.",
+	"model": {
+		"name":{"label":"Le nom d'affichage du prix."},
+        "price":{"label":"Prix ​​hors taxes."},
+        "type":{"label":"Liste des types de prix."},
+        "calculation_method_id":{"label":"Méthode à utiliser pour le calcul des prix."},
+        "description":{"label":"Brève description de la variante."},
+        "price_list_id":{"label":"La liste de prix à laquelle appartient le prix."},
+        "accounting_rule_id":{"label":"Règle comptable de vente. Si défini, remplace la règle de produit."},
+        "product_id":{"label":"Le produit (sku) auquel le prix s'applique."}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}
