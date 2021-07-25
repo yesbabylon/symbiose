@@ -3,8 +3,8 @@
 	"plural": "Unités de location",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
-		"center_category_id":{"label":"Catégorie centrale à laquelle appartient l'unité actuelle, le cas échéant."},
-        "center_id":{"label":"Le centre auquel appartient le logement locatif."}
+		"center_category_id":{"label":"Catégorie centrale"},
+        "center_id":{"label":"Centre"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

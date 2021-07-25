@@ -1,0 +1,28 @@
+{
+	"name": "Consommation",
+	"plural": "Consommations",
+	"description": "Une consommation est une prestation de service qui peut être programmée et qui est liée à une réservation.",
+	"model": {
+		"name":{"label":"Identification"},
+        "description":{"label":"Description"},
+        "booking_id":{"label":"Réservation"},
+        "booking_line_id":{"label":"Ligne de réservation"},
+        "date":{"label":"Date"},
+        "schedule":{"label":"Programme"},
+        "type":{"label":"Type"},
+        "product_id":{"label":"Produit"},
+        "rental_unit_id":{"label":"Unité de location"},
+        "disclaimed":{"label":"Démenti"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

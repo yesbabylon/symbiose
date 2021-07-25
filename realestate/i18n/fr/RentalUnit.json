@@ -4,13 +4,13 @@
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"name":{"label":"Nom du logement locatif."},
-        "type":{"label":"Type de logement locatif (qui se rapporte à la capacité)."},
-        "category":{"label":"Type d'unité locative (qui comprend généralement des logements supplémentaires, c'est-à-dire des repas ; ou louée telle quelle)."},
-        "capacity":{"label":"Le nombre de personnes pouvant séjourner dans l'unité."},
-        "has_children":{"label":"Drapeau pour marquer l'unité comme ayant des sous-unités."},
-        "can_rent":{"label":"Drapeau pour marquer l'unité comme (temporairement) indisponible à la location."},
-        "children_ids":{"label":"La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant."},
-        "parent_id":{"label":"Unité de location à laquelle appartient l'unité actuelle, le cas échéant."}
+        "type":{"label":"Type"},
+        "category":{"label":"Catégorie"},
+        "capacity":{"label":"Capacité"},
+        "has_children":{"label":"A des enfants"},
+        "can_rent":{"label":"Peut louer"},
+        "children_ids":{"label":"Enfants"},
+        "parent_id":{"label":"Parent"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

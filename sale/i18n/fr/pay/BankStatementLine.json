@@ -1,0 +1,27 @@
+{
+	"name": "Ligne de relevé bancaire",
+	"plural": "Lignes de relevé bancaire",
+	"description": "",
+	"model": {
+        "bank_statement_id":{"label":"Relevé bancaire"},
+        "communication":{"label":"Communication"},
+        "date":{"label":"Date"},
+        "reference":{"label":"Référence de la banque."},
+        "customer_id":{"label":"Client"},
+        "amount":{"label":"Montant"},
+        "account_iban":{"label":"Compte IBAN"},
+        "account_holder":{"label":"Titulaire de compte"},
+        "is_reconciled":{"label":"Est réconcilié"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

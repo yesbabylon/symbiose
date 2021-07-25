@@ -3,13 +3,13 @@
 	"plural": "partenaires",
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
-		"name":{"label":"Le nom d'affichage du partenaire (nom de l'organisation associée)."},
-		"owner_identity_id":{"label":"L'organisation dont l'identité ciblée est partenaire."},
-        "partner_identity_id":{"label":"L'identité ciblée (le partenaire)."},
-        "partner_position":{"label":"Position du contact de référence (personne physique) au sein de l'organisation (personne morale)."},
-        "relationship":{"label":"Le genre de partenariat qui existe entre les identités."},
-        "customer_rate_class_id":{"label":"Classe tarifaire qui s'applique au client."},
-        "customer_type_id":{"label":"Type de client (carte avec classes tarifaires)."}
+		"name":{"label":"Nom"},
+		"owner_identity_id":{"label":"Identité du propriétaire"},
+        "partner_identity_id":{"label":"Identité du partenaire"},
+        "partner_position":{"label":"Position du partenaire"},
+        "relationship":{"label":"Relation"},
+        "customer_rate_class_id":{"label":"Classe tarifaire au client"},
+        "customer_type_id":{"label":"Type de client"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

@@ -3,8 +3,8 @@
 	"plural": "Groupes de lignes de facture",
 	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
-		"name":{"label":"Nom du groupe de la ligne de facture."},
-		"invoice_id":{"label":"Facture à laquelle la ligne est liée."}
+		"name":{"label":"Nom"},
+		"invoice_id":{"label":"Facture"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

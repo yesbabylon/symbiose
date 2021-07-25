@@ -3,14 +3,14 @@
 	"plural": "Operations",
 	"description": "",
 	"model": {
-		"name":{"label":"Mnémo court pour identifier le bureau."},
-        "type":{"label":"Le genre d'opération."},
-        "user_id":{"label":"Utilisateur à l'origine de l'opération."},
-        "cashdesk_id":{"label":"Caisse à laquelle appartiennent les opérations."},
-        "total":{"label":"Montant total de la vente."},
+		"name":{"label":"Nom de l'operation"},
+        "type":{"label":"Type"},
+        "user_id":{"label":"Utilisateur"},
+        "cashdesk_id":{"label":"Caisse"},
+        "total":{"label":"Montant total"},
         "amount_paid":{"label":"Montant payé."},
         "amount_returned":{"label":"Montant retourné."},
-        "payments_ids":{"label":"Les paiements qui font partie de l'opération."}
+        "payments_ids":{"label":"Paiements"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},

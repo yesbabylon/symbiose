@@ -1,0 +1,24 @@
+{
+	"name": "Date limite de paiement",
+	"plural": "Dates limite de paiement",
+	"description": "",
+	"model": {
+        "name":{"label":"Nom du payeur"},
+        "delay_from_event":{"label":"Retard de l'événement"},
+        "delay_count":{"label":"Compte de retard"},
+        "type":{"label":"Type de paiment"},
+        "amount_share":{"label":"Montant part"},
+        "payment_plan_id":{"label":"Plan de paiement"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

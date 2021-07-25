@@ -1,0 +1,39 @@
+{
+	"name": "Modèle du produit",
+	"plural": "Modèles du produit",
+	"description": "",
+	"model": {
+		"name":{"label":"Nom du produit"},
+        "family_id":{"label":"Famille"},
+        "selling_accounting_rule_id":{"label":"Règle comptable de vente"},
+        "buying_accounting_rule_id":{"label":"Règle comptable d'achat"},
+        "can_buy":{"label":"Peut acheter"},
+        "can_sell":{"label":"Peut vendre"},
+        "cost":{"label":"Coût"},
+        "is_pack":{"label":"Est pack"},
+        "has_own_price":{"label":"A son propre prix"},
+        "type":{"label":"Type"},
+        "consumable_type":{"label":"Type de consommable"},
+        "service_type":{"label":"Type de service"},
+        "schedule_type":{"label":"Type d'horaire"},
+        "schedule_default_value":{"label":"Valeur par défaut du programme"},
+        "schedule_offset":{"label":"Décalage horaire"},
+        "tracking_type":{"label":"Type de suivi"},
+        "description_delivery":{"label":"Description livraison"},
+        "description_receipt":{"label":"Description reçu"},
+        "groups_ids":{"label":"Groupes"},
+        "categories_ids":{"label":"Catégories"},
+        "products_ids":{"label":"Produits"}
+	},
+	"view": {
+		"group.user": {"label": "Infos de l'utilisateur"},
+		"label.details":{"label":"Détails de contact"},
+		"section.user_details": {"label": "Section des détails"},
+		"identification":{"label":"Identification"},
+		"cancel":{"label":"Annuler"},
+		"subscribe":{"label":"S'inscrire"}
+	},
+	"error": {
+		
+	}
+}

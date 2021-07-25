@@ -3,10 +3,10 @@
 	"plural": "Journaux de caisse",
 	"description": "",
 	"model": {
-		"date":{"label":"Date d'achat du produit."},
-        "amount":{"label":"Montant restant à la fin de la journée."},
-        "user_id":{"label":"Utilisateur qui a effectué l'entrée de journal."},
-        "cashdesk_id":{"label":"Caisse à laquelle appartient l'entrée du journal."}
+		"date":{"label":"Date d'achat"},
+        "amount":{"label":"Montant"},
+        "user_id":{"label":"Utilisateur"},
+        "cashdesk_id":{"label":"Caisse"}
 	},
 	"view": {
 		"group.user": {"label": "Infos de l'utilisateur"},
