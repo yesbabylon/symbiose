@@ -8,9 +8,10 @@
         "rental_units_ids":{"label":"Unités locatives"}
 	},
 	"view": {
-		"group.user": {"label": "Infos de l'utilisateur"},
 		"label.details":{"label":"Détails de contact"},
-		"section.user_details": {"label": "Section des détails"},
+		"section.center_category": {"label": "Section des détails"},
+		"section.centers_section": {"label": "Section des centres"},
+		"section.rental_units_section": {"label": "Section des centres"},
 		"identification":{"label":"Identification"},
 		"cancel":{"label":"Annuler"},
 		"subscribe":{"label":"S'inscrire"}

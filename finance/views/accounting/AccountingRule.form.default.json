@@ -24,7 +24,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "100%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rule_id",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
