@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "products_Section",
+                        "id": "section.products_Section",
                         "rows": [
                             {
                                 "columns": [
@@ -45,7 +45,7 @@
                     },
                     {
                         "label": "Prices",
-                        "id": "prices_section",
+                        "id": "section.prices_section",
                         "rows": [
                             {
                                 "columns": [

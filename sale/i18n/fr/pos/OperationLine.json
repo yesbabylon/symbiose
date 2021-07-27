@@ -3,16 +3,13 @@
 	"plural": "Lines d'operation",
 	"description": "",
 	"model": {
-        "type":{"label":"Type"},
-        "operation_id":{"label":"Opération"},
-        "product_id":{"label":"Produit"},
-        "booking_line_id":{"label":"Ligne de réservation"}
+        "type":{"label":"Type", "help": "Le genre d'opération."},
+        "operation_id":{"label":"Opération", "help": "L'opération à laquelle se rapporte le paiement."},
+        "product_id":{"label":"Produit", "help": "Le produit visé par la ligne."},
+        "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation ciblée par la ligne d'opération."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

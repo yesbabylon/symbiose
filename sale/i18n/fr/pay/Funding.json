@@ -4,20 +4,16 @@
 	"description": "",
 	"model": {
         "payments_ids":{"label":"Paiements"},
-        "type":{"label":"Type"},
-        "due_amount":{"label":"Montant dû"},
-        "due_date":{"label":"Date d'échéance"},
-        "is_paid":{"label":"Est payé"},
-        "payment_deadline_id":{"label":"Date limite de paiement"},
-        "invoice_id":{"label":"Facture d'achat"}
+        "type":{"label":"Type", "help": "Les délais sont échelonnés sauf le dernier : facture définitive."},
+        "due_amount":{"label":"Montant dû", "help": "Montant prévu pour le financement."},
+        "due_date":{"label":"Date d'échéance", "help": "Date limite avant laquelle le financement est attendu."},
+        "is_paid":{"label":"Est payé", "help": "Le paiement complet a-t-il été reçu?"},
+        "payment_deadline_id":{"label":"Date limite de paiement", "help": "Le modèle de date limite utilisé pour créer le financement, le cas échéant."},
+        "invoice_id":{"label":"Facture d'achat", "help": "La facture visée par le financement, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.funding_section": {"label": "Section des détails"},
-		"section.payments_section": {"label": "Section des paiments"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.funding_section": {"label": "SDétails"},
+		"section.payments_section": {"label": "Paiments"}
 	},
 	"error": {
 		

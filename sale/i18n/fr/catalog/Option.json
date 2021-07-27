@@ -3,15 +3,12 @@
 	"plural": "Options",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "family_id":{"label":"Famille"},
-        "description":{"label":"Description"}
+		"name":{"label":"Identification", "help": "Nom unique de cette option."},
+        "family_id":{"label":"Famille", "help": "Famille de produits à laquelle appartient cette option."},
+        "description":{"label":"Description", "help": "Brève description de l'option."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

@@ -7,13 +7,10 @@
         "operand":{"label":"Opérande"},
         "operator":{"label":"Opérateur"},
         "value":{"label":"Valeur"},
-        "discount_id":{"label":"Remise"}
+        "discount_id":{"label":"Remise", "help": "La liste de remises à laquelle appartient la remise."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

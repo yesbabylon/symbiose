@@ -4,17 +4,14 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Identification"},
-        "description":{"label":"Description"},
-        "type":{"label":"Type"},
-        "value":{"label":"Valeur"},
-        "discount_list_id":{"label":"Liste de remise"},
-        "conditions_ids":{"label":"Conditions"}
+        "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
+        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités."},
+        "value":{"label":"Valeur", "help": "Valeur de remise."},
+        "discount_list_id":{"label":"Liste de remise", "help": "La liste de remises à laquelle appartient la remise."},
+        "conditions_ids":{"label":"Conditions", "help": "Les conditions qui s'appliquent à la remise."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

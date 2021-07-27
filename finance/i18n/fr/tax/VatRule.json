@@ -8,9 +8,7 @@
 		"type":{"label":"Type"}
 	},
 	"view": {
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

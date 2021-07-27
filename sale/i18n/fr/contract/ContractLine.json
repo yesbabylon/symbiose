@@ -3,20 +3,17 @@
 	"plural": "Lignes de contrats",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "contract_id":{"label":"Contrat"},
-        "product_id":{"label":"Produit"},
-        "price":{"label":"Prix"},
-        "vat_rate":{"label":"Taux de tva"},
-        "qty":{"label":"Quantité"},
+		"name":{"label":"Identification", "help": "Nom abrégé du contrat."},
+        "contract_id":{"label":"Contrat", "help": "Le contrat auquel la ligne se rapporte."},
+        "product_id":{"label":"Produit", "help": "Le produit (SKU) auquel la ligne se rapporte."},
+        "price":{"label":"Prix", "help": "Prix ​​du produit lié à la ligne."},
+        "vat_rate":{"label":"Taux de tva", "help": "Taux de TVA à appliquer."},
+        "qty":{"label":"Quantité", "help": "Quantité de produit."},
         "free_qty":{"label":"Quantité gratuite"},
-        "discount":{"label":"Remise"}
+        "discount":{"label":"Remise", "help": "Montant total de la remise à appliquer, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

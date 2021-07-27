@@ -3,15 +3,12 @@
 	"plural": "Suivis de réservation",
 	"description": "Les entrées de suivi sont des notes créées par les utilisateurs pour faciliter la communication interne liée aux réservations.",
 	"model": {
-		"message":{"label":"Message"},
-        "creator":{"label":"Créateur"},
-        "booking_id":{"label":"Réservation"}
+		"message":{"label":"Message", "help": "Communication concernant la réservation."},
+        "creator":{"label":"Créateur", "help": "Utilisateur qui a créé l'entrée."},
+        "booking_id":{"label":"Réservation", "help": "La réservation de l'adaptateur concerne."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

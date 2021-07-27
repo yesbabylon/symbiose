@@ -3,20 +3,16 @@
 	"plural": "Produits",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "sku":{"label":"Sku"},
-        "ean":{"label":"EAN"},
-        "description":{"label":"Description"},
-        "product_model_id":{"label":"Modèle du produit"},
-        "prices_ids":{"label":"Prix"}
+		"name":{"label":"Identification", "help": "Mnémo lisible par l'homme pour identifier le produit. Autorise les doublons."},
+        "sku":{"label":"Sku", "help": "Code de l'unité de gestion des stocks pour référence interne. Doit être unique."},
+        "ean":{"label":"EAN", "help": "Code IAN/EAN pour la génération de codes-barres."},
+        "description":{"label":"Description", "help": "Description de la variante (spécificités)."},
+        "product_model_id":{"label":"Modèle du produit", "help": "Produit Modèle de cette variante."},
+        "prices_ids":{"label":"Prix", "help": "Les prix qui sont liés à ce produit."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.products_Section": {"label": "Section des détails"},
-		"section.prices_section": {"label": "Section des prix"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.products_Section": {"label": "Détails"},
+		"section.prices_section": {"label": "Prix"}
 	},
 	"error": {
 		

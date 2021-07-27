@@ -4,19 +4,15 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Identification"},
-        "description":{"label":"Description"},
-        "rate_min":{"label":"Taux min"},
-        "rate_max":{"label":"Taux max"},
-        "rate_class_id":{"label":"Classe tarifaire"},
-        "discount_lists_ids":{"label":"Liste de remise"}
+        "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
+        "rate_min":{"label":"Taux min", "help": "Remise minimale garantie, le cas échéant."},
+        "rate_max":{"label":"Taux max", "help": "Remise maximale applicable, le cas échéant."},
+        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique à cette classe de remise."},
+        "discount_lists_ids":{"label":"Liste de remise", "help": "La liste de remises à laquelle appartient la remise."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.discount_class": {"label": "Section des détails"},
-		"section.discount_lists": {"label": "Section des remises"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.discount_class": {"label": "Détails"},
+		"section.discount_lists": {"label": "Remises"}
 	},
 	"error": {
 		

@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "product_model",
+                        "id": "section.product_model",
                         "rows": [
                             {
                                 "columns": [
@@ -117,7 +117,7 @@
                     },
                     {
                         "label": "Groups",
-                        "id": "groups_section",
+                        "id": "section.groups_section",
                         "rows": [
                             {
                                 "columns": [
@@ -137,7 +137,7 @@
                     },
                     {
                         "label": "Categories",
-                        "id": "categories_section",
+                        "id": "section.categories_section",
                         "rows": [
                             {
                                 "columns": [

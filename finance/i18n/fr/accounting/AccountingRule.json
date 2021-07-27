@@ -3,19 +3,15 @@
 	"plural": "Règles de Tva",
 	"description": "Les règles comptables permettent de préciser sur quel compte une opération doit être imputée.",
 	"model": {
-		"name":{"label":"Nom"},
-		"description":{"label":"Description"},
-		"type":{"label":"Type"},
-        "vat_rule_id":{"label":"Règle de TVA"},
-        "accounting_rule_line_ids":{"label":"Lignes liées à cette règle."}
+		"name":{"label":"Nom", "help": "Nom de la règle comptable."},
+		"description":{"label":"Description", "help": "Brève description de la règle pour servir de mémo."},
+		"type":{"label":"Type", "help": "Type d'opération auquel cette règle se rapporte."},
+        "vat_rule_id":{"label":"Règle de TVA", "help": "Règle de TVA à laquelle cette ligne est liée."},
+        "accounting_rule_line_ids":{"label":"Lignes liées à cette règle.", "help": "Lignes liées à cette règle."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.accounting_rules_section": {"label": "Section des détails"},
-		"section.accounting_rulelines": {"label": "Section des ligne de règle comptable"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.accounting_rules_section": {"label": "Détails"},
+		"section.accounting_rulelines": {"label": "Ligne de règle comptable"}
 	},
 	"error": {
 	

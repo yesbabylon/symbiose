@@ -3,18 +3,15 @@
 	"plural": "Line des règles comptable",
 	"description": "Les règles comptables ont une ou plusieurs lignes les associant à un compte et une règle TVA.",
 	"model": {
-		"name":{"label":"Nom de la ligne"},
-		"label":{"label":"Code de la ligne"},
-		"account":{"label":"Compte"},
-        "section":{"label":"Section"},
-        "share":{"label":"Part de la ligne"},
-        "accounting_rule_id":{"label":"Règle comptable"}
+		"name":{"label":"Nom de la ligne", "help": "Identification"},
+		"label":{"label":"Code de la ligne", "help": "Code de la ligne à servir de mémo."},
+		"account":{"label":"Compte", "help": "Code du compte concerné."},
+        "section":{"label":"Section", "help": "Code de la section de comptabilité analytique associée."},
+        "share":{"label":"Part de la ligne", "help": "Part de la ligne, en pourcentage (la somme des lignes doit être de 100 %)."},
+        "accounting_rule_id":{"label":"Règle comptable", "help": "Règle comptable à laquelle cette ligne est liée."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	
