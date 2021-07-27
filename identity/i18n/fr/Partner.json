@@ -3,7 +3,7 @@
 	"plural": "partenaires",
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
-		"name":{"label":"Nom"},
+		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'organisation)."},
 		"owner_identity_id":{"label":"Identité du propriétaire"},
         "partner_identity_id":{"label":"Identité du partenaire"},
         "partner_position":{"label":"Position du partenaire"},

@@ -21,7 +21,8 @@ class Booking extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Booking::getDisplayName'
+                'function'          => 'sale\booking\Booking::getDisplayName',
+                'store'             => true
             ],
             
             'description' => [

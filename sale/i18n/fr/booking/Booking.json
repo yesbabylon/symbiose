@@ -3,7 +3,7 @@
 	"plural": "Réservations",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom de la personne"},
+		"name":{"label":"Référence"},
         "creator":{"label":"Créateur"},
         "description":{"label":"Description"},
         "customer_id":{"label":"Client"},
@@ -16,7 +16,7 @@
         "status":{"label":"Statut"},
         "date_from":{"label":"Date de"},
         "date_to":{"label":"Date à"},
-        "has_payer_organisation":{"label":"A un organisme payeur"},
+        "has_payer_organisation":{"label":"Payeur distinct"},
         "payer_organisation_id":{"label":"Organisme payeur"}
 	},
 	"view": {
