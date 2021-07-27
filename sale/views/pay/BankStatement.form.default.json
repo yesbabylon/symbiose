@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "bank_statement",
+                        "id": "section.bank_statement",
                         "rows": [
                             {
                                 "columns": [
@@ -39,7 +39,7 @@
                     },
                     {
                         "label": "Statement Lines",
-                        "id": "statment_lines_section",
+                        "id": "section.statment_lines_section",
                         "rows": [
                             {
                                 "columns": [

@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "accounting_rules_section",
+                        "id": "section.accounting_rules_section",
                         "rows": [
                             {
                                 "columns": [
@@ -44,7 +44,7 @@
                     },
                     {
                         "label": "Accounting Rule Lines",
-                        "id": "accounting_rulelines",
+                        "id": "section.accounting_rulelines",
                         "rows": [
                             {
                                 "columns": [

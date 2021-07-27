@@ -3,15 +3,12 @@
 	"plural": "Valeurs d'option",
 	"description": "",
 	"model": {
-		"value":{"label":"Valeur"},
-        "option_id":{"label":"Option"},
-        "description":{"label":"Description"}
+		"value":{"label":"Valeur", "help": "La valeur possible pour l'option associée."},
+        "option_id":{"label":"Option", "help": "Option de produit à laquelle cette valeur se rapporte."},
+        "description":{"label":"Description", "help": "Brève description de la valeur."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

@@ -3,17 +3,14 @@
 	"plural": "Listes des prix",
 	"description": "La liste des prix du produit.",
 	"model": {
-		"name":{"label":"Identification"},
-        "date_from":{"label":"Dater de"},
-        "date_to":{"label":"Dater à"},
-        "prices_ids":{"label":"Les prix"},
-        "price_list_category_id":{"label":"Liste de prix catégorie"}
+		"name":{"label":"Identification", "help": "Etiquette courte pour faciliter l'identification de la liste."},
+        "date_from":{"label":"Dater de", "help": "Début de la période de validité."},
+        "date_to":{"label":"Dater à", "help": "Fin de la période de validité."},
+        "prices_ids":{"label":"Les prix", "help": "Les prix qui sont liés à cette liste, le cas échéant."},
+        "price_list_category_id":{"label":"Liste de prix catégorie", "help": "Catégorie à laquelle cette liste est liée, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

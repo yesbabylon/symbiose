@@ -3,20 +3,16 @@
 	"plural": "Listes de remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "valid_from":{"label":"Valide à partir de"},
-        "valid_until":{"label":"Valable jusque"},
-        "discounts_ids":{"label":"Remises"},
-        "discount_list_category_id":{"label":"Catégorie de liste de remise"},
-        "discount_class_id":{"label":"Classe de remise"}
+		"name":{"label":"Identification", "help": "Mémo court pour la liste (ex. remises 2025)."},
+        "valid_from":{"label":"Valide à partir de", "help": "Date à partir de laquelle la liste est valide."},
+        "valid_until":{"label":"Valable jusque", "help": "Moment jusqu'à ce que la liste soit valide."},
+        "discounts_ids":{"label":"Remises", "help": "Les remises qui font partie de la liste."},
+        "discount_list_category_id":{"label":"Catégorie de liste de remise", "help": "La catégorie à laquelle appartient la liste."},
+        "discount_class_id":{"label":"Classe de remise", "help": "La classe de remise à laquelle appartient la liste."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.discounts_list": {"label": "Section des détails"},
-		"section.discounts_section": {"label": "Section des remises"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.discounts_list": {"label": "Détails"},
+		"section.discounts_section": {"label": "Remises"}
 	},
 	"error": {
 		

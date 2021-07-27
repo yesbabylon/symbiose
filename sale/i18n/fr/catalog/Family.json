@@ -3,18 +3,14 @@
 	"plural": "Familles",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom du produit"},
+		"name":{"label":"Nom du produit", "help": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque."},
         "children_ids":{"label":"Enfants"},
-        "parent_id":{"label":"Parent"},
-        "path":{"label":"Chemin"}
+        "parent_id":{"label":"Parent", "help": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant."},
+        "path":{"label":"Chemin", "help": "Chemin complet de la famille avec les ancêtres."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.family_section": {"label": "Section des détails"},
-		"section.children_section": {"label": "Section des enfants"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.family_section": {"label": "Détails"},
+		"section.children_section": {"label": "Enfants"}
 	},
 	"error": {
 		

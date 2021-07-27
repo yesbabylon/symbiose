@@ -4,18 +4,15 @@
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
 		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'organisation)."},
-		"owner_identity_id":{"label":"Identité du propriétaire"},
-        "partner_identity_id":{"label":"Identité du partenaire"},
-        "partner_position":{"label":"Position du partenaire"},
-        "relationship":{"label":"Relation"},
-        "customer_rate_class_id":{"label":"Classe tarifaire au client"},
-        "customer_type_id":{"label":"Type de client"}
+		"owner_identity_id":{"label":"Identité du propriétaire", "help": "L'organisation dont l'identité ciblée est partenaire."},
+        "partner_identity_id":{"label":"Identité du partenaire", "help": "L'identité ciblée (le partenaire)."},
+        "partner_position":{"label":"Position du partenaire", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
+        "relationship":{"label":"Relation", "help": "Le genre de partenariat qui existe entre les identités."},
+        "customer_rate_class_id":{"label":"Classe tarifaire au client", "help": "Classe tarifaire qui s'applique au client."},
+        "customer_type_id":{"label":"Type de client", "help": "Type de client (carte avec classes tarifaires)."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

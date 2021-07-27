@@ -3,19 +3,15 @@
 	"plural": "Listes de catégories de vente automatique",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "date_from":{"label":"Dater de"},
-        "date_to":{"label":"Dater à"},
-        "autosale_lines_ids":{"label":"Lignes de vente automatique"},
-        "autosale_category_id":{"label":"Catégorie de vente automatique"}
+		"name":{"label":"Identification", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
+        "date_from":{"label":"Dater de", "help": "Date (incluse) de début de la saison."},
+        "date_to":{"label":"Dater à", "help": "Date (exclue) à laquelle la saison se termine."},
+        "autosale_lines_ids":{"label":"Lignes de vente automatique", "help": "Les lignes qui s'appliquent à la liste."},
+        "autosale_category_id":{"label":"Catégorie de vente automatique", "help": "La catégorie de vente automatique à laquelle appartient la liste."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.autosale_list_section": {"label": "Section des détails"},
-		"section.autosale_lines_section": {"label": "Section des ligne de vente automatique"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.autosale_list_section": {"label": "Détails"},
+		"section.autosale_lines_section": {"label": "Lignes de vente automatique"}
 	},
 	"error": {
 		

@@ -3,13 +3,10 @@
 	"plural": "Propriétés",
 	"description": "Les propriétés qui existent.",
 	"model": {
-		"name":{"label":"Nom de la propriété."}
+		"name":{"label":"Nom de la propriété"}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

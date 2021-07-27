@@ -3,13 +3,10 @@
 	"plural": "Contrats",
 	"description": "",
 	"model": {
-        "booking_id":{"label":"Réservation"}
+        "booking_id":{"label":"Réservation", "help": "La réservation sur laquelle porte le contrat."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

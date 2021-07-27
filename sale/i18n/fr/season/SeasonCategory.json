@@ -3,14 +3,11 @@
 	"plural": "Catégories de saison",
 	"description": "Les catégories de saison de l'année.",
 	"model": {
-		"name":{"label":"Identification"},
-        "seasons_ids":{"label":"Saisons"}
+		"name":{"label":"Identification", "help": "Etiquette courte pour faciliter l'identification de la liste."},
+        "seasons_ids":{"label":"Saisons", "help": "Les saisons qui sont liées à cette catégorie, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

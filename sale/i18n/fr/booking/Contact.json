@@ -3,15 +3,12 @@
 	"plural": "Contacts",
 	"description": "Les contacts de réservation sont des personnes impliquées dans l'organisation d'une réservation.",
 	"model": {
-		"creator":{"label":"Créateur"},
-        "booking_id":{"label":"Réservation"},
-        "type":{"label":"Type"}
+		"creator":{"label":"Créateur", "help": "Utilisateur qui a créé l'entrée."},
+        "booking_id":{"label":"Réservation", "help": "La réservation du contact se rapporte."},
+        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

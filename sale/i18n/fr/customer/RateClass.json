@@ -4,13 +4,10 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Identification"},
-        "description":{"label":"Description"}
+        "description":{"label":"Description", "help": "Brève description de la classe tarifaire."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

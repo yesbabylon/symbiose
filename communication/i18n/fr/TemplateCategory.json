@@ -3,13 +3,11 @@
 	"plural": "Catégories de modèle",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom"},
-		"templates_ids":{"label":"Modèles"}
+		"name":{"label":"Nom", "help": "Etiquette courte pour faciliter l'identification de la catégorie."},
+		"templates_ids":{"label":"Modèles", "help": "Modèles liés à cette catégorie, le cas échéant."}
 	},
 	"view": {
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

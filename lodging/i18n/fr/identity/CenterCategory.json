@@ -3,18 +3,14 @@
 	"plural": "Catégories centrale",
 	"description": "La liste des catégories des centres.",
 	"model": {
-		"name":{"label":"Nom de catégorie."},
-        "centers_ids":{"label":"Centres"},
-        "rental_units_ids":{"label":"Unités locatives"}
+		"name":{"label":"Nom de catégorie"},
+        "centers_ids":{"label":"Centres", "help": "Liste des catégories auxquelles appartient le centre belge, le cas échéant."},
+        "rental_units_ids":{"label":"Unités locatives", "help": "Liste des unités locatives liées à la catégorie."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.center_category": {"label": "Section des détails"},
-		"section.centers_section": {"label": "Section des centres"},
-		"section.rental_units_section": {"label": "Section des centres"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.center_category": {"label": "Détails"},
+		"section.centers_section": {"label": "Centres"},
+		"section.rental_units_section": {"label": "Unités de location"}
 	},
 	"error": {
 		

@@ -3,21 +3,18 @@
 	"plural": "Lignes de relevé bancaire",
 	"description": "",
 	"model": {
-        "bank_statement_id":{"label":"Relevé bancaire"},
-        "communication":{"label":"Communication"},
-        "date":{"label":"Date"},
-        "reference":{"label":"Référence de la banque."},
-        "customer_id":{"label":"Client"},
-        "amount":{"label":"Montant"},
-        "account_iban":{"label":"Compte IBAN"},
-        "account_holder":{"label":"Titulaire de compte"},
-        "is_reconciled":{"label":"Est réconcilié"}
+                "bank_statement_id":{"label":"Relevé bancaire", "help": "Le relevé bancaire auquel la ligne se rapporte."},
+                "communication":{"label":"Communication", "help": "Message du payeur."},
+                "date":{"label":"Date", "help": "Date à laquelle la déclaration a été émise."},
+                "reference":{"label":"Référence de la banque"},
+                "customer_id":{"label":"Client", "help": "Le client auquel le paiement se rapporte, s'il est connu."},
+                "amount":{"label":"Montant", "help": "Référence de la banque."},
+                "account_iban":{"label":"Compte IBAN", "help": "IBAN à l'origine du paiement."},
+                "account_holder":{"label":"Titulaire de compte", "help": "Nom de la personne à l'origine du paiement."},
+                "is_reconciled":{"label":"Est réconcilié", "help": "Indicateur pour marquer la ligne comme rapprochée d'un paiement."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

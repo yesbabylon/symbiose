@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "discounts_list",
+                        "id": "section.discounts_list",
                         "rows": [
                             {
                                 "columns": [
@@ -44,7 +44,7 @@
                     },
                     {
                         "label": "Discounts",
-                        "id": "discounts_section",
+                        "id": "section.discounts_section",
                         "rows": [
                             {
                                 "columns": [
