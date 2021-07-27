@@ -41,17 +41,17 @@ class Partner extends Model {
                 'description'       => 'The targeted identity (the partner).' 
             ],
 
+            'relationship' => [
+                'type'              => 'string',
+                'selection'         => [ 'contact', 'employee', 'customer', 'provider', 'payer', 'other' ],
+                'description'       => 'The kind of partnership that exists between the identities.' 
+            ],
+
             // if partner is a contact (ex. referenced by reference_partner_id), use a 'position' info
             'partner_position' => [
                 'type'              => 'string',
                 'description'       => 'Position of the reference contact (natural person) within the organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
                 'visible'           => [ ['relationship', '=', 'contact'] ]
-            ],
-
-            'relationship' => [
-                'type'              => 'string',
-                'selection'         => [ 'contact', 'employee', 'customer', 'provider', 'payer', 'other' ],
-                'description'       => 'The kind of partnership that exists between the identities.' 
             ],
 
             // if partner is a customer, it can be assigned to a rate class

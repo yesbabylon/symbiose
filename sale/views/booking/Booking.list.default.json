@@ -5,6 +5,7 @@
             {
                 "type": "field",            
                 "value": "name",
+                "label": "reference",
                 "width": "5%"
             },
             {
