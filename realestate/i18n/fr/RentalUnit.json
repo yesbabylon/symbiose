@@ -13,9 +13,9 @@
         "parent_id":{"label":"Parent"}
 	},
 	"view": {
-		"group.user": {"label": "Infos de l'utilisateur"},
 		"label.details":{"label":"Détails de contact"},
-		"section.user_details": {"label": "Section des détails"},
+		"section.rental_units": {"label": "Section des détails"},
+		"section.children_section": {"label": "Section des enfants"},
 		"identification":{"label":"Identification"},
 		"cancel":{"label":"Annuler"},
 		"subscribe":{"label":"S'inscrire"}

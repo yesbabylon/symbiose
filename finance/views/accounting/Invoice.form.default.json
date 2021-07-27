@@ -1,6 +1,5 @@
 {
-    "name": "Partner",
-    "description": "Basic form for displaying a Partner",
+    "name": "Invoice",
     "layout": {
         "groups": [
             {
@@ -10,52 +9,40 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name of Partner",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Identity of Partner",
-                                                "value": "partner_identity_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Identity of Owner",
-                                                "value": "owner_identity_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "relationship",
+                                                "value": "status",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "partner_position",
+                                                "value": "number",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer Rate Class",
-                                                "value": "customer_rate_class_id",
+                                                "value": "date",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer Type",
-                                                "value": "customer_type_id",
+                                                "label": "Partner",
+                                                "value": "partner_id",
                                                 "width": "50%"
                                             }
                                         ]
