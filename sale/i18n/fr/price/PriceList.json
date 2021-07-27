@@ -10,9 +10,7 @@
         "price_list_category_id":{"label":"Liste de prix catégorie"}
 	},
 	"view": {
-		"group.user": {"label": "Infos de l'utilisateur"},
 		"label.details":{"label":"Détails de contact"},
-		"section.user_details": {"label": "Section des détails"},
 		"identification":{"label":"Identification"},
 		"cancel":{"label":"Annuler"},
 		"subscribe":{"label":"S'inscrire"}

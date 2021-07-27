@@ -8,9 +8,9 @@
         "discount_lists_ids":{"label":"Liste de remise"}
 	},
 	"view": {
-		"group.user": {"label": "Infos de l'utilisateur"},
 		"label.details":{"label":"Détails de contact"},
-		"section.user_details": {"label": "Section des détails"},
+		"section.discount_category": {"label": "Section des détails"},
+		"section.discount_lists": {"label": "Section des remises"},
 		"identification":{"label":"Identification"},
 		"cancel":{"label":"Annuler"},
 		"subscribe":{"label":"S'inscrire"}
