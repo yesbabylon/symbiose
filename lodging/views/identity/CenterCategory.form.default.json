@@ -1,5 +1,6 @@
 {
     "name": "Center Category",
+    "description": "A center category is the type of accommodation of the center.",
     "layout": {
         "groups": [
             {

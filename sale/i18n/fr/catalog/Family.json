@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Nom du produit", "help": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque."},
-        "children_ids":{"label":"Enfants"},
+        "children_ids":{"label":"Enfants", "help": "Les enfants de cette famille."},
         "parent_id":{"label":"Parent", "help": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant."},
         "path":{"label":"Chemin", "help": "Chemin complet de la famille avec les ancêtres."}
 	},

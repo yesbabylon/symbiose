@@ -7,12 +7,12 @@
         "amount":{"label":"Montant", "help": "Référence de la banque."},
         "communication":{"label":"Communication", "help": "Message du payeur."},
         "receipt_date":{"label":"Date de réception", "help": "Heure de réception du paiement."},
-        "payment_method":{"label":"Mode de paiement"},
-        "payment_origin":{"label":"Origine de paiment"},
+        "payment_method":{"label":"Mode de paiement", "help": "Le mode de paiement utilisé."},
+        "payment_origin":{"label":"Origine de paiment", "help": "Origine de l'argent reçu."},
         "operation_id":{"label":"Operation", "help": "L'opération à laquelle se rapporte le paiement."},
         "statement_line_id":{"label":"Ligne de déclaration", "help": "La ligne de relevé bancaire à laquelle se rapporte le paiement."},
         "voucher_ref":{"label":"Référence du bon", "help": "La référence du bon auquel se rapporte le paiement."},
-        "fundings_ids":{"label":"Financements"}
+        "fundings_ids":{"label":"Financements", "help": "Liste de financements."}
 	},
 	"view": {
 		"section.payment_section": {"label": "Détails"},

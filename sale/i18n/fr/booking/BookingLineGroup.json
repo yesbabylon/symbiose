@@ -4,7 +4,7 @@
 	"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
 	"model": {
 		"name":{"label":"Nom du groupe", "help": "Mnemo pour le groupe."},
-        "order":{"label":"ordre", "help": "Ordre du groupe dans la liste."},
+        "order":{"label":"Ordre", "help": "Ordre du groupe dans la liste."},
         "has_pack":{"label":"A pack", "help": "Le groupe se rapporte-t-il à une meute ?"},
         "pack_id":{"label":"Pack", "help": "Emballage (produit) auquel le groupe se rapporte, le cas échéant."},
         "is_locked":{"label":"Est verrouillé", "help": "Les modifications sont-elles désactivées pour le groupe ?"},

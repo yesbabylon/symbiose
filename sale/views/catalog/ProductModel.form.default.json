@@ -1,5 +1,6 @@
 {
     "name": "Product Model",
+    "description": "Product Models act as common denominator for products variants (referred to as Products).",
     "layout": {
         "groups": [
             {

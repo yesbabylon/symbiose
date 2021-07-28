@@ -1,5 +1,6 @@
 {
     "name": "Payments",
+    "description": "This view is intended for displaying the list of payments.",
     "layout": {
         "items": [
             {

@@ -1,5 +1,6 @@
 {
     "name": "ProductModel",
+    "description": "Product models and all its details.",
     "layout": {
         "groups": [
             {

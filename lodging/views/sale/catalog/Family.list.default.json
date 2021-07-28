@@ -1,5 +1,6 @@
 {
     "name": "Family",
+    "description": "This view is intented to display the list of families.",
     "layout": {
         "items": [
             {

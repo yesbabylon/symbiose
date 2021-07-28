@@ -1,5 +1,6 @@
 {
     "name": "Booking Line Groups",
+    "description": "This view is intended for displaying the list of booking line groups.",
     "layout": {
         "items": [
             {

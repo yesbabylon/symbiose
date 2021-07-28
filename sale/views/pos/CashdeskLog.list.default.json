@@ -1,5 +1,6 @@
 {
     "name": "Cashdesk Logs",
+    "description": "This view is intended for displaying the list of cashdesk logs.",
     "layout": {
         "items": [
             {

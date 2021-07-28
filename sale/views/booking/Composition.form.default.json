@@ -1,5 +1,6 @@
 {
     "name": "Composition",
+    "description": "A Composition is an exhaustive list of persons that participate to a sojourn related to a Booking.",
     "layout": {
         "groups": [
             {

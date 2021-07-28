@@ -1,5 +1,6 @@
 {
     "name": "Booking Line",
+    "description": "Booking lines describe the products and quantities that are part of a booking.",
     "layout": {
         "groups": [
             {

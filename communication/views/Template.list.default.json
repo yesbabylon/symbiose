@@ -1,5 +1,6 @@
 {
     "name": "Templates",
+    "description": "This view is intented for displying the list of templates.",
     "layout": {
         "items": [
             {

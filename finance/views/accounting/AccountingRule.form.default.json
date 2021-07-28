@@ -1,5 +1,6 @@
 {
     "name": "Accounting Rules",
+    "description": "Default view for accounting rules with all fields",
     "layout": {
         "groups": [
             {

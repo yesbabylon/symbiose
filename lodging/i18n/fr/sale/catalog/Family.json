@@ -3,7 +3,7 @@
 	"plural": "Familles",
 	"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque. Les familles soutiennent la hiérarchie.",
 	"model": {
-		"centers_ids":{"label":"Liste des catégories auxquelles appartient le centre, le cas échéant."}
+		"centers_ids":{"label":"Centres", "help": "Liste des catégories auxquelles appartient le centre, le cas échéant."}
 	},
 	"view": {
 		

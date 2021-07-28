@@ -1,5 +1,6 @@
 {
     "name": "Family",
+    "description": "A Product Family is a group of goods produced under the same brand.",
     "layout": {
         "groups": [
             {

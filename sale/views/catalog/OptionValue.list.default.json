@@ -1,5 +1,6 @@
 {
     "name": "Option Values",
+    "description": "This view is intended for displaying the list of option values.",
     "layout": {
         "items": [
             {

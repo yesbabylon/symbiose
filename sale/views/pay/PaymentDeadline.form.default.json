@@ -1,5 +1,6 @@
 {
     "name": "Payment Deadline",
+    "description": "",
     "layout": {
         "groups": [
             {
