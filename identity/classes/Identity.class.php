@@ -275,7 +275,12 @@ class Identity extends Model {
                 'default'           => 'fr'
             ],
 
-
+            'partners_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'identity\Partner',
+                'foreign_field'     => 'partner_identity_id',
+                'description'       => 'Partnerships that relate to the identity.'
+            ],
 
         ];
     }
@@ -297,6 +302,12 @@ class Identity extends Model {
 
     public static function onchangeName($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
+        $res = $om->read(__CLASS__, $oids, ['partners_ids']);
+        $partners_ids = [];
+        foreach($res as $oid => $odata) {
+            $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
+        }
+        $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
     }
 
     public static function onchangeType($om, $oids, $lang) {
