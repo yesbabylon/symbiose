@@ -1,6 +1,6 @@
 {
 	"name": "Partenaire",
-	"plural": "partenaires",
+	"plural": "Partenaires",
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
 		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'organisation)."},
@@ -8,7 +8,7 @@
         "partner_identity_id":{"label":"Identité du partenaire"},
         "partner_position":{"label":"Position du partenaire"},
         "relationship":{"label":"Relation"},
-        "customer_rate_class_id":{"label":"Classe tarifaire au client"},
+        "customer_rate_class_id":{"label":"Classe tarifaire"},
         "customer_type_id":{"label":"Type de client"}
 	},
 	"view": {
