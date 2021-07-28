@@ -76,6 +76,20 @@ class Booking extends Model {
                 'foreign_field'     => 'booking_id',                
                 'description'       => 'List of contacts related to the booking, if any.' 
             ],
+
+            'booking_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\BookingLine',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Detailed consumptions of the booking.' 
+            ],
+
+            'booking_lines_groups_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\BookingLineGroup',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Grouped consumptions of the booking.' 
+            ],
             
             'type_id' => [
                 'type'              => 'many2one',

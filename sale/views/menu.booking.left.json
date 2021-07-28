@@ -1,0 +1,146 @@
+{
+    "name": "Booking menu",
+    "layout": {
+        "items": [
+            {
+              "id": "item.bookings",
+              "value": "Bookings",
+              "description": "",
+              "icon": "menu_book",
+              "type": "parent",
+              "children": [
+                {
+                  "id": "item.bookings",
+                  "value": "Bookings",
+                  "description": "",
+                  "icon": "menu_book",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "type": "entry",
+                      "value": "New booking",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "form.default",
+                      "purpose": "create"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "New booking",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "form.default",
+                      "purpose": "create"
+                    }                    
+                  ]
+                },
+                {
+                  "value": "Bookings",
+                  "description": "",
+                  "icon": "menu_book",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "type": "entry",
+                      "value": "New booking",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "form.default",
+                      "purpose": "create"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "New booking",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "form.default",
+                      "purpose": "create"
+                    }                    
+                  ]
+                },                
+                {
+                  "type": "entry",
+                  "value": "New booking",
+                  "description": "", 
+                  "icon": "add",
+                  "entity": "sale\\booking\\Booking",
+                  "view": "form.default",
+                  "purpose": "create"
+                },
+                {
+                  "type": "entry",
+                  "value": "All bookings",
+                  "description": "", 
+                  "entity": "sale\\booking\\Booking",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Quotes",
+                  "description": "", 
+                  "entity": "sale\\booking\\Booking",
+                  "view": "list.default",
+                  "domain": ["status", "=", "quote"]
+                },
+                {
+                  "type": "entry",
+                  "value": "Options",
+                  "description": "", 
+                  "entity": "sale\\booking\\Booking",
+                  "view": "list.default",
+                  "domain": ["status", "=", "option"]
+                },
+                {
+                  "type": "entry",
+                  "value": "Validated bookings",
+                  "description": "",
+                  "entity": "sale\\booking\\Booking",
+                  "view": "list.default",
+                  "domain": ["status", "=", "validated"]
+                }
+              ]
+            },
+            {
+              "id": "item.customers",
+              "value": "Customers",
+              "description": "",
+              "icon": "person_outline",
+              "type": "parent",
+              "children": [
+                {
+                  "id": "item.new_customer",
+                  "type": "entry",
+                  "value": "New customer",
+                  "description": "", 
+                  "icon": "add",
+                  "entity": "identity\\Partner",
+                  "view": "form.customer",
+                  "purpose": "create",
+                  "domain": ["relationship", "=", "customer"]
+                },
+                {
+                  "id": "item.all_customers",
+                  "type": "entry",
+                  "value": "All customers",
+                  "description": "", 
+                  "entity": "identity\\Partner",
+                  "view": "list.customer",
+                  "domain": ["relationship", "=", "customer"]
+                },
+                {
+                  "id": "item.all_partners",
+                  "type": "entry",
+                  "value": "All partners",
+                  "description": "", 
+                  "entity": "identity\\Partner",
+                  "view": "list.default"
+                }                
+              ]
+            }                      
+        ]
+    }
+}
