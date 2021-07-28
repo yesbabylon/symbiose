@@ -1,5 +1,6 @@
 {
     "name": "Price Categorie List",
+    "description": "This view is intended for displaying the list of price categories.",
     "layout": {
         "items": [
             {

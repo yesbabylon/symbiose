@@ -1,5 +1,6 @@
 {
     "name": "Bank Statement Line",
+    "description": "",
     "layout": {
         "groups": [
             {

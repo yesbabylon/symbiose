@@ -1,5 +1,6 @@
 {
     "name": "Consumption",
+    "description": "A Consumption is a service delivery that can be scheduled and is related to a booking.",
     "layout": {
         "groups": [
             {

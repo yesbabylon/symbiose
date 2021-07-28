@@ -3,7 +3,7 @@
 	"plural": "Classes tarifaire",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
+		"name":{"label":"Identification", "help": "Nom de la classe tarifaire."},
         "description":{"label":"Description", "help": "Brève description de la classe tarifaire."}
 	},
 	"view": {

@@ -1,5 +1,6 @@
 {
     "name": "Compositions",
+    "description": "This view is intended for displaying the list of compositions.",
     "layout": {
         "items": [
             {

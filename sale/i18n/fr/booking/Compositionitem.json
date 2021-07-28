@@ -7,9 +7,9 @@
         "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
         "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
         "gender":{"label":"Genre", "help": "Genre du contact de référence."},
-        "date_of_birth":{"label":"Date de naissance"},
-        "email":{"label":"Email"},
-        "phone":{"label":"Telephone"},
+        "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
+        "email":{"label":"Email", "help": "Adresse e-mail du contact."},
+        "phone":{"label":"Telephone", "help": "Numéro de téléphone du contact, le cas échéant."},
         "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."}
 	},
 	"view": {

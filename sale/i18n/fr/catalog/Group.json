@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Nom du produit", "help": "Nom du groupe de modèles de produits (utilisé pour toutes les variantes)."},
-        "family_id":{"label":"Famille"},
+        "family_id":{"label":"Famille", "help": "Le nom de la famille."},
         "product_models_ids":{"label":"Modèles de produits", "help": "Famille de produits à laquelle appartient le groupe actuel."}
 	},
 	"view": {

@@ -11,7 +11,7 @@
         "template_category_id":{"label":"Catégorie de modèle", "help": "Catégorie de modèle utilisée par le centre."},
         "categories_ids":{"label":"Catégories", "help": "Liste des catégories auxquelles appartient le centre belge, le cas échéant."},
         "rental_units_ids":{"label":"Unités locatives", "help": "List of rental units of the center."},
-        "product_families_ids":{"label":"Produits pour les familles du centre."}
+        "product_families_ids":{"label":"Produit de familles", "help": "Produits pour les familles du centre."}
 	},
 	"view": {
 		

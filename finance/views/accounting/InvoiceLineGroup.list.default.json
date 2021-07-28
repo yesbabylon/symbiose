@@ -1,5 +1,6 @@
 {
     "name": "Invoice Line Groups",
+    "description": "This view is intented for displaying the invoice line groups.",
     "layout": {
         "items": [
             {

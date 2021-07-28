@@ -1,5 +1,6 @@
 {
     "name": "Options",
+    "description": "This view is intended for dispaying the list of options.",
     "layout": {
         "items": [
             {

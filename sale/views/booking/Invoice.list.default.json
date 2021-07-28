@@ -1,5 +1,6 @@
 {
     "name": "Invoices",
+    "description": "This view is intended for displaying the list of invoices.",
     "layout": {
         "items": [
             {

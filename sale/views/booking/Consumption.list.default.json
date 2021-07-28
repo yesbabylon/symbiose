@@ -1,5 +1,6 @@
 {
     "name": "Consumption",
+    "description": "This view is intended for displaying the list of consumptions.",
     "layout": {
         "items": [
             {

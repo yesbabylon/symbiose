@@ -1,5 +1,6 @@
 {
     "name": "Composition Items",
+    "description": "This view is intended for displaying the list of compostion items.",
     "layout": {
         "items": [
             {

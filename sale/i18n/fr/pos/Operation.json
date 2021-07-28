@@ -8,8 +8,8 @@
         "user_id":{"label":"Utilisateur", "help": "Utilisateur à l'origine de l'opération."},
         "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartiennent les opérations."},
         "total":{"label":"Montant total", "help": "Montant total de la vente."},
-        "amount_paid":{"label":"Montant payé."},
-        "amount_returned":{"label":"Montant retourné."},
+        "amount_paid":{"label":"Montant payé", "help": "Montant d'argent payé."},
+        "amount_returned":{"label":"Montant retourné", "help": "Montant d'argent retourné."},
         "payments_ids":{"label":"Paiements", "help": "Les paiements qui font partie de l'opération."}
 	},
 	"view": {

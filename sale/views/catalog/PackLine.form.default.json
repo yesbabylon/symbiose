@@ -1,5 +1,6 @@
 {
     "name": "PackLine",
+    "description": "A Pack Line corresponds to the relation between a 'pack' product (bundle) and another product that it includes.",
     "layout": {
         "groups": [
             {
