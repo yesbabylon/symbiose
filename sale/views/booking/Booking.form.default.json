@@ -106,6 +106,26 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Details",
+                        "id": "section.booking_details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "booking_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

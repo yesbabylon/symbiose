@@ -94,11 +94,6 @@ class BookingLineGroup extends Model {
                 'required'          => true
             ]
 
-
-
-
-
-
         ];
     }
 
