@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "autosale_list_section",
+                        "id": "section.autosale_list_section",
                         "rows": [
                             {
                                 "columns": [
@@ -45,7 +45,7 @@
                     },
                     {
                         "label": "Autosale Lines",
-                        "id": "autosale_lines_section",
+                        "id": "section.autosale_lines_section",
                         "rows": [
                             {
                                 "columns": [

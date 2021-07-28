@@ -4,17 +4,13 @@
 	"description": "",
 	"model": {
         "name":{"label":"Nom du payeur"},
-        "reference_name":{"label":"Nom de référence"},
-        "date":{"label":"Date de réception du relevé."},
-        "statement_lines_ids":{"label":"Ligne de déclaration"}
+        "reference_name":{"label":"Nom de référence", "help": "Référence de la déclaration."},
+        "date":{"label":"Date de réception du relevé.", "help": "Date de réception du relevé."},
+        "statement_lines_ids":{"label":"Ligne de déclaration", "help": "Les lignes qui sont affectées à l'instruction."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.bank_statement": {"label": "Section des détails"},
-		"section.statment_lines_section": {"label": "Section des lignes de déclaration"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.bank_statement": {"label": "Détails"},
+		"section.statment_lines_section": {"label": "Lignes de déclaration"}
 	},
 	"error": {
 		

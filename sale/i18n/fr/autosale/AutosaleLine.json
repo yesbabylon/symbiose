@@ -3,19 +3,15 @@
 	"plural": "Lignes de catégories de vente automatique",
 	"description": "",
 	"model": {
-		"description":{"label":"Description"},
-        "qty":{"label":"Quantité"},
-        "product_id":{"label":"Produit"},
-        "autosale_list_id":{"label":"Liste de vente automatique"},
-        "conditions_ids":{"label":"Conditions"}
+		"description":{"label":"Description", "help": "Raison de la vente automatique."},
+        "qty":{"label":"Quantité", "help": "Quantité de produits vendus automatiquement."},
+        "product_id":{"label":"Produit", "help": "Le produit visé par la ligne."},
+        "autosale_list_id":{"label":"Liste de vente automatique", "help": "La liste à laquelle appartient la ligne."},
+        "conditions_ids":{"label":"Conditions", "help": "Les conditions qui s'appliquent à l'auto-vente."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.autosale_line_section": {"label": "Section des détails"},
-		"section.conditions_section": {"label": "Section des conditions"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.autosale_line_section": {"label": "Détails"},
+		"section.conditions_section": {"label": "Conditions"}
 	},
 	"error": {
 		

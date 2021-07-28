@@ -3,14 +3,11 @@
 	"plural": "Catégories de liste de prix",
 	"description": "La liste des prix du produit.",
 	"model": {
-		"name":{"label":"Identification"},
-        "price_list_ids":{"label":"Liste de prix"}
+		"name":{"label":"Identification", "help": "Etiquette courte pour faciliter l'identification de la liste."},
+        "price_list_ids":{"label":"Liste de prix", "help": "Les listes qui sont liées à cette catégorie, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

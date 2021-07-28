@@ -3,15 +3,12 @@
 	"plural": "Attributs de produit",
 	"description": "",
 	"model": {
-		"product_id":{"label":"Produit"},
-        "option_id":{"label":"Option"},
-        "option_value_id":{"label":"Valeur d'option"}
+		"product_id":{"label":"Produit", "help": "Le produit auquel appartient cet attribut."},
+        "option_id":{"label":"Option", "help": "Option de produit à laquelle cet attribut se rapporte."},
+        "option_value_id":{"label":"Valeur d'option", "help": "Valeur de cet attribut pour l'option sélectionnée."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

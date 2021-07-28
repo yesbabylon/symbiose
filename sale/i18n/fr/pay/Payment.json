@@ -3,24 +3,20 @@
 	"plural": "Paiements",
 	"description": "",
 	"model": {
-        "customer_id":{"label":"Client"},
-        "amount":{"label":"montant"},
-        "communication":{"label":"Communication"},
-        "receipt_date":{"label":"Date de réception"},
+        "customer_id":{"label":"Client", "help": "Le client auquel le paiement se rapporte."},
+        "amount":{"label":"Montant", "help": "Référence de la banque."},
+        "communication":{"label":"Communication", "help": "Message du payeur."},
+        "receipt_date":{"label":"Date de réception", "help": "Heure de réception du paiement."},
         "payment_method":{"label":"Mode de paiement"},
         "payment_origin":{"label":"Origine de paiment"},
-        "operation_id":{"label":"Operation"},
-        "statement_line_id":{"label":"Ligne de déclaration"},
-        "voucher_ref":{"label":"Référence du bon"},
+        "operation_id":{"label":"Operation", "help": "L'opération à laquelle se rapporte le paiement."},
+        "statement_line_id":{"label":"Ligne de déclaration", "help": "La ligne de relevé bancaire à laquelle se rapporte le paiement."},
+        "voucher_ref":{"label":"Référence du bon", "help": "La référence du bon auquel se rapporte le paiement."},
         "fundings_ids":{"label":"Financements"}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.payment_section": {"label": "Section des détails"},
-		"section.fundings_section": {"label": "Section des financements"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.payment_section": {"label": "Détails"},
+		"section.fundings_section": {"label": "Financements"}
 	},
 	"error": {
 		

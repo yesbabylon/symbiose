@@ -3,24 +3,21 @@
 	"plural": "Groupes de lignes de réservation",
 	"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
 	"model": {
-		"name":{"label":"Nom du groupe"},
-        "order":{"label":"ordre"},
-        "has_pack":{"label":"A pack"},
-        "pack_id":{"label":"Pack"},
-        "is_locked":{"label":"Est verrouillé"},
-        "date_from":{"label":"Date de"},
-        "date_to":{"label":"Date à"},
-        "sojourn_type":{"label":"Type de séjour"},
-        "nb_pers":{"label":"Nombre de personne"},
-        "rate_class_id":{"label":"Classe tarifaire"},
-        "booking_lines_ids":{"label":"Ligne de réservation"},
-        "booking_id":{"label":"Réservation"}
+		"name":{"label":"Nom du groupe", "help": "Mnemo pour le groupe."},
+        "order":{"label":"ordre", "help": "Ordre du groupe dans la liste."},
+        "has_pack":{"label":"A pack", "help": "Le groupe se rapporte-t-il à une meute ?"},
+        "pack_id":{"label":"Pack", "help": "Emballage (produit) auquel le groupe se rapporte, le cas échéant."},
+        "is_locked":{"label":"Est verrouillé", "help": "Les modifications sont-elles désactivées pour le groupe ?"},
+        "date_from":{"label":"Date de", "help": "Heure d'arrivée."},
+        "date_to":{"label":"Date à", "help": "Heure de départ."},
+        "sojourn_type":{"label":"Type de séjour", "help": "Le genre de séjour que le groupe est sur."},
+        "nb_pers":{"label":"Nombre de personne", "help": "Le nombre de personnes qui composent ce groupe."},
+        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique au groupe."},
+        "booking_lines_ids":{"label":"Ligne de réservation", "help": "Lignes de réservation qui appartiennent au groupe."},
+        "booking_id":{"label":"Réservation", "help": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

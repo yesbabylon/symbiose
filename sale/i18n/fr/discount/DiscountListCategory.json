@@ -3,17 +3,13 @@
 	"plural": "catégories de liste de remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "description":{"label":"Description"},
-        "discount_lists_ids":{"label":"Liste de remise"}
+		"name":{"label":"Identification", "help": "Nom court du type de réservation."},
+        "description":{"label":"Description", "help": "Raison de la réservation."},
+        "discount_lists_ids":{"label":"Liste de remise", "help": "Les listes de remises affectées à la catégorie."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.discount_category": {"label": "Section des détails"},
-		"section.discount_lists": {"label": "Section des remises"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.discount_category": {"label": "Détails"},
+		"section.discount_lists": {"label": "Remises"}
 	},
 	"error": {
 		

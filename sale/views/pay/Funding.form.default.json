@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "funding_section",
+                        "id": "section.funding_section",
                         "rows": [
                             {
                                 "columns": [
@@ -54,7 +54,7 @@
                     },
                     {
                         "label": "Payments",
-                        "id": "payments_section",
+                        "id": "section.payments_section",
                         "rows": [
                             {
                                 "columns": [

@@ -3,20 +3,17 @@
 	"plural": "Eléments de composition",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "firstname":{"label":"Prénom"},
-        "lastname":{"label":"Nom"},
-        "gender":{"label":"Genre"},
+		"name":{"label":"Identification", "help": "Le nom d'affichage de la personne (concaténation des noms et prénoms)."},
+        "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
+        "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
+        "gender":{"label":"Genre", "help": "Genre du contact de référence."},
         "date_of_birth":{"label":"Date de naissance"},
         "email":{"label":"Email"},
         "phone":{"label":"Telephone"},
-        "rental_unit_id":{"label":"Unité de location"}
+        "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

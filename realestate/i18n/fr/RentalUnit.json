@@ -3,22 +3,18 @@
 	"plural": "Unités de location",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
-		"name":{"label":"Nom du logement locatif."},
-        "type":{"label":"Type"},
-        "category":{"label":"Catégorie"},
-        "capacity":{"label":"Capacité"},
-        "has_children":{"label":"A des enfants"},
-        "can_rent":{"label":"Peut louer"},
-        "children_ids":{"label":"Enfants"},
-        "parent_id":{"label":"Parent"}
+		"name":{"label":"Nom", "help": "Nom du logement locatif."},
+        "type":{"label":"Type", "help": "Type de logement locatif (qui se rapporte à la capacité)."},
+        "category":{"label":"Catégorie", "help": "Type d'unité locative (qui comprend généralement des logements supplémentaires, c'est-à-dire des repas ; ou louée telle quelle)."},
+        "capacity":{"label":"Capacité", "help": "Le nombre de personnes pouvant séjourner dans l'unité."},
+        "has_children":{"label":"A des enfants", "help": "Drapeau pour marquer l'unité comme ayant des sous-unités."},
+        "can_rent":{"label":"Peut louer", "help": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location."},
+        "children_ids":{"label":"Enfants", "help": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels)."},
+        "parent_id":{"label":"Parent", "help": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.rental_units": {"label": "Section des détails"},
-		"section.children_section": {"label": "Section des enfants"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.rental_units": {"label": "Détails"},
+		"section.children_section": {"label": "Enfants"}
 	},
 	"error": {
 		

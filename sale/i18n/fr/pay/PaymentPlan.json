@@ -3,14 +3,11 @@
 	"plural": "Plans de paiement",
 	"description": "",
 	"model": {
-        "name":{"label":"Nom du payeur"},
-        "rate_class_id":{"label":"Classe tarifaire"}
+        "name":{"label":"Nom du payeur", "help": "Le client auquel le paiement se rapporte."},
+        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe de taux qui s'applique au plan de paiement."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

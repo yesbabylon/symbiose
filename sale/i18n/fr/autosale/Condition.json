@@ -7,13 +7,10 @@
         "operand":{"label":"Opérande"},
         "operator":{"label":"Opérateur"},
         "value":{"label":"Valeur"},
-        "autosale_line_id":{"label":"Ligne de vente automatique"}
+        "autosale_line_id":{"label":"Ligne de vente automatique", "help": "La ligne de vente automatique à laquelle appartient la condition."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

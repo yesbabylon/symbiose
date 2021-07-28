@@ -4,22 +4,19 @@
 	"description": "Une entreprise ou une autre organisation, ou le lieu où une organisation exerce ses activités.",
 	"model": {
 		"name":{"label":"Nom de l'établissement."},
-		"organisation_id":{"label":"Organisation"},
+		"organisation_id":{"label":"Organisation", "help": "L'organisation à laquelle appartient l'établissement."},
         "phone":{"label":"Numéro de téléphone"},
         "email":{"label":"Email"},
-        "address_street":{"label":"Rue et numéro"},
-        "address_dispatch":{"label":"Adresse d'expédition"},
-        "address_city":{"label":"Ville"},
+        "address_street":{"label":"Rue", "help": "Rue et numéro de l'adresse d'établissement."},
+        "address_dispatch":{"label":"Adresse d'expédition", "help": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."},
+        "address_city":{"label":"Ville", "help": "Ville dans laquelle se situe l'établissement."},
         "address_zip":{"label":"Code postal"},
         "address_state":{"label":"État ou région"},
-        "address_country":{"label":"Pays"},
+        "address_country":{"label":"Pays", "help": "Pays dans lequel se situe l'établissement."},
         "registration_number":{"label":"Numéro d'enregistrement"}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

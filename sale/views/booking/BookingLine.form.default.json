@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "booking_line",
+                        "id": "section.booking_line",
                         "rows": [
                             {
                                 "columns": [
@@ -88,7 +88,7 @@
                     },
                     {
                         "label": "Price Adapter",
-                        "id": "price_adapter",
+                        "id": "section.price_adapter",
                         "rows": [
                             {
                                 "columns": [

@@ -4,21 +4,18 @@
 	"description": "Une consommation est une prestation de service qui peut être programmée et qui est liée à une réservation.",
 	"model": {
 		"name":{"label":"Identification"},
-        "description":{"label":"Description"},
-        "booking_id":{"label":"Réservation"},
-        "booking_line_id":{"label":"Ligne de réservation"},
-        "date":{"label":"Date"},
-        "schedule":{"label":"Programme"},
-        "type":{"label":"Type"},
-        "product_id":{"label":"Produit"},
-        "rental_unit_id":{"label":"Unité de location"},
-        "disclaimed":{"label":"Démenti"}
+        "description":{"label":"Description", "help": "Note supplémentaire sur la consommation, le cas échéant."},
+        "booking_id":{"label":"Réservation", "help": "La réservation à laquelle se rapporte la consommation."},
+        "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation à laquelle se rapporte la consommation."},
+        "date":{"label":"Date", "help": "Date à laquelle la prestation de service est planifiée."},
+        "schedule":{"label":"Programme", "help": "Moment de la journée auquel la prestation de service est planifiée."},
+        "type":{"label":"Type", "help": "La raison pour laquelle l'unité est réservée."},
+        "product_id":{"label":"Produit", "help": "Le produit auquel appartient cet attribut."},
+        "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."},
+        "disclaimed":{"label":"Démenti", "help": "La livraison est prévue par le client qui y a expressément renoncé."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		
