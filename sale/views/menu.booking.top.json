@@ -1,0 +1,23 @@
+{
+    "name": "Booking menu",
+    "layout": {
+        "items": [
+            {
+              "id": "item.bookings",
+              "value": "Bookings",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/booking"
+            },
+            {
+              "id": "item.customers",
+              "value": "Customers",
+              "description": "",
+              "icon": "person_outline",
+              "type": "entry",
+              "route": "/planning"
+            }                      
+        ]
+    }
+}

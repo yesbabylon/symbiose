@@ -10,16 +10,21 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "legal_name",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": false
                                                 }
                                             },
+                                            {
+                                                "type": "field",
+                                                "value": "short_name",
+                                                "width": "50%"
+                                            },                                            
                                             {
                                                 "type": "field",
                                                 "value": "firstname",
@@ -49,22 +54,7 @@
                                         ]
                                     }
                                 ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "33%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "short_name",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }                          
+                            }                                                   
                         ]
                     }
                 ]

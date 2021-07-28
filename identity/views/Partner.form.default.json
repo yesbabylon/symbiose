@@ -10,25 +10,31 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Name of Partner",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Identity of Partner",
                                                 "value": "partner_identity_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",

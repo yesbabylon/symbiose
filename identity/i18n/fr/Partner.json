@@ -1,15 +1,15 @@
 {
 	"name": "Partenaire",
-	"plural": "partenaires",
+	"plural": "Partenaires",
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
 		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'organisation)."},
 		"owner_identity_id":{"label":"Identité du propriétaire", "help": "L'organisation dont l'identité ciblée est partenaire."},
         "partner_identity_id":{"label":"Identité du partenaire", "help": "L'identité ciblée (le partenaire)."},
-        "partner_position":{"label":"Position du partenaire", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
+        "partner_position":{"label":"Position du contact", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
         "relationship":{"label":"Relation", "help": "Le genre de partenariat qui existe entre les identités."},
-        "customer_rate_class_id":{"label":"Classe tarifaire au client", "help": "Classe tarifaire qui s'applique au client."},
-        "customer_type_id":{"label":"Type de client", "help": "Type de client (carte avec classes tarifaires)."}
+        "customer_rate_class_id":{"label":"Classe tarifaire", "help": "Classe tarifaire qui s'applique au client."},
+        "customer_type_id":{"label":"Type de client", "help": "Type de client (en relation avec les classes tarifaires)."}
 	},
 	"view": {
 		
