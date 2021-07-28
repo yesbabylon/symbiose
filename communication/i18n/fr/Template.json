@@ -3,15 +3,13 @@
 	"plural": "Modèles",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom"},
-		"value":{"label":"Valeur"},
-        "category_id":{"label":"Catégorie"},
-        "type":{"label":"Type"}
+		"name":{"label":"Nom", "help": "Bref mnémo de la saison."},
+		"value":{"label":"Valeur", "help": "Corps du modèle (html)."},
+        "category_id":{"label":"Catégorie", "help": "La catégorie à laquelle appartient le modèle."},
+        "type":{"label":"Type", "help": "Le modèle de contexte est destiné à être utilisé."}
 	},
 	"view": {
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

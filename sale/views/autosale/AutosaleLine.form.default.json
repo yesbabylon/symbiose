@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "autosale_line_section",
+                        "id": "section.autosale_line_section",
                         "rows": [
                             {
                                 "columns": [
@@ -52,7 +52,7 @@
                     },
                     {
                         "label": "Conditions",
-                        "id": "conditions_section",
+                        "id": "section.conditions_section",
                         "rows": [
                             {
                                 "columns": [

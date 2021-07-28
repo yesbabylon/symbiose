@@ -3,15 +3,12 @@
 	"plural": "Compositions",
 	"description": "Une composition est une liste exhaustive des personnes qui participent à un séjour lié à une Réservation.",
 	"model": {
-		"name":{"label":"Identification"},
-        "booking_id":{"label":"Réservation"},
-        "booking_line_group_id":{"label":"Groupe de lignes de réservation"}
+		"name":{"label":"Identification", "help": "Le nom de la composition est basé sur la réservation associée (client et date)."},
+        "booking_id":{"label":"Réservation", "help": "La réservation à laquelle se rapporte la composition."},
+        "booking_line_group_id":{"label":"Groupe de lignes de réservation", "help": "Le groupe de la réservation auquel la composition se rapporte."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

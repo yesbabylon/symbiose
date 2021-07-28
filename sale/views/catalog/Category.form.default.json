@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "Categories",
-                        "id": "categories_id",
+                        "id": "section.categories_id",
                         "rows": [
                             {
                                 "columns": [
@@ -34,7 +34,7 @@
                     },
                     {
                         "label": "Product Models",
-                        "id": "product_models",
+                        "id": "section.product_models",
                         "rows": [
                             {
                                 "columns": [
@@ -54,7 +54,7 @@
                     },
                     {
                         "label": "Booking Types",
-                        "id": "booking_types",
+                        "id": "section.booking_types",
                         "rows": [
                             {
                                 "columns": [

@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "rental_units",
+                        "id": "section.rental_units",
                         "rows": [
                             {
                                 "columns": [
@@ -73,7 +73,7 @@
                     },
                     {
                         "label": "Children",
-                        "id": "children_section",
+                        "id": "section.children_section",
                         "rows": [
                             {
                                 "columns": [

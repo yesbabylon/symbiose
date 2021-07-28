@@ -4,15 +4,12 @@
 	"description": "",
 	"model": {
 		"date":{"label":"Date d'achat"},
-        "amount":{"label":"Montant"},
-        "user_id":{"label":"Utilisateur"},
-        "cashdesk_id":{"label":"Caisse"}
+        "amount":{"label":"Montant", "help": "Montant restant à la fin de la journée."},
+        "user_id":{"label":"Utilisateur", "help": "Utilisateur qui a effectué l'entrée de journal."},
+        "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartient l'entrée du journal."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

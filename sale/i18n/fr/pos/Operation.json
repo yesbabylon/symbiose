@@ -3,22 +3,18 @@
 	"plural": "Operations",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom de l'operation"},
-        "type":{"label":"Type"},
-        "user_id":{"label":"Utilisateur"},
-        "cashdesk_id":{"label":"Caisse"},
-        "total":{"label":"Montant total"},
+		"name":{"label":"Nom", "help": "Mnémo court pour identifier le bureau."},
+        "type":{"label":"Type", "help": "Le genre d'opération."},
+        "user_id":{"label":"Utilisateur", "help": "Utilisateur à l'origine de l'opération."},
+        "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartiennent les opérations."},
+        "total":{"label":"Montant total", "help": "Montant total de la vente."},
         "amount_paid":{"label":"Montant payé."},
         "amount_returned":{"label":"Montant retourné."},
-        "payments_ids":{"label":"Paiements"}
+        "payments_ids":{"label":"Paiements", "help": "Les paiements qui font partie de l'opération."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"section.operation_section": {"label": "Section des détails"},
-		"section.payments_section": {"label": "Section des paiements"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		"section.operation_section": {"label": "Détails"},
+		"section.payments_section": {"label": "Paiements"}
 	},
 	"error": {
 		

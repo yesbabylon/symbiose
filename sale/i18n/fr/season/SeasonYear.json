@@ -4,13 +4,10 @@
 	"description": "Les catégories de saison de l'année.",
 	"model": {
 		"name":{"label":"Identification"},
-        "year":{"label":"Année"}
+        "year":{"label":"Année", "help": "Année à laquelle s'applique la saison."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		

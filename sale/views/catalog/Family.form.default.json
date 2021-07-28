@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "family_section",
+                        "id": "section.family_section",
                         "rows": [
                             {
                                 "columns": [
@@ -35,7 +35,7 @@
                     },
                     {
                         "label": "Children",
-                        "id": "children_section",
+                        "id": "section.children_section",
                         "rows": [
                             {
                                 "columns": [

@@ -6,7 +6,7 @@
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "center_category",
+                        "id": "section.center_category",
                         "rows": [
                             {
                                 "columns": [
@@ -29,7 +29,7 @@
                     },
                     {
                         "label": "Centers",
-                        "id": "centers_section",
+                        "id": "section.centers_section",
                         "rows": [
                             {
                                 "columns": [
@@ -49,7 +49,7 @@
                     },
                     {
                         "label": "Rental Units",
-                        "id": "rental_units_section",
+                        "id": "section.rental_units_section",
                         "rows": [
                             {
                                 "columns": [

@@ -3,14 +3,11 @@
 	"plural": "Utilisateurs",
 	"description": "Les utilisateurs peuvent se connecter, être assignés à des groupes et recevoir des permissions spécifiques.",
 	"model": {
-		"name":{"label":"Nom de l'utilisateur"},
-		"identity_id":{"label":"Identité"}
+		"name":{"label":"Nom de l'utilisateur", "help": "Le nom d'affichage de l'utilisateur."},
+		"identity_id":{"label":"Identité", "help": "Le contact lié à l'utilisateur."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 	

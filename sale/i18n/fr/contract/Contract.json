@@ -3,18 +3,15 @@
 	"plural": "Contrats",
 	"description": "Les contrats sont des accords formels concernant la livraison de produits ou de services conclus entre deux parties.",
 	"model": {
-		"name":{"label":"Identification"},
-        "description":{"label":"Description"},
-        "status":{"label":"Statut"},
-        "date":{"label":"Date"},
-        "valid_until":{"label":"Valable jusque"},
-        "customer_id":{"label":"Client"}
+		"name":{"label":"Identification", "help": "Nom abrégé du contrat."},
+        "description":{"label":"Description", "help": "Brève description de la raison du contrat (c'est-à-dire l'objet de l'accord)."},
+        "status":{"label":"Statut", "help": "Status of the contract."},
+        "date":{"label":"Date", "help": "Date à laquelle le contrat a été officiellement publié."},
+        "valid_until":{"label":"Valable jusque", "help": "Date après laquelle le contrat expire s'il n'a pas été approuvé."},
+        "customer_id":{"label":"Client", "help": "Le client auquel se rapporte le contrat."}
 	},
 	"view": {
-		"label.details":{"label":"Détails de contact"},
-		"identification":{"label":"Identification"},
-		"cancel":{"label":"Annuler"},
-		"subscribe":{"label":"S'inscrire"}
+		
 	},
 	"error": {
 		
