@@ -19,11 +19,6 @@
                 "label": "Maximum Rate",
                 "value": "rate_max",
                 "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "value",
-                "width": "20%"
             }
         ]
     }

@@ -10,7 +10,7 @@
         "is_locked":{"label":"Est verrouillé", "help": "Les modifications sont-elles désactivées pour le groupe ?"},
         "date_from":{"label":"Date de", "help": "Heure d'arrivée."},
         "date_to":{"label":"Date à", "help": "Heure de départ."},
-        "sojourn_type":{"label":"Type de séjour", "help": "Le genre de séjour que le groupe est sur."},
+        "sojourn_type":{"label":"Type de séjour", "help": "Le genre de séjour que le groupe est sur.", "selection": {"GA": "GA", "GG": "GG"}},
         "nb_pers":{"label":"Nombre de personne", "help": "Le nombre de personnes qui composent ce groupe."},
         "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique au groupe."},
         "booking_lines_ids":{"label":"Ligne de réservation", "help": "Lignes de réservation qui appartiennent au groupe."},

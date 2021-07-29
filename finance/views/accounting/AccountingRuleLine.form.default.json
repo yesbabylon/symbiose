@@ -50,12 +50,6 @@
                                                 "label": "Accounting Rule",
                                                 "value": "accounting_rule_id",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Vat Rule",
-                                                "value": "vat_rule_id",
-                                                "width": "50%"
                                             }
                                         ]
                                     }

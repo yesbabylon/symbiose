@@ -12,7 +12,7 @@
             {
                 "type": "field",
                 "label": "Organization Name",
-                "value": "organisation_name",
+                "value": "organisation_id",
                 "width": "15%"
             }
         ]

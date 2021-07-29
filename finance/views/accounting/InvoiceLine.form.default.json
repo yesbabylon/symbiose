@@ -63,26 +63,6 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Prices",
-                        "id": "section.prices_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "prices_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 ]
             }

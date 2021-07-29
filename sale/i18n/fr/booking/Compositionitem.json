@@ -6,7 +6,7 @@
 		"name":{"label":"Identification", "help": "Le nom d'affichage de la personne (concaténation des noms et prénoms)."},
         "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
         "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
-        "gender":{"label":"Genre", "help": "Genre du contact de référence."},
+        "gender":{"label":"Genre", "help": "Genre du contact de référence.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"}},
         "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
         "email":{"label":"Email", "help": "Adresse e-mail du contact."},
         "phone":{"label":"Telephone", "help": "Numéro de téléphone du contact, le cas échéant."},

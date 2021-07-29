@@ -14,12 +14,6 @@
                 "label": "Manager Name",
                 "value": "name",
                 "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Organisation Name",
-                "value": "organisation_name",
-                "width": "20%"
             }
         ]
     }

@@ -24,12 +24,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Center",
-                                                "value": "center_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Rentable",
                                                 "value": "can_rent",
                                                 "width": "50%"                                                

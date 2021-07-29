@@ -3,7 +3,7 @@
 	"plural": "Lines d'operation",
 	"description": "",
 	"model": {
-        "type":{"label":"Type", "help": "Le genre d'opération."},
+        "type":{"label":"Type", "help": "Le genre d'opération.", "selection": {"direct": "direct", "booking": "réservation"}},
         "operation_id":{"label":"Opération", "help": "L'opération à laquelle se rapporte le paiement."},
         "product_id":{"label":"Produit", "help": "Le produit visé par la ligne."},
         "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation ciblée par la ligne d'opération."}

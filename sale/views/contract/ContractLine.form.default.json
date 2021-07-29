@@ -44,14 +44,14 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Contract",
-                                                "value": "Quantity",
+                                                "label": "Quantity",
+                                                "value": "qty",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "free_qty",
-                                                "value": "qty",
+                                                "label": "Free Quantity",
+                                                "value": "free_qty",
                                                 "width": "50%"
                                             },
                                             {

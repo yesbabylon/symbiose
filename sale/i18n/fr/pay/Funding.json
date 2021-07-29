@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
         "payments_ids":{"label":"Paiements", "help": "Liste de paiements."},
-        "type":{"label":"Type", "help": "Les délais sont échelonnés sauf le dernier : facture définitive."},
+        "type":{"label":"Type", "help": "Les délais sont échelonnés sauf le dernier : facture définitive.", "selection": {"installment": "versement", "invoice": "facture d'achat"}},
         "due_amount":{"label":"Montant dû", "help": "Montant prévu pour le financement."},
         "due_date":{"label":"Date d'échéance", "help": "Date limite avant laquelle le financement est attendu."},
         "is_paid":{"label":"Est payé", "help": "Le paiement complet a-t-il été reçu?"},

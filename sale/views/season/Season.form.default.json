@@ -53,26 +53,6 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Discount Lists",
-                        "id": "discount_lists",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "discount_lists_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 ]
             }

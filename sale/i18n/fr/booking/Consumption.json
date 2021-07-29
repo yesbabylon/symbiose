@@ -9,7 +9,7 @@
         "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation à laquelle se rapporte la consommation."},
         "date":{"label":"Date", "help": "Date à laquelle la prestation de service est planifiée."},
         "schedule":{"label":"Programme", "help": "Moment de la journée auquel la prestation de service est planifiée."},
-        "type":{"label":"Type", "help": "La raison pour laquelle l'unité est réservée."},
+        "type":{"label":"Type", "help": "La raison pour laquelle l'unité est réservée.", "selection": {"book": "consommation d'une réservation", "ooo": "hors service"}},
         "product_id":{"label":"Produit", "help": "Le produit auquel appartient cet attribut."},
         "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."},
         "disclaimed":{"label":"Démenti", "help": "La livraison est prévue par le client qui y a expressément renoncé."}

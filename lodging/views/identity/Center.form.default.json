@@ -26,12 +26,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Organization Name",
-                                                "value": "organisation_name",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Organization",
                                                 "value": "organisation_id",
                                                 "width": "50%"

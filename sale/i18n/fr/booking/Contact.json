@@ -5,7 +5,7 @@
 	"model": {
 		"creator":{"label":"Créateur", "help": "Utilisateur qui a créé l'entrée."},
         "booking_id":{"label":"Réservation", "help": "La réservation du contact se rapporte."},
-        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités."}
+        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités.", "selection": {"booking": "réservation", "invoice": "facture d'achat", "contract": "contrat", "sojourn": "séjour"}}
 	},
 	"view": {
 		
