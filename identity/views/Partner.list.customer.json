@@ -1,0 +1,19 @@
+{
+    "name": "Partners",
+    "description": "This view is intended for displaying basic listing of existing Partners.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",   
+                "label": "Partner Identity",         
+                "value": "partner_identity_id",
+                "width": "20%"
+            }
+        ]
+    }
+}
