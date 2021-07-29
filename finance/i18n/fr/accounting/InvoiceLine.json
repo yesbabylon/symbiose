@@ -9,12 +9,11 @@
         "price":{"label":"Prix", "help": "Prix ​​du produit lié à la ligne."},
         "vat_rate":{"label":"Taux de TVA", "help": "Taux de TVA à appliquer."},
         "qty":{"label":"Quantité", "help": "Quantité de produit."},
-        "free_qty":{"label":"Quantité gratuite"},
+        "free_qty":{"label":"Quantité gratuite", "help": "Quantité gratuite du produit."},
         "discount":{"label":"Remise", "help": "Montant total de la remise à appliquer, le cas échéant."}
 	},
 	"view": {
-		"section.products_Section": {"label": "Détails"},
-		"section.prices_section": {"label": "Prix"}
+		"section.products_Section": {"label": "Détails"}
 	},
 	"error": {
 	

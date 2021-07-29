@@ -3,8 +3,8 @@
 	"plural": "Produits",
 	"description": "Informations relatives au produit.",
 	"model": {
-		"qty_accounting_method":{"label":"Méthode de comptabilisation des quantités", "help": "La façon dont la quantité de produit doit être calculée (par unité [par défaut], par personne ou par logement [ressource])."},
-        "rental_unit_assignement":{"label":"Cession de logement locatif", "help": "La manière dont le produit est affecté à une unité de location (une unité spécifique, une catégorie spécifique ou en fonction de la capacité)."},
+		"qty_accounting_method":{"label":"Méthode de comptabilisation des quantités", "help": "La façon dont la quantité de produit doit être calculée (par unité [par défaut], par personne ou par logement [ressource]).", "selection": {"person": "personne", "accomodation": "hébergement", "unit": "unité"}},
+        "rental_unit_assignement":{"label":"Cession de logement locatif", "help": "La manière dont le produit est affecté à une unité de location (une unité spécifique, une catégorie spécifique ou en fonction de la capacité).", "selection": {"unit": "unité", "category": "catégorie", "capacity": "capacité"}},
         "has_duration":{"label":"A une durée", "help": "Le produit a-t-il une durée spécifique."},
         "duration":{"label":"Durée", "help": "Informations supplémentaires sur la durée du service (en jours), utilisées à des fins de planification."},
         "capacity":{"label":"Capacité", "help": "Informations supplémentaires sur la capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants)."},

@@ -25,8 +25,8 @@
             },
             {
                 "type": "field",
-                "label": "Autosale List",
-                "value": "autosale_list_id",
+                "label": "Autosale Line",
+                "value": "autosale_line_id",
                 "width": "20%"
             }
         ]

@@ -5,7 +5,7 @@
 	"model": {
 		"name":{"label":"Nom", "help": "Identité de l'utilisateur."},
 		"display_name":{"label":"Nom d'affichage", "help": "Nom d'affichage de l'identité."},
-        "type":{"label":"Type", "help": "Type d'organisation."},
+        "type":{"label":"Type", "help": "Type d'organisation.", "selection": {"I": "individuel", "SE": "travailleur indépendant", "C": "entreprise", "NP": "non lucratif", "PA": "administration publique"}},
         "legal_name":{"label":"Nom légal", "help": "Nom complet de l'Identité."},
         "short_name":{"label":"Nom usuel", "help": "Nom usuel à utiliser comme mémo pour identifier l'organisation (acronyme ou nom abrégé)."},
         "description":{"label":"Description", "help": "Un petit rappel pour aider l'utilisateur à identifier l'organisation (par exemple 'Société de conseil en ressources humaines')."},
@@ -34,7 +34,7 @@
         "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
         "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
         "gender":{"label":"Genre", "help": "Genre du contact de référence.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"} },
-        "title":{"label":"Titre", "help": "Titre du contact de référence."},
+        "title":{"label":"Titre", "help": "Titre du contact de référence.", "selection": {"Dr": "Docteur", "Ms": "Mademoiselle", "Mrs": "Madame", "Mr": "Monsieur", "Pr": "Professeur"}},
         "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
         "lang":{"label":"Langue", "help": "Langue parlée préférée."}
 	},

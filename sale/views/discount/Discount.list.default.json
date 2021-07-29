@@ -9,15 +9,13 @@
                 "width": "20%"
             }, 
             {
-                "type": "field",   
-                "label": "Minimum Rate",         
-                "value": "rate_min",
+                "type": "field",        
+                "value": "value",
                 "width": "20%"
             },
             {
-                "type": "field",
-                "label": "Maximum Rate",            
-                "value": "rate_max",
+                "type": "field",          
+                "value": "type",
                 "width": "20%"
             }
         ]

@@ -3,8 +3,8 @@
 	"plural": "Factures",
 	"description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
 	"model": {
-		"name":{"label":"Nom de la facture", "help": "Identification"},
-		"status":{"label":"Statut", "help": "La situation à un moment donné au cours d'un processus."},
+		"name":{"label":"Identification", "help": "Nom de la facture."},
+		"status":{"label":"Statut", "help": "La situation à un moment donné au cours d'un processus.", "selection": {"proforma": "pro forma", "invoice": "facture d'achat"}},
 		"number":{"label":"Numéro de la facture", "help": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation)."},
         "is_paid":{"label":"Est payée", "help": "Indicateur pour marquer la facture comme entièrement payée."},
         "date":{"label":"Date", "help": "Date de création de la facture."},

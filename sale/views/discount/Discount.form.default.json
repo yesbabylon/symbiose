@@ -6,6 +6,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "section.discounts",
                         "rows": [
                             {
                                 "columns": [
@@ -15,28 +17,51 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Minimum Rate",
-                                                "value": "rate_min",
-                                                "width": "50%"                                                
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Maximum Rate",
-                                                "value": "rate_max",
-                                                "width": "50%"                                                
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Discount List",
                                                 "value": "discount_list_id",
                                                 "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "value",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"                                                
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"                                                
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Conditions",
+                        "id": "section.conditions",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "conditions_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

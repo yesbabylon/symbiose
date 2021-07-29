@@ -6,7 +6,7 @@
 		"name":{"label":"Nom", "help": "Bref mnémo de la saison."},
 		"value":{"label":"Valeur", "help": "Corps du modèle (html)."},
         "category_id":{"label":"Catégorie", "help": "La catégorie à laquelle appartient le modèle."},
-        "type":{"label":"Type", "help": "Le modèle de contexte est destiné à être utilisé."}
+        "type":{"label":"Type", "help": "Le modèle de contexte est destiné à être utilisé.", "selection": {"contract": "contract", "invoice": "facture d'achat", "email": "e-mail"}}
 	},
 	"view": {
 		

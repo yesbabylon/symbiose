@@ -5,7 +5,7 @@
 	"model": {
         "name":{"label":"Nom", "help": "Nom du payeur."},
         "reference_name":{"label":"Nom de référence", "help": "Référence de la déclaration."},
-        "date":{"label":"Date de réception du relevé.", "help": "Date de réception du relevé."},
+        "date":{"label":"Date de réception du relevé", "help": "Date de réception du relevé."},
         "statement_lines_ids":{"label":"Ligne de déclaration", "help": "Les lignes qui sont affectées à l'instruction."}
 	},
 	"view": {

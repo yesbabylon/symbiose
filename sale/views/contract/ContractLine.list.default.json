@@ -26,8 +26,8 @@
             },
             {
                 "type": "field",
-                "label": "Contract",
-                "value": "Quantity",
+                "label": "Quantity",
+                "value": "qty",
                 "width": "10%"
             }
         ]

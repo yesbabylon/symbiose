@@ -10,7 +10,7 @@
         "qty":{"label":"Quantité", "help": "Quantité d'articles de produit pour la ligne."},
         "free_qty":{"label":"Quantité gratuite", "help": "Quantité d'articles gratuits (offerts en cadeau)."},
         "order":{"label":"Ordre", "help": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement."},
-        "payment_mode":{"label":"Mode de paiement", "help": "La façon dont la ligne est destinée à être payée."},
+        "payment_mode":{"label":"Mode de paiement", "help": "La façon dont la ligne est destinée à être payée.", "selection": {"invoice": "facture d'achat", "cash": "en espèces", "free": "gratuit"}},
         "is_paid":{"label":"Est payé", "help": "La ligne a-t-elle déjà été payée ?"},
         "price_adapters_ids":{"label":"Adaptateurs de prix", "help": "Adaptateurs de prix qui s'appliquent à la ligne."},
         "price":{"label":"Prix computé", "help": "Prix computé."},

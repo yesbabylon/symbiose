@@ -3,7 +3,7 @@
 	"plural": "Line des règles comptable",
 	"description": "Les règles comptables ont une ou plusieurs lignes les associant à un compte et une règle TVA.",
 	"model": {
-		"name":{"label":"Nom de la ligne", "help": "Identification"},
+		"name":{"label":"Identification", "help": "Nom de la ligne."},
 		"label":{"label":"Code de la ligne", "help": "Code de la ligne à servir de mémo."},
 		"account":{"label":"Compte", "help": "Code du compte concerné."},
         "section":{"label":"Section", "help": "Code de la section de comptabilité analytique associée."},

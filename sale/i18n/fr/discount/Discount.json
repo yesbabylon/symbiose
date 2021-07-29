@@ -5,7 +5,7 @@
 	"model": {
 		"name":{"label":"Identification", "help": "Nom de la remise."},
         "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
-        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités."},
+        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités.", "selection": {"amount": "montant", "percent": "pour cent", "freebie": "gratuité"}},
         "value":{"label":"Valeur", "help": "Valeur de remise."},
         "discount_list_id":{"label":"Liste de remise", "help": "La liste de remises à laquelle appartient la remise."},
         "conditions_ids":{"label":"Conditions", "help": "Les conditions qui s'appliquent à la remise."}

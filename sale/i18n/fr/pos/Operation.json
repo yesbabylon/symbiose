@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Nom", "help": "Mnémo court pour identifier le bureau."},
-        "type":{"label":"Type", "help": "Le genre d'opération."},
+        "type":{"label":"Type", "help": "Le genre d'opération.", "selection": {"sale": "vendre", "move": "mouvement"}},
         "user_id":{"label":"Utilisateur", "help": "Utilisateur à l'origine de l'opération."},
         "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartiennent les opérations."},
         "total":{"label":"Montant total", "help": "Montant total de la vente."},

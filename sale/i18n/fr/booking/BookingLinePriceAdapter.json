@@ -6,7 +6,7 @@
 		"booking_id":{"label":"Réservation", "help": "La réservation de l'adaptateur concerne."},
         "booking_line_id":{"label":"Ligne de réservation", "help": "Ligne de réservation à laquelle l'adaptateur se rapporte."},
         "is_manual_discount":{"label":"Est une remise manuelle", "help": "Indicateur pour définir l'adaptateur comme manuel ou associé à une remise."},
-        "type":{"label":"Type", "help": "Type de remise manuelle (montant fixe ou pourcentage du prix)."},
+        "type":{"label":"Type", "help": "Type de remise manuelle (montant fixe ou pourcentage du prix).", "selection": {"percent": "pour cent", "amount": "montant"}},
         "value":{"label":"Valeur", "help": "Valeur de la remise (montant monétaire ou pourcentage)."},
         "discount_id":{"label":"Remise", "help": "Remise liée à l'adaptateur, le cas échéant."}
 	},
