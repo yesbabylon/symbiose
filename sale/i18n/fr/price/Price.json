@@ -5,7 +5,7 @@
 	"model": {
 		"name":{"label":"Nom", "help": "Le nom d'affichage du prix."},
         "price":{"label":"Prix", "help": "Prix ​​hors taxes."},
-        "type":{"label":"Type"},
+        "type":{"label":"Type", "help": "Type de prix."},
         "calculation_method_id":{"label":"Méthode de calcul", "help": "Méthode à utiliser pour le calcul des prix."},
         "description":{"label":"Description", "help": "Brève description de la variante."},
         "price_list_id":{"label":"Liste de prix", "help": "La liste de prix à laquelle appartient le prix."},

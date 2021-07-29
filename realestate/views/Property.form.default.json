@@ -1,5 +1,6 @@
 {
     "name": "Properties",
+    "description": "Properties available.",
     "layout": {
         "groups": [
             {
@@ -11,7 +12,14 @@
                                     {
                                         "width": "50%",
                                         "items": [
-                                            
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            }
                                         ]
                                     }
                                 ]

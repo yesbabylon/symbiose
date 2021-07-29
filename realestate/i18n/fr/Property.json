@@ -3,7 +3,7 @@
 	"plural": "Propriétés",
 	"description": "Les propriétés qui existent.",
 	"model": {
-		"name":{"label":"Nom de la propriété"}
+		"name":{"label":"Nom", "help": "Nom de la propriété."}
 	},
 	"view": {
 		

@@ -6,7 +6,7 @@
                 "bank_statement_id":{"label":"Relevé bancaire", "help": "Le relevé bancaire auquel la ligne se rapporte."},
                 "communication":{"label":"Communication", "help": "Message du payeur."},
                 "date":{"label":"Date", "help": "Date à laquelle la déclaration a été émise."},
-                "reference":{"label":"Référence de la banque"},
+                "reference":{"label":"Référence", "help": "Référence de la banque."},
                 "customer_id":{"label":"Client", "help": "Le client auquel le paiement se rapporte, s'il est connu."},
                 "amount":{"label":"Montant", "help": "Référence de la banque."},
                 "account_iban":{"label":"Compte IBAN", "help": "IBAN à l'origine du paiement."},

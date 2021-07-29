@@ -1,5 +1,6 @@
 {
     "name": "Bank Statement Lines",
+    "description": "This view is intended for displaying the list of bank statement lines.",
     "layout": {
         "items": [
             {

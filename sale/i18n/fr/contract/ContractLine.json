@@ -9,7 +9,7 @@
         "price":{"label":"Prix", "help": "Prix ​​du produit lié à la ligne."},
         "vat_rate":{"label":"Taux de tva", "help": "Taux de TVA à appliquer."},
         "qty":{"label":"Quantité", "help": "Quantité de produit."},
-        "free_qty":{"label":"Quantité gratuite"},
+        "free_qty":{"label":"Quantité gratuite", "help": "Quantité gratuite de produit."},
         "discount":{"label":"Remise", "help": "Montant total de la remise à appliquer, le cas échéant."}
 	},
 	"view": {

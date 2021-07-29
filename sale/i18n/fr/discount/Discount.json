@@ -3,7 +3,7 @@
 	"plural": "Remises",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
+		"name":{"label":"Identification", "help": "Nom de la remise."},
         "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
         "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités."},
         "value":{"label":"Valeur", "help": "Valeur de remise."},

@@ -1,5 +1,6 @@
 {
     "name": "Accounting Rule List",
+    "description": "This view is intented for displaying the accounting rules.",
     "layout": {
         "items": [
             {

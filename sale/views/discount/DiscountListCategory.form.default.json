@@ -1,5 +1,6 @@
 {
     "name": "Discount List Category",
+    "description": "Discount lists can be arranged by categories.",
     "layout": {
         "groups": [
             {

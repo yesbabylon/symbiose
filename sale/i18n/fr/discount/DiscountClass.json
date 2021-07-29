@@ -3,7 +3,7 @@
 	"plural": "Classes de remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
+		"name":{"label":"Identification", "help": "Nom de la classe de remise."},
         "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
         "rate_min":{"label":"Taux min", "help": "Remise minimale garantie, le cas échéant."},
         "rate_max":{"label":"Taux max", "help": "Remise maximale applicable, le cas échéant."},

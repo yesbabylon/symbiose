@@ -3,10 +3,10 @@
 	"plural": "Conditions",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "operand":{"label":"Opérande"},
-        "operator":{"label":"Opérateur"},
-        "value":{"label":"Valeur"},
+		"name":{"label":"Identification", "help": "Nom de la condition."},
+        "operand":{"label":"Opérande", "help": "L'opérand de la condition."},
+        "operator":{"label":"Opérateur", "help": "L'opérateur qui a effectué cette condition."},
+        "value":{"label":"Valeur", "help": "Valeur de la condition."},
         "discount_id":{"label":"Remise", "help": "La liste de remises à laquelle appartient la remise."}
 	},
 	"view": {

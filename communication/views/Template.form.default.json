@@ -1,5 +1,6 @@
 {
     "name": "Template",
+    "description": "Templates are used in communication and contains multiple categories.",
     "layout": {
         "groups": [
             {

@@ -1,5 +1,6 @@
 {
     "name": "ProductModel",
+    "description": "Thies view is intended for displaying the list product models.",
     "layout": {
         "items": [
             {
