@@ -1,5 +1,6 @@
 {
     "name": "Template Category",
+    "description": "Category list of the templates.",
     "layout": {
         "groups": [
             {

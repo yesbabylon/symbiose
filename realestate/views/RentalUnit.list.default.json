@@ -1,5 +1,6 @@
 {
     "name": "Rental Unit List",
+    "description": "This view is intended for displaying the list of rental units.",
     "layout": {
         "items": [
             {

@@ -3,7 +3,7 @@
 	"plural": "Catégories de vente automatique",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"}
+		"name":{"label":"Identification", "help": "Nom de la catégorie de vente automatique."}
 	},
 	"view": {
 		

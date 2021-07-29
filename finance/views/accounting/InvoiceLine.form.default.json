@@ -1,5 +1,6 @@
 {
     "name": "Invoice Line",
+    "description": "Invoice lines describe the products and quantities that are part of an invoice.",
     "layout": {
         "groups": [
             {

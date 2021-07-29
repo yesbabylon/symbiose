@@ -1,5 +1,6 @@
 {
     "name": "Operation Lines",
+    "description": "This view is intended for displaying the list of operation lines.",
     "layout": {
         "items": [
             {

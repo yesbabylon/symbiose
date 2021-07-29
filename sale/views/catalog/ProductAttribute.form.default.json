@@ -1,5 +1,6 @@
 {
     "name": "Product Attribute",
+    "description": "A Product Attrribute corresponds to the value of an attribute available for a Product of a given Family.",
     "layout": {
         "groups": [
             {

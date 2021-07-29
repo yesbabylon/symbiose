@@ -1,5 +1,6 @@
 {
     "name": "Composition Item",
+    "description": "Composition items are details about a person that is part of a booking and stays at least one night.",
     "layout": {
         "groups": [
             {

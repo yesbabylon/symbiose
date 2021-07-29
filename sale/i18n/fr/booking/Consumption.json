@@ -3,7 +3,7 @@
 	"plural": "Consommations",
 	"description": "Une consommation est une prestation de service qui peut être programmée et qui est liée à une réservation.",
 	"model": {
-		"name":{"label":"Identification"},
+		"name":{"label":"Identification", "help": "Nom de la personne."},
         "description":{"label":"Description", "help": "Note supplémentaire sur la consommation, le cas échéant."},
         "booking_id":{"label":"Réservation", "help": "La réservation à laquelle se rapporte la consommation."},
         "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation à laquelle se rapporte la consommation."},

@@ -1,5 +1,6 @@
 {
     "name": "Product",
+    "description": "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.",
     "layout": {
         "groups": [
             {

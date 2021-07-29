@@ -1,5 +1,6 @@
 {
     "name": "Contract List",
+    "description": "This view is intended for displaying the list of contracts.",
     "layout": {
         "items": [
             {

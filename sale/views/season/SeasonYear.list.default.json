@@ -1,5 +1,6 @@
 {
     "name": "Season Year",
+    "description": "This view is intended for displaying the list of season years.",
     "layout": {
         "items": [
             {

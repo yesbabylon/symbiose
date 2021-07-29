@@ -3,7 +3,7 @@
 	"plural": "Caisses",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom du caissier"}
+		"name":{"label":"Nom", "help": "Nom du caissier."}
 	},
 	"view": {
 		

@@ -1,5 +1,6 @@
 {
     "name": "Category",
+    "description": "Categories are not related to Families and allow a different way of grouping Products.",
     "layout": {
         "groups": [
             {

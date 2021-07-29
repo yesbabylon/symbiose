@@ -1,5 +1,6 @@
 {
     "name": "Booking Line Group",
+    "description": "Booking line groups are related to a booking and describe one or more sojourns and their related consumptions.",
     "layout": {
         "groups": [
             {

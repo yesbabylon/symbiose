@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Référence", "help": "Utilisateur qui a créé l'entrée."},
-        "creator":{"label":"Créateur"},
+        "creator":{"label":"Créateur", "help": "La personne qui a effectué cette réservation."},
         "description":{"label":"Description", "help": "Raison de la réservation."},
         "customer_id":{"label":"Client", "help": "Le client auquel se rapporte la réservation."},
         "center_id":{"label":"Centre", "help": "Le centre auquel se rapporte la réservation."},
@@ -13,9 +13,9 @@
         "has_contract":{"label":"A un contrat", "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."},
         "contracts_ids":{"label":"Contrats", "help": "Liste des contacts liés à la réservation, le cas échéant."},
         "type_id":{"label":"Type", "help": "Type d'organisation."},
-        "status":{"label":"Statut"},
-        "date_from":{"label":"Date de"},
-        "date_to":{"label":"Date à"},
+        "status":{"label":"Statut", "help": "Statut de la réservation."},
+        "date_from":{"label":"Date de", "help": "Date de début de la réservation."},
+        "date_to":{"label":"Date à", "help": "Date de fin de la réservation."},
         "has_payer_organisation":{"label":"Payeur distinct", "help": "Indicateur pour savoir si la facture doit être envoyée à une autre identité."},
         "payer_organisation_id":{"label":"Organisme payeur", "help": "Le partenaire auquel les factures doivent être envoyées."}
 	},
