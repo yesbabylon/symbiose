@@ -33,7 +33,7 @@
         "user_id":{"label":"Utilisateur", "help": "Utilisateur associé à cette identité."},
         "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
         "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
-        "gender":{"label":"Genre", "help": "Genre du contact de référence."},
+        "gender":{"label":"Genre", "help": "Genre du contact de référence.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"} },
         "title":{"label":"Titre", "help": "Titre du contact de référence."},
         "date_of_birth":{"label":"Date de naissance"},
         "lang":{"label":"Langue", "help": "Langue parlée préférée."}

@@ -7,8 +7,8 @@
 		"owner_identity_id":{"label":"Identité du propriétaire", "help": "L'organisation dont l'identité ciblée est partenaire."},
         "partner_identity_id":{"label":"Identité du partenaire", "help": "L'identité ciblée (le partenaire)."},
         "partner_position":{"label":"Position du contact", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
-        "relationship":{"label":"Relation", "help": "Le genre de partenariat qui existe entre les identités."},
-        "customer_rate_class_id":{"label":"Classe tarifaire", "help": "Classe tarifaire qui s'applique au client."},
+        "relationship":{"label":"Relation", "help": "Le genre de partenariat qui existe entre les identités.", "selection": {"contact": "contact", "employee": "employé", "customer": "client", "provider":"fournisseur", "payer":"payeur", "other": "autre" } },
+        "customer_rate_class_id":{"label":"Catégorie tarifaire", "help": "Catégorie tarifaire qui s'applique au client."},
         "customer_type_id":{"label":"Type de client", "help": "Type de client (en relation avec les classes tarifaires)."}
 	},
 	"view": {
