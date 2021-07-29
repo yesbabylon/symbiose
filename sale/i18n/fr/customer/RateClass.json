@@ -1,10 +1,10 @@
 {
-	"name": "Classe tarifaire",
-	"plural": "Classes tarifaire",
+	"name": "Catégorie tarifaire",
+	"plural": "Catégories tarifaire",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification"},
-        "description":{"label":"Description", "help": "Brève description de la classe tarifaire."}
+		"name":{"label":"Identifiant", "help": "Mnémo d'identification de la catégorie (T1-7)."},
+        "description":{"label":"Description", "help": "Brève description de la catégorie tarifaire."}
 	},
 	"view": {
 		
