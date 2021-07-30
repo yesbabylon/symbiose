@@ -19,14 +19,16 @@ class CustomerType extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the customer type."
+                'description'       => "Short description of the customer type.",
+                "multilang"         => true
             ],
             
             'rate_class_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The rate class that applies to this type of customer.",
-                'required'          => true
+                // when using Natures, the rate class to apply is set in CustomerNature
+                'required'          => false
             ],
         ];
     }

@@ -22,12 +22,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Class Rate",
-                                                "value": "rate_class_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "description",
                                                 "width": "100%"                                                
                                             }
