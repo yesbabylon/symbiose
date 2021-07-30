@@ -8,60 +8,7 @@
               "description": "",
               "icon": "menu_book",
               "type": "parent",
-              "children": [
-                {
-                  "id": "item.bookings",
-                  "value": "Bookings",
-                  "description": "",
-                  "icon": "menu_book",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "type": "entry",
-                      "value": "New booking",
-                      "description": "", 
-                      "icon": "add",
-                      "entity": "sale\\booking\\Booking",
-                      "view": "form.default",
-                      "purpose": "create"
-                    },
-                    {
-                      "type": "entry",
-                      "value": "New booking",
-                      "description": "", 
-                      "icon": "add",
-                      "entity": "sale\\booking\\Booking",
-                      "view": "form.default",
-                      "purpose": "create"
-                    }                    
-                  ]
-                },
-                {
-                  "value": "Bookings",
-                  "description": "",
-                  "icon": "menu_book",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "type": "entry",
-                      "value": "New booking",
-                      "description": "", 
-                      "icon": "add",
-                      "entity": "sale\\booking\\Booking",
-                      "view": "form.default",
-                      "purpose": "create"
-                    },
-                    {
-                      "type": "entry",
-                      "value": "New booking",
-                      "description": "", 
-                      "icon": "add",
-                      "entity": "sale\\booking\\Booking",
-                      "view": "form.default",
-                      "purpose": "create"
-                    }                    
-                  ]
-                },                
+              "children": [               
                 {
                   "type": "entry",
                   "value": "New booking",
@@ -108,9 +55,43 @@
               "id": "item.customers",
               "value": "Customers",
               "description": "",
-              "icon": "person_outline",
+              "icon": "person",
               "type": "parent",
               "children": [
+                {
+                  "id": "item.customers_types",
+                  "value": "Types",
+                  "description": "",
+                  "icon": "person_outline",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "item.all_customers_natures",
+                      "type": "entry",
+                      "value": "All types",
+                      "description": "", 
+                      "entity": "sale\\customer\\CustomerType",
+                      "view": "list.default"
+                    }
+                  ]
+                },
+                {
+                  "id": "item.customers_natures",
+                  "value": "Natures",
+                  "description": "",
+                  "icon": "person_outline",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "item.all_customers_natures",
+                      "type": "entry",
+                      "value": "All natures",
+                      "description": "", 
+                      "entity": "sale\\customer\\CustomerNature",
+                      "view": "list.default"
+                    }
+                  ]
+                },
                 {
                   "id": "item.new_customer",
                   "type": "entry",
