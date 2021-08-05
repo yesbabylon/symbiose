@@ -10,6 +10,7 @@
               "type": "parent",
               "children": [               
                 {
+                  "id": "item.permissions",
                   "type": "entry",
                   "value": "Permissions",
                   "description": "", 
@@ -17,6 +18,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.users",
                   "type": "entry",
                   "value": "Users",
                   "description": "", 
@@ -24,6 +26,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.groups",
                   "type": "entry",
                   "value": "Groups",
                   "description": "", 
@@ -47,6 +50,7 @@
                   "type": "parent",
                   "children": [               
                     {
+                      "id": "item.new_booking",
                       "type": "entry",
                       "value": "New booking",
                       "description": "", 
@@ -56,6 +60,7 @@
                       "purpose": "create"
                     },
                     {
+                      "id": "item.all_bookings",
                       "type": "entry",
                       "value": "All bookings",
                       "description": "", 
@@ -63,6 +68,7 @@
                       "view": "list.default"
                     },
                     {
+                      "id": "item.quotes",
                       "type": "entry",
                       "value": "Quotes",
                       "description": "", 
@@ -71,6 +77,7 @@
                       "domain": ["status", "=", "quote"]
                     },
                     {
+                      "id": "item.options",
                       "type": "entry",
                       "value": "Options",
                       "description": "", 
@@ -79,6 +86,7 @@
                       "domain": ["status", "=", "option"]
                     },
                     {
+                      "id": "item.validated_bookings",
                       "type": "entry",
                       "value": "Validated bookings",
                       "description": "",
@@ -103,7 +111,7 @@
                       "type": "parent",
                       "children": [
                         {
-                          "id": "item.all_customers_natures",
+                          "id": "item.all_customers_types",
                           "type": "entry",
                           "value": "All types",
                           "description": "", 
@@ -293,6 +301,7 @@
               "type": "parent",
               "children": [
                 {
+                  "id": "item.vat_rules",
                   "type": "entry",
                   "value": "VAT rules",
                   "description": "", 
@@ -300,6 +309,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.accounting_rules",
                   "type": "entry",
                   "value": "Accounting rules",
                   "description": "", 
@@ -307,6 +317,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.invoices",
                   "type": "entry",
                   "value": "Invoices",
                   "description": "", 
@@ -323,6 +334,7 @@
               "type": "parent",
               "children": [               
                 {
+                  "id": "item.available_settings",
                   "type": "entry",
                   "value": "Available settings",
                   "description": "", 
@@ -330,6 +342,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.settings_values",
                   "type": "entry",
                   "value": "Settings values",
                   "description": "", 
@@ -344,6 +357,7 @@
                   "type": "parent",
                   "children": [
                     {
+                      "id": "item.identities_id",
                       "type": "entry",
                       "value": "Identities",
                       "description": "", 
@@ -351,6 +365,7 @@
                       "view": "list.default"
                     },
                     {
+                      "id": "item.partners",
                       "type": "entry",
                       "value": "Partners",
                       "description": "", 
@@ -358,6 +373,7 @@
                       "view": "list.default"
                     },
                     {
+                      "id": "item.addresses",
                       "type": "entry",
                       "value": "Addresses",
                       "description": "", 
@@ -365,6 +381,7 @@
                       "view": "list.default"
                     },
                     {
+                      "id": "item.establishments",
                       "type": "entry",
                       "value": "Establishments",
                       "description": "", 

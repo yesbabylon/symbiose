@@ -1,0 +1,7 @@
+{
+	"description": "",
+	"view": {
+		"item.bookings": {"label": "Réservations", "help": ""},
+		"item.customers": {"label": "Clients", "help": ""}
+	}
+}

@@ -10,6 +10,7 @@
               "type": "parent",
               "children": [
                 {
+                  "id": "item.new_booking",
                   "type": "entry",
                   "value": "New booking",
                   "description": "", 
@@ -19,6 +20,7 @@
                   "purpose": "create"
                 },
                 {
+                  "id": "item.all_booking",
                   "type": "entry",
                   "value": "All bookings",
                   "description": "", 
@@ -26,6 +28,7 @@
                   "view": "list.default"
                 },
                 {
+                  "id": "item.all_booking",
                   "type": "entry",
                   "value": "Quotes",
                   "description": "", 
@@ -34,6 +37,7 @@
                   "domain": ["status", "=", "quote"]
                 },
                 {
+                  "id": "item.options",
                   "type": "entry",
                   "value": "Options",
                   "description": "", 
@@ -42,6 +46,7 @@
                   "domain": ["status", "=", "option"]
                 },
                 {
+                  "id": "item.validated_options",
                   "type": "entry",
                   "value": "Validated bookings",
                   "description": "",
@@ -66,7 +71,7 @@
                   "type": "parent",
                   "children": [
                     {
-                      "id": "item.all_customers_natures",
+                      "id": "item.all_customers_types",
                       "type": "entry",
                       "value": "All types",
                       "description": "", 

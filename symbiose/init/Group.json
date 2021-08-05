@@ -1,27 +1,101 @@
 [
     {
-        "name":"core\\Group",
-        "lang":"fr",
+        "name": "core\\Group",
+        "lang": "fr",
         "data": [
-        {
-            "id": 3,
-            "name": "accounting.administrators",
-            "display_name": "Comptabilité / Administrateurs",
-            "users_ids": [2],
-            "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, …)."
-        },
-        {
-            "id": 4,
-            "name": "accounting.invoicing.administrators",
-            "display_name": "Comptabilité / Facturation / Administrateurs",
-            "description": "Création et suppression de factures et notes de crédit, envoi de factures aux clients."
-        },
-        {
-            "id": 5,
-            "name": "accounting.invoicing.users",
-            "display_name": "Comptabilité / Facturation / Utilisateurs",
-            "description": "Number of decimal digits to save for Price fields."
-        }        
+            {
+                "id": 8,
+                "name": "sales.catalog.administrators",
+                "display_name": "Ventes / Catalogue / Administrateurs",
+                "description": "Modification of products and addition of new products to the catalog."
+            },
+            {
+                "id": 9,
+                "name": "sales.price_list.users",
+                "display_name": "Ventes / Listes de prix / Utilisateurs",
+                "description": "Consultation of prices."
+            },
+            {
+                "id": 10,
+                "name": "sales.price_list.administrators",
+                "display_name": "Ventes / Listes de prix / Administrateurs",
+                "description": "Modification of prices and tariff schedules."
+            },
+            {
+                "id": 11,
+                "name": "sales.reductions.users",
+                "display_name": "Ventes / Réductions / Utilisateurs",
+                "description": "Consultation of discounts and discount lists."
+            },
+            {
+                "id": 12,
+                "name": "sales.reductions.administrators",
+                "display_name": "Ventes / Réductions / Administrateurs",
+                "description": "Modification and creation of discount lists."
+            },
+            {
+                "id": 13,
+                "name": "sales.seasons.users",
+                "display_name": "Ventes / Saisons / Utilisateurs",
+                "description": "Consultation of seasons and lists of seasons."
+            },
+            {
+                "id": 14,
+                "name": "sales.seasons.administrators",
+                "display_name": "Ventes / Saisons / Administrateurs",
+                "description": "Modification and creation of seasons."
+            },
+            {
+                "id": 15,
+                "name": "point_of_sale.administrators",
+                "display_name": "Point de Vente / Administrateurs",
+                "description": "Encoding of consumption by the cash register."
+            },
+            {
+                "id": 16,
+                "name": "point_of_sale.users",
+                "display_name": "Point de Vente / Utilisateurs",
+                "description": "Encoding of consumption by the cash register."
+            },
+            {
+                "id": 17,
+                "name": "settings",
+                "display_name": "Settings",
+                "description": "Modifying the global configuration."
+            },
+            {
+                "id": 18,
+                "name": "sales.bookings.users",
+                "display_name": "Ventes / Réservations / Utilisateurs",
+                "description": "Creation and consultation of reservations."
+            },
+            {
+                "id": 19,
+                "name": "sales.catalog.users",
+                "display_name": "Ventes / Catalogue / Utilisateurs",
+                "description": "Consultation of catalog products."
+            },
+            {
+                "id": 20,
+                "name": "accounting.administrators",
+                "display_name": "Comptabilité / Administrateurs",
+                "users_ids": [
+                    2
+                ],
+                "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, …)."
+            },
+            {
+                "id": 21,
+                "name": "accounting.invoicing.administrators",
+                "display_name": "Comptabilité / Facturation / Administrateurs",
+                "description": "Création et suppression de factures et notes de crédit, envoi de factures aux clients."
+            },
+            {
+                "id": 22,
+                "name": "accounting.invoicing.users",
+                "display_name": "Comptabilité / Facturation / Utilisateurs",
+                "description": "Number of decimal digits to save for Price fields."
+            }
         ]
-    }   
+    }
 ]
