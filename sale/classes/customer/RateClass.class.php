@@ -15,7 +15,8 @@ class RateClass extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'required'          => true
+                'required'          => true,
+                'unique'            => true
             ],
 
             'description' => [

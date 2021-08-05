@@ -44,6 +44,7 @@ class AccountingRule extends Model {
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Lines that are related to this rule."
             ],
+            
 
             'vat_rule_id' => [
                 'type'              => 'many2one',

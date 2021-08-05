@@ -1,5 +1,5 @@
 {
-    "name": "Customer Types",
+    "name": "Customer Natures",
     "description": "",
     "layout": {
         "groups": [
@@ -14,11 +14,23 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "code",
-                                                "width": "50%",
+                                                "value": "name",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Class Rate",
+                                                "value": "rate_class_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer type",
+                                                "value": "customer_type_id",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",

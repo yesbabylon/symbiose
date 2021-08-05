@@ -10,8 +10,14 @@
             },
             {
                 "type": "field",   
-                "label": "Partner Identity",         
-                "value": "partner_identity_id",
+                "label": "Type",         
+                "value": "customer_type_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",   
+                "label": "Rate class",         
+                "value": "customer_rate_class_id",
                 "width": "20%"
             }
         ]

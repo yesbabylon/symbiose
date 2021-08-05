@@ -13,7 +13,7 @@
         "has_contract":{"label":"A un contrat", "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."},
         "contracts_ids":{"label":"Contrats", "help": "Liste des contacts liés à la réservation, le cas échéant."},
         "type_id":{"label":"Type", "help": "Type d'organisation."},
-        "status":{"label":"Statut", "help": "Statut de la réservation.", "selection": {"quote": "citer", "option": "option", "valdiated": "validé"}},
+        "status":{"label":"Statut", "help": "Statut de la réservation.", "selection": {"quote": "cotation", "option": "option", "validated": "validé"}},
         "date_from":{"label":"Date de", "help": "Date de début de la réservation."},
         "date_to":{"label":"Date à", "help": "Date de fin de la réservation."},
         "has_payer_organisation":{"label":"Payeur distinct", "help": "Indicateur pour savoir si la facture doit être envoyée à une autre identité."},

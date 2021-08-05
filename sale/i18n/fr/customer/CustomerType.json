@@ -3,9 +3,9 @@
 	"plural": "Types de client",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Mnémonique du type de client."},
+		"code":{"label":"Identifiant", "help": "Mnémonique du type de client."},
         "description":{"label":"Description", "help": "Brève description du type de client."},
-        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique à ce type de client."}
+        "rate_class_id":{"label":"Catégorie tarifaire", "help": "La catégorie tarifaire qui s'applique à ce type de client."}
 	},
 	"view": {
 		

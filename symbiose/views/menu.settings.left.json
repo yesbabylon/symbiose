@@ -1,0 +1,381 @@
+{
+    "name": "Settings menu",
+    "layout": {
+        "items": [
+            {
+              "id": "item.security",
+              "value": "Security",
+              "description": "",
+              "icon": "lock_open",
+              "type": "parent",
+              "children": [               
+                {
+                  "type": "entry",
+                  "value": "Permissions",
+                  "description": "", 
+                  "entity": "core\\Permission",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Users",
+                  "description": "", 
+                  "entity": "identity\\User",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Groups",
+                  "description": "", 
+                  "entity": "core\\Group",
+                  "view": "list.default"
+                }
+              ]
+            },
+            {
+              "id": "item.sales",
+              "value": "Sales",
+              "description": "",
+              "icon": "store",
+              "type": "parent",
+              "children": [
+                {
+                  "id": "item.bookings",
+                  "value": "Bookings",
+                  "description": "",
+                  "icon": "menu_book",
+                  "type": "parent",
+                  "children": [               
+                    {
+                      "type": "entry",
+                      "value": "New booking",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "form.default",
+                      "purpose": "create"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "All bookings",
+                      "description": "", 
+                      "entity": "sale\\booking\\Booking",
+                      "view": "list.default"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Quotes",
+                      "description": "", 
+                      "entity": "sale\\booking\\Booking",
+                      "view": "list.default",
+                      "domain": ["status", "=", "quote"]
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Options",
+                      "description": "", 
+                      "entity": "sale\\booking\\Booking",
+                      "view": "list.default",
+                      "domain": ["status", "=", "option"]
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Validated bookings",
+                      "description": "",
+                      "entity": "sale\\booking\\Booking",
+                      "view": "list.default",
+                      "domain": ["status", "=", "validated"]
+                    }
+                  ]
+                },
+                {
+                  "id": "item.customers",
+                  "value": "Customers",
+                  "description": "",
+                  "icon": "person",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "item.customers_types",
+                      "value": "Types",
+                      "description": "",
+                      "icon": "person_outline",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.all_customers_natures",
+                          "type": "entry",
+                          "value": "All types",
+                          "description": "", 
+                          "entity": "sale\\customer\\CustomerType",
+                          "view": "list.default"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "item.customers_natures",
+                      "value": "Natures",
+                      "description": "",
+                      "icon": "person_outline",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.all_customers_natures",
+                          "type": "entry",
+                          "value": "All natures",
+                          "description": "", 
+                          "entity": "sale\\customer\\CustomerNature",
+                          "view": "list.default"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "item.new_customer",
+                      "type": "entry",
+                      "value": "New customer",
+                      "description": "", 
+                      "icon": "add",
+                      "entity": "identity\\Partner",
+                      "view": "form.customer",
+                      "purpose": "create",
+                      "domain": ["relationship", "=", "customer"]
+                    },
+                    {
+                      "id": "item.all_customers",
+                      "type": "entry",
+                      "value": "All customers",
+                      "description": "", 
+                      "entity": "identity\\Partner",
+                      "view": "list.customer",
+                      "domain": ["relationship", "=", "customer"]
+                    },
+                    {
+                      "id": "item.all_partners",
+                      "type": "entry",
+                      "value": "All partners",
+                      "description": "", 
+                      "entity": "identity\\Partner",
+                      "view": "list.default"
+                    }                
+                  ]
+                },
+                {
+                  "id": "item.catalog",
+                  "value": "Catalog",
+                  "description": "",
+                  "icon": "library_books",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "item.products",
+                      "value": "Products",
+                      "description": "",
+                      "icon": "style",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.products_products",
+                          "type": "entry",
+                          "value": "Products",
+                          "description": "", 
+                          "entity": "sale\\catalog\\Product",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.products_product_models",
+                          "type": "entry",
+                          "value": "Products Models",
+                          "description": "", 
+                          "entity": "sale\\catalog\\ProductModel",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.products_product_categories",
+                          "type": "entry",
+                          "value": "Categories",
+                          "description": "", 
+                          "entity": "sale\\catalog\\Category",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.products_product_families",
+                          "type": "entry",
+                          "value": "Families",
+                          "description": "", 
+                          "entity": "sale\\catalog\\Family",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.products_product_groups",
+                          "type": "entry",
+                          "value": "Groups",
+                          "description": "", 
+                          "entity": "sale\\catalog\\Group",
+                          "view": "list.default"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "item.prices",
+                      "value": "Prices",
+                      "description": "",
+                      "icon": "attach_money",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.prices_pricelists",
+                          "type": "entry",
+                          "value": "Price Lists",
+                          "description": "", 
+                          "entity": "sale\\price\\PriceList",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.prices_categories",
+                          "type": "entry",
+                          "value": "Price list Categories",
+                          "description": "", 
+                          "entity": "sale\\price\\PriceListCategory",
+                          "view": "list.default"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "item.discounts",
+                      "value": "Discounts",
+                      "description": "",
+                      "icon": "money_off",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.discounts_discounts",
+                          "type": "entry",
+                          "value": "Discounts",
+                          "description": "", 
+                          "entity": "sale\\discount\\Discount",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.discounts_classes",
+                          "type": "entry",
+                          "value": "Discount classes",
+                          "description": "", 
+                          "entity": "sale\\discount\\DiscountClass",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.discounts_lists",
+                          "type": "entry",
+                          "value": "Discount lists",
+                          "description": "", 
+                          "entity": "sale\\discount\\DiscountList",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.discounts_lists_categories",
+                          "type": "entry",
+                          "value": "Discount lists categories",
+                          "description": "", 
+                          "entity": "sale\\discount\\DiscountListCategory",
+                          "view": "list.default"
+                        }
+                      ]
+                    }                    
+                  ]
+                }                
+              ]
+            },
+            {
+              "id": "item.accounting",
+              "value": "Accounting",
+              "description": "",
+              "icon": "monetization_on",
+              "type": "parent",
+              "children": [
+                {
+                  "type": "entry",
+                  "value": "VAT rules",
+                  "description": "", 
+                  "entity": "finance\\tax\\VatRule",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Accounting rules",
+                  "description": "", 
+                  "entity": "finance\\accounting\\AccountingRule",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Invoices",
+                  "description": "", 
+                  "entity": "finance\\accounting\\Invoice",
+                  "view": "list.default"
+                }
+              ]
+            },
+            {
+              "id": "item.settings",
+              "value": "Configuration",
+              "description": "",
+              "icon": "settings",
+              "type": "parent",
+              "children": [               
+                {
+                  "type": "entry",
+                  "value": "Available settings",
+                  "description": "", 
+                  "entity": "core\\Setting",
+                  "view": "list.default"
+                },
+                {
+                  "type": "entry",
+                  "value": "Settings values",
+                  "description": "", 
+                  "entity": "core\\SettingValue",
+                  "view": "list.default"
+                },
+                {
+                  "id": "item.identities",
+                  "value": "Identities",
+                  "description": "",
+                  "icon": "person",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "type": "entry",
+                      "value": "Identities",
+                      "description": "", 
+                      "entity": "identity\\Identity",
+                      "view": "list.default"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Partners",
+                      "description": "", 
+                      "entity": "identity\\Partner",
+                      "view": "list.default"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Addresses",
+                      "description": "", 
+                      "entity": "identity\\Address",
+                      "view": "list.default"
+                    },
+                    {
+                      "type": "entry",
+                      "value": "Establishments",
+                      "description": "", 
+                      "entity": "identity\\Establishment",
+                      "view": "list.default"
+                    }
+                  ]
+                }                
+              ]
+            }
+                                
+        ]
+    }
+}

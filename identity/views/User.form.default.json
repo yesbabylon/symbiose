@@ -10,17 +10,21 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "login",
                                                 "width": "100%",
-                                                "readonly": true,
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Identity",
@@ -29,7 +33,36 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "language",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "validated",
+                                                "width": "50%"
+                                            }
+                                        ]                                        
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Groups",
+                        "id":  "section.group",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "groups_ids",
                                                 "width": "100%"
                                             }
                                         ]
@@ -37,9 +70,29 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "label": "Preferences",
+                        "id":  "section.preferences",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "setting_values_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
                 ]
-            }
+            }            
         ]
     }
 }

@@ -29,6 +29,13 @@ class User extends \core\User {
                 'domain'            => ['type', '=', 'I'],                
                 'description'       => 'The contact related to the user.',
                 'onchange'          => 'identity\User::onchangeIdentity'
+            ],
+
+            'setting_values_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'core\SettingValue', 
+                'foreign_field'     => 'user_id', 
+                'description'       => 'List of settings that relate to the user.'
             ]
 
         ];
