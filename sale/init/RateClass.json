@@ -1,0 +1,36 @@
+[
+    {
+        "name":"sale\\customer\\RateClass",
+        "lang":"fr",
+        "data": [
+        {
+            "name": "T1",
+            "description": "Institutions reconnues CWB"
+        },
+        {
+            "name": "T2",
+            "description": "Autres associations sociales"
+        },
+        {
+            "name": "T3",
+            "description": "Travailleurs Kaleo"
+        },
+        {
+            "name": "T4",
+            "description": "Grand public"
+        },
+        {
+            "name": "T5",
+            "description": "Ecoles primaires et secondaires"
+        },
+        {
+            "name": "T6",
+            "description": "TO / Partenaires"
+        },
+        {
+            "name": "T7",
+            "description": "Ecoles maternelles"
+        }   
+        ]
+    }
+]

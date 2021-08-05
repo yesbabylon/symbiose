@@ -1,11 +1,11 @@
 {
-	"name": "Liste de remise",
-	"plural": "Listes de remise",
+	"name": "Liste de remises",
+	"plural": "Listes de remises",
 	"description": "",
 	"model": {
 		"name":{"label":"Identification", "help": "Mémo court pour la liste (ex. remises 2025)."},
-        "valid_from":{"label":"Valide à partir de", "help": "Date à partir de laquelle la liste est valide."},
-        "valid_until":{"label":"Valable jusque", "help": "Moment jusqu'à ce que la liste soit valide."},
+        "valid_from":{"label":"Valide à partir du", "help": "Date à partir de laquelle la liste est valide."},
+        "valid_until":{"label":"Valide jusqu'au", "help": "Moment jusqu'à ce que la liste soit valide."},
         "discounts_ids":{"label":"Remises", "help": "Les remises qui font partie de la liste."},
         "discount_list_category_id":{"label":"Catégorie de liste de remise", "help": "La catégorie à laquelle appartient la liste."},
         "discount_class_id":{"label":"Classe de remise", "help": "La classe de remise à laquelle appartient la liste."}

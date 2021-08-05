@@ -8,7 +8,7 @@
               "description": "",
               "icon": "menu_book",
               "type": "parent",
-              "children": [               
+              "children": [
                 {
                   "type": "entry",
                   "value": "New booking",

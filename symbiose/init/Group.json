@@ -1,0 +1,27 @@
+[
+    {
+        "name":"core\\Group",
+        "lang":"fr",
+        "data": [
+        {
+            "id": 3,
+            "name": "accounting.administrators",
+            "display_name": "Comptabilité / Administrateurs",
+            "users_ids": [2],
+            "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, …)."
+        },
+        {
+            "id": 4,
+            "name": "accounting.invoicing.administrators",
+            "display_name": "Comptabilité / Facturation / Administrateurs",
+            "description": "Création et suppression de factures et notes de crédit, envoi de factures aux clients."
+        },
+        {
+            "id": 5,
+            "name": "accounting.invoicing.users",
+            "display_name": "Comptabilité / Facturation / Utilisateurs",
+            "description": "Number of decimal digits to save for Price fields."
+        }        
+        ]
+    }   
+]
