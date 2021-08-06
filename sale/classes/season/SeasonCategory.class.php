@@ -15,7 +15,7 @@ class SeasonCategory extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short label to ease identification of the list."
+                'description'       => "Short label to ease identification of the category."
             ],
             
             'seasons_ids' => [
@@ -23,7 +23,7 @@ class SeasonCategory extends Model {
                 'foreign_object'    => 'sale\season\Season',
                 'foreign_field'     => 'season_category_id',
                 'description'       => "Seasons that are related to this category, if any."
-            ]            
+            ]
         ];
     }
 }

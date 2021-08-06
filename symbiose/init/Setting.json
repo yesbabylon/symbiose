@@ -6,136 +6,136 @@
         {
             "id": 1,
             "name": "numbers.thousands_separator",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Character for thousands separator (e.g. '.', ',', ' ').",
-            "type": "string"        
+            "type": "string"
         },
         {
             "id": 2,
             "name": "currency.symbol_position",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Position of the currency symbol related to its float value ('before', 'after', 'decimal_separator').",
             "type": "string"
         },
         {
             "id": 3,
             "name": "currency.decimal_precision",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Number of decimal digits to save for Price fields.",
             "type": "integer"
         },
         {
             "id": 4,
             "name": "numbers.decimal_separator",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Character for separation between integer and decimal parts (e.g. '.', ',').",
             "type": "string"
         },
         {
             "id": 5,
             "name": "numbers.decimal_precision",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Number of decimal digits to save for float values.",
             "type": "integer"
         },
         {
             "id": 6,
             "name": "date_format",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Format for displaying dates.",
             "type": "string"
         },
         {
             "id": 7,
             "name": "time_format",
-            "package_id": "",
-            "section_id": "locale",
+            "package": "",
+            "section": "locale",
             "description": "Format for displaying time values.",
             "type": "string"
         },
         {
             "id": 8,
             "name": "company.id",
-            "package_id": "",
-            "section_id": "main",
+            "package": "",
+            "section": "main",
             "description": "Identifier of the main company for the installation.",
             "type": "integer"
         },
         {
             "id": 9,
             "name": "formats.paper",
-            "package_id": "",
-            "section_id": "main",
+            "package": "",
+            "section": "main",
             "description": "Default paper size (e.g. 'A4', 'legal_US', 'letter_US').",
             "type": "string"
         },
         {
             "id": 10,
             "name": "account_creation",
-            "package_id": "",
-            "section_id": "security",
+            "package": "",
+            "section": "security",
             "description": "Allow visitors to create a user account.",
             "type": "boolean"
         },
         {
             "id": 11,
             "name": "import",
-            "package_id": "",
-            "section_id": "security",
+            "package": "",
+            "section": "security",
             "description": "Allow users to import data from files (CSV\/XLS\/XLSX\/ODS).",
             "type": "boolean"
         },
         {
             "id": 12,
             "name": "export",
-            "package_id": "",
-            "section_id": "security",
+            "package": "",
+            "section": "security",
             "description": "Allow users to export data as files (CSV\/XLS\/PDF).",
             "type": "boolean"
         },
         {
             "id": 13,
             "name": "currency",
-            "package_id": "",
-            "section_id": "units",
+            "package": "",
+            "section": "units",
             "description": "Default currency to be used in Price fields (ISO 4217).",
             "type": "string"
         },
         {
             "id": 14,
             "name": "length",
-            "package_id": "",
-            "section_id": "units",
+            "package": "",
+            "section": "units",
             "description": "Default unit for length measures.",
             "type": "string"
         },
         {
             "id": 15,
             "name": "weight",
-            "package_id": "",
-            "section_id": "units",
+            "package": "",
+            "section": "units",
             "description": "Default unit for weight measures (e.g. 'kg' kilogram, 'lb' pound).",
             "type": "string"
         },
         {
             "id": 16,
             "name": "volume",
-            "package_id": "",
-            "section_id": "units",
+            "package": "",
+            "section": "units",
             "description": "Default unit for volume measures (e.g. 'm3' cubic meter, 'ft3' cubic foot).",
             "type": "string"
         },
         {
             "id": 17,
             "name": "surface",
-            "package_id": "",
-            "section_id": "units",
+            "package": "",
+            "section": "units",
             "description": "Default unit for surface measures (e.g. 'm2' square meter, 'ft2' square foot).",
             "type": "string"
         }

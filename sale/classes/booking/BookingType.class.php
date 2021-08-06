@@ -29,6 +29,11 @@ class BookingType extends Model {
                 'required'          => true
             ],
 
+            'code' => [
+                'type'              => 'string',
+                'description'       => 'Mnemo for the type.'
+            ],
+
 /*            
             'stat_id' => [
                 'type'              => 'many2one',

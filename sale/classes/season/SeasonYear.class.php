@@ -25,6 +25,12 @@ class SeasonYear extends Model {
                 'required'          => true
             ],
 
+            'seasons_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\season\Season',
+                'foreign_field'     => 'season_year_id',
+                'description'       => "Seasons that are related to this year, if any."
+            ]
             
         ];
     }
