@@ -19,6 +19,12 @@ class Center extends \identity\Establishment {
     public static function getColumns() {
 
         return [
+
+            'code' => [
+                'type'              => 'string',
+                'description'       => 'Short identifier of the center.'                
+            ],
+
             /*
                 The manager is stored as part of the Center object.
             */

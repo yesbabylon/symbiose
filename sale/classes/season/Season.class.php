@@ -33,7 +33,7 @@ class Season extends Model {
 
             'season_year_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\season\Season',
+                'foreign_object'    => 'sale\season\SeasonYear',
                 'description'       => "The Season the list relates to.",
                 'required'          => true
             ],
