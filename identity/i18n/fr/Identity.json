@@ -38,8 +38,11 @@
         "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
         "lang":{"label":"Langue", "help": "Langue parlée préférée."}
 	},
-	"view": {
-		
+	"view": {        
+        "section.identity_info": {"label": "Infos générales"},
+        "section.identity_main_address": {"label": "Adresse principale"},
+        "section.identity_addresses": {"label": "Autres adresses"},
+		"section.identity_description": {"label": "Description"}
 	},
 	"error": {
 	
