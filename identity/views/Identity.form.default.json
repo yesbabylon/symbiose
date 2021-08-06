@@ -63,7 +63,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "identity_info",
+                        "id": "section.identity_info",
                         "rows": [
                             {
                                 "columns": [
@@ -171,7 +171,7 @@
                     },
                     {
                         "label": "Main address",
-                        "id": "identity_address",
+                        "id": "section.identity_main_address",
                         "rows": [
                             {
                                 "columns": [
@@ -217,7 +217,7 @@
                     },                    
                     {
                         "label": "Other addresses",
-                        "id": "identity_addresses",
+                        "id": "section.identity_addresses",
                         "rows": [
                             {
                                 "columns": [
@@ -238,7 +238,7 @@
                     },
                     {
                         "label": "Description",
-                        "id": "identity_description",
+                        "id": "section.identity_description",
                         "rows": [
                             {
                                 "columns": [

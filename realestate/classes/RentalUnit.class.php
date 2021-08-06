@@ -21,6 +21,11 @@ class RentalUnit extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Short description of the unit.'
+            ],
+
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['building', 'bedroom', 'bed', 'meetingroom', 'room'],
