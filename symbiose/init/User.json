@@ -1,205 +1,205 @@
 [
     {
         "name":"identity\\Identity",
-        "lang":"en",
+        "lang":"fr",
         "data": [
             {
                 "id": 1,
-                "name": "Agnès Evrard",
-                "firstName": "Agnès",
-                "lastName": "Evrard",
-                "vendor_code": "Agnès",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Agnès",
+                "lastname": "Evrard",
+                "short_name": "Agnès",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "1"
             },
             {
                 "id": 2,
-                "name": "Alessandro Progno",
-                "firstName": "Alessandro",
-                "lastName": "Progno",
-                "vendor_code": " Alessan",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Alessandro",
+                "lastname": "Progno",
+                "short_name": " Alessan",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "2"
             },
             {
                 "id": 3,
-                "name": "Annabel Verstraete",
-                "firstName": "Annabel",
-                "lastName": "Verstraete",
-                "vendor_code": "Annab",
-                "society_code": "CBTJGiGr",
-                "all_centers": "1",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Annabel",
+                "lastname": "Verstraete",
+                "short_name": "Annab",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "3"
             },
             {
                 "id": 4,
-                "name": "Benoît César",
-                "firstName": "Benoît",
-                "lastName": "César",
-                "vendor_code": "BC",
-                "society_code": "CBTJGiGr",
-                "all_centers": "1",
-                "submitted_vat": "1",
-                "top_cash": "0",
-                "cash_invoice": "-1"
+                "firstname": "Benoît",
+                "lastname": "César",
+                "short_name": "BC",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "4"
             },
             {
                 "id": 5,
-                "name": "Céline Delplan",
-                "firstName": "Céline",
-                "lastName": "Delplan",
-                "vendor_code": "CeDel",
-                "society_code": "CBTJLouv",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Céline",
+                "lastname": "Delplan",
+                "short_name": "CeDel",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "5"
             },
             {
                 "id": 6,
-                "name": "Gwenaëlle Hoste",
-                "firstName": "Gwenaëlle",
-                "lastName": "Hoste",
-                "vendor_code": "Gwen",
-                "society_code": "CBTJGiGr",
-                "all_centers": "1",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Gwenaëlle",
+                "lastname": "Hoste",
+                "short_name": "Gwen",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "6"
             },
             {
                 "id": 7,
-                "name": "Jean-Luc Giaux",
-                "firstName": "",
-                "lastName": "",
-                "vendor_code": "J-Luc",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "",
+                "lastname": "",
+                "short_name": "J-Luc",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "7"
             },
             {
                 "id": 8,
-                "name": "Nathalie Faveaux",
-                "firstName": "Nathalie",
-                "lastName": "Faveaux",
-                "vendor_code": "nath",
-                "society_code": "CBTJWann",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Nathalie",
+                "lastname": "Faveaux",
+                "short_name": "nath",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "8"
             },
             {
                 "id": 9,
-                "name": "Olivia Verbraeken",
-                "firstName": "Olivia",
-                "lastName": "Verbraeken",
-                "vendor_code": "Olivia",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Olivia",
+                "lastname": "Verbraeken",
+                "short_name": "Olivia",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "9"
             },
             {
                 "id": 10,
-                "name": "Philippine Goffin",
-                "firstName": "Philippine",
-                "lastName": "Goffin",
-                "vendor_code": "PhGof",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Philippine",
+                "lastname": "Goffin",
+                "short_name": "PhGof",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "10"
             },
             {
                 "id": 11,
-                "name": "Patricia Louis",
-                "firstName": "Patricia",
-                "lastName": "Louis",
-                "vendor_code": "PatLo",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Patricia",
+                "lastname": "Louis",
+                "short_name": "PatLo",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "11"
             },
             {
                 "id": 12,
-                "name": "Vanessa Denée",
-                "firstName": "Vanessa",
-                "lastName": "Denée",
-                "vendor_code": "VaDen",
-                "society_code": "CBTJGiGr",
-                "all_centers": "0",
-                "submitted_vat": "1",
-                "top_cash": "1",
-                "cash_invoice": "-1"
+                "firstname": "Vanessa",
+                "lastname": "Denée",
+                "short_name": "VaDen",
+                "has_vat": true,
+                "type": "I",
+                "user_id": "12"
             }
         ]
     },
     {
         "name":"identity\\User",
-        "lang":"en",
+        "lang":"fr",
         "data": [
             {
                 "id": 1,
-                "name": "a.evrard@kaleo-asbl.be"
+                "login": "a.evrard@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "1"
             },
             {
                 "id": 2,
-                "name": "a.progno@kaleo-asbl.be"
+                "login": "a.progno@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "2"
             },
             {
                 "id": 3,
-                "name": "a.verstraete@kaleo-asbl.be"
+                "login": "a.verstraete@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "3"
             },
             {
                 "id": 4,
-                "name": "b.cesar@kaleo-asbl.be"
+                "login": "b.cesar@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "4"
             },
             {
                 "id": 5,
-                "name": "c.delplan@kaleo-asbl.be"
+                "login": "c.delplan@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "5"
             },
             {
                 "id": 6,
-                "name": "g.hoste@kaleo-asbl.be"
+                "login": "g.hoste@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "6"
             },
             {
                 "id": 7,
-                "name": "jl.giaux@kaleo-asbl.be"
+                "login": "jl.giaux@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "7"
             },
             {
                 "id": 8,
-                "name": "nathalie.faveaux@kaleo-asbl.be"
+                "login": "nathalie.faveaux@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "8"
             },
             {
                 "id": 9,
-                "name": "o.verbraeken@kaleo-asbl.be"
+                "login": "o.verbraeken@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "9"
             },
             {
                 "id": 10,
-                "name": "p.goffin@kaleo-asbl.be"
+                "login": "p.goffin@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "10"
             },
             {
                 "id": 11,
-                "name": "p.louis@kaleo-asbl.be"
+                "login": "p.louis@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "11"
             },
             {
                 "id": 12,
-                "name": "v.denee@kaleo-asbl.be"
+                "login": "v.denee@kaleo-asbl.be",
+                "validated": "1",
+                "password": "111111",
+                "identity_id": "12"
             }
         ]
     }
