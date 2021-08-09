@@ -3,10 +3,11 @@
 	"plural": "Partenaires",
 	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
 	"model": {
-		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'organisation)."},
-		"owner_identity_id":{"label":"Identité du propriétaire", "help": "L'organisation dont l'identité ciblée est partenaire."},
-        "partner_identity_id":{"label":"Identité du partenaire", "help": "L'identité ciblée (le partenaire)."},
-        "partner_position":{"label":"Position du contact", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
+		"name":{"label":"Nom", "help": "Nom affiché du partenaire (lié au nom de l'identité)."},
+		"owner_identity_id":{"label":"Origine de la relation", "help": "L'organisation dont l'identité ciblée est partenaire."},
+        "partner_identity_id":{"label":"Identité", "help": "L'identité ciblée (le partenaire)."},
+		"partner_organisation_id":{"label":"Organisation", "help": "Entreprise au sein de laquelle travaille le contact."},
+        "partner_position":{"label":"Position", "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."},
         "relationship":{"label":"Relation", "help": "Le genre de partenariat qui existe entre les identités.", "selection": {"contact": "contact", "employee": "employé", "customer": "client", "provider":"fournisseur", "payer":"payeur", "other": "autre" } },
         "customer_rate_class_id":{"label":"Catégorie tarifaire", "help": "Catégorie tarifaire qui s'applique au client."},
         "customer_type_id":{"label":"Type de client", "help": "Type de client (en relation avec les classes tarifaires)."}

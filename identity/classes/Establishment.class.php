@@ -65,7 +65,8 @@ class Establishment extends Model {
 
             'address_country' => [
                 'type'          => 'string',
-                'description'   => 'Country in which the establishment is located.' 
+                'usage'         => 'country/iso-3166:2',
+                'description'   => 'Country in which the establishment is located (ISO 3166).' 
             ],
             
             'registration_number' => [

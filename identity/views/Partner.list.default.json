@@ -4,31 +4,32 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
                 "value": "name",
                 "width": "20%"
             },
             {
-                "type": "field",   
-                "label": "Partner Identity",         
-                "value": "partner_identity_id",
-                "width": "20%"
-            },  
-            {
-                "type": "field",    
-                "label": "Owner Identity",        
-                "value": "owner_identity_id",
-                "width": "20%"
-            }, 
-            {
-                "type": "field",            
-                "value": "partner_position",
-                "width": "20%"
-            },    
-            {
-                "type": "field",            
+                "type": "field",
                 "value": "relationship",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "partner_organisation_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "partner_position",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "partner_identity_id",
+                "width": "20%",
+                "widget": {
+                    "type": "link"
+                }
             }
         ]
     }
