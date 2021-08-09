@@ -40,11 +40,11 @@ class Identity extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                                        'I'  => 'individual (natural person)',
-                                        'SE' => 'self-employed',
-                                        'C'  => 'company',
-                                        'NP' => 'non-profit',
-                                        'PA' => 'public-administration'
+                                        'I'  => 'Individual (natural person)',
+                                        'SE' => 'Self-employed',
+                                        'C'  => 'Company',
+                                        'NP' => 'Non-profit organisation',
+                                        'PA' => 'Public administration'
                 ],
                 'default'           => 'I',
                 'onchange'          => 'identity\Identity::onchangeType',

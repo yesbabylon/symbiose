@@ -5,69 +5,84 @@
         "data": [
             {
                 "id": 1,
+                "legal_name": "Kaleo ASBL",
+                "short_name": "Kaleo",
+                "has_vat": false,
+                "type": "NP",
+                "address_street": "4 Rue Van Orley",
+                "address_dispatch": "",
+                "address_city": "Bruxelles",
+                "address_zip": "1000", 
+                "address_country": "BE",
+                "email": "info@kaleo-asbl.be",
+                "phone": "+3222090300",
+                "website": "https://www.kaleo-asbl.be"
+            },            
+            {
+                "id": 2,
                 "firstname": "Agnès",
                 "lastname": "Evrard",
                 "short_name": "Agnès",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "1"
             },
             {
-                "id": 2,
+                "id": 3,
                 "firstname": "Alessandro",
                 "lastname": "Progno",
                 "short_name": " Alessan",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "2"
             },
             {
-                "id": 3,
+                "id": 4,
                 "firstname": "Annabel",
                 "lastname": "Verstraete",
                 "short_name": "Annab",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "3"
             },
             {
-                "id": 4,
+                "id": 5,
                 "firstname": "Benoît",
                 "lastname": "César",
                 "short_name": "BC",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "4"
             },
             {
-                "id": 5,
+                "id": 6,
                 "firstname": "Céline",
                 "lastname": "Delplan",
                 "short_name": "CeDel",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "5"
             },
             {
-                "id": 6,
+                "id": 7,
                 "firstname": "Gwenaëlle",
                 "lastname": "Hoste",
                 "short_name": "Gwen",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "6"
             },
             {
-                "id": 7,
+                "id": 8,
                 "firstname": "",
                 "lastname": "",
                 "short_name": "J-Luc",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "7"
             },
             {
-                "id": 8,
+                "id": 9,
                 "firstname": "Nathalie",
                 "lastname": "Faveaux",
                 "short_name": "nath",
@@ -76,38 +91,38 @@
                 "user_id": "8"
             },
             {
-                "id": 9,
+                "id": 10,
                 "firstname": "Olivia",
                 "lastname": "Verbraeken",
                 "short_name": "Olivia",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "9"
             },
             {
-                "id": 10,
+                "id": 11,
                 "firstname": "Philippine",
                 "lastname": "Goffin",
                 "short_name": "PhGof",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "10"
             },
             {
-                "id": 11,
+                "id": 12,
                 "firstname": "Patricia",
                 "lastname": "Louis",
                 "short_name": "PatLo",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "11"
             },
             {
-                "id": 12,
+                "id": 13,
                 "firstname": "Vanessa",
                 "lastname": "Denée",
                 "short_name": "VaDen",
-                "has_vat": true,
+                "has_vat": false,
                 "type": "I",
                 "user_id": "12"
             }
@@ -118,88 +133,88 @@
         "lang":"fr",
         "data": [
             {
-                "id": 1,
-                "login": "a.evrard@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "1"
-            },
-            {
-                "id": 2,
-                "login": "a.progno@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "2"
-            },
-            {
                 "id": 3,
-                "login": "a.verstraete@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "3"
+                "login": "a.evrard@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 2
             },
             {
                 "id": 4,
-                "login": "b.cesar@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "4"
+                "login": "a.progno@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 3
             },
             {
                 "id": 5,
-                "login": "c.delplan@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "5"
+                "login": "a.verstraete@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 4
             },
             {
                 "id": 6,
-                "login": "g.hoste@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "6"
+                "login": "b.cesar@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 5
             },
             {
                 "id": 7,
-                "login": "jl.giaux@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "7"
+                "login": "c.delplan@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 6
             },
             {
                 "id": 8,
-                "login": "nathalie.faveaux@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "8"
+                "login": "g.hoste@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 7
             },
             {
                 "id": 9,
-                "login": "o.verbraeken@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "9"
+                "login": "jl.giaux@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 8
             },
             {
                 "id": 10,
-                "login": "p.goffin@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "10"
+                "login": "nathalie.faveaux@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 9
             },
             {
                 "id": 11,
-                "login": "p.louis@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "11"
+                "login": "o.verbraeken@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 10
             },
             {
                 "id": 12,
+                "login": "p.goffin@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 11
+            },
+            {
+                "id": 13,
+                "login": "p.louis@kaleo-asbl.be",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 12
+            },
+            {
+                "id": 14,
                 "login": "v.denee@kaleo-asbl.be",
-                "validated": "1",
-                "password": "111111",
-                "identity_id": "12"
+                "validated": true,
+                "password": "1111",
+                "identity_id": 13
             }
         ]
     }

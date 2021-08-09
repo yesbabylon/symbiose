@@ -47,10 +47,18 @@ class Partner extends Model {
                 'description'       => 'The kind of partnership that exists between the identities.' 
             ],
 
-            // if partner is a contact (ex. referenced by reference_partner_id), use a 'position' info
+            // if partner is a contact, keep the organisation (s)he is a contact from
+            'partner_organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => 'Target organisation which the contact is working for.',
+                'visible'           => [ ['relationship', '=', 'contact'] ]
+            ],
+
+            // if partner is a contact, keep its 'position' within the 
             'partner_position' => [
                 'type'              => 'string',
-                'description'       => 'Position of the reference contact (natural person) within the organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
+                'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
                 'visible'           => [ ['relationship', '=', 'contact'] ]
             ],
 
