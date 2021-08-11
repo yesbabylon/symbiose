@@ -74,8 +74,8 @@
             },
             {
                 "id": 8,
-                "firstname": "",
-                "lastname": "",
+                "firstname": "Jean-Luc",
+                "lastname": "Giaux",
                 "short_name": "J-Luc",
                 "has_vat": false,
                 "type": "I",
@@ -125,6 +125,528 @@
                 "has_vat": false,
                 "type": "I",
                 "user_id": "12"
+            },
+            {
+                "id": 14,
+                "firstname": "Alice",
+                "lastname": "Legrand",
+                "short_name": "Aleg",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "13"
+            },
+            {
+                "id": 15,
+                "firstname": "Alexandre",
+                "lastname": "Grosjean",
+                "short_name": "Alex",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "14"
+            },
+            {
+                "id": 15,
+                "firstname": "Anne",
+                "lastname": "Giaux",
+                "short_name": "Anne",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "14"
+            },
+            {
+                "id": 16,
+                "firstname": "Audeline",
+                "lastname": "Keffer",
+                "short_name": "AudKe",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "15"
+            },
+            {
+                "id": 17,
+                "firstname": "Caisse",
+                "lastname": "Rochefort",
+                "short_name": "BarRo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "16"
+            },
+            {
+                "id": 18,
+                "firstname": "Charline",
+                "lastname": "Hamal",
+                "short_name": "CH",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "17"
+            },
+            {
+                "id": 19,
+                "firstname": "Chantal",
+                "lastname": "Bougelet",
+                "short_name": "ChaBo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "18"
+            },
+            {
+                "id": 20,
+                "firstname": "Danielle",
+                "lastname": "Janowski",
+                "short_name": "Dany",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "19"
+            },
+            {
+                "id": 21,
+                "firstname": "Elodie",
+                "lastname": "Bodson",
+                "short_name": "Elodi",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "20"
+            },
+            {
+                "id": 22,
+                "firstname": "Eric",
+                "lastname": "Piron",
+                "short_name": "ErPir",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "21"
+            },
+            {
+                "id": 23,
+                "firstname": "Farva",
+                "lastname": "Iqbal",
+                "short_name": "Farva",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "22"
+            },
+            {
+                "id": 24,
+                "firstname": "Gaultier",
+                "lastname": "Loubris",
+                "short_name": "GLou",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "23"
+            },
+            {
+                "id": 25,
+                "firstname": "Caisse",
+                "lastname": "Han-sur-Lesse",
+                "short_name": "Han",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "24"
+            },
+            {
+                "id": 26,
+                "firstname": "Harmony",
+                "lastname": "Martin",
+                "short_name": "Harmo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "25"
+            },
+            {
+                "id": 27,
+                "firstname": "Henry",
+                "lastname": "Bertrand",
+                "short_name": "HeBe",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "26"
+            },
+            {
+                "id": 28,
+                "firstname": "Jean-Paul",
+                "lastname": "Boniver",
+                "short_name": "JPBon",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "27"
+            },
+            {
+                "id": 29,
+                "firstname": "Julie",
+                "lastname": "SCHUMACHER",
+                "short_name": "JSch",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "28"
+            },
+            {
+                "id": 30,
+                "firstname": "Jérémy",
+                "lastname": "Wuidart",
+                "short_name": "JW",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "29"
+            },
+            {
+                "id": 31,
+                "firstname": "Laetitia",
+                "lastname": "Laffineuse",
+                "short_name": "LaLaf",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "30"
+            },
+            {
+                "id": 32,
+                "firstname": "Loran",
+                "lastname": "Haesen",
+                "short_name": "Loran",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "31"
+            },
+            {
+                "id": 33,
+                "firstname": "Manon",
+                "lastname": "Hamtiaux",
+                "short_name": "Maham",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "32"
+            },
+            {
+                "id": 34,
+                "firstname": "Mathieu",
+                "lastname": "Latine",
+                "short_name": "MaLat",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "33"
+            },
+            {
+                "id": 35,
+                "firstname": "Maxime",
+                "lastname": "Lekenne",
+                "short_name": "MaLe",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "34"
+            },
+            {
+                "id": 36,
+                "firstname": "Marie",
+                "lastname": "Lennerts",
+                "short_name": "MaLen",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "35"
+            },
+            {
+                "id": 37,
+                "firstname": "Emanuelle",
+                "lastname": "Chavet",
+                "short_name": "manuC",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "36"
+            },
+            {
+                "id": 38,
+                "firstname": "Marine",
+                "lastname": "Mathieu",
+                "short_name": "MarMa",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "37"
+            },
+            {
+                "id": 39,
+                "firstname": "Mélodie",
+                "lastname": "Bruere",
+                "short_name": "MeBru",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "38"
+            },
+            {
+                "id": 40,
+                "firstname": "Michel",
+                "lastname": "Dubois",
+                "short_name": "Miche",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "39"
+            },
+            {
+                "id": 41,
+                "firstname": "Maurane",
+                "lastname": "Lannois",
+                "short_name": "ML",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "40"
+            },
+            {
+                "id": 42,
+                "firstname": "Monique",
+                "lastname": "Houmard",
+                "short_name": "MonHo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "41"
+            },
+            {
+                "id": 43,
+                "firstname": "Monique",
+                "lastname": "Rossi",
+                "short_name": "Monic",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "42"
+            },
+            {
+                "id": 44,
+                "firstname": "Mauricette",
+                "lastname": "Jordant",
+                "short_name": "Mori7",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "43"
+            },
+            {
+                "id": 45,
+                "firstname": "Nathalie",
+                "lastname": "Meessen",
+                "short_name": "NMess",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "44"
+            },
+            {
+                "id": 46,
+                "firstname": "Olivier",
+                "lastname": "Laurent",
+                "short_name": "OL",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "45"
+            },
+            {
+                "id": 47,
+                "firstname": "Oumou",
+                "lastname": "Hawa Diallo",
+                "short_name": "OuHDi",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "46"
+            },
+            {
+                "id": 48,
+                "firstname": "Caisse",
+                "lastname": "Ovifat",
+                "short_name": "Ovifa",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "47"
+            },
+            {
+                "id": 49,
+                "firstname": "Patricia",
+                "lastname": "Descamps",
+                "short_name": "PatD",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "48"
+            },
+            {
+                "id": 50,
+                "firstname": "Rachel",
+                "lastname": "GAZON",
+                "short_name": "raGAZ",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "49"
+            },
+            {
+                "id": 51,
+                "firstname": "Student",
+                "lastname": "@ Mozaik",
+                "short_name": "S@M",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "50"
+            },
+            {
+                "id": 52,
+                "firstname": "Sara",
+                "lastname": "Bertoncello",
+                "short_name": "sb",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "51"
+            },
+            {
+                "id": 53,
+                "firstname": "Sébastien",
+                "lastname": "Baudoux",
+                "short_name": "SBaud",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "52"
+            },
+            {
+                "id": 54,
+                "firstname": "Sébastien",
+                "lastname": "Bury",
+                "short_name": "SebBu",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "53"
+            },
+            {
+                "id": 55,
+                "firstname": "Student",
+                "lastname": "Han",
+                "short_name": "shan",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "54"
+            },
+            {
+                "id": 56,
+                "firstname": "Sonia",
+                "lastname": "Maaseen",
+                "short_name": "Smaas",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "55"
+            },
+            {
+                "id": 57,
+                "firstname": "Stagiaire",
+                "lastname": "Villers",
+                "short_name": "StaVi",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "56"
+            },
+            {
+                "id": 58,
+                "firstname": "Student",
+                "lastname": "Mozaik",
+                "short_name": "StuMo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "57"
+            },
+            {
+                "id": 59,
+                "firstname": "Student",
+                "lastname": "Wanne",
+                "short_name": "StuWa",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "58"
+            },
+            {
+                "id": 60,
+                "firstname": "Thomas",
+                "lastname": "deHesselle",
+                "short_name": "Tdh",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "59"
+            },
+            {
+                "id": 61,
+                "firstname": "Tanguy",
+                "lastname": "Rolin",
+                "short_name": "Trol",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "60"
+            },
+            {
+                "id": 62,
+                "firstname": "Utilisateurs",
+                "lastname": "partis",
+                "short_name": "UsGo",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "61"
+            },
+            {
+                "id": 63,
+                "firstname": "Véronique",
+                "lastname": "Esselen",
+                "short_name": "Vero",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "62"
+            },
+            {
+                "id": 64,
+                "firstname": "Véronique",
+                "lastname": "Piret",
+                "short_name": "VérPi",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "63"
+            },
+            {
+                "id": 65,
+                "firstname": "Vincent",
+                "lastname": "Exsteen",
+                "short_name": "VExst",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "64"
+            },
+            {
+                "id": 66,
+                "firstname": "Vincianne",
+                "lastname": "Martin",
+                "short_name": "Vinci",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "65"
+            },
+            {
+                "id": 67,
+                "firstname": "Caisse",
+                "lastname": "Wanne",
+                "short_name": "Wanne",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "66"
+            },
+            {
+                "id": 68,
+                "firstname": "Zeliha",
+                "lastname": "Sezgin",
+                "short_name": "Z.Sez",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "67"
+            },
+            {
+                "id": 69,
+                "firstname": "Zoé",
+                "lastname": "Baldewyns",
+                "short_name": "zBal",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "68"
+            },
+            {
+                "id": 70,
+                "firstname": "Didier",
+                "lastname": "Humblet",
+                "short_name": "DiHu",
+                "has_vat": false,
+                "type": "I",
+                "user_id": "69"
             }
         ]
     },
@@ -137,84 +659,544 @@
                 "login": "a.evrard@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 2
+                "identity_id": 2,
+                "language": "fr"
             },
             {
                 "id": 4,
                 "login": "a.progno@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 3
+                "identity_id": 3,
+                "language": "fr"
             },
             {
                 "id": 5,
                 "login": "a.verstraete@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 4
+                "identity_id": 4,
+                "language": "fr"
             },
             {
                 "id": 6,
                 "login": "b.cesar@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 5
+                "identity_id": 5,
+                "language": "fr"
             },
             {
                 "id": 7,
                 "login": "c.delplan@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 6
+                "identity_id": 6,
+                "language": "fr"
             },
             {
                 "id": 8,
                 "login": "g.hoste@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 7
+                "identity_id": 7,
+                "language": "fr"
             },
             {
                 "id": 9,
                 "login": "jl.giaux@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 8
+                "identity_id": 8,
+                "language": "fr"
             },
             {
                 "id": 10,
                 "login": "nathalie.faveaux@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 9
+                "identity_id": 9,
+                "language": "fr"
             },
             {
                 "id": 11,
                 "login": "o.verbraeken@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 10
+                "identity_id": 10,
+                "language": "fr"
             },
             {
                 "id": 12,
                 "login": "p.goffin@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 11
+                "identity_id": 11,
+                "language": "fr"
             },
             {
                 "id": 13,
                 "login": "p.louis@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 12
+                "identity_id": 12,
+                "language": "fr"
             },
             {
                 "id": 14,
                 "login": "v.denee@kaleo-asbl.be",
                 "validated": true,
                 "password": "1111",
-                "identity_id": 13
+                "identity_id": 13,
+                "language": "fr"
+            },
+            {
+                "id": 15,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 14,
+                "language": "fr"
+            },
+            {
+                "id": 16,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 15,
+                "language": "fr"
+            },
+            {
+                "id": 17,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 16,
+                "language": "fr"
+            },
+            {
+                "id": 18,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 17,
+                "language": "fr"
+            },
+            {
+                "id": 19,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 18,
+                "language": "fr"
+            },
+            {
+                "id": 20,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 19,
+                "language": "fr"
+            },
+            {
+                "id": 21,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 20,
+                "language": "fr"
+            },
+            {
+                "id": 22,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 21,
+                "language": "fr"
+            },
+            {
+                "id": 23,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 22,
+                "language": "fr"
+            },
+            {
+                "id": 24,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 23,
+                "language": "fr"
+            },
+            {
+                "id": 25,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 24,
+                "language": "fr"
+            },
+            {
+                "id": 26,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 25,
+                "language": "fr"
+            },
+            {
+                "id": 27,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 26,
+                "language": "fr"
+            },
+            {
+                "id": 28,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 27,
+                "language": "fr"
+            },
+            {
+                "id": 29,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 28,
+                "language": "fr"
+            },
+            {
+                "id": 30,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 29,
+                "language": "fr"
+            },
+            {
+                "id": 31,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 30,
+                "language": "fr"
+            },
+            {
+                "id": 32,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 31,
+                "language": "fr"
+            },
+            {
+                "id": 33,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 32,
+                "language": "fr"
+            },
+            {
+                "id": 34,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 33,
+                "language": "fr"
+            },
+            {
+                "id": 35,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 34,
+                "language": "fr"
+            },
+            {
+                "id": 36,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 35,
+                "language": "fr"
+            },
+            {
+                "id": 37,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 36,
+                "language": "fr"
+            },
+            {
+                "id": 38,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 37,
+                "language": "fr"
+            },
+            {
+                "id": 39,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 38,
+                "language": "fr"
+            },
+            {
+                "id": 40,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 39,
+                "language": "fr"
+            },
+            {
+                "id": 41,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 40,
+                "language": "fr"
+            },
+            {
+                "id": 42,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 41,
+                "language": "fr"
+            },
+            {
+                "id": 43,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 42,
+                "language": "fr"
+            },
+            {
+                "id": 44,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 43,
+                "language": "fr"
+            },
+            {
+                "id": 45,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 44,
+                "language": "fr"
+            },
+            {
+                "id": 46,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 45,
+                "language": "fr"
+            },
+            {
+                "id": 47,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 46,
+                "language": "fr"
+            },
+            {
+                "id": 48,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 47,
+                "language": "fr"
+            },
+            {
+                "id": 49,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 48,
+                "language": "fr"
+            },
+            {
+                "id": 50,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 49,
+                "language": "fr"
+            },
+            {
+                "id": 51,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 50,
+                "language": "fr"
+            },
+            {
+                "id": 52,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 51,
+                "language": "fr"
+            },
+            {
+                "id": 53,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 52,
+                "language": "fr"
+            },
+            {
+                "id": 54,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 53,
+                "language": "fr"
+            },
+            {
+                "id": 55,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 54,
+                "language": "fr"
+            },
+            {
+                "id": 56,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 55,
+                "language": "fr"
+            },
+            {
+                "id": 57,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 56,
+                "language": "fr"
+            },
+            {
+                "id": 58,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 57,
+                "language": "fr"
+            },
+            {
+                "id": 59,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 58,
+                "language": "fr"
+            },
+            {
+                "id": 60,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 59,
+                "language": "fr"
+            },
+            {
+                "id": 61,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 60,
+                "language": "fr"
+            },
+            {
+                "id": 62,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 61,
+                "language": "fr"
+            },
+            {
+                "id": 63,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 62,
+                "language": "fr"
+            },
+            {
+                "id": 64,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 63,
+                "language": "fr"
+            },
+            {
+                "id": 65,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 64,
+                "language": "fr"
+            },
+            {
+                "id": 66,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 65,
+                "language": "fr"
+            },
+            {
+                "id": 67,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 66,
+                "language": "fr"
+            },
+            {
+                "id": 68,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 67,
+                "language": "fr"
+            },
+            {
+                "id": 69,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 68,
+                "language": "fr"
+            },
+            {
+                "id": 70,
+                "login": "",
+                "validated": true,
+                "password": "1111",
+                "identity_id": 69,
+                "language": "fr"
             }
         ]
     }
