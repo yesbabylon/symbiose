@@ -11,8 +11,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 71
+                "has_vat": false
             },
             {
                 "id": 72,
@@ -22,8 +21,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 72
+                "has_vat": false
             },
             {
                 "id": 73,
@@ -33,8 +31,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 73
+                "has_vat": false
             },
             {
                 "id": 74,
@@ -44,8 +41,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 74
+                "has_vat": false
             },
             {
                 "id": 75,
@@ -55,8 +51,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 75
+                "has_vat": false
             },
             {
                 "id": 76,
@@ -66,8 +61,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 76
+                "has_vat": false
             },
             {
                 "id": 77,
@@ -77,8 +71,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 77
+                "has_vat": false
             },
             {
                 "id": 78,
@@ -88,8 +81,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 78
+                "has_vat": false
             },
             {
                 "id": 79,
@@ -99,8 +91,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 79
+                "has_vat": false
             },
             {
                 "id": 80,
@@ -110,8 +101,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 80
+                "has_vat": false
             },
             {
                 "id": 81,
@@ -121,8 +111,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 81
+                "has_vat": false
             },
             {
                 "id": 82,
@@ -132,8 +121,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 82
+                "has_vat": false
             },
             {
                 "id": 83,
@@ -143,8 +131,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 83
+                "has_vat": false
             },
             {
                 "id": 84,
@@ -154,8 +141,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 84
+                "has_vat": false
             },
             {
                 "id": 85,
@@ -165,8 +151,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 85
+                "has_vat": false
             },
             {
                 "id": 86,
@@ -176,8 +161,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 86
+                "has_vat": false
             },
             {
                 "id": 87,
@@ -187,8 +171,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 87
+                "has_vat": false
             },
             {
                 "id": 88,
@@ -198,8 +181,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 88
+                "has_vat": false
             },
             {
                 "id": 89,
@@ -209,8 +191,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 89
+                "has_vat": false
             },
             {
                 "id": 90,
@@ -220,8 +201,7 @@
                 "type": "I",
                 "title": "Mr",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 90
+                "has_vat": false
             },
             {
                 "id": 91,
@@ -231,8 +211,7 @@
                 "type": "I",
                 "title": "Mrs",
                 "lang": "fr",
-                "has_vat": false,
-                "user_id": 91
+                "has_vat": false
             }
         ]
     },
