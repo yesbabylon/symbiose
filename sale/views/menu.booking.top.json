@@ -8,8 +8,16 @@
               "description": "",
               "icon": "menu_book",
               "type": "entry",
-              "route": "/booking"
+              "route": "/bookings"
             },
+            {
+              "id": "item.booking.edit",
+              "value": "Edit Booking",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/bookings/edit"
+            },            
             {
               "id": "item.customers",
               "value": "Customers",

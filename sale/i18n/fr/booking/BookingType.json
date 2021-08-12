@@ -3,8 +3,8 @@
 	"plural": "Types de réservation",
 	"description": "Les types de réservation permettent d'associer un motif à une réservation donnée (ex. 'individuel', 'groupe', ...) à des fins statistiques.",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom court du type de réservation."},
-        "product_categories_ids":{"label":"Catégories de produits", "help": "Catégories de produits auxquels le type se rapporte."}
+		"name":{"label":"Nom", "help": "Nom court du type de réservation."},
+		"code":{"label":"Code", "help": "Mnemo pour le type de réservation."}
 	},
 	"view": {
 		

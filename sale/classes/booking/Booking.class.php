@@ -101,7 +101,7 @@ class Booking extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => ['quote', 'option', 'validated'],
-                'description'       => 'Type of organisation.',
+                'description'       => 'Status of the booking.',
                 'required'          => true
             ],
 
