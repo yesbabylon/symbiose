@@ -25,7 +25,7 @@
             },
             {
                 "type": "field",
-                "value": "partner_identity_id",
+                "value": "partner_organisation_id",
                 "width": "20%",
                 "widget": {
                     "type": "link"
