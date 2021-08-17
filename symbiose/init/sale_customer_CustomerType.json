@@ -1,0 +1,59 @@
+[
+  {
+      "name":"sale\\customer\\CustomerType",
+      "lang":"fr",
+      "data": [
+      {
+          "id": 1,
+          "code": "I",
+          "description": "Particulier (personne physique)"
+      },
+      {
+        "id": 2,
+        "code": "SE",
+        "description": "Indépendant"
+      },
+      {
+        "id": 3,
+        "code": "C",
+        "description": "Société"
+      },
+      {
+        "id": 4,
+        "code": "NP",
+        "description": "Association ou École (asbl, association de fait ou autre)"
+      },
+      {
+        "id": 5,
+        "code": "PA",
+        "description": "Administration publique"
+      }
+      ]
+  },
+  {
+    "name":"sale\\customer\\CustomerType",
+    "lang":"fr",
+    "data": [
+    {
+        "id": 1,
+        "description": "Individual (natural person)"
+    },
+    {
+      "id": 2,
+      "description": "Self-employed"
+    },
+    {
+      "id": 3,
+      "description": "Company"
+    },
+    {
+      "id": 4,
+      "description": "Non-profit Organisation"
+    },
+    {
+      "id": 5,
+      "description": "Public Administration"
+    }
+    ]
+  }  
+]

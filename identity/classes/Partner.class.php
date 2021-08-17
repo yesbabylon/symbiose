@@ -31,14 +31,14 @@ class Partner extends Model {
             'owner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'I'],
                 'description'       => 'The organisation which the targeted identity is a partner of.'
             ],
 
             'partner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The targeted identity (the partner).' 
+                'description'       => 'The targeted identity (the partner).',
+                'onchange'          => 'identity\Partner::onchangeIdentity'
             ],
 
             'relationship' => [
@@ -86,6 +86,16 @@ class Partner extends Model {
             ],
             
         ];
+    }
+
+    public function getUnique() {
+        return [
+            ['owner_identity_id', 'partner_identity_id']
+        ];
+    }       
+
+    public static function onchangeIdentity($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 
     public static function getDisplayName($om, $oids, $lang) {

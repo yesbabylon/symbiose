@@ -12,6 +12,11 @@ class CustomerNature extends Model {
     public static function getColumns() {
         return [
             'name' => [
+                'type'              => 'alias',
+                'alias'             => 'description'
+            ],
+
+            'code' => [
                 'type'              => 'string',
                 'description'       => "Mnemonic of the customer nature.",
                 'required'          => true
@@ -19,7 +24,8 @@ class CustomerNature extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the customer nature."
+                'description'       => "Short description of the customer nature.",
+                'multilang'         => true
             ],
             
             'rate_class_id' => [

@@ -188,13 +188,21 @@ class Identity extends Model {
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',
-                'description'       => "Contact email address."
+                'description'       => "Identity main email address."
             ],
+            
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'description'       => "Contact phone number."
+                'description'       => "Identity main phone number."
             ],
+
+            'fax' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity main fax number."
+            ],
+
             // Companies can also have an official website.
             'website' => [
                 'type'              => 'string',

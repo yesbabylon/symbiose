@@ -11,7 +11,7 @@ class Establishment extends Model {
     
     public static function getName() {
         return "Establishment unit";
-    }    
+    }
 
     public static function getColumns() {
 

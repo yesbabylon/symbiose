@@ -15,7 +15,7 @@
         },
         {
             "id": 3,
-            "code": "STA",            
+            "code": "STA",
             "name": "Stages"
         },
         {
@@ -62,7 +62,7 @@
             "id": 12,
             "code": "SV",
             "name": "Stage"
-        }          
+        }
         ]
     }
 ]

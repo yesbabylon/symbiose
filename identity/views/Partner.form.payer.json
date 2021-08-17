@@ -1,6 +1,6 @@
 {
     "name": "Partner",
-    "description": "Basic form for displaying a Partner",
+    "description": "Form for Payer Partners",
     "layout": {
         "groups": [
             {
@@ -16,7 +16,8 @@
                                                 "type": "field",
                                                 "label": "Identity of Partner",
                                                 "value": "partner_identity_id",
-                                                "width": "80%"
+                                                "width": "80%",
+                                                "domain": ["type", "<>", "I"]
                                             }
                                         ]
                                     },
@@ -27,35 +28,14 @@
                                                 "type": "field",
                                                 "label": "Identity of Owner",
                                                 "value": "owner_identity_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "relationship",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Target organisation",
-                                                "value": "partner_organisation_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "partner_position",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Rate Class",
-                                                "value": "customer_rate_class_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Type",
-                                                "value": "customer_type_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             }
                                         ]
                                     }
