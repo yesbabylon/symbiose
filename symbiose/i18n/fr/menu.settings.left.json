@@ -1,9 +1,9 @@
 {
     "name": "Menu Paramètres",
-	"description": "",
-	"view": {
-		"item.security": {"label": "Sécurité", "help": ""},
-		"item.permissions": {"label": "Permissions", "help": ""},
+    "description": "",
+    "view": {
+        "item.security": {"label": "Sécurité", "help": ""},
+        "item.permissions": {"label": "Permissions", "help": ""},
         "item.users": {"label": "Utilisateurs", "help": ""},
         "item.groups": {"label": "Groupes", "help": ""},
         "item.sales": {"label": "Ventes", "help": ""},

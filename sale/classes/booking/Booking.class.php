@@ -27,7 +27,14 @@ class Booking extends Model {
             
             'description' => [
                 'type'              => 'string',
-                'description'       => "Reason of the booking."
+                'description'       => "Reason of the booking, for internal use.",
+                'default'           => ''
+            ],
+
+            'customer_reference' => [
+                'type'              => 'string',
+                'description'       => "Code or short string given by the customer as own reference, if any.",
+                'default'           => ''
             ],
 
             'customer_id' => [
@@ -130,7 +137,7 @@ class Booking extends Model {
                 'visible'           => [ 'has_payer_organisation', '=', true ],
                 'domain'            => [ ['owner_identity_id', '=', 'object.customer_id'], ['relationship', '=', 'payer'] ],                
                 'description'       => "The partner whom the invoices have to be sent to."
-            ],
+            ]
             
         ];
     }

@@ -3,9 +3,10 @@
 	"plural": "Natures client",
 	"description": "",
 	"model": {
-		"name":{"label":"Identifiant", "help": "Mnémonique de la nature client."},
-        "description":{"label":"Description", "help": "Brève description de la nature."},
-        "rate_class_id":{"label":"Catégorie tarifaire", "help": "La catégorie tarifaire qui s'applique à cette nature client."}
+		"name":{"label":"Nom", "help": "Description de la nature client."},
+		"code":{"label":"Code", "help": "Mnémonique de la nature client."},    
+    "description":{"label":"Description", "help": "Brève description de la nature."},
+    "rate_class_id":{"label":"Catégorie tarifaire", "help": "La catégorie tarifaire qui s'applique à cette nature client."}
 	},
 	"view": {
 		

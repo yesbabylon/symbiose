@@ -1,0 +1,337 @@
+[
+  {
+      "name":"sale\\customer\\CustomerNature",
+      "lang":"fr",
+      "data": [
+      {
+          "id": 1,
+         "code": "AA",
+          "description": "Ancien administrateur CBTJ/Kaleo",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 2,
+          "code": "AC",
+          "description": "Administration publique",
+          "rate_class_id": 4,
+          "customer_type_id": 5
+      },
+      {
+          "id": 3,
+          "code": "AD",
+          "description": "Administrateur CBTJ/Kaleo",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 4,
+          "code": "AL",
+          "description": "ATL (Accueil Temps Libre)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 5,
+          "code": "AM",
+          "description": "Groupe d'amis",
+          "rate_class_id": 4,
+          "customer_type_id": 1
+      },
+      {
+          "id": 6,
+          "code": "AN",
+          "description": "Animateur",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 7,
+          "code": "AR",
+          "description": "Association (sociale divers)",
+          "rate_class_id": 2,
+          "customer_type_id": 4
+      },
+      {
+          "id": 8,
+          "code": "AS",
+          "description": "Association (grand public)",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 9,
+          "code": "AT",
+          "description": "Ancien travailleur CBTJ/Kaleo",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 10,
+          "code": "CC",
+          "description": "Culture - Centre culturel ou Association culturelle)",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 11,
+          "code": "CE",
+          "description": "CEC (Coopération par l'Education et la Culture)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 12,
+          "code": "CH",
+          "description": "Chorale & Aca de Musique",
+          "rate_class_id": 2,
+          "customer_type_id": 4
+      },
+      {
+          "id": 13,
+          "code": "CP",
+          "description": "CPAS",
+          "rate_class_id": 1,
+          "customer_type_id": 5
+      },
+      {
+          "id": 14,
+          "code": "CS",
+          "description": "Club sportif / Fédération",
+          "rate_class_id": 2,
+          "customer_type_id": 4
+      },
+      {
+          "id": 15,
+          "code": "EC",
+          "description": "Ecole (non précisée)",
+          "rate_class_id": 5,
+          "customer_type_id": 4
+      },
+      {
+          "id": 16,
+          "code": "ED",
+          "description": "AEC (Association d'Education Permanente)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 17,
+          "code": "EG",
+          "description": "Eglise - groupe religieux",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 18,
+          "code": "EM",
+          "description": "Ecole maternelle",
+          "rate_class_id": 7,
+          "customer_type_id": 4
+      },
+      {
+          "id": 19,
+          "code": "EN",
+          "description": "Entreprise (société privée)",
+          "rate_class_id": 4,
+          "customer_type_id": 3
+      },
+      {
+          "id": 20,
+          "code": "EP",
+          "description": "Ecole primaire",
+          "rate_class_id": 5,
+          "customer_type_id": 4
+      },
+      {
+          "id": 21,
+          "code": "ES",
+          "description": "Ecole secondaire",
+          "rate_class_id": 5,
+          "customer_type_id": 4
+      },
+      {
+          "id": 22,
+          "code": "FA",
+          "description": "Famille",
+          "rate_class_id": 4,
+          "customer_type_id": 1
+      },
+      {
+          "id": 23,
+          "code": "FM",
+          "description": "Fanfare-groupe musique",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 24,
+          "code": "GA",
+          "description": "Gérant gîte Auberge",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 25,
+          "code": "GG",
+          "description": "Gérant gîte de Groupes",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 26,
+          "code": "HA",
+          "description": "Home pour adultes",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 27,
+          "code": "HE",
+          "description": "Haute Ecole",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 28,
+          "code": "HO",
+          "description": "Home pour enfants (Maison d'Accueil)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 30,
+          "code": "IN",
+          "description": "Individuel (particulier)",
+          "rate_class_id": 4,
+          "customer_type_id": 1
+      },
+      {
+          "id": 31,
+          "code": "IP",
+          "description": "IPPJ (Institution publique de protection de la jeunesse)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 33,
+          "code": "JE",
+          "description": "Maison de Jeunes Flandres (Jeugdhuis)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 34,
+           "code": "M3",
+          "description": "Maison de Quartier"	,
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 35,
+          "code": "MJ",
+          "description": "Maison de Jeunes Wallonie",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 36,
+          "code": "MO",
+          "description": "AMO (Aide en Milieu Ouvert)",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 37,
+          "code": "MU",
+          "description": "Mutuelle",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 38,
+          "code": "OF",
+          "description": "Officiels (délégation politique)",
+          "rate_class_id": 4,
+          "customer_type_id": 5
+      },
+      {
+          "id": 50,
+          "code": "PP",
+          "description": "Parti politque",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 39,
+          "code": "OJ",
+          "description": "Organisation de jeunesse",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 40,
+          "code": "PR",
+          "description": "Presse",
+          "rate_class_id": 4,
+          "customer_type_id": 3
+      },
+      {
+          "id": 41,
+          "code": "SC",
+          "description": "Mouvement de Jeunesse",
+          "rate_class_id": 1,
+          "customer_type_id": 4
+      },
+      {
+          "id": 42,
+          "code": "SI",
+          "description": "Syndicat Initiative - Maison du Tourisme",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 43,
+          "code": "SJ",
+          "description": "SAJ/SPJ (Service de l'aide à la jeunesse)",
+          "rate_class_id": 1,
+          "customer_type_id": 5
+      },
+      {
+          "id": 45,
+          "code": "SP",
+          "description": "Ecole spéciale (handicap)",
+          "rate_class_id": 5,
+          "customer_type_id": 4
+      },
+      {
+          "id": 46,
+          "code": "TC",
+          "description": "Travailleur CBTJ/Kaleo",
+          "rate_class_id": 3,
+          "customer_type_id": 1
+      },
+      {
+          "id": 47,
+          "code": "TO",
+          "description": "Tour opérateur",
+          "rate_class_id": 6,
+          "customer_type_id": 3
+      },
+      {
+          "id": 48,
+          "code": "UC",
+          "description": "Club Estudiantin",
+          "rate_class_id": 4,
+          "customer_type_id": 4
+      },
+      {
+          "id": 49,
+          "code": "US",
+          "description": "Université - Enseignement Supérieur",
+          "rate_class_id": 2,
+          "customer_type_id": 4
+      }            
+      ]
+  }
+]
