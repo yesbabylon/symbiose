@@ -7,7 +7,6 @@
         "price":{"label":"Prix", "help": "Prix ​​hors taxes."},
         "type":{"label":"Type", "help": "Type de prix.", "selection": {"simple": "simple", "computed": "computé"}},
         "calculation_method_id":{"label":"Méthode de calcul", "help": "Méthode à utiliser pour le calcul des prix."},
-        "description":{"label":"Description", "help": "Brève description de la variante."},
         "price_list_id":{"label":"Liste de prix", "help": "La liste de prix à laquelle appartient le prix."},
         "accounting_rule_id":{"label":"Règle comptable de vente", "help": "Règle comptable de vente. Si défini, remplace la règle de produit."},
         "product_id":{"label":"Produit", "help": "Le produit (sku) auquel le prix s'applique."}

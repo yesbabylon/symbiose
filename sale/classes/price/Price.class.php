@@ -31,18 +31,14 @@ class Price extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['simple', 'computed']
+                'selection'         => ['direct', 'computed'],
+                'default'           => 'direct'
             ],
 
             'calculation_method_id' => [
                 'type'              => 'string',
                 'description'       => "Method to use for price computation.",
                 'visible'           => ['type', '=', 'computed']
-            ],
-
-            'description' => [
-                'type'              => 'string',
-                'description'       => "Short description of the variant."
             ],
 
             'price_list_id' => [
@@ -55,7 +51,7 @@ class Price extends Model {
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
-                'description'       => "Selling accounting rule. If set, overrides the product rule."
+                'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to."
             ],
 
             'product_id' => [
@@ -63,7 +59,7 @@ class Price extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product (sku) the price applies to.",
                 'required'          => true
-            ],
+            ]
             
         ];
     }

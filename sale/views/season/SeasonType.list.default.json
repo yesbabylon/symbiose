@@ -1,5 +1,5 @@
 {
-    "name": "Season Year",
+    "name": "Season Type",
     "description": "This view is intended for displaying the list of season years.",
     "layout": {
         "items": [
@@ -10,9 +10,9 @@
             },
             {
                 "type": "field",
-                "value": "year",
-                "width": "20%"
-            }
+                "value": "description",
+                "width": "80%"
+            }            
         ]
     }
 }

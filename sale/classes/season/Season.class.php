@@ -19,22 +19,10 @@ class Season extends Model {
                 'required'          => true
             ],
 
-            'date_from' => [
-                'type'              => 'date',
-                'description'       => "Date (included) at which the season starts.",
-                'required'          => true
-            ],
-
-            'date_to' => [
-                'type'              => 'date',
-                'description'       => "Date (excluded) at which the season ends.",
-                'required'          => true
-            ],
-
-            'season_year_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\season\SeasonYear',
-                'description'       => "The Season the list relates to.",
+            'year' => [
+                'type'              => 'integer',
+                'usage'             => 'date/year:4',
+                'description'       => "Year the season applies to.",
                 'required'          => true
             ],
 
@@ -45,13 +33,26 @@ class Season extends Model {
                 'required'          => true
             ],
 
-            'rate_class_id' => [
-                'type'              => 'many2one',                
-                'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => "The rate class that applies to this class of discount.",
-                'required'          => true
+            'has_rate_class' => [
+                'type'              => 'boolean',
+                'description'       => "Is the season specific to a given Rate Class?",
+                'default'           => false
             ],
-            
+
+            'rate_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => "The rate class that applies to this Season defintion.",
+                'visible'           => ['has_rate_class', '=', true]
+            ],
+
+            'season_periods_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\season\SeasonPeriod',
+                'foreign_field'     => 'season_id',
+                'description'       => 'Periods that are part of the season (on a yearly basis).'
+            ]
+
         ];
     }
 

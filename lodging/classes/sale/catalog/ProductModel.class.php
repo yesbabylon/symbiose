@@ -9,6 +9,11 @@ namespace lodging\sale\catalog;
 
 class ProductModel extends \sale\catalog\ProductModel {
 
+    /*
+        This class extends the ProductModel with fields specific to property rental.
+    */
+
+
 	public static function getName() {
         return "Product Model";
     }
@@ -27,6 +32,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'string',
                 'description'       => 'The way the product is assigned to a rental unit (a specific unit, a specific category, or based on capacity match).',
                 'selection'         => ['unit', 'category', 'capacity'],
+                'default'           => 'category',
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'] ]
             ],
 
@@ -40,6 +46,7 @@ class ProductModel extends \sale\catalog\ProductModel {
             'duration' => [
                 'type'              => 'integer',
                 'description'       => 'Additional information about the duration of the service (in days), used for planning purpose.',
+                'default'           => 1,
                 'visible'           => [ ['qty_accounting_method', '=', 'person'], ['has_duration', '=', true] ]
             ],
 
@@ -59,7 +66,7 @@ class ProductModel extends \sale\catalog\ProductModel {
 
             'is_accomodation' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the product a ni? (meals might be part of the board / included services of the stay).',
+                'description'       => 'Is the product an accomodation?',
                 'default'           => false,
                 'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
             ],

@@ -19,11 +19,6 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price_list_ids",
-                                                "width": "50%"                                                
                                             }
                                         ]
                                     }

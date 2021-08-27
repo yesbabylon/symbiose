@@ -1,11 +1,13 @@
 {
     "name": "Product",
-    "description": "Identifying the products.",
+    "description": "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
+                        "label": "General info",
+                        "id": "section.products_Section",
                         "rows": [
                             {
                                 "columns": [
@@ -22,9 +24,39 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "sku",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Product Model",
                                                 "value": "product_model_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"                                                
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Prices",
+                        "id": "section.prices_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "prices_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

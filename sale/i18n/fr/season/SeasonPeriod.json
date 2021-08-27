@@ -1,0 +1,16 @@
+{
+	"name": "Saison",
+	"plural": "Saisons",
+	"description": "Les saisons de l'année.",
+	"model": {
+        "date_from":{"label":"Dater de", "help": "Date (incluse) de début de la saison."},
+        "date_to":{"label":"Dater à", "help": "Date (exclue) à laquelle la saison se termine."},
+        "season_type_id":{"label":"Type de saison", "help": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...)."}
+	},
+	"view": {
+		
+	},
+	"error": {
+		
+	}
+}

@@ -14,11 +14,6 @@
                 "width": "20%"
             },
             {
-                "type": "field",            
-                "value": "description",
-                "width": "20%"
-            },
-            {
                 "type": "field",
                 "label": "Product",
                 "value": "product_id",

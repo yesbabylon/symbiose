@@ -22,7 +22,7 @@
                   "type": "entry",
                   "value": "Users",
                   "description": "", 
-                  "entity": "identity\\User",
+                  "entity": "lodging\\identity\\User",
                   "view": "list.default"
                 },
                 {
@@ -186,7 +186,7 @@
                           "type": "entry",
                           "value": "Products",
                           "description": "", 
-                          "entity": "sale\\catalog\\Product",
+                          "entity": "lodging\\sale\\catalog\\Product",
                           "view": "list.default"
                         },
                         {
@@ -194,7 +194,7 @@
                           "type": "entry",
                           "value": "Products Models",
                           "description": "", 
-                          "entity": "sale\\catalog\\ProductModel",
+                          "entity": "lodging\\sale\\catalog\\ProductModel",
                           "view": "list.default"
                         },
                         {
@@ -210,7 +210,7 @@
                           "type": "entry",
                           "value": "Families",
                           "description": "", 
-                          "entity": "sale\\catalog\\Family",
+                          "entity": "lodging\\sale\\catalog\\Family",
                           "view": "list.default"
                         },
                         {
@@ -386,6 +386,31 @@
                       "value": "Establishments",
                       "description": "", 
                       "entity": "identity\\Establishment",
+                      "view": "list.default"
+                    }
+                  ]
+                },
+                {
+                  "id": "item.centers",
+                  "value": "Centers",
+                  "description": "",
+                  "icon": "house",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "item.centers_centers",
+                      "type": "entry",
+                      "value": "Centers",
+                      "description": "", 
+                      "entity": "lodging\\identity\\Center",
+                      "view": "list.default"
+                    },
+                    {
+                      "id": "item.centers_categories",
+                      "type": "entry",
+                      "value": "Center Categories",
+                      "description": "", 
+                      "entity": "lodging\\identity\\CenterCategory",
                       "view": "list.default"
                     }
                   ]

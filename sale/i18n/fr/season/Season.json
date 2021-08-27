@@ -4,9 +4,6 @@
 	"description": "Les saisons de l'année.",
 	"model": {
 		"name":{"label":"Nom de saison", "help": "Bref mnémo de la saison."},
-        "date_from":{"label":"Dater de", "help": "Date (incluse) de début de la saison."},
-        "date_to":{"label":"Dater à", "help": "Date (exclue) à laquelle la saison se termine."},
-        "season_year_id":{"label":"Saison de l'année", "help": "La saison à laquelle la liste se rapporte."},
         "season_category_id":{"label":"Catégorie de saison", "help": "La catégorie à laquelle se rapporte la saison."},
         "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique à cette classe de remise."}
 	},

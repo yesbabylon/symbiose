@@ -21,7 +21,8 @@ class Establishment extends Model {
                 'description'   => "Name of the establishment unit.",
                 'required'      => true
             ],
-
+            
+            /* parent organisation */
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',

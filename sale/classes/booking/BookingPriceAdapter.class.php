@@ -7,14 +7,14 @@
 namespace sale\booking;
 use equal\orm\Model;
 
-class BookingLinePriceAdapter extends Model {
+class BookingPriceAdapter extends Model {
 
     public static function getName() {
         return "Price Adapter";
     }
 
     public static function getDescription() {
-        return "Adapters allow to get the final price of a booking line, either by performing a direct computation, or by using a discount definition.";
+        return "Adapters allow to adapt the final price of the booking lines, either by performing a direct computation, or by using a discount definition.";
     }
     
     public static function getColumns() {
@@ -27,11 +27,16 @@ class BookingLinePriceAdapter extends Model {
                 'required'          => true
             ],
 
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingLineGroup',
+                'description'       => 'Booking Line Group the adapter relates to, if any.'
+            ],
+
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLine',
-                'description'       => 'Booking Line the adapter relates to.',
-                'required'          => true
+                'description'       => 'Booking Line the adapter relates to, if any.'
             ],
             
             'is_manual_discount' => [
@@ -63,5 +68,18 @@ class BookingLinePriceAdapter extends Model {
 
         ];
     }
+
+    public static function getConstraints() {
+        return [
+            'booking_line_id' =>  [
+                'missing_relation' => [
+                    'message'       => 'booking_line_id or booking_line_group_id must be set.',
+                    'function'      => function ($booking_line_id, $values) {
+                        return ($values['booking_line_id'] >= 0 || $values['booking_line_group_id'] >=0);
+                    }
+                ]
+            ]
+        ];
+    }    
 
 }

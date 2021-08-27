@@ -20,12 +20,6 @@
             },
             {
                 "type": "field",
-                "label": "Prices",
-                "value": "prices_ids",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Price List Category",
                 "value": "price_list_category_id",
                 "width": "20%"

@@ -1,23 +1,43 @@
 {
-	"name": "Produit",
-	"plural": "Produits",
-	"description": "Informations relatives au produit.",
-	"model": {
-		"qty_accounting_method":{"label":"Méthode de comptabilisation des quantités", "help": "La façon dont la quantité de produit doit être calculée (par unité [par défaut], par personne ou par logement [ressource]).", "selection": {"person": "personne", "accomodation": "hébergement", "unit": "unité"}},
-        "rental_unit_assignement":{"label":"Cession de logement locatif", "help": "La manière dont le produit est affecté à une unité de location (une unité spécifique, une catégorie spécifique ou en fonction de la capacité).", "selection": {"unit": "unité", "category": "catégorie", "capacity": "capacité"}},
+    "name": "Modèle de produit",
+    "plural": "Modèles de produits",
+    "description": "Détails du Modèle de produit.",
+    "model": {
+        "name":{"label":"Nom du modèle", "help": "Nom du modèle de produit (utilisé pour toutes les variantes)."},
+        "family_id":{"label":"Famille", "help": "Famille de produits à laquelle appartient le produit actuel."},
+        "selling_accounting_rule_id":{"label":"Règle de vente", "help": "Règle comptable a utiliser pour les ventes."},
+        "buying_accounting_rule_id":{"label":"Règle d'achat", "help": "Règle comptable a utiliser pour les achats."},
+        "can_buy":{"label":"Peut être acheté", "help": "Ce produit peut-il être acheté ?"},
+        "can_sell":{"label":"Peut être vendu", "help": "Ce produit peut-il être vendu ?"},
+        "cost":{"label":"Coût", "help": "Coût d'achat."},
+        "is_pack":{"label":"Pack", "help": "S'agit-il d'un pack ?"},
+        "has_own_price":{"label":"A son propre prix", "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)"},
+        "type":{"label":"Type", "help": "Type de produit.", "selection": {"consumable": "consommable", "service": "service"}},
+        "consumable_type":{"label":"Type de consommable", "help": "Liste des types de produit consommable.", "selection": {"simple": "simple", "storable": "stockable"}},
+        "service_type":{"label":"Type de service", "help": "Précision du type de 'service'.", "selection": {"simple": "simple", "schedulable": "planifiable"}},
+        "schedule_type":{"label":"Mode de planification", "help": "Planification a un moment précis, ou pour un intervalle de temps.", "selection": {"time": "heure", "timerange": "intervalle"}},
+        "schedule_default_value":{"label":"Planification par défaut", "help": "Valeur par défaut du planning selon son type (heure, plage horaire)."},
+        "schedule_offset":{"label":"Décalage horaire", "help": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour."},
+        "tracking_type":{"label":"Type de suivi", "help": "Manière dont le produit est identifé pour les suivis.", "selection": {"none": "rien", "batch": "grouper", "sku": "sku", "upc": "upc"}},
+        "description_delivery":{"label":"Description de livraison", "help": "Description des bons de livraison."},
+        "description_receipt":{"label":"Description de réception", "help": "Description pour les bons de réception."},
+        "groups_ids":{"label":"Groupes", "help": "Liste des groupes auxquels appartient le modèle."},
+        "categories_ids":{"label":"Catégories", "help": "Liste des catégories assignés au modèle."},
+        "products_ids":{"label":"Produits (variantes)", "help": "Liste des variantes de ce modèle."},		
+        "qty_accounting_method":{"label":"Comptabilisation", "help": "Méthode de comptabilisation pour calculer la quantité de produit (par unité [par défaut], par personne ou par logement [ressource]).", "selection": {"person": "personne", "accomodation": "hébergement", "unit": "unité"}},
+        "rental_unit_assignement":{"label":"Attribution des unités locatives", "help": "Manière dont le produit est affecté à une unité locative (une unité spécifique, une catégorie spécifique, ou en fonction de la capacité).", "selection": {"unit": "unité", "category": "catégorie", "capacity": "capacité"}},
         "has_duration":{"label":"A une durée", "help": "Le produit a-t-il une durée spécifique."},
         "duration":{"label":"Durée", "help": "Informations supplémentaires sur la durée du service (en jours), utilisées à des fins de planification."},
         "capacity":{"label":"Capacité", "help": "Informations supplémentaires sur la capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants)."},
         "is_meal":{"label":"Est un repas", "help": "Le produit est-il un repas ? (les repas peuvent faire partie de la pension / services inclus du séjour)."},
-        "is_accomodation":{"label":"Est l'hébergement", "help": "Le produit est-il un ni? (les repas peuvent faire partie de la pension / services inclus du séjour)."},
-        "rental_unit_category_id":{"label":"Catégorie d'unité locative", "help": "Unité de location Catégorie à laquelle ce produit est lié, le cas échéant."},
-        "rental_unit_id":{"label":"Unité de location", "help": "Unité de location spécifique à laquelle ce produit est lié, le cas échéant."},
-        "products_ids":{"label":"Produits", "help": "Variantes de produit liées à ce modèle."}
-	},
-	"view": {
-		
-	},
-	"error": {
-		
-	}
+        "is_accomodation":{"label":"Est un logement", "help": "Le produit est-il un logement ?"},
+        "rental_unit_category_id":{"label":"Catégorie d'unité locative", "help": "Catégorie d'unité locative à laquelle ce produit est lié, le cas échéant."},
+        "rental_unit_id":{"label":"Unité de location", "help": "Unité locative spécifique à laquelle ce produit est lié, le cas échéant."}
+    },
+    "view": {
+        
+    },
+    "error": {
+        
+    }
 }

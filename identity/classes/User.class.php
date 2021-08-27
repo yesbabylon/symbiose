@@ -36,7 +36,16 @@ class User extends \core\User {
                 'foreign_object'    => 'core\SettingValue', 
                 'foreign_field'     => 'user_id', 
                 'description'       => 'List of settings that relate to the user.'
+            ],
+
+            /* the organisation the user is part of (multi-company support) */
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The organisation the user relates to.",
+                'default'           => 1
             ]
+
 
         ];
     }

@@ -22,7 +22,7 @@ class Center extends \identity\Establishment {
 
             'code' => [
                 'type'              => 'string',
-                'description'       => 'Short identifier of the center.'                
+                'description'       => 'Short identifier of the center.'
             ],
 
             /*
@@ -35,25 +35,12 @@ class Center extends \identity\Establishment {
                 'description'       => 'List of employees of the organisation, if any.'
             ],
 
-            'organisation_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'I'],
-                'description'       => 'The parent organisation of the Center.'
-            ],
-
-            'organisation_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '<>', 'I'],
-                'description'       => 'The parent organisation of the Center.'
-            ],
 
             'price_list_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\PriceListCategory',
                 'description'       => "Price list category used by the center.",
-                'required'          => true                
+                'required'          => true
             ],
 
             'discount_list_category_id' => [
@@ -65,17 +52,17 @@ class Center extends \identity\Establishment {
 
             'season_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\season\SeasonCategory',
-                'description'       => "Season category used by the center.",
+                'foreign_object'    => 'lodging\sale\season\SeasonCategory',
+                'description'       => "Category of seasons used by the center.",
                 'required'          => true
-            ],            
+            ],
 
             'template_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'communication\TemplateCategory',
                 'description'       => "Template category used by the center.",
                 'required'          => true
-            ],            
+            ],
 
             'categories_ids' => [
                 'type'              => 'many2many',
@@ -94,14 +81,23 @@ class Center extends \identity\Establishment {
                 'description'       => 'List of rental units of the center.'
             ],
 
-            'product_families_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'lodging\sale\catalog\Family', 
-                'foreign_field'     => 'centers_ids', 
-                'rel_table'         => 'sale_product_family_rel_identity_center', 
+            'product_families_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\sale\catalog\Family',
+                'foreign_field'     => 'centers_ids',
+                'rel_table'         => 'sale_product_family_rel_identity_center',
                 'rel_foreign_key'   => 'family_id',
                 'rel_local_key'     => 'center_id'
-            ]            
+            ],
+
+            'users_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\identity\User',
+                'foreign_field'     => 'centers_ids',
+                'rel_table'         => 'sale_identity_rel_center_user',
+                'rel_foreign_key'   => 'user_id',
+                'rel_local_key'     => 'center_id'
+            ]
         ];
     }
 }

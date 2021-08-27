@@ -20,12 +20,12 @@ class DiscountList extends Model {
 
             'valid_from' => [
                 'type'              => 'date',
-                'description'       => "Date from which the list is valid."
+                'description'       => "Date from which the list is valid (included)."
             ],
 
             'valid_until' => [
                 'type'              => 'date',
-                'description'       => "Moment until when the list is valid."
+                'description'       => "Moment until when the list is valid (included)."
             ],
 
             'discounts_ids' => [

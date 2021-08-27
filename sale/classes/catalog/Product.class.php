@@ -46,7 +46,22 @@ class Product extends Model {
                 'required'          => true
             ],
 
-            // if the organisation uses price-lists, the price is to be found in the Price object related to the product SKU
+            'is_pack' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Is the product a pack? (from product model)',
+                'function'          => 'sale\catalog\Product::getIsPack',
+                'store'             => true
+            ],
+
+            'is_locked' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the pack static? (cannot be modified)',
+                'default'           => false,
+                'visible'           => [ ['is_pack', '=', true] ]                
+            ],
+
+            // if the organisation uses price-lists, the price to use depends on the applicable
 
             'prices_ids' => [
                 'type'              => 'one2many',
@@ -56,6 +71,16 @@ class Product extends Model {
             ],
 
         ];
+    }
+
+
+    public static function getIsPack($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['product_model_id.is_pack']);
+        foreach($lines as $oid => $odata) {
+            $result[$oid] = $odata['product_model_id.is_pack'];
+        }
+        return $result;
     }
 
 }

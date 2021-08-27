@@ -26,7 +26,8 @@ class Booking extends Model {
             ],
             
             'description' => [
-                'type'              => 'string',
+                'type'              => 'text',
+                'usage'             => '',
                 'description'       => "Reason of the booking, for internal use.",
                 'default'           => ''
             ],
@@ -39,7 +40,7 @@ class Booking extends Model {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
+                'foreign_object'    => 'sale\customer\Customer',
                 'domain'            => ['relationship', '=', 'customer'],
                 'description'       => "The customer to whom the booking relates to.",
                 'required'          => true
@@ -63,7 +64,7 @@ class Booking extends Model {
 // #todo            
             // origin ID (OTA)
 
-            // A booking can have several contacts
+            // A booking can have several contacts (extending identity\Partner)
             'contacts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contact',
@@ -101,7 +102,7 @@ class Booking extends Model {
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingType',
-                'description'       => "The customer to whom the booking relates to.",
+                'description'       => "The kind of booking it is about.",
                 'required'          => true
             ],
 

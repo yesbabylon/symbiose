@@ -53,7 +53,16 @@ class Invoice extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'description'       => "Organisation which has to pay for the goods and services related to the sale."
+            ],
+
+            /* the organisation the invoice relates to (multi-company support) */
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The organisation that emitted the invoice.",
+                'default'           => 1
             ]
+
         ];
     }
 
