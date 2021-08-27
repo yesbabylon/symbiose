@@ -79,7 +79,6 @@
                 "id": 20,
                 "name": "accounting.administrators",
                 "display_name": "Accounting / Administrators",
-                "users_ids": [ 2 ],
                 "description": "Manage settings related to accounting (accounting rules, accounting plan, VAT rules, …)."
             },
             {

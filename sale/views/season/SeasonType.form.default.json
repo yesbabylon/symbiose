@@ -1,5 +1,5 @@
 {
-    "name": "Season Year",
+    "name": "Season Type",
     "description": "",
     "layout": {
         "groups": [
@@ -22,7 +22,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "year",
+                                                "value": "description",
                                                 "width": "100%"
                                             }
                                         ]

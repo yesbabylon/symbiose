@@ -107,6 +107,7 @@ class Identity extends Model {
                 'description'       => 'Children organisations owned by the company, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
+            
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -325,7 +326,7 @@ class Identity extends Model {
                 if($odata['type'] == 'I' ) {
                     $om->write(__CLASS__, $oid, [ 'display_name' => null ], $lang);
                 }
-            }    
+            }
         }
     }
 

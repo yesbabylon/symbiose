@@ -3,8 +3,8 @@
 	"plural": "Produits",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Mnémo lisible par l'homme pour identifier le produit. Autorise les doublons."},
-        "sku":{"label":"Sku", "help": "Code de l'unité de gestion des stocks pour référence interne. Doit être unique."},
+		"name":{"label":"Identification", "help": "Mnémo pour identifier le produit (doublons autorisés)."},
+        "sku":{"label":"Sku", "help": "Code unique  pour référence interne (Stock Keeping Unit)."},
         "ean":{"label":"EAN", "help": "Code IAN/EAN pour la génération de codes-barres."},
         "description":{"label":"Description", "help": "Description de la variante (spécificités)."},
         "product_model_id":{"label":"Modèle du produit", "help": "Produit Modèle de cette variante."},

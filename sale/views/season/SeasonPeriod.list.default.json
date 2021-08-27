@@ -1,0 +1,30 @@
+{
+    "name": "Seasons",
+    "description": "This view is intended for displaying the list of seasons.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Season",
+                "value": "season_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "season_type_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

@@ -134,17 +134,6 @@
                                                 "type": "field",
                                                 "value": "website",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "reference_partner_id",
-                                                "label": "Person of reference",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "user_id",
-                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -156,7 +145,8 @@
                                                 "type": "field",
                                                 "value": "reference_partner_id",
                                                 "label": "Person of reference",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "domain": ["owner_identity_id", "=", "object.id"]                                                
                                             },
                                             {
                                                 "type": "field",

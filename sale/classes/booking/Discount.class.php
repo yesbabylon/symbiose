@@ -15,7 +15,7 @@ class Discount extends \sale\discount\Discount {
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
-                'description'       => 'Booking the contract relates to.',
+                'description'       => 'Booking the discount is applied on.',
                 'required'          => true
             ]
 

@@ -14,20 +14,26 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Manager Name",
+                                                "label": "Center Name",
                                                 "value": "name",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Manager",
-                                                "value": "manager_id",
+                                                "label": "Code",
+                                                "value": "code",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Organization",
                                                 "value": "organisation_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Manager",
+                                                "value": "manager_id",
                                                 "width": "50%"
                                             }
                                         ]
@@ -37,7 +43,131 @@
                         ]
                     }
                 ]
-            }
+            },
+            {
+                "sections": [                    
+                    {
+                        "label":"Details",
+                        "id": "section.details",
+                        "rows": [                            
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "price_list_category_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "discount_list_category_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "season_category_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "template_category_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label":"Categories",
+                        "id": "section.categories",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "categories_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label":"Rental units",
+                        "id": "section.rental_units",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "rental_units_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label":"Product families",
+                        "id": "section.product_families",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_families_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label":"Users",
+                        "id": "section.users",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "users_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
+                ]
+            }            
        ]
     }
 }

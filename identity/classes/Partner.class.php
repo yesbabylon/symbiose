@@ -100,9 +100,12 @@ class Partner extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $employees = $om->read(__CLASS__, $oids, ['partner_identity_id.name']);
-        foreach($employees as $oid => $odata) {
-            $result[$oid] = $odata['partner_identity_id.name'];
+        $partners = $om->read(__CLASS__, $oids, ['partner_identity_id.name']);
+        foreach($oids as $oid) {
+            $result[$oid] = '';
+            if(isset($partners[$oid]['partner_identity_id.name'])) {
+                $result[$oid] = $partners[$oid]['partner_identity_id.name'];
+            }
         }
         return $result;
     }    

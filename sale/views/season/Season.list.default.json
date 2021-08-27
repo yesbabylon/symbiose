@@ -10,16 +10,6 @@
             },
             {
                 "type": "field",
-                "value": "date_from",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "date_to",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Category",
                 "value": "season_category_id",
                 "width": "20%"

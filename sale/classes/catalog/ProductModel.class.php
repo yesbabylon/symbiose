@@ -64,8 +64,16 @@ class ProductModel extends Model {
 
             'is_pack' => [
                 'type'              => 'boolean',
-                'description'       => "Is this a bundle of other products?",
+                'description'       => "Is the product a bundle of other products?",
                 'default'           => false
+// #todo : onchange, reset related products is_pack                
+            ],
+
+            'pack_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\PackLine',
+                'foreign_field'     => 'parent_product_id',
+                'description'       => "Products that are bundled in the pack.",
             ],
 
             'has_own_price' => [
@@ -95,12 +103,13 @@ class ProductModel extends Model {
             'schedule_type' => [
                 'type'              => 'string',
                 'selection'         => ['time', 'timerange'],
+                'default'           => 'time',
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
 
             'schedule_default_value' => [
                 'type'              => 'string',
-                'description'       => 'Multipurpose string representing the default value of the schedule according to its type (time, timerange).',
+                'description'       => "Multipurpose string representing the default value of the schedule according to its type (time: '9:00', timerange: '9:00-10:00').",
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
 

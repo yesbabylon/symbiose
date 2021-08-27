@@ -5,13 +5,8 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\booking;
-use equal\orm\Model;
 
-class Contact extends \identity\Identity {
-
-    public function getTable() {
-        return str_replace('\\', '_', get_class($this));
-    }
+class Contact extends \identity\Partner {
 
     public static function getName() {
         return "Contact";
@@ -19,23 +14,23 @@ class Contact extends \identity\Identity {
 
     public static function getDescription() {
         return "Booking contacts are persons involved in the organisation of a booking.";
-    }
-    
+    }    
 
     public static function getColumns() {
 
         return [
-            'creator' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\User',
-                'description'       => 'User who created the entry.',
-            ],
 
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'Booking the contact relates to.',
                 'required'          => true
+            ],
+
+            'relationship' => [
+                'type'              => 'string',
+                'default'           => 'contact',
+                'description'       => "The partnership should remain 'contact'."
             ],
 
             'type' => [
@@ -47,7 +42,7 @@ class Contact extends \identity\Identity {
                     'sojourn'           // person that will be present during the sojourn (beneficiary)
                 ],
                 'description'       => 'The kind of contact, based on its responsibilities.'
-            ],
+            ]
      
         ];
     }

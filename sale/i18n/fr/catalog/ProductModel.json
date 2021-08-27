@@ -1,36 +1,36 @@
 {
-	"name": "Modèle du produit",
-	"plural": "Modèles du produit",
-	"description": "",
-	"model": {
-		"name":{"label":"Nom du produit", "help": "Nom du modèle de produit (utilisé pour toutes les variantes)."},
+    "name": "Modèle du produit",
+    "plural": "Modèles du produit",
+    "description": "",
+    "model": {
+        "name":{"label":"Nom du produit", "help": "Nom du modèle de produit (utilisé pour toutes les variantes)."},
         "family_id":{"label":"Famille", "help": "Famille de produits à laquelle appartient le produit actuel."},
-        "selling_accounting_rule_id":{"label":"Règle comptable de vente", "help": "Règle comptable de vente."},
-        "buying_accounting_rule_id":{"label":"Règle comptable d'achat", "help": "Règle comptable d'achat."},
-        "can_buy":{"label":"Peut acheter", "help": "Ce produit peut-il être acheté ?"},
-        "can_sell":{"label":"Peut vendre", "help": "Ce produit peut-il être vendu ?"},
+        "selling_accounting_rule_id":{"label":"Règle de vente", "help": "Règle comptable a utiliser pour les ventes."},
+        "buying_accounting_rule_id":{"label":"Règle d'achat", "help": "Règle comptable a utiliser pour les achats."},
+        "can_buy":{"label":"Peut être acheté", "help": "Ce produit peut-il être acheté ?"},
+        "can_sell":{"label":"Peut être vendu", "help": "Ce produit peut-il être vendu ?"},
         "cost":{"label":"Coût", "help": "Coût d'achat."},
-        "is_pack":{"label":"Est pack", "help": "S'agit-il d'un ensemble d'autres produits ?"},
-        "has_own_price":{"label":"A son propre prix", "help": "L'offre groupée a-t-elle son propre prix ou utilisons-nous le prix de chaque produit ?"},
-        "type":{"label":"Type", "help": "Type de modèle de produit.", "selection": {"consumable": "consommable", "service": "service"}},
+        "is_pack":{"label":"Pack", "help": "S'agit-il d'un pack ?"},
+        "has_own_price":{"label":"A son propre prix", "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)."},
+        "type":{"label":"Type", "help": "Type de produit.", "selection": {"consumable": "consommable", "service": "service"}},
         "consumable_type":{"label":"Type de consommable", "help": "Liste des types de produit consommable.", "selection": {"simple": "simple", "storable": "stockable"}},
-        "service_type":{"label":"Type de service", "help": "Liste des types de service.", "selection": {"simple": "simple", "schedulable": "planifiable"}},
-        "schedule_type":{"label":"Type d'horaire", "help": "Liste des types d'horaire.", "selection": {"time": "temps", "timerange": "intervalle de temps"}},
-        "schedule_default_value":{"label":"Valeur par défaut du programme", "help": "Chaîne polyvalente représentant la valeur par défaut du planning selon son type (heure, plage horaire)."},
+        "service_type":{"label":"Type de service", "help": "Précision du type de 'service'.", "selection": {"simple": "simple", "schedulable": "planifiable"}},
+        "schedule_type":{"label":"Mode de planification", "help": "Liste des types d'horaire.", "selection": {"time": "temps", "timerange": "intervalle de temps"}},
+        "schedule_default_value":{"label":"Planification par défaut", "help": "Chaîne polyvalente représentant la valeur par défaut du planning selon son type (heure, plage horaire)."},
         "schedule_offset":{"label":"Décalage horaire", "help": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour."},
-        "tracking_type":{"label":"Type de suivi", "help": "Liste des types de suivi.", "selection": {"none": "rien", "batch": "grouper", "sku": "sku", "upc": "upc"}},
-        "description_delivery":{"label":"Description livraison", "help": "Description des bons de livraison."},
-        "description_receipt":{"label":"Description reçu", "help": "Description des bons d'accueil."},
-        "groups_ids":{"label":"Groupes", "help": "La liste des groupes."},
-        "categories_ids":{"label":"Catégories", "help": "La liste des catégories."},
-        "products_ids":{"label":"Produits", "help": "Variantes de produit liées à ce modèle."}
-	},
-	"view": {
-		"section.product_model": {"label": "Détails"},
+        "tracking_type":{"label":"Type de suivi", "help": "Manière dont le produit est identifé pour les suivis.", "selection": {"none": "rien", "batch": "grouper", "sku": "sku", "upc": "upc"}},
+        "description_delivery":{"label":"Description de livraison", "help": "Description des bons de livraison."},
+        "description_receipt":{"label":"Description de réception", "help": "Description pour les bons de réception."},
+        "groups_ids":{"label":"Groupes", "help": "Liste des groupes auxquels appartient le modèle."},
+        "categories_ids":{"label":"Catégories", "help": "Liste des catégories assignés au modèle."},
+        "products_ids":{"label":"Produits (variantes)", "help": "Liste des variantes de ce modèle."}
+    },
+    "view": {
+        "section.product_model": {"label": "Détails"},
         "section.groups_section": {"label": "Groupes"},
         "section.categories_section": {"label": "Catégories"}
-	},
-	"error": {
-		
-	}
+    },
+    "error": {
+        
+    }
 }

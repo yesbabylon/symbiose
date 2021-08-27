@@ -14,18 +14,22 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
+                                                "label": "Identity of Partner",
+                                                "value": "partner_identity_id",
+                                                "width": "80%",
+                                                "domain": ["type", "=", "I"]
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Booking",
+                                                "value": "owner_identity_id",
+                                                "width": "0%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "booking_id",
-                                                "width": "50%"
+                                                "width": "0%",
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
