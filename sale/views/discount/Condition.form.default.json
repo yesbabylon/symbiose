@@ -23,22 +23,22 @@
                                             {
                                                 "type": "field",
                                                 "value": "operand",
-                                                "width": "50%"
+                                                "width": "40%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "operator",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "value",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "discount_id",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }

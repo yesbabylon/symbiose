@@ -20,12 +20,14 @@ class DiscountList extends Model {
 
             'valid_from' => [
                 'type'              => 'date',
-                'description'       => "Date from which the list is valid (included)."
+                'description'       => "Date from which the list is valid (included).",
+                'default'           => time()
             ],
 
             'valid_until' => [
                 'type'              => 'date',
-                'description'       => "Moment until when the list is valid (included)."
+                'description'       => "Moment until when the list is valid (included).",
+                'default'           => time()                
             ],
 
             'discounts_ids' => [
@@ -46,10 +48,34 @@ class DiscountList extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\discount\DiscountClass',
                 'description'       => 'The discount class the list belongs to.',
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\discount\DiscountList::onchangeDiscountClassId'
             ],
 
+            'rate_class_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'sale\discount\DiscountList::getRateClassId',
+                'description'       => "The rate class that applies to the parent class of discount.",
+                'store'             => true
+            ]
+
         ];
+    }
+
+    public static function onchangeDiscountClassId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['rate_class_id' => null]);
+        // force immediate re-computing
+        $om->read(__CLASS__, $oids, ['rate_class_id']);
+    }    
+
+    public static function getRateClassId($om, $oids, $lang) {
+        $result = [];
+        $lists = $om->read(__CLASS__, $oids, ['discount_class_id.rate_class_id']);
+        foreach($lists as $oid => $list) {
+            $result[$oid] = $list['discount_class_id.rate_class_id'];
+        }
+        return $result;
     }
 
 }

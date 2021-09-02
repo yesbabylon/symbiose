@@ -43,21 +43,23 @@ class Booking extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'domain'            => ['relationship', '=', 'customer'],
                 'description'       => "The customer to whom the booking relates to.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
             ],
 
             'center_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Center',
                 'description'       => "The center to which the booking relates to.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\booking\Booking::onchangeCenterId'
             ],
 
-            'price_total' => [
+            'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money',
-                'function'          => 'sale\booking\Booking::getPriceTotal',
+                'function'          => 'sale\booking\Booking::getPrice',
                 'description'       => 'Total price (vat incl.) of the booking.'
             ],
 
@@ -160,9 +162,36 @@ class Booking extends Model {
     public static function getDateTo($om, $oids, $lang) {
 
     }
-    
-    public static function getPriceTotal($om, $oids, $lang) {
 
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        if($bookings > 0 && count($bookings)) {            
+            foreach($bookings as $bid => $booking) {
+                $groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
+                $result[$bid] = 0.0;
+                if($groups > 0 && count($groups)) {
+                    foreach($groups as $group) {
+                        $result[$bid] += $group['price'];
+                    }
+                }
+            }
+        }
+        return $result;
+    }    
+
+    public static function onchangeCustomerId($om, $oids, $lang) {
+        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
+            BookingLineGroup::_updatePriceAdapters($om, $booking_lines_groups_ids, $lang);
+        }
+    }
+
+    public static function onchangeCenterId($om, $oids, $lang) {
+        $booking_lines_ids = $om->read(__CLASS__, $oids, ['booking_lines_ids']);
+        if($booking_lines_ids > 0 && count($booking_lines_ids)) {
+            BookingLine::_updatePriceId($om, $booking_lines_ids, $lang);
+        }
     }
 
 }

@@ -6,6 +6,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "section.details",
                         "rows": [
                             {
                                 "columns": [
@@ -43,7 +45,27 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "label": "Periods",
+                        "id": "section.periods",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "season_periods_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
                 ]
             }
         ]

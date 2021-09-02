@@ -25,13 +25,13 @@ class DiscountListCategory extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Short name of the booking type.',
+                'description'       => 'Short name of the category.',
                 'required'          => true
             ],
             
             'description' => [
                 'type'              => 'string',
-                'description'       => "Reason of the booking."
+                'description'       => "Criterias that need to be addressed by children lists."
             ],
 
             'discount_lists_ids' => [

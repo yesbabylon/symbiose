@@ -45,26 +45,39 @@ class BookingLine extends Model {
             'price_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
-                'description'       => 'The price (retrieved by price list) the line relates to.'
+                'description'       => 'The price (retrieved by price list) the line relates to.',
+                'onchange'          => 'sale\booking\BookingLine::onchangePriceId'
             ],
 
             'price_adapters_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingPriceAdapter',
                 'foreign_field'     => 'booking_line_id',
-                'description'       => 'Price adapters holding the manual discounts applied on the line.'
+                'description'       => 'All price adapters: auto and manual discounts applied on the line.',
+                'onchange'          => 'sale\booking\BookingLine::onchangePriceAdaptersIds'
+            ],
+
+            'auto_discounts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\BookingPriceAdapter',
+                'foreign_field'     => 'booking_line_id',
+                'domain'            => ['is_manual_discount', '=', false],
+                'description'       => 'Price adapters relating to auto discounts only.'
+            ],
+
+            'manual_discounts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\BookingPriceAdapter',
+                'foreign_field'     => 'booking_line_id',
+                'domain'            => ['is_manual_discount', '=', true],
+                'description'       => 'Price adapters relating to manual discounts only.'
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'default'           => 1.0
-            ],
-
-            'free_qty' => [
-                'type'              => 'integer',
-                'description'       => 'Quantity of free items (granted as a gift).',
-                'default'           => 0
+                'default'           => 1.0,
+                'onchange'          => 'sale\booking\BookingLine::onchangeQty'
             ],
 
             'order' => [
@@ -86,20 +99,38 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
+            'unit_price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Unit price (with automated discounts applied).',
+                'function'          => 'sale\booking\BookingLine::getUnitPrice',
+                'store'             => true
+            ],
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'Final (computed) price.',
-                'function'          => 'sale\booking\BookingLine::getPrice',
+                'function'          => 'sale\booking\BookingLine::getTotalPrice',
+                'store'             => true
             ],
 
             'vat_rate' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'VAT rate that applies to this line.',
-                'function'          => 'sale\booking\BookingLine::getVatRate'
+                'function'          => 'sale\booking\BookingLine::getVatRate',
+                'store'             => true
             ]
         ];
+    }
+
+    public static function onchangeFreeQty($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null]);
+    }
+
+    public static function onchangeQty($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null]);
     }
 
     /**
@@ -107,12 +138,29 @@ class BookingLine extends Model {
      */
     public static function onchangeProductId($om, $oids, $lang) {
         self::_updatePriceId($om, $oids, $lang);
+        // self::_updateConsumptions($om, $oids, $lang);
     }
 
-// #todo - _updatePriceId should be called upon center_id change
+    public static function onchangePriceId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
+    }
 
+    public static function onchangePriceAdaptersIds($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
+    }
+
+    /**
+     * Try to assign the price_id according to the current product_id.
+     * Resolve the price from the applicable price lists, based on booking_line_group settings and booking center.
+     *
+     * _updatePriceId is also called upon booking_id.center_id and booking_line_group_id.date_from changes.
+     */
     public static function _updatePriceId($om, $oids, $lang) {
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.date_from', 'product_id', 'booking_id.center_id.price_list_category_id']);
+        $lines = $om->read(__CLASS__, $oids, [
+            'booking_line_group_id.date_from',
+            'product_id',
+            'booking_id.center_id.price_list_category_id'
+        ]);
 
         foreach($lines as $line_id => $line) {
             /*
@@ -125,8 +173,8 @@ class BookingLine extends Model {
                                                                    ]);
             $price_lists = $om->read('sale\price\PriceList', $price_lists_ids, ['id']);
             $price_list_id = 0;
-            if($price_lists > 0 && count($price_lists)) {            
-                $price_list_id = array_shift(array_keys($price_lists));
+            if($price_lists > 0 && count($price_lists)) {
+                $price_list_id = array_keys($price_lists)[0];
             }
             /*
                 Search for a matching Price within the found Price List
@@ -141,49 +189,101 @@ class BookingLine extends Model {
                     $om->write(__CLASS__, $line_id, ['price_id' => $prices_ids[0]]);
                 }
                 else {
-                    $om->write(__CLASS__, $line_id, ['price_id' => null]);
+                    $om->write(__CLASS__, $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
                     trigger_error("QN_DEBUG_ORM::no matching price found for product {$line['product_id']} in price_list $price_list_id", QN_REPORT_ERROR);
                 }
             }
             else {
-                $om->write(__CLASS__, $line_id, ['price_id' => null]);
+                $om->write(__CLASS__, $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
                 $date = date('Y-m-d', $line['booking_line_group_id.date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);
             }
         }
     }
 
+
     /**
-     * Compute the final total price of the line
+     * Compute the VAT excl. unit price of the line, according to manual and automated discounts.
+     *
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function getUnitPrice($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'price_adapters_ids']);
+        $lines = $om->read(__CLASS__, $oids, [
+                    'price_id.price',
+                    'auto_discounts_ids'
+                ]);
         foreach($lines as $oid => $odata) {
             $price = (float) $odata['price_id.price'];
             $disc_percent = 0.0;
             $disc_value = 0.0;
-            $adapters = $om->read('sale\booking\BookingLinePriceAdapter', $odata['price_adapters_ids'], ['is_manual_discount', 'type', 'value', 'discount_id']);
+            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
             foreach($adapters as $aid => $adata) {
-                if($adata['is_manual_discount'] == true) {
-                    if($adata['type'] == 'amount') {
-                        $disc_value += $adata['value'];
-                    }
-                    else if($adata['type'] == 'percent') {
-                        $disc_percent += $adata['value'];
-                    }
+                if($adata['type'] == 'amount') {
+                    $disc_value += $adata['value'];
+                }
+                else if($adata['type'] == 'percent') {
+                    $disc_percent += $adata['value'];
                 }
             }
-            $result[$oid] = ($price * (1-$disc_percent)) - $disc_value;
+            $result[$oid] = round(($price * (1-$disc_percent)) - $disc_value, 2);
+        }
+        return $result;
+    }
+
+    /**
+     * Compute the VAT incl. total price of the line, according to manual and automated discounts.
+     *
+     */
+    public static function getTotalPrice($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, [
+                    'qty',
+                    'vat_rate',
+                    'unit_price',
+                    'auto_discounts_ids',
+                    'manual_discounts_ids'
+                ]);
+        foreach($lines as $oid => $odata) {
+            $price = (float) $odata['unit_price'];
+            $disc_percent = 0.0;
+            $disc_value = 0.0;
+            $vat = (float) $odata['vat_rate'];
+            $qty = intval($odata['qty']);
+            // apply auto-discounts
+            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
+            foreach($adapters as $aid => $adata) {
+                // amount and percent discounts have been applied in ::getUnitPrice()
+                if($adata['type'] == 'freebie') {
+                    $qty -= $adata['value'];
+                }
+            }
+            // apply manual discounts
+            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
+            foreach($discounts as $aid => $adata) {
+                if($adata['type'] == 'amount') {
+                    $disc_value += $adata['value'];
+                }
+                else if($adata['type'] == 'percent') {
+                    $disc_percent += $adata['value'];
+                }
+                else if($adata['type'] == 'freebie') {
+                    $qty -= $adata['value'];
+                }
+            }
+            $price = ($price * (1-$disc_percent));
+            // apply discount amount VAT excl.
+            // $result[$oid] = round( (($price * $qty) - $disc_value) * (1 + $vat), 2);
+            // apply discount amount VAT incl.
+            $result[$oid] = round( ($price * $qty)  * (1 + $vat) - $disc_value, 2);
         }
         return $result;
     }
 
     public static function getVatRate($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule.rate']);
+        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {
-            $result[$oid] = $odata['price_id.accounting_rule_id.vat_rule.rate'];
+            $result[$oid] = $odata['price_id.accounting_rule_id.vat_rule_id.rate'];
         }
         return $result;
     }
@@ -194,7 +294,7 @@ class BookingLine extends Model {
                 'lte_zero' => [
                     'message'       => 'Quantity must be a positive value.',
                     'function'      => function ($qty, $values) {
-                        return ($qty <= 0);
+                        return ($qty > 0);
                     }
                 ]
             ]

@@ -19,11 +19,13 @@ class Condition extends Model {
 
             'operand' => [
                 'type'              => 'string',
+                'selection'         => ['season', 'nb_pers', 'duration', 'count_booking_24'],
                 'required'          => true
             ],
 
             'operator' => [
                 'type'              => 'string',
+                'selection'         => ['=', '>', '>=', '<', '<='],
                 'required'          => true
             ],
 

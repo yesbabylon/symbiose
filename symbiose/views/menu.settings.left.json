@@ -55,7 +55,7 @@
                       "value": "New booking",
                       "description": "", 
                       "icon": "add",
-                      "entity": "sale\\booking\\Booking",
+                      "entity": "lodging\\sale\\booking\\Booking",
                       "view": "form.default",
                       "purpose": "create"
                     },
@@ -64,7 +64,7 @@
                       "type": "entry",
                       "value": "All bookings",
                       "description": "", 
-                      "entity": "sale\\booking\\Booking",
+                      "entity": "lodging\\sale\\booking\\Booking",
                       "view": "list.default"
                     },
                     {
@@ -72,7 +72,7 @@
                       "type": "entry",
                       "value": "Quotes",
                       "description": "", 
-                      "entity": "sale\\booking\\Booking",
+                      "entity": "lodging\\sale\\booking\\Booking",
                       "view": "list.default",
                       "domain": ["status", "=", "quote"]
                     },
@@ -81,7 +81,7 @@
                       "type": "entry",
                       "value": "Options",
                       "description": "", 
-                      "entity": "sale\\booking\\Booking",
+                      "entity": "lodging\\sale\\booking\\Booking",
                       "view": "list.default",
                       "domain": ["status", "=", "option"]
                     },
@@ -90,7 +90,7 @@
                       "type": "entry",
                       "value": "Validated bookings",
                       "description": "",
-                      "entity": "sale\\booking\\Booking",
+                      "entity": "lodging\\sale\\booking\\Booking",
                       "view": "list.default",
                       "domain": ["status", "=", "validated"]
                     }
@@ -288,7 +288,40 @@
                           "view": "list.default"
                         }
                       ]
-                    }                    
+                    },
+                    {
+                      "id": "item.seasons",
+                      "value": "Seasons",
+                      "description": "",
+                      "icon": "calendar_today",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "item.seasons_type",
+                          "type": "entry",
+                          "value": "Season Types",
+                          "description": "", 
+                          "entity": "sale\\season\\SeasonType",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.seasons_category",
+                          "type": "entry",
+                          "value": "Seasons categories",
+                          "description": "", 
+                          "entity": "sale\\season\\SeasonCategory",
+                          "view": "list.default"
+                        },
+                        {
+                          "id": "item.seasons_season",
+                          "type": "entry",
+                          "value": "Seasons",
+                          "description": "", 
+                          "entity": "sale\\season\\Season",
+                          "view": "list.default"
+                        }
+                      ]
+                    } 
                   ]
                 }                
               ]

@@ -23,13 +23,15 @@ class DiscountClass extends Model {
             ],
 
             'rate_min' => [
-                'type'              => 'datetime',
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
                 'description'       => "Guaranteed minimal discount, if any.",
                 'default'           => 0.0
             ],
 
             'rate_max' => [
-                'type'              => 'datetime',
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
                 'description'       => "Maximal applicable discount, if any.",
                 'default'           => 1.0
             ],
@@ -42,7 +44,7 @@ class DiscountClass extends Model {
             ],
 
             'rate_class_id' => [
-                'type'              => 'many2one',                
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The rate class that applies to this class of discount.",
                 'required'          => true

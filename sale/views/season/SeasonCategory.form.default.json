@@ -19,12 +19,6 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Season",
-                                                "value": "seasons_ids",
-                                                "width": "100%"
                                             }
                                         ]
                                     }

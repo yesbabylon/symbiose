@@ -36,7 +36,13 @@
                                                 "type": "field",
                                                 "value": "discount_list_category_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "discount_class_id",
+                                                "width": "100%"
                                             }
+                                            
                                         ]
                                     }
                                 ]

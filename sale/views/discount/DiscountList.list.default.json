@@ -4,24 +4,23 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
                 "value": "name",
                 "width": "20%"
-            }, 
+            },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "valid_from",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "valid_until",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Discount",
-                "value": "discounts_ids",
+                "value": "rate_class_id",
                 "width": "20%"
             }
         ]
