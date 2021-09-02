@@ -12,7 +12,7 @@
 	},
 	"view": {
 		"section.discount_class": {"label": "Détails"},
-		"section.discount_lists": {"label": "Remises"}
+		"section.discount_lists": {"label": "Listes"}
 	},
 	"error": {
 		

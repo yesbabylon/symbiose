@@ -209,7 +209,29 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Pack lines",
+                        "id": "section.pack_lines",
+                        "visible": ["is_pack", "=", true],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "pack_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
+
                 ]
             }
         ]

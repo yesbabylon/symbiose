@@ -4,8 +4,8 @@
 	"description": "",
 	"model": {
 		"name":{"label":"Identification", "help": "Nom de la condition."},
-        "operand":{"label":"Opérande", "help": "L'opérand de la condition."},
-        "operator":{"label":"Opérateur", "help": "L'opérateur qui a effectué cette condition."},
+        "operand":{"label":"Opérande", "help": "L'opérande de la condition."},
+        "operator":{"label":"Opérateur", "help": "L'opérateur à appliquer."},
         "value":{"label":"Valeur", "help": "Valeur de la condition."},
         "discount_id":{"label":"Remise", "help": "La liste de remises à laquelle appartient la remise."}
 	},

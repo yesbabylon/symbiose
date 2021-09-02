@@ -49,14 +49,14 @@ class Product extends Model {
             'is_pack' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Is the product a pack? (from product model)',
+                'description'       => 'Is the product a pack? (from model).',
                 'function'          => 'sale\catalog\Product::getIsPack',
                 'store'             => true
             ],
 
             'is_locked' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the pack static? (cannot be modified)',
+                'description'       => 'Is the pack static? (cannot be modified).',
                 'default'           => false,
                 'visible'           => [ ['is_pack', '=', true] ]                
             ],

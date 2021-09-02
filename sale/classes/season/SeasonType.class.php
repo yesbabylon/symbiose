@@ -15,7 +15,7 @@ class SeasonType extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short name of the type."
+                'description'       => "Short code of the type."
             ],
 
             'description' => [

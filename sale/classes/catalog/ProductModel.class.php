@@ -65,8 +65,8 @@ class ProductModel extends Model {
             'is_pack' => [
                 'type'              => 'boolean',
                 'description'       => "Is the product a bundle of other products?",
-                'default'           => false
-// #todo : onchange, reset related products is_pack                
+                'default'           => false,
+                'onchange'          => 'sale\catalog\ProductModel::onchangeIsPack'
             ],
 
             'pack_lines_ids' => [
@@ -78,7 +78,8 @@ class ProductModel extends Model {
 
             'has_own_price' => [
                 'type'              => 'boolean',
-                'description'       => 'Has the bundle its own price, or do we use each product price?',
+                'description'       => 'Has the bundle its own price, or do we use each sub-product price?',
+                'default'           => false,
                 'visible'           => ['is_pack', '=', true]
             ],
 
@@ -163,5 +164,20 @@ class ProductModel extends Model {
             
         ];
     }
+
+    /**
+     * 
+     * reset related products is_pack                
+     */
+    public static function onchangeIsPack($om, $oids, $lang) {
+        $models = $om->read(__CLASS__, $oids, ['products_ids']);
+        $products_ids = [];
+        foreach($models as $mid => $model) {
+            $products_ids = array_merge($products_ids, $model['products_ids']);
+        }
+        $om->write('sale\catalog\Product', $products_ids, ['is_pack' => null]);
+    }
+    
+    
 
 }

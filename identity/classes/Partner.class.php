@@ -108,5 +108,5 @@ class Partner extends Model {
             }
         }
         return $result;
-    }    
+    }
 }

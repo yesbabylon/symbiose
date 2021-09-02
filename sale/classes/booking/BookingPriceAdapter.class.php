@@ -24,19 +24,22 @@ class BookingPriceAdapter extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'Booking the adapter relates to.',
-                'required'          => true
+                'required'          => true,
+                'ondelete'          => 'cascade'
             ],
 
             'booking_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
-                'description'       => 'Booking Line Group the adapter relates to, if any.'
+                'description'       => 'Booking Line Group the adapter relates to, if any.',
+                'ondelete'          => 'cascade'
             ],
 
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLine',
-                'description'       => 'Booking Line the adapter relates to, if any.'
+                'description'       => 'Booking Line the adapter relates to, if any.',
+                'ondelete'          => 'cascade'
             ],
             
             'is_manual_discount' => [
@@ -47,15 +50,19 @@ class BookingPriceAdapter extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['percent', 'amount'],         
+                'selection'         => ['percent', 'amount', 'freebie'],         
                 'description'       => 'Type of manual discount (fixed amount or percentage of the price).',
-                'visible'           => ['is_manual_discount', '=', true]
+                'visible'           => ['is_manual_discount', '=', true],
+                'default'           => 'percent',
+                'onchange'          => 'sale\booking\BookingPriceAdapter::onchangeValue'
             ],
 
             'value' => [
                 'type'              => 'float',                
                 'description'       => "Value of the discount (monetary amount or percentage).",
-                'visible'           => ['is_manual_discount', '=', true]
+                'visible'           => ['is_manual_discount', '=', true],
+                'default'           => 0.0,
+                'onchange'          => 'sale\booking\BookingPriceAdapter::onchangeValue'
             ],
 
             'discount_id' => [
@@ -65,8 +72,17 @@ class BookingPriceAdapter extends Model {
                 'visible'           => ['is_manual_discount', '=', false]                
             ]
 
-
         ];
+    }
+
+    public static function onchangeValue($om, $oids, $lang) {
+// #todo - reset bookings and booking_line_groups        
+        $discounts = $om->read(__CLASS__, $oids, ['booking_line_id']);
+
+        if($discounts > 0 && count($discounts)) {
+            $booking_lines_ids = array_map( function($a) { return $a['booking_line_id']; }, $discounts);
+            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['unit_price' => null, 'price' => null]);
+        }
     }
 
     public static function getConstraints() {

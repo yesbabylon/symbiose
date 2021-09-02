@@ -7,31 +7,43 @@
                 "type": "field",
                 "label": "Name",
                 "value": "name",
-                "width": "50%"
+                "width": "40%"
+            },
+            {
+                "type": "field",
+                "label": "Family",
+                "value": "family_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Quantity Accounting Method",
                 "value": "qty_accounting_method",
-                "width": "40%"
+                "width": "10%"
             },
             {
                 "type": "field",
-                "label": "Duration",
-                "value": "has_duration",
-                "width": "20%"
+                "label": "Pack",
+                "value": "is_pack",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Meal",
                 "value": "is_meal",
-                "width": "20%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Accomodation",
                 "value": "is_accomodation",
-                "width": "20%"
+                "width": "10%"
             }
         ]
     }

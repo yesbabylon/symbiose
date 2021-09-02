@@ -15,6 +15,14 @@ class PackLine extends Model {
          * It is equivalent of M2M table between Product and itself.
          */
         return [
+            'name' => [
+                'type'              => 'computed',
+                'function'          => 'sale\catalog\PackLine::getDisplayName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The display name of the pack line.'
+            ],
+
             'parent_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
@@ -26,7 +34,8 @@ class PackLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\catalog\PackLine::onchangeChildProductId'                
             ],
 
             'has_own_qty' => [
@@ -49,4 +58,17 @@ class PackLine extends Model {
 
         ];
     }
+
+    public static function onchangeChildProductId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
+    }
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['child_product_id.name', 'child_product_id.sku',]);
+        foreach($oids as $oid) {
+            $result[$oid] = $lines[$oid]['child_product_id.name'].' ('.$lines[$oid]['child_product_id.sku'].')';
+        }
+        return $result;
+    }    
 }

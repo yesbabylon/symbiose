@@ -8,22 +8,31 @@ namespace sale\season;
 use equal\orm\Model;
 
 class SeasonPeriod extends Model {
+
+    public static function getName() {
+        return "Booking line group";
+    }
+
+    public static function getDescription() {
+        return "Booking line groups are related to a booking and describe one or more sojourns and their related consumptions.";
+    }
+
     public static function getColumns() {
-        /**
-         */
 
         return [
 
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Date (included) at which the season starts.",
-                'required'          => true
+                'required'          => true,
+                'default'           => time()
             ],
 
             'date_to' => [
                 'type'              => 'date',
-                'description'       => "Date (excluded) at which the season ends.",
-                'required'          => true
+                'description'       => "Date (included) at which the season ends.",
+                'required'          => true,
+                'default'           => time()
             ],
 
             'season_id' => [
@@ -31,7 +40,7 @@ class SeasonPeriod extends Model {
                 'foreign_object'    => 'sale\season\Season',
                 'description'       => "The season the period belongs to.",
                 'required'          => true,
-                'onchange'          => 'sale\season\Season::onchangeSeason'
+                'onchange'          => 'sale\season\SeasonPeriod::onchangeSeason'
             ],
 
             'season_type_id' => [
@@ -60,10 +69,10 @@ class SeasonPeriod extends Model {
         ];
     }
 
-    public static function onchangeSeason($orm, $oids, $lang) {
-        $orm->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
+    public static function onchangeSeason($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
         // force immediate re-computing
-        $orm->read(__CLASS__, $oids, ['year', 'season_category_id']);
+        $om->read(__CLASS__, $oids, ['year', 'season_category_id']);
     }
 
     public static function getYear($om, $oids, $lang) {
