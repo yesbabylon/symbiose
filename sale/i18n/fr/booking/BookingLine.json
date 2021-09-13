@@ -3,17 +3,17 @@
 	"plural": "Lignes de réservation",
 	"description": "Les lignes de réservation décrivent les produits et les quantités qui font partie d'une réservation.",
 	"model": {
-		"booking_line_group_id":{"label":"Groupe de lignes de réservation", "help": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur réservation)."},
+		"booking_line_group_id":{"label":"Groupe", "help": "Groupe duquel la ligne fait partie."},
         "product_id":{"label":"Produit", "help": "Le produit (SKU) auquel la ligne se rapporte."},
         "booking_id":{"label":"Réservation", "help": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."},
         "price_id":{"label":"Prix", "help": "Le prix (récupéré par liste de prix) auquel la ligne se rapporte."},
         "qty":{"label":"Quantité", "help": "Quantité d'articles de produit pour la ligne."},
-        "free_qty":{"label":"Quantité gratuite", "help": "Quantité d'articles gratuits (offerts en cadeau)."},
+        "free_qty":{"label":"Gratuits", "help": "Quantité d'articles gratuits (offerts en cadeau)."},
         "order":{"label":"Ordre", "help": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement."},
         "payment_mode":{"label":"Mode de paiement", "help": "La façon dont la ligne est destinée à être payée.", "selection": {"invoice": "facture d'achat", "cash": "en espèces", "free": "gratuit"}},
-        "is_paid":{"label":"Est payé", "help": "La ligne a-t-elle déjà été payée ?"},
+        "is_paid":{"label":"Payé", "help": "La ligne a-t-elle déjà été payée ?"},
         "price_adapters_ids":{"label":"Adaptateurs de prix", "help": "Adaptateurs de prix qui s'appliquent à la ligne."},
-        "price":{"label":"Prix computé", "help": "Prix computé."},
+        "price":{"label":"Prix", "help": "Prix TTC de la ligne."},
         "vat_rate":{"label":"Taux de tva", "help": "Taux de TVA qui s'applique à cette ligne."}
 	},
 	"view": {

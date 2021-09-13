@@ -100,6 +100,12 @@ class Booking extends Model {
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Grouped consumptions of the booking.' 
             ],
+
+            'composition_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Composition',
+                'description'       => 'The composition that relates to the booking.' 
+            ],
             
             'type_id' => [
                 'type'              => 'many2one',
@@ -110,22 +116,31 @@ class Booking extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'selection'         => ['quote', 'option', 'validated'],
+                'selection'         => ['quote', 'option', 'validated', 'checkedin', 'checkedout', 'due_balance', 'credit_balance', 'balanced'],
                 'description'       => 'Status of the booking.',
                 'required'          => true
             ],
 
-// #todo : make those fields computed (based on dates from booking line groups)
+            'payment_status' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'sale\booking\Booking::getPaymentStatus'
+            ],
+
+
+            // date fields are based on dates from booking line groups
             'date_from' => [
                 'type'              => 'computed',
-                'result_type'       => 'datetime',
-                'function'          => 'sale\booking\Booking::getDateFrom'
+                'result_type'       => 'date',
+                'function'          => 'sale\booking\Booking::getDateFrom',
+                'store'             => true
             ],
 
             'date_to' => [
                 'type'              => 'computed',
-                'result_type'       => 'datetime',
-                'function'          => 'sale\booking\Booking::getDateTo'
+                'result_type'       => 'date',
+                'function'          => 'sale\booking\Booking::getDateTo',
+                'store'             => true                
             ],
 
             'has_payer_organisation' => [
@@ -149,18 +164,53 @@ class Booking extends Model {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_id.name']);
         foreach($bookings as $oid => $odata) {
-            $result[$oid] = date("Y-m-d", $odata['created'])." - {$odata['customer_id.name']}";
+            $result[$oid] = date("Ymd", $odata['created'])." - {$odata['customer_id.name']}";
         }
         return $result;              
     }
 
-    // #todo
     public static function getDateFrom($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        
+        foreach($bookings as $bid => $booking) {
+            $min_date = PHP_INT_MAX;
+            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_from']);
+            if($booking_line_groups > 0 && count($booking_line_groups)) {
+                foreach($booking_line_groups as $gid => $group) {
+                    if($group['date_from'] < $min_date) {
+                        $min_date = $group['date_from'];
+                    }
+                }
+                $result[$bid] = $min_date;    
+            }
+        }
 
+        return $result;
     }
 
     public static function getDateTo($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        
+        foreach($bookings as $bid => $booking) {
+            $max_date = 0;
+            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to']);
+            if($booking_line_groups > 0 && count($booking_line_groups)) {            
+                foreach($booking_line_groups as $gid => $group) {
+                    if($group['date_to'] > $max_date) {
+                        $max_date = $group['date_to'];
+                    }
+                }
+                $result[$bid] = $max_date;
+            }
+        }
 
+        return $result;
+    }
+
+    public static function getPaymentStatus($om, $oids, $lang) {
+        // #todo
     }
 
     public static function getPrice($om, $oids, $lang) {

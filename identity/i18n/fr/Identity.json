@@ -36,13 +36,23 @@
         "gender":{"label":"Genre", "help": "Genre.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"} },
         "title":{"label":"Titre", "help": "Titre de civilité.", "selection": {"Dr": "Docteur", "Ms": "Mademoiselle", "Mrs": "Madame", "Mr": "Monsieur", "Pr": "Professeur"}},
         "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
-        "lang":{"label":"Langue", "help": "Langue parlée préférée."}
+        "lang":{
+            "label":"Langue", 
+            "description": "Langue préférée.",
+            "help": ""
+        }
 	},
-	"view": {        
-        "section.identity_info": {"label": "Infos générales"},
-        "section.identity_main_address": {"label": "Adresse principale"},
-        "section.identity_addresses": {"label": "Autres adresses"},
-		"section.identity_description": {"label": "Description"}
+	"view": {
+        "form.default" : {
+            "name": "",
+            "description": "",
+            "layout": {
+                "section.identity_info": {"label": "Infos générales"},
+                "section.identity_main_address": {"label": "Adresse principale"},
+                "section.identity_addresses": {"label": "Autres adresses"},
+                "section.identity_description": {"label": "Description"}    
+            }
+        }
 	},
 	"error": {
 	

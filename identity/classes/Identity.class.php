@@ -34,7 +34,12 @@ class Identity extends Model {
                 'function'          => 'identity\Identity::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
-                'description'       => 'The display name of the identity.'
+                'description'       => 'The display name of the identity.',
+                'help'              => "
+                    The display name is not an actual field but a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
+                    For instance, 'display_name', for a company with \"My Company\" as legal name will return \"My Company\". \n
+                    Whereas, for an individual with \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\".
+                "
             ],
 
             'type' => [

@@ -1,0 +1,32 @@
+{
+    "name": "Document list",
+    "description": "This view is intended for displaying the list of bookings.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "label": "Imported",
+                "value": "created",
+                "width": "15%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Hash",
+                "value": "hash",
+                "width": "15%"
+            }
+        ]
+    }
+}

@@ -15,44 +15,54 @@
                   "value": "New booking",
                   "description": "", 
                   "icon": "add",
-                  "entity": "sale\\booking\\Booking",
-                  "view": "form.default",
-                  "purpose": "create"
+                  "context": {
+                    "entity": "sale\\booking\\Booking",
+                    "view": "form.default",
+                    "purpose": "create"
+                  }
                 },
                 {
                   "id": "item.all_booking",
                   "type": "entry",
                   "value": "All bookings",
                   "description": "", 
-                  "entity": "sale\\booking\\Booking",
-                  "view": "list.default"
+                  "context": {
+                    "entity": "sale\\booking\\Booking",
+                    "view": "list.default"
+                  }
                 },
                 {
                   "id": "item.all_booking",
                   "type": "entry",
                   "value": "Quotes",
                   "description": "", 
-                  "entity": "sale\\booking\\Booking",
-                  "view": "list.default",
-                  "domain": ["status", "=", "quote"]
+                  "context": {
+                    "entity": "sale\\booking\\Booking",
+                    "view": "list.default",
+                    "domain": ["status", "=", "quote"]
+                  }
                 },
                 {
                   "id": "item.options",
                   "type": "entry",
                   "value": "Options",
                   "description": "", 
-                  "entity": "sale\\booking\\Booking",
-                  "view": "list.default",
-                  "domain": ["status", "=", "option"]
+                  "context": {
+                    "entity": "sale\\booking\\Booking",
+                    "view": "list.default",
+                    "domain": ["status", "=", "option"]
+                  }
                 },
                 {
                   "id": "item.validated_options",
                   "type": "entry",
                   "value": "Validated bookings",
                   "description": "",
-                  "entity": "sale\\booking\\Booking",
-                  "view": "list.default",
-                  "domain": ["status", "=", "validated"]
+                  "context": {
+                    "entity": "sale\\booking\\Booking",
+                    "view": "list.default",
+                    "domain": ["status", "=", "validated"]  
+                  }
                 }
               ]
             },
@@ -75,8 +85,10 @@
                       "type": "entry",
                       "value": "All types",
                       "description": "", 
-                      "entity": "sale\\customer\\CustomerType",
-                      "view": "list.default"
+                      "context": {
+                        "entity": "sale\\customer\\CustomerType",
+                        "view": "list.default"
+                      }
                     }
                   ]
                 },
@@ -91,9 +103,11 @@
                       "id": "item.all_customers_natures",
                       "type": "entry",
                       "value": "All natures",
-                      "description": "", 
-                      "entity": "sale\\customer\\CustomerNature",
-                      "view": "list.default"
+                      "description": "",
+                      "context": {
+                        "entity": "sale\\customer\\CustomerNature",
+                        "view": "list.default"
+                      }
                     }
                   ]
                 },
@@ -103,27 +117,33 @@
                   "value": "New customer",
                   "description": "", 
                   "icon": "add",
-                  "entity": "identity\\Partner",
-                  "view": "form.customer",
-                  "purpose": "create",
-                  "domain": ["relationship", "=", "customer"]
+                  "context": {
+                    "entity": "identity\\Partner",
+                    "view": "form.customer",
+                    "purpose": "create",
+                    "domain": ["relationship", "=", "customer"]
+                  }
                 },
                 {
                   "id": "item.all_customers",
                   "type": "entry",
                   "value": "All customers",
                   "description": "", 
-                  "entity": "identity\\Partner",
-                  "view": "list.customer",
-                  "domain": ["relationship", "=", "customer"]
+                  "context": {
+                    "entity": "identity\\Partner",
+                    "view": "list.customer",
+                    "domain": ["relationship", "=", "customer"]
+                  }
                 },
                 {
                   "id": "item.all_partners",
                   "type": "entry",
                   "value": "All partners",
                   "description": "", 
-                  "entity": "identity\\Partner",
-                  "view": "list.default"
+                  "context": {
+                    "entity": "identity\\Partner",
+                    "view": "list.default"
+                  }
                 }                
               ]
             }                      

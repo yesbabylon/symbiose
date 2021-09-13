@@ -17,7 +17,7 @@
         "service_type":{"label":"Type de service", "help": "Précision du type de 'service'.", "selection": {"simple": "simple", "schedulable": "planifiable"}},
         "schedule_type":{"label":"Mode de planification", "help": "Planification a un moment précis, ou pour un intervalle de temps.", "selection": {"time": "heure", "timerange": "intervalle"}},
         "schedule_default_value":{"label":"Planification par défaut", "help": "Valeur par défaut du planning selon son type (heure, plage horaire)."},
-        "schedule_offset":{"label":"Décalage horaire", "help": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour."},
+        "schedule_offset":{"label":"Décalage", "help": "Décalage, en jours, à partir de la date de début de séjour."},
         "tracking_type":{"label":"Type de suivi", "help": "Manière dont le produit est identifé pour les suivis.", "selection": {"none": "rien", "batch": "grouper", "sku": "sku", "upc": "upc"}},
         "description_delivery":{"label":"Description de livraison", "help": "Description des bons de livraison."},
         "description_receipt":{"label":"Description de réception", "help": "Description pour les bons de réception."},

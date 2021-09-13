@@ -3,11 +3,11 @@
 	"plural": "Lignes de conditionnement",
 	"description": "",
 	"model": {
-		"parent_product_id":{"label":"Produit parent", "help": "Le produit auquel appartient cet attribut."},
-        "child_product_id":{"label":"Produit enfant", "help": "Le produit auquel appartient cet attribut."},
+		"parent_product_id":{"label":"Pack", "help": "Le produit auquel appartient cet attribut."},
+        "child_product_id":{"label":"Produit lié", "help": "Le produit auquel appartient cet attribut."},
         "has_own_qty":{"label":"A sa propre quantité", "help": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?"},
-        "own_qty":{"label":"Propre quantité", "help": "Quantité auto-assignée pour ce produit."},
-        "share":{"label":"Partager", "help": "Pourcentage de part de la ligne pour l'analyse."}
+        "own_qty":{"label":"Quantité", "help": "Quantité auto-assignée pour ce produit."},
+        "share":{"label":"Part", "help": "Pourcentage de part de la ligne pour l'analyse."}
 	},
 	"view": {
 		

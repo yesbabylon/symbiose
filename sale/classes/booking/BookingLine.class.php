@@ -38,8 +38,7 @@ class BookingLine extends Model {
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
-                'description'       => 'The product (SKU) the line relates to.',
-                'onchange'          => 'sale\booking\BookingLine::onchangeProductId'
+                'description'       => 'The product (SKU) the line relates to.'
             ],
 
             'price_id' => [
@@ -47,6 +46,14 @@ class BookingLine extends Model {
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price (retrieved by price list) the line relates to.',
                 'onchange'          => 'sale\booking\BookingLine::onchangePriceId'
+            ],
+
+            'consumptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Consumption',
+                'foreign_field'     => 'booking_line_id',                
+                'description'       => 'Consumptions related to the booking line.',
+                'ondetach'          => 'delete'
             ],
 
             'price_adapters_ids' => [
@@ -75,9 +82,13 @@ class BookingLine extends Model {
 
             'qty' => [
                 'type'              => 'float',
-                'description'       => 'Quantity of product items for the line.',
-                'default'           => 1.0,
-                'onchange'          => 'sale\booking\BookingLine::onchangeQty'
+                'description'       => 'Quantity of product items for the line.'
+            ],
+
+            'has_own_qty' => [
+                'type'              => 'boolean',
+                'description'       => 'Set according to related pack line.',
+                'default'           => false
             ],
 
             'order' => [
@@ -125,82 +136,37 @@ class BookingLine extends Model {
         ];
     }
 
-    public static function onchangeFreeQty($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['price' => null]);
-    }
 
-    public static function onchangeQty($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['price' => null]);
-    }
-
-    /**
-     * Update the price_id according to booking line settings.
-     */
-    public static function onchangeProductId($om, $oids, $lang) {
-        self::_updatePriceId($om, $oids, $lang);
-        // self::_updateConsumptions($om, $oids, $lang);
-    }
 
     public static function onchangePriceId($om, $oids, $lang) {
+        // reset computed fields related to price
         $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
     }
 
     public static function onchangePriceAdaptersIds($om, $oids, $lang) {
+        // reset computed fields related to price
         $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
     }
 
-    /**
-     * Try to assign the price_id according to the current product_id.
-     * Resolve the price from the applicable price lists, based on booking_line_group settings and booking center.
-     *
-     * _updatePriceId is also called upon booking_id.center_id and booking_line_group_id.date_from changes.
-     */
-    public static function _updatePriceId($om, $oids, $lang) {
-        $lines = $om->read(__CLASS__, $oids, [
-            'booking_line_group_id.date_from',
-            'product_id',
-            'booking_id.center_id.price_list_category_id'
-        ]);
 
-        foreach($lines as $line_id => $line) {
-            /*
-                Find the first Price List that matches the criteria from the booking
-            */
-            $price_lists_ids = $om->search('sale\price\PriceList', [
-                                                                       ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
-                                                                       ['date_from', '<=', $line['booking_line_group_id.date_from']],
-                                                                       ['date_to', '>=', $line['booking_line_group_id.date_from']]
-                                                                   ]);
-            $price_lists = $om->read('sale\price\PriceList', $price_lists_ids, ['id']);
-            $price_list_id = 0;
-            if($price_lists > 0 && count($price_lists)) {
-                $price_list_id = array_keys($price_lists)[0];
-            }
-            /*
-                Search for a matching Price within the found Price List
-            */
-            if($price_list_id) {
-                // there should be exactly one matching price
-                $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $line['product_id']] ]);
-                if($prices_ids > 0 && count($prices_ids)) {
-                    /*
-                        Assign found Price to current line
-                    */
-                    $om->write(__CLASS__, $line_id, ['price_id' => $prices_ids[0]]);
-                }
-                else {
-                    $om->write(__CLASS__, $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
-                    trigger_error("QN_DEBUG_ORM::no matching price found for product {$line['product_id']} in price_list $price_list_id", QN_REPORT_ERROR);
-                }
-            }
-            else {
-                $om->write(__CLASS__, $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
-                $date = date('Y-m-d', $line['booking_line_group_id.date_from']);
-                trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);
-            }
-        }
+    /**
+     * Update booking line quantities according to current pack (supposely after change occured).
+     * 
+     * pack_id refers to the parent booking_line_group_id.pack_id (there is no pack_id in BookingLine schema)
+     * This method is called by BookingLineGroup::onchangePackId (and derived classes overloads)
+     */
+    public static function _updatePack($om, $oids, $lang) {
+        // #todo                
     }
 
+            
+    /**
+     * This method is called upon change on: qty
+     */
+    public static function _updateConsumptions($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_updateConsumptions", QN_REPORT_DEBUG);
+        // #todo
+    }
 
     /**
      * Compute the VAT excl. unit price of the line, according to manual and automated discounts.
@@ -249,7 +215,7 @@ class BookingLine extends Model {
             $disc_value = 0.0;
             $vat = (float) $odata['vat_rate'];
             $qty = intval($odata['qty']);
-            // apply auto-discounts
+            // apply freebies from auto-discounts
             $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
             foreach($adapters as $aid => $adata) {
                 // amount and percent discounts have been applied in ::getUnitPrice()
@@ -257,7 +223,7 @@ class BookingLine extends Model {
                     $qty -= $adata['value'];
                 }
             }
-            // apply manual discounts
+            // apply additional manual discounts
             $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
             foreach($discounts as $aid => $adata) {
                 if($adata['type'] == 'amount') {

@@ -1,14 +1,10 @@
 {
     "name": "Booking Followups",
     "description": "This view is intended for displaying the list of booking lines.",
+    "order": "booking_line_group_id,order",
+    "sort": "asc",
     "layout": {
         "items": [
-            {
-                "type": "field",      
-                "label": "Booking",      
-                "value": "booking_id",
-                "width": "10%"
-            },
             {
                 "type": "field",     
                 "label": "Line Booking Group",       
@@ -29,13 +25,14 @@
             },
             {
                 "type": "field",            
-                "value": "order",
+                "value": "price",
                 "width": "15%"
             },
             {
                 "type": "field",            
-                "value": "price",
-                "width": "15%"
+                "value": "order",
+                "width": "15%",
+                "visible": false
             }
         ]
     }

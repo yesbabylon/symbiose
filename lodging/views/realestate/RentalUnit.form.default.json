@@ -1,11 +1,13 @@
 {
-    "name": "Rental Unit",
+    "name": "Rental Units",
     "description": "A rental unit is a ressource that can be rented to a customer.",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "section.rental_units",
                         "rows": [
                             {
                                 "columns": [
@@ -15,7 +17,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }
@@ -28,9 +30,61 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Center Category",
-                                                "value": "center_category_id",
+                                                "label": "Rentable",
+                                                "value": "can_rent",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "category",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "capacity",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Children",
+                                                "value": "has_children",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Parent",
+                                                "value": "parent_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Children",
+                        "id": "section.children_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "children_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

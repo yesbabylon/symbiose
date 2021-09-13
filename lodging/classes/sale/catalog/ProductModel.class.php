@@ -45,14 +45,14 @@ class ProductModel extends \sale\catalog\ProductModel {
 
             'duration' => [
                 'type'              => 'integer',
-                'description'       => 'Additional information about the duration of the service (in days), used for planning purpose.',
+                'description'       => 'Duration of the service (in days), used for planning.',
                 'default'           => 1,
                 'visible'           => [ ['qty_accounting_method', '=', 'person'], ['has_duration', '=', true] ]
             ],
 
             'capacity' => [
                 'type'              => 'integer',
-                'description'       => 'Additional information about the capacity implied by the service (used for finding matching rental units).',
+                'description'       => 'Capacity implied by the service (used for filtering rental units).',
                 'default'           => 1,
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'] ]
             ],

@@ -21,7 +21,7 @@ class Composition extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'booking\Composition::getDisplayName',
+                'function'          => 'sale\booking\Composition::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'Composition name is based on the related booking (customer and date).'
@@ -33,10 +33,11 @@ class Composition extends Model {
                 'description'       => 'The booking the composition relates to.' 
             ],
 
-            'booking_line_group_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\BookingLineGroup',
-                'description'       => 'The group of the booking the composition relates to.'             
+            'composition_items_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\CompositionItem',
+                'foreign_field'     => 'composition_id',
+                'description'       => "The items that refer to the composition."
             ]
 
         ];

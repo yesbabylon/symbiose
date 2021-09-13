@@ -110,7 +110,7 @@ class ProductModel extends Model {
 
             'schedule_default_value' => [
                 'type'              => 'string',
-                'description'       => "Multipurpose string representing the default value of the schedule according to its type (time: '9:00', timerange: '9:00-10:00').",
+                'description'       => "Default value of the schedule according to type (time: '9:00', timerange: '9:00-10:00').",
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
 
