@@ -50,6 +50,13 @@ class Center extends \identity\Establishment {
                 'required'          => true
             ],
 
+            'autosale_list_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\autosale\AutosaleCategory',
+                'description'       => 'Autosale list category used by the center.',
+                'required'          => true
+            ],
+
             'season_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\season\SeasonCategory',

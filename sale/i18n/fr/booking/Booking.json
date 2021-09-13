@@ -13,16 +13,17 @@
         "has_contract":{"label":"A un contrat", "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."},
         "contracts_ids":{"label":"Contrats", "help": "Liste des contacts liés à la réservation, le cas échéant."},
         "type_id":{"label":"Type", "help": "Type d'organisation."},
-        "status":{"label":"Statut", "help": "Statut de la réservation.", "selection": {"quote": "cotation", "option": "option", "validated": "validé"}},
-        "date_from":{"label":"Date de", "help": "Date de début de la réservation."},
-        "date_to":{"label":"Date à", "help": "Date de fin de la réservation."},
+        "status":{"label":"Statut", "help": "Statut de la réservation.", "selection": {"quote": "cotation", "option": "option", "validated": "validé", "checkedin": "en cours", "checkedout": "terminé", "due_balance": "solde dû", "credit_balance": "solde créditeur", "balanced": "soldée"}},
+        "date_from":{"label":"Du", "help": "Premier jour du séjour."},
+        "date_to":{"label":"Au", "help": "Dernier jour du séjour."},
         "has_payer_organisation":{"label":"Payeur distinct", "help": "Indicateur pour savoir si la facture doit être envoyée à une autre identité."},
         "payer_organisation_id":{"label":"Organisme payeur", "help": "Le partenaire auquel les factures doivent être envoyées."}
 	},
 	"view": {
 		"section.booking_info": {"label": "Détails"},
 		"section.booking_contacts": {"label": "Contacts"},
-		"section.booking_contracts": {"label": "Contrats"}
+		"section.booking_contracts": {"label": "Contrats"},
+        "section.booking_products": {"label": "Produits"}
 	},
 	"error": {
 		

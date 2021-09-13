@@ -24,13 +24,12 @@ class CompositionItem extends Model {
 
             'firstname' => [
                 'type'              => 'string',
-                'description'       => "Full name of the contact (must be a person, not a role).",
-                'required'          => true                
+                'description'       => "Firstname of the contact."
             ],
 
             'lastname' => [
                 'type'              => 'string',
-                'description'       => 'Reference contact surname.'
+                'description'       => 'Lastname of the contact.'
             ],
 
             'gender' => [
@@ -44,7 +43,12 @@ class CompositionItem extends Model {
                 'description'   => 'Date of birth of the person.'
             ],
 
-            /* in some cases we need additional contact details */
+            'place_of_birth' => [
+                'type'          => 'string',
+                'description'   => 'Place of birth of the person (city, country).'
+            ],
+
+            /* some legal constraints might apply, in which case we need extra contact details */
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',                
@@ -54,18 +58,68 @@ class CompositionItem extends Model {
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'description'       => "Phone number of the contact, if any."
+                'description'       => "Phone number of the contact."
+            ],
+
+            'address' => [
+                'type'              => 'string',
+                'description'       => 'Full postal address (street, number, zip, city, country).'
+            ],
+
+            'country' => [
+                'type'              => 'string',
+                'usage'             => 'country/iso-3166:2',
+                'description'       => "Nationality of the contact.",
+                'default'           => 'BE'
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the person is assigned to.",
+                'required'          => true,
+                'domain'            => ['id', 'in', 'object.rental_units_ids']
+            ],
+
+            'composition_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Composition',
+                'description'       => "The composition the item refers to.",
+                'ondelete'          => 'cascade',        // delete item when parent composition is deleted
                 'required'          => true
+            ],
+
+
+            // for filtering rental_unit_id field in forms
+            'rental_units_ids' => [
+                'type'              => 'computed',                
+                'function'          => 'sale\booking\CompositionItem::getRentalUnitsIds',
+                'result_type'       => 'one2many',
+                'foreign_object'    => 'realestate\RentalUnit',
+                'description'       => "The rental units attached to the current booking."
             ]
+        
+
         ];
     }
 
+    public static function getRentalUnitsIds($om, $oids, $lang) {
+        $result = [];
+        $items = $om->read(__CLASS__, $oids, ['composition_id.booking_id.booking_lines_ids']);
+
+        foreach($items as $oid => $odata) {
+            $rental_units_ids = [];
+            $booking_lines_ids = $odata['composition_id.booking_id.booking_lines_ids'];
+            $lines = $om->read('lodging\sale\booking\BookingLine', $booking_lines_ids, ['qty_accounting_method', 'rental_unit_id']);
+            foreach($lines as $lid => $line) {
+                if($line['qty_accounting_method'] == 'accomodation') {
+                    $rental_units_ids[$line['rental_unit_id']] = true;
+                }
+            }
+            $result[$oid] = array_keys($rental_units_ids);
+        }
+        return $result;
+    }
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];

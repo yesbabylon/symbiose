@@ -1,20 +1,20 @@
 {
-	"name": "Unité de location",
-	"plural": "Unités de location",
+	"name": "Unité locative",
+	"plural": "Unités locatives",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"name":{"label":"Nom", "help": "Nom du logement locatif."},
         "type":{"label":"Type", "help": "Type de logement locatif (qui se rapporte à la capacité).", "selection": {"building": "imeuble", "bedroom": "chambre à coucher", "bed": "lit", "meetingroom": "salle de réunion", "room": "salle"}},
         "category":{"label":"Catégorie", "help": "Type d'unité locative (qui comprend généralement des logements supplémentaires, c'est-à-dire des repas ; ou louée telle quelle).", "selection": {"hostel": "auberge", "lodge": "loge"}},
         "capacity":{"label":"Capacité", "help": "Le nombre de personnes pouvant séjourner dans l'unité."},
-        "has_children":{"label":"A des enfants", "help": "Drapeau pour marquer l'unité comme ayant des sous-unités."},
-        "can_rent":{"label":"Peut louer", "help": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location."},
+        "has_children":{"label":"Sous-unités ?", "help": "L'unité regroupe des sous-unités locatives."},
+        "can_rent":{"label":"Peut être loué ?", "help": "Indicateur pour marquer l'unité comme (temporairement) indisponible à la location."},
         "children_ids":{"label":"Enfants", "help": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels)."},
-        "parent_id":{"label":"Parent", "help": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant."}
+        "parent_id":{"label":"Unité parente", "help": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant."}
 	},
 	"view": {
 		"section.rental_units": {"label": "Détails"},
-		"section.children_section": {"label": "Enfants"}
+		"section.children_section": {"label": "Sous-unités"}
 	},
 	"error": {
 		

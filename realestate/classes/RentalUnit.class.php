@@ -21,6 +21,11 @@ class RentalUnit extends Model {
                 'required'          => true
             ],
 
+            'code' => [
+                'type'              => 'string',
+                'description'       => 'Short code for identification.'
+            ],
+
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Short description of the unit.'
@@ -42,7 +47,8 @@ class RentalUnit extends Model {
 
             'capacity' => [
                 'type'              => 'integer',
-                'description'       => 'The number of persons that may stay in the unit.'
+                'description'       => 'The number of persons that may stay in the unit.',
+                'default'           => 1
             ],
 
             'has_children' => [
@@ -67,6 +73,33 @@ class RentalUnit extends Model {
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
                 'foreign_object'    => 'realestate\RentalUnit'
+            ],
+
+            // Status relates to current status (NOW) of a rental unit. For availability, refer to related Consumptions
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'ready',                // unit is clean and ready for customers
+                    'ooo',                  // unit is out-of-order
+                    'cleanup_daily',        // unit requires a daily cleanup
+                    'cleanup_full'          // unit requires a full cleanup
+                ],       
+                'description'       => 'Status of the rental unit.',
+                'default'           => 'clean'
+            ],
+
+            'consumptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Consumption',
+                'foreign_field'     => 'rental_unit_id',
+                'description'       => "The consumptions that relate to the rental unit."
+            ],
+
+            'composition_items_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\CompositionItem',
+                'foreign_field'     => 'rental_unit_id',
+                'description'       => "The composition items that relate to the rental unit."
             ]
 
         ];

@@ -1,16 +1,18 @@
 {
-	"name": "Elément de composition",
-	"plural": "Eléments de composition",
+	"name": "Ligne de composition",
+	"plural": "Lignes de composition",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Le nom d'affichage de la personne (concaténation des noms et prénoms)."},
-        "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
-        "lastname":{"label":"Nom", "help": "Nom du contact de référence."},
+		"name":{"label":"Identification", "help": "Le nom d'affichage (prénom + nom)."},
+        "firstname":{"label":"Prénom", "help": "Prénom."},
+        "lastname":{"label":"Nom", "help": "Nom de famille."},
         "gender":{"label":"Genre", "help": "Genre du contact de référence.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"}},
-        "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
+        "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance."},
+		"place_of_birth":{"label":"Lieu de naissance", "help": "Lieu de naissance (ville, pays)."},
         "email":{"label":"Email", "help": "Adresse e-mail du contact."},
-        "phone":{"label":"Telephone", "help": "Numéro de téléphone du contact, le cas échéant."},
-        "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."}
+        "phone":{"label":"Téléphone", "help": "Numéro de téléphone du contact, le cas échéant."},
+		"country":{"label":"Nationalité", "help": "Nationalité du contact."},
+        "rental_unit_id":{"label":"Unité locative", "help": "L'unité locative à laquelle la personne est assignée."}
 	},
 	"view": {
 		

@@ -154,6 +154,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "autosale_list_category_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "season_category_id",
                                                 "width": "100%"
                                             },

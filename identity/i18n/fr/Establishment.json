@@ -2,6 +2,7 @@
 	"name": "Unité d'établissement",
 	"plural": "Unités d'établissement",
 	"description": "Une entreprise ou une autre organisation, ou le lieu où une organisation exerce ses activités.",
+
 	"model": {
 		"name":{"label":"Nom", "help": "Nom de l'établissement."},
 		"organisation_id":{"label":"Organisation", "help": "L'organisation à laquelle appartient l'établissement."},
@@ -16,7 +17,20 @@
         "registration_number":{"label":"Numéro d'enregistrement", "help": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant."}
 	},
 	"view": {
-		
+		"list.default": {
+			"name": "",
+			"description": "This view is intended for displaying basic listing of existing Establishments.",
+			"layout": {
+
+			}
+		},
+		"form.default": {
+			"name": "",
+			"description": "",
+			"layout": {
+				
+			}
+		}
 	},
 	"error": {
 	

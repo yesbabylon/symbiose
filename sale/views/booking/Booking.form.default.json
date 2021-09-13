@@ -109,8 +109,8 @@
                         ]
                     },
                     {
-                        "label": "Details",
-                        "id": "section.booking_details",
+                        "label": "Products",
+                        "id": "section.booking_products",
                         "rows": [
                             {
                                 "columns": [

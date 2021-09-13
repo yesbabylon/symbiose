@@ -14,7 +14,7 @@ class Consumption extends Model {
     }
 
     public static function getDescription() {
-        return "A Consumption is a service delivery that can be scheduled and is related to a booking.";
+        return "A Consumption is a service delivery that can be scheduled and relates to a booking.";
     }
 
     public static function getColumns() {
@@ -34,13 +34,22 @@ class Consumption extends Model {
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
-                'description'       => 'The booking the comsumption relates to.'
+                'description'       => 'The booking the comsumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted                
             ],
 
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLine',
-                'description'       => 'The booking line the consumption relates to.'
+                'description'       => 'The booking line the consumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent line is deleted
+            ],
+
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingLineGroup',
+                'description'       => 'The booking line group the consumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent group is deleted
             ],
 
             'date' => [
@@ -48,9 +57,14 @@ class Consumption extends Model {
                 'description'       => 'Date at which the service delivery is planed.'
             ],
 
-            'schedule' => [
+            'schedule_from' => [
                 'type'              => 'time',
                 'description'       => 'Moment of the day at which the service delivery is planed.'
+            ],
+
+            'schedule_to' => [
+                'type'              => 'time',
+                'description'       => 'Moment of the day at which the service delivery is over, if applicable.'
             ],
 
             'type' => [
@@ -58,8 +72,9 @@ class Consumption extends Model {
                 'selection'         => [ 
                     'book',          // consumption relates to a booking
                     'ooo',           // out-of-order
-                ],
-                'description'       => 'The reason the unit is reserved.'
+                ],                
+                'description'       => 'The reason the unit is reserved.',
+                'default'           => 'book'
             ],
 
             'product_id' => [
@@ -69,11 +84,17 @@ class Consumption extends Model {
                 'required'          => true
             ],
 
+            'is_rental_unit' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the consumption relate to a rental unit?',
+                'default'           => false
+            ],
+
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the person is assigned to.",
-                'required'          => true
+                'visible'           => ['is_rental_unit', '=', true]
             ],
 
             'disclaimed' => [
@@ -82,15 +103,23 @@ class Consumption extends Model {
                 'default'           => false
             ],
 
+            'is_meal' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the consumption relate to a meal?',
+                'default'           => false
+            ]
+
         ];
     }
 
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $consumptions = $om->read(__CLASS__, $oids, ['product_id.name', 'date', 'schedule']);
+        $consumptions = $om->read(__CLASS__, $oids, ['booking_id.customer_id.name', 'booking_id.description', 'product_id.name', 'date', 'schedule_from']);
         foreach($consumptions as $oid => $odata) {
-            $result[$oid] = "{$odata['product_id.name']} ({$odata['date']}) @ {$odata['schedule']}";
+            $datetime = $odata['date'] + $odata['schedule_from'];
+            $moment = date("d/m/Y H:i:s", $datetime);
+            $result[$oid] = substr("{$odata['booking_id.customer_id.name']} {$odata['product_id.name']} {$moment}", 0, 255);
         }
         return $result;
     }

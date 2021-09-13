@@ -1,29 +1,68 @@
 {
     "name": "Composition Items",
     "description": "This view is intended for displaying the list of compostion items.",
+    "order": "rental_unit_id",
     "layout": {
         "items": [
             {
-                "type": "field",            
-                "value": "name",
+                "type": "field",
+                "value": "firstname",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
+                "value": "lastname",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "gender",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "email",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "phone",
-                "width": "20%"
+                "width": "15%"
             },
             {
-                "type": "field",            
+                "type": "field",
+                "value": "address",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "date_of_birth",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "place_of_birth",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "country",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "label": "Rental Unit",
                 "value": "rental_unit_id",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Rental Units",
+                "value": "rental_units_ids",
+                "width": "0%",
+                "visible": false
             }
+
         ]
     }
 }
