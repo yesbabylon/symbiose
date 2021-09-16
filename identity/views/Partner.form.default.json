@@ -44,18 +44,6 @@
                                                 "type": "field",
                                                 "value": "partner_position",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Rate Class",
-                                                "value": "customer_rate_class_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Type",
-                                                "value": "customer_type_id",
-                                                "width": "50%"
                                             }
                                         ]
                                     }

@@ -20,6 +20,28 @@ class Customer extends \identity\Partner {
 
         return [
 
+            // if partner is a customer, it can be assigned to a rate class
+            'rate_class_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => 'Rate class that applies to the customer.',
+                'visible'           => ['relationship', '=', 'customer']
+            ],
+
+            'customer_nature_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\CustomerNature',
+                'description'       => 'Nature of the customer (map with rate classes).',
+            ],
+
+            // if partner is a customer, it can be assigned a customer type
+            'customer_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\CustomerType',
+                'description'       => 'Type of customer (map with rate classes).',
+                'visible'           => ['relationship', '=', 'customer']
+            ],
+            
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'customer',

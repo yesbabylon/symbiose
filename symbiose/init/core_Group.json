@@ -79,7 +79,7 @@
                 "id": 20,
                 "name": "accounting.administrators",
                 "display_name": "Accounting / Administrators",
-                "description": "Manage settings related to accounting (accounting rules, accounting plan, VAT rules, …)."
+                "description": "Manage settings related to accounting (accounting rules, accounting plan, VAT rules, ...)."
             },
             {
                 "id": 21,
@@ -162,7 +162,7 @@
             {
                 "id": 20,
                 "display_name": "Comptabilité / Administrateurs",
-                "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, …)."
+                "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, ...)."
             },
             {
                 "id": 21,

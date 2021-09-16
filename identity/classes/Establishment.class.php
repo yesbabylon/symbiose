@@ -21,7 +21,13 @@ class Establishment extends Model {
                 'description'   => "Name of the establishment unit.",
                 'required'      => true
             ],
-            
+
+            'legal_name' => [
+                'type'          => 'string',
+                'description'   => "Official name of the establishment (as displayed in the address).",
+                'required'      => true
+            ],
+
             /* parent organisation */
             'organisation_id' => [
                 'type'              => 'many2one',
@@ -73,6 +79,11 @@ class Establishment extends Model {
             'registration_number' => [
                 'type'          => 'string',
                 'description'   => 'Establishment registration number (establishment unit number), if any.'
+            ],
+
+            'accounting_section_code' => [
+                'type'          => 'string',
+                'description'   => 'Accounting section code specific to the establishment, if any.'
             ],
 
 

@@ -62,22 +62,6 @@ class Partner extends Model {
                 'visible'           => [ ['relationship', '=', 'contact'] ]
             ],
 
-            // if partner is a customer, it can be assigned to a rate class
-            'customer_rate_class_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => 'Rate class that applies to the customer.',
-                'visible'           => ['relationship', '=', 'customer']
-            ],
-
-            // if partner is a customer, it can be assigned a customer type
-            'customer_type_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\CustomerType',
-                'description'       => 'Type of customer (map with rate classes).',
-                'visible'           => ['relationship', '=', 'customer']
-            ],
-
             // if partner is a customer, it can have an external reference (e.g. reference assigned by previous software)
             'customer_external_ref' => [
                 'type'              => 'string',
@@ -90,7 +74,7 @@ class Partner extends Model {
 
     public function getUnique() {
         return [
-            ['owner_identity_id', 'partner_identity_id']
+            ['owner_identity_id', 'partner_identity_id', 'relationship']
         ];
     }       
 

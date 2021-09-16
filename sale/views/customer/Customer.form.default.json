@@ -15,7 +15,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name of Partner",
+                                                "label": "Name of Customer",
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
@@ -24,7 +24,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Identity of Partner",
+                                                "label": "Identity of Customer",
                                                 "value": "partner_identity_id",
                                                 "width": "50%",
                                                 "widget": {
@@ -43,13 +43,19 @@
                                             {
                                                 "type": "field",
                                                 "label": "Customer Rate Class",
-                                                "value": "customer_rate_class_id",
+                                                "value": "rate_class_id",
                                                 "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer Type",
                                                 "value": "customer_type_id",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
                                                 "width": "33%"
                                             }                                            
                                         ]

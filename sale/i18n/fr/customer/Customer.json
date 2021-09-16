@@ -1,0 +1,49 @@
+{
+    "name": "Client",
+    "plural": "Clients",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom affiché du client (lié au nom de l'identité)."
+        },
+        "owner_identity_id": {
+            "label": "Origine de la relation",
+            "description": "L'organisation dont l'identité ciblée est partenaire."
+        },
+        "partner_identity_id": {
+            "label": "Identité",
+            "description": "L'identité ciblée (le partenaire)."
+        },
+        "partner_organisation_id": {
+            "label": "Organisation",
+            "description": "Entreprise au sein de laquelle travaille le contact."
+        },
+        "partner_position": {
+            "label": "Position",
+            "description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."
+        },
+        "relationship": {
+            "label": "Partenariat",
+            "description": "Le artenariat est fixé à 'client'."
+        },
+        "rate_class_id": {
+            "label": "Catégorie tarifaire",
+            "description": "Catégorie tarifaire qui s'applique au client."
+        },
+        "customer_type_id": {
+            "label": "Type de client",
+            "description": "Type de client (en relation avec les classes tarifaires)."
+        },
+        "customer_nature_id": {
+            "label": "Type de client",
+            "description": "Type de client (en relation avec les classes tarifaires)."
+        }        
+    },
+    "view": {
+        
+    },
+    "error": {
+        
+    }
+}
