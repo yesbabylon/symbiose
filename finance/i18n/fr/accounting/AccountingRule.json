@@ -5,11 +5,13 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de la règle comptable."
+			"description": "Nom de la règle comptable.",
+			"help": ""
 		},
 		"description": {
 			"label": "Description",
-			"description": "Brève description de la règle pour servir de mémo."
+			"description": "Brève description de la règle pour servir de mémo.",
+			"help": ""
 		},
 		"type": {
 			"label": "Type",
@@ -17,15 +19,18 @@
 			"selection": {
 				"purchase": "achat",
 				"sale": "vente"
-			}
+			},
+			"help": ""
 		},
 		"vat_rule_id": {
 			"label": "Règle de TVA",
-			"description": "Règle de TVA à laquelle cette ligne est liée."
+			"description": "Règle de TVA à laquelle cette ligne est liée.",
+			"help": ""
 		},
 		"accounting_rule_line_ids": {
 			"label": "Lignes liées à cette règle",
-			"description": "Lignes liées à cette règle."
+			"description": "Lignes liées à cette règle.",
+			"help": ""
 		}
 	},
 	"view": {

@@ -3,12 +3,23 @@
 	"plural": "Produits",
 	"description": "Les produits offert",
 	"model": {
-		"product_model_id":{"label":"Produit Modèle", "help": "Produit Modèle de cette variante."}
+		"product_model_id": {
+			"label": "Produit Modèle",
+			"description": "Produit Modèle de cette variante.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Produit",
+			"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque. Les familles soutiennent la hiérarchie.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Produits",
+			"description": "Cette vue est destinée à afficher la liste des produits.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

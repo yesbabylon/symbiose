@@ -1,0 +1,55 @@
+{
+    "name": "Utilisateur",
+    "plural": "Utilisateurs",
+    "description": "",
+    "model": {
+        "login": {
+            "label": "Email",
+            "description": "",
+            "help": ""
+        },
+        "language": {
+            "label": "Language",
+            "description": "",
+            "help": ""
+        },
+        "validated": {
+            "label": "Validé",
+            "description": "",
+            "help": ""
+        },
+        "groups_ids": {
+            "label": "Groupes",
+            "description": "",
+            "help": ""
+        },
+        "centers_ids": {
+            "label": "Centres",
+            "description": "",
+            "help": ""
+        },
+        "setting_values_ids": {
+            "label": "Valeurs de Réglage",
+            "description": "",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Utilisateur",
+            "description": "Formulaire de base pour afficher un utilisateur.",
+            "layout": {
+                "section.group": {
+                    "label": "Groupes"
+                },
+                "section.centers": {
+                    "label": "Centres"
+                },
+                "section.preferences": {
+                    "label": "Préférences"
+                }
+            }
+        }
+    },
+    "error": {}
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Catégories de saison",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Centers",
+                "value": "centers_ids",
+                "width": "20%"
+            }
+        ]
+    }
+}

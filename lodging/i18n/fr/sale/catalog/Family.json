@@ -3,12 +3,23 @@
 	"plural": "Familles",
 	"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque. Les familles soutiennent la hiérarchie.",
 	"model": {
-		"centers_ids":{"label":"Centres", "help": "Liste des catégories auxquelles appartient le centre, le cas échéant."}
+		"centers_ids": {
+			"label": "Centres",
+			"description": "Liste des catégories auxquelles appartient le centre, le cas échéant.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Famille",
+			"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque. Les familles soutiennent la hiérarchie.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Famille",
+			"description": "Cette vue est destinée à afficher la liste des familles.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

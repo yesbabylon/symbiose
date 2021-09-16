@@ -1,0 +1,50 @@
+{
+	"name": "Réservation",
+	"plural": "Réservations",
+	"description": "",
+	"model": {
+		"customer_id": {
+			"label": "Client",
+			"description": "Le client auquel se rapporte la réservation.",
+			"help": ""
+		},
+		"center_id": {
+			"label": "Centre",
+			"description": "Le centre auquel se rapporte la réservation.",
+			"help": ""
+		},
+        "booking_lines_ids": {
+			"label": "Lignes de Réservation",
+			"description": "Consommations détaillées de la réservation.",
+			"help": ""
+		},
+		"booking_lines_groups_ids": {
+			"label": "Groupes de Lignes de Réservation",
+			"description": "Consommations groupées de la réservation.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Réservation",
+			"description": "",
+			"layout": {
+                "section.booking_section": {
+                    "label": "Infos générales"
+                },
+                "section.bookingLine_section": {
+                    "label": "Lignes de Réservation"
+                },
+                "section.bookingLineGroups_section": {
+                    "label": "Groupes de Lignes de Réservation"
+                }
+            }
+		},
+		"list.default": {
+			"name": "Réservations",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {}
+}

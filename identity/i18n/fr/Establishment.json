@@ -6,47 +6,58 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de l'établissement."
+			"description": "Nom de l'établissement.",
+			"help": ""
 		},
 		"organisation_id": {
 			"label": "Organisation",
-			"description": "L'organisation à laquelle appartient l'établissement."
+			"description": "L'organisation à laquelle appartient l'établissement.",
+			"help": ""
 		},
 		"phone": {
 			"label": "Téléphone",
-			"description": "Numéro de téléphone de contact officiel."
+			"description": "Numéro de téléphone de contact officiel.",
+			"help": ""
 		},
 		"email": {
 			"label": "Email",
-			"description": "Adresse e-mail de contact officielle."
+			"description": "Adresse e-mail de contact officielle.",
+			"help": ""
 		},
 		"address_street": {
 			"label": "Rue",
-			"description": "Rue et numéro de l'adresse d'établissement."
+			"description": "Rue et numéro de l'adresse d'établissement.",
+			"help": ""
 		},
 		"address_dispatch": {
 			"label": "Adresse d'expédition",
-			"description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."
+			"description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
+			"help": ""
 		},
 		"address_city": {
 			"label": "Ville",
-			"description": "Ville dans laquelle se situe l'établissement."
+			"description": "Ville dans laquelle se situe l'établissement.",
+			"help": ""
 		},
 		"address_zip": {
 			"label": "Code postal",
-			"description": "Code Postal."
+			"description": "Code Postal.",
+			"help": ""
 		},
 		"address_state": {
 			"label": "État",
-			"description": "État ou région."
+			"description": "État ou région.",
+			"help": ""
 		},
 		"address_country": {
 			"label": "Pays",
-			"description": "Pays dans lequel se situe l'établissement."
+			"description": "Pays dans lequel se situe l'établissement.",
+			"help": ""
 		},
 		"registration_number": {
 			"label": "Numéro d'enregistrement",
-			"description": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant."
+			"description": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant.",
+			"help": ""
 		}
 	},
 	"view": {

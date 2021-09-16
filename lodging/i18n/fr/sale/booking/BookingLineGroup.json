@@ -1,0 +1,93 @@
+{
+	"name": "Groupe de ligne de Réservation",
+	"plural": "Groupes de ligne de Réservation",
+	"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
+	"model": {
+		"has_pack": {
+			"label": "A Pack",
+			"description": "Quantité d'articles de produit pour la ligne.",
+			"help": ""
+		},
+		"pack_id": {
+			"label": "Pack",
+			"description": "Méthode de comptabilité quantitative (à partir de product_model).",
+			"help": ""
+		},
+        "is_locked": {
+			"label": "Est Verrouillé",
+			"description": "Les modifications sont-elles désactivées pour le groupe ?",
+			"help": ""
+		},
+		"date_from": {
+			"label": "Date de",
+			"description": "Heure d'arrivée.",
+			"help": ""
+		},
+		"date_to": {
+			"label": "Date à",
+			"description": "Heure de départ.",
+			"help": ""
+		},
+        "sojourn_type": {
+			"label": "Type de Séjour",
+			"description": "Le genre de séjour que le groupe est sur.",
+			"help": ""
+		},
+		"nb_pers": {
+			"label": "Nombre de Personne",
+			"description": "Le nombre de personnes qui composent ce groupe.",
+			"help": ""
+		},
+        "rate_class_id": {
+			"label": "Classe Tarifaire",
+			"description": "La classe tarifaire qui s'applique au groupe.",
+			"help": ""
+		},
+        "booking_lines_ids": {
+			"label": "Lignes de Réservation",
+			"description": "Lignes de réservation qui appartiennent au groupe.",
+			"help": ""
+		},
+		"price_adapters_ids": {
+			"label": "Adaptateurs de Prix",
+			"description": "Des adaptateurs de prix qui s'appliquent à toutes les lignes du groupe (en fonction des paramètres du groupe).",
+			"help": ""
+		},
+        "booking_id": {
+			"label": "Réservation",
+			"description": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
+			"help": ""
+		},
+		"accomodations_ids": {
+			"label": "Accomodations",
+			"description": "Booking lines related to accomodations.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Groupe de Ligne de Réservation",
+			"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
+			"layout": {
+                "section.bookinglineGroup_section": {
+                    "label": "Infos générales"
+                },
+                "section.bookingLines_section": {
+                    "label": "Lignes de Réservation"
+                },
+                "section.priceAdapters_section": {
+                    "label": "Adaptateurs de Prix"
+                },
+                "section.accomodation_section": {
+                    "label": "Accomodations"
+                }
+            }
+		},
+		"list.default": {
+			"name": "Groupes de ligne de Réservation",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {}
+}
