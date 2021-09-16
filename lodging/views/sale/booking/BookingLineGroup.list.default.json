@@ -1,0 +1,35 @@
+{
+    "name": "Booking Line Group",
+    "description": "List of booking lines groups for products.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Number of People",
+                "value": "nb_pers",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "sojourn_type",
+                "width": "20%"
+            }      
+        ]
+    }
+}

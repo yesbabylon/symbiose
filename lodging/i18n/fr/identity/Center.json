@@ -3,21 +3,68 @@
 	"plural": "Centres",
 	"description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
 	"model": {
-		"code":{"label":"Code", "help": "Mnémo d'identification du centre."},
-		"manager_id":{"label":"Gérant", "help": "Personne de référence pour la gérance, le cas échéant."},
-        "organisation_id":{"label":"Organisation", "help": "Organisation mère du Centre."},
-        "price_list_category_id":{"label":"Catégorie de liste de prix", "help": "Catégorie de liste de prix utilisée par le centre."},
-        "discount_list_category_id":{"label":"Catégorie de liste de remise", "help": "Catégorie de liste de remise utilisée par le centre."},
-        "season_category_id":{"label":"Catégorie de saison", "help": "Catégorie de saison utilisée par le centre."},
-        "template_category_id":{"label":"Catégorie de modèle", "help": "Catégorie de modèle utilisée par le centre."},
-        "categories_ids":{"label":"Catégories", "help": "Liste des catégories auxquelles appartient le centre belge, le cas échéant."},
-        "rental_units_ids":{"label":"Unités locatives", "help": "List of rental units of the center."},
-        "product_families_ids":{"label":"Produit de familles", "help": "Produits pour les familles du centre."}
+		"code": {
+			"label": "Code",
+			"description": "Mnémo d'identification du centre.",
+			"help": ""
+		},
+		"manager_id": {
+			"label": "Gérant",
+			"description": "Personne de référence pour la gérance, le cas échéant.",
+			"help": ""
+		},
+		"organisation_id": {
+			"label": "Organisation",
+			"description": "Organisation mère du Centre.",
+			"help": ""
+		},
+		"price_list_category_id": {
+			"label": "Catégorie de liste de prix",
+			"description": "Catégorie de liste de prix utilisée par le centre.",
+			"help": ""
+		},
+		"discount_list_category_id": {
+			"label": "Catégorie de liste de remise",
+			"description": "Catégorie de liste de remise utilisée par le centre.",
+			"help": ""
+		},
+		"season_category_id": {
+			"label": "Catégorie de saison",
+			"description": "Catégorie de saison utilisée par le centre.",
+			"help": ""
+		},
+		"template_category_id": {
+			"label": "Catégorie de modèle",
+			"description": "Catégorie de modèle utilisée par le centre.",
+			"help": ""
+		},
+		"categories_ids": {
+			"label": "Catégories",
+			"description": "Liste des catégories auxquelles appartient le centre belge, le cas échéant.",
+			"help": ""
+		},
+		"rental_units_ids": {
+			"label": "Unités locatives",
+			"description": "List of rental units of the center.",
+			"help": ""
+		},
+		"product_families_ids": {
+			"label": "Produit de familles",
+			"description": "Produits pour les familles du centre.",
+			"help": ""
+		}
 	},
 	"view": {
-
+		"form.default": {
+			"name": "Centre",
+			"description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Centres",
+			"description": "Cette vue est destinée à afficher la liste des centres.",
+			"layout": {}
+		}
 	},
-	"error": {
-
-	}
+	"error": {}
 }

@@ -3,13 +3,28 @@
 	"plural": "Unités de location",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
-		"center_category_id":{"label":"Catégorie centrale", "help": "Catégorie centrale à laquelle appartient l'unité actuelle, le cas échéant."},
-        "center_id":{"label":"Centre", "help": "Le centre auquel appartient le logement locatif."}
+		"center_category_id": {
+			"label": "Catégorie centrale",
+			"description": "Catégorie centrale à laquelle appartient l'unité actuelle, le cas échéant.",
+			"help": ""
+		},
+		"center_id": {
+			"label": "Centre",
+			"description": "Le centre auquel appartient le logement locatif.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Unités de location",
+			"description": "Une unité locative est une ressource qui peut être louée à un client.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Unités de location",
+			"description": "Cette vue est destinée à afficher la liste des unités locatives.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

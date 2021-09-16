@@ -5,23 +5,28 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom affiché du partenaire (lié au nom de l'identité)."
+			"description": "Nom affiché du partenaire (lié au nom de l'identité).",
+			"help": ""
 		},
 		"owner_identity_id": {
 			"label": "Origine de la relation",
-			"description": "L'organisation dont l'identité ciblée est partenaire."
+			"description": "L'organisation dont l'identité ciblée est partenaire.",
+			"help": ""
 		},
 		"partner_identity_id": {
 			"label": "Identité",
-			"description": "L'identité ciblée (le partenaire)."
+			"description": "L'identité ciblée (le partenaire).",
+			"help": ""
 		},
 		"partner_organisation_id": {
 			"label": "Organisation",
-			"description": "Entreprise au sein de laquelle travaille le contact."
+			"description": "Entreprise au sein de laquelle travaille le contact.",
+			"help": ""
 		},
 		"partner_position": {
 			"label": "Position",
-			"description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."
+			"description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'.",
+			"help": ""
 		},
 		"relationship": {
 			"label": "Relation",
@@ -33,15 +38,18 @@
 				"provider": "fournisseur",
 				"payer": "payeur",
 				"other": "autre"
-			}
+			},
+			"help": ""
 		},
 		"customer_rate_class_id": {
 			"label": "Catégorie tarifaire",
-			"description": "Catégorie tarifaire qui s'applique au client."
+			"description": "Catégorie tarifaire qui s'applique au client.",
+			"help": ""
 		},
 		"customer_type_id": {
 			"label": "Type de client",
-			"description": "Type de client (en relation avec les classes tarifaires)."
+			"description": "Type de client (en relation avec les classes tarifaires).",
+			"help": ""
 		}
 	},
 	"view": {
