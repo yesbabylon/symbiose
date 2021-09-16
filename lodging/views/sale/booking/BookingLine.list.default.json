@@ -1,0 +1,32 @@
+{
+    "name": "Booking Line",
+    "description": "List of booking lines for products.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Product",
+                "value": "product_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Rental Unit",
+                "value": "rental_unit_id",
+                "width": "20%"
+            }    
+        ]
+    }
+}

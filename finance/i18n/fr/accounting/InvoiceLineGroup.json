@@ -5,11 +5,13 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Étiquette pour le groupe."
+			"description": "Étiquette pour le groupe.",
+			"help": ""
 		},
 		"invoice_id": {
 			"label": "Facture",
-			"description": "Facture à laquelle la ligne est liée."
+			"description": "Facture à laquelle la ligne est liée.",
+			"help": ""
 		}
 	},
 	"view": {

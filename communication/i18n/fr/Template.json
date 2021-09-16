@@ -5,15 +5,18 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Bref mnémo de la saison."
+			"description": "Bref mnémo de la saison.",
+			"help": ""
 		},
 		"value": {
 			"label": "Valeur",
-			"description": "Corps du modèle (html)."
+			"description": "Corps du modèle (html).",
+			"help": ""
 		},
 		"category_id": {
 			"label": "Catégorie",
-			"description": "La catégorie à laquelle appartient le modèle."
+			"description": "La catégorie à laquelle appartient le modèle.",
+			"help": ""
 		},
 		"type": {
 			"label": "Type",
@@ -22,7 +25,8 @@
 				"contract": "contract",
 				"invoice": "facture d'achat",
 				"email": "e-mail"
-			}
+			},
+			"help": ""
 		}
 	},
 	"view": {

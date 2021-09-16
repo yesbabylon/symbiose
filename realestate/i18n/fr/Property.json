@@ -5,7 +5,8 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de la propriété."
+			"description": "Nom de la propriété.",
+			"help": ""
 		}
 	},
 	"view": {
