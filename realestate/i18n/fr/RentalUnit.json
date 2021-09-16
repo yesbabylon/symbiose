@@ -1,20 +1,21 @@
 {
-	"name": "Unité de location",
-	"plural": "Unités de location",
+	"name": "Unité locative",
+	"plural": "Unités locatives",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom du logement locatif."
+			"description": "Nom de l'untié."
 		},
 		"type": {
 			"label": "Type",
-			"description": "Type de logement locatif (qui se rapporte à la capacité).",
+			"description": "Type d'unité locative (en lien avec la capacité).",
 			"selection": {
-				"building": "imeuble",
-				"bedroom": "chambre à coucher",
+				"building": "bâtiment",
+				"bedroom": "chambre",
 				"bed": "lit",
 				"meetingroom": "salle de réunion",
+				"diningroom": "réfectoire",
 				"room": "salle"
 			}
 		},
@@ -63,7 +64,9 @@
 		"list.default": {
 			"name": "Liste des Unités de location",
 			"description": "Cette vue est destinée à afficher la liste des logements locatifs.",
-			"layout": {}
+			"layout": {
+
+			}
 		}
 	},
 	"error": {

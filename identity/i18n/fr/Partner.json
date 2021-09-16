@@ -1,75 +1,67 @@
 {
-	"name": "Partenaire",
-	"plural": "Partenaires",
-	"description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Nom affiché du partenaire (lié au nom de l'identité)."
-		},
-		"owner_identity_id": {
-			"label": "Origine de la relation",
-			"description": "L'organisation dont l'identité ciblée est partenaire."
-		},
-		"partner_identity_id": {
-			"label": "Identité",
-			"description": "L'identité ciblée (le partenaire)."
-		},
-		"partner_organisation_id": {
-			"label": "Organisation",
-			"description": "Entreprise au sein de laquelle travaille le contact."
-		},
-		"partner_position": {
-			"label": "Position",
-			"description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."
-		},
-		"relationship": {
-			"label": "Relation",
-			"description": "Le genre de partenariat qui existe entre les identités.",
-			"selection": {
-				"contact": "contact",
-				"employee": "employé",
-				"customer": "client",
-				"provider": "fournisseur",
-				"payer": "payeur",
-				"other": "autre"
-			}
-		},
-		"customer_rate_class_id": {
-			"label": "Catégorie tarifaire",
-			"description": "Catégorie tarifaire qui s'applique au client."
-		},
-		"customer_type_id": {
-			"label": "Type de client",
-			"description": "Type de client (en relation avec les classes tarifaires)."
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Partenaire",
-			"description": "Formulaire de base pour afficher un partenaire",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Partenaires",
-			"description": "Cette vue est destinée à afficher la liste de base des partenaires existants.",
-			"layout": {}
-		},
-		"form.customer": {
-			"name": "Client",
-			"description": "Formulaire de base pour afficher un client (Partenaire)",
-			"layout": {}
-		},
-		"list.customer": {
-			"name": "Clients",
-			"description": "Cette vue est destinée à afficher la liste de base des clients existants.",
-			"layout": {}
-		},
-		"list.contact": {
-			"name": "Contacts",
-			"description": "Liste des contacts existants Partenaires.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Partenaire",
+    "plural": "Partenaires",
+    "description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom affiché du partenaire (lié au nom de l'identité)."
+        },
+        "owner_identity_id": {
+            "label": "Origine de la relation",
+            "description": "L'organisation dont l'identité ciblée est partenaire."
+        },
+        "partner_identity_id": {
+            "label": "Identité",
+            "description": "L'identité ciblée (le partenaire)."
+        },
+        "partner_organisation_id": {
+            "label": "Organisation",
+            "description": "Entreprise au sein de laquelle travaille le contact."
+        },
+        "partner_position": {
+            "label": "Position",
+            "description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."
+        },
+        "relationship": {
+            "label": "Relation",
+            "description": "Le genre de partenariat qui existe entre les identités.",
+            "selection": {
+                "contact": "contact",
+                "employee": "employé",
+                "customer": "client",
+                "provider": "fournisseur",
+                "payer": "payeur",
+                "other": "autre"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Partenaire",
+            "description": "Formulaire de base pour afficher un partenaire",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Partenaires",
+            "description": "Cette vue est destinée à afficher la liste de base des partenaires existants.",
+            "layout": {}
+        },
+        "form.customer": {
+            "name": "Client",
+            "description": "Formulaire de base pour afficher un client (Partenaire)",
+            "layout": {}
+        },
+        "list.customer": {
+            "name": "Clients",
+            "description": "Cette vue est destinée à afficher la liste de base des clients existants.",
+            "layout": {}
+        },
+        "list.contact": {
+            "name": "Contacts",
+            "description": "Liste des contacts existants Partenaires.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

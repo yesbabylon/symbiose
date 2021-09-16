@@ -17,8 +17,14 @@
             },
             {
                 "type": "field",   
+                "label": "Type",         
+                "value": "customer_nature_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",   
                 "label": "Rate class",         
-                "value": "customer_rate_class_id",
+                "value": "rate_class_id",
                 "width": "20%"
             }
         ]

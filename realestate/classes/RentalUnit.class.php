@@ -33,7 +33,7 @@ class RentalUnit extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['building', 'bedroom', 'bed', 'meetingroom', 'room'],
+                'selection'         => ['building', 'bedroom', 'bed', 'meetingroom', 'diningroom', 'room'],
                 'description'       => 'Type of rental unit (that relates to capacity).',
                 'required'          => true
             ],
@@ -42,7 +42,7 @@ class RentalUnit extends Model {
                 'type'              => 'string',
                 'selection'         => ['hostel', 'lodge'],         // hostel is GA, lodge is GG
                 'description'       => 'Type of rental unit (that usually comes with extra accomodations, ie meals; or rented as is).',
-                'required'          => true
+                'default'           => 'hostel'
             ],
 
             'capacity' => [
