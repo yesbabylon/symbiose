@@ -5,35 +5,43 @@
 	"model": {
 		"invoice_line_group_id": {
 			"label": "Groupe de lignes de facture",
-			"description": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur facture)."
+			"description": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur facture).",
+			"help": ""
 		},
 		"invoice_id": {
 			"label": "Facture",
-			"description": "Facture à laquelle la ligne est liée."
+			"description": "Facture à laquelle la ligne est liée.",
+			"help": ""
 		},
 		"product_id": {
 			"label": "Produit",
-			"description": "Le produit (SKU) auquel la ligne se rapporte."
+			"description": "Le produit (SKU) auquel la ligne se rapporte.",
+			"help": ""
 		},
 		"price": {
 			"label": "Prix",
-			"description": "Prix ​​du produit lié à la ligne."
+			"description": "Prix ​​du produit lié à la ligne.",
+			"help": ""
 		},
 		"vat_rate": {
 			"label": "Taux de TVA",
-			"description": "Taux de TVA à appliquer."
+			"description": "Taux de TVA à appliquer.",
+			"help": ""
 		},
 		"qty": {
 			"label": "Quantité",
-			"description": "Quantité de produit."
+			"description": "Quantité de produit.",
+			"help": ""
 		},
 		"free_qty": {
 			"label": "Quantité gratuite",
-			"description": "Quantité gratuite du produit."
+			"description": "Quantité gratuite du produit.",
+			"help": ""
 		},
 		"discount": {
 			"label": "Remise",
-			"description": "Montant total de la remise à appliquer, le cas échéant."
+			"description": "Montant total de la remise à appliquer, le cas échéant.",
+			"help": ""
 		}
 	},
 	"view": {

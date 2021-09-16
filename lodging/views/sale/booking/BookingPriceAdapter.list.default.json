@@ -1,0 +1,26 @@
+{
+    "name": "Prices Adapter",
+    "description": "List of price adapters.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Booking Line",
+                "value": "booking_line_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Booking Line Group",
+                "value": "booking_line_group_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

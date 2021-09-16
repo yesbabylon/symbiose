@@ -5,7 +5,8 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de l'untié."
+			"description": "Nom de l'untié.",
+			"help": ""
 		},
 		"type": {
 			"label": "Type",
@@ -17,7 +18,8 @@
 				"meetingroom": "salle de réunion",
 				"diningroom": "réfectoire",
 				"room": "salle"
-			}
+			},
+			"help": ""
 		},
 		"category": {
 			"label": "Catégorie",
@@ -25,27 +27,33 @@
 			"selection": {
 				"hostel": "auberge",
 				"lodge": "loge"
-			}
+			},
+			"help": ""
 		},
 		"capacity": {
 			"label": "Capacité",
-			"description": "Le nombre de personnes pouvant séjourner dans l'unité."
+			"description": "Le nombre de personnes pouvant séjourner dans l'unité.",
+			"help": ""
 		},
 		"has_children": {
 			"label": "A des enfants",
-			"description": "Drapeau pour marquer l'unité comme ayant des sous-unités."
+			"description": "Drapeau pour marquer l'unité comme ayant des sous-unités.",
+			"help": ""
 		},
 		"can_rent": {
 			"label": "Peut louer",
-			"description": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location."
+			"description": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location.",
+			"help": ""
 		},
 		"children_ids": {
 			"label": "Enfants",
-			"description": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels)."
+			"description": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels).",
+			"help": ""
 		},
 		"parent_id": {
 			"label": "Parent",
-			"description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant."
+			"description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant.",
+			"help": ""
 		}
 	},
 	"view": {

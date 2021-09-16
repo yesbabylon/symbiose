@@ -5,11 +5,13 @@
 	"model": {
 		"name": {
 			"label": "Nom de l'utilisateur",
-			"description": "Le nom d'affichage de l'utilisateur."
+			"description": "Le nom d'affichage de l'utilisateur.",
+			"help": ""
 		},
 		"identity_id": {
 			"label": "Identité",
-			"description": "Le contact lié à l'utilisateur."
+			"description": "Le contact lié à l'utilisateur.",
+			"help": ""
 		}
 	},
 	"view": {

@@ -5,11 +5,13 @@
 	"model": {
 		"name":{
 			"label":"Nom",
-			"description": "Etiquette courte pour faciliter l'identification de la catégorie."
+			"description": "Etiquette courte pour faciliter l'identification de la catégorie.",
+			"help": ""
 		},
 		"templates_ids":{
 			"label":"Modèles", 
-			"description": "Modèles liés à cette catégorie, le cas échéant."
+			"description": "Modèles liés à cette catégorie, le cas échéant.",
+			"help": ""
 		}
 	},
 	"view": {
