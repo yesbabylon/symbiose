@@ -21,9 +21,10 @@ class RentalUnit extends Model {
                 'required'          => true
             ],
 
-            'description' => [
-                'type'              => 'string',
-                'description'       => 'Short description of the unit.'
+            'center_id' => [
+                'type'              => 'many2one',
+                'description'       => "Center which current unit belongs to, if any.",
+                'foreign_object'    => 'lodging\identity\Center'
             ],
 
             'type' => [
@@ -59,8 +60,7 @@ class RentalUnit extends Model {
                 'type'              => 'one2many', 
                 'description'       => "The list of rental units the current unit can be divided into, if any (i.e. a dorm might be rent as individual beds).",
                 'foreign_object'    => 'realestate\RentalUnit', 
-                'foreign_field'     => 'parent_id',
-                'visible'           => ['has_children', '=', true]
+                'foreign_field'     => 'parent_id'
             ],
             
             'parent_id' => [

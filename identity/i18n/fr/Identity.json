@@ -1,50 +1,188 @@
 {
-	"name": "Identité",
-	"plural": "Identités",
-	"description": "Une Identité est soit une personne morale soit une personne physique : les organisations sont des personnes morales et les utilisateurs, les contacts et les employés sont des personnes physiques.",
-	"model": {
-		"name":{"label":"Nom", "help": "Identité de l'utilisateur."},
-		"display_name":{"label":"Nom d'affichage", "help": "Nom d'affichage de l'identité."},
-        "type":{"label":"Type", "help": "Type d'organisation.", "selection": {"I": "Particulier", "SE": "Travailleur indépendant", "C": "Entreprise", "NP": "Association à but non lucratif", "PA": "Administration publique"}},
-        "legal_name":{"label":"Nom légal", "help": "Nom complet de l'Identité."},
-        "short_name":{"label":"Nom usuel", "help": "Nom usuel à utiliser comme mémo pour identifier l'organisation (acronyme ou nom abrégé)."},
-        "description":{"label":"Description", "help": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques."},
-        "has_vat":{"label":"Assujetti à la TVA", "help": "Cette organisation a-t-elle un numéro de TVA ?"},
-        "vat_number":{"label":"Numéro de TVA", "help": "Numéro d'identification à la TVA."},
-        "registration_number":{"label":"Numéro d'enregistrement", "help": "Numéro d'enregistrement de l'organisation (numéro d'entreprise)."},
-        "citizen_identification":{"label":"Numéro de registre national", "help": "Numéro de registre national (facultatif)."},
-        "children_ids":{"label":"Filiales", "help": "Les organisations appartenant à l'entreprise, le cas échéant."},
-        "parent_id":{"label":"Organisation mère", "help": "Société mère dont l'organisation est une filiale, le cas échéant."},
-        "employees_ids":{"label":"Employés", "help": "Liste des employés de l'organisation."},
-        "customers_ids":{"label":"Clients", "help": "Liste des clients de l'organisation."},
-        "providers_ids":{"label":"Fournisseurs", "help": "Liste des prestataires de l'organisation, le cas échéant."},
-        "contacts_ids":{"label":"Contacts", "help": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant."},
-        "address_street":{"label":"Rue", "help": "Rue et numéro."},
-        "address_dispatch":{"label":"Complément d'adresse", "help": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...)."},
-        "address_city":{"label":"Ville", "help": "Ville."},
-        "address_zip":{"label":"Code Postal", "help": "Code Postal."},
-        "address_state":{"label":"État", "help": "État ou région."},
-        "address_country":{"label":"Pays", "help": "Pays."},
-        "email":{"label":"Email", "help": "Adresse e-mail principale."},
-        "phone":{"label":"Numéro de téléphone", "help": "Numéro de téléphone."},
-        "website":{"label":"Site Web officiel", "help": "URL du site Web officiel de l'organisation, le cas échéant."},
-        "addresses_ids":{"label":"Adresses", "help": "Liste des adresses liées à l'identité."},
-        "reference_partner_id":{"label":"Reference du partenaire", "help": "Contact (personne physique) pouvant représenter légalement l'organisation."},
-        "user_id":{"label":"Utilisateur", "help": "Utilisateur associé à cette identité."},
-        "firstname":{"label":"Prénom", "help": "Nom complet du contact (doit être une personne, pas un rôle)."},
-        "lastname":{"label":"Nom", "help": "Nom."},
-        "gender":{"label":"Genre", "help": "Genre.", "selection": {"M": "Masculin", "F": "Féminin", "X": "Non-binaire"} },
-        "title":{"label":"Titre", "help": "Titre de civilité.", "selection": {"Dr": "Docteur", "Ms": "Mademoiselle", "Mrs": "Madame", "Mr": "Monsieur", "Pr": "Professeur"}},
-        "date_of_birth":{"label":"Date de naissance", "help": "Date de naissance de la personne."},
-        "lang":{"label":"Langue", "help": "Langue parlée préférée."}
-	},
-	"view": {        
-        "section.identity_info": {"label": "Infos générales"},
-        "section.identity_main_address": {"label": "Adresse principale"},
-        "section.identity_addresses": {"label": "Autres adresses"},
-		"section.identity_description": {"label": "Description"}
-	},
-	"error": {
-	
-	}
+    "name": "Identité",
+    "plural": "Identités",
+    "description": "Une Identité est soit une personne morale soit une personne physique : les organisations sont des personnes morales et les utilisateurs, les contacts et les employés sont des personnes physiques.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Identité de l'utilisateur."
+        },
+        "display_name": {
+            "label": "Nom d'affichage",
+            "description": "Nom d'affichage de l'identité."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type d'organisation.",
+            "selection": {
+                "I": "Particulier",
+                "SE": "Travailleur indépendant",
+                "C": "Entreprise",
+                "NP": "Association à but non lucratif",
+                "PA": "Administration publique"
+            }
+        },
+        "legal_name": {
+            "label": "Nom légal",
+            "description": "Nom complet de l'Identité."
+        },
+        "short_name": {
+            "label": "Nom usuel",
+            "description": "Nom usuel à utiliser comme mémo pour identifier l'organisation (acronyme ou nom abrégé)."
+        },
+        "description": {
+            "label": "Description",
+            "description": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques."
+        },
+        "has_vat": {
+            "label": "Assujetti à la TVA",
+            "description": "Cette organisation a-t-elle un numéro de TVA ?"
+        },
+        "vat_number": {
+            "label": "Numéro de TVA",
+            "description": "Numéro d'identification à la TVA."
+        },
+        "registration_number": {
+            "label": "Numéro d'enregistrement",
+            "description": "Numéro d'enregistrement de l'organisation (numéro d'entreprise)."
+        },
+        "citizen_identification": {
+            "label": "Numéro de registre national",
+            "description": "Numéro de registre national (facultatif)."
+        },
+        "children_ids": {
+            "label": "Filiales",
+            "description": "Les organisations appartenant à l'entreprise, le cas échéant."
+        },
+        "parent_id": {
+            "label": "Organisation mère",
+            "description": "Société mère dont l'organisation est une filiale, le cas échéant."
+        },
+        "employees_ids": {
+            "label": "Employés",
+            "description": "Liste des employés de l'organisation."
+        },
+        "customers_ids": {
+            "label": "Clients",
+            "description": "Liste des clients de l'organisation."
+        },
+        "providers_ids": {
+            "label": "Fournisseurs",
+            "description": "Liste des prestataires de l'organisation, le cas échéant."
+        },
+        "contacts_ids": {
+            "label": "Contacts",
+            "description": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant."
+        },
+        "address_street": {
+            "label": "Rue",
+            "description": "Rue et numéro."
+        },
+        "address_dispatch": {
+            "label": "Complément d'adresse",
+            "description": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...)."
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville."
+        },
+        "address_zip": {
+            "label": "Code Postal",
+            "description": "Code Postal."
+        },
+        "address_state": {
+            "label": "État",
+            "description": "État ou région."
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays."
+        },
+        "email": {
+            "label": "Email",
+            "description": "Adresse e-mail principale."
+        },
+        "phone": {
+            "label": "Numéro de téléphone",
+            "description": "Numéro de téléphone."
+        },
+        "website": {
+            "label": "Site Web officiel",
+            "description": "URL du site Web officiel de l'organisation, le cas échéant."
+        },
+        "addresses_ids": {
+            "label": "Adresses",
+            "description": "Liste des adresses liées à l'identité."
+        },
+        "reference_partner_id": {
+            "label": "Reference du partenaire",
+            "description": "Contact (personne physique) pouvant représenter légalement l'organisation."
+        },
+        "user_id": {
+            "label": "Utilisateur",
+            "description": "Utilisateur associé à cette identité."
+        },
+        "firstname": {
+            "label": "Prénom",
+            "description": "Nom complet du contact (doit être une personne, pas un rôle)."
+        },
+        "lastname": {
+            "label": "Nom",
+            "description": "Nom."
+        },
+        "gender": {
+            "label": "Genre",
+            "description": "Genre.",
+            "selection": {
+                "M": "Masculin",
+                "F": "Féminin",
+                "X": "Non-binaire"
+            }
+        },
+        "title": {
+            "label": "Titre",
+            "description": "Titre de civilité.",
+            "selection": {
+                "Dr": "Docteur",
+                "Ms": "Mademoiselle",
+                "Mrs": "Madame",
+                "Mr": "Monsieur",
+                "Pr": "Professeur"
+            }
+        },
+        "date_of_birth": {
+            "label": "Date de naissance",
+            "description": "Date de naissance de la personne."
+        },
+        "lang": {
+            "label": "Langue",
+            "description": "Langue parlée préférée."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Identité",
+            "description": "Formulaire de base pour l'affichage du groupe.",
+            "layout": {
+                "section.identity_info": {
+                    "label": "Infos générales"
+                },
+                "section.identity_main_address": {
+                    "label": "Adresse principale"
+                },
+                "section.identity_addresses": {
+                    "label": "Autres adresses"
+                },
+                "section.identity_description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste d'Identité",
+            "description": "Cette vue est destinée à afficher la liste de base des identités existantes.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

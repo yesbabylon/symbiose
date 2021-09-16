@@ -3,15 +3,39 @@
 	"plural": "Modèles",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom", "help": "Bref mnémo de la saison."},
-		"value":{"label":"Valeur", "help": "Corps du modèle (html)."},
-        "category_id":{"label":"Catégorie", "help": "La catégorie à laquelle appartient le modèle."},
-        "type":{"label":"Type", "help": "Le modèle de contexte est destiné à être utilisé.", "selection": {"contract": "contract", "invoice": "facture d'achat", "email": "e-mail"}}
+		"name": {
+			"label": "Nom",
+			"description": "Bref mnémo de la saison."
+		},
+		"value": {
+			"label": "Valeur",
+			"description": "Corps du modèle (html)."
+		},
+		"category_id": {
+			"label": "Catégorie",
+			"description": "La catégorie à laquelle appartient le modèle."
+		},
+		"type": {
+			"label": "Type",
+			"description": "Le modèle de contexte est destiné à être utilisé.",
+			"selection": {
+				"contract": "contract",
+				"invoice": "facture d'achat",
+				"email": "e-mail"
+			}
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Modèle",
+			"description": "Les modèles sont utilisés dans la communication et contiennent plusieurs catégories.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Liste des Modèles",
+			"description": "Cette vue est destinée à afficher la liste des modèles.",
+			"layout": {}
+		}
 	},
-	"error": {
-	
-	}
+	"error": {}
 }

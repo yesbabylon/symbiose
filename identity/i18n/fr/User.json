@@ -3,13 +3,26 @@
 	"plural": "Utilisateurs",
 	"description": "Les utilisateurs peuvent se connecter, être assignés à des groupes et recevoir des permissions spécifiques.",
 	"model": {
-		"name":{"label":"Nom de l'utilisateur", "help": "Le nom d'affichage de l'utilisateur."},
-		"identity_id":{"label":"Identité", "help": "Le contact lié à l'utilisateur."}
+		"name": {
+			"label": "Nom de l'utilisateur",
+			"description": "Le nom d'affichage de l'utilisateur."
+		},
+		"identity_id": {
+			"label": "Identité",
+			"description": "Le contact lié à l'utilisateur."
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Utilisateur",
+			"description": "Formulaire de base pour afficher un utilisateur.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Utilisateurs",
+			"description": "Cette vue est destinée à afficher la liste de base des utilisateurs existants.",
+			"layout": {}
+		}
 	},
-	"error": {
-	
-	}
+	"error": {}
 }
