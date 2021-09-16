@@ -36,7 +36,7 @@ class Category extends Model {
 
             'booking_types_ids' => [ 
                 'type'              => 'many2many', 
-                'foreign_object'    => 'sale\booking\BookingType', 
+                'foreign_object'    => 'sale\booking\Type', 
                 'foreign_field'     => 'product_categories_ids', 
                 'rel_table'         => 'sale_rel_productcategory_bookingtype', 
                 'rel_local_key'     => 'productcategory_id',

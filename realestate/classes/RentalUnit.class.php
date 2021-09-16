@@ -65,8 +65,7 @@ class RentalUnit extends Model {
                 'type'              => 'one2many', 
                 'description'       => "The list of rental units the current unit can be divided into, if any (i.e. a dorm might be rent as individual beds).",
                 'foreign_object'    => 'realestate\RentalUnit', 
-                'foreign_field'     => 'parent_id',
-                'visible'           => ['has_children', '=', true]
+                'foreign_field'     => 'parent_id'
             ],
             
             'parent_id' => [

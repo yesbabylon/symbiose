@@ -1,6 +1,6 @@
 {
     "name": "Template Categories",
-    "description": "This view is intented for displying the list of template categories.",
+    "description": "This view is intented for displaying the list of template categories.",
     "layout": {
         "items": [
             {
