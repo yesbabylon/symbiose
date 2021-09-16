@@ -16,6 +16,7 @@
                                                 "type": "field",
                                                 "value": "login",
                                                 "width": "100%",
+                                                "readonly": true,
                                                 "widget": {
                                                     "header": true
                                                 }

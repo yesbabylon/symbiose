@@ -21,6 +21,7 @@ class Booking extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'description'       => "Code to serve as reference (might not be unique)",
                 'function'          => 'sale\booking\Booking::getDisplayName',
                 'store'             => true
             ],
@@ -118,7 +119,7 @@ class Booking extends Model {
                 'type'              => 'string',
                 'selection'         => ['quote', 'option', 'validated', 'checkedin', 'checkedout', 'due_balance', 'credit_balance', 'balanced'],
                 'description'       => 'Status of the booking.',
-                'required'          => true
+                'default'           => 'quote'
             ],
 
             'payment_status' => [
@@ -164,7 +165,7 @@ class Booking extends Model {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_id.name']);
         foreach($bookings as $oid => $odata) {
-            $result[$oid] = date("Ymd", $odata['created'])." - {$odata['customer_id.name']}";
+            $result[$oid] = date("Ymd", $odata['created'])."-{$odata['customer_id.name']}";
         }
         return $result;              
     }

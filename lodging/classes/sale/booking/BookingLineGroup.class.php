@@ -522,12 +522,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $om->write(__CLASS__, $gid, ['price_id' => $prices_ids[0]]);
                 }
                 else {
-                    $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
+                    $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
                     trigger_error("QN_DEBUG_ORM::no matching price found for product {$group['product_id']} in price_list $price_list_id", QN_REPORT_ERROR);
                 }
             }
             else {
-                $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
+                $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
                 $date = date('Y-m-d', $group['booking_line_group_id.date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);
             }

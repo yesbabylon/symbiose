@@ -104,4 +104,18 @@ class RentalUnit extends Model {
 
         ];
     }
+
+    public static function getConstraints() {
+        return [
+            'capacity' =>  [
+                'lte_zero' => [
+                    'message'       => 'Capacity must be a positive value.',
+                    'function'      => function ($qty, $values) {
+                        return ($qty > 0);
+                    }
+                ]
+            ]
+
+        ];
+    }    
 }
