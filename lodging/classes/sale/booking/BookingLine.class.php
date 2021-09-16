@@ -60,7 +60,8 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the line is assigned to.",
-                "visible"           => ['qty_accounting_method', '=', 'accomodation']
+                'visible'           => ['qty_accounting_method', '=', 'accomodation'],
+                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeRentalUnitId'
             ],
 
             'price_adapters_ids' => [
@@ -85,6 +86,22 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
         return $result;
+    }
+
+    /**
+     * sync rental_unit_id with related consumption lines
+     */
+    public static function onchangeRentalUnitId($om, $oids, $lang) {
+        $lines = $om->read(__CLASS__, $oids, ['rental_unit_id', 'consumptions_ids'], $lang);
+
+        if($lines > 0 && count($lines)) {
+            foreach($lines as $lid => $line) {
+                if(isset($line['consumptions_ids']) && count($line['consumptions_ids']) && $line['rental_unit_id']) {
+                    $om->write('sale\booking\Consumption', $line['consumptions_ids'], ['rental_unit_id' => $line['rental_unit_id']]);
+                }                
+            }
+        }
+        
     }
 
     /**
@@ -222,10 +239,10 @@ class BookingLine extends \sale\booking\BookingLine {
                 Find the first Price List that matches the criteria from the booking
             */
             $price_lists_ids = $om->search('sale\price\PriceList', [
-                                                                       ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
-                                                                       ['date_from', '<=', $line['booking_line_group_id.date_from']],
-                                                                       ['date_to', '>=', $line['booking_line_group_id.date_from']]
-                                                                   ]);
+                ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
+                ['date_from', '<=', $line['booking_line_group_id.date_from']],
+                ['date_to', '>=', $line['booking_line_group_id.date_from']]
+            ]);
             $price_lists = $om->read('sale\price\PriceList', $price_lists_ids, ['id']);
             $price_list_id = 0;
             if($price_lists > 0 && count($price_lists)) {
@@ -262,7 +279,7 @@ class BookingLine extends \sale\booking\BookingLine {
     public static function _updateConsumptions($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updateConsumptions", QN_REPORT_DEBUG);
 
-        $lines = $om->read(get_called_class(), $oids, [
+        $lines = $om->read(__CLASS__, $oids, [
             'product_id', 'qty', 'rental_unit_id',
             'booking_id', 'booking_id.center_id',
             'booking_line_group_id', 'booking_line_group_id.nb_pers', 'booking_line_group_id.nb_nights', 'booking_line_group_id.date_from',
@@ -286,7 +303,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 /*
                     Reset consumptions (updating consumptions_ids will trigger ondetach event)
                 */
-                $om->write(get_called_class(), $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
+                $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
 
                 if($line['qty'] <= 0) continue;
 
@@ -300,6 +317,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 $product_type = $product_models[$line['product_id.product_model_id']]['type'];
                 $service_type = $product_models[$line['product_id.product_model_id']]['service_type'];
 
+                // consumptions are schedulable services
                 if($product_type == 'service' && $service_type == 'schedulable') {
                     
                     // retrieve default time for consumption
