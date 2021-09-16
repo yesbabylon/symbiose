@@ -3,12 +3,22 @@
 	"plural": "Propriétés",
 	"description": "Les propriétés qui existent.",
 	"model": {
-		"name":{"label":"Nom", "help": "Nom de la propriété."}
+		"name": {
+			"label": "Nom",
+			"description": "Nom de la propriété."
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Propriété",
+			"description": "Propriétés disponibles.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Liste des Propriétés",
+			"description": "Cette vue est destinée à afficher la liste des propriétés.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }
