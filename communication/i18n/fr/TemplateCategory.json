@@ -3,11 +3,26 @@
 	"plural": "Catégories de modèle",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom", "help": "Etiquette courte pour faciliter l'identification de la catégorie."},
-		"templates_ids":{"label":"Modèles", "help": "Modèles liés à cette catégorie, le cas échéant."}
+		"name":{
+			"label":"Nom",
+			"description": "Etiquette courte pour faciliter l'identification de la catégorie."
+		},
+		"templates_ids":{
+			"label":"Modèles", 
+			"description": "Modèles liés à cette catégorie, le cas échéant."
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Catégorie de modèle",
+			"description": "Liste des catégories des modèles.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Catégories de modèle",
+			"description": "Cette vue est destinée à afficher la liste des catégories de modèles.",
+			"layout": {}
+		}
 	},
 	"error": {
 	

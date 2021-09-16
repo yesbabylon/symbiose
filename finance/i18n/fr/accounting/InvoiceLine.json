@@ -3,19 +3,54 @@
 	"plural": "Line de factures",
 	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
-		"invoice_line_group_id":{"label":"Groupe de lignes de facture", "help": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur facture)."},
-		"invoice_id":{"label":"Facture", "help": "Facture à laquelle la ligne est liée."},
-		"product_id":{"label":"Produit", "help": "Le produit (SKU) auquel la ligne se rapporte."},
-        "price":{"label":"Prix", "help": "Prix ​​du produit lié à la ligne."},
-        "vat_rate":{"label":"Taux de TVA", "help": "Taux de TVA à appliquer."},
-        "qty":{"label":"Quantité", "help": "Quantité de produit."},
-        "free_qty":{"label":"Quantité gratuite", "help": "Quantité gratuite du produit."},
-        "discount":{"label":"Remise", "help": "Montant total de la remise à appliquer, le cas échéant."}
+		"invoice_line_group_id": {
+			"label": "Groupe de lignes de facture",
+			"description": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur facture)."
+		},
+		"invoice_id": {
+			"label": "Facture",
+			"description": "Facture à laquelle la ligne est liée."
+		},
+		"product_id": {
+			"label": "Produit",
+			"description": "Le produit (SKU) auquel la ligne se rapporte."
+		},
+		"price": {
+			"label": "Prix",
+			"description": "Prix ​​du produit lié à la ligne."
+		},
+		"vat_rate": {
+			"label": "Taux de TVA",
+			"description": "Taux de TVA à appliquer."
+		},
+		"qty": {
+			"label": "Quantité",
+			"description": "Quantité de produit."
+		},
+		"free_qty": {
+			"label": "Quantité gratuite",
+			"description": "Quantité gratuite du produit."
+		},
+		"discount": {
+			"label": "Remise",
+			"description": "Montant total de la remise à appliquer, le cas échéant."
+		}
 	},
 	"view": {
-		"section.products_Section": {"label": "Détails"}
+		"form.default": {
+			"name": "Line de facture",
+			"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
+			"layout": {
+				"section.products_Section": {
+					"label": "Détails"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Lines de facture",
+			"description": "Cette vue est destinée à afficher les lignes de facture.",
+			"layout": {}
+		}
 	},
-	"error": {
-	
-	}
+	"error": {}
 }
