@@ -6,30 +6,30 @@
     "layout": {
         "items": [
             {
-                "type": "field",     
-                "label": "Line Booking Group",       
+                "type": "field",
+                "label": "Line Booking Group",
                 "value": "booking_line_group_id",
                 "width": "10%"
             },
             {
-                "type": "field",    
-                "label": "Product",        
+                "type": "field",
+                "label": "Product",
                 "value": "product_id",
                 "width": "15%"
             },
             {
-                "type": "field",       
-                "label": "Quantity",     
+                "type": "field",
+                "label": "Quantity",
                 "value": "qty",
                 "width": "10%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "price",
                 "width": "15%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "order",
                 "width": "15%",
                 "visible": false

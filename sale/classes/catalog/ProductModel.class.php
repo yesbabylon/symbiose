@@ -8,7 +8,7 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class ProductModel extends Model {
-    
+
     public static function getName() {
         return "Product Model";
     }
@@ -42,6 +42,12 @@ class ProductModel extends Model {
             'buying_accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule'
+            ],
+
+            'stat_section_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\stats\StatSection',
+                'description'       => 'Statistics section to which relates the product, if any.'
             ],
 
             'can_buy' => [
@@ -92,7 +98,7 @@ class ProductModel extends Model {
             'consumable_type' => [
                 'type'              => 'string',
                 'selection'         => ['simple', 'storable'],
-                'visible'           => ['type', '=', 'consumable']                
+                'visible'           => ['type', '=', 'consumable']
             ],
 
             'service_type' => [
@@ -137,7 +143,7 @@ class ProductModel extends Model {
                 'description'       => "Description for reception vouchers."
             ],
 
-            'groups_ids' => [ 
+            'groups_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'product_models_ids',
@@ -146,7 +152,7 @@ class ProductModel extends Model {
                 'rel_local_key'     => 'productmodel_id'
             ],
 
-            'categories_ids' => [ 
+            'categories_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Category',
                 'foreign_field'     => 'product_models_ids',
@@ -161,13 +167,13 @@ class ProductModel extends Model {
                 'foreign_field'     => 'product_model_id',
                 'description'       => "Product variants that are related to this model.",
             ],
-            
+
         ];
     }
 
     /**
-     * 
-     * reset related products is_pack                
+     *
+     * reset related products is_pack
      */
     public static function onchangeIsPack($om, $oids, $lang) {
         $models = $om->read(__CLASS__, $oids, ['products_ids']);
@@ -177,7 +183,7 @@ class ProductModel extends Model {
         }
         $om->write('sale\catalog\Product', $products_ids, ['is_pack' => null]);
     }
-    
-    
+
+
 
 }

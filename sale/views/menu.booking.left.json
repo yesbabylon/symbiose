@@ -16,7 +16,7 @@
                   "description": "", 
                   "icon": "add",
                   "context": {
-                    "entity": "sale\\booking\\Booking",
+                    "entity": "lodging\\sale\\booking\\Booking",
                     "view": "form.default",
                     "purpose": "create"
                   }
@@ -27,17 +27,17 @@
                   "value": "All bookings",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\Booking",
+                    "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default"
                   }
                 },
                 {
-                  "id": "item.all_booking",
+                  "id": "item.quotes",
                   "type": "entry",
                   "value": "Quotes",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\Booking",
+                    "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
                     "domain": ["status", "=", "quote"]
                   }
@@ -48,13 +48,13 @@
                   "value": "Options",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\Booking",
+                    "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
                     "domain": ["status", "=", "option"]
                   }
                 },
                 {
-                  "id": "item.validated_options",
+                  "id": "item.validated",
                   "type": "entry",
                   "value": "Validated bookings",
                   "description": "",

@@ -33,7 +33,15 @@ class RentalUnit extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['building', 'bedroom', 'bed', 'meetingroom', 'diningroom', 'room'],
+                'selection'         => [
+                    'building', 
+                    'bedroom', 
+                    'bed', 
+                    'meetingroom', 
+                    'diningroom', 
+                    'room', 
+                    'FFE'               // Furniture, Fixtures, and Equipment
+                ],
                 'description'       => 'Type of rental unit (that relates to capacity).',
                 'required'          => true
             ],

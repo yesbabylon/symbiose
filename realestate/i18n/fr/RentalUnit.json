@@ -12,12 +12,13 @@
 			"label": "Type",
 			"description": "Type d'unité locative (en lien avec la capacité).",
 			"selection": {
-				"building": "bâtiment",
-				"bedroom": "chambre",
-				"bed": "lit",
-				"meetingroom": "salle de réunion",
-				"diningroom": "réfectoire",
-				"room": "salle"
+				"building": "Bâtiment",
+				"bedroom": "Chambre",
+				"bed": "Lit",
+				"meetingroom": "Salle de réunion",
+				"diningroom": "Réfectoire",
+				"room": "Salle",
+				"FFE": "Mobilier, accessoires et équipement"
 			},
 			"help": ""
 		},
