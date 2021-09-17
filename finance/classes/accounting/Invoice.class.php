@@ -25,6 +25,14 @@ class Invoice extends Model {
                 'alias'             => "number"
             ],
 
+            /* owner organisation */
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The organisation the invoice belongs to.",
+                'required'          => true
+            ],
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => ['proforma', 'invoice'],

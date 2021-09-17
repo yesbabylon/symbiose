@@ -7,29 +7,31 @@
 namespace finance\accounting;
 use equal\orm\Model;
 
-class InvoiceLineGroup extends Model {
-
+class AnalyticChart extends Model {
+    
     public static function getName() {
-        return "Invoice line group";
+        return "Analytical Chart of Accounts";
     }
 
     public static function getDescription() {
-        return "Invoice line groups are related to an invoice and are meant to join several invoice lines.";
+        return "The analytical chart of accounts allow to ventilate incomes and expenses independently from the chart of accounts.";
     }
 
     public static function getColumns() {
+
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Label for the group (displayed on invoice).'
+                'description'       => "Name of the analytical chart of accounts."
             ],
 
-            'invoice_id' => [
+            /* owner organisation */
+            'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
-                'description'       => 'Invoice the line is related to.',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The organisation the chart belongs to.",
                 'required'          => true
-            ],
+            ]
 
         ];
     }

@@ -37,7 +37,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "section",
+                                                "value": "analytic_section_id",
                                                 "width": "50%"
                                             },
                                             {

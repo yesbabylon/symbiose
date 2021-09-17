@@ -37,9 +37,10 @@ class AccountingRuleLine extends Model {
                 'required'          => true
             ],
 
-            'section' => [
-                'type'              => 'string',
-                'description'       => "Code of the related analytical accounting section."
+            'analytic_section_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\AnalyticSection',
+                'description'       => "Related analytic section, if any."
             ],
             
             'share' => [
@@ -53,9 +54,7 @@ class AccountingRuleLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
                 'description'       => "Accounting rule this line is related to."
-            ],
-
-
+            ]
 
         ];
     }

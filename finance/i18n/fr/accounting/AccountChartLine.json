@@ -1,0 +1,70 @@
+{
+    "name": "Compte",
+    "plural": "Comptes",
+    "description": "Une ligne de plan comptable reprennent des informations relatices à un compte spécifique.",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "",
+            "help": ""
+        },
+        "code": {
+            "label": "Description",
+            "description": "",
+            "help": ""
+        },
+        "nature": {
+            "label": "Nature",
+            "description": "Type d'opération auquel cette règle se rapporte.",
+            "selection": {
+                "B" : "Bilan",
+                "M" : "Gestion"
+            }
+        },
+        "account_chart_id": {
+            "label": "Plan comptable",
+            "description": "Type d'opération auquel cette règle se rapporte.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type d'opération auquel cette règle se rapporte.",
+            "selection": {
+                "debt" : "Bilan>Immobilisations>Debtor",
+                "bank" : "Bilan>Immobilisations>Bank and liquidity",
+                "current_asset" : "Bilan>Immobilisations>Actif circulant",
+                "fixed_asset" : "Bilan>Immobilisations>Actif immobilisé",
+                "prepayment" : "Bilan>Immobilisations>Prépaiements",
+                "fixed_assets" : "Bilan>Immobilisations>Immobilisations",
+                "payable" : "Bilan>Liabilities>Payable",
+                "credit_card" : "Bilan>Liabilities>Carte de crédit",
+                "short_term_debt" : "Bilan>Liabilities>Dettes à court terme",
+                "fixed_liability" : "Bilan>Liabilities>Passif immobilisé",
+                "equity" : "Bilan>Capitaux propres>Capitaux propres",
+                "profits_yearly" : "Bilan>Capitaux propres>Bénéfices de l'année en cours",
+                "income" : "Pertes et Profits>Revenus>Revenus",
+                "other_income" : "Pertes et Profits>Revenus>Autres revenus",
+                "expenses" : "Pertes et Profits>Dépense>Dépenses",
+                "amortization" : "Pertes et Profits>Dépense>Amortissement",
+                "cost_of_sale" : "Pertes et Profits>Dépense>Coût des ventes",
+                "off_balance" : "Autre>Hors bilan"
+            },
+            "help": ""
+        },
+        "analytic_section_id": {
+            "label": "Section analytique",
+            "description": "Code la section analytique attachée.",
+            "help": ""
+        },
+        "is_visible": {
+            "label": "Visible?",
+            "description": "Permet de masquer le compte dans les listes.",
+            "help": ""
+        }
+    },
+    "view": {       
+    },
+    "error": {
+
+    }
+}

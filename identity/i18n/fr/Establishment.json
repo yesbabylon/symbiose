@@ -1,76 +1,81 @@
 {
-	"name": "Unité d'établissement",
-	"plural": "Unités d'établissement",
-	"description": "Une entreprise ou une autre organisation, ou le lieu où une organisation exerce ses activités.",
+    "name": "Unité d'établissement",
+    "plural": "Unités d'établissement",
+    "description": "Une entreprise ou une autre organisation, ou le lieu où une organisation exerce ses activités.",
 
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Nom de l'établissement.",
-			"help": ""
-		},
-		"organisation_id": {
-			"label": "Organisation",
-			"description": "L'organisation à laquelle appartient l'établissement.",
-			"help": ""
-		},
-		"phone": {
-			"label": "Téléphone",
-			"description": "Numéro de téléphone de contact officiel.",
-			"help": ""
-		},
-		"email": {
-			"label": "Email",
-			"description": "Adresse e-mail de contact officielle.",
-			"help": ""
-		},
-		"address_street": {
-			"label": "Rue",
-			"description": "Rue et numéro de l'adresse d'établissement.",
-			"help": ""
-		},
-		"address_dispatch": {
-			"label": "Adresse d'expédition",
-			"description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
-			"help": ""
-		},
-		"address_city": {
-			"label": "Ville",
-			"description": "Ville dans laquelle se situe l'établissement.",
-			"help": ""
-		},
-		"address_zip": {
-			"label": "Code postal",
-			"description": "Code Postal.",
-			"help": ""
-		},
-		"address_state": {
-			"label": "État",
-			"description": "État ou région.",
-			"help": ""
-		},
-		"address_country": {
-			"label": "Pays",
-			"description": "Pays dans lequel se situe l'établissement.",
-			"help": ""
-		},
-		"registration_number": {
-			"label": "Numéro d'enregistrement",
-			"description": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Unité d'établissement",
-			"description": "Formulaire de base pour afficher un Etablissement.",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Unités d'établissement",
-			"description": "Cette vue est destinée à afficher la liste de base des établissements existants.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'établissement.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "L'organisation à laquelle appartient l'établissement.",
+            "help": ""
+        },
+        "phone": {
+            "label": "Téléphone",
+            "description": "Numéro de téléphone de contact officiel.",
+            "help": ""
+        },
+        "email": {
+            "label": "Email",
+            "description": "Adresse e-mail de contact officielle.",
+            "help": ""
+        },
+        "address_street": {
+            "label": "Rue",
+            "description": "Rue et numéro de l'adresse d'établissement.",
+            "help": ""
+        },
+        "address_dispatch": {
+            "label": "Adresse d'expédition",
+            "description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
+            "help": ""
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville dans laquelle se situe l'établissement.",
+            "help": ""
+        },
+        "address_zip": {
+            "label": "Code postal",
+            "description": "Code Postal.",
+            "help": ""
+        },
+        "address_state": {
+            "label": "État",
+            "description": "État ou région.",
+            "help": ""
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays dans lequel se situe l'établissement.",
+            "help": ""
+        },
+        "registration_number": {
+            "label": "Numéro d'enregistrement",
+            "description": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant.",
+            "help": ""
+        },
+        "analytic_section_id":{
+            "label":"Section analytique", 
+            "description": "Code de la section analytique associée.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Unité d'établissement",
+            "description": "Formulaire de base pour afficher un Etablissement.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Unités d'établissement",
+            "description": "Cette vue est destinée à afficher la liste de base des établissements existants.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

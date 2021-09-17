@@ -51,10 +51,12 @@ class Establishment extends Model {
                 'description'   => 'Street and number of the estalishment address.',
                 'required'      => true
             ],
+
             'address_dispatch' => [
                 'type'          => 'string',
                 'description'   => 'Optional info for mail dispatch (appartment, box, floor, ...).'
             ],
+
             'address_city' => [
                 'type'          => 'string',
                 'description'   => 'City in which estalishment is located.'
@@ -81,11 +83,11 @@ class Establishment extends Model {
                 'description'   => 'Establishment registration number (establishment unit number), if any.'
             ],
 
-            'accounting_section_code' => [
-                'type'          => 'string',
-                'description'   => 'Accounting section code specific to the establishment, if any.'
-            ],
-
+            'analytic_section_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\AnalyticSection',
+                'description'       => "Related analytic section, if any."
+            ]
 
         ];
     }
