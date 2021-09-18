@@ -17,9 +17,10 @@
                                                 "type": "field",
                                                 "label": "Name of Customer",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "50%",                                                
                                                 "widget": {
-                                                    "header": true
+                                                    "header": true,
+                                                    "readonly": true
                                                 }
                                             },
                                             {
@@ -29,7 +30,7 @@
                                                 "width": "50%",
                                                 "widget": {
 
-                                                }                                                
+                                                }
                                             }
                                         ]
                                     }
@@ -42,22 +43,22 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Customer Rate Class",
                                                 "value": "rate_class_id",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer Type",
                                                 "value": "customer_type_id",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Nature",
-                                                "value": "customer_nature_id",
-                                                "width": "33%"
-                                            }                                            
+                                                "width": "50%"
+                                            }
                                         ]
                                     }
                                 ]

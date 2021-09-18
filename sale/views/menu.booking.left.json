@@ -118,8 +118,8 @@
                   "description": "", 
                   "icon": "add",
                   "context": {
-                    "entity": "identity\\Partner",
-                    "view": "form.customer",
+                    "entity": "sale\\customer\\Customer",
+                    "view": "form.create",
                     "purpose": "create",
                     "domain": ["relationship", "=", "customer"]
                   }
@@ -130,8 +130,8 @@
                   "value": "All customers",
                   "description": "", 
                   "context": {
-                    "entity": "identity\\Partner",
-                    "view": "list.customer",
+                    "entity": "sale\\customer\\Customer",
+                    "view": "list.default",
                     "domain": ["relationship", "=", "customer"]
                   }
                 },
