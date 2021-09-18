@@ -1,15 +1,30 @@
 {
-	"name": "Plan de paiement",
-	"plural": "Plans de paiement",
+	"name": "Plan de Paiement",
+	"plural": "Plans de Paiement",
 	"description": "",
 	"model": {
-        "name":{"label":"Nom du payeur", "help": "Le client auquel le paiement se rapporte."},
-        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe de taux qui s'applique au plan de paiement."}
+		"name": {
+			"label": "Nom du payeur",
+			"description": "Le client auquel le paiement se rapporte.",
+			"help": ""
+		},
+		"rate_class_id": {
+			"label": "Classe tarifaire",
+			"description": "La classe de taux qui s'applique au plan de paiement.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Plan de Paiement",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Plans de Paiement",
+			"description": "Cette vue est destinée à afficher la liste des plans de Paiement.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

@@ -1,20 +1,57 @@
 {
-	"name": "Classe de remise",
-	"plural": "Classes de remise",
+	"name": "Classe de Remise",
+	"plural": "Classes de Remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la classe de remise."},
-        "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
-        "rate_min":{"label":"Taux min", "help": "Remise minimale garantie, le cas échéant."},
-        "rate_max":{"label":"Taux max", "help": "Remise maximale applicable, le cas échéant."},
-        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique à cette classe de remise."},
-        "discount_lists_ids":{"label":"Liste de remise", "help": "La liste de remises à laquelle appartient la remise."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom de la classe de remise.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Contexte dans lequel la remise est destinée à être utilisée.",
+			"help": ""
+		},
+		"rate_min": {
+			"label": "Taux min",
+			"description": "Remise minimale garantie, le cas échéant.",
+			"help": ""
+		},
+		"rate_max": {
+			"label": "Taux max",
+			"description": "Remise maximale applicable, le cas échéant.",
+			"help": ""
+		},
+		"rate_class_id": {
+			"label": "Classe tarifaire",
+			"description": "La classe tarifaire qui s'applique à cette classe de remise.",
+			"help": ""
+		},
+		"discount_lists_ids": {
+			"label": "Liste de remise",
+			"description": "La liste de remises à laquelle appartient la remise.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.discount_class": {"label": "Détails"},
-		"section.discount_lists": {"label": "Listes"}
+		"form.default": {
+			"name": "Classe de Remise",
+			"description": "",
+			"layout": {
+				"section.discount_class": {
+					"label": "Détails"
+				},
+				"section.discount_lists": {
+					"label": "Listes"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Classes de Remise",
+			"description": "Cette vue est destinée à afficher la liste des classes de Remise.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

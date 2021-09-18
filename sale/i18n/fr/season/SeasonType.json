@@ -1,0 +1,30 @@
+{
+    "name": "Type de Saison",
+    "plural": "Types de Saison",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Code abrégé du type.",
+            "help": ""
+        },
+        "description": {
+            "label": "Déscription",
+            "description": "Explication sur quand utiliser le type et ses spécificités.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Type de Saison",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Types de Saison",
+            "description": "Cette vue est destinée à afficher la liste des types de saison.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

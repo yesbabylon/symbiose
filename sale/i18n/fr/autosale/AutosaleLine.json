@@ -3,17 +3,50 @@
 	"plural": "Lignes de catégories de vente automatique",
 	"description": "",
 	"model": {
-		"description":{"label":"Description", "help": "Raison de la vente automatique."},
-        "qty":{"label":"Quantité", "help": "Quantité de produits vendus automatiquement."},
-        "product_id":{"label":"Produit", "help": "Le produit visé par la ligne."},
-        "autosale_list_id":{"label":"Liste de vente automatique", "help": "La liste à laquelle appartient la ligne."},
-        "conditions_ids":{"label":"Conditions", "help": "Les conditions qui s'appliquent à l'auto-vente."}
+		"description": {
+			"label": "Description",
+			"description": "Raison de la vente automatique.",
+			"help": ""
+		},
+		"qty": {
+			"label": "Quantité",
+			"description": "Quantité de produits vendus automatiquement.",
+			"help": ""
+		},
+		"product_id": {
+			"label": "Produit",
+			"description": "Le produit visé par la ligne.",
+			"help": ""
+		},
+		"autosale_list_id": {
+			"label": "Liste de vente automatique",
+			"description": "La liste à laquelle appartient la ligne.",
+			"help": ""
+		},
+		"conditions_ids": {
+			"label": "Conditions",
+			"description": "Les conditions qui s'appliquent à l'auto-vente.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.autosale_line_section": {"label": "Détails"},
-		"section.conditions_section": {"label": "Conditions"}
+		"form.default": {
+			"name": "Ligne de catégorie de vente automatique",
+			"description": "",
+			"layout": {
+				"section.autosale_line_section": {
+					"label": "Détails"
+				},
+				"section.conditions_section": {
+					"label": "Conditions"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Lignes de catégorie de vente automatique",
+			"description": "Cette vue est destinée à afficher les lignes de vente automatique.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

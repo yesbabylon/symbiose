@@ -3,18 +3,55 @@
 	"plural": "Produits",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Mnémo pour identifier le produit (doublons autorisés)."},
-        "sku":{"label":"Sku", "help": "Code unique  pour référence interne (Stock Keeping Unit)."},
-        "ean":{"label":"EAN", "help": "Code IAN/EAN pour la génération de codes-barres."},
-        "description":{"label":"Description", "help": "Description de la variante (spécificités)."},
-        "product_model_id":{"label":"Modèle du produit", "help": "Produit Modèle de cette variante."},
-        "prices_ids":{"label":"Prix", "help": "Les prix qui sont liés à ce produit."}
+		"name": {
+			"label": "Identification",
+			"description": "Mnémo pour identifier le produit (doublons autorisés).",
+			"help": ""
+		},
+		"sku": {
+			"label": "Sku",
+			"description": "Code unique  pour référence interne (Stock Keeping Unit).",
+			"help": ""
+		},
+		"ean": {
+			"label": "EAN",
+			"description": "Code IAN/EAN pour la génération de codes-barres.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Description de la variante (spécificités).",
+			"help": ""
+		},
+		"product_model_id": {
+			"label": "Modèle du produit",
+			"description": "Produit Modèle de cette variante.",
+			"help": ""
+		},
+		"prices_ids": {
+			"label": "Prix",
+			"description": "Les prix qui sont liés à ce produit.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.products_Section": {"label": "Détails"},
-		"section.prices_section": {"label": "Prix"}
+		"form.default": {
+			"name": "Produit",
+			"description": "Un produit est une variante d'un modèle de produit. Il y a toujours au moins un produit pour un modèle de produit donné.",
+			"layout": {
+				"section.products_Section": {
+					"label": "Détails"
+				},
+				"section.prices_section": {
+					"label": "Prix"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Produits",
+			"description": "Cette vue est destinée à afficher la liste des produits.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

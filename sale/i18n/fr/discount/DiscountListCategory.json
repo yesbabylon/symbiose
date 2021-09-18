@@ -1,17 +1,42 @@
 {
-	"name": "Catégorie de liste de remise",
-	"plural": "catégories de liste de remise",
+	"name": "Catégorie de liste de Remise",
+	"plural": "Catégories de liste de Remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom court de la catégorie."},
-        "description":{"label":"Description", "help": "Critères d'aplication pour la catégorie."},
-        "discount_lists_ids":{"label":"Liste de remise", "help": "Les listes de remises affectées à la catégorie."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom court de la catégorie.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Critères d'aplication pour la catégorie.",
+			"help": ""
+		},
+		"discount_lists_ids": {
+			"label": "Liste de remise",
+			"description": "Les listes de remises affectées à la catégorie.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.discount_category": {"label": "Détails"},
-		"section.discount_lists": {"label": "Remises"}
+		"form.default": {
+			"name": "Catégorie de liste de Remise",
+			"description": "Les listes de remises peuvent être organisées par catégories.",
+			"layout": {
+				"section.discount_category": {
+					"label": "Détails"
+				},
+				"section.discount_lists": {
+					"label": "Remises"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Catégories de liste de Remise",
+			"description": "Cette vue est destinée à afficher la liste des catégories de remise.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

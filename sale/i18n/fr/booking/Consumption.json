@@ -3,21 +3,72 @@
 	"plural": "Consommations",
 	"description": "Une consommation est une prestation de service qui peut être programmée et qui est liée à une réservation.",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la personne."},
-        "description":{"label":"Description", "help": "Note supplémentaire sur la consommation, le cas échéant."},
-        "booking_id":{"label":"Réservation", "help": "La réservation à laquelle se rapporte la consommation."},
-        "booking_line_id":{"label":"Ligne de réservation", "help": "La ligne de réservation à laquelle se rapporte la consommation."},
-        "date":{"label":"Date", "help": "Date à laquelle la prestation de service est planifiée."},
-        "schedule":{"label":"Programme", "help": "Moment de la journée auquel la prestation de service est planifiée."},
-        "type":{"label":"Type", "help": "La raison pour laquelle l'unité est réservée.", "selection": {"book": "consommation d'une réservation", "ooo": "hors service"}},
-        "product_id":{"label":"Produit", "help": "Le produit auquel appartient cet attribut."},
-        "rental_unit_id":{"label":"Unité de location", "help": "L'unité locative à laquelle la personne est affectée."},
-        "disclaimed":{"label":"Démenti", "help": "La livraison est prévue par le client qui y a expressément renoncé."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom de la personne.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Note supplémentaire sur la consommation, le cas échéant.",
+			"help": ""
+		},
+		"booking_id": {
+			"label": "Réservation",
+			"description": "La réservation à laquelle se rapporte la consommation.",
+			"help": ""
+		},
+		"booking_line_id": {
+			"label": "Ligne de réservation",
+			"description": "La ligne de réservation à laquelle se rapporte la consommation.",
+			"help": ""
+		},
+		"date": {
+			"label": "Date",
+			"description": "Date à laquelle la prestation de service est planifiée.",
+			"help": ""
+		},
+		"schedule": {
+			"label": "Programme",
+			"description": "Moment de la journée auquel la prestation de service est planifiée.",
+			"help": ""
+		},
+		"type": {
+			"label": "Type",
+			"description": "La raison pour laquelle l'unité est réservée.",
+			"selection": {
+				"book": "consommation d'une réservation",
+				"ooo": "hors service"
+			},
+			"help": ""
+		},
+		"product_id": {
+			"label": "Produit",
+			"description": "Le produit auquel appartient cet attribut.",
+			"help": ""
+		},
+		"rental_unit_id": {
+			"label": "Unité de location",
+			"description": "L'unité locative à laquelle la personne est affectée.",
+			"help": ""
+		},
+		"disclaimed": {
+			"label": "Démenti",
+			"description": "La livraison est prévue par le client qui y a expressément renoncé.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Consommation",
+			"description": "Une Consommation est une prestation de service qui peut être programmée et qui est liée à une réservation.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Consommation",
+			"description": "Cette vue est destinée à afficher la liste des consommations.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

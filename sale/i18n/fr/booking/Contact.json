@@ -3,13 +3,32 @@
 	"plural": "Contacts",
 	"description": "Les contacts de réservation sont des personnes impliquées dans l'organisation d'une réservation.",
 	"model": {
-        "booking_id":{"label":"Réservation", "help": "La réservation à laquelle le contact se rapporte."},
-        "type":{"label":"Type", "help": "Le rôle du contact dans la réservation.", "selection": {"booking": "réservation", "invoice": "facturation", "contract": "contrat", "sojourn": "séjour"}}
+		"booking_id": {
+			"label": "Réservation",
+			"help": "La réservation à laquelle le contact se rapporte."
+		},
+		"type": {
+			"label": "Type",
+			"help": "Le rôle du contact dans la réservation.",
+			"selection": {
+				"booking": "réservation",
+				"invoice": "facturation",
+				"contract": "contrat",
+				"sojourn": "séjour"
+			}
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Contact",
+			"description": "Les contacts de réservation sont des personnes impliquées dans l'organisation d'une réservation.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Contacts",
+			"description": "Cette vue est destinée à afficher la liste des contacts.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

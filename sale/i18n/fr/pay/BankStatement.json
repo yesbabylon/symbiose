@@ -1,18 +1,47 @@
 {
-	"name": "Relevé bancaire",
-	"plural": "Relevés bancaire",
+	"name": "Relevé Bancaire",
+	"plural": "Relevés Bancaire",
 	"description": "",
 	"model": {
-        "name":{"label":"Nom", "help": "Nom du payeur."},
-        "reference_name":{"label":"Nom de référence", "help": "Référence de la déclaration."},
-        "date":{"label":"Date de réception du relevé", "help": "Date de réception du relevé."},
-        "statement_lines_ids":{"label":"Ligne de déclaration", "help": "Les lignes qui sont affectées à l'instruction."}
+		"name": {
+			"label": "Nom",
+			"description": "Nom du payeur.",
+			"help": ""
+		},
+		"reference_name": {
+			"label": "Nom de référence",
+			"description": "Référence de la déclaration.",
+			"help": ""
+		},
+		"date": {
+			"label": "Date de réception du relevé",
+			"description": "Date de réception du relevé.",
+			"help": ""
+		},
+		"statement_lines_ids": {
+			"label": "Ligne de déclaration",
+			"description": "Les lignes qui sont affectées à l'instruction.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.bank_statement": {"label": "Détails"},
-		"section.statment_lines_section": {"label": "Lignes de déclaration"}
+		"form.default": {
+			"name": "Relevé Bancaire",
+			"description": "",
+			"layout": {
+				"section.bank_statement": {
+					"label": "Détails"
+				},
+				"section.statment_lines_section": {
+					"label": "Lignes de déclaration"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Relevés Bancaire",
+			"description": "Cette vue est destinée à afficher la liste des relevés Bancaire.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

@@ -1,22 +1,65 @@
 {
-	"name": "Ligne de relevé bancaire",
-	"plural": "Lignes de relevé bancaire",
-	"description": "",
-	"model": {
-                "bank_statement_id":{"label":"Relevé bancaire", "help": "Le relevé bancaire auquel la ligne se rapporte."},
-                "communication":{"label":"Communication", "help": "Message du payeur."},
-                "date":{"label":"Date", "help": "Date à laquelle la déclaration a été émise."},
-                "reference":{"label":"Référence", "help": "Référence de la banque."},
-                "customer_id":{"label":"Client", "help": "Le client auquel le paiement se rapporte, s'il est connu."},
-                "amount":{"label":"Montant", "help": "Référence de la banque."},
-                "account_iban":{"label":"Compte IBAN", "help": "IBAN à l'origine du paiement."},
-                "account_holder":{"label":"Titulaire de compte", "help": "Nom de la personne à l'origine du paiement."},
-                "is_reconciled":{"label":"Est réconcilié", "help": "Indicateur pour marquer la ligne comme rapprochée d'un paiement."}
-	},
-	"view": {
-		
-	},
-	"error": {
-		
-	}
+    "name": "Ligne de Relevé Bancaire",
+    "plural": "Lignes de Relevé Bancaire",
+    "description": "",
+    "model": {
+        "bank_statement_id": {
+            "label": "Relevé bancaire",
+            "description": "Le relevé bancaire auquel la ligne se rapporte.",
+            "help": ""
+        },
+        "communication": {
+            "label": "Communication",
+            "description": "Message du payeur.",
+            "help": ""
+        },
+        "date": {
+            "label": "Date",
+            "description": "Date à laquelle la déclaration a été émise.",
+            "help": ""
+        },
+        "reference": {
+            "label": "Référence",
+            "description": "Référence de la banque.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client auquel le paiement se rapporte, s'il est connu.",
+            "help": ""
+        },
+        "amount": {
+            "label": "Montant",
+            "description": "Référence de la banque.",
+            "help": ""
+        },
+        "account_iban": {
+            "label": "Compte IBAN",
+            "description": "IBAN à l'origine du paiement.",
+            "help": ""
+        },
+        "account_holder": {
+            "label": "Titulaire de compte",
+            "description": "Nom de la personne à l'origine du paiement.",
+            "help": ""
+        },
+        "is_reconciled": {
+            "label": "Est réconcilié",
+            "description": "Indicateur pour marquer la ligne comme rapprochée d'un paiement.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de Relevé Bancaire",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Lignes de Relevé Bancaire",
+            "description": "Cette vue est destinée à afficher la liste des ligne de relevé bancaire.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }
