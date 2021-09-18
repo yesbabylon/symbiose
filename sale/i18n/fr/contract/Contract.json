@@ -3,17 +3,54 @@
 	"plural": "Contrats",
 	"description": "Les contrats sont des accords formels concernant la livraison de produits ou de services conclus entre deux parties.",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom abrégé du contrat."},
-        "description":{"label":"Description", "help": "Brève description de la raison du contrat (c'est-à-dire l'objet de l'accord)."},
-        "status":{"label":"Statut", "help": "Status of the contract.", "selection": {"pending": "en attente", "sent": "expédié", "approved": "approuvé", "rejected": "rejeté"}},
-        "date":{"label":"Date", "help": "Date à laquelle le contrat a été officiellement publié."},
-        "valid_until":{"label":"Valable jusque", "help": "Date après laquelle le contrat expire s'il n'a pas été approuvé."},
-        "customer_id":{"label":"Client", "help": "Le client auquel se rapporte le contrat."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom abrégé du contrat.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Brève description de la raison du contrat (c'est-à-dire l'objet de l'accord).",
+			"help": ""
+		},
+		"status": {
+			"label": "Statut",
+			"description": "Status of the contract.",
+			"selection": {
+				"pending": "en attente",
+				"sent": "expédié",
+				"approved": "approuvé",
+				"rejected": "rejeté"
+			},
+			"help": ""
+		},
+		"date": {
+			"label": "Date",
+			"description": "Date à laquelle le contrat a été officiellement publié.",
+			"help": ""
+		},
+		"valid_until": {
+			"label": "Valable jusque",
+			"description": "Date après laquelle le contrat expire s'il n'a pas été approuvé.",
+			"help": ""
+		},
+		"customer_id": {
+			"label": "Client",
+			"description": "Le client auquel se rapporte le contrat.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Contrat",
+			"description": "Les contrats sont des accords formels concernant la livraison de produits ou de services conclus entre deux parties.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Liste des Contrats",
+			"description": "Cette vue est destinée à afficher la liste des contrats.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

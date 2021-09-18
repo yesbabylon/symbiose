@@ -1,31 +1,118 @@
 {
-	"name": "Réservation",
-	"plural": "Réservations",
-	"description": "",
-	"model": {
-		"name":{"label":"Référence", "help": "Utilisateur qui a créé l'entrée."},
-        "creator":{"label":"Créateur", "help": "La personne qui a effectué cette réservation."},
-        "description":{"label":"Description", "help": "Raison de la réservation."},
-        "customer_id":{"label":"Client", "help": "Le client auquel se rapporte la réservation."},
-        "center_id":{"label":"Centre", "help": "Le centre auquel se rapporte la réservation."},
-        "price_total":{"label":"Prix total", "help": "Prix ​​total (tva incl.) de la réservation."},
-        "contacts_ids":{"label":"Contacts", "help": "Liste des contacts liés à la réservation, le cas échéant."},
-        "has_contract":{"label":"A un contrat", "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."},
-        "contracts_ids":{"label":"Contrats", "help": "Liste des contacts liés à la réservation, le cas échéant."},
-        "type_id":{"label":"Type", "help": "Type d'organisation."},
-        "status":{"label":"Statut", "help": "Statut de la réservation.", "selection": {"quote": "cotation", "option": "option", "validated": "validé", "checkedin": "en cours", "checkedout": "terminé", "due_balance": "solde dû", "credit_balance": "solde créditeur", "balanced": "soldée"}},
-        "date_from":{"label":"Du", "help": "Premier jour du séjour."},
-        "date_to":{"label":"Au", "help": "Dernier jour du séjour."},
-        "has_payer_organisation":{"label":"Payeur distinct", "help": "Indicateur pour savoir si la facture doit être envoyée à une autre identité."},
-        "payer_organisation_id":{"label":"Organisme payeur", "help": "Le partenaire auquel les factures doivent être envoyées."}
-	},
-	"view": {
-		"section.booking_info": {"label": "Détails"},
-		"section.booking_contacts": {"label": "Contacts"},
-		"section.booking_contracts": {"label": "Contrats"},
-        "section.booking_products": {"label": "Produits"}
-	},
-	"error": {
-		
-	}
+    "name": "Réservation",
+    "plural": "Réservations",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Référence",
+            "description": "Utilisateur qui a créé l'entrée.",
+            "help": ""
+        },
+        "creator": {
+            "label": "Créateur",
+            "description": "La personne qui a effectué cette réservation.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Raison de la réservation.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client auquel se rapporte la réservation.",
+            "help": ""
+        },
+        "center_id": {
+            "label": "Centre",
+            "description": "Le centre auquel se rapporte la réservation.",
+            "help": ""
+        },
+        "price_total": {
+            "label": "Prix total",
+            "description": "Prix ​​total (tva incl.) de la réservation.",
+            "help": ""
+        },
+        "contacts_ids": {
+            "label": "Contacts",
+            "description": "Liste des contacts liés à la réservation, le cas échéant.",
+            "help": ""
+        },
+        "has_contract": {
+            "label": "A un contrat",
+            "description": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour.",
+            "help": ""
+        },
+        "contracts_ids": {
+            "label": "Contrats",
+            "description": "Liste des contacts liés à la réservation, le cas échéant.",
+            "help": ""
+        },
+        "type_id": {
+            "label": "Type",
+            "description": "Type d'organisation.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut de la réservation.",
+            "selection": {
+                "quote": "cotation",
+                "option": "option",
+                "validated": "validé",
+                "checkedin": "en cours",
+                "checkedout": "terminé",
+                "due_balance": "solde dû",
+                "credit_balance": "solde créditeur",
+                "balanced": "soldée"
+            },
+            "help": ""
+        },
+        "date_from": {
+            "label": "Du",
+            "description": "Premier jour du séjour.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Dernier jour du séjour.",
+            "help": ""
+        },
+        "has_payer_organisation": {
+            "label": "Payeur distinct",
+            "description": "Indicateur pour savoir si la facture doit être envoyée à une autre identité.",
+            "help": ""
+        },
+        "payer_organisation_id": {
+            "label": "Organisme payeur",
+            "description": "Le partenaire auquel les factures doivent être envoyées.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Réservation",
+            "description": "",
+            "layout": {
+                "section.booking_info": {
+                    "label": "Détails"
+                },
+                "section.booking_contacts": {
+                    "label": "Contacts"
+                },
+                "section.booking_contracts": {
+                    "label": "Contrats"
+                },
+                "section.booking_products": {
+                    "label": "Produits"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste de Réservation",
+            "description": "Cette vue est destinée à afficher la liste des réservations.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

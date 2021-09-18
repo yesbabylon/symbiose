@@ -3,13 +3,28 @@
 	"plural": "Catégories tarifaire",
 	"description": "",
 	"model": {
-		"name":{"label":"Identifiant", "help": "Mnémo d'identification de la catégorie (T1-7)."},
-        "description":{"label":"Description", "help": "Brève description de la catégorie tarifaire."}
+		"name": {
+			"label": "Identifiant",
+			"description": "Mnémo d'identification de la catégorie (T1-7).",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Brève description de la catégorie tarifaire.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Catégorie tarifaire",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Liste de catégories tarifaire",
+			"description": "Cette vue est destinée à afficher la liste des catégories tarifaire.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

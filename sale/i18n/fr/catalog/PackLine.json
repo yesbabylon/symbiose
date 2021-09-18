@@ -3,16 +3,43 @@
 	"plural": "Lignes de conditionnement",
 	"description": "",
 	"model": {
-		"parent_product_id":{"label":"Pack", "help": "Le produit auquel appartient cet attribut."},
-        "child_product_id":{"label":"Produit lié", "help": "Le produit auquel appartient cet attribut."},
-        "has_own_qty":{"label":"A sa propre quantité", "help": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?"},
-        "own_qty":{"label":"Quantité", "help": "Quantité auto-assignée pour ce produit."},
-        "share":{"label":"Part", "help": "Pourcentage de part de la ligne pour l'analyse."}
+		"parent_product_id": {
+			"label": "Pack",
+			"description": "Le produit auquel appartient cet attribut.",
+			"help": ""
+		},
+		"child_product_id": {
+			"label": "Produit lié",
+			"description": "Le produit auquel appartient cet attribut.",
+			"help": ""
+		},
+		"has_own_qty": {
+			"label": "A sa propre quantité",
+			"description": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?",
+			"help": ""
+		},
+		"own_qty": {
+			"label": "Quantité",
+			"description": "Quantité auto-assignée pour ce produit.",
+			"help": ""
+		},
+		"share": {
+			"label": "Part",
+			"description": "Pourcentage de part de la ligne pour l'analyse.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Ligne de conditionnement",
+			"description": "Une Ligne Pack correspond à la relation entre un produit « pack » (bundle) et un autre produit qu'il comprend.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Ligne de conditionnement",
+			"description": "Cette vue est destinée à afficher la liste des lignes de conditionnement.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

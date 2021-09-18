@@ -1,0 +1,47 @@
+{
+    "name": "Customer",
+    "description": "Basic form for displaying a customer (Partner)",
+    "domain": ["relationship", "=", "customer"],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Identity of Customer",
+                                                "value": "partner_identity_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
+                                                "width": "100%"
+                                            }                                            
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

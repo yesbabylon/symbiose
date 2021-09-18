@@ -3,34 +3,155 @@
     "plural": "Modèles du produit",
     "description": "",
     "model": {
-        "name":{"label":"Nom du produit", "help": "Nom du modèle de produit (utilisé pour toutes les variantes)."},
-        "family_id":{"label":"Famille", "help": "Famille de produits à laquelle appartient le produit actuel."},
-        "selling_accounting_rule_id":{"label":"Règle de vente", "help": "Règle comptable a utiliser pour les ventes."},
-        "buying_accounting_rule_id":{"label":"Règle d'achat", "help": "Règle comptable a utiliser pour les achats."},
-        "can_buy":{"label":"Peut être acheté", "help": "Ce produit peut-il être acheté ?"},
-        "can_sell":{"label":"Peut être vendu", "help": "Ce produit peut-il être vendu ?"},
-        "cost":{"label":"Coût", "help": "Coût d'achat."},
-        "is_pack":{"label":"Pack", "help": "S'agit-il d'un pack ?"},
-        "has_own_price":{"label":"A son propre prix", "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)."},
-        "type":{"label":"Type", "help": "Type de produit.", "selection": {"consumable": "consommable", "service": "service"}},
-        "consumable_type":{"label":"Type de consommable", "help": "Liste des types de produit consommable.", "selection": {"simple": "simple", "storable": "stockable"}},
-        "service_type":{"label":"Type de service", "help": "Précision du type de 'service'.", "selection": {"simple": "simple", "schedulable": "planifiable"}},
-        "schedule_type":{"label":"Mode de planification", "help": "Liste des types d'horaire.", "selection": {"time": "temps", "timerange": "intervalle de temps"}},
-        "schedule_default_value":{"label":"Planification par défaut", "help": "Chaîne polyvalente représentant la valeur par défaut du planning selon son type (heure, plage horaire)."},
-        "schedule_offset":{"label":"Décalage horaire", "help": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour."},
-        "tracking_type":{"label":"Type de suivi", "help": "Manière dont le produit est identifé pour les suivis.", "selection": {"none": "rien", "batch": "grouper", "sku": "sku", "upc": "upc"}},
-        "description_delivery":{"label":"Description de livraison", "help": "Description des bons de livraison."},
-        "description_receipt":{"label":"Description de réception", "help": "Description pour les bons de réception."},
-        "groups_ids":{"label":"Groupes", "help": "Liste des groupes auxquels appartient le modèle."},
-        "categories_ids":{"label":"Catégories", "help": "Liste des catégories assignés au modèle."},
-        "products_ids":{"label":"Produits (variantes)", "help": "Liste des variantes de ce modèle."}
+        "name": {
+            "label": "Nom du produit",
+            "description": "Nom du modèle de produit (utilisé pour toutes les variantes).",
+            "help": ""
+        },
+        "family_id": {
+            "label": "Famille",
+            "description": "Famille de produits à laquelle appartient le produit actuel.",
+            "help": ""
+        },
+        "selling_accounting_rule_id": {
+            "label": "Règle de vente",
+            "description": "Règle comptable a utiliser pour les ventes.",
+            "help": ""
+        },
+        "buying_accounting_rule_id": {
+            "label": "Règle d'achat",
+            "description": "Règle comptable a utiliser pour les achats.",
+            "help": ""
+        },
+        "can_buy": {
+            "label": "Peut être acheté",
+            "description": "Ce produit peut-il être acheté ?",
+            "help": ""
+        },
+        "can_sell": {
+            "label": "Peut être vendu",
+            "description": "Ce produit peut-il être vendu ?",
+            "help": ""
+        },
+        "cost": {
+            "label": "Coût",
+            "description": "Coût d'achat.",
+            "help": ""
+        },
+        "is_pack": {
+            "label": "Pack",
+            "description": "S'agit-il d'un pack ?",
+            "help": ""
+        },
+        "has_own_price": {
+            "label": "A son propre prix",
+            "description": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé).",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type de produit.",
+            "selection": {
+                "consumable": "consommable",
+                "service": "service"
+            },
+            "help": ""
+        },
+        "consumable_type": {
+            "label": "Type de consommable",
+            "description": "Liste des types de produit consommable.",
+            "selection": {
+                "simple": "simple",
+                "storable": "stockable"
+            },
+            "help": ""
+        },
+        "service_type": {
+            "label": "Type de service",
+            "description": "Précision du type de 'service'.",
+            "selection": {
+                "simple": "simple",
+                "schedulable": "planifiable"
+            },
+            "help": ""
+        },
+        "schedule_type": {
+            "label": "Mode de planification",
+            "description": "Liste des types d'horaire.",
+            "selection": {
+                "time": "temps",
+                "timerange": "intervalle de temps"
+            },
+            "help": ""
+        },
+        "schedule_default_value": {
+            "label": "Planification par défaut",
+            "description": "Chaîne polyvalente représentant la valeur par défaut du planning selon son type (heure, plage horaire).",
+            "help": ""
+        },
+        "schedule_offset": {
+            "label": "Décalage horaire",
+            "description": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour.",
+            "help": ""
+        },
+        "tracking_type": {
+            "label": "Type de suivi",
+            "description": "Manière dont le produit est identifé pour les suivis.",
+            "selection": {
+                "none": "rien",
+                "batch": "grouper",
+                "sku": "sku",
+                "upc": "upc"
+            },
+            "help": ""
+        },
+        "description_delivery": {
+            "label": "Description de livraison",
+            "description": "Description des bons de livraison.",
+            "help": ""
+        },
+        "description_receipt": {
+            "label": "Description de réception",
+            "description": "Description pour les bons de réception.",
+            "help": ""
+        },
+        "groups_ids": {
+            "label": "Groupes",
+            "description": "Liste des groupes auxquels appartient le modèle.",
+            "help": ""
+        },
+        "categories_ids": {
+            "label": "Catégories",
+            "description": "Liste des catégories assignés au modèle.",
+            "help": ""
+        },
+        "products_ids": {
+            "label": "Produits (variantes)",
+            "description": "Liste des variantes de ce modèle.",
+            "help": ""
+        }
     },
     "view": {
-        "section.product_model": {"label": "Détails"},
-        "section.groups_section": {"label": "Groupes"},
-        "section.categories_section": {"label": "Catégories"}
+        "form.default": {
+            "name": "Modèle du produit",
+            "description": "Les modèles de produits servent de dénominateur commun pour les variantes de produits (appelées Produits).",
+            "layout": {
+                "section.product_model": {
+                    "label": "Détails"
+                },
+                "section.groups_section": {
+                    "label": "Groupes"
+                },
+                "section.categories_section": {
+                    "label": "Catégories"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Modèles du produit",
+            "description": "Cette vue est destinée à afficher la liste des modèle du produit.",
+            "layout": {}
+        }
     },
-    "error": {
-        
-    }
+    "error": {}
 }

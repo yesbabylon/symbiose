@@ -3,17 +3,53 @@
 	"plural": "Remises",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la remise."},
-        "description":{"label":"Description", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
-        "type":{"label":"Type", "help": "Le type de contact, en fonction de ses responsabilités.", "selection": {"amount": "montant", "percent": "pourcentage", "freebie": "gratuité"}},
-        "value":{"label":"Valeur", "help": "Valeur de remise."},
-        "discount_list_id":{"label":"Liste de remise", "help": "La liste de remises à laquelle appartient la remise."},
-        "conditions_ids":{"label":"Conditions", "help": "Les conditions qui s'appliquent à la remise."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom de la remise.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Contexte dans lequel la remise est destinée à être utilisée.",
+			"help": ""
+		},
+		"type": {
+			"label": "Type",
+			"description": "Le type de contact, en fonction de ses responsabilités.",
+			"selection": {
+				"amount": "montant",
+				"percent": "pourcentage",
+				"freebie": "gratuité"
+			},
+			"help": ""
+		},
+		"value": {
+			"label": "Valeur",
+			"description": "Valeur de remise.",
+			"help": ""
+		},
+		"discount_list_id": {
+			"label": "Liste de remise",
+			"description": "La liste de remises à laquelle appartient la remise.",
+			"help": ""
+		},
+		"conditions_ids": {
+			"label": "Conditions",
+			"description": "Les conditions qui s'appliquent à la remise.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Remise",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Remises",
+			"description": "Cette vue est destinée à afficher la liste des remises.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }
