@@ -31,7 +31,8 @@ class Customer extends \identity\Partner {
             'customer_nature_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
-                'description'       => 'Nature of the customer (map with rate classes).',
+                'description'       => 'Nature of the customer (map with rate classes).',            
+                'onchange'          => 'sale\customer\Customer::onchangeCustomerNatureId'
             ],
 
             // if partner is a customer, it can be assigned a customer type
@@ -56,6 +57,18 @@ class Customer extends \identity\Partner {
             ]
 
         ];
+    }
+
+    public static function onchangeCustomerNatureId($om, $oids, $lang) {
+        $customers = $om->read(__CLASS__, $oids, ['customer_nature_id.rate_class_id', 'customer_nature_id.customer_type_id']);
+        if($customers > 0 && count($customers)) {
+            foreach($customers as $cid => $customer) {
+                $customer_type_id = $customer['customer_nature_id.customer_type_id'];
+                $rate_class_id = $customer['customer_nature_id.rate_class_id'];
+                $om->write(__CLASS__, $oids, ['rate_class_id' => $rate_class_id, 'customer_type_id' => $customer_type_id]);
+            }
+        }
+        
     }
 
     /**

@@ -27,7 +27,7 @@
 	"view": {
 		"form.default": {
 			"name": "Réservation",
-			"description": "",
+			"description": "Formulaire d'édition d'une réservation",
 			"layout": {
                 "section.booking_section": {
                     "label": "Infos générales"
@@ -42,7 +42,7 @@
 		},
 		"list.default": {
 			"name": "Réservations",
-			"description": "",
+			"description": "# Listing standard des réservations.\n  **Listing standard** des réservations.  \nListing standard des réservations. \nListing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. ",
 			"layout": {}
 		}
 	},

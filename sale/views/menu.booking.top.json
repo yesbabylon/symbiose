@@ -19,8 +19,8 @@
               "route": "/bookings/edit"
             },            
             {
-              "id": "item.customers",
-              "value": "Customers",
+              "id": "item.planning",
+              "value": "Planning",
               "description": "",
               "icon": "person_outline",
               "type": "entry",

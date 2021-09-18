@@ -36,8 +36,8 @@
             "description": "Type de client (en relation avec les classes tarifaires)."
         },
         "customer_nature_id": {
-            "label": "Type de client",
-            "description": "Type de client (en relation avec les classes tarifaires)."
+            "label": "Nature du client",
+            "description": "La nature (origine) permet d'attribuer une catégorie tarifaire."
         }        
     },
     "view": {
