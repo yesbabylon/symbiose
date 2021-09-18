@@ -1,15 +1,30 @@
 {
-	"name": "Catégorie de liste de prix",
-	"plural": "Catégories de liste de prix",
+	"name": "Catégorie de Liste de Prix",
+	"plural": "Catégories de Liste de Prix",
 	"description": "La liste des prix du produit.",
 	"model": {
-		"name":{"label":"Identification", "help": "Etiquette courte pour faciliter l'identification de la liste."},
-        "price_list_ids":{"label":"Liste de prix", "help": "Les listes qui sont liées à cette catégorie, le cas échéant."}
+		"name": {
+			"label": "Identification",
+			"description": "Etiquette courte pour faciliter l'identification de la liste.",
+			"help": ""
+		},
+		"price_list_ids": {
+			"label": "Liste de prix",
+			"description": "Les listes qui sont liées à cette catégorie, le cas échéant.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Catégorie de Liste de Prix",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "CatégorieS de Liste de Prix",
+			"description": "Cette vue est destinée à afficher la liste des catégories de prix.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

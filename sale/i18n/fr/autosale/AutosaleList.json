@@ -3,17 +3,50 @@
 	"plural": "Listes de catégories de vente automatique",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Contexte dans lequel la remise est destinée à être utilisée."},
-        "date_from":{"label":"Dater de", "help": "Date (incluse) de début de la saison."},
-        "date_to":{"label":"Dater à", "help": "Date (exclue) à laquelle la saison se termine."},
-        "autosale_lines_ids":{"label":"Lignes de vente automatique", "help": "Les lignes qui s'appliquent à la liste."},
-        "autosale_category_id":{"label":"Catégorie de vente automatique", "help": "La catégorie de vente automatique à laquelle appartient la liste."}
+		"name": {
+			"label": "Identification",
+			"description": "Contexte dans lequel la remise est destinée à être utilisée.",
+			"help": ""
+		},
+		"date_from": {
+			"label": "Dater de",
+			"description": "Date (incluse) de début de la saison.",
+			"help": ""
+		},
+		"date_to": {
+			"label": "Dater à",
+			"description": "Date (exclue) à laquelle la saison se termine.",
+			"help": ""
+		},
+		"autosale_lines_ids": {
+			"label": "Lignes de vente automatique",
+			"description": "Les lignes qui s'appliquent à la liste.",
+			"help": ""
+		},
+		"autosale_category_id": {
+			"label": "Catégorie de vente automatique",
+			"description": "La catégorie de vente automatique à laquelle appartient la liste.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.autosale_list_section": {"label": "Détails"},
-		"section.autosale_lines_section": {"label": "Lignes de vente automatique"}
+		"form.default": {
+			"name": "Liste de catégorie de vente automatique",
+			"description": "",
+			"layout": {
+				"section.autosale_list_section": {
+					"label": "Détails"
+				},
+				"section.autosale_lines_section": {
+					"label": "Lignes de vente automatique"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Listes de catégorie de vente automatique",
+			"description": "Cette vue est destinée à afficher la liste des ventes automatiques.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

@@ -3,14 +3,33 @@
 	"plural": "Valeurs d'option",
 	"description": "",
 	"model": {
-		"value":{"label":"Valeur", "help": "La valeur possible pour l'option associée."},
-        "option_id":{"label":"Option", "help": "Option de produit à laquelle cette valeur se rapporte."},
-        "description":{"label":"Description", "help": "Brève description de la valeur."}
+		"value": {
+			"label": "Valeur",
+			"description": "La valeur possible pour l'option associée.",
+			"help": ""
+		},
+		"option_id": {
+			"label": "Option",
+			"description": "Option de produit à laquelle cette valeur se rapporte.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Brève description de la valeur.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Valeur d'option",
+			"description": "Les objets OptionValue sont les valeurs possibles auxquelles une option, pour un attribut de produit donné, peut être définie sur.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Valeurs d'option",
+			"description": "Cette vue est destinée à afficher la liste des valeurs d'option.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

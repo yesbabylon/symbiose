@@ -1,6 +1,6 @@
 {
-    "name": "Seasons",
-    "description": "This view is intended for displaying the list of seasons.",
+    "name": "Périodes de la saison",
+    "description": "This view is intended for displaying the list of season period.",
     "layout": {
         "items": [
             {

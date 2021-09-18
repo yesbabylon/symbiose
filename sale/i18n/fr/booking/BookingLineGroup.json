@@ -1,25 +1,84 @@
 {
-	"name": "Groupe de lignes de réservation",
-	"plural": "Groupes de lignes de réservation",
-	"description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
-	"model": {
-		"name":{"label":"Nom du groupe", "help": "Mnemo pour le groupe."},
-        "order":{"label":"Ordre", "help": "Ordre du groupe dans la liste."},
-        "has_pack":{"label":"A pack", "help": "Le groupe se rapporte-t-il à une meute ?"},
-        "pack_id":{"label":"Pack", "help": "Emballage (produit) auquel le groupe se rapporte, le cas échéant."},
-        "is_locked":{"label":"Est verrouillé", "help": "Les modifications sont-elles désactivées pour le groupe ?"},
-        "date_from":{"label":"Date de", "help": "Heure d'arrivée."},
-        "date_to":{"label":"Date à", "help": "Heure de départ."},
-        "sojourn_type":{"label":"Type de séjour", "help": "Le genre de séjour que le groupe est sur.", "selection": {"GA": "GA", "GG": "GG"}},
-        "nb_pers":{"label":"Nombre de personne", "help": "Le nombre de personnes qui composent ce groupe."},
-        "rate_class_id":{"label":"Classe tarifaire", "help": "La classe tarifaire qui s'applique au groupe."},
-        "booking_lines_ids":{"label":"Ligne de réservation", "help": "Lignes de réservation qui appartiennent au groupe."},
-        "booking_id":{"label":"Réservation", "help": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."}
-	},
-	"view": {
-		
-	},
-	"error": {
-		
-	}
+    "name": "Groupe de lignes de réservation",
+    "plural": "Groupes de lignes de réservation",
+    "description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
+    "model": {
+        "name": {
+            "label": "Nom du groupe",
+            "description": "Mnemo pour le groupe.",
+            "help": ""
+        },
+        "order": {
+            "label": "Ordre",
+            "description": "Ordre du groupe dans la liste.",
+            "help": ""
+        },
+        "has_pack": {
+            "label": "A pack",
+            "description": "Le groupe se rapporte-t-il à une meute ?",
+            "help": ""
+        },
+        "pack_id": {
+            "label": "Pack",
+            "description": "Emballage (produit) auquel le groupe se rapporte, le cas échéant.",
+            "help": ""
+        },
+        "is_locked": {
+            "label": "Est verrouillé",
+            "description": "Les modifications sont-elles désactivées pour le groupe ?",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Date de",
+            "description": "Heure d'arrivée.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Date à",
+            "description": "Heure de départ.",
+            "help": ""
+        },
+        "sojourn_type": {
+            "label": "Type de séjour",
+            "description": "Le genre de séjour que le groupe est sur.",
+            "selection": {
+                "GA": "GA",
+                "GG": "GG"
+            },
+            "help": ""
+        },
+        "nb_pers": {
+            "label": "Nombre de personne",
+            "description": "Le nombre de personnes qui composent ce groupe.",
+            "help": ""
+        },
+        "rate_class_id": {
+            "label": "Classe tarifaire",
+            "description": "La classe tarifaire qui s'applique au groupe.",
+            "help": ""
+        },
+        "booking_lines_ids": {
+            "label": "Ligne de réservation",
+            "description": "Lignes de réservation qui appartiennent au groupe.",
+            "help": ""
+        },
+        "booking_id": {
+            "label": "Réservation",
+            "description": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Groupe de lignes de réservation",
+            "description": "Les groupes de lignes de réservation sont liés à une réservation et décrivent un ou plusieurs séjours et leurs consommations associées.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Groupes de lignes de réservation",
+            "description": "Cette vue est destinée à afficher la liste des groupes de lignes de réservation.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

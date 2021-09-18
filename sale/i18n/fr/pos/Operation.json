@@ -3,20 +3,69 @@
 	"plural": "Operations",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom", "help": "Mnémo court pour identifier le bureau."},
-        "type":{"label":"Type", "help": "Le genre d'opération.", "selection": {"sale": "vendre", "move": "mouvement"}},
-        "user_id":{"label":"Utilisateur", "help": "Utilisateur à l'origine de l'opération."},
-        "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartiennent les opérations."},
-        "total":{"label":"Montant total", "help": "Montant total de la vente."},
-        "amount_paid":{"label":"Montant payé", "help": "Montant d'argent payé."},
-        "amount_returned":{"label":"Montant retourné", "help": "Montant d'argent retourné."},
-        "payments_ids":{"label":"Paiements", "help": "Les paiements qui font partie de l'opération."}
+		"name": {
+			"label": "Nom",
+			"description": "Mnémo court pour identifier le bureau.",
+			"help": ""
+		},
+		"type": {
+			"label": "Type",
+			"description": "Le genre d'opération.",
+			"selection": {
+				"sale": "vendre",
+				"move": "mouvement"
+			},
+			"help": ""
+		},
+		"user_id": {
+			"label": "Utilisateur",
+			"description": "Utilisateur à l'origine de l'opération.",
+			"help": ""
+		},
+		"cashdesk_id": {
+			"label": "Caisse",
+			"description": "Caisse à laquelle appartiennent les opérations.",
+			"help": ""
+		},
+		"total": {
+			"label": "Montant total",
+			"description": "Montant total de la vente.",
+			"help": ""
+		},
+		"amount_paid": {
+			"label": "Montant payé",
+			"description": "Montant d'argent payé.",
+			"help": ""
+		},
+		"amount_returned": {
+			"label": "Montant retourné",
+			"description": "Montant d'argent retourné.",
+			"help": ""
+		},
+		"payments_ids": {
+			"label": "Paiements",
+			"description": "Les paiements qui font partie de l'opération.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.operation_section": {"label": "Détails"},
-		"section.payments_section": {"label": "Paiements"}
+		"form.default": {
+			"name": "Operation",
+			"description": "",
+			"layout": {
+				"section.operation_section": {
+					"label": "Détails"
+				},
+				"section.payments_section": {
+					"label": "Paiements"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Operations",
+			"description": "Cette vue est destinée à afficher la liste des operations.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

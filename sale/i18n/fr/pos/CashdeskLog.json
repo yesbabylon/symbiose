@@ -1,17 +1,40 @@
 {
-	"name": "Journal de caisse",
-	"plural": "Journaux de caisse",
+	"name": "Journal de Caisse",
+	"plural": "Journaux de Caisse",
 	"description": "",
 	"model": {
-		"date":{"label":"Date d'achat", "help": "Date d'achat du produit."},
-        "amount":{"label":"Montant", "help": "Montant restant à la fin de la journée."},
-        "user_id":{"label":"Utilisateur", "help": "Utilisateur qui a effectué l'entrée de journal."},
-        "cashdesk_id":{"label":"Caisse", "help": "Caisse à laquelle appartient l'entrée du journal."}
+		"date": {
+			"label": "Date d'achat",
+			"description": "Date d'achat du produit.",
+			"help": ""
+		},
+		"amount": {
+			"label": "Montant",
+			"description": "Montant restant à la fin de la journée.",
+			"help": ""
+		},
+		"user_id": {
+			"label": "Utilisateur",
+			"description": "Utilisateur qui a effectué l'entrée de journal.",
+			"help": ""
+		},
+		"cashdesk_id": {
+			"label": "Caisse",
+			"description": "Caisse à laquelle appartient l'entrée du journal.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Journal de Caisse",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Journaux de Caisse",
+			"description": "Cette vue est destinée à afficher la liste des journaux de Caisse.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

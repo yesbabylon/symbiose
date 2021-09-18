@@ -3,16 +3,43 @@
 	"plural": "Conditions",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la condition."},
-        "operand":{"label":"Opérande", "help": "L'opérande de la condition."},
-        "operator":{"label":"Opérateur", "help": "L'opérateur à appliquer."},
-        "value":{"label":"Valeur", "help": "Valeur de la condition."},
-        "discount_id":{"label":"Remise", "help": "La liste de remises à laquelle appartient la remise."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom de la condition.",
+			"help": ""
+		},
+		"operand": {
+			"label": "Opérande",
+			"description": "L'opérande de la condition.",
+			"help": ""
+		},
+		"operator": {
+			"label": "Opérateur",
+			"description": "L'opérateur à appliquer.",
+			"help": ""
+		},
+		"value": {
+			"label": "Valeur",
+			"description": "Valeur de la condition.",
+			"help": ""
+		},
+		"discount_id": {
+			"label": "Remise",
+			"description": "La liste de remises à laquelle appartient la remise.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Condition",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Liste des Conditions",
+			"description": "Cette vue est destinée à afficher la liste des conditions.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }
