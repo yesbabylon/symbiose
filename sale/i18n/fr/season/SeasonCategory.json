@@ -1,15 +1,30 @@
 {
-	"name": "Catégorie de saison",
-	"plural": "Catégories de saison",
+	"name": "Catégorie de Saison",
+	"plural": "Catégories de Saison",
 	"description": "Les catégories de saison de l'année.",
 	"model": {
-		"name":{"label":"Identification", "help": "Etiquette courte pour faciliter l'identification de la liste."},
-        "seasons_ids":{"label":"Saisons", "help": "Les saisons qui sont liées à cette catégorie, le cas échéant."}
+		"name": {
+			"label": "Identification",
+			"description": "Etiquette courte pour faciliter l'identification de la liste.",
+			"help": ""
+		},
+		"seasons_ids": {
+			"label": "Saisons",
+			"description": "Les saisons qui sont liées à cette catégorie, le cas échéant.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Catégorie de Saison",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Catégories de Saison",
+			"description": "Cette vue est destinée à afficher la liste des catégories de saison.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

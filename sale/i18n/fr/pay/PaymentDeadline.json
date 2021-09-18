@@ -1,19 +1,66 @@
 {
-	"name": "Date limite de paiement",
-	"plural": "Dates limite de paiement",
+	"name": "Date Limite de Paiement",
+	"plural": "Dates Limite de Paiement",
 	"description": "",
 	"model": {
-        "name":{"label":"Nom du payeur", "help": "Le client auquel le paiement se rapporte."},
-        "delay_from_event":{"label":"Retard de l'événement", "help": "Date de début de l'événement du compteur d'échéance.", "selection": {"booking": "réservation", "checkin": "enregistrement", "checkout": "vérifier"}},
-        "delay_count":{"label":"Compte de retard", "help": "Nombre de jours avant d'atteindre la date limite."},
-        "type":{"label":"Type de paiment", "help": "Les délais sont échelonnés sauf le dernier : facture définitive.", "selection": {"installment": "versement", "invoice": "facture d'achat"}},
-        "amount_share":{"label":"Montant part", "help": "Part du paiement sur le montant total dû."},
-        "payment_plan_id":{"label":"Plan de paiement", "help": "Le plan de paiement auquel s'applique la date limite."}
+		"name": {
+			"label": "Nom du payeur",
+			"description": "Le client auquel le paiement se rapporte.",
+			"help": ""
+		},
+		"delay_from_event": {
+			"label": "Retard de l'événement",
+			"description": "Date de début de l'événement du compteur d'échéance.",
+			"selection": {
+				"booking": "réservation",
+				"checkin": "enregistrement",
+				"checkout": "vérifier"
+			},
+			"help": ""
+		},
+		"delay_count": {
+			"label": "Compte de retard",
+			"description": "Nombre de jours avant d'atteindre la date limite.",
+			"help": ""
+		},
+		"type": {
+			"label": "Type de paiment",
+			"description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
+			"selection": {
+				"installment": "versement",
+				"invoice": "facture d'achat"
+			},
+			"help": ""
+		},
+		"amount_share": {
+			"label": "Montant part",
+			"description": "Part du paiement sur le montant total dû.",
+			"help": ""
+		},
+		"payment_plan_id": {
+			"label": "Plan de paiement",
+			"description": "Le plan de paiement auquel s'applique la date limite.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Date Limite de Paiement",
+			"description": "",
+			"layout": {
+				"section.payment_section": {
+					"label": "Détails"
+				},
+				"section.fundings_section": {
+					"label": "Financements"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Dates Limite de Paiement",
+			"description": "Cette vue est destinée à afficher la liste des Dates limite de paiement.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

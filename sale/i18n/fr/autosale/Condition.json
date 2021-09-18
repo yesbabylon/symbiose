@@ -3,16 +3,43 @@
 	"plural": "Conditions",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la condition."},
-        "operand":{"label":"Opérande", "help": "L'opérand de la condition."},
-        "operator":{"label":"Opérateur", "help": "L'opérateur qui a effectué cette condition."},
-        "value":{"label":"Valeur", "help": "Valeur de la condition."},
-        "autosale_line_id":{"label":"Ligne de vente automatique", "help": "La ligne de vente automatique à laquelle appartient la condition."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom de la condition.",
+			"help": ""
+		},
+		"operand": {
+			"label": "Opérande",
+			"description": "L'opérand de la condition.",
+			"help": ""
+		},
+		"operator": {
+			"label": "Opérateur",
+			"description": "L'opérateur qui a effectué cette condition.",
+			"help": ""
+		},
+		"value": {
+			"label": "Valeur",
+			"description": "Valeur de la condition.",
+			"help": ""
+		},
+		"autosale_line_id": {
+			"label": "Ligne de vente automatique",
+			"description": "La ligne de vente automatique à laquelle appartient la condition.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Condition",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Conditions",
+			"description": "Cette vue est destinée à afficher la liste des conditions.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

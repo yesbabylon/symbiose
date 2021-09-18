@@ -1,21 +1,60 @@
 {
-	"name": "Ligne de contrat",
-	"plural": "Lignes de contrats",
+	"name": "Ligne de Contrat",
+	"plural": "Lignes de Contrats",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom abrégé du contrat."},
-        "contract_id":{"label":"Contrat", "help": "Le contrat auquel la ligne se rapporte."},
-        "product_id":{"label":"Produit", "help": "Le produit (SKU) auquel la ligne se rapporte."},
-        "price":{"label":"Prix", "help": "Prix ​​du produit lié à la ligne."},
-        "vat_rate":{"label":"Taux de tva", "help": "Taux de TVA à appliquer."},
-        "qty":{"label":"Quantité", "help": "Quantité de produit."},
-        "free_qty":{"label":"Quantité gratuite", "help": "Quantité gratuite de produit."},
-        "discount":{"label":"Remise", "help": "Montant total de la remise à appliquer, le cas échéant."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom abrégé du contrat.",
+			"help": ""
+		},
+		"contract_id": {
+			"label": "Contrat",
+			"description": "Le contrat auquel la ligne se rapporte.",
+			"help": ""
+		},
+		"product_id": {
+			"label": "Produit",
+			"description": "Le produit (SKU) auquel la ligne se rapporte.",
+			"help": ""
+		},
+		"price": {
+			"label": "Prix",
+			"description": "Prix ​​du produit lié à la ligne.",
+			"help": ""
+		},
+		"vat_rate": {
+			"label": "Taux de tva",
+			"description": "Taux de TVA à appliquer.",
+			"help": ""
+		},
+		"qty": {
+			"label": "Quantité",
+			"description": "Quantité de produit.",
+			"help": ""
+		},
+		"free_qty": {
+			"label": "Quantité gratuite",
+			"description": "Quantité gratuite de produit.",
+			"help": ""
+		},
+		"discount": {
+			"label": "Remise",
+			"description": "Montant total de la remise à appliquer, le cas échéant.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Ligne de Contrat",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Lignes de contrat",
+			"description": "Cette vue est destinée à afficher la liste des lignes de contrat.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

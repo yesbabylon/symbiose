@@ -3,10 +3,23 @@
 	"plural": "Catégories de vente automatique",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom de la catégorie de vente automatique."}
+		"name":{
+			"label":"Identification", 
+			"description": "Nom de la catégorie de vente automatique.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Catégorie de vente automatique",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Catégories de vente automatique",
+			"description": "",
+			"layout": {}
+		}
 	},
 	"error": {
 		

@@ -3,14 +3,33 @@
 	"plural": "Options",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Nom unique de cette option."},
-        "family_id":{"label":"Famille", "help": "Famille de produits à laquelle appartient cette option."},
-        "description":{"label":"Description", "help": "Brève description de l'option."}
+		"name": {
+			"label": "Identification",
+			"description": "Nom unique de cette option.",
+			"help": ""
+		},
+		"family_id": {
+			"label": "Famille",
+			"description": "Famille de produits à laquelle appartient cette option.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Brève description de l'option.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Option",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Options",
+			"description": "Cette vue est destinée à afficher la liste des option.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

@@ -3,14 +3,30 @@
 	"plural": "Attributs de produit",
 	"description": "",
 	"model": {
-		"product_id":{"label":"Produit", "help": "Le produit auquel appartient cet attribut."},
-        "option_id":{"label":"Option", "help": "Option de produit à laquelle cet attribut se rapporte."},
-        "option_value_id":{"label":"Valeur d'option", "help": "Valeur de cet attribut pour l'option sélectionnée."}
+		"product_id": {
+			"label": "Produit",
+			"help": "Le produit auquel appartient cet attribut."
+		},
+		"option_id": {
+			"label": "Option",
+			"help": "Option de produit à laquelle cet attribut se rapporte."
+		},
+		"option_value_id": {
+			"label": "Valeur d'option",
+			"help": "Valeur de cet attribut pour l'option sélectionnée."
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Attribut de produit",
+			"description": "Un Attribut Produit correspond à la valeur d'un attribut disponible pour un Produit d'une Famille donnée.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Attributs de produit",
+			"description": "Cette vue est destinée à afficher la liste d'attributs de produit.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

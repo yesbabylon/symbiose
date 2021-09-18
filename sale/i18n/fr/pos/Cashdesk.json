@@ -3,12 +3,23 @@
 	"plural": "Caisses",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom", "help": "Nom du caissier."}
+		"name": {
+			"label": "Nom",
+			"description": "Nom du caissier.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Caisse",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Caisses",
+			"description": "Cette vue est destinée à afficher la liste des caisses.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

@@ -1,20 +1,57 @@
 {
-	"name": "Liste de remises",
-	"plural": "Listes de remises",
+	"name": "Liste de Remise",
+	"plural": "Listes de Remise",
 	"description": "",
 	"model": {
-		"name":{"label":"Identification", "help": "Mémo court pour la liste (ex. remises 2025)."},
-        "valid_from":{"label":"Valide à partir du", "help": "Date à partir de laquelle la liste est valide."},
-        "valid_until":{"label":"Valide jusqu'au", "help": "Moment jusqu'à ce que la liste soit valide."},
-        "discounts_ids":{"label":"Remises", "help": "Les remises qui font partie de la liste."},
-        "discount_list_category_id":{"label":"Catégorie de liste de remise", "help": "La catégorie à laquelle appartient la liste."},
-        "discount_class_id":{"label":"Classe de remise", "help": "La classe de remise à laquelle appartient la liste."}
+		"name": {
+			"label": "Identification",
+			"description": "Mémo court pour la liste (ex. remises 2025).",
+			"help": ""
+		},
+		"valid_from": {
+			"label": "Valide à partir du",
+			"description": "Date à partir de laquelle la liste est valide.",
+			"help": ""
+		},
+		"valid_until": {
+			"label": "Valide jusqu'au",
+			"description": "Moment jusqu'à ce que la liste soit valide.",
+			"help": ""
+		},
+		"discounts_ids": {
+			"label": "Remises",
+			"description": "Les remises qui font partie de la liste.",
+			"help": ""
+		},
+		"discount_list_category_id": {
+			"label": "Catégorie de liste de remise",
+			"description": "La catégorie à laquelle appartient la liste.",
+			"help": ""
+		},
+		"discount_class_id": {
+			"label": "Classe de remise",
+			"description": "La classe de remise à laquelle appartient la liste.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.discounts_list": {"label": "Détails"},
-		"section.discounts_section": {"label": "Remises"}
+		"form.default": {
+			"name": "Liste de Remise",
+			"description": "",
+			"layout": {
+				"section.discounts_list": {
+					"label": "Détails"
+				},
+				"section.discounts_section": {
+					"label": "Remises"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Listes de Remise",
+			"description": "Cette vue est destinée à afficher la liste des remises.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

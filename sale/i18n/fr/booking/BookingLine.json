@@ -3,24 +3,90 @@
 	"plural": "Lignes de réservation",
 	"description": "Les lignes de réservation décrivent les produits et les quantités qui font partie d'une réservation.",
 	"model": {
-		"booking_line_group_id":{"label":"Groupe", "help": "Groupe duquel la ligne fait partie."},
-        "product_id":{"label":"Produit", "help": "Le produit (SKU) auquel la ligne se rapporte."},
-        "booking_id":{"label":"Réservation", "help": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."},
-        "price_id":{"label":"Prix", "help": "Le prix (récupéré par liste de prix) auquel la ligne se rapporte."},
-        "qty":{"label":"Quantité", "help": "Quantité d'articles de produit pour la ligne."},
-        "free_qty":{"label":"Gratuits", "help": "Quantité d'articles gratuits (offerts en cadeau)."},
-        "order":{"label":"Ordre", "help": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement."},
-        "payment_mode":{"label":"Mode de paiement", "help": "La façon dont la ligne est destinée à être payée.", "selection": {"invoice": "facture d'achat", "cash": "en espèces", "free": "gratuit"}},
-        "is_paid":{"label":"Payé", "help": "La ligne a-t-elle déjà été payée ?"},
-        "price_adapters_ids":{"label":"Adaptateurs de prix", "help": "Adaptateurs de prix qui s'appliquent à la ligne."},
-        "price":{"label":"Prix", "help": "Prix TTC de la ligne."},
-        "vat_rate":{"label":"Taux de tva", "help": "Taux de TVA qui s'applique à cette ligne."}
+		"booking_line_group_id": {
+			"label": "Groupe",
+			"description": "Groupe duquel la ligne fait partie.",
+			"help": ""
+		},
+		"product_id": {
+			"label": "Produit",
+			"description": "Le produit (SKU) auquel la ligne se rapporte.",
+			"help": ""
+		},
+		"booking_id": {
+			"label": "Réservation",
+			"description": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
+			"help": ""
+		},
+		"price_id": {
+			"label": "Prix",
+			"description": "Le prix (récupéré par liste de prix) auquel la ligne se rapporte.",
+			"help": ""
+		},
+		"qty": {
+			"label": "Quantité",
+			"description": "Quantité d'articles de produit pour la ligne.",
+			"help": ""
+		},
+		"free_qty": {
+			"label": "Gratuits",
+			"description": "Quantité d'articles gratuits (offerts en cadeau).",
+			"help": ""
+		},
+		"order": {
+			"label": "Ordre",
+			"description": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement.",
+			"help": ""
+		},
+		"payment_mode": {
+			"label": "Mode de paiement",
+			"description": "La façon dont la ligne est destinée à être payée.",
+			"selection": {
+				"invoice": "facture d'achat",
+				"cash": "en espèces",
+				"free": "gratuit"
+			},
+			"help": ""
+		},
+		"is_paid": {
+			"label": "Payé",
+			"description": "La ligne a-t-elle déjà été payée ?",
+			"help": ""
+		},
+		"price_adapters_ids": {
+			"label": "Adaptateurs de prix",
+			"description": "Adaptateurs de prix qui s'appliquent à la ligne.",
+			"help": ""
+		},
+		"price": {
+			"label": "Prix",
+			"description": "Prix TTC de la ligne.",
+			"help": ""
+		},
+		"vat_rate": {
+			"label": "Taux de tva",
+			"description": "Taux de TVA qui s'applique à cette ligne.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.booking_line": {"label": "Détails"},
-		"section.price_adapter": {"label": "Adaptateur de prix"}
+		"form.default": {
+			"name": "Ligne de réservation",
+			"description": "Les lignes de réservation décrivent les produits et les quantités qui font partie d'une réservation.",
+			"layout": {
+				"section.booking_line": {
+					"label": "Détails"
+				},
+				"section.price_adapter": {
+					"label": "Adaptateur de prix"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Lignes de réservation",
+			"description": "Cette vue est destinée à afficher la liste des lignes de réservation.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

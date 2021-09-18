@@ -3,16 +3,45 @@
 	"plural": "Familles",
 	"description": "",
 	"model": {
-		"name":{"label":"Nom du produit", "help": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque."},
-        "children_ids":{"label":"Enfants", "help": "Les enfants de cette famille."},
-        "parent_id":{"label":"Parent", "help": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant."},
-        "path":{"label":"Chemin", "help": "Chemin complet de la famille avec les ancêtres."}
+		"name": {
+			"label": "Nom du produit",
+			"description": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque.",
+			"help": ""
+		},
+		"children_ids": {
+			"label": "Enfants",
+			"description": "Les enfants de cette famille.",
+			"help": ""
+		},
+		"parent_id": {
+			"label": "Parent",
+			"description": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant.",
+			"help": ""
+		},
+		"path": {
+			"label": "Chemin",
+			"description": "Chemin complet de la famille avec les ancêtres.",
+			"help": ""
+		}
 	},
 	"view": {
-		"section.family_section": {"label": "Détails"},
-		"section.children_section": {"label": "Enfants"}
+		"form.default": {
+			"name": "Famille",
+			"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque.",
+			"layout": {
+				"section.family_section": {
+					"label": "Détails"
+				},
+				"section.children_section": {
+					"label": "Enfants"
+				}
+			}
+		},
+		"list.default": {
+			"name": "Familles",
+			"description": "Cette vue est destinée à afficher la liste des familles.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }

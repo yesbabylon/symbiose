@@ -3,12 +3,23 @@
 	"plural": "Financements",
 	"description": "",
 	"model": {
-        "booking_id":{"label":"Réservation", "help": "La réservation sur laquelle porte le contrat."}
+		"booking_id": {
+			"label": "Réservation",
+			"description": "La réservation sur laquelle porte le contrat.",
+			"help": ""
+		}
 	},
 	"view": {
-		
+		"form.default": {
+			"name": "Financement",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Financements",
+			"description": "Cette vue est destinée à afficher la liste des financement.",
+			"layout": {}
+		}
 	},
-	"error": {
-		
-	}
+	"error": {}
 }
