@@ -14,6 +14,16 @@
                 "label": "Booking",
                 "value": "booking_id",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
             }
         ]
     }

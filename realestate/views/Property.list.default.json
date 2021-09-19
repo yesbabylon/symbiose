@@ -7,6 +7,26 @@
                 "type": "field",
                 "value": "name",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "email",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "address_street",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "address_city",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "registration_number",
+                "width": "20%"
             }
         ]
     }

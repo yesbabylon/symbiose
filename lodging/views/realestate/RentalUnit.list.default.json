@@ -10,14 +10,22 @@
             },
             {
                 "type": "field",
-                "label": "Center",
-                "value": "center_id",
+                "value": "code",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Center Category",
-                "value": "center_category_id",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "category",
                 "width": "20%"
             }
         ]

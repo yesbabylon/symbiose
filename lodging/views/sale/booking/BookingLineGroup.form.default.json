@@ -16,7 +16,20 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "pack_id",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_locked",
                                                 "width": "50%"
                                             },
                                             {
@@ -26,7 +39,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_locked",
+                                                "value": "pack_id",
                                                 "width": "50%"
                                             },
                                             {
@@ -37,11 +50,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "nb_pers",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "rate_class_id",
                                                 "width": "50%"
                                             }
                                         ]
@@ -64,9 +72,19 @@
                                                 "type": "field",
                                                 "value": "booking_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rate_class_id",
+                                                "width": "50%"
                                             }
                                         ]
-                                    }  
+                                    }
                                 ]
                             }
                         ]
@@ -123,6 +141,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "accomodations_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Consumptions",
+                        "id": "section.consumptions_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "consumptions_ids",
                                                 "width": "100%"
                                             }
                                         ]

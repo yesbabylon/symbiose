@@ -54,12 +54,18 @@
                 },
                 "section.bookingLineGroups_section": {
                     "label": "Groupes de Lignes de Réservation"
-                }
+                },
+				"section.contacts_section": {
+					"label": "Contacts"
+				},
+				"section.contracts_section": {
+					"label": "Contracts"
+				}                
             }
         },
         "list.default": {
             "name": "Réservations",
-            "description": "# Listing standard des réservations.\n  **Listing standard** des réservations.  \nListing standard des réservations. \nListing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. ",
+            "description": "",
             "exports": {
                 "export.print.contract": {
                     "label": "Imprimer le contrat"
