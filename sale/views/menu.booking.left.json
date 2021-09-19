@@ -28,7 +28,9 @@
                   "description": "", 
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "list.default"
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "desc"
                   }
                 },
                 {

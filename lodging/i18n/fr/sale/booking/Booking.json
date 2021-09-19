@@ -1,34 +1,51 @@
 {
-	"name": "Réservation",
-	"plural": "Réservations",
-	"description": "",
-	"model": {
-		"customer_id": {
-			"label": "Client",
-			"description": "Le client auquel se rapporte la réservation.",
-			"help": ""
-		},
-		"center_id": {
-			"label": "Centre",
-			"description": "Le centre auquel se rapporte la réservation.",
-			"help": ""
-		},
+    "name": "Réservation",
+    "plural": "Réservations",
+    "description": "",
+    "model": {
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client auquel se rapporte la réservation.",
+            "help": ""
+        },
+        "center_id": {
+            "label": "Centre",
+            "description": "Le centre auquel se rapporte la réservation.",
+            "help": ""
+        },
         "booking_lines_ids": {
-			"label": "Lignes de Réservation",
-			"description": "Consommations détaillées de la réservation.",
-			"help": ""
-		},
-		"booking_lines_groups_ids": {
-			"label": "Groupes de Lignes de Réservation",
-			"description": "Consommations groupées de la réservation.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Réservation",
-			"description": "Formulaire d'édition d'une réservation",
-			"layout": {
+            "label": "Lignes de Réservation",
+            "description": "Consommations détaillées de la réservation.",
+            "help": ""
+        },
+        "booking_lines_groups_ids": {
+            "label": "Groupes de Lignes de Réservation",
+            "description": "Consommations groupées de la réservation.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Réservation",
+            "description": "Formulaire d'édition d'une réservation",
+            "actions": {
+                "action.option": {
+                    "label": "Placer une option"
+                },
+                "action.validate": {
+                    "label": "Confirmer"
+                },
+                "action.checkin": {
+                    "label": "Check in"
+                },
+                "action.checkout": {
+                    "label": "Checkout client"
+                },
+                "action.invoice": {
+                    "label": "Facturer le solde"
+                }                
+            },
+            "layout": {
                 "section.booking_section": {
                     "label": "Infos générales"
                 },
@@ -39,12 +56,19 @@
                     "label": "Groupes de Lignes de Réservation"
                 }
             }
-		},
-		"list.default": {
-			"name": "Réservations",
-			"description": "# Listing standard des réservations.\n  **Listing standard** des réservations.  \nListing standard des réservations. \nListing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. ",
-			"layout": {}
-		}
-	},
-	"error": {}
+        },
+        "list.default": {
+            "name": "Réservations",
+            "description": "# Listing standard des réservations.\n  **Listing standard** des réservations.  \nListing standard des réservations. \nListing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations.\n Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. Listing standard des réservations. ",
+            "exports": {
+                "export.print.contract": {
+                    "label": "Imprimer le contrat"
+                }
+            },
+            "layout": {
+
+            }
+        }
+    },
+    "error": {}
 }
