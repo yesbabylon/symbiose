@@ -13,7 +13,14 @@
 		"form.default": {
 			"name": "Financement",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.funding": {
+					"label": "Info Générales"
+				},
+				"section.payments": {
+					"label": "Paiements"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Financements",

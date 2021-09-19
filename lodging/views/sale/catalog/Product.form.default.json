@@ -29,6 +29,16 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "ean",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_locked",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Product Model",
                                                 "value": "product_model_id",
                                                 "width": "50%"
@@ -36,7 +46,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"                                                
+                                                "width": "100%"
                                             }
                                         ]
                                     }

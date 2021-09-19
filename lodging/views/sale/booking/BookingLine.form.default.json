@@ -31,7 +31,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "rental_unit_id",
+                                                "value": "has_own_qty",
                                                 "width": "50%"
                                             },
                                             {
@@ -43,6 +43,38 @@
                                                 "type": "field",
                                                 "value": "qty_accounting_method",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Price",
+                                                "value": "price_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rental_unit_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_mode",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -62,6 +94,66 @@
                                             {
                                                 "type": "field",
                                                 "value": "price_adapters_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Consumptions",
+                        "id": "section.consumptions_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "consumptions_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Auto Discounts",
+                        "id": "section.autoDiscounts_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "auto_discounts_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Manual Discounts",
+                        "id": "section.manualDiscounts_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "manual_discounts_ids",
                                                 "width": "100%"
                                             }
                                         ]
