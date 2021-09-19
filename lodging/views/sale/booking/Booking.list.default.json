@@ -1,32 +1,60 @@
 {
-    "name": "Bookings",
-    "description": "",
+    "name": "Booking list",
+    "description": "This view is intended for displaying the list of bookings.",
+    "exports": [
+        {
+            "id": "export.print.contract",
+            "label": "Print contract",
+            "icon": "print",            
+            "description": "Print contract related to the booking.",
+            "controller": "model_export-print",
+            "view": "print.default",
+            "visible": ["status", "=", "quote"]
+        }
+    ],
     "layout": {
         "items": [
             {
                 "type": "field",
+                "value": "name",
+                "label": "reference",
+                "width": "5%"
+            },
+            {
+                "type": "field",
                 "label": "Customer",
                 "value": "customer_id",
-                "width": "20%"
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "From",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "To",
+                "value": "date_to",
+                "width": "15%"
             },
             {
                 "type": "field",
                 "label": "Center",
                 "value": "center_id",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
-                "label": "Booking Lines",
-                "value": "booking_lines_ids",
-                "width": "20%"
+                "label": "Type",
+                "value": "type_id",
+                "width": "15%"
             },
             {
                 "type": "field",
-                "label": "Booking Line Groups",
-                "value": "booking_lines_groups_ids",
-                "width": "20%"
-            }    
+                "value": "status",
+                "width": "15%"
+            }
         ]
     }
 }

@@ -97,6 +97,9 @@
                 "section.booking_info": {
                     "label": "Détails"
                 },
+                "section.booking_description": {
+                    "label": "Descriptions"
+                },
                 "section.booking_contacts": {
                     "label": "Contacts"
                 },
