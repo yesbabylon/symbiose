@@ -80,6 +80,9 @@
                 },
                 "section.accomodation_section": {
                     "label": "Accomodations"
+                },
+				"section.consumptions_section": {
+                    "label": "Consommations"
                 }
             }
 		},

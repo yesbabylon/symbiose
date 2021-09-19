@@ -190,7 +190,23 @@
         "form.default": {
             "name": "Modèle de produit",
             "description": "Les modèles de produits servent de dénominateur commun pour les variantes de produits (appelées Produits).",
-            "layout": {}
+            "layout": {
+                "section.product_model": {
+                    "label": "Info Géneral"
+                },
+                "section.products_section": {
+                    "label": "Produits"
+                },
+                "section.groups_section": {
+                    "label": "Groupes"
+                },
+                "section.categories_section": {
+                    "label": "Catégories"
+                },
+                "section.pack_lines": {
+                    "label": "Ligne d'emballage"
+                }
+            }
         },
         "list.default": {
             "name": "Modèle de produit",

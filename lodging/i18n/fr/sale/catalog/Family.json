@@ -13,7 +13,17 @@
 		"form.default": {
 			"name": "Famille",
 			"description": "Une famille de produits est un groupe de produits fabriqués sous la même marque. Les familles soutiennent la hiérarchie.",
-			"layout": {}
+			"layout": {
+				"section.family_Section": {
+					"label": "Info Géneral"
+				},
+				"section.centers_section": {
+					"label": "Centres"
+				},
+				"section.children_section": {
+					"label": "Enfants"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Famille",

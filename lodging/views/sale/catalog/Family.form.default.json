@@ -6,6 +6,8 @@
             {
                 "sections": [
                     {
+                        "label": "General info",
+                        "id": "section.family_Section",
                         "rows": [
                             {
                                 "columns": [
@@ -14,9 +16,57 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Centers",
-                                                "value": "centers_ids",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Parent",
+                                                "value": "parent_id",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Centers",
+                                "id": "section.centers_section",
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "width": "100%",
+                                                "items": [
+                                                    {
+                                                        "type": "field",
+                                                        "value": "centers_ids",
+                                                        "width": "100%"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Children",
+                                "id": "section.children_section",
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "width": "100%",
+                                                "items": [
+                                                    {
+                                                        "type": "field",
+                                                        "value": "children_ids",
+                                                        "width": "100%"
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -26,6 +76,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

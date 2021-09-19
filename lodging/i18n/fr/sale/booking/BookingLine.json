@@ -13,7 +13,7 @@
 			"description": "Méthode de comptabilité quantitative (à partir de product_model).",
 			"help": ""
 		},
-        "booking_line_group_id": {
+		"booking_line_group_id": {
 			"label": "Identifiant de groupe de ligne de réservation",
 			"description": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur réservation).",
 			"help": ""
@@ -28,7 +28,7 @@
 			"description": "Le produit (SKU) auquel la ligne se rapporte.",
 			"help": ""
 		},
-        "rental_unit_id": {
+		"rental_unit_id": {
 			"label": "Unité de Location",
 			"description": "L'unité locative à laquelle la ligne est affectée.",
 			"help": ""
@@ -44,13 +44,22 @@
 			"name": "Ligne de Réservation",
 			"description": "Les lignes de réservation prolongées les produits et les quantités qui font partie d'une.",
 			"layout": {
-                "section.bookingLine_section": {
-                    "label": "Infos générales"
-                },
-                "section.priceAdapters_section": {
-                    "label": "Adaptateurs de prix"
-                }
-            }
+				"section.bookingLine_section": {
+					"label": "Infos générales"
+				},
+				"section.priceAdapters_section": {
+					"label": "Adaptateurs de prix"
+				},
+				"section.consumptions_section": {
+					"label": "Consommations"
+				},
+				"section.autoDiscounts_section": {
+					"label": "Remise Automatique"
+				},
+				"section.manualDiscounts_section": {
+					"label": "Remise Manuelle"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Lignes de Réservation",

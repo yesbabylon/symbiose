@@ -13,7 +13,17 @@
         "form.default": {
             "name": "Catégorie de saison",
             "description": "",
-            "layout": {}
+            "layout": {
+                "section.seasonCategory_Section": {
+                    "label": "Info Géneral"
+                },
+                "section.centers_section": {
+                    "label": "Centres"
+                },
+                "section.seasons_section": {
+                    "label": "Saisons"
+                }
+            }
         },
         "list.default": {
             "name": "Catégories de saison",

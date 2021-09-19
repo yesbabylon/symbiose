@@ -6,6 +6,8 @@
             {
                 "sections": [
                     {
+                        "label": "General Info",
+                        "id": "section.funding",
                         "rows": [
                             {
                                 "columns": [
@@ -25,6 +27,58 @@
                                                 "label": "Booking",
                                                 "value": "booking_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "due_amount",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "due_date",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Payment Deadline",
+                                                "value": "payment_deadline_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Invoice",
+                                                "value": "invoice_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Payments",
+                                "id": "section.payments",
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "width": "100%",
+                                                "items": [
+                                                    {
+                                                        "type": "field",
+                                                        "value": "payments_ids",
+                                                        "width": "100%"
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }

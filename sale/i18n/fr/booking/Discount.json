@@ -13,7 +13,14 @@
 		"form.default": {
 			"name": "Remise",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.discounts": {
+					"label": "Détails"
+				},
+				"section.conditons": {
+					"label": "Conditions"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Remises",

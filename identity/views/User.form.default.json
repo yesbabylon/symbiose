@@ -14,11 +14,31 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "login",
+                                                "value": "name",
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "login",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "password",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "firstname",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "lastname",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
