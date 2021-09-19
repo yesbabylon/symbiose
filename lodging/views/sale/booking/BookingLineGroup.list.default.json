@@ -5,6 +5,11 @@
         "items": [
             {
                 "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "label": "Booking",
                 "value": "booking_id",
                 "width": "20%"
@@ -24,12 +29,7 @@
                 "type": "field",
                 "value": "date_to",
                 "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "sojourn_type",
-                "width": "20%"
-            }      
+            }
         ]
     }
 }

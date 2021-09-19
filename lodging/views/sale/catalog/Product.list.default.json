@@ -21,12 +21,7 @@
             },
             {
                 "type": "field",
-                "value": "description",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "is_pack",
+                "value": "ean",
                 "width": "10%"
             }        
         ]

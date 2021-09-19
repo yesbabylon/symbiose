@@ -1,7 +1,11 @@
 {
     "name": "Customer",
     "description": "Basic form for displaying a customer (Partner)",
-    "domain": ["relationship", "=", "customer"],
+    "domain": [
+        "relationship",
+        "=",
+        "customer"
+    ],
     "layout": {
         "groups": [
             {
@@ -17,7 +21,7 @@
                                                 "type": "field",
                                                 "label": "Name of Customer",
                                                 "value": "name",
-                                                "width": "50%",                                                
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true,
                                                     "readonly": true
@@ -27,10 +31,29 @@
                                                 "type": "field",
                                                 "label": "Identity of Customer",
                                                 "value": "partner_identity_id",
-                                                "width": "50%",
-                                                "widget": {
-
-                                                }
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Owner Identity",
+                                                "value": "owner_identity_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "relationship",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "partner_position",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partner Organisation",
+                                                "value": "partner_organisation_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -57,6 +80,17 @@
                                                 "type": "field",
                                                 "label": "Customer Type",
                                                 "value": "customer_type_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_external_ref",
                                                 "width": "50%"
                                             }
                                         ]

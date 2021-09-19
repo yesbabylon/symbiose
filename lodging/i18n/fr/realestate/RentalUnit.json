@@ -18,7 +18,20 @@
 		"form.default": {
 			"name": "Unités de location",
 			"description": "Une unité locative est une ressource qui peut être louée à un client.",
-			"layout": {}
+			"layout": {
+				"section.rental_units": {
+					"label": "Info Géneral"
+				},
+				"section.children_section": {
+					"label": "Enfants"
+				},
+				"section.consumption_section": {
+					"label": "Consommation"
+				},
+				"section.consumptionItems_section": {
+					"label": "Elements de Consommation"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Unités de location",

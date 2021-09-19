@@ -5,8 +5,7 @@
         "items": [
             {
                 "type": "field",
-                "label": "Customer",
-                "value": "customer_id",
+                "value": "creator",
                 "width": "20%"
             },
             {
@@ -17,16 +16,15 @@
             },
             {
                 "type": "field",
-                "label": "Booking Lines",
-                "value": "booking_lines_ids",
+                "label": "Customer",
+                "value": "customer_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Booking Line Groups",
-                "value": "booking_lines_groups_ids",
+                "value": "status",
                 "width": "20%"
-            }    
+            }
         ]
     }
 }

@@ -13,7 +13,7 @@
 			"description": "Le centre auquel se rapporte la réservation.",
 			"help": ""
 		},
-        "booking_lines_ids": {
+		"booking_lines_ids": {
 			"label": "Lignes de Réservation",
 			"description": "Consommations détaillées de la réservation.",
 			"help": ""
@@ -29,16 +29,22 @@
 			"name": "Réservation",
 			"description": "Formulaire d'édition d'une réservation",
 			"layout": {
-                "section.booking_section": {
-                    "label": "Infos générales"
-                },
-                "section.bookingLine_section": {
-                    "label": "Lignes de Réservation"
-                },
-                "section.bookingLineGroups_section": {
-                    "label": "Groupes de Lignes de Réservation"
-                }
-            }
+				"section.booking_section": {
+					"label": "Infos générales"
+				},
+				"section.bookingLine_section": {
+					"label": "Lignes de Réservation"
+				},
+				"section.bookingLineGroups_section": {
+					"label": "Groupes de Lignes de Réservation"
+				},
+				"section.contacts_section": {
+					"label": "Contacts"
+				},
+				"section.contracts_section": {
+					"label": "Contracts"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Réservations",

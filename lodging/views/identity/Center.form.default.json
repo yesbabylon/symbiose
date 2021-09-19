@@ -38,7 +38,7 @@
             {
                 "sections": [
                     {
-                        "label":"Details",
+                        "label": "Details",
                         "id": "section.details",
                         "rows": [
                             {
@@ -128,13 +128,12 @@
                                             }
                                         ]
                                     }
-
                                 ]
                             }
                         ]
                     },
                     {
-                        "label":"Settings",
+                        "label": "Settings",
                         "id": "section.settings",
                         "rows": [
                             {
@@ -174,7 +173,7 @@
                         ]
                     },
                     {
-                        "label":"Categories",
+                        "label": "Categories",
                         "id": "section.categories",
                         "rows": [
                             {
@@ -194,7 +193,7 @@
                         ]
                     },
                     {
-                        "label":"Rental units",
+                        "label": "Rental units",
                         "id": "section.rental_units",
                         "rows": [
                             {
@@ -214,7 +213,7 @@
                         ]
                     },
                     {
-                        "label":"Product families",
+                        "label": "Product families",
                         "id": "section.product_families",
                         "rows": [
                             {
@@ -234,7 +233,7 @@
                         ]
                     },
                     {
-                        "label":"Users",
+                        "label": "Users",
                         "id": "section.users",
                         "rows": [
                             {
@@ -255,6 +254,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }

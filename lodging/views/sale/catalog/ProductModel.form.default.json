@@ -171,6 +171,26 @@
                         ]
                     },
                     {
+                        "label": "Products",
+                        "id": "section.products_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "label": "Groups",
                         "id": "section.groups_section",
                         "rows": [
