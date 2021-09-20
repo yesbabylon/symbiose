@@ -27,19 +27,15 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "password",
-                                                "width": "50%"
+                                                "value": "language",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "firstname",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "lastname",
-                                                "width": "50%"
+                                                "value": "validated",
+                                                "width": "25%"
                                             }
+
                                         ]
                                     },
                                     {
@@ -50,16 +46,6 @@
                                                 "label": "Identity",
                                                 "value": "identity_id",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "language",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "validated",
-                                                "width": "50%"
                                             }
                                         ]
                                     }
