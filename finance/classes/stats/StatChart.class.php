@@ -31,8 +31,14 @@ class StatChart extends Model {
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The organisation the chart belongs to.",
                 'required'          => true
-            ]
+            ],
 
+            'stat_sections_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\stats\StatSection',
+                'foreign_field'     => 'stat_chart_id',
+                'description'       => "Sections that are related to this stat chart."
+            ]            
         ];
     }
 

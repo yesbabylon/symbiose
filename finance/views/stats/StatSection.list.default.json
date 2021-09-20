@@ -1,6 +1,6 @@
 {
-    "name": "Partners",
-    "description": "This view is intended for displaying basic listing of existing Partners.",
+    "name": "Accounting Charts List",
+    "description": "This view is intented for displaying the accounting charts.",
     "layout": {
         "items": [
             {
@@ -10,17 +10,17 @@
             },
             {
                 "type": "field",
-                "value": "relationship",
+                "value": "code",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "owner_identity_id",
+                "value": "label",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "partner_position",
+                "value": "stat_chart_id",
                 "width": "20%"
             }
         ]

@@ -1,0 +1,38 @@
+{
+    "name": "Accounting Charts List",
+    "description": "This view is intented for displaying the accounting charts.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "account_chart_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "analytic_section_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "nature",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            }
+        ]
+    }
+}

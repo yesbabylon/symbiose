@@ -19,7 +19,8 @@
             "selection": {
                 "B" : "Bilan",
                 "M" : "Gestion"
-            }
+            },
+            "help": ""
         },
         "account_chart_id": {
             "label": "Plan comptable",

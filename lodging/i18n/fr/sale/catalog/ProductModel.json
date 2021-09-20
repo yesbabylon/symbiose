@@ -45,7 +45,7 @@
         },
         "has_own_price": {
             "label": "A son propre prix",
-            "description": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)",
+            "description": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé).",
             "help": ""
         },
         "type": {

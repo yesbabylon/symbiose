@@ -42,15 +42,15 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             ],            
 
             'date_from' => [
-                'type'              => 'datetime',
-                'description'       => "Time of arrival.",
+                'type'              => 'date',
+                'description'       => "Day of arrival.",
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeDateFrom',
                 'default'           => time()
             ],
 
             'date_to' => [
-                'type'              => 'datetime',
-                'description'       => "Time of departure.",
+                'type'              => 'date',
+                'description'       => "Day of departure.",
                 'default'           => time(),
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeDateTo',                
             ],
