@@ -5,7 +5,7 @@
         {
             "id": "export.print.contract",
             "label": "Print contract",
-            "icon": "print",            
+            "icon": "print",
             "description": "Print contract related to the booking.",
             "controller": "model_export-print",
             "view": "print.default",

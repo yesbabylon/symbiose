@@ -4,23 +4,15 @@
         "items": [
             {
               "id": "item.bookings",
-              "value": "Bookings",
+              "label": "Bookings",
               "description": "",
               "icon": "menu_book",
               "type": "entry",
               "route": "/bookings"
             },
             {
-              "id": "item.booking.edit",
-              "value": "Edit Booking",
-              "description": "",
-              "icon": "menu_book",
-              "type": "entry",
-              "route": "/bookings/edit"
-            },            
-            {
               "id": "item.planning",
-              "value": "Planning",
+              "label": "Planning",
               "description": "",
               "icon": "person_outline",
               "type": "entry",

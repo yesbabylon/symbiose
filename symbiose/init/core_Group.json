@@ -6,91 +6,91 @@
             {
                 "id": 8,
                 "name": "sales.catalog.administrators",
-                "display_name": "Sales / Catalog / Administrators",
+                "display_name": "Sales \/ Catalog \/ Administrators",
                 "description": "Modification of products and addition of new products to the catalog."
             },
             {
                 "id": 9,
                 "name": "sales.price_list.users",
-                "display_name": "Sales / Pricelists / Utilisateurs",
+                "display_name": "Sales \/ Pricelists \/ Users",
                 "description": "Consultation of prices."
             },
             {
                 "id": 10,
                 "name": "sales.price_list.administrators",
-                "display_name": "Sales / Pricelists / Administrators",
-                "description": "Modification of prices and tariff schedules."
+                "display_name": "Sales \/ Pricelists \/ Administrators",
+                "description": "Modification of prices and pricelists."
             },
             {
                 "id": 11,
                 "name": "sales.reductions.users",
-                "display_name": "Sales / Discounts / Utilisateurs",
+                "display_name": "Sales \/ Discounts \/ Utilisateurs",
                 "description": "Consultation of discounts and discount lists."
             },
             {
                 "id": 12,
                 "name": "sales.reductions.administrators",
-                "display_name": "Sales / Discounts / Administrators",
+                "display_name": "Sales \/ Discounts \/ Administrators",
                 "description": "Create and update discount lists."
             },
             {
                 "id": 13,
                 "name": "sales.seasons.users",
-                "display_name": "Sales / Seasons / Utilisateurs",
+                "display_name": "Sales \/ Seasons \/ Users",
                 "description": "Consultation of seasons and lists of seasons."
             },
             {
                 "id": 14,
                 "name": "sales.seasons.administrators",
-                "display_name": "Sales / Seasons / Administrators",
+                "display_name": "Sales \/ Seasons \/ Administrators",
                 "description": "Modification and creation of seasons."
             },
             {
                 "id": 15,
                 "name": "point_of_sale.administrators",
-                "display_name": "Point of Sale / Administrators",
-                "description": "Encoding of consumption by the cash register."
+                "display_name": "Point of Sale \/ Managers",
+                "description": "Perform daily operations on cash register."
             },
             {
                 "id": 16,
                 "name": "point_of_sale.users",
-                "display_name": "Point of Sale / Users",
+                "display_name": "Point of Sale \/ Users",
                 "description": "Encoding of consumption by the cash register."
             },
             {
                 "id": 17,
                 "name": "settings",
                 "display_name": "Settings",
-                "description": "Modifying the global configuration."
+                "description": "Modify the global configuration."
             },
             {
                 "id": 18,
                 "name": "sales.bookings.users",
-                "display_name": "Sales / Booking / Users",
+                "display_name": "Sales \/ Booking \/ Users",
                 "description": "Creation and consultation of reservations."
             },
             {
                 "id": 19,
                 "name": "sales.catalog.users",
-                "display_name": "Sales / Catalog / Users",
+                "display_name": "Sales \/ Catalog \/ Users",
                 "description": "Consultation of catalog products."
             },
             {
                 "id": 20,
                 "name": "accounting.administrators",
-                "display_name": "Accounting / Administrators",
+                "display_name": "Accounting \/ Administrators",
                 "description": "Manage settings related to accounting (accounting rules, accounting plan, VAT rules, ...)."
             },
             {
                 "id": 21,
                 "name": "accounting.invoicing.administrators",
-                "display_name": "Accounting / Invoicing / Administrators",
+                "display_name": "Accounting \/ Invoicing \/ Administrators",
                 "description": "Create, update and delete invoices, and send invoices to customers."
             },
             {
                 "id": 22,
                 "name": "accounting.invoicing.users",
-                "display_name": "Accounting / Invoicing / Users",
+                "display_name": "Accounting \/ Invoicing \/ Users",
                 "description": "Generate and send invoices to customers."
             }
         ]
@@ -101,79 +101,79 @@
         "data": [
             {
                 "id": 8,
-                "display_name": "Ventes / Catalogue / Administrateurs",
+                "display_name": "Ventes \/ Catalogue \/ Administrateurs",
                 "description": "Modification de produits et ajout de nouveaux produits au catalogue."
             },
             {
                 "id": 9,
-                "display_name": "Ventes / Listes de prix / Utilisateurs",
+                "display_name": "Ventes \/ Listes de prix \/ Utilisateurs",
                 "description": "Consultation des listes de prix."
             },
             {
                 "id": 10,
-                "display_name": "Ventes / Listes de prix / Administrateurs",
+                "display_name": "Ventes \/ Listes de prix \/ Administrateurs",
                 "description": "Modification des prix et tarifs."
             },
             {
                 "id": 11,
-                "display_name": "Ventes / Réductions / Utilisateurs",
-                "description": "Consultation des réductions et liste de réductions."
+                "display_name": "Ventes \/ R\u00e9ductions \/ Utilisateurs",
+                "description": "Consultation des r\u00e9ductions et liste de r\u00e9ductions."
             },
             {
                 "id": 12,
-                "display_name": "Ventes / Réductions / Administrateurs",
-                "description": "Création et modification des listes de réductionss."
+                "display_name": "Ventes \/ R\u00e9ductions \/ Administrateurs",
+                "description": "Cr\u00e9ation et modification des listes de r\u00e9ductionss."
             },
             {
                 "id": 13,
-                "display_name": "Ventes / Saisons / Utilisateurs",
+                "display_name": "Ventes \/ Saisons \/ Utilisateurs",
                 "description": "Consultation des saisons et listes de saisons."
             },
             {
                 "id": 14,
-                "display_name": "Ventes / Saisons / Administrateurs",
-                "description": "Modification et création des saisons."
+                "display_name": "Ventes \/ Saisons \/ Administrateurs",
+                "description": "Modification et cr\u00e9ation des saisons."
             },
             {
                 "id": 15,
-                "display_name": "Point de Vente / Administrateurs",
+                "display_name": "Point de Vente \/ Administrateurs",
                 "description": "Gestion de la configuration de la caisse."
             },
             {
                 "id": 16,
-                "display_name": "Point de Vente / Utilisateurs",
+                "display_name": "Point de Vente \/ Utilisateurs",
                 "description": "Encodage des consommation avec la caisse."
             },
             {
                 "id": 17,
-                "display_name": "Paramètres de configuration",
+                "display_name": "Param\u00e8tres de configuration",
                 "description": "Modification de la configuration globale."
             },
             {
                 "id": 18,
-                "display_name": "Ventes / Réservations / Utilisateurs",
-                "description": "Création et consultation des réservations."
+                "display_name": "Ventes \/ R\u00e9servations \/ Utilisateurs",
+                "description": "Cr\u00e9ation et consultation des r\u00e9servations."
             },
             {
                 "id": 19,
-                "display_name": "Ventes / Catalogue / Utilisateurs",
+                "display_name": "Ventes \/ Catalogue \/ Utilisateurs",
                 "description": "Consultation du catalogue de produits."
             },
             {
                 "id": 20,
-                "display_name": "Comptabilité / Administrateurs",
-                "description": "Modification des paramètres liés à la compta (règles comptables, plan comptable, règles de TVA, ...)."
+                "display_name": "Comptabilit\u00e9 \/ Administrateurs",
+                "description": "Modification des param\u00e8tres li\u00e9s \u00e0 la compta (r\u00e8gles comptables; plan comptable; r\u00e8gles de TVA; ...)."
             },
             {
                 "id": 21,
-                "display_name": "Comptabilité / Facturation / Administrateurs",
-                "description": "Création, modification et suppression de factures et notes de crédit, envoi de factures aux clients."
+                "display_name": "Comptabilit\u00e9 \/ Facturation \/ Administrateurs",
+                "description": "Cr\u00e9ation, modification et suppression de factures et notes de cr\u00e9dit, envoi de factures aux clients."
             },
             {
                 "id": 22,
-                "display_name": "Comptabilité / Facturation / Utilisateurs",
-                "description": "Génération et envoi des factures aux clients."
+                "display_name": "Comptabilit\u00e9 \/ Facturation \/ Utilisateurs",
+                "description": "G\u00e9n\u00e9ration et envoi des factures aux clients."
             }
         ]
-    }    
+    }
 ]

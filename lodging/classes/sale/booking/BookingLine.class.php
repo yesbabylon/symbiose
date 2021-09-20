@@ -76,6 +76,8 @@ class BookingLine extends \sale\booking\BookingLine {
     }
 
     public static function getQtyAccountingMethod($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:getQtyAccountingMethod", QN_REPORT_DEBUG);
+
         $result = [];
         $lines = $om->read(__CLASS__, $oids, [
             'product_id.product_model_id.qty_accounting_method'
@@ -92,6 +94,8 @@ class BookingLine extends \sale\booking\BookingLine {
      * sync rental_unit_id with related consumption lines
      */
     public static function onchangeRentalUnitId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeRentalUnitId", QN_REPORT_DEBUG);
+
         $lines = $om->read(__CLASS__, $oids, ['rental_unit_id', 'consumptions_ids'], $lang);
 
         if($lines > 0 && count($lines)) {
@@ -111,6 +115,7 @@ class BookingLine extends \sale\booking\BookingLine {
      */
     public static function onchangeProductId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeProductId", QN_REPORT_DEBUG);
+
         self::_updatePriceId($om, $oids, $lang);
         // reset quantity accounting method
         $om->write(__CLASS__, $oids, ['qty_accounting_method' => null]);
@@ -170,6 +175,7 @@ class BookingLine extends \sale\booking\BookingLine {
      */
     public static function onchangeQty($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeQty", QN_REPORT_DEBUG);
+        
         // reset total price
         $om->write(__CLASS__, $oids, ['price' => null]);
         // update consumptions
@@ -228,6 +234,8 @@ class BookingLine extends \sale\booking\BookingLine {
      * _updatePriceId is also called upon booking_id.center_id and booking_line_group_id.date_from changes.
      */
     public static function _updatePriceId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updatePriceId", QN_REPORT_DEBUG);
+
         $lines = $om->read(get_called_class(), $oids, [
             'booking_line_group_id.date_from',
             'product_id',

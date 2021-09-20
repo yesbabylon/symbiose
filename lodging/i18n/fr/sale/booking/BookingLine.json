@@ -29,7 +29,7 @@
 			"help": ""
 		},
 		"rental_unit_id": {
-			"label": "Unité de Location",
+			"label": "Unité locative",
 			"description": "L'unité locative à laquelle la ligne est affectée.",
 			"help": ""
 		},
