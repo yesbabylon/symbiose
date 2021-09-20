@@ -50,7 +50,9 @@ class Booking extends \sale\booking\Booking {
     }
 
     public static function onchangeCustomerId($om, $oids, $lang) {
-        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        // force immediate recomputing of the name/reference
+        $om->write(__CLASS__, $oids, ['name' => null]);
+        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'booking_lines_groups_ids']);
         if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
             BookingLineGroup::_updatePriceAdapters($om, $booking_lines_groups_ids, $lang);
         }
