@@ -33,6 +33,12 @@ class Composition extends Model {
                 'description'       => 'The booking the composition relates to.' 
             ],
 
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingLineGroup',
+                'description'       => 'The group the composition relates to.' 
+            ],
+
             'composition_items_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\CompositionItem',

@@ -31,6 +31,7 @@
         "sojourn_type": {
 			"label": "Type de Séjour",
 			"description": "Le genre de séjour que le groupe est sur.",
+			"selection":{ "GA" : "GA", "GG": "GG"},
 			"help": ""
 		},
 		"nb_pers": {

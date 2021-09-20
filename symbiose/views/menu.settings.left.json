@@ -410,14 +410,14 @@
               ]
             },
             {
-              "id": "item.accounting",
+              "id": "item.documents",
               "label": "Documents",
               "description": "",
               "icon": "insert_drive_file",
               "type": "parent",
               "children": [
                 {
-                  "id": "item.documents",
+                  "id": "item.documents_documents",
                   "type": "entry",
                   "label": "Documents",
                   "description": "", 

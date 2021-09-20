@@ -42,7 +42,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "relationship",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
@@ -64,24 +65,6 @@
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Nature",
-                                                "value": "customer_nature_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Rate Class",
-                                                "value": "rate_class_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer Type",
-                                                "value": "customer_type_id",
-                                                "width": "50%"
-                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Customer Nature",

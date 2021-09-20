@@ -5,11 +5,13 @@
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de la règle de TVA."
+			"description": "Nom de la règle de TVA.",
+			"help": ""
 		},
 		"rate": {
 			"label": "Taux",
-			"description": "Taux de la règle de TVA."
+			"description": "Taux de la règle de TVA.",
+			"help": ""
 		},
 		"type": {
 			"label": "Type",
@@ -17,7 +19,8 @@
 			"selection": {
 				"purchase": "achat",
 				"sale": "vente"
-			}
+			},
+			"help": ""
 		}
 	},
 	"view": {

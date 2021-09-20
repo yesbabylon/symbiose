@@ -31,6 +31,13 @@ class AnalyticChart extends Model {
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The organisation the chart belongs to.",
                 'required'          => true
+            ],
+
+            'analytic_sections_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\AnalyticSection',
+                'foreign_field'     => 'analytic_chart_id',
+                'description'       => "Sections that are related to this analytic chart."
             ]
 
         ];

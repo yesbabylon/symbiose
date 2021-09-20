@@ -25,12 +25,17 @@
 		},
 		"date": {
 			"label": "Date",
-			"description": "Date à laquelle la prestation de service est planifiée.",
+			"description": "Date à laquelle la prestation est planifiée.",
 			"help": ""
 		},
-		"schedule": {
-			"label": "Programme",
-			"description": "Moment de la journée auquel la prestation de service est planifiée.",
+		"schedule_from": {
+			"label": "Début",
+			"description": "Moment de la journée auquel la prestation est planifiée.",
+			"help": ""
+		},
+		"schedule_to": {
+			"label": "Fin",
+			"description": "Moment de la journée auquel la prestationest terminée.",
 			"help": ""
 		},
 		"type": {

@@ -44,16 +44,23 @@
         "item.seasons_category": {"label": "Categories", "help": ""},
         "item.seasons_season": {"label": "Saisons", "help": ""},
         "item.accounting": {"label": "Comptabilité", "help": ""},
+        "item.documents": {"label": "Documents", "help": ""},
+        "item.documents_documents": {"label": "Documents", "help": ""},        
         "item.vat_rules": {"label": "Règles de TVA", "help": ""},
         "item.accounting_rules": {"label": "Règles Comptables", "help": ""},
         "item.invoices": {"label": "Factures", "help": ""},
         "item.settings": {"label": "Paramètres", "help": ""},
-        "item.available_settings": {"label": "Paramètres Disponibles", "help": ""},
-        "item.settings_values": {"label": "Valeurs Des Paramètres", "help": ""},
+        "item.available_settings": {"label": "Liste des paramètres", "help": ""},
+        "item.settings_values": {"label": "Valeurs des paramètres", "help": ""},
         "item.identities": {"label": "Identités", "help": ""},
         "item.identities_id": {"label": "Identités", "help": ""},
         "item.partners": {"label": "Partenaires", "help": ""},
         "item.addresses": {"label": "Addresses", "help": ""},
-        "item.establishments": {"label": "Etablissements", "help": ""}
+        "item.establishments": {"label": "Etablissements", "help": ""},
+        "item.centers": {"label": "Centres", "help": ""},
+        "item.centers_centers": {"label": "Liste des centres", "help": ""},
+        "item.centers_categories": {"label": "Catégories", "help": ""},
+        "item.rental_units": {"label": "Catégories", "help": ""},
+        "item.rental_units_units": {"label": "Catégories", "help": ""}        
 	}
 }
