@@ -51,7 +51,7 @@
 			"help": ""
         },
         "registration_number": {
-            "label": "Numéro d'enregistrement",
+            "label": "Numéro de registre",
             "description": "Numéro d'enregistrement de l'organisation (numéro d'entreprise).",
 			"help": ""
         },

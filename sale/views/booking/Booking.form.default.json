@@ -86,7 +86,10 @@
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "33%"
+                                                "width": "33%",
+                                                "widget": {
+                                                    "view": "form.create"
+                                                }
                                             },
                                             {
                                                 "type": "field",
