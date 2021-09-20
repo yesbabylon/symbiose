@@ -38,6 +38,30 @@
             "visible": ["status", "=", "checkedout"]
         }
     ],
+    "routes": [
+        {
+            "id": "item.booking.edit",
+            "label": "Edit Booking",
+            "description": "",
+            "icon": "edit",
+            "route": "/bookings/edit/object.id"
+        },
+        {
+            "id": "item.booking.composition",
+            "label": "Edit composition",
+            "description": "",
+            "icon": "view_list",
+            "route": "/bookings/composition/object.id"
+        },
+        {
+            "id": "item.booking.contract",
+            "label": "Send contract",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/bookings/contract/object.id",
+            "visible": ["has_contract", "=", "true"]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -201,47 +225,7 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Contacts",
-                        "id": "section.contacts_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contacts_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Contracts",
-                        "id": "section.contracts_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+                    }                    
                 ]
             }
         ]

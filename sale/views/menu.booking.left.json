@@ -4,7 +4,7 @@
         "items": [
             {
               "id": "item.bookings",
-              "value": "Bookings",
+              "label": "Bookings",
               "description": "",
               "icon": "menu_book",
               "type": "parent",
@@ -12,7 +12,7 @@
                 {
                   "id": "item.new_booking",
                   "type": "entry",
-                  "value": "New booking",
+                  "label": "New booking",
                   "description": "", 
                   "icon": "add",
                   "context": {
@@ -24,7 +24,7 @@
                 {
                   "id": "item.all_booking",
                   "type": "entry",
-                  "value": "All bookings",
+                  "label": "All bookings",
                   "description": "", 
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
@@ -36,7 +36,7 @@
                 {
                   "id": "item.quotes",
                   "type": "entry",
-                  "value": "Quotes",
+                  "label": "Quotes",
                   "description": "", 
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
@@ -47,7 +47,7 @@
                 {
                   "id": "item.options",
                   "type": "entry",
-                  "value": "Options",
+                  "label": "Options",
                   "description": "", 
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
@@ -58,7 +58,7 @@
                 {
                   "id": "item.validated",
                   "type": "entry",
-                  "value": "Validated bookings",
+                  "label": "Validated bookings",
                   "description": "",
                   "context": {
                     "entity": "sale\\booking\\Booking",
@@ -70,14 +70,14 @@
             },
             {
               "id": "item.customers",
-              "value": "Customers",
+              "label": "Customers",
               "description": "",
               "icon": "person",
               "type": "parent",
               "children": [
                 {
                   "id": "item.customers_types",
-                  "value": "Types",
+                  "label": "Types",
                   "description": "",
                   "icon": "person_outline",
                   "type": "parent",
@@ -85,7 +85,7 @@
                     {
                       "id": "item.all_customers_types",
                       "type": "entry",
-                      "value": "All types",
+                      "label": "All types",
                       "description": "", 
                       "context": {
                         "entity": "sale\\customer\\CustomerType",
@@ -96,7 +96,7 @@
                 },
                 {
                   "id": "item.customers_natures",
-                  "value": "Natures",
+                  "label": "Natures",
                   "description": "",
                   "icon": "person_outline",
                   "type": "parent",
@@ -104,7 +104,7 @@
                     {
                       "id": "item.all_customers_natures",
                       "type": "entry",
-                      "value": "All natures",
+                      "label": "All natures",
                       "description": "",
                       "context": {
                         "entity": "sale\\customer\\CustomerNature",
@@ -116,7 +116,7 @@
                 {
                   "id": "item.new_customer",
                   "type": "entry",
-                  "value": "New customer",
+                  "label": "New customer",
                   "description": "", 
                   "icon": "add",
                   "context": {
@@ -129,7 +129,7 @@
                 {
                   "id": "item.all_customers",
                   "type": "entry",
-                  "value": "All customers",
+                  "label": "All customers",
                   "description": "", 
                   "context": {
                     "entity": "sale\\customer\\Customer",
@@ -140,7 +140,7 @@
                 {
                   "id": "item.all_partners",
                   "type": "entry",
-                  "value": "All partners",
+                  "label": "All partners",
                   "description": "", 
                   "context": {
                     "entity": "identity\\Partner",

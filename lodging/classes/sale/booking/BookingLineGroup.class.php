@@ -75,7 +75,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The rate class that applies to the group.",
                 'required'          => true,
-                'onchange'          => 'sale\booking\BookingLineGroup::onchangeRateClassId'
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeRateClassId'
             ],            
 
             'booking_lines_ids' => [
@@ -100,7 +100,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'required'          => true
             ],
 
-
             'accomodations_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -109,7 +108,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'ondetach'          => 'delete',
                 'domain'            => ['qty_accounting_method', '=', 'accomodation']
             ]
-
 
         ];
     }
@@ -154,6 +152,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      */
     public static function onchangePackId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangePackId", QN_REPORT_DEBUG);
+
         self::_updatePackId($om, $oids, $lang);
 
         $groups = $om->read(__CLASS__, $oids, [
@@ -189,11 +188,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
 
     public static function onchangeRateClassId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
+
         self::_updatePriceAdapters($om, $oids, $lang);
     }
 
     public static function onchangeDateFrom($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeDateFrom", QN_REPORT_DEBUG);
+
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
 
@@ -213,6 +215,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onchangeDateTo($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeDateTo", QN_REPORT_DEBUG);
+
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
 
@@ -230,6 +233,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onchangeNbPers($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
+
         self::_updatePriceAdapters($om, $oids, $lang);
 
         $groups = $om->read(__CLASS__, $oids, ['has_pack', 'booking_lines_ids']);
@@ -257,6 +261,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             Remove all previous price adapters that were automatically created
         */
         $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [ ['booking_line_group_id', 'in', $oids], ['is_manual_discount','=', false]]);
+        
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
         $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'date_from', 'date_to', 'nb_pers', 'booking_id', 'is_locked',
@@ -420,7 +425,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      */
     public static function _updatePackId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:_updatePackId", QN_REPORT_DEBUG);
-        $groups = $om->read(get_called_class(), $oids, [
+
+        $groups = $om->read(__CLASS__, $oids, [
             'booking_id', 'booking_lines_ids',
             'pack_id.is_locked',
             'pack_id.product_model_id.pack_lines_ids',
@@ -435,16 +441,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             // might need to update price_id
             if($group['pack_id.product_model_id.has_own_price']) {
-                $om->write(get_called_class(), $gid, ['is_locked' => true], $lang);
+                $om->write(__CLASS__, $gid, ['is_locked' => true], $lang);
             }
             else {
-                $om->write(get_called_class(), $gid, ['is_locked' => $group['pack_id.is_locked'] ], $lang);
+                $om->write(__CLASS__, $gid, ['is_locked' => $group['pack_id.is_locked'] ], $lang);
             }
 
             /*
                 Reset booking_lines (updating booking_lines_ids will trigger ondetach event)
             */
-            $om->write(get_called_class(), $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
+            $om->write(__CLASS__, $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
 
             /*
                 Create booking lines according to pack composition
@@ -468,7 +474,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
                 $lid = $om->create('lodging\sale\booking\BookingLine', $line, $lang);
                 if($lid > 0) {
-                    $om->write(get_called_class(), $gid, ['booking_lines_ids' => ["+$lid"] ]);
+                    $om->write(__CLASS__, $gid, ['booking_lines_ids' => ["+$lid"] ]);
                 }
                 ++$order;
             }
