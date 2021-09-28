@@ -1,6 +1,6 @@
 {
-	"name": "Règle de Tva",
-	"plural": "Règles de Tva",
+	"name": "Règle Comptable",
+	"plural": "Règles Comptables",
 	"description": "Les règles comptables permettent de préciser sur quel compte une opération doit être imputée.",
 	"model": {
 		"name": {

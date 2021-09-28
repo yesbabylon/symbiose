@@ -20,7 +20,8 @@ class Option extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the option."
+                'description'       => "Short description of the option.",
+                'multilang'         => true
             ],
             
             'family_id' => [

@@ -24,7 +24,11 @@ class ProductModel extends \sale\catalog\ProductModel {
             'qty_accounting_method' => [
                 'type'              => 'string',
                 'description'       => 'The way the product quantity has to be computed (per unit [default], per person, or per accomodation [resource]).',
-                'selection'         => ['person', 'accomodation', 'unit'],
+                'selection'         => [
+                                            'person',           // depends on the number of people
+                                            'accomodation',     // depends on the number of nights
+                                            'unit'              // only depends on quantity
+                                       ],
                 'default'           => 'unit'
             ],
 
@@ -92,6 +96,15 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'foreign_field'     => 'product_model_id',
                 'description'       => "Product variants that are related to this model.",
             ],
+
+            'groups_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\sale\catalog\Group',
+                'foreign_field'     => 'product_models_ids',
+                'rel_table'         => 'lodging_catalog_product_rel_productmodel_group',
+                'rel_foreign_key'   => 'group_id',
+                'rel_local_key'     => 'product_model_id'
+            ]
 
         ];
     }

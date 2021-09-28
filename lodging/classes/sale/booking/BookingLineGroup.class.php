@@ -295,7 +295,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $operands['duration'] = ($group['date_to']-$group['date_from'])/(60*60*24);     // duration in nights
                 $operands['nb_pers'] = $group['nb_pers'];                                       // number of participants
 
-                $season_category = $group['booking_id.center_id.season_category_id'];
                 $date = $group['date_from'];
                 /*
                     Pick up the first season period that matches the year and the season category of the center
@@ -313,12 +312,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $period = array_shift($periods);
                     $operands['season'] = $period['season_type_id.name'];
                 }
-
-                $discounts_ids = $om->search('sale\discount\DiscountList', [
-                    ['discount_list_category_id', '=', $group['booking_id.center_id.discount_list_category_id']],
-                    ['valid_from', '<=', $group['date_from']],
-                    ['valid_until', '>=', $group['date_from']]
-                ]);
 
                 $discounts = $om->read('sale\discount\Discount', $discount_lists[$discount_list_id]['discounts_ids'], ['value', 'type', 'conditions_ids']);
 
@@ -503,36 +496,37 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         foreach($groups as $gid => $group) {
             /*
-                Find the first Price List that matches the criteria from the booking
+                Find the Price List that matches the criteria from the booking with the shortest duration
             */
-            $price_lists_ids = $om->search('sale\price\PriceList', [
-                                                                       ['price_list_category_id', '=', $group['booking_id.center_id.price_list_category_id']],
-                                                                       ['date_from', '<=', $group['date_from']],
-                                                                       ['date_to', '>=', $group['date_from']]
-                                                                   ]);
-            $price_lists = $om->read('sale\price\PriceList', $price_lists_ids, ['id']);
-            $price_list_id = 0;
-            if($price_lists > 0 && count($price_lists)) {
-                $price_list_id = array_keys($price_lists)[0];
-            }
-            /*
-                Search for a matching Price within the found Price List
-            */
-            if($price_list_id) {
-                // there should be exactly one matching price
-                $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $group['pack_id']] ]);
-                if($prices_ids > 0 && count($prices_ids)) {
-                    /*
-                        Assign found Price to current group
-                    */
-                    $om->write(__CLASS__, $gid, ['price_id' => $prices_ids[0]]);
+            $price_lists_ids = $om->search(
+                'sale\price\PriceList', 
+                [
+                    ['price_list_category_id', '=', $group['booking_id.center_id.price_list_category_id']],
+                    ['date_from', '<=', $group['date_from']],
+                    ['date_to', '>=', $group['date_from']]
+                ], 
+                ['duration' => 'asc']
+            );
+
+            $found = false;
+            if($price_lists_ids > 0 && count($price_lists_ids)) {
+                /*
+                    Search for a matching Price within the found Price Lists
+                */
+                foreach($price_lists_ids as $price_list_id) {
+                    // there should be exactly one matching price
+                    $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $group['pack_id']] ]);
+                    if($prices_ids > 0 && count($prices_ids)) {
+                        /*
+                            Assign found Price to current group
+                        */
+                        $found = true;
+                        $om->write(__CLASS__, $gid, ['price_id' => $prices_ids[0]]);
+                        break;
+                    }
                 }
-                else {
-                    $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
-                    trigger_error("QN_DEBUG_ORM::no matching price found for product {$group['product_id']} in price_list $price_list_id", QN_REPORT_ERROR);
-                }
             }
-            else {
+            if(!$found) {
                 $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
                 $date = date('Y-m-d', $group['booking_line_group_id.date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);

@@ -86,7 +86,7 @@
         },
         "schedule_default_value": {
             "label": "Planification par défaut",
-            "description": "Chaîne polyvalente représentant la valeur par défaut du planning selon son type (heure, plage horaire).",
+            "description": "Valeur par défaut du planning selon son type (heure, plage horaire).",
             "help": ""
         },
         "schedule_offset": {

@@ -29,9 +29,10 @@ class ProductModel extends Model {
 
             'family_id' => [
                 'type'              => 'many2one',
-                'description'       => "Product Family which current product belongs to.",
                 'foreign_object'    => 'sale\catalog\Family',
-                'required'          => true
+                'description'       => "Product Family which current product belongs to.",
+                'required'          => true,
+                'onchange'          => 'sale\catalog\ProductModel::onchangeFamilyId'
             ],
 
             'selling_accounting_rule_id' => [
@@ -176,14 +177,18 @@ class ProductModel extends Model {
      * reset related products is_pack
      */
     public static function onchangeIsPack($om, $oids, $lang) {
-        $models = $om->read(__CLASS__, $oids, ['products_ids']);
-        $products_ids = [];
-        foreach($models as $mid => $model) {
-            $products_ids = array_merge($products_ids, $model['products_ids']);
-        }
-        $om->write('sale\catalog\Product', $products_ids, ['is_pack' => null]);
+        $models = $om->read(__CLASS__, $oids, ['products_ids', 'is_pack']);
+        foreach($models as $mid => $model) {            
+            $om->write('sale\catalog\Product', $model['products_ids'], ['is_pack' => $model['is_pack']]);
+        }        
     }
 
 
+    public static function onchangeFamilyId($om, $oids, $lang) {
+        $models = $om->read(__CLASS__, $oids, ['products_ids', 'family_id']);
+        foreach($models as $mid => $model) {
+            $om->write('sale\catalog\Product', $model['products_ids'], ['family_id' => $model['family_id']]);
+        }
+    }
 
 }

@@ -21,6 +21,12 @@
             },
             {
                 "type": "field",
+                "label": "Family",
+                "value": "family_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "ean",
                 "width": "10%"
             }        

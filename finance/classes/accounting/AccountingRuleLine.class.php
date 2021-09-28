@@ -21,26 +21,15 @@ class AccountingRuleLine extends Model {
 
         return [
             'name' => [
-                'type'              => 'alias',
-                'alias'             => 'label'
-            ],
-
-            'label' => [
                 'type'              => 'string',
-                'description'       => "Code of the line to serve as memo.",
-                'required'          => true                
+                'description'       => "Short string to serve as memo.",
+                'required'          => true
             ],
 
             'account' => [
                 'type'              => 'string',
                 'description'       => "Code of the related account.",
                 'required'          => true
-            ],
-
-            'analytic_section_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AnalyticSection',
-                'description'       => "Related analytic section, if any."
             ],
             
             'share' => [

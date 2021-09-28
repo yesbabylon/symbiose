@@ -20,12 +20,22 @@ class PriceList extends Model {
 
             'date_from' => [
                 'type'              => 'date',
-                'description'       => "Start of validity period."
+                'description'       => "Start of validity period.",
+                'required'          => true
             ],
 
             'date_to' => [
                 'type'              => 'date',
-                'description'       => "End of validity period."
+                'description'       => "End of validity period.",
+                'required'          => true
+            ],
+
+            'duration' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'sale\price\PriceList::getDuration',
+                'store'             => true,
+                'description'       => "Pricelist validity duration, in days."
             ],
 
             'prices_ids' => [
@@ -43,4 +53,17 @@ class PriceList extends Model {
             
         ];
     }
+
+    public static function getDuration($om, $oids, $lang) {
+        $result = [];
+        $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
+
+        if($lists > 0 && count($lists)) {
+            foreach($lists as $lid => $list) {
+                $result[$lid] = round( ($list['date_to'] - $list['date_from']) / (60 * 60 * 24));
+            }
+        }
+        return $result;        
+    }
+
 }

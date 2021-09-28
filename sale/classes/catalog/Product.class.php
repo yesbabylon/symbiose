@@ -46,12 +46,17 @@ class Product extends Model {
                 'required'          => true
             ],
 
-            'is_pack' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
+            'family_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\Family',
+                'description'       => "Product Family which current product belongs to.",
+                'default'           => 'sale\catalog\Product::defaultFamilyId'
+            ],
+
+            'is_pack' => [                
+                'type'              => 'boolean',
                 'description'       => 'Is the product a pack? (from model).',
-                'function'          => 'sale\catalog\Product::getIsPack',
-                'store'             => true
+                'default'           => 'sale\catalog\Product::defaultIsPack'
             ],
 
             'is_locked' => [
@@ -70,17 +75,33 @@ class Product extends Model {
                 'description'       => "Prices that are related to this product.",
             ],
 
+            'stat_section_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\stats\StatSection',
+                'description'       => 'Statistics section (overloads the model one, if any).'
+            ]
+
         ];
     }
 
-
-    public static function getIsPack($om, $oids, $lang) {
-        $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['product_model_id.is_pack']);
-        foreach($lines as $oid => $odata) {
-            $result[$oid] = $odata['product_model_id.is_pack'];
+    public static function defaultFamilyId($om, $values=[]) {
+        if(isset($values['product_model_id'])) {
+            $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['family_id']);
+            if($models > 0 && count($models)) {
+                return $models[$values['product_model_id']]['family_id'];
+            }            
         }
-        return $result;
+        return null;
     }
+
+    public static function defaultIsPack($om, $values=[]) {
+        if(isset($values['product_model_id'])) {
+            $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['is_pack']);
+            if($models > 0 && count($models)) {
+                return $models[$values['product_model_id']]['is_pack'];
+            }            
+        }
+        return null;
+    }    
 
 }
