@@ -14,7 +14,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "price",
+                                                "value": "product_id",
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": true
@@ -22,7 +22,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "value": "price",
                                                 "width": "50%"                                                
                                             }
                                         ]
@@ -44,8 +44,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Product",
-                                                "value": "product_id",
+                                                "label": "Type",
+                                                "value": "type",
                                                 "width": "100%"
                                             }
                                         ]

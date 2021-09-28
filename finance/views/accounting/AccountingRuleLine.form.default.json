@@ -22,11 +22,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "label",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "account",
                                                 "width": "50%"                                                
                                             }

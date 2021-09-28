@@ -23,7 +23,8 @@ class Family extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product family. A family is a group of goods produced under the same brand.",
-                'required'          => true
+                'required'          => true,
+                'multilang'         => true
             ],
 
             'children_ids' => [ 

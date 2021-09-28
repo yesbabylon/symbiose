@@ -244,36 +244,38 @@ class BookingLine extends \sale\booking\BookingLine {
 
         foreach($lines as $line_id => $line) {
             /*
-                Find the first Price List that matches the criteria from the booking
+                Find the Price List that matches the criteria from the booking with the shortest duration
             */
-            $price_lists_ids = $om->search('sale\price\PriceList', [
-                ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
-                ['date_from', '<=', $line['booking_line_group_id.date_from']],
-                ['date_to', '>=', $line['booking_line_group_id.date_from']]
-            ]);
-            $price_lists = $om->read('sale\price\PriceList', $price_lists_ids, ['id']);
-            $price_list_id = 0;
-            if($price_lists > 0 && count($price_lists)) {
-                $price_list_id = array_keys($price_lists)[0];
-            }
-            /*
-                Search for a matching Price within the found Price List
-            */
-            if($price_list_id) {
-                // there should be exactly one matching price
-                $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $line['product_id']] ]);
-                if($prices_ids > 0 && count($prices_ids)) {
-                    /*
-                        Assign found Price to current line
-                    */
-                    $om->write(get_called_class(), $line_id, ['price_id' => $prices_ids[0]]);
+            $price_lists_ids = $om->search(
+                'sale\price\PriceList', 
+                [
+                    ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
+                    ['date_from', '<=', $line['booking_line_group_id.date_from']],
+                    ['date_to', '>=', $line['booking_line_group_id.date_from']]
+                ],
+                ['duration' => 'asc']
+            );
+
+            $found = false;
+
+            if($price_lists_ids > 0 && count($price_lists_ids)) {
+                /*
+                    Search for a matching Price within the found Price List
+                */
+                foreach($price_lists_ids as $price_list_id) {
+                    // there should be exactly one matching price
+                    $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $line['product_id']] ]);
+                    if($prices_ids > 0 && count($prices_ids)) {
+                        /*
+                            Assign found Price to current line
+                        */
+                        $found = true;
+                        $om->write(get_called_class(), $line_id, ['price_id' => $prices_ids[0]]);
+                        break;
+                    }
                 }
-                else {
-                    $om->write(get_called_class(), $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
-                    trigger_error("QN_DEBUG_ORM::no matching price found for product {$line['product_id']} in price_list $price_list_id", QN_REPORT_ERROR);
-                }
             }
-            else {
+            if(!$found) {
                 $om->write(get_called_class(), $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
                 $date = date('Y-m-d', $line['booking_line_group_id.date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);

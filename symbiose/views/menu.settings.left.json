@@ -399,7 +399,7 @@
                           "label": "Seasons",
                           "description": "", 
                           "context": {
-                            "entity": "sale\\season\\Season",
+                            "entity": "lodging\\sale\\season\\Season",
                             "view": "list.default"
                           }
                         }

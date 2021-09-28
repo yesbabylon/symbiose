@@ -23,26 +23,26 @@ class Category extends Model {
                 'type'              => 'string',
                 'description'       => "Short string describing the purpose and usage of the category."
             ],
-            
-            'product_models_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'sale\catalog\ProductModel', 
-                'foreign_field'     => 'categories_ids', 
-                'rel_table'         => 'sale_product_rel_productmodel_category', 
+
+            'product_models_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'foreign_field'     => 'categories_ids',
+                'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'category_id',
                 'description'       => 'List of product models assigned to this category.'
             ],
 
-            'booking_types_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'sale\booking\BookingType', 
-                'foreign_field'     => 'product_categories_ids', 
-                'rel_table'         => 'sale_rel_productcategory_bookingtype', 
+            'booking_types_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\booking\BookingType',
+                'foreign_field'     => 'product_categories_ids',
+                'rel_table'         => 'sale_rel_productcategory_bookingtype',
                 'rel_local_key'     => 'productcategory_id',
                 'rel_foreign_key'   => 'bookingtype_id',
                 'description'       => 'List of booking types assigned to this category.'
-            ]            
+            ]
         ];
     }
 }

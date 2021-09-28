@@ -19,7 +19,7 @@ class CenterCategory extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Category name.' 
+                'description'       => 'Category name.'
             ],
 
             'centers_ids' => [
@@ -35,9 +35,21 @@ class CenterCategory extends Model {
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
-                'foreign_field'     => 'center_category_id',                
-                'description'       => 'List of rental units related to the category.' 
-            ],              
+                'foreign_field'     => 'center_category_id',
+                'description'       => 'List of rental units related to the category.'
+            ],
+
+            'product_groups_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\catalog\Group',
+                'foreign_field'     => 'center_category_id'
+            ],
+
+            'accounting_rules_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\finance\accounting\AccountingRule',
+                'foreign_field'     => 'center_category_id'
+            ]
 
         ];
     }

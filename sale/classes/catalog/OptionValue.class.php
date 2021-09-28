@@ -13,6 +13,11 @@ class OptionValue extends Model {
          * OptionValue objects are the possible values to which an option, for a given Product Attriubute, can be set to.
          */
         return [
+            'name' => [
+                'type'              => 'alias',
+                'alias'             => 'value'
+            ],
+
             'value' => [
                 'type'              => 'string',
                 'description'       => "The possible value for the related option."
@@ -20,7 +25,8 @@ class OptionValue extends Model {
             
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the value."
+                'description'       => "Short description of the value.",
+                'multilang'         => true
             ],
 
             'option_id' => [

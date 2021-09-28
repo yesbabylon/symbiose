@@ -45,6 +45,12 @@ class AccountingRule extends Model {
                 'description'       => "Lines that are related to this rule."
             ],            
 
+            'stat_section_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\stats\StatSection',
+                'description'       => "Related stat section, if any."
+            ],
+
             'vat_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\tax\VatRule',

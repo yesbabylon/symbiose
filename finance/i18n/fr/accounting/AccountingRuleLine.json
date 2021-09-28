@@ -4,12 +4,7 @@
     "description": "Les règles comptables ont une ou plusieurs lignes les associant à un compte et une règle TVA.",
     "model": {
         "name":{
-            "label":"Identification", 
-            "description": "Nom de la ligne.",
-            "help": ""
-        },
-        "label":{
-            "label":"Code de la ligne", 
+            "label":"Code", 
             "description": "Code de la ligne à servir de mémo.",
             "help": ""
         },

@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\Reader;
 use core\User;
 
 list($params, $providers) = announce([
-    'description'   => "Returns a view populated with a collection of objects, and outputs it as an XLS spreadsheet.",
+    'description'   => "Convert XLS file dedicated to import to their JSON equivalent.",
     'params'        => [
     ],
     'response'      => [
@@ -95,10 +95,6 @@ foreach (glob($path."*.xls") as $filename) {
     file_put_contents($path_parts['dirname'].'/'.$path_parts['filename'].'.json', $json);
 
 }
-
-
-
-
 
 $context->httpResponse()
         ->body([])
