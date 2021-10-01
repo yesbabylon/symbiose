@@ -14,13 +14,13 @@
             "help": ""
         },
         "has_pack": {
-            "label": "A pack",
-            "description": "Le groupe se rapporte-t-il à une meute ?",
+            "label": "Utilise un Pack ?",
+            "description": "Le groupe se rapporte-t-il à un pack ?",
             "help": ""
         },
         "pack_id": {
             "label": "Pack",
-            "description": "Emballage (produit) auquel le groupe se rapporte, le cas échéant.",
+            "description": "Pack (produit) auquel le groupe se rapporte, le cas échéant.",
             "help": ""
         },
         "is_locked": {

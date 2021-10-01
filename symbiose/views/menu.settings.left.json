@@ -267,9 +267,20 @@
                       "type": "parent",
                       "children": [
                         {
-                          "id": "item.prices_pricelists",
+                          "id": "item.prices_pricelists_active",
                           "type": "entry",
-                          "label": "Price Lists",
+                          "label": "Active Price Lists",
+                          "description": "", 
+                          "context": {
+                            "entity": "sale\\price\\PriceList",
+                            "view": "list.default",
+                            "domain": ["is_active", "=", true]
+                          }
+                        },
+                        {
+                          "id": "item.prices_pricelists_all",
+                          "type": "entry",
+                          "label": "All Price Lists",
                           "description": "", 
                           "context": {
                             "entity": "sale\\price\\PriceList",
@@ -451,7 +462,7 @@
                   "label": "Accounting rules",
                   "description": "", 
                   "context": {
-                    "entity": "finance\\accounting\\AccountingRule",
+                    "entity": "lodging\\finance\\accounting\\AccountingRule",
                     "view": "list.default"
                   }
                 },

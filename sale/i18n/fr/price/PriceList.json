@@ -1,45 +1,60 @@
 {
-	"name": "Liste de Prix",
-	"plural": "Listes de Prix",
-	"description": "La liste des prix du produit.",
-	"model": {
-		"name": {
-			"label": "Identifiant",
-			"description": "Etiquette courte pour faciliter l'identification de la liste.",
+    "name": "Liste de Prix",
+    "plural": "Listes de Prix",
+    "description": "La liste des prix du produit.",
+    "model": {
+        "name": {
+            "label": "Identifiant",
+            "description": "Etiquette courte pour faciliter l'identification de la liste.",
+            "help": ""
+        },
+        "is_active": {
+            "label": "Active ?",
+            "description": "La liste est-elle en application.",
+            "help": ""
+        },
+        "prices_count": {
+            "label": "Nb prix",
+            "description": "Nombre de prix de la liste.",
+            "help": ""
+        },        
+        "date_from": {
+            "label": "A partir de",
+            "description": "Début de la période de validité.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Jusqu'à",
+            "description": "Fin de la période de validité.",
+            "help": ""
+        },
+		"duration": {
+			"label": "Durée",
+			"description": "Nombre de jours de la période.",
 			"help": ""
 		},
-		"date_from": {
-			"label": "A partir de",
-			"description": "Début de la période de validité.",
-			"help": ""
-		},
-		"date_to": {
-			"label": "Jusqu'à",
-			"description": "Fin de la période de validité.",
-			"help": ""
-		},
-		"prices_ids": {
-			"label": "Prix",
-			"description": "Les prix qui sont liés à cette liste, le cas échéant.",
-			"help": ""
-		},
-		"price_list_category_id": {
-			"label": "Catégorie de liste de prix",
-			"description": "Catégorie à laquelle cette liste est liée, le cas échéant.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Liste de prix",
-			"description": "",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Liste de Prix",
-			"description": "Cette vue est destinée à afficher la liste des prix.",
-			"layout": {}
-		}
-	},
-	"error": {}
+        "prices_ids": {
+            "label": "Prix",
+            "description": "Les prix qui sont liés à cette liste, le cas échéant.",
+            "help": ""
+        },
+        "price_list_category_id": {
+            "label": "Catégorie de liste de prix",
+            "description": "Catégorie à laquelle cette liste est liée, le cas échéant.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Liste de prix",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Liste de Prix",
+            "description": "Cette vue est destinée à afficher la liste des prix.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

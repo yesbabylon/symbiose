@@ -23,6 +23,7 @@ class VatRule extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the VAT rule.",
+                'multilang'         => true,
                 'required'          => true
             ],
 

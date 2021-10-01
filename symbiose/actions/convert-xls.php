@@ -34,6 +34,8 @@ foreach (glob($path."*.xls") as $filename) {
     $path_parts = pathinfo($filename);
 
     $entity = str_replace('_', '\\', $path_parts['filename']);
+    $model = $orm->getModel($entity);
+    $schema = $model->getSchema();
 
     $filetype = IOFactory::identify($filename);
 
@@ -71,7 +73,15 @@ foreach (glob($path."*.xls") as $filename) {
             foreach($values as $field => $value) {
                 if(empty($value) || $field == 'lang') {
                     unset($values[$field]);
+                    continue;
                 }
+
+                // adapt dates
+                if($schema[$field]['type'] == 'date') {
+                    $date_parts = explode('/', $value);
+                    $values[$field] = sprintf("%04d-%02d-%02d", $date_parts[2], $date_parts[0], $date_parts[1]);
+                }
+
             }
             if(!isset($objects[ $line['lang'] ])) {
                 $objects[ $line['lang'] ] = [];

@@ -1,57 +1,67 @@
 {
-	"name": "Liste de Remise",
-	"plural": "Listes de Remise",
-	"description": "",
-	"model": {
-		"name": {
-			"label": "Identification",
-			"description": "Mémo court pour la liste (ex. remises 2025).",
-			"help": ""
-		},
-		"valid_from": {
-			"label": "Valide à partir du",
-			"description": "Date à partir de laquelle la liste est valide.",
-			"help": ""
-		},
-		"valid_until": {
-			"label": "Valide jusqu'au",
-			"description": "Moment jusqu'à ce que la liste soit valide.",
-			"help": ""
-		},
-		"discounts_ids": {
-			"label": "Remises",
-			"description": "Les remises qui font partie de la liste.",
-			"help": ""
-		},
-		"discount_list_category_id": {
-			"label": "Catégorie de liste de remise",
-			"description": "La catégorie à laquelle appartient la liste.",
-			"help": ""
-		},
-		"discount_class_id": {
-			"label": "Classe de remise",
-			"description": "La classe de remise à laquelle appartient la liste.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Liste de Remise",
-			"description": "",
-			"layout": {
-				"section.discounts_list": {
-					"label": "Détails"
-				},
-				"section.discounts_section": {
-					"label": "Remises"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Listes de Remise",
-			"description": "Cette vue est destinée à afficher la liste des remises.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Liste de Remise",
+    "plural": "Listes de Remise",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Mémo court pour la liste (ex. remises 2025).",
+            "help": ""
+        },
+        "valid_from": {
+            "label": "Valide à partir du",
+            "description": "Date à partir de laquelle la liste est valide.",
+            "help": ""
+        },
+        "valid_until": {
+            "label": "Valide jusqu'au",
+            "description": "Moment jusqu'à ce que la liste soit valide.",
+            "help": ""
+        },
+        "discounts_ids": {
+            "label": "Remises",
+            "description": "Les remises qui font partie de la liste.",
+            "help": ""
+        },
+        "discount_list_category_id": {
+            "label": "Catégorie de liste de remise",
+            "description": "La catégorie à laquelle appartient la liste.",
+            "help": ""
+        },
+        "rate_min": {
+            "label": "Taux min",
+            "description": "Remise minimale garantie, le cas échéant.",
+            "help": ""
+        },
+        "rate_max": {
+            "label": "Taux max",
+            "description": "Remise maximale applicable, le cas échéant.",
+            "help": ""
+        },
+        "rate_class_id": {
+            "label": "Classe tarifaire",
+            "description": "La classe tarifaire qui s'applique à la liste de remise.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Liste de Remise",
+            "description": "",
+            "layout": {
+                "section.discounts_list": {
+                    "label": "Détails"
+                },
+                "section.discounts_section": {
+                    "label": "Remises"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Listes de Remise",
+            "description": "Cette vue est destinée à afficher la liste des remises.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

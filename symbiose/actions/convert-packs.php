@@ -77,7 +77,7 @@ foreach (glob($path."*R_Packs.csv") as $file) {
 
             $centers_map = [
                 'GG' => [
-                    'prefix_list'           => ['AE','BA','BG','BO','BP','BR','CH','CO','DA','HA','HU','LA','LO','LP','LS','MA','MO','VE','WC','WE','GG', ''],
+                    'prefix_list'           => ['AP', 'AE','BA','BG','BO','BP','BR','CH','CO','DA','HA','HU','LA','LO','LP','LS','MA','MO','VE','WC','WE','GG', ''],
                 ],
                 'EU' => [
                     'prefix_list'           => ['EU', 'GA', ''],
@@ -95,7 +95,7 @@ foreach (glob($path."*R_Packs.csv") as $file) {
                     'prefix_list'           => ['RO', 'GA', ''],
                 ],
                 'VS' => [
-                    'prefix_list'           => ['VS', 'GA', ''],
+                    'prefix_list'           => ['VS', 'GA', 'GG', ''],
                 ],
                 'WA' => [
                     'prefix_list'           => ['WA', 'GA', ''],
@@ -146,8 +146,9 @@ foreach (glob($path."*R_Packs.csv") as $file) {
                 - de la tranche d'âge du produit correspondant au pack (sur base du Codif_Mnémo_Pack - pour le pack produit; et Codif_Mnémo_Nomenc pour le produit/ligne de pack)
              */
             // remove leading §§~_
-             $pack_code = substr($line['Codif_Mnémo_Pack'], 6);
-
+            $pack_code = substr($line['Codif_Mnémo_Pack'], 6);
+            $pack_code = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $pack_code);
+            
             // retrieve pack from the list of products
 
             $matches = [];
@@ -167,66 +168,93 @@ foreach (glob($path."*R_Packs.csv") as $file) {
             }
 
             if(!count($matches)) {
-                die('no value found for pack '.$pack_code);
+                die($center_prefix.' : no value found for pack '.$pack_code);
             }
 
             foreach($matches as $index) {
                 // each product is a pack
                 $product = $products[$index];
-                list($product_category, $product_code, $product_option) = explode('-', $product['sku']);
+                $product_parts = explode('-', $product['sku']);
+                if(count($product_parts) == 2) {
+                    $product_category = $center_prefix;
+                    list($product_code, $product_option) = $product_parts;
+                }
+                else {
+                    list($product_category, $product_code, $product_option) = $product_parts;
+                }
 
-            /*
 
-            dans le fichier _R_Packs_nomenc correspondant, prendre toutes les lignes  avec Numéro_Pack correspondant
+                /*
 
-            utiliser Codif_Mnémo_Nomenc pour retrouver le product correspondant
-            il doit y avoir un match au niveau du suffixe
-            */
+                dans le fichier _R_Packs_nomenc correspondant, prendre toutes les lignes  avec Numéro_Pack correspondant
 
-                echo PHP_EOL.PHP_EOL.$product['sku'].PHP_EOL;
+                utiliser Codif_Mnémo_Nomenc pour retrouver le product correspondant
+                il doit y avoir un match au niveau du suffixe
+                */
+
                 foreach($nomenc_lines as $nomenc_line) {
                     if($pack_id == $nomenc_line['Numéro_Pack']) {
                         $nomenc_code = substr($nomenc_line['Codif_Mnémo_Nomenc'], 5);
                         $nomenc_code = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $nomenc_code);
-                        $subproduct_sku = $product_category.'-'.$nomenc_code.'-'.$product_option;
-                        
+
                         $subproduct_id = 0;
-                        foreach($products as $subproduct) {
-                            if($subproduct['sku'] == $subproduct_sku) {
-                                $subproduct_id = $subproduct['id'];
-                                break;
+
+                        foreach($prefixes as $prefix_index => $prefix) {
+
+                            if(strlen($prefix)) {
+                                $prefix .= '-';
                             }
-                        }
+                            foreach([$product_option, 'A'] as $test_option) {
+                                $subproduct_sku = $prefix.$nomenc_code.'-'.$test_option;
 
-                        if(!$subproduct_id) {
-                            $subproduct_sku = $nomenc_code.'-'.$product_option;
-
-                            foreach($products as $subproduct) {
-                                if($subproduct['sku'] == $subproduct_sku) {
-                                    $subproduct_id = $subproduct['id'];
-                                    break;
+                                // echo "looking for $subproduct_sku".PHP_EOL;
+                                foreach($products as $subproduct) {
+                                    if($subproduct['sku'] == $subproduct_sku) {
+                                        $subproduct_id = $subproduct['id'];
+                                        break 3;
+                                    }
                                 }
                             }
                         }
 
                         if(!$subproduct_id) {
-                            echo('no match for subproduct '.$subproduct_sku.PHP_EOL);
+                            // ignore product
+                            echo($product['sku'].' : no match for subproduct '.$subproduct_sku.PHP_EOL);
                         }
+                        else {
+                            // create  pack_line
 
+                            $pack_line_id = count($pack_lines) + 1;
+                            $pack_lines[] = [
+                                'id'                => $pack_line_id,
+                                'parent_product_id' => $product['id'],
+                                'child_product_id'  => $subproduct_id
+                            ];
 
+                        }
                     }
                 }
-                
+
             }
 
 
 
         }
     }
-    break;
 
 }
 
+if(count($pack_lines)) {
+    $data = [];
+    $first = $pack_lines[0];
+    $header = array_keys($first);
+    $data[] = implode(';', $header);
+
+    foreach($pack_lines as $pack_line) {
+        $data[] = implode(';', array_values($pack_line));
+    }
+    file_put_contents($path."pack_lines.csv", "\xEF\xBB\xBF".implode(PHP_EOL, $data));    
+}
 
 
 

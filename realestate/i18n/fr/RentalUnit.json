@@ -37,42 +37,42 @@
 			"help": ""
 		},
 		"has_children": {
-			"label": "A des enfants",
-			"description": "Drapeau pour marquer l'unité comme ayant des sous-unités.",
+			"label": "Sous-unités ?",
+			"description": "Drapeau indiquant que l'unité a des sous-unités.",
 			"help": ""
 		},
 		"can_rent": {
-			"label": "Peut louer",
+			"label": "Peut être loué",
 			"description": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location.",
 			"help": ""
 		},
 		"children_ids": {
-			"label": "Enfants",
+			"label": "Sous-unités",
 			"description": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels).",
 			"help": ""
 		},
 		"parent_id": {
-			"label": "Parent",
+			"label": "Unité parente",
 			"description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant.",
 			"help": ""
 		}
 	},
 	"view": {
 		"form.default": {
-			"name": "Unité de location",
+			"name": "Unité locative",
 			"description": "Une unité locative est une ressource qui peut être louée à un client.",
 			"layout": {
 				"section.rental_units": {
 					"label": "Détails"
 				},
 				"section.children_section": {
-					"label": "Enfants"
+					"label": "Sous-unités"
 				}
 			}
 		},
 		"list.default": {
-			"name": "Liste des Unités de location",
-			"description": "Cette vue est destinée à afficher la liste des logements locatifs.",
+			"name": "Liste des Unités locatives",
+			"description": "Cette vue est destinée à afficher la liste des unités locatives.",
 			"layout": {
 
 			}

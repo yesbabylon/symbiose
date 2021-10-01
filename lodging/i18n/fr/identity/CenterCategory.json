@@ -1,16 +1,16 @@
 {
-	"name": "Catégorie centrale",
-	"plural": "Catégories centrale",
+	"name": "Catégorie de Centres",
+	"plural": "Catégories de Centres",
 	"description": "La liste des catégories des centres.",
 	"model": {
 		"name": {
 			"label": "Nom",
-			"description": "Nom de catégorie.",
+			"description": "Nom de la catégorie.",
 			"help": ""
 		},
 		"centers_ids": {
 			"label": "Centres",
-			"description": "Liste des catégories auxquelles appartient le centre belge, le cas échéant.",
+			"description": "Liste des catégories auxquelles appartient le centre, le cas échéant.",
 			"help": ""
 		},
 		"rental_units_ids": {

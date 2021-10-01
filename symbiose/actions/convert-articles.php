@@ -40,6 +40,11 @@ $prices = [];
 $product_models = [];
 $products = [];
 
+$product_attributes = [];
+
+
+// remember allocated SKUs
+$sku_cache = [];
 
 // load accounting rules
 $accounting_rules = loadXlsFile($path.'finance_accounting_AccountingRule.xls');
@@ -412,13 +417,13 @@ foreach (glob($path."*R_Articles.csv") as $file) {
                 resolve SKU suffix
             */
             $sku_map = [
-                'moins de 3 ans'        => 'M3',
-                'de 3 ans à 5 ans'      => '3_5',
-                'de 3 ans à 11 ans'     => '3_11',
-                'de 6 ans à 11 ans'     => '6_11',
-                'de 12 ans à 25 ans'    => '12_25',
+                'moins de 3 ans'        => '0_3',
+                'de 3 ans à 5 ans'      => '3_6',
+                'de 3 ans à 11 ans'     => '3_12',
+                'de 6 ans à 11 ans'     => '6_12',
+                'de 12 ans à 25 ans'    => '12_26',
                 'moins de 26 ans'       => 'M26',
-                'plus de 26 ans'        => 'M100'
+                'plus de 26 ans'        => '26_99'
             ];
 
             $sku_suffix = '';
@@ -447,6 +452,7 @@ foreach (glob($path."*R_Articles.csv") as $file) {
 
             // check if a model by that name does already exist
             $product_model_id = 0;
+            
             foreach($product_models as $product_model_index => $product_model) {
                 if($product_model['name'] == $line['Libellé_Mnémo']) {
                     $product_model_id = $product_model['id'];
@@ -540,25 +546,75 @@ foreach (glob($path."*R_Articles.csv") as $file) {
             $product_sku = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $product_sku);
 
             $product_id = 0;
-            foreach($products as $product) {
-                if($product['sku'] == $product_sku) {
-                    $product_id = $product['id'];
-                    break;
-                }
+
+            if(isset($sku_cache[$product_sku])) {
+                $product_id = $sku_cache[$product_sku];
             }
 
+            $product_arributes_map = [
+                'A'     =>1,
+                '0_3'   =>2,
+                '3_6'   =>3,
+                '3_12'  =>4,
+                '6_12'  =>5,
+                '12_26' =>6,
+                '26_99' =>7,
+                'M12'   =>8,
+                'M26'   =>9
+            ];
+
             if(!$product_id) {
-                $product_id = sprintf("%d%04d", $pricelist_category_id, $line['Code_Article']);
+                // $product_id = sprintf("%d%04d", $pricelist_category_id, $line['Code_Article']);
+                $product_id = count($products) + 1;
 
                 $products[] = [
                     'id'                => $product_id,
+                    'code_legacy'       => $center_prefix.'-'.$line['Code_Article'],
                     'sku'               => $product_sku,
                     'name'              => $label,
                     'product_model_id'  => $product_model_id,
                     'stat_section_id'   => $stat_section_id,
                     'is_pack'           => $is_pack
                 ];
+
+                $sku_cache[$product_sku] = $product_id;
+                $product_attributes[] = [
+                    'id'                => count($product_attributes) + 1,
+                    'product_id'        => $product_id,
+                    'option_id'         => 1,
+                    'option_value_id'   => $product_arributes_map[$sku_suffix]
+                ];
+
+                if($sku_suffix == '26_99') {
+                    $sku_all = str_replace('26_99', 'A', $product_sku);
+                    if(!isset($sku_cache[$sku_all])) {
+
+                        $product_id = count($products) + 1;
+
+                        $products[] = [
+                            'id'                => $product_id,
+                            'code_legacy'       => $center_prefix.'-'.$line['Code_Article'].'-A',
+                            'sku'               => $sku_all,
+                            'name'              => str_replace('Plus de 26 ans', 'Tous les âges', $label),
+                            'product_model_id'  => $product_model_id,
+                            'stat_section_id'   => $stat_section_id,
+                            'is_pack'           => $is_pack
+                        ];
+
+                        $sku_cache[$sku_all] = $product_id;
+
+                        $product_attributes[] = [
+                            'id'                => count($product_attributes) + 1,
+                            'product_id'        => $product_id,
+                            'option_id'         => 1,
+                            'option_value_id'   => $product_arributes_map[$sku_suffix]
+                        ];
+
+                    }
+                }
             }
+
+
 
             /*
                 create price
@@ -628,6 +684,17 @@ if(count($products)) {
     file_put_contents($path."products.csv", "\xEF\xBB\xBF".implode(PHP_EOL, $data));    
 }
 
+if(count($product_attributes)) {
+    $data = [];
+    $first = $product_attributes[0];
+    $header = array_keys($first);
+    $data[] = implode(';', $header);
+
+    foreach($product_attributes as $product_attribute) {
+        $data[] = implode(';', array_values($product_attribute));
+    }
+    file_put_contents($path."product_attributes.csv", "\xEF\xBB\xBF".implode(PHP_EOL, $data));    
+}
 
 
 $context->httpResponse()

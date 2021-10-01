@@ -5,14 +5,14 @@
         "items": [
             {
                 "type": "field",
-                "label": "Organization",
-                "value": "organisation_id",
-                "width": "20%"
-            },            
-            {
-                "type": "field",
                 "value": "name",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Organization",
+                "value": "organisation_id",
+                "width": "15%"
             },
             {
                 "type": "field",
@@ -22,7 +22,7 @@
             {
                 "type": "field",
                 "value": "address_city",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
@@ -32,7 +32,7 @@
             {
                 "type": "field",
                 "value": "email",
-                "width": "10%"
+                "width": "20%"
             }
         ]
     }

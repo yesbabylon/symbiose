@@ -17,8 +17,8 @@
 			"label": "Type",
 			"description": "Type de prix.",
 			"selection": {
-				"simple": "simple",
-				"computed": "computé"
+				"direct": "direct",
+				"computed": "calculé"
 			},
 			"help": ""
 		},
