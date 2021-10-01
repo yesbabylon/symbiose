@@ -1,0 +1,19 @@
+{
+    "name": "Saison",
+    "plural": "Saisons",
+    "description": "",
+    "model": {
+        "center_category_id": {
+            "label": "Categorie de Centres",
+            "description": "Catégorie à laquelle est rattachée la saison.",
+            "help": "La catégorie permet de retrouver la liste des centres qui sont affectés par cette saison."
+        }
+    },
+    "view": {
+        "form.default": {
+        },
+        "list.default": {
+        }
+    },
+    "error": {}
+}
