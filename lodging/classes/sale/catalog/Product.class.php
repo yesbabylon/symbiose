@@ -11,6 +11,10 @@ class Product extends \sale\catalog\Product {
     public static function getColumns() {
 
         return [
+            'code_legacy' => [
+                'type'              => 'string',
+                'description'       => "Old code of the product."
+            ],
 
             'product_model_id' => [
                 'type'              => 'many2one',

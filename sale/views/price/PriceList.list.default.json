@@ -4,18 +4,33 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
                 "value": "name",
                 "width": "20%"
-            }, 
+            },
             {
-                "type": "field",            
+                "type": "field",
+                "value": "is_active",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "prices_count",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "date_from",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "date_to",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "duration",
                 "width": "20%"
             },
             {

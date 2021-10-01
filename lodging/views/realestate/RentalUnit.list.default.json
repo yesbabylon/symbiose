@@ -20,12 +20,7 @@
             },
             {
                 "type": "field",
-                "value": "status",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "category",
+                "value": "center_id",
                 "width": "20%"
             }
         ]

@@ -59,7 +59,7 @@ class Center extends \identity\Establishment {
 
             'season_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\season\SeasonCategory',
+                'foreign_object'    => 'sale\season\SeasonCategory',
                 'description'       => "Category of seasons used by the center.",
                 'required'          => true
             ],

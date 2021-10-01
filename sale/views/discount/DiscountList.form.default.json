@@ -39,10 +39,22 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "discount_class_id",
-                                                "width": "100%"
-                                            }
-                                            
+                                                "label": "Minimum Rate",
+                                                "value": "rate_min",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Maximum Rate",
+                                                "value": "rate_max",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Class Rate",
+                                                "value": "rate_class_id",
+                                                "width": "50%"
+                                            }                                            
                                         ]
                                     }
                                 ]

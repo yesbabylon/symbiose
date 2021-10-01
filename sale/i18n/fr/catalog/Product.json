@@ -1,57 +1,67 @@
 {
-	"name": "Produit",
-	"plural": "Produits",
-	"description": "",
-	"model": {
-		"name": {
-			"label": "Identification",
-			"description": "Mnémo pour identifier le produit (doublons autorisés).",
-			"help": ""
-		},
-		"sku": {
-			"label": "Sku",
-			"description": "Code unique  pour référence interne (Stock Keeping Unit).",
-			"help": ""
-		},
-		"ean": {
-			"label": "EAN",
-			"description": "Code IAN/EAN pour la génération de codes-barres.",
-			"help": ""
-		},
-		"description": {
-			"label": "Description",
-			"description": "Description de la variante (spécificités).",
-			"help": ""
-		},
-		"product_model_id": {
-			"label": "Modèle du produit",
-			"description": "Produit Modèle de cette variante.",
-			"help": ""
-		},
-		"prices_ids": {
-			"label": "Prix",
-			"description": "Les prix qui sont liés à ce produit.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Produit",
-			"description": "Un produit est une variante d'un modèle de produit. Il y a toujours au moins un produit pour un modèle de produit donné.",
-			"layout": {
-				"section.products_Section": {
-					"label": "Détails"
-				},
-				"section.prices_section": {
-					"label": "Prix"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Produits",
-			"description": "Cette vue est destinée à afficher la liste des produits.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Produit",
+    "plural": "Produits",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Mnémo pour identifier le produit (doublons autorisés).",
+            "help": ""
+        },
+        "sku": {
+            "label": "Sku",
+            "description": "Code unique pour référence interne (Stock Keeping Unit).",
+            "help": ""
+        },
+        "ean": {
+            "label": "EAN",
+            "description": "Code IAN/EAN pour la génération de codes-barres.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de la variante (spécificités).",
+            "help": ""
+        },
+        "product_model_id": {
+            "label": "Modèle de produit",
+            "description": "Modèle de produit de la variante.",
+            "help": ""
+        },
+        "prices_ids": {
+            "label": "Prix",
+            "description": "Liste de  prix  liés au produit.",
+            "help": ""
+        },
+        "is_pack": {
+            "label": "Pack ?",
+            "description": "Le produit contient d'autres produits.",
+            "help": ""
+        },
+        "family_id": {
+            "label": "Famille",
+            "description": "Famille à laquelle appartient le produit.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Produit",
+            "description": "Un produit est une variante de modèle de produit (template). Il y a toujours au moins un produit pour un modèle de produit donné.",
+            "layout": {
+                "section.products_Section": {
+                    "label": "Détails"
+                },
+                "section.prices_section": {
+                    "label": "Prix"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Produits",
+            "description": "Liste de toutes les variantes de produits.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

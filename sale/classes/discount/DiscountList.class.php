@@ -18,6 +18,11 @@ class DiscountList extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Short description of the list.",
+            ],
+
             'valid_from' => [
                 'type'              => 'date',
                 'description'       => "Date from which the list is valid (included).",
@@ -44,20 +49,25 @@ class DiscountList extends Model {
                 'required'          => true
             ],
 
-            'discount_class_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\discount\DiscountClass',
-                'description'       => 'The discount class the list belongs to.',
-                'required'          => true,
-                'onchange'          => 'sale\discount\DiscountList::onchangeDiscountClassId'
+            'rate_min' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Guaranteed minimal discount, if any.",
+                'default'           => 0.0
+            ],
+
+            'rate_max' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Maximal applicable discount, if any.",
+                'default'           => 1.0
             ],
 
             'rate_class_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'integer',
-                'function'          => 'sale\discount\DiscountList::getRateClassId',
-                'description'       => "The rate class that applies to the parent class of discount.",
-                'store'             => true
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\RateClass',
+                'description'       => "The rate class that applies to this class of discount.",
+                'required'          => true
             ]
 
         ];

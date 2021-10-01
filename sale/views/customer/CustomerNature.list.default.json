@@ -6,22 +6,22 @@
             {
                 "type": "field",            
                 "value": "code",
-                "width": "10%"
+                "width": "15%"
             }, 
             {
                 "type": "field",            
                 "value": "description",
-                "width": "50%"
+                "width": "45%"
             },
             {
                 "type": "field",            
                 "value": "rate_class_id",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",            
                 "value": "customer_type_id",
-                "width": "20%"
+                "width": "25%"
             }
         ]
     }

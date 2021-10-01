@@ -23,12 +23,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "rate",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "100%"                                                
+                                                "width": "50%"                                                
                                             }
                                         ]
                                     }

@@ -7,12 +7,6 @@
                 "type": "field",            
                 "value": "name",
                 "width": "20%"
-            }, 
-            {
-                "type": "field",     
-                "label": "Price List",       
-                "value": "price_list_ids",
-                "width": "20%"
             }
         ]
     }

@@ -10,7 +10,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -19,25 +19,30 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "66%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "date_from",
-                                                "width": "50%"                                                
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_to",
-                                                "width": "50%"                                                
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Category of Price List",
                                                 "value": "price_list_category_id",
-                                                "width": "100%"
+                                                "width": "33%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             },
                             {
@@ -54,7 +59,7 @@
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
                     }
                 ]

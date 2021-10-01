@@ -29,11 +29,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "status",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Center",
                                                 "value": "center_id",
                                                 "width": "50%"
@@ -112,47 +107,7 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Consumption",
-                        "id": "section.consumption_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "consumptions_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Consumption Items",
-                        "id": "section.consumptionItems_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "composition_items_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+                    }                   
                 ]
             }
         ]

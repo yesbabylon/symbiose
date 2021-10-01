@@ -20,7 +20,12 @@
         },
         "rate_class_id": {
             "label": "Catégorie tarifaire",
-            "description": "La catégorie tarifaire qui s'applique à cette nature client.",
+            "description": "La catégorie tarifaire qui s'applique à cette nature.",
+            "help": ""
+        },
+        "customer_type_id": {
+            "label": "Type de client",
+            "description": "Le type de client qui s'applique à cette nature.",
             "help": ""
         }
     },
