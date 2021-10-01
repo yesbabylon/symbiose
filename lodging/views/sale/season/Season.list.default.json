@@ -1,0 +1,19 @@
+{
+    "name": "Seasons",
+    "description": "This view is intended for displaying the list of seasons.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Category",
+                "value": "center_category_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

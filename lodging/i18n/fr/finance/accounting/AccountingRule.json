@@ -1,0 +1,26 @@
+{
+    "name": "Règle Comptable",
+    "plural": "Règles Comptables",
+    "description": "Les règles comptables permettent de préciser sur quel compte une opération doit être imputée.",
+    "model": {
+        "center_category_id": {
+            "label": "Catégorie de centre",
+            "description": "Catégorie de centres utilisant cette rèlge.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Règles de Tva",
+            "description": "Vue par défaut des règles comptables avec tous les champs",
+            "layout": {
+            }
+        },
+        "list.default": {
+            "name": "Liste des Règles de Tva",
+            "description": "Cette vue est destinée à afficher les règles comptables.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

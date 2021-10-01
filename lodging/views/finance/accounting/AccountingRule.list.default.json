@@ -1,0 +1,23 @@
+{
+    "name": "Accounting Rule List",
+    "description": "This view is intented for displaying the accounting rules.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "center_category_id",
+                "width": "20%"
+            }
+        ]
+    }
+}
