@@ -14,12 +14,20 @@ class Condition extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'required'          => true
+                'result_type'       => 'computed',
+                'function'          => 'sale\discount\Condition::getDisplayName',
+                'store'             => true,
+                'description'       => 'Resulting display name of the condition.'
             ],
 
             'operand' => [
                 'type'              => 'string',
-                'selection'         => ['season', 'nb_pers', 'duration', 'count_booking_24'],
+                'selection'         => [
+                                            'season', 
+                                            'nb_pers', 
+                                            'duration', 
+                                            'count_booking_24'
+                                       ],
                 'required'          => true
             ],
 
@@ -44,5 +52,15 @@ class Condition extends Model {
 
         ];
     }
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(__CLASS__, $oids, ['operand', 'operator', 'value']);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = "{$odata['operand']} {$odata['operator']} {$odata['value']}";
+        }
+        return $result;              
+    }
+
 
 }
