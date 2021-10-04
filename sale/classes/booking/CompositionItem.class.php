@@ -16,8 +16,8 @@ class CompositionItem extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\booking\CompositionItem::getDisplayName',
                 'result_type'       => 'string',
+                'function'          => 'sale\booking\CompositionItem::getDisplayName',
                 'store'             => true,
                 'description'       => 'The display name of the person (concatenation of first and last names).'
             ],
@@ -51,7 +51,7 @@ class CompositionItem extends Model {
             /* some legal constraints might apply, in which case we need extra contact details */
             'email' => [
                 'type'              => 'string',
-                'usage'             => 'email',                
+                'usage'             => 'email',
                 'description'       => "Email address of the contact."
             ],
 
@@ -92,13 +92,13 @@ class CompositionItem extends Model {
 
             // for filtering rental_unit_id field in forms
             'rental_units_ids' => [
-                'type'              => 'computed',                
+                'type'              => 'computed',
                 'function'          => 'sale\booking\CompositionItem::getRentalUnitsIds',
                 'result_type'       => 'one2many',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental units attached to the current booking."
             ]
-        
+
 
         ];
     }
@@ -127,6 +127,6 @@ class CompositionItem extends Model {
         foreach($res as $oid => $odata) {
             $result[$oid] = "{$odata['firstname']} {$odata['lastname']}";
         }
-        return $result;              
+        return $result;
     }
 }
