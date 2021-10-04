@@ -10,7 +10,7 @@ use equal\orm\Model;
 class DiscountListCategory extends Model {
 
     public static function getName() {
-        return "Discount lsit category";
+        return "Discount list category";
     }
 
     public static function getDescription() {
@@ -31,7 +31,8 @@ class DiscountListCategory extends Model {
             
             'description' => [
                 'type'              => 'string',
-                'description'       => "Criterias that need to be addressed by children lists."
+                'description'       => "Criterias that need to be addressed by children lists.",
+                'multilang'         => true
             ],
 
             'discount_lists_ids' => [
@@ -39,8 +40,7 @@ class DiscountListCategory extends Model {
                 'foreign_object'    => 'sale\discount\DiscountList',
                 'foreign_field'     => 'discount_list_category_id',
                 'description'       => 'The discount lists that are assigned to the category.'
-            ],
-
+            ]
 
         ];
     }

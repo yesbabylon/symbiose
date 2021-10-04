@@ -37,12 +37,13 @@ class AutosaleList extends Model {
                 'description'       => 'The lines that apply to the list.'
             ],
 
-            'autosale_category_id' => [
+            'autosale_list_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\autosale\AutosaleCategory',
+                'foreign_object'    => 'sale\autosale\AutosaleListCategory',
                 'description'       => 'The autosale category the list belongs to.',
                 'required'          => true
-            ],            
+            ]
+            
         ];
     }
 

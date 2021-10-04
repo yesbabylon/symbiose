@@ -84,11 +84,11 @@ class Partner extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $partners = $om->read(__CLASS__, $oids, ['partner_identity_id.name']);
-        foreach($oids as $oid) {
+        $partners = $om->read(__CLASS__, $oids, ['partner_identity_id.name'], $lang);
+        foreach($partners as $oid => $partner) {
             $result[$oid] = '';
-            if(isset($partners[$oid]['partner_identity_id.name'])) {
-                $result[$oid] = $partners[$oid]['partner_identity_id.name'];
+            if(isset($partner['partner_identity_id.name'])) {
+                $result[$oid] = $partner['partner_identity_id.name'];
             }
         }
         return $result;

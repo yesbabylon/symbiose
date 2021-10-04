@@ -36,6 +36,13 @@ class Discount extends Model {
                 'required'          => true
             ],
 
+            'discount_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\discount\DiscountCategory',
+                'description'       => 'The discount category the discount belongs to.',
+                'required'          => true
+            ],
+
             'type' => [
                 'type'              => 'string',
                 'selection'         => [ 
