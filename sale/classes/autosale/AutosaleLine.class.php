@@ -15,7 +15,8 @@ class AutosaleLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Reason of the automatic sale."
+                'description'       => "Reason of the automatic sale.",
+                'multilang'         => true
             ],
 
             'qty' => [
@@ -28,7 +29,7 @@ class AutosaleLine extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product targeted by the line.'
             ],
-             
+
             'autosale_list_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\autosale\AutosaleList',
@@ -40,7 +41,7 @@ class AutosaleLine extends Model {
                 'foreign_object'    => 'sale\autosale\Condition',
                 'foreign_field'     => 'autosale_line_id',
                 'description'       => 'The conditions that apply to the auto-sale.'
-            ],            
+            ],
 
 
         ];

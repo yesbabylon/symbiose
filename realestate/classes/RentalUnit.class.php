@@ -107,6 +107,12 @@ class RentalUnit extends Model {
                 'foreign_object'    => 'sale\booking\CompositionItem',
                 'foreign_field'     => 'rental_unit_id',
                 'description'       => "The composition items that relate to the rental unit."
+            ],
+
+            'rental_unit_category_id' => [
+                'type'              => 'many2one',
+                'description'       => "Category which current unit belongs to, if any.",
+                'foreign_object'    => 'realestate\RentalUnitCategory'
             ]
 
         ];
