@@ -54,7 +54,23 @@ class Customer extends \identity\Partner {
                 'result_type'       => 'integer',
                 'function'          => 'sale\customer\Customer::getCountBooking24',
                 'description'       => 'Number of bookings made during last 24 months.'
+            ],
+
+            'address' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'sale\customer\Customer::getAddress',
+                'description'       => 'Main address from related Identity.',
+                'store'             => true
+            ],
+
+            'bookings_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Booking',
+                'foreign_field'     => 'customer_id',
+                'description'       => "The bookings history of the customer.",
             ]
+
 
         ];
     }
@@ -65,11 +81,27 @@ class Customer extends \identity\Partner {
             foreach($customers as $cid => $customer) {
                 $customer_type_id = $customer['customer_nature_id.customer_type_id'];
                 $rate_class_id = $customer['customer_nature_id.rate_class_id'];
-                $om->write(__CLASS__, $oids, ['rate_class_id' => $rate_class_id, 'customer_type_id' => $customer_type_id]);
+                if(!empty($customer_type_id) && !empty($rate_class_id)) {
+                    $om->write(__CLASS__, $oids, ['rate_class_id' => $rate_class_id, 'customer_type_id' => $customer_type_id]);
+                }                
             }
-        }
-        
+        }        
     }
+
+    /**
+     * Computes the number of bookings made by the customer during the last two years.
+     * 
+     */
+    public static function getAddress($om, $oids, $lang) {
+        $result = [];
+
+        $customers = $om->read(__CLASS__, $oids, ['partner_identity_id.address_street', 'partner_identity_id.address_city'], $lang);
+        foreach($customers as $oid => $customer) {            
+            $result[$oid] = "{$customer['partner_identity_id.address_street']} {$customer['partner_identity_id.address_city']}";
+        }
+        return $result;
+    }
+
 
     /**
      * Computes the number of bookings made by the customer during the last two years.
@@ -84,6 +116,5 @@ class Customer extends \identity\Partner {
             $result[$oid] = count($bookings_ids);
         }
         return $result;
-    }
-
+    }    
 }

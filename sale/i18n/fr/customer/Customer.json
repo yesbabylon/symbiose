@@ -9,7 +9,7 @@
             "help": ""
         },
         "owner_identity_id": {
-            "label": "Origine de la relation",
+            "label": "Client de",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
             "help": ""
         },
@@ -47,13 +47,25 @@
             "label": "Nature du client",
             "description": "La nature (origine) permet d'attribuer une catégorie tarifaire.",
             "help": ""
-        }        
+        },
+        "address": {
+            "label": "Adresse",
+            "description": "Adresse principale du Client'.",
+            "help": ""
+        }
     },
     "view": {
         "form.default": {
             "name": "Client",
             "description": "Formulaire de base pour afficher un client (Partenaire).",
-            "layout": {}
+            "layout": {
+                "section.customer_details": {
+                    "label": "Détails"
+                },
+                "section.customer_bookings": {
+                    "label": "Historique des Réservations"
+                }
+            }
         },
         "list.default": {
             "name": "Clients",

@@ -39,7 +39,7 @@
             "help": ""
         },
         "is_pack": {
-            "label": "Pack",
+            "label": "Pack ?",
             "description": "S'agit-il d'un pack ?",
             "help": ""
         },
@@ -129,6 +129,11 @@
             "label": "Produits (variantes)",
             "description": "Liste des variantes de ce modèle.",
             "help": ""
+        },
+        "stat_section_id": {
+            "label": "Statistiques",
+            "description": "Section statistique associée au produit.",
+            "help": ""
         }
     },
     "view": {
@@ -138,6 +143,9 @@
             "layout": {
                 "section.product_model": {
                     "label": "Détails"
+                },
+                "section.products": {
+                    "label": "Variantes"
                 },
                 "section.groups_section": {
                     "label": "Groupes"

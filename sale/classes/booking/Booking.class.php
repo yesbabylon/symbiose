@@ -43,9 +43,17 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'domain'            => ['relationship', '=', 'customer'],
-                'description'       => "The customer to whom the booking relates to.",
+                'description'       => "The customer whom the booking relates to.",
                 'required'          => true,
                 'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
+            ],
+
+
+            'customer_identity_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'sale\booking\Booking::getCustomerIdentityId',
+                'description'       => "The identifier of the Customer identity."
             ],
 
             'center_id' => [
@@ -154,7 +162,7 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'visible'           => [ 'has_payer_organisation', '=', true ],
-                'domain'            => [ ['owner_identity_id', '=', 'object.customer_id'], ['relationship', '=', 'payer'] ],                
+                'domain'            => [ ['owner_identity_id', '=', 'object.customer_identity_id'], ['relationship', '=', 'payer'] ],                
                 'description'       => "The partner whom the invoices have to be sent to."
             ]
             
@@ -163,9 +171,16 @@ class Booking extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_id.name']);
+        $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_id', 'customer_id.partner_identity_id'], $lang);
+
         foreach($bookings as $oid => $odata) {
-            $result[$oid] = date("Ymd", $odata['created'])."-{$odata['customer_id.name']}";
+            $increment = 1;
+            // search for bookings made the same day by same customer, if any
+            if(!empty($odata['customer_id'])) {
+                $bookings_ids = $om->search(__CLASS__, [ ['created', '=', $odata['created']], ['customer_id','=', $odata['customer_id']] ]);
+                $increment = count($bookings_ids);    
+            }
+            $result[$oid] = sprintf("%s-%08d-%02d", date("ymd", $odata['created']), $odata['customer_id.partner_identity_id'], $increment);
         }
         return $result;              
     }
@@ -214,6 +229,16 @@ class Booking extends Model {
         // #todo
     }
 
+    public static function getCustomerIdentityId($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['customer_id.partner_identity_id']);
+
+        foreach($bookings as $oid => $booking) {
+            $result[$oid] = (int) $booking['customer_id.partner_identity_id'];
+        }
+        return $result;
+    }
+
     public static function getPrice($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
@@ -231,9 +256,9 @@ class Booking extends Model {
         return $result;
     }    
 
-    public static function onchangeCustomerId($om, $oids, $lang) {
-        // force immediate recomputing of the name/reference
+    public static function onchangeCustomerId($om, $oids, $lang) {        
         $om->write(__CLASS__, $oids, ['name' => null]);
+        // force immediate recomputing of the name/reference
         $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'booking_lines_groups_ids']);
         if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
             BookingLineGroup::_updatePriceAdapters($om, $booking_lines_groups_ids, $lang);

@@ -29,7 +29,8 @@
                                                 "label": "Identity of Owner",
                                                 "value": "owner_identity_id",
                                                 "width": "50%",
-                                                "readonly": true
+                                                "readonly": true,
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",

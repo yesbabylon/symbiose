@@ -1,50 +1,60 @@
 {
-    "name": "ProductModel",
-    "description": "Thies view is intended for displaying the list product models.",
+    "name": "Product Models",
+    "description": "This view is intended for displaying the list of product models.",
     "layout": {
         "items": [
             {
                 "type": "field",
-                "label": "Name",
                 "value": "name",
-                "width": "40%"
+                "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Family",
-                "value": "family_id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "label": "Type",
                 "value": "type",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
-                "label": "Quantity Accounting Method",
-                "value": "qty_accounting_method",
-                "width": "10%"
+                "value": "family_id",
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
-                "label": "Pack",
+                "value": "can_sell",
+                "width": "5%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "is_pack",
-                "width": "10%"
+                "width": "5%",
+                "sortable": true
             },
             {
                 "type": "field",
-                "label": "Meal",
+                "value": "stat_section_id",
+                "width": "5%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "qty_accounting_method",
+                "width": "5%"
+            },
+            {
+                "type": "field",
                 "value": "is_meal",
-                "width": "10%"
+                "width": "5%",
+                "sortable": true
             },
             {
                 "type": "field",
-                "label": "Accomodation",
                 "value": "is_accomodation",
-                "width": "10%"
-            }
+                "width": "5%",
+                "sortable": true
+            }            
         ]
     }
 }

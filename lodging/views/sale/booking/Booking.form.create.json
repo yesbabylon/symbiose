@@ -1,13 +1,13 @@
 {
-    "name": "Product",
-    "description": "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.",
+    "name": "Booking",
+    "description": "",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "section.products_Section",
+                        "id": "section.booking_info",
                         "rows": [
                             {
                                 "columns": [
@@ -16,42 +16,30 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
+                                                "label": "Center",
+                                                "value": "center_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Type",
+                                                "value": "type_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "view": "form.create"
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "sku",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "ean",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_pack",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_locked",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Product Model",
-                                                "value": "product_model_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
+                                                "value": "customer_identity_id",
+                                                "width": "0%",
+                                                "visible": false
                                             }
                                         ]
                                     }
@@ -60,8 +48,8 @@
                         ]
                     },
                     {
-                        "label": "Prices",
-                        "id": "section.prices_section",
+                        "label": "Description",
+                        "id": "section.booking_description",
                         "rows": [
                             {
                                 "columns": [
@@ -70,7 +58,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "prices_ids",
+                                                "value": "description",
                                                 "width": "100%"
                                             }
                                         ]

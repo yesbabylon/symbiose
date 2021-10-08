@@ -20,7 +20,8 @@ class Product extends \sale\catalog\Product {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\catalog\Product::onchangeProductModelId'
             ],
 
         ];

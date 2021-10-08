@@ -20,7 +20,7 @@
             },
             {
                 "type": "field",
-                "value": "can_buy",
+                "value": "can_sell",
                 "width": "5%"
             },
             {
@@ -30,14 +30,10 @@
             },
             {
                 "type": "field",
-                "value": "description_delivery",
-                "width": "25%"
-            },
-            {
-                "type": "field",
-                "value": "description_receipt",
-                "width": "25%"
-            }
+                "value": "stat_section_id",
+                "width": "5%"
+            }            
+            
         ]
     }
 }

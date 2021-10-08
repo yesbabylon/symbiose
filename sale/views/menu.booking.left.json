@@ -10,18 +10,6 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "item.new_booking",
-                  "type": "entry",
-                  "label": "New booking",
-                  "description": "", 
-                  "icon": "add",
-                  "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "form.default",
-                    "purpose": "create"
-                  }
-                },
-                {
                   "id": "item.all_booking",
                   "type": "entry",
                   "label": "All bookings",

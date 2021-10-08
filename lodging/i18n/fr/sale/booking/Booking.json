@@ -13,6 +13,11 @@
             "description": "Le centre auquel se rapporte la réservation.",
             "help": ""
         },
+        "type_id": {
+            "label": "Type",
+            "description": "Le type de réservation.",
+            "help": ""
+        },
         "booking_lines_ids": {
             "label": "Lignes de Réservation",
             "description": "Consommations détaillées de la réservation.",
@@ -43,10 +48,21 @@
                 },
                 "action.invoice": {
                     "label": "Facturer le solde"
-                }                
+                }
+            },
+            "routes": {
+                "item.booking.edit": {
+                    "label": "Définir le séjour"
+                },
+                "item.booking.composition": {
+                    "label": "Liste de hôtes"
+                },
+                "item.booking.contract": {
+                    "label": "Envoyer le contrat"
+                }
             },
             "layout": {
-                "section.booking_section": {
+                "section.booking_info": {
                     "label": "Infos générales"
                 },
                 "section.bookingLine_section": {
@@ -55,12 +71,27 @@
                 "section.bookingLineGroups_section": {
                     "label": "Groupes de Lignes de Réservation"
                 },
-				"section.contacts_section": {
-					"label": "Contacts"
-				},
-				"section.contracts_section": {
-					"label": "Contracts"
-				}                
+                "section.booking_contacts": {
+                    "label": "Contacts"
+                },
+                "section.booking_contracts": {
+                    "label": "Contrats"
+                }
+            }
+        },
+        "form.create": {
+            "name": "Réservation",
+            "description": "Formulaire d'édition d'une réservation",
+            "layout": {
+                "section.booking_info": {
+                    "label": "Infos générales"
+                },
+                "section.booking_description": {
+                    "label": "Description"
+                },
+                "section.booking_contacts": {
+                    "label": "Contacts"
+                }
             }
         },
         "list.default": {

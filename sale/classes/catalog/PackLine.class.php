@@ -54,7 +54,7 @@ class PackLine extends Model {
                 'usage'             => 'amount/percent',
                 'default'           => 1.0,
                 'description'       => "Percent share of the line for analytics."
-            ],            
+            ]
 
         ];
     }

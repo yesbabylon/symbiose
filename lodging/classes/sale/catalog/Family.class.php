@@ -28,6 +28,13 @@ class Family extends \sale\catalog\Family {
                 'rel_table'         => 'sale_product_family_rel_identity_center', 
                 'rel_foreign_key'   => 'center_id',
                 'rel_local_key'     => 'family_id'
+            ],
+
+            'product_models_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'foreign_field'     => 'family_id',
+                'description'       => "Product models which current product belongs to the family."
             ]
 
         ];

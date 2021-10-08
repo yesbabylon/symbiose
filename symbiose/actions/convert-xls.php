@@ -59,7 +59,7 @@ foreach (glob($path."*.xls") as $filename) {
 
         $objects = [];
 
-        foreach($data as $raw) {
+        foreach($data as $index => $raw) {
 
             $line = array_combine($header, $raw);
 
@@ -71,7 +71,13 @@ foreach (glob($path."*.xls") as $filename) {
             // clean up the line
             $values = $line;
             foreach($values as $field => $value) {
-                if(empty($value) || $field == 'lang') {
+
+                if($field != 'lang' && !isset($schema[$field]['type'])) {
+                    echo "$entity : malformed schema for field $field".PHP_EOL;
+                    continue;
+                }
+
+                if(!in_array($schema[$field]['type'], ['boolean', 'integer', 'float']) && (empty($value) || $field == 'lang')) { 
                     unset($values[$field]);
                     continue;
                 }
@@ -79,6 +85,9 @@ foreach (glob($path."*.xls") as $filename) {
                 // adapt dates
                 if($schema[$field]['type'] == 'date') {
                     $date_parts = explode('/', $value);
+                    if(count($date_parts) < 3) {
+                        echo "$entity : malformed date for field $field at index $index".PHP_EOL;
+                    }
                     $values[$field] = sprintf("%04d-%02d-%02d", $date_parts[2], $date_parts[0], $date_parts[1]);
                 }
 

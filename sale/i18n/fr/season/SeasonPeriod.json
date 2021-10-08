@@ -1,35 +1,40 @@
 {
-	"name": "Période de la saison",
-	"plural": "Périodes de la saison",
-	"description": "Les saisons de l'année.",
-	"model": {
-		"date_from": {
-			"label": "Valide du",
-			"description": "Date (incluse) de début de la saison.",
+    "name": "Période de la saison",
+    "plural": "Périodes de la saison",
+    "description": "Les saisons de l'année.",
+    "model": {
+		"season_id": {
+			"label": "Saison",
+			"description": "Saison relative à la période.",
 			"help": ""
 		},
-		"date_to": {
-			"label": "Jusqu'au",
-			"description": "Date (incluse) à laquelle la saison se termine.",
-			"help": ""
-		},
-		"season_type_id": {
-			"label": "Type",
-			"description": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...).",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Période de la saison",
-			"description": "",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Période de la saison",
-			"description": "Cette vue est destinée à afficher la liste des périodes de la saison.",
-			"layout": {}
-		}
-	},
-	"error": {}
+        "date_from": {
+            "label": "Valide du",
+            "description": "Date (incluse) de début de la saison.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Jusqu'au",
+            "description": "Date (incluse) à laquelle la saison se termine.",
+            "help": ""
+        },
+        "season_type_id": {
+            "label": "Type",
+            "description": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...).",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Période de la saison",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Période de la saison",
+            "description": "Cette vue est destinée à afficher la liste des périodes de la saison.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

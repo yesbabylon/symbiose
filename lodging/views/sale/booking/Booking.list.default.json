@@ -1,6 +1,8 @@
 {
     "name": "Booking list",
-    "description": "This view is intended for displaying the list of bookings.",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "order": "created",
+    "sort": "desc",
     "exports": [
         {
             "id": "export.print.contract",
@@ -12,48 +14,66 @@
             "visible": ["status", "=", "quote"]
         }
     ],
+    "actions": [
+        {
+            "id": "ACTIONS.CREATE",
+            "view": "form.create"
+        }
+    ],    
     "layout": {
         "items": [
             {
                 "type": "field",
                 "value": "name",
                 "label": "reference",
-                "width": "5%"
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "created",
+                "label": "Created",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "modified",
+                "label": "Modified",
+                "width": "15%"
             },
             {
                 "type": "field",
                 "label": "Customer",
                 "value": "customer_id",
-                "width": "15%"
+                "width": "20%"
             },
             {
                 "type": "field",
                 "label": "From",
                 "value": "date_from",
-                "width": "15%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "To",
                 "value": "date_to",
-                "width": "15%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Center",
                 "value": "center_id",
-                "width": "15%"
+                "width": "20%"
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type_id",
-                "width": "15%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "status",
-                "width": "15%"
+                "width": "10%"
             }
         ]
     }

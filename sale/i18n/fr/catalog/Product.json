@@ -42,7 +42,22 @@
             "label": "Famille",
             "description": "Famille à laquelle appartient le produit.",
             "help": ""
-        }
+        },
+        "can_buy": {
+            "label": "Peut être acheté",
+            "description": "Ce produit peut-il être acheté ?",
+            "help": ""
+        },
+        "can_sell": {
+            "label": "Peut être vendu",
+            "description": "Ce produit peut-il être vendu ?",
+            "help": ""
+        },
+        "stat_section_id": {
+            "label": "Statistiques",
+            "description": "Section statistique associée au produit.",
+            "help": ""
+        }        
     },
     "view": {
         "form.default": {
@@ -54,6 +69,12 @@
                 },
                 "section.prices_section": {
                     "label": "Prix"
+                },
+                "section.groups": {
+                    "label": "Groupes"
+                },
+                "section.pack_lines": {
+                    "label": "Produits du packs"
                 }
             }
         },

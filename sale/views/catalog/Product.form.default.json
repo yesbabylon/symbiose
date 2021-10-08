@@ -56,6 +56,29 @@
                                             {
                                                 "type": "field",
                                                 "value": "prices_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["is_active", "=", true]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Prices",
+                        "id": "section.groups",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "groups_ids",
                                                 "width": "100%"
                                             }
                                         ]
@@ -63,7 +86,27 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "label": "Pack Products",
+                        "id": "section.pack_lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "pack_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                      
                 ]
             }
         ]

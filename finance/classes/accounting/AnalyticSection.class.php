@@ -31,6 +31,17 @@ class AnalyticSection extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Short description of the section.",
+            ],
+
+            'is_locked' => [
+                'type'              => 'boolean',
+                'description'       => "Can the section be updated.",
+                'default'           => false
+            ],
+
             'label' => [
                 'type'              => 'string',
                 'description'       => "Short description of the section."

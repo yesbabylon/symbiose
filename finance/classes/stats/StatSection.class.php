@@ -31,6 +31,11 @@ class StatSection extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Short description of the section."
+            ],
+
             'label' => [
                 'type'              => 'string',
                 'description'       => "Short description of the section."

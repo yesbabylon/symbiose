@@ -1,59 +1,64 @@
 {
-	"name": "Prix",
-	"plural": "Prix",
-	"description": "Le prix du produit.",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Le nom d'affichage du prix.",
-			"help": ""
-		},
-		"price": {
-			"label": "Prix",
-			"description": "Prix ​​hors taxes.",
-			"help": ""
-		},
-		"type": {
-			"label": "Type",
-			"description": "Type de prix.",
-			"selection": {
-				"direct": "direct",
-				"computed": "calculé"
-			},
-			"help": ""
-		},
-		"calculation_method_id": {
-			"label": "Méthode de calcul",
-			"description": "Méthode à utiliser pour le calcul des prix.",
-			"help": ""
-		},
-		"price_list_id": {
-			"label": "Liste de prix",
-			"description": "La liste de prix à laquelle appartient le prix.",
-			"help": ""
-		},
-		"accounting_rule_id": {
-			"label": "Règle comptable de vente",
-			"description": "Règle comptable de vente. Si défini, remplace la règle de produit.",
-			"help": ""
-		},
-		"product_id": {
-			"label": "Produit",
-			"description": "Le produit (sku) auquel le prix s'applique.",
+    "name": "Prix",
+    "plural": "Prix",
+    "description": "Le prix du produit.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Le nom d'affichage du prix.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix",
+            "description": "Prix ​​hors taxes.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type de prix.",
+            "selection": {
+                "direct": "direct",
+                "computed": "calculé"
+            },
+            "help": ""
+        },
+        "calculation_method_id": {
+            "label": "Méthode de calcul",
+            "description": "Méthode à utiliser pour le calcul des prix.",
+            "help": ""
+        },
+        "price_list_id": {
+            "label": "Liste de prix",
+            "description": "La liste de prix à laquelle appartient le prix.",
+            "help": ""
+        },
+        "accounting_rule_id": {
+            "label": "Règle comptable de vente",
+            "description": "Règle comptable de vente. Si défini, remplace la règle de produit.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit (sku) auquel le prix s'applique.",
+            "help": ""
+        },
+		"is_active": {
+			"label": "Actif?",
+			"description": "Le prix est en cours d'application.",
 			"help": ""
 		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Prix",
-			"description": "",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Liste de Prix",
-			"description": "Cette vue est destinée à afficher la liste des prix.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    },
+    "view": {
+        "form.default": {
+            "name": "Prix",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Liste de Prix",
+            "description": "Cette vue est destinée à afficher la liste des prix.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }
