@@ -33,7 +33,7 @@ class Product extends Model {
                 'usage'             => 'uri/urn:ean',
                 'description'       => "IAN/EAN code for barcode generation."
             ],
-            
+
             'description' => [
                 'type'              => 'text',
                 'description'       => "Description of the variant (specifics)."
@@ -43,7 +43,8 @@ class Product extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\catalog\Product::onchangeProductModelId'
             ],
 
             'family_id' => [
@@ -53,17 +54,24 @@ class Product extends Model {
                 'default'           => 'sale\catalog\Product::defaultFamilyId'
             ],
 
-            'is_pack' => [                
+            'is_pack' => [
                 'type'              => 'boolean',
                 'description'       => 'Is the product a pack? (from model).',
                 'default'           => 'sale\catalog\Product::defaultIsPack'
+            ],
+
+            'pack_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\PackLine',
+                'foreign_field'     => 'parent_product_id',
+                'description'       => "Products that are bundled in the pack.",
             ],
 
             'is_locked' => [
                 'type'              => 'boolean',
                 'description'       => 'Is the pack static? (cannot be modified).',
                 'default'           => false,
-                'visible'           => [ ['is_pack', '=', true] ]                
+                'visible'           => [ ['is_pack', '=', true] ]
             ],
 
             // if the organisation uses price-lists, the price to use depends on the applicable
@@ -79,6 +87,27 @@ class Product extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\stats\StatSection',
                 'description'       => 'Statistics section (overloads the model one, if any).'
+            ],
+
+            'can_buy' => [
+                'type'              => 'boolean',
+                'description'       => "Can this product be purchassed?",
+                'default'           => false
+            ],
+
+            'can_sell' => [
+                'type'              => 'boolean',
+                'description'       => "Can this product be sold?",
+                'default'           => true
+            ],
+
+            'groups_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\catalog\Group',
+                'foreign_field'     => 'products_ids',
+                'rel_table'         => 'sale_catalog_product_rel_product_group',
+                'rel_foreign_key'   => 'group_id',
+                'rel_local_key'     => 'product_id'
             ]
 
         ];
@@ -89,7 +118,7 @@ class Product extends Model {
             $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['family_id']);
             if($models > 0 && count($models)) {
                 return $models[$values['product_model_id']]['family_id'];
-            }            
+            }
         }
         return null;
     }
@@ -99,9 +128,21 @@ class Product extends Model {
             $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['is_pack']);
             if($models > 0 && count($models)) {
                 return $models[$values['product_model_id']]['is_pack'];
-            }            
+            }
         }
         return null;
-    }    
+    }
+
+    public static function onchangeProductModelId($om, $oids, $lang) {
+        $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
+        foreach($products as $pid => $product) {
+            $om->write(get_called_class(), $pid, [
+                'can_sell'      => $product['product_model_id.can_sell'], 
+                'groups_ids'    => $product['product_model_id.groups_ids'], 
+                'family_id'     => $product['product_model_id.family_id']
+            ]);
+        }
+    }
+
 
 }

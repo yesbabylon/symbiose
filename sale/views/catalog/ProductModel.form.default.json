@@ -99,7 +99,22 @@
                                                 "type": "field",
                                                 "value": "schedule_offset",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Description",
+                        "id": "section.description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "description_delivery",
@@ -109,6 +124,26 @@
                                                 "type": "field",
                                                 "value": "description_receipt",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
+                    {
+                        "label": "Products",
+                        "id": "section.products",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -155,7 +190,7 @@
                                 ]
                             }
                         ]
-                    }
+                    }                                      
                 ]
             }
         ]

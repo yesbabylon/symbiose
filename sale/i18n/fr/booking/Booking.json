@@ -13,6 +13,16 @@
             "description": "La personne qui a effectué cette réservation.",
             "help": ""
         },
+        "created": {
+            "label": "Créée",
+            "description": "Date de création de la réservation.",
+            "help": ""
+        },
+        "modified": {
+            "label": "Modifiée",
+            "description": "Dernière modification de la réservation.",
+            "help": ""
+        },
         "description": {
             "label": "Description",
             "description": "Raison de la réservation.",
@@ -50,7 +60,7 @@
         },
         "type_id": {
             "label": "Type",
-            "description": "Type d'organisation.",
+            "description": "Type de réservation.",
             "help": ""
         },
         "status": {
@@ -95,10 +105,10 @@
             "description": "",
             "layout": {
                 "section.booking_info": {
-                    "label": "Détails"
+                    "label": "Infos générales"
                 },
                 "section.booking_description": {
-                    "label": "Descriptions"
+                    "label": "Description"
                 },
                 "section.booking_contacts": {
                     "label": "Contacts"
@@ -117,5 +127,15 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "customer_id": {
+            "missing_mandatory": "Champ obligatoire."
+        },
+        "center_id": {
+            "missing_mandatory": "Champ obligatoire."
+        },
+        "type_id": {
+            "missing_mandatory": "Champ obligatoire."
+        }        
+    }
 }

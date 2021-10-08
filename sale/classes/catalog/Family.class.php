@@ -45,8 +45,14 @@ class Family extends Model {
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'Full path of the family with ancestors.'
-            ]
+            ],
 
+            'product_models_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'foreign_field'     => 'family_id',
+                'description'       => "Product models which current product belongs to the family."
+            ]
 
         ];
     }
@@ -56,7 +62,8 @@ class Family extends Model {
         $res = $om->read(__CLASS__, $oids, ['name', 'parent_id']);
         foreach($res as $oid => $odata) {
             if($odata['parent_id']) {
-                $result[$oid] = self::getPath($om, (array) $odata['parent_id'], $lang).'/'.$odata['name'];
+                $paths = self::getPath($om, (array) $odata['parent_id'], $lang);
+                $result[$oid] = $paths[$odata['parent_id']].'/'.$odata['name'];
             }
             else {
                 $result[$oid] = $odata['name'];

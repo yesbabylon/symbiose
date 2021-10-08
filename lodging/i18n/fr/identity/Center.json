@@ -74,9 +74,18 @@
                 "section.product_families": {
                     "label": "Familles de produits"
                 },
+                "section.product_groups": {
+                    "label": "Groupes de produits"
+                },
                 "section.users": {
                     "label": "Utilisateurs"
-                }
+                },
+                "details.address": {
+                    "label": "Adresse"
+                },
+                "details.identification": {
+                    "label": "Identification"
+                }                
             }
         },
         "list.default": {

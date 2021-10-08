@@ -52,7 +52,7 @@ class Center extends \identity\Establishment {
 
             'autosale_list_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\autosale\AutosaleCategory',
+                'foreign_object'    => 'sale\autosale\AutosaleListCategory',
                 'description'       => 'Autosale list category used by the center.',
                 'required'          => true
             ],
@@ -104,7 +104,16 @@ class Center extends \identity\Establishment {
                 'rel_table'         => 'sale_identity_rel_center_user',
                 'rel_foreign_key'   => 'user_id',
                 'rel_local_key'     => 'center_id'
+            ],
+
+            'product_groups_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\Catalog\Group',
+                'foreign_field'     => 'center_id',
+                'description'       => "Group targeted by the center.",
+                'required'          => true
             ]
+
         ];
     }
 }

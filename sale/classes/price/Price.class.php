@@ -48,6 +48,14 @@ class Price extends Model {
                 'required'          => true
             ],
 
+            'is_active' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'sale\price\Price::getIsActive',
+                'store'             => true,
+                'description'       => "Is the price currently applicable?"
+            ],
+
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
@@ -60,7 +68,7 @@ class Price extends Model {
                 'description'       => "The Product (sku) the price applies to.",
                 'required'          => true
             ]
-            
+
         ];
     }
 
@@ -72,5 +80,18 @@ class Price extends Model {
             $result[$oid] = "{$odata['product_id.name']} ({$odata['product_id.sku']})";
         }
         return $result;
-    }    
+    }
+
+    public static function getIsActive($om, $oids, $lang) {
+        $result = [];
+        $prices = $om->read(__CLASS__, $oids, ['price_list_id.is_active']);
+
+        if($prices > 0 && count($prices)) {
+            foreach($prices as $pid => $price) {
+                $result[$pid] = $price['price_list_id.is_active'];
+            }
+        }
+        return $result;
+    }
+
 }

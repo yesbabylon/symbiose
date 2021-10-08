@@ -28,10 +28,6 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 $path = "packages/symbiose/test/";
 
-$Kaleo_commons = explode(PHP_EOL, file_get_contents($path.'Kaleo_commons.csv'));
-$GG_commons = explode(PHP_EOL, file_get_contents($path.'GG_commons.csv'));
-$GA_commons = explode(PHP_EOL, file_get_contents($path.'GA_commons.csv'));
-
 
 $packs = [];
 $pack_lines = [];
@@ -42,7 +38,7 @@ $products = loadXlsFile($path.'products.csv');
 
 foreach (glob($path."*R_Packs.csv") as $file) {
 
-
+echo "reading $file".PHP_EOL;
 
     $path_parts = pathinfo($file);
     $filetype = IOFactory::identify($file);
@@ -51,6 +47,8 @@ foreach (glob($path."*R_Packs.csv") as $file) {
 
     $nomenc_lines = loadXlsFile($path.$filename.'_Nomenc.csv');
 
+
+    // read each pack
 
     /** @var Reader */
     $reader = IOFactory::createReader($filetype);
@@ -69,11 +67,13 @@ foreach (glob($path."*R_Packs.csv") as $file) {
         $data = $worksheet->toArray();
 
         $header = array_shift($data);
-
-
+        
+// parcourir le fichier des lignes
         foreach($data as $raw) {
 
+
             $line = array_combine($header, $raw);
+
 
             $centers_map = [
                 'GG' => [
@@ -224,6 +224,7 @@ foreach (glob($path."*R_Packs.csv") as $file) {
                         else {
                             // create  pack_line
 
+                            echo "found match {$nomenc_code} : {$subproduct_sku}".PHP_EOL;
                             $pack_line_id = count($pack_lines) + 1;
                             $pack_lines[] = [
                                 'id'                => $pack_line_id,

@@ -1,35 +1,47 @@
 {
-	"name": "Saison",
-	"plural": "Saisons",
-	"description": "Les saisons de l'année.",
-	"model": {
-		"name": {
-			"label": "Nom de saison",
-			"description": "Bref mnémo de la saison.",
-			"help": ""
-		},
-		"season_category_id": {
-			"label": "Catégorie de saison",
-			"description": "La catégorie à laquelle se rapporte la saison.",
-			"help": ""
-		},
-		"rate_class_id": {
-			"label": "Classe tarifaire",
-			"description": "La classe tarifaire qui s'applique à cette classe de remise.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Saison",
-			"description": "",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Saisons",
-			"description": "Cette vue est destinée à afficher la liste des saisons.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Saison",
+    "plural": "Saisons",
+    "description": "Les saisons de l'année.",
+    "model": {
+        "name": {
+            "label": "Nom de saison",
+            "description": "Bref mnémo de la saison.",
+            "help": ""
+        },
+        "season_category_id": {
+            "label": "Catégorie de saison",
+            "description": "La catégorie à laquelle se rapporte la saison.",
+            "help": ""
+        },
+        "rate_class_id": {
+            "label": "Classe tarifaire",
+            "description": "La classe tarifaire qui s'applique à cette classe de remise.",
+            "help": ""
+        },
+        "year": {
+            "label": "Année",
+            "description": "Année d'exercice de la saison.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Saison",
+            "description": "",
+            "layout": {
+                "section.details": {
+                    "label": "Détails"                    
+                },
+                "section.periods": {
+                    "label": "Périodes"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Saisons",
+            "description": "Cette vue est destinée à afficher la liste des saisons.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

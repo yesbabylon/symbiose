@@ -10,12 +10,12 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }

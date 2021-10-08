@@ -40,7 +40,10 @@
                                                 "type": "field",
                                                 "label": "Product Model",
                                                 "value": "product_models_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["can_sell", "=", true]
+                                                }
                                             }
                                         ]
                                     }

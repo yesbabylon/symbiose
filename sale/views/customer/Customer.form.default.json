@@ -26,7 +26,26 @@
                                                     "header": true,
                                                     "readonly": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }                           
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [            
+                    {
+                        "id": "section.customer_details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Identity of Customer",
@@ -81,7 +100,27 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "id": "section.customer_bookings",
+                        "label": "Bookings",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "bookings_ids",
+                                                "width": "100%"
+                                            }                                            
+                                        ]
+                                    }
+                                ]
+                            }                            
+                        ]
+                    }                                        
                 ]
             }
         ]

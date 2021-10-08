@@ -41,21 +41,21 @@
     "routes": [
         {
             "id": "item.booking.edit",
-            "label": "Edit Booking",
+            "label": "Biens & Services ",
             "description": "",
             "icon": "edit",
             "route": "/bookings/edit/object.id"
         },
         {
             "id": "item.booking.composition",
-            "label": "Edit composition",
+            "label": "Composition & Répartition",
             "description": "",
             "icon": "view_list",
             "route": "/bookings/composition/object.id"
         },
         {
             "id": "item.booking.contract",
-            "label": "Send contract",
+            "label": "Envoi du contrat",
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/bookings/contract/object.id",
@@ -87,6 +87,12 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_identity_id",
+                                                "width": "0%",
+                                                "visible": false
                                             }
                                         ]
                                     }

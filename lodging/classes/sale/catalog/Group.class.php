@@ -18,12 +18,21 @@ class Group extends \sale\catalog\Group {
                 'required'          => true
             ],
             
+            'products_ids' => [ 
+                'type'              => 'many2many', 
+                'foreign_object'    => 'lodging\sale\catalog\Product', 
+                'foreign_field'     => 'groups_ids', 
+                'rel_table'         => 'sale_catalog_product_rel_product_group', 
+                'rel_foreign_key'   => 'product_id',
+                'rel_local_key'     => 'group_id'
+            ],
+
             'product_models_ids' => [ 
                 'type'              => 'many2many', 
                 'foreign_object'    => 'lodging\sale\catalog\ProductModel', 
                 'foreign_field'     => 'groups_ids', 
-                'rel_table'         => 'lodging_catalog_product_rel_productmodel_group', 
-                'rel_foreign_key'   => 'product_model_id',
+                'rel_table'         => 'sale_catalog_product_rel_productmodel_group', 
+                'rel_foreign_key'   => 'productmodel_id',
                 'rel_local_key'     => 'group_id'
             ]
 

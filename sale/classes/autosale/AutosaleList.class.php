@@ -18,6 +18,11 @@ class AutosaleList extends Model {
                 'description'       => "Context the discount is meant to be used."
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Reason for which the discount is meant to be used."
+            ],
+
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Date (included) at which the season starts.",

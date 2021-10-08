@@ -31,8 +31,8 @@ class ProductModel extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current product belongs to.",
-                'required'          => true,
-                'onchange'          => 'sale\catalog\ProductModel::onchangeFamilyId'
+                'onchange'          => 'sale\catalog\ProductModel::onchangeFamilyId',
+                'required'          => true
             ],
 
             'selling_accounting_rule_id' => [
@@ -60,7 +60,8 @@ class ProductModel extends Model {
             'can_sell' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be sold?",
-                'default'           => true
+                'default'           => true,
+                'onchange'          => 'sale\catalog\ProductModel::onchangeCanSell'
             ],
 
             'cost' => [
@@ -76,13 +77,6 @@ class ProductModel extends Model {
                 'onchange'          => 'sale\catalog\ProductModel::onchangeIsPack'
             ],
 
-            'pack_lines_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\catalog\PackLine',
-                'foreign_field'     => 'parent_product_id',
-                'description'       => "Products that are bundled in the pack.",
-            ],
-
             'has_own_price' => [
                 'type'              => 'boolean',
                 'description'       => 'Has the bundle its own price, or do we use each sub-product price?',
@@ -93,7 +87,8 @@ class ProductModel extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['consumable', 'service'],
-                'required'          => true
+                'required'          => true,
+                'default'           => 'service'
             ],
 
             'consumable_type' => [
@@ -105,7 +100,8 @@ class ProductModel extends Model {
             'service_type' => [
                 'type'              => 'string',
                 'selection'         => ['simple', 'schedulable'],
-                'visible'           => ['type', '=', 'service']
+                'visible'           => ['type', '=', 'service'],
+                'default'           => 'simple'
             ],
 
             'schedule_type' => [
@@ -148,9 +144,10 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'product_models_ids',
-                'rel_table'         => 'sale_product_rel_productmodel_group',
+                'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
-                'rel_local_key'     => 'productmodel_id'
+                'rel_local_key'     => 'productmodel_id',
+                'onchange'          => 'sale\catalog\ProductModel::onchangeGroupsIds'
             ],
 
             'categories_ids' => [
@@ -167,27 +164,49 @@ class ProductModel extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'foreign_field'     => 'product_model_id',
                 'description'       => "Product variants that are related to this model.",
-            ],
+            ]
 
         ];
     }
 
     /**
      *
-     * reset related products is_pack
+     * Update related products is_pack
      */
     public static function onchangeIsPack($om, $oids, $lang) {
-        $models = $om->read(__CLASS__, $oids, ['products_ids', 'is_pack']);
-        foreach($models as $mid => $model) {            
+        $models = $om->read(get_called_class(), $oids, ['products_ids', 'is_pack']);
+        foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['is_pack' => $model['is_pack']]);
-        }        
+        }
     }
 
+    /**
+     *
+     * Update related products can_sell
+     */
+    public static function onchangeCanSell($om, $oids, $lang) {
+        $models = $om->read(get_called_class(), $oids, ['products_ids', 'can_sell']);
+        foreach($models as $mid => $model) {
+            $om->write('sale\catalog\Product', $model['products_ids'], ['can_sell' => $model['can_sell']]);
+        }
+    }
 
     public static function onchangeFamilyId($om, $oids, $lang) {
-        $models = $om->read(__CLASS__, $oids, ['products_ids', 'family_id']);
+        $models = $om->read(get_called_class(), $oids, ['products_ids', 'family_id']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['family_id' => $model['family_id']]);
+        }
+    }
+
+    public static function onchangeGroupsIds($om, $oids, $lang) {
+        $models = $om->read(get_called_class(), $oids, ['products_ids', 'groups_ids']);
+        foreach($models as $mid => $model) {
+            $products = $om->read('sale\catalog\Product', $model['products_ids'], ['groups_ids']);
+            foreach($products as $pid => $product) {
+                $groups_ids = array_map(function($a) {return "-$a";}, $product['groups_ids']);
+                $groups_ids = array_merge($groups_ids, $model['groups_ids']);
+                $om->write('sale\catalog\Product', $pid, ['groups_ids' => $groups_ids]);
+            }
         }
     }
 

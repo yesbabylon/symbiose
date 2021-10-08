@@ -1,6 +1,8 @@
 {
     "name": "Products",
     "description": "This view is intended for displaying the list of products.",
+    "order": "sku,product_model_id",
+    "sort": "asc",
     "layout": {
         "items": [
             {
@@ -22,7 +24,17 @@
             },
             {
                 "type": "field",
-                "value": "description",
+                "value": "is_pack",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "can_sell",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "family_id",
                 "width": "20%"
             }
         ]

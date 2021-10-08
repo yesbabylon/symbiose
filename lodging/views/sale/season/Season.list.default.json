@@ -11,7 +11,7 @@
             {
                 "type": "field",
                 "label": "Category",
-                "value": "center_category_id",
+                "value": "season_category_id",
                 "width": "20%"
             }
         ]

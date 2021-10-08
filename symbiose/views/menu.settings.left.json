@@ -208,6 +208,17 @@
                       "type": "parent",
                       "children": [
                         {
+                          "id": "item.products_current_products",
+                          "type": "entry",
+                          "label": "Current Products",
+                          "description": "", 
+                          "context": {
+                            "entity": "lodging\\sale\\catalog\\Product",
+                            "view": "list.default",
+                            "domain": ["can_sell", "=", true]
+                          }
+                        },
+                        {
                           "id": "item.products_products",
                           "type": "entry",
                           "label": "Products",
@@ -215,6 +226,17 @@
                           "context": {
                             "entity": "lodging\\sale\\catalog\\Product",
                             "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "item.products_current_models",
+                          "type": "entry",
+                          "label": "Current Models",
+                          "description": "", 
+                          "context": {
+                            "entity": "lodging\\sale\\catalog\\ProductModel",
+                            "view": "list.default",
+                            "domain": ["can_sell", "=", true]
                           }
                         },
                         {
@@ -253,7 +275,7 @@
                           "label": "Groups",
                           "description": "", 
                           "context": {
-                            "entity": "sale\\catalog\\Group",
+                            "entity": "lodging\\sale\\catalog\\Group",
                             "view": "list.default"
                           }
                         }

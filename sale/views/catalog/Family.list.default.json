@@ -16,9 +16,9 @@
             },
             {
                 "type": "field",
-                "label": "Children",
-                "value": "children_ids",
-                "width": "20%"
+                "label": "Path",
+                "value": "path",
+                "width": "30%"
             }
         ]
     }
