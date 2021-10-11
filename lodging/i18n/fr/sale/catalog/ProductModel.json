@@ -135,7 +135,7 @@
             "description": "Méthode de comptabilisation pour calculer la quantité de produit (par unité [par défaut], par personne ou par logement [ressource]).",
             "selection": {
                 "person": "personne",
-                "accomodation": "hébergement",
+                "accomodation": "logement",
                 "unit": "unité"
             },
             "help": ""
@@ -181,7 +181,7 @@
             "help": ""
         },
         "rental_unit_id": {
-            "label": "Unité de location",
+            "label": "Unité locative",
             "description": "Unité locative spécifique à laquelle ce produit est lié, le cas échéant.",
             "help": ""
         }

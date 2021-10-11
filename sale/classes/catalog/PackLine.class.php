@@ -70,5 +70,20 @@ class PackLine extends Model {
             $result[$oid] = $lines[$oid]['child_product_id.name'].' ('.$lines[$oid]['child_product_id.sku'].')';
         }
         return $result;
-    }    
+    }
+
+    public static function getCanSell($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['child_product_id.can_sell']);
+        foreach($lines as $lid => $line) {
+            $result[$lid] = $line['child_product_id.can_sell'];
+        }
+        return $result;
+    }
+
+    public function getUnique() {
+        return [
+            ['parent_product_id', 'child_product_id']
+        ];
+    }       
 }

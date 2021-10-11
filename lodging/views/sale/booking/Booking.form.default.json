@@ -41,14 +41,14 @@
     "routes": [
         {
             "id": "item.booking.edit",
-            "label": "Biens & Services ",
+            "label": "Services réservés",
             "description": "",
             "icon": "edit",
             "route": "/bookings/edit/object.id"
         },
         {
             "id": "item.booking.composition",
-            "label": "Composition & Répartition",
+            "label": "Composition",
             "description": "",
             "icon": "view_list",
             "route": "/bookings/composition/object.id"

@@ -1,6 +1,6 @@
 {
-	"name": "Ligne de conditionnement",
-	"plural": "Lignes de conditionnement",
+	"name": "Ligne de Pack",
+	"plural": "Lignes de Pack",
 	"description": "",
 	"model": {
 		"parent_product_id": {
@@ -31,13 +31,13 @@
 	},
 	"view": {
 		"form.default": {
-			"name": "Ligne de conditionnement",
-			"description": "Une Ligne Pack correspond à la relation entre un produit « pack » (bundle) et un autre produit qu'il comprend.",
+			"name": "Ligne de Pack",
+			"description": "Une ligne Pack correspond à la relation entre un produit « Pack » et un autre produit qu'il inclus.",
 			"layout": {}
 		},
 		"list.default": {
-			"name": "Ligne de conditionnement",
-			"description": "Cette vue est destinée à afficher la liste des lignes de conditionnement.",
+			"name": "Ligne de Pack",
+			"description": "Cette vue affiche la liste des lignes de Pack.",
 			"layout": {}
 		}
 	},

@@ -144,7 +144,7 @@ class BookingLineGroup extends Model {
 
     public static function getPrice($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'is_locked', 'has_pack', 'price_id', 'pack_id', 'nb_pers']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'is_locked', 'has_pack', 'price_id', 'pack_id', 'nb_pers', 'nb_nights']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
@@ -154,6 +154,7 @@ class BookingLineGroup extends Model {
                 if($group['has_pack'] && $group['is_locked']) {
                     $res = $om->read(__CLASS__, $gid, [
                         'pack_id.product_model_id.has_own_price', 
+                        'pack_id.product_model_id.qty_accounting_method', 
                         'price_id.price', 
                         'price_id.accounting_rule_id.vat_rule_id.rate'
                     ]);
@@ -167,7 +168,7 @@ class BookingLineGroup extends Model {
                 if($has_own_price) {
                     // #todo - add support for qty_accounting_method by night (memo - product_model.qty_accounting_method is defined in lodging package)
                     $price_adapters_ids = $om->search('sale\booking\BookingPriceAdapter', [ ['booking_line_group_id', '=', $gid], ['booking_line_id','=', 0] ]);
-                    $adapters = $om->read('sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value']);
+                    $adapters = $om->read('sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
 
                     $disc_value = 0.0;
                     $disc_percent = 0.0;
@@ -177,12 +178,22 @@ class BookingLineGroup extends Model {
                             $disc_value += $adata['value'];
                         }
                         else if($adata['type'] == 'percent') {
-                            $disc_percent += $adata['value'];
+                            if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
+                                $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                            }
+                            else {
+                                $disc_percent += $adata['value'];
+                            }
                         }
                     }
  
-                    // apply quantity (either nb_pers or nb_nights) AND price adapters
-                    $qty = $group['nb_pers'];
+                    // apply quantity (either nb_pers or nb_nights) and price adapters
+                    if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation') {
+                        $qty = $group['nb_nights'];
+                    }
+                    else {
+                        $qty = $group['nb_pers'];
+                    }                    
                     $price = $group['price_id.price'] * (1-$disc_percent) - $disc_value;
                     $result[$gid] = round($price * $qty * (1 + $group['price_id.accounting_rule_id.vat_rule_id.rate']), 2);
                 }

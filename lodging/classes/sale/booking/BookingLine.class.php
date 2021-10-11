@@ -23,7 +23,8 @@ class BookingLine extends \sale\booking\BookingLine {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQty'
+                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQty',
+                'default'           => 1.0                
             ],
 
             'qty_accounting_method' => [

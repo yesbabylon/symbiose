@@ -82,7 +82,8 @@ class BookingLine extends Model {
 
             'qty' => [
                 'type'              => 'float',
-                'description'       => 'Quantity of product items for the line.'
+                'description'       => 'Quantity of product items for the line.',
+                'default'           => 1.0
             ],
 
             'has_own_qty' => [
@@ -115,7 +116,8 @@ class BookingLine extends Model {
                 'result_type'       => 'float',
                 'description'       => 'Unit price (with automated discounts applied).',
                 'function'          => 'sale\booking\BookingLine::getUnitPrice',
-                'store'             => true
+                'store'             => true,
+                'onchange'          => 'sale\booking\BookingLine::onchangeUnitPrice'
             ],
 
             'price' => [
@@ -131,12 +133,21 @@ class BookingLine extends Model {
                 'result_type'       => 'float',
                 'description'       => 'VAT rate that applies to this line.',
                 'function'          => 'sale\booking\BookingLine::getVatRate',
-                'store'             => true
+                'store'             => true,
+                'onchange'          => 'sale\booking\BookingLine::onchangeVatRate'                
             ]
         ];
     }
 
 
+
+    public static function onchangeUnitPrice($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null]);
+    }
+
+    public static function onchangeVatRate($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null]);
+    }
 
     public static function onchangePriceId($om, $oids, $lang) {
         // reset computed fields related to price
@@ -182,13 +193,18 @@ class BookingLine extends Model {
             $price = (float) $odata['price_id.price'];
             $disc_percent = 0.0;
             $disc_value = 0.0;
-            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
+            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value', 'discount_id.discount_list_id.rate_max']);
             foreach($adapters as $aid => $adata) {
                 if($adata['type'] == 'amount') {
                     $disc_value += $adata['value'];
                 }
                 else if($adata['type'] == 'percent') {
-                    $disc_percent += $adata['value'];
+                    if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
+                        $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                    }
+                    else {
+                        $disc_percent += $adata['value'];
+                    }
                 }
             }
             $result[$oid] = round(($price * (1-$disc_percent)) - $disc_value, 2);
@@ -202,13 +218,14 @@ class BookingLine extends Model {
      */
     public static function getTotalPrice($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, [
+        $lines = $om->read(get_called_class(), $oids, [
                     'qty',
                     'vat_rate',
                     'unit_price',
                     'auto_discounts_ids',
                     'manual_discounts_ids'
                 ]);
+// #todo we also need to set the limit according to related DiscountLists                
         foreach($lines as $oid => $odata) {
             $price = (float) $odata['unit_price'];
             $disc_percent = 0.0;
@@ -249,7 +266,7 @@ class BookingLine extends Model {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {
-            $result[$oid] = $odata['price_id.accounting_rule_id.vat_rule_id.rate'];
+            $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
         }
         return $result;
     }

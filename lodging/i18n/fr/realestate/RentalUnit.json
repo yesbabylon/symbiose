@@ -1,6 +1,6 @@
 {
-	"name": "Unité de location",
-	"plural": "Unités de location",
+	"name": "Unité locative",
+	"plural": "Unités locatives",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"center_category_id": {
@@ -10,7 +10,7 @@
 		},
 		"center_id": {
 			"label": "Centre",
-			"description": "Le centre auquel appartient le logement locatif.",
+			"description": "Le centre auquel appartient le logement.",
 			"help": ""
 		}
 	},
@@ -23,7 +23,7 @@
 					"label": "Info Géneral"
 				},
 				"section.children_section": {
-					"label": "Enfants"
+					"label": "Sous-unités"
 				},
 				"section.consumption_section": {
 					"label": "Consommation"
@@ -34,7 +34,7 @@
 			}
 		},
 		"list.default": {
-			"name": "Unités de location",
+			"name": "Unités locatives",
 			"description": "Cette vue est destinée à afficher la liste des unités locatives.",
 			"layout": {}
 		}

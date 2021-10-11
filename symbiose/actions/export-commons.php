@@ -29,7 +29,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 $path = "packages/symbiose/test/";
 
 $objects = [];
-foreach (glob($path."*.csv") as $filename) {
+foreach (glob($path."*R_Articles.csv") as $filename) {
     
 
 
@@ -147,14 +147,12 @@ $Kaleo_commons = array_intersect($GA_commons, $GG_commons);
 $GA_commons = array_diff($GA_commons, $Kaleo_commons);
 $GG_commons = array_diff($GG_commons, $Kaleo_commons);
 
-$list = implode(PHP_EOL, $Kaleo_commons);
-file_put_contents($path.'/'.'Kaleo_commons.csv', $list);
 
-$list = implode(PHP_EOL, $GA_commons);
-file_put_contents($path.'/'.'GA_commons.csv', $list);
+file_put_contents($path.'/'.'Kaleo_commons.csv', "\xEF\xBB\xBF".implode(PHP_EOL, $Kaleo_commons));
 
-$list = implode(PHP_EOL, $GG_commons);
-file_put_contents($path.'/'.'GG_commons.csv', $list);
+file_put_contents($path.'/'.'GA_commons.csv', "\xEF\xBB\xBF".implode(PHP_EOL, $GA_commons));
+
+file_put_contents($path.'/'.'GG_commons.csv', "\xEF\xBB\xBF".implode(PHP_EOL, $GG_commons));
 
 
 
