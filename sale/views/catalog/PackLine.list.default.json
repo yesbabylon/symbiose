@@ -7,7 +7,7 @@
                 "type": "field",
                 "label": "Name",
                 "value": "name",
-                "width": "20%"
+                "width": "30%"
             },
             {
                 "type": "field",
@@ -25,13 +25,13 @@
                 "type": "field",
                 "label": "Has Quantity",
                 "value": "has_own_qty",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "label": "Product Quantity",
                 "value": "own_qty",
-                "width": "20%"
+                "width": "15%"
             }
         ]
     }

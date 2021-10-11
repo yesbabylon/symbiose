@@ -50,7 +50,7 @@ class PriceList extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'sale\price\PriceList::getPricesCount',
-                'store'             => true,
+                // 'store'             => true,
                 'description'       => "Amount of prices defined in list."
             ],
 

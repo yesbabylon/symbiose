@@ -45,7 +45,8 @@ class Price extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\PriceList',
                 'description'       => "The Price List the price belongs to.",
-                'required'          => true
+                'required'          => true,
+                'ondelete'          => 'cascade'
             ],
 
             'is_active' => [
@@ -93,5 +94,12 @@ class Price extends Model {
         }
         return $result;
     }
+
+    public function getUnique() {
+        return [
+            ['product_id', 'price_list_id']
+        ];
+    }       
+
 
 }

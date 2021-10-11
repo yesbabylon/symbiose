@@ -164,7 +164,7 @@
                       "description": "", 
                       "icon": "add",
                       "context": {
-                        "entity": "identity\\Partner",
+                        "entity": "sale\\customer\\Customer",
                         "view": "form.customer",
                         "purpose": "create",
                         "domain": ["relationship", "=", "customer"]
@@ -176,7 +176,7 @@
                       "label": "All customers",
                       "description": "", 
                       "context": {
-                        "entity": "identity\\Partner",
+                        "entity": "sale\\customer\\Customer",
                         "view": "list.customer",
                         "domain": ["relationship", "=", "customer"]
                       }
@@ -310,6 +310,16 @@
                           }
                         },
                         {
+                          "id": "item.prices_prices_all",
+                          "type": "entry",
+                          "label": "All Prices",
+                          "description": "", 
+                          "context": {
+                            "entity": "sale\\price\\Price",
+                            "view": "list.default"
+                          }
+                        },
+                        {
                           "id": "item.prices_categories",
                           "type": "entry",
                           "label": "Price list Categories",
@@ -335,16 +345,6 @@
                           "description": "", 
                           "context": {
                             "entity": "sale\\discount\\Discount",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "item.discounts_classes",
-                          "type": "entry",
-                          "label": "Discount classes",
-                          "description": "", 
-                          "context": {
-                            "entity": "sale\\discount\\DiscountClass",
                             "view": "list.default"
                           }
                         },

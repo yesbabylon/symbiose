@@ -42,12 +42,20 @@ $products = [];
 
 $product_attributes = [];
 
+$products_map = [];
 
 // remember allocated SKUs
 $sku_cache = [];
 
+
+$pack_lines = [];
+
+if(file_exists($path.'pack_lines.csv')) {
+    $pack_lines = loadXlsFile($path.'pack_lines.csv');
+}
+
 // load accounting rules
-$accounting_rules = loadXlsFile($path.'finance_accounting_AccountingRule.xls');
+$accounting_rules = loadXlsFile($path.'lodging_finance_accounting_AccountingRule.xls');
 
 
 foreach (glob($path."*R_Articles.csv") as $file) {
@@ -173,69 +181,61 @@ foreach (glob($path."*R_Articles.csv") as $file) {
             if(in_array($mnemo, $Kaleo_commons)) {
                 $family_id = 1;
             }
-            else {
-                $sku_prefix = $center_prefix;
 
-                switch($center_prefix) {
-                    case 'GG':
-                        $family_id = 3;
-                        $sku_prefix = 'GG';
-                        break;
-                    case 'VS':
-                        $family_id = 4;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        else if(in_array($mnemo, $GG_commons)) {
-                            $family_id = 3;
-                            $sku_prefix = 'GG';
-                        }
-                        break;
-                    case 'LO':
-                        $family_id = 5;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                    case 'EU':
-                        $family_id = 6;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                    case 'HL':
-                        $family_id = 7;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                    case 'OV':
-                        $family_id = 8;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                    case 'RO':
-                        $family_id = 9;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                    case 'WA':
-                        $family_id = 10;
-                        if(in_array($mnemo, $GA_commons)) {
-                            $family_id = 2;
-                            $sku_prefix = 'GA';
-                        }
-                        break;
-                }
+            // products have always a prefix
+            $sku_prefix = $center_prefix;
+
+            switch($center_prefix) {
+                case 'GG':
+                    $family_id = 3;
+                    break;
+                case 'VS':
+                    $family_id = 4;
+                    break;
+                case 'LO':
+                    $family_id = 5;
+                    $sku_prefix = 'GA';
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
+                case 'EU':
+                    $family_id = 6;
+                    $sku_prefix = 'GA';
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
+                case 'HL':
+                    $family_id = 7;
+                    $sku_prefix = 'GA';
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
+                case 'OV':
+                    $family_id = 8;
+                    $sku_prefix = 'GA';                    
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
+                case 'RO':
+                    $family_id = 9;
+                    $sku_prefix = 'GA';
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
+                case 'WA':
+                    $family_id = 10;
+                    $sku_prefix = 'GA';                    
+                    if(in_array($mnemo, $GA_commons)) {
+                        $family_id = 2;
+                    }
+                    break;
             }
+
 
 
             /*
@@ -454,8 +454,26 @@ foreach (glob($path."*R_Articles.csv") as $file) {
             $product_model_id = 0;
             
             foreach($product_models as $product_model_index => $product_model) {
-                if($product_model['name'] == $line['Libellé_Mnémo']) {
+                if( strcasecmp($product_model['name'], $line['Libellé_Mnémo']) == 0 ) {
                     $product_model_id = $product_model['id'];
+                    break;
+                }
+            }
+
+            $can_sell = false;
+
+            if ((int) $date_to_array['year'] == 2000 || (int) $date_to_array['year'] >= (int) date('Y')) {
+                $can_sell = true;
+            }
+
+            $product_sku = trim($sku_prefix.'-'.trim($line['Codif_MnémCourt'], '_').'-'.$sku_suffix, '-');
+            $product_sku = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $product_sku);
+
+// #reminder - this requires to perform convertion in 2-pass (we need the products for the packs and this requires the packs)
+
+            foreach($pack_lines as $pack_line) {
+                if($product_sku == $pack_line['parent_sku'] || $product_sku == $pack_line['child_sku']) {
+                    $can_sell = true;
                     break;
                 }
             }
@@ -470,7 +488,7 @@ foreach (glob($path."*R_Articles.csv") as $file) {
                     'groups_ids'            => '['.implode(',', $groups_ids).']',
                     'categories_ids'        => '['.$category_id.']',
                     'is_pack'               => 0,
-                    'can_sell'              => ((int) $date_to_array['year'] == 2000 || (int) $date_to_array['year'] >= (int) date('Y'))?'1':'0',
+                    'can_sell'              => $can_sell,
                     'stat_section_id'       => $stat_section_id,
                     'is_meal'               => (int) in_array((int) $line['Code_Pension'], [5,6,7,8,9]),
                     'is_accomodation'       => (int) ((int) $line['Code_Pension'] == 4),
@@ -539,11 +557,10 @@ foreach (glob($path."*R_Articles.csv") as $file) {
                 $p_groups_ids = json_decode($product_model['groups_ids']);
                 $p_groups_ids = array_unique(array_merge($p_groups_ids, $groups_ids));
                 $product_models[$product_model_index]['groups_ids'] = '['.implode(',', $p_groups_ids).']';
+                $product_models[$product_model_index]['can_sell'] = $product_models[$product_model_index]['can_sell'] || $can_sell;
             }            
 
             
-            $product_sku = trim($sku_prefix.'-'.trim($line['Codif_MnémCourt'], '_').'-'.$sku_suffix, '-');
-            $product_sku = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $product_sku);
 
             $product_id = 0;
 
@@ -569,7 +586,6 @@ foreach (glob($path."*R_Articles.csv") as $file) {
 
                 $products[] = [
                     'id'                => $product_id,
-                    'code_legacy'       => $center_prefix.'-'.$line['Code_Article'],
                     'sku'               => $product_sku,
                     'name'              => $label,
                     'product_model_id'  => $product_model_id,
@@ -593,7 +609,6 @@ foreach (glob($path."*R_Articles.csv") as $file) {
 
                         $products[] = [
                             'id'                => $product_id,
-                            'code_legacy'       => $center_prefix.'-'.$line['Code_Article'].'-A',
                             'sku'               => $sku_all,
                             'name'              => str_replace('Plus de 26 ans', 'Tous les âges', $label),
                             'product_model_id'  => $product_model_id,
@@ -614,6 +629,11 @@ foreach (glob($path."*R_Articles.csv") as $file) {
                 }
             }
 
+
+            $products_map[] = [
+                'legacy_code' => $center_prefix.'-'.$line['Code_Article'],
+                'sku' => $product_sku
+            ];
 
 
             /*
@@ -696,6 +716,18 @@ if(count($product_attributes)) {
     file_put_contents($path."product_attributes.csv", "\xEF\xBB\xBF".implode(PHP_EOL, $data));    
 }
 
+
+if(count($products_map)) {
+    $data = [];
+    $first = $products_map[0];
+    $header = array_keys($first);
+    $data[] = implode(';', $header);
+
+    foreach($products_map as $product_map) {
+        $data[] = implode(';', array_values($product_map));
+    }
+    file_put_contents($path."products_map.csv", "\xEF\xBB\xBF".implode(PHP_EOL, $data));    
+}
 
 $context->httpResponse()
         ->body([])

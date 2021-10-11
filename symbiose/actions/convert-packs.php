@@ -67,7 +67,7 @@ echo "reading $file".PHP_EOL;
         $data = $worksheet->toArray();
 
         $header = array_shift($data);
-        
+
 // parcourir le fichier des lignes
         foreach($data as $raw) {
 
@@ -79,27 +79,12 @@ echo "reading $file".PHP_EOL;
                 'GG' => [
                     'prefix_list'           => ['AP', 'AE','BA','BG','BO','BP','BR','CH','CO','DA','HA','HU','LA','LO','LP','LS','MA','MO','VE','WC','WE','GG', ''],
                 ],
-                'EU' => [
-                    'prefix_list'           => ['EU', 'GA', ''],
-                ],
-                'HL' => [
-                    'prefix_list'           => ['HL', 'GA', ''],
-                ],
-                'OV' => [
-                    'prefix_list'           => ['OV', 'GA', ''],
-                ],
-                'LO' => [
-                    'prefix_list'           => ['LO', 'GA', ''],
-                ],
-                'RO' => [
-                    'prefix_list'           => ['RO', 'GA', ''],
+                'GA' => [
+                    'prefix_list'           => ['EU', 'HL', 'OV', 'LO', 'RO', 'WA', 'GA', ''],
                 ],
                 'VS' => [
                     'prefix_list'           => ['VS', 'GA', 'GG', ''],
                 ],
-                'WA' => [
-                    'prefix_list'           => ['WA', 'GA', ''],
-                ]
             ];
 
             /*
@@ -107,36 +92,20 @@ echo "reading $file".PHP_EOL;
             */
             $center_prefix = '';
 
-            if(strpos($filename, 'GiGr') !== false) {
+            if(strpos($filename, 'GG_') !== false) {
                 $center_prefix = 'GG';
             }
-            else {
-                if(strpos($filename, 'Louv') !== false) {
-                    $center_prefix = 'LO';
-                }
-                else if(strpos($filename, 'Eupe') !== false) {
-                    $center_prefix = 'EU';
-                }
-                else if(strpos($filename, 'HanL') !== false) {
-                    $center_prefix = 'HL';
-                }
-                else if(strpos($filename, 'Ovif') !== false) {
-                    $center_prefix = 'OV';
-                }
-                else if(strpos($filename, 'Roch') !== false) {
-                    $center_prefix = 'RO';
-                }
-                else if(strpos($filename, 'Wann') !== false) {
-                    $center_prefix = 'WA';
-                }
-                else if(strpos($filename, 'Vill') !== false) {
-                    $center_prefix = 'VS';
-                }
+            else if(strpos($filename, 'GA_') !== false) {
+                $center_prefix = 'GA';
             }
+            else if(strpos($filename, 'VS_') !== false) {
+                $center_prefix = 'VS';
+            }
+
 
             $prefixes = $centers_map[$center_prefix]['prefix_list'];
 
-            // l'id du pack est arbitraire : on ne devrait pas l'utiliser
+            // l'id du pack est arbitraire : on ne l'utilise que pour retrouver les lignes
             $pack_id = $line['Numéro_Pack'];
 
 
@@ -149,8 +118,8 @@ echo "reading $file".PHP_EOL;
             $pack_code = substr($line['Codif_Mnémo_Pack'], 6);
             $pack_code = str_replace(['à', 'ï', 'î', 'é', 'ê','è', 'ë', 'û'], ['a', 'i', 'i', 'e', 'e', 'e', 'e', 'u'], $pack_code);
             
-            // retrieve pack from the list of products
-
+            // retrieve pack from the list of products (the same pack might refer to distinct products across the centers)
+// echo "looking for {$pack_code}".PHP_EOL;
             $matches = [];
             foreach($products as $product_index => $product) {
                 if(stripos($product['sku'], $pack_code) !== false) {
@@ -167,23 +136,30 @@ echo "reading $file".PHP_EOL;
                 }
             }
 
-            if(!count($matches)) {
+            if(empty($matches)) {
                 die($center_prefix.' : no value found for pack '.$pack_code);
             }
-
+/*
+echo "found ";
+foreach($matches as $index) {
+    echo $products[$index]['sku'].',';
+}
+echo PHP_EOL;
+*/
             foreach($matches as $index) {
-                // each product is a pack
+
+                // product is a pack
                 $product = $products[$index];
                 $product_parts = explode('-', $product['sku']);
                 if(count($product_parts) == 2) {
-                    $product_category = $center_prefix;
+                    $product_category = '';
                     list($product_code, $product_option) = $product_parts;
                 }
                 else {
                     list($product_category, $product_code, $product_option) = $product_parts;
                 }
 
-
+// echo "pack {$product['sku']}".PHP_EOL;
                 /*
 
                 dans le fichier _R_Packs_nomenc correspondant, prendre toutes les lignes  avec Numéro_Pack correspondant
@@ -199,7 +175,14 @@ echo "reading $file".PHP_EOL;
 
                         $subproduct_id = 0;
 
-                        foreach($prefixes as $prefix_index => $prefix) {
+                        $subprefixes = [];
+                        if($product_category == '') {
+                            $subprefixes = ['', 'GG', 'GA', 'VS'];
+                        }
+                        else {
+                            $subprefixes = [$product_category, ''];
+                        }
+                        foreach($subprefixes as $prefix) {
 
                             if(strlen($prefix)) {
                                 $prefix .= '-';
@@ -209,7 +192,7 @@ echo "reading $file".PHP_EOL;
 
                                 // echo "looking for $subproduct_sku".PHP_EOL;
                                 foreach($products as $subproduct) {
-                                    if($subproduct['sku'] == $subproduct_sku) {
+                                    if(strcasecmp($subproduct['sku'], $subproduct_sku) == 0) {
                                         $subproduct_id = $subproduct['id'];
                                         break 3;
                                     }
@@ -217,25 +200,29 @@ echo "reading $file".PHP_EOL;
                             }
                         }
 
+
                         if(!$subproduct_id) {
                             // ignore product
-                            echo($product['sku'].' : no match for subproduct '.$subproduct_sku.PHP_EOL);
+                            echo($product['sku'].' : no match for subproduct '.$nomenc_code.PHP_EOL);
+                            // continue 2;
+                            $subproduct_sku = $nomenc_code;
                         }
-                        else {
+
                             // create  pack_line
 
-                            echo "found match {$nomenc_code} : {$subproduct_sku}".PHP_EOL;
+                            // echo "  found match {$nomenc_code} : {$subproduct_sku}".PHP_EOL;
                             $pack_line_id = count($pack_lines) + 1;
                             $pack_lines[] = [
                                 'id'                => $pack_line_id,
                                 'parent_product_id' => $product['id'],
-                                'child_product_id'  => $subproduct_id
+                                'child_product_id'  => $subproduct_id,
+                                'parent_sku'        => $product['sku'],
+                                'child_sku'         => $subproduct_sku
                             ];
 
-                        }
+
                     }
                 }
-
             }
 
 

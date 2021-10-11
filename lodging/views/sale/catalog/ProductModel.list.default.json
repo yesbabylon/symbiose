@@ -41,7 +41,8 @@
             {
                 "type": "field",
                 "value": "qty_accounting_method",
-                "width": "5%"
+                "width": "5%",
+                "sortable": true
             },
             {
                 "type": "field",

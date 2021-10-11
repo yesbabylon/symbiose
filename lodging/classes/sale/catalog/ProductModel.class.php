@@ -78,14 +78,14 @@ class ProductModel extends \sale\catalog\ProductModel {
             // a product either refers to a specific rental unit, or to a category of rental units (both allowing to find matching units for a given period and a capacity)
             'rental_unit_category_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\catalog\Family',
+                'foreign_object'    => 'realestate\RentalUnitCategory',
                 'description'       => "Rental Unit Category this Product related to, if any.",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'category'] ]
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\catalog\Family',
+                'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => "Specific Rental Unit this Product related to, if any",
                 'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'unit'] ]
             ],

@@ -67,10 +67,18 @@ class BookingPriceAdapter extends Model {
 
             'discount_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\Discount',
+                'foreign_object'    => 'sale\discount\Discount',
                 'description'       => 'Discount related to the adapter, if any.',
                 'visible'           => ['is_manual_discount', '=', false]                
+            ],
+
+            'discount_list_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\discount\DiscountList',
+                'description'       => 'Discount List related to the adapter, if any.',
+                'visible'           => ['is_manual_discount', '=', false]                
             ]
+
 
         ];
     }

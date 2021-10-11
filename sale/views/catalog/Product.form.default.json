@@ -39,7 +39,24 @@
                                                 "width": "100%"                                                
                                             }
                                         ]
-                                    }
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "can_sell",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+
+                                        ]
+                                    }                                    
                                 ]
                             }
                         ]

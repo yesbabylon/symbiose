@@ -39,7 +39,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'description'       => 'Are modifications disabled for the group?',
                 'default'           => false,
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeIsLocked'
-            ],            
+            ],
 
             'date_from' => [
                 'type'              => 'date',
@@ -52,7 +52,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'type'              => 'date',
                 'description'       => "Day of departure.",
                 'default'           => time(),
-                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeDateTo',                
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeDateTo'
             ],
 
             'sojourn_type' => [
@@ -60,13 +60,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'selection'         => ['GA', 'GG'],
                 'default'           => 'GG',
                 'description'       => 'The kind of sojourn the group is about.',
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeSojournType'
             ],
 
             'nb_pers' => [
                 'type'              => 'integer',
                 'description'       => 'Amount of persons this group is about.',
                 'default'           => 1,
-                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeNbPers',
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeNbPers'
             ],
 
             /* a booking can be split into several groups on which distinct rate classes apply, by default the rate_class of the customer is used */
@@ -76,7 +77,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'description'       => "The rate class that applies to the group.",
                 'required'          => true,
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeRateClassId'
-            ],            
+            ],
 
             'booking_lines_ids' => [
                 'type'              => 'one2many',
@@ -138,16 +139,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
             }
             if(count($update_groups_ids)) {
-                self::_updatePriceId($om, $update_groups_ids, $lang);    
-            }            
-        }        
-    }    
+                self::_updatePriceId($om, $update_groups_ids, $lang);
+            }
+        }
+    }
 
     /**
      * Update is_locked field according to selected pack (pack_id).
      * This is done when pack_id is changed, but can be manually set by the user afterward.
-     * 
-     * Since this method is called, we assume that current group has 'has_pack' set to ture, 
+     *
+     * Since this method is called, we assume that current group has 'has_pack' set to ture,
      * and that pack_id relates to a product_model that is a pack.
      */
     public static function onchangePackId($om, $oids, $lang) {
@@ -157,31 +158,37 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $groups = $om->read(__CLASS__, $oids, [
             'date_from',
+            'nb_pers',
             'booking_lines_ids',
             'pack_id.product_model_id.qty_accounting_method',
             'pack_id.product_model_id.has_duration',
             'pack_id.product_model_id.duration',
-            'pack_id.product_model_id.capacity'            
+            'pack_id.product_model_id.capacity'
         ]);
-        
+
         foreach($groups as $gid => $group) {
             $updated_fields = [];
 
             // if targeted product model has its own duration, date_to is updated accordingly
             if($group['pack_id.product_model_id.has_duration']) {
                 $updated_fields['date_to'] = $group['date_from'] + ($group['pack_id.product_model_id.duration'] * 60*60*24);
-                // will update price_adapters, nb_nights                
+                // will update price_adapters, nb_nights
             }
-    
+
             if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation') {
                 $updated_fields['nb_pers'] = $group['pack_id.product_model_id.capacity'];
-                // will update price_adapters                
+                // will update price_adapters
             }
-    
+            else {
+                // make sure to triggered _updatePriceAdapters
+                $updated_fields['nb_pers'] = $group['nb_pers'];
+            }
+
             $om->write(__CLASS__, $gid, $updated_fields, $lang);
-    
+
             // notify bookinglines that pack_id has been updated
             BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
+
         }
     }
 
@@ -200,7 +207,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         self::_updatePriceAdapters($om, $oids, $lang);
 
         $groups = $om->read(__CLASS__, $oids, ['has_pack', 'booking_lines_ids']);
-        
+
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
                 // notify booking lines that price_id has to be updated
@@ -208,7 +215,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // notify bookinglines that pack_id has been updated
                 if($group['has_pack']) {
                     BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }                
+                }
             }
         }
     }
@@ -220,15 +227,21 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         self::_updatePriceAdapters($om, $oids, $lang);
 
         $groups = $om->read(__CLASS__, $oids, ['has_pack', 'booking_lines_ids']);
-        
+
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
                 // notify bookinglines that pack_id has been updated
                 if($group['has_pack']) {
                     BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }                
+                }
             }
         }
+    }
+
+
+    public static function onchangeSojournType($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournType", QN_REPORT_DEBUG);
+        self::_updatePriceAdapters($om, $oids, $lang);
     }
 
     public static function onchangeNbPers($om, $oids, $lang) {
@@ -236,14 +249,25 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         self::_updatePriceAdapters($om, $oids, $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['has_pack', 'booking_lines_ids']);
-        
+        $groups = $om->read(__CLASS__, $oids, ['nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids']);
+
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
-                // notify bookinglines that pack_id has been updated
+                // notify bookinglines that pack_id has been updated (qty will be updated)
                 if($group['has_pack']) {
+
                     BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }                
+                }
+                else {
+                    // if lines do not belong to a pack, update qty and price if their product has qty_accounting_method set to 'person'
+                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['product_id.product_model_id.qty_accounting_method']);
+                    foreach($lines as $lid => $line) {
+                        if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
+                            // will trigger a call to _updateConsumptions
+                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers']]);
+                        }
+                    }
+                }
             }
         }
     }
@@ -252,7 +276,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * Create Price adapters according to group settings.
      *
      * create priceAdapters only for meal and accomodation products
-     *  
+     *
      * (This method is called upon booking_id.customer_id change)
      */
     public static function _updatePriceAdapters($om, $oids, $lang) {
@@ -261,10 +285,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             Remove all previous price adapters that were automatically created
         */
         $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [ ['booking_line_group_id', 'in', $oids], ['is_manual_discount','=', false]]);
-        
+
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
-        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'date_from', 'date_to', 'nb_pers', 'booking_id', 'is_locked',
+        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type', 'date_from', 'date_to', 'nb_pers', 'booking_id', 'is_locked',
                                                     'booking_lines_ids', 'sojourn_type',
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
@@ -274,17 +298,25 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             /*
                 Find the first Discount List that matches the booking dates
             */
+            $discount_category_id = ($group['sojourn_type'] == 'GA')?1:2;
             $discount_lists_ids = $om->search('sale\discount\DiscountList', [
                 ['rate_class_id', '=', $group['rate_class_id']],
-                ['discount_list_category_id', '=', $group['booking_id.center_id.discount_list_category_id']],
+                ['discount_list_category_id', '=', $discount_category_id],
                 ['valid_from', '<=', $group['date_from']],
                 ['valid_until', '>=', $group['date_from']]
             ]);
 
-            $discount_lists = $om->read('sale\discount\DiscountList', $discount_lists_ids, ['id', 'discounts_ids']);
+            $discount_lists = $om->read('sale\discount\DiscountList', $discount_lists_ids, ['id', 'discounts_ids', 'rate_min']);
             $discount_list_id = 0;
+            $discount_list = null;
             if($discount_lists > 0 && count($discount_lists)) {
-                $discount_list_id = array_keys($discount_lists)[0];
+                // use first match (there should alwasy be only one or zero)
+                $discount_list = array_pop($discount_lists);
+                $discount_list_id = $discount_list['id'];
+                trigger_error("QN_DEBUG_ORM:: match with discount List {$discount_list_id}", QN_REPORT_DEBUG);
+            }
+            else {
+                trigger_error("QN_DEBUG_ORM:: no discount List found", QN_REPORT_DEBUG);
             }
             /*
                 Search for matching Discounts within the found Discount List
@@ -313,8 +345,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $operands['season'] = $period['season_type_id.name'];
                 }
 
-                $discounts = $om->read('sale\discount\Discount', $discount_lists[$discount_list_id]['discounts_ids'], ['value', 'type', 'conditions_ids']);
+                $discounts = $om->read('sale\discount\Discount', $discount_list['discounts_ids'], ['value', 'type', 'conditions_ids']);
 
+                $discounts_to_apply = [];
+                // filter discounts to be applied on booking lines
                 foreach($discounts as $discount_id => $discount) {
                     $conditions = $om->read('sale\discount\Condition', $discount['conditions_ids'], ['operand', 'operator', 'value']);
                     $valid = true;
@@ -341,68 +375,88 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         }
                         trigger_error(" testing {$operand} {$operator} {$value}", QN_REPORT_DEBUG);
                         $valid = $valid && (bool) eval("return ( {$operand} {$operator} {$value});");
+                        if(!$valid) break;
                     }
                     if($valid) {
                         trigger_error("QN_DEBUG_ORM:: all conditions fullfilled", QN_REPORT_DEBUG);
-                        /* 
-                            create price adapter for group only, according to discount and group settings
-                            (needed in case of pack with own price)
-                        */
-                        $price_adapters_ids = $om->create('lodging\sale\booking\BookingPriceAdapter', [
-                            'is_manual_discount'    => false,
-                            'booking_id'            => $group['booking_id'],
-                            'booking_line_group_id' => $group_id,
-                            'booking_line_id'       => 0,
-                            'discount_id'           => $discount_id,
-                            'type'                  => $discount['type'],
-                            'value'                 => $discount['value']
-                        ]);
+                        $discounts_to_apply[$discount_id] = $discount;
+                    }
+                }
 
-                        /*
-                            create related price adapter for all lines, according to discount and group settings
-                        */
-                        // read all lines from group
-                        $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], [
-                            'product_id',
-                            'product_id.product_model_id',
-                            'product_id.product_model_id.is_meal',
-                            'product_id.product_model_id.is_accomodation'
-                        ]);
 
-                        foreach($lines as $line_id => $line) {
-                            // do not apply discount on lines that cannot have a price 
-                            if($group['is_locked']) continue;
-                            if( (
-                                    $group['sojourn_type'] == 'GG'
-                                    &&
-                                    $line['product_id.product_model_id.is_accomodation']
-                                )
-                                ||
+                // if there is no match add the guaranteed rate (rate_min) add a single discount
+                if(count($discounts_to_apply) == 0) {
+                    $discounts_to_apply[0] = [
+                        'type'      => 'percent',
+                        'value'     => $discount_list['rate_min']
+                    ];
+                }
+
+                // apply all applicable discounts
+                foreach($discounts_to_apply as $discount_id => $discount) {
+
+                    /*
+                        create price adapter for group only, according to discount and group settings
+                        (needed in case group targets a pack with own price)
+                    */
+                    $price_adapters_ids = $om->create('lodging\sale\booking\BookingPriceAdapter', [
+                        'is_manual_discount'    => false,
+                        'booking_id'            => $group['booking_id'],
+                        'booking_line_group_id' => $group_id,
+                        'booking_line_id'       => 0,
+                        'discount_id'           => $discount_id,
+                        'discount_list_id'      => $discount_list_id,
+                        'type'                  => $discount['type'],
+                        'value'                 => $discount['value']
+                    ]);
+
+                    /*
+                        create related price adapter for all lines, according to discount and group settings
+                    */
+                    // read all lines from group
+                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], [
+                        'product_id',
+                        'product_id.product_model_id',
+                        'product_id.product_model_id.is_meal',
+                        'product_id.product_model_id.is_accomodation'
+                    ]);
+
+                    foreach($lines as $line_id => $line) {
+                        // do not apply discount on lines that cannot have a price
+                        if($group['is_locked']) continue;
+                        // GG: apply discounts only for accomodations, for GA: apply discounts on meals and accomodations
+                        if( (
+                                $group['sojourn_type'] == 'GG'
+                                &&
+                                $line['product_id.product_model_id.is_accomodation']
+                            )
+                            ||
+                            (
+                                $group['sojourn_type'] == 'GA'
+                                &&
                                 (
-                                    $group['sojourn_type'] == 'GA'
-                                    &&
-                                    (
-                                        $line['product_id.product_model_id.is_accomodation']
-                                        ||
-                                        $line['product_id.product_model_id.is_meal']
-                                    )
+                                    $line['product_id.product_model_id.is_accomodation']
+                                    ||
+                                    $line['product_id.product_model_id.is_meal']
                                 )
-                            ) {
-                                trigger_error("QN_DEBUG_ORM:: creating price adapter", QN_REPORT_DEBUG);
-                                // current discount must be applied on the line: create a price adpter
-                                $price_adapters_ids = $om->create('lodging\sale\booking\BookingPriceAdapter', [
-                                    'is_manual_discount'    => false,
-                                    'booking_id'            => $group['booking_id'],
-                                    'booking_line_group_id' => $group_id,
-                                    'booking_line_id'       => $line_id,
-                                    'discount_id'           => $discount_id,
-                                    'type'                  => $discount['type'],
-                                    'value'                 => $discount['value']
-                                ]);
-                            }
+                            )
+                        ) {
+                            trigger_error("QN_DEBUG_ORM:: creating price adapter", QN_REPORT_DEBUG);
+                            // current discount must be applied on the line: create a price adpter
+                            $price_adapters_ids = $om->create('lodging\sale\booking\BookingPriceAdapter', [
+                                'is_manual_discount'    => false,
+                                'booking_id'            => $group['booking_id'],
+                                'booking_line_group_id' => $group_id,
+                                'booking_line_id'       => $line_id,
+                                'discount_id'           => $discount_id,
+                                'discount_list_id'      => $discount_list_id,
+                                'type'                  => $discount['type'],
+                                'value'                 => $discount['value']
+                            ]);
                         }
                     }
                 }
+
             }
             else {
                 $date = date('Y-m-d', $group['date_from']);
@@ -414,7 +468,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     /**
      * Update pack_id and re-create booking lines accordingly.
-     * 
+     *
      */
     public static function _updatePackId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:_updatePackId", QN_REPORT_DEBUG);
@@ -422,7 +476,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $groups = $om->read(__CLASS__, $oids, [
             'booking_id', 'booking_lines_ids',
             'pack_id.is_locked',
-            'pack_id.product_model_id.pack_lines_ids',
+            'pack_id.pack_lines_ids',
             'pack_id.product_model_id.has_own_price'
         ]);
 
@@ -448,8 +502,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             /*
                 Create booking lines according to pack composition
             */
-            $pack_lines = $om->read('sale\catalog\PackLine', $group['pack_id.product_model_id.pack_lines_ids'], [
-                'child_product_id', 'has_own_qty', 'own_qty', 'child_product_id.qty_accounting_method'
+            $pack_lines = $om->read('lodging\sale\catalog\PackLine', $group['pack_id.pack_lines_ids'], [
+                'child_product_id', 'has_own_qty', 'own_qty', 'child_product_id.product_model_id.qty_accounting_method'
             ]);
             $order = 1;
 
@@ -459,7 +513,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     'booking_id'                => $group['booking_id'],
                     'booking_line_group_id'     => $gid,
                     'product_id'                => $pack_line['child_product_id'],
-                    'qty_accounting_method'     => $pack_line['child_product_id.qty_accounting_method']
+                    'qty_accounting_method'     => $pack_line['child_product_id.product_model_id.qty_accounting_method']
                 ];
                 if($pack_line['has_own_qty']) {
                     $line['has_own_qty'] = true;
@@ -482,7 +536,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * This only applies when group targets a Pack with own price.
      *
      * Should only be called when is_locked == true
-     * 
+     *
      * _updatePriceId is called upon change on: pack_id, is_locked, date_from, center_id
      */
     public static function _updatePriceId($om, $oids, $lang) {
@@ -499,12 +553,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 Find the Price List that matches the criteria from the booking with the shortest duration
             */
             $price_lists_ids = $om->search(
-                'sale\price\PriceList', 
+                'sale\price\PriceList',
                 [
                     ['price_list_category_id', '=', $group['booking_id.center_id.price_list_category_id']],
                     ['date_from', '<=', $group['date_from']],
                     ['date_to', '>=', $group['date_from']]
-                ], 
+                ],
                 ['duration' => 'asc']
             );
 
@@ -532,5 +586,5 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);
             }
         }
-    }    
+    }
 }

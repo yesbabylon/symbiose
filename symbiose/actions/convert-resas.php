@@ -166,7 +166,17 @@ $create_identity_from_R_Client = function ($identity_id) use (&$R_Client, &$part
                 $phone = $line['Tel_Client'];
             }
 
-            $contact_identity_id = $create_identity_individual($firstname, $lastname, $gender, $title, $phone);
+            $contact_identity_id = 0;
+            foreach($identities as $c_id => $c_identity) {
+                if(strcasecmp($c_identity['firstname'], $firstname) == 0 && strcasecmp($c_identity['lastname'], $lastname) == 0) {
+                    $contact_identity_id = $c_id;
+                    break;
+                }
+            }
+
+            if(!$contact_identity_id) {
+                $contact_identity_id = $create_identity_individual($firstname, $lastname, $gender, $title, $phone);
+            }            
             $partner_id = $create_partner($line['Cle_Client'], $contact_identity_id, 'contact');
 
             $identity = [
@@ -447,7 +457,17 @@ foreach($list as $file) {
                     $phone = $row['Tel_Payeur'];
                 }
 
-                $contact_identity_id = $create_identity_individual($firstname, $lastname, $gender, $title, $phone);
+                $contact_identity_id = 0;
+                foreach($identities as $c_id => $c_identity) {
+                    if(strcasecmp($c_identity['firstname'], $firstname) == 0 && strcasecmp($c_identity['lastname'], $lastname) == 0) {
+                        $contact_identity_id = $c_id;
+                        break;
+                    }
+                }
+                if(!$contact_identity_id) {
+                    $contact_identity_id = $create_identity_individual($firstname, $lastname, $gender, $title, $phone);                    
+                }
+
                 $partner_id = $create_partner($row['Cle_Client_Payeur'], $contact_identity_id, 'contact');
 
                 $identity = [
@@ -576,19 +596,19 @@ echo "finished !".PHP_EOL;
 file_put_contents("result_partners.csv", "\xEF\xBB\xBF".'"id";"owner_identity_id";"partner_identity_id";"relationship";"customer_nature_id";"customer_type_id";"rate_class_id"'.PHP_EOL);
 foreach($partners as $partner) {
     $line = '"'.implode('";"', $partner).'"'.PHP_EOL;
-    file_put_contents("result_partners.csv", $line, FILE_APPEND);
+    file_put_contents($path."result_partners.csv", $line, FILE_APPEND);
 }
 
 file_put_contents("result_identities.csv", "\xEF\xBB\xBF".'"id";"type";"firstname";"lastname";"gender";"title";"email";"legal_name";"address_street";"address_dispatch";"address_zip";"address_city";"address_country";"phone";"vat_number"'.PHP_EOL);
 foreach($identities as $identity) {
     $line = '"'.implode('";"', $identity).'"'.PHP_EOL;
-    file_put_contents("result_identities.csv", $line, FILE_APPEND);
+    file_put_contents($path."result_identities.csv", $line, FILE_APPEND);
 }
 
 file_put_contents("result_addresses.csv", "\xEF\xBB\xBF".'"id";"role";"identity_id";"address_street";"address_zip";"address_city";"address_country"'.PHP_EOL);
 foreach($addresses as $address) {
     $line = '"'.implode('";"', $address).'"'.PHP_EOL;
-    file_put_contents("result_addresses.csv", $line, FILE_APPEND);
+    file_put_contents($path."result_addresses.csv", $line, FILE_APPEND);
 }
 
 
