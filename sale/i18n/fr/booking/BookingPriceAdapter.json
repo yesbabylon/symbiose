@@ -1,0 +1,54 @@
+{
+	"name": "Adaptateur de Prix",
+	"plural": "Adaptateurs de Prix",
+	"description": "Les adaptateurs permettent d'obtenir le prix final d'une ligne de réservation, soit en effectuant un calcul direct, soit en utilisant une définition de remise.",
+	"model": {
+		"booking_id": {
+			"label": "Réservation",
+			"description": "La réservation de l'adaptateur concerne.",
+			"help": ""
+		},
+		"booking_line_id": {
+			"label": "Ligne de Réservation",
+			"description": "Ligne de réservation à laquelle l'adaptateur se rapporte.",
+			"help": ""
+		},
+		"is_manual_discount": {
+			"label": "Remise manuelle?",
+			"description": "Indicateur pour définir l'adaptateur comme manuel ou associé à une remise.",
+			"help": ""
+		},
+		"type": {
+			"label": "Type",
+			"description": "Type de remise manuelle (montant fixe ou pourcentage du prix).",
+			"selection": {
+				"percent": "pourcent",
+				"amount": "montant"
+			},
+			"help": ""
+		},
+		"value": {
+			"label": "Valeur",
+			"description": "Valeur de la remise (montant monétaire ou pourcentage).",
+			"help": ""
+		},
+		"discount_id": {
+			"label": "Remise",
+			"description": "Remise liée à l'adaptateur, le cas échéant.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Adaptateur de prix de ligne de réservation",
+			"description": "Les adaptateurs permettent d'obtenir le prix final d'une ligne de réservation, soit en effectuant un calcul direct, soit en utilisant une définition de remise.",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Adaptateurs de prix de ligne de réservation",
+			"description": "Cette vue est destinée à afficher la liste des adaptateurs de prix des lignes de réservation.",
+			"layout": {}
+		}
+	},
+	"error": {}
+}

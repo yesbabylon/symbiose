@@ -4,8 +4,8 @@
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"center_category_id": {
-			"label": "Catégorie centrale",
-			"description": "Catégorie centrale à laquelle appartient l'unité actuelle, le cas échéant.",
+			"label": "Catégorie de centre",
+			"description": "Catégorie de centre à laquelle appartient l'unité actuelle, le cas échéant.",
 			"help": ""
 		},
 		"center_id": {
