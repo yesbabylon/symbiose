@@ -26,8 +26,8 @@
 			"label": "Catégorie",
 			"description": "Type d'unité locative (qui comprend généralement des logements supplémentaires, c'est-à-dire des repas ; ou louée telle quelle).",
 			"selection": {
-				"hostel": "auberge",
-				"lodge": "loge"
+				"hostel": "GA",
+				"lodge": "GG"
 			},
 			"help": ""
 		},

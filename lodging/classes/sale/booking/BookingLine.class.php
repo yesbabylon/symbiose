@@ -122,7 +122,8 @@ class BookingLine extends \sale\booking\BookingLine {
         $om->write(__CLASS__, $oids, ['qty_accounting_method' => null]);
 
         // try to auto-assign a rental_unit
-        $lines = $om->read(get_called_class(), $oids, ['booking_id.center_id', 'product_id.product_model_id', 'qty_accounting_method'], $lang);
+
+        $lines = $om->read(__CLASS__, $oids, ['booking_id.center_id', 'product_id.product_model_id', 'qty_accounting_method'], $lang);
 
         // read all related product models at once
         $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
@@ -162,7 +163,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     // search amongst rental unit, select the first match
                     // rental_unit = this.available_rental_units.find(unit => (unit.category_id && unit.category_id.id == product.product_model_id.rental_unit_category_id.id));
                 }
-
+                trigger_error("QN_DEBUG_ORM::assigning {$rental_unit_id}", QN_REPORT_DEBUG);                
                 $om->write(__CLASS__, $oids, ['rental_unit_id' => $rental_unit_id]);
             }
         }
