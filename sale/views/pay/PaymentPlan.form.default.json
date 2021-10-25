@@ -6,6 +6,8 @@
             {
                 "sections": [
                     {
+                        "id": "section.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
@@ -22,6 +24,26 @@
                                                 "label": "Class Rate",
                                                 "value": "rate_class_id",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.deadlines",
+                        "label": "Deadlines",                        
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "payment_deadlines_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

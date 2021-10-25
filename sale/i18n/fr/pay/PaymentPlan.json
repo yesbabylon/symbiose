@@ -4,13 +4,13 @@
 	"description": "",
 	"model": {
 		"name": {
-			"label": "Nom du payeur",
-			"description": "Le client auquel le paiement se rapporte.",
+			"label": "Nom du Plan",
+			"description": "Nom court du plan de paiement.",
 			"help": ""
 		},
 		"rate_class_id": {
 			"label": "Classe tarifaire",
-			"description": "La classe de taux qui s'applique au plan de paiement.",
+			"description": "La classe tarifaire applicable au plan de paiement.",
 			"help": ""
 		}
 	},
@@ -18,7 +18,14 @@
 		"form.default": {
 			"name": "Plan de Paiement",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.details":{
+					"label": "Détails"
+				},
+				"section.deadlines":{
+					"label": "Échéances"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Plans de Paiement",

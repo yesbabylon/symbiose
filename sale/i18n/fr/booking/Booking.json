@@ -55,7 +55,7 @@
         },
         "contracts_ids": {
             "label": "Contrats",
-            "description": "Liste des contacts liés à la réservation, le cas échéant.",
+            "description": "Liste des contrats liés à la réservation, le cas échéant.",
             "help": ""
         },
         "type_id": {
@@ -69,7 +69,8 @@
             "selection": {
                 "quote": "cotation",
                 "option": "option",
-                "validated": "validé",
+                "confirmed": "confirmée",                
+                "validated": "validée",
                 "checkedin": "en cours",
                 "checkedout": "terminé",
                 "due_balance": "solde dû",
@@ -117,7 +118,7 @@
                     "label": "Contrats"
                 },
                 "section.booking_products": {
-                    "label": "Produits"
+                    "label": "Services"
                 }
             }
         },
@@ -127,7 +128,7 @@
             "layout": {}
         }
     },
-    "error": {
+    "error": {        
         "customer_id": {
             "missing_mandatory": "Champ obligatoire."
         },
@@ -136,6 +137,9 @@
         },
         "type_id": {
             "missing_mandatory": "Champ obligatoire."
-        }        
+        },
+        "errors": {
+            "overbooking_detected": "Surbooking détecté"
+        }
     }
 }

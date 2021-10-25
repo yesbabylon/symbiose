@@ -8,7 +8,7 @@
               "description": "",
               "icon": "menu_book",
               "type": "entry",
-              "route": "/bookings"
+              "route": "/"
             },
             {
               "id": "item.planning",

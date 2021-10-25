@@ -1,66 +1,66 @@
 {
-	"name": "Date Limite de Paiement",
-	"plural": "Dates Limite de Paiement",
-	"description": "",
-	"model": {
-		"name": {
-			"label": "Nom du payeur",
-			"description": "Le client auquel le paiement se rapporte.",
-			"help": ""
-		},
-		"delay_from_event": {
-			"label": "Retard de l'événement",
-			"description": "Date de début de l'événement du compteur d'échéance.",
-			"selection": {
-				"booking": "réservation",
-				"checkin": "enregistrement",
-				"checkout": "vérifier"
-			},
-			"help": ""
-		},
-		"delay_count": {
-			"label": "Compte de retard",
-			"description": "Nombre de jours avant d'atteindre la date limite.",
-			"help": ""
-		},
-		"type": {
-			"label": "Type de paiment",
-			"description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
-			"selection": {
-				"installment": "versement",
-				"invoice": "facture d'achat"
-			},
-			"help": ""
-		},
-		"amount_share": {
-			"label": "Montant part",
-			"description": "Part du paiement sur le montant total dû.",
-			"help": ""
-		},
-		"payment_plan_id": {
-			"label": "Plan de paiement",
-			"description": "Le plan de paiement auquel s'applique la date limite.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Date Limite de Paiement",
-			"description": "",
-			"layout": {
-				"section.payment_section": {
-					"label": "Détails"
-				},
-				"section.fundings_section": {
-					"label": "Financements"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Dates Limite de Paiement",
-			"description": "Cette vue est destinée à afficher la liste des Dates limite de paiement.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Date Limite de Paiement",
+    "plural": "Dates Limite de Paiement",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Court mémo de l'échéance.",
+            "help": ""
+        },
+        "delay_from_event": {
+            "label": "À partir de",
+            "description": "Événement de départ du délai avant échéance.",
+            "selection": {
+                "booking": "Prise de réservation",
+                "checkin": "Arrivée (checkin)",
+                "checkout": "Départ (checkout)"
+            },
+            "help": ""
+        },
+        "delay_count": {
+            "label": "Délai",
+            "description": "Nombre de jours avant échéance.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type d'échéance",
+            "description": "Les délais sont échelonnés sauf le dernier (facture définitive).",
+            "selection": {
+                "installment": "acompte",
+                "invoice": "facture"
+            },
+            "help": ""
+        },
+        "amount_share": {
+            "label": "Part du paiement",
+            "description": "Part du paiement sur le montant total dû.",
+            "help": ""
+        },
+        "payment_plan_id": {
+            "label": "Plan de paiement",
+            "description": "Le plan de paiement auquel s'applique l'échéance'.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Date Limite de Paiement",
+            "description": "",
+            "layout": {
+                "section.payment_section": {
+                    "label": "Détails"
+                },
+                "section.fundings_section": {
+                    "label": "Financements"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Dates Limite de Paiement",
+            "description": "Cette vue est destinée à afficher la liste des Dates limite de paiement.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

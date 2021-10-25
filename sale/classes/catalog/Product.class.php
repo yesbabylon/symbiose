@@ -16,7 +16,16 @@ class Product extends Model {
          */
 
         return [
+
             'name' => [
+                'type'              => 'computed',
+                'function'          => 'sale\catalog\Product::getDisplayName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The display name of the product (label + sku).'
+            ],
+            
+            'label' => [
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
                 'required'          => true
@@ -113,6 +122,19 @@ class Product extends Model {
             ]
 
         ];
+    }
+
+    /**
+     * Computes the display_name of the product as a concatenation of Label and SKU.
+     *
+     */
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(get_called_class(), $oids, ['label', 'sku']);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = "{$odata['label']} ({$odata['sku']})";
+        }
+        return $result;
     }
 
     public static function defaultFamilyId($om, $values=[]) {

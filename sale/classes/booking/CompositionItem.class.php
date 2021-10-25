@@ -39,13 +39,13 @@ class CompositionItem extends Model {
             ],
 
             'date_of_birth' => [
-                'type'          => 'date',
-                'description'   => 'Date of birth of the person.'
+                'type'              => 'date',
+                'description'       => 'Date of birth of the person.'
             ],
 
             'place_of_birth' => [
-                'type'          => 'string',
-                'description'   => 'Place of birth of the person (city, country).'
+                'type'              => 'string',
+                'description'       => 'Place of birth of the person (city, country).'
             ],
 
             /* some legal constraints might apply, in which case we need extra contact details */
@@ -105,18 +105,19 @@ class CompositionItem extends Model {
 
     public static function getRentalUnitsIds($om, $oids, $lang) {
         $result = [];
-        $items = $om->read(__CLASS__, $oids, ['composition_id.booking_id.booking_lines_ids']);
+        $items = $om->read(__CLASS__, $oids, ['composition_id.booking_id']);
 
         foreach($items as $oid => $odata) {
+
             $rental_units_ids = [];
-            $booking_lines_ids = $odata['composition_id.booking_id.booking_lines_ids'];
-            $lines = $om->read('lodging\sale\booking\BookingLine', $booking_lines_ids, ['qty_accounting_method', 'rental_unit_id']);
-            foreach($lines as $lid => $line) {
-                if($line['qty_accounting_method'] == 'accomodation') {
-                    $rental_units_ids[$line['rental_unit_id']] = true;
-                }
+            $assignments_ids = $om->search('lodging\sale\booking\BookingLineRentalUnitAssignement', ['booking_id', '=', $odata['composition_id.booking_id']]);
+
+            if($assignments_ids > 0 && count($assignments_ids)) {
+                $assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id']);
+                $rental_units_ids = array_filter(array_map(function($a) { return $a['rental_unit_id']; }, array_values($assignments)), function($a) {return $a > 0;});
             }
-            $result[$oid] = array_keys($rental_units_ids);
+
+            $result[$oid] = $rental_units_ids;
         }
         return $result;
     }

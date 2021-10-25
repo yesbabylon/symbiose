@@ -38,7 +38,7 @@ class Identity extends Model {
                 'help'              => "
                     The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
                     For instance, 'display_name', for a company with \"My Company\" as legal name will return \"My Company\". \n
-                    Whereas, for an individual with \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\".
+                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it returns \"John Smith\".
                 "
             ],
 
@@ -56,6 +56,11 @@ class Identity extends Model {
                 'description'       => 'Type of organisation.'
             ],
 
+            'description' => [
+                'type'              => 'text',
+                'description'       => 'A short reminder to help user identify the targeted person and its specifics.'
+            ],
+
             /*
                 Fields specific to organisations
             */
@@ -70,10 +75,6 @@ class Identity extends Model {
                 'description'   => 'Usual name to be used as a memo for identifying the organisation (acronym or short name).',
                 'visible'           => [ ['type', '<>', 'I'] ],
                 'onchange'          => 'identity\Identity::onchangeName'
-            ],
-            'description' => [
-                'type'              => 'text',
-                'description'       => 'A short reminder to help user identify the organisation (e.g. "Human Resources Consultancy Firm").'
             ],
             'has_vat' => [  
                 'type'              => 'boolean',

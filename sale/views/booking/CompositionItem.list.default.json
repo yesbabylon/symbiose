@@ -41,11 +41,6 @@
             },
             {
                 "type": "field",
-                "value": "place_of_birth",
-                "width": "15%"
-            },
-            {
-                "type": "field",
                 "value": "country",
                 "width": "10%"
             },

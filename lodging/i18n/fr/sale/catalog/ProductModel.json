@@ -157,12 +157,12 @@
         },
         "duration": {
             "label": "Durée",
-            "description": "Informations supplémentaires sur la durée du service (en jours), utilisées à des fins de planification.",
+            "description": "Durée du service (en jours), utilisées à des fins de planification.",
             "help": ""
         },
         "capacity": {
             "label": "Capacité",
-            "description": "Informations supplémentaires sur la capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants).",
+            "description": "Capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants).",
             "help": ""
         },
         "is_meal": {

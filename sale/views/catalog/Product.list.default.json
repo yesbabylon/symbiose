@@ -8,7 +8,7 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%"
+                "width": "30%"
             },
             {
                 "type": "field",
@@ -25,18 +25,18 @@
             {
                 "type": "field",
                 "value": "is_pack",
-                "width": "20%",
+                "width": "10%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "can_sell",
-                "width": "20%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "family_id",
-                "width": "20%"
+                "width": "10%"
             }
         ]
     }

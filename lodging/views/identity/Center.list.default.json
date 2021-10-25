@@ -7,13 +7,25 @@
                 "type": "field",
                 "label": "Center Name",
                 "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "label": "Code",
+                "value": "group_code",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Mnemo",
+                "value": "code_alpha",
                 "width": "15%"
             },
             {
                 "type": "field",
                 "label": "Organization Name",
                 "value": "organisation_id",
-                "width": "15%",
+                "width": "25%",
                 "sortable": true
             }
         ]

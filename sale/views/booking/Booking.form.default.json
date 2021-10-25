@@ -10,11 +10,11 @@
             "visible": ["status", "=", "quote"]
         },
         {
-            "id": "action.validate",
+            "id": "action.confirm",
             "label": "Confirm Booking",
             "description": "Rental units will be blocked and the invoicing plan will be set up.",
             "controller": "lodging_booking_confirm",
-            "visible": ["status", "in", ["quote", "option"]]
+            "visible": ["status", "=", "option"]
         },
         {
             "id": "action.checkin",

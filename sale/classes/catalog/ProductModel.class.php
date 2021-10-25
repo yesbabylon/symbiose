@@ -127,7 +127,8 @@ class ProductModel extends Model {
             'tracking_type' => [
                 'type'              => 'string',
                 'selection'         => ['none', 'batch', 'sku', 'upc'],
-                'visible'           => [ ['type', '=', 'consumable'], ['consumable_type', '=', 'storable'] ]
+                'visible'           => [ ['type', '=', 'consumable'], ['consumable_type', '=', 'storable'] ],
+                'default'           => 'sku'
             ],
 
             'description_delivery' => [

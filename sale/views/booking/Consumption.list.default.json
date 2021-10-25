@@ -5,35 +5,43 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Booking",
-                "value": "booking_id",
-                "width": "10%"
+                "label": "Product",
+                "value": "product_id",
+                "width": "25%"
             },
             {
                 "type": "field",
                 "value": "date",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
-                "value": "type",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Product",
-                "value": "product_id",
+                "value": "schedule_from",
                 "width": "10%"
             },
             {
                 "type": "field",
-                "label": "Rental Unit",
-                "value": "rental_unit_id",
+                "value": "schedule_to",
+                "width": "10%"
+            },            
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "is_rental_unit",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "is_meal",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "disclaimed",
                 "width": "10%"
             }
         ]

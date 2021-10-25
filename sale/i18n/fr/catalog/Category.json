@@ -4,7 +4,7 @@
 	"description": "",
 	"model": {
 		"name": {
-			"label": "Nom du produit",
+			"label": "Nom",
 			"description": "Nom de la catégorie de produits (utilisé pour toutes les variantes).",
 			"help": ""
 		},
