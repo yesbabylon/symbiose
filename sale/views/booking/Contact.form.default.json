@@ -14,14 +14,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Identity of Partner",
                                                 "value": "partner_identity_id",
                                                 "width": "80%",
@@ -33,26 +25,14 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner Organisation",
-                                                "value": "partner_organisation_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "owner_identity_id",
-                                                "width": "0%",
-                                                "visible": false
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "relationship",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "booking_id",
                                                 "width": "0%",
                                                 "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "partner_organisation_id",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -65,7 +45,23 @@
                                                 "width": "50%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "owner_identity_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "relationship",
+                                                "width": "50%"
+                                            }
+                                        ]
                                     }
+
                                 ]
                             }
                         ]

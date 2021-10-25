@@ -3,6 +3,7 @@
     "description": "This view displays the list of bookings: the most recent on top.",
     "order": "created",
     "sort": "desc",
+    "domain": ["center_id", "in", "user.centers_ids"],
     "exports": [
         {
             "id": "export.print.contract",
@@ -17,7 +18,8 @@
     "actions": [
         {
             "id": "ACTIONS.CREATE",
-            "view": "form.create"
+            "view": "form.create",
+            "description": "overload form to use for booking creation"
         }
     ],    
     "layout": {

@@ -15,7 +15,7 @@ class RentalUnitCategory extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the rental unit category."
+                'description'       => "Short code of the rental unit category."
             ],
 
             'description' => [

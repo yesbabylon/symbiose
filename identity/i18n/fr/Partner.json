@@ -9,23 +9,23 @@
             "help": ""
         },
         "owner_identity_id": {
-            "label": "Organisation",
+            "label": "Origine",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
             "help": ""
         },
         "partner_identity_id": {
-            "label": "Identité",
+            "label": "Identité du partenaire",
             "description": "L'identité ciblée (le partenaire).",
             "help": ""
         },
         "partner_organisation_id": {
-            "label": "Partenaire",
+            "label": "Organisation du partenaire",
             "description": "Organisation au sein de laquelle travaille le contact.",
             "help": ""
         },
         "partner_position": {
-            "label": "Position",
-            "description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'.",
+            "label": "Fonction",
+            "description": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional).",
             "help": ""
         },
         "customer_external_ref": {

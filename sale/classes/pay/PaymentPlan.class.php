@@ -15,15 +15,22 @@ class PaymentPlan extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => 'The customer the payment relates to.',
+                'description'       => 'The name of the plan.',
+                'required'          => true                
             ],
 
             'rate_class_id' => [
                 'type'              => 'many2one',                
                 'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => "The rate class that applies to the payment plan.",
-                'required'          => true
-            ]
+                'description'       => "The rate class that applies to the payment plan."
+            ],
+
+            'payment_deadlines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\pay\PaymentDeadline',
+                'foreign_field'     => 'payment_plan_id',                
+                'description'       => 'List of deadlines related to the plan, if any.' 
+            ],            
 
         ];
     }

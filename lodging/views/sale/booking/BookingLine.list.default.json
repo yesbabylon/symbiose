@@ -25,8 +25,8 @@
             },
             {
                 "type": "field",
-                "label": "Rental Unit",
-                "value": "rental_unit_id",
+                "label": "Price",
+                "value": "price",
                 "width": "20%"
             },
             {

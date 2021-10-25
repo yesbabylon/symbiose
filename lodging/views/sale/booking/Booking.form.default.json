@@ -3,18 +3,26 @@
     "description": "",
     "actions": [
         {
+            "id": "action.quote",
+            "label": "Revert to Quote",
+            "description": "Rental units will no longer be reserved and will be available for other bookings.",
+            "controller": "lodging_booking_quote",
+            "confirm": true,
+            "visible": ["status", "in", ["option", "confirmed"]]
+        },
+        {
             "id": "action.option",
             "label": "Set as Option",
-            "description": "Rental units will be blocked but no funding will be claimed yet.",
+            "description": "Rental units will be reserved but no funding will be claimed yet.",
             "controller": "lodging_booking_option",
             "visible": ["status", "=", "quote"]
         },
         {
-            "id": "action.validate",
+            "id": "action.confirm",
             "label": "Confirm Booking",
-            "description": "Rental units will be blocked and the invoicing plan will be set up.",
+            "description": "Rental units will be reserved and the invoicing plan will be set up.",
             "controller": "lodging_booking_confirm",
-            "visible": ["status", "in", ["quote", "option"]]
+            "visible": ["status", "=", "option"]
         },
         {
             "id": "action.checkin",
@@ -40,10 +48,22 @@
     ],
     "routes": [
         {
+            "id": "item.booking.contract",
+            "label": "Fiche de réservation",
+            "description": "",
+            "icon": "library_books",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "form.default",
+                "domain": ["id", "=", "object.id"]
+            }
+        },
+        {
             "id": "item.booking.edit",
             "label": "Services réservés",
             "description": "",
-            "icon": "edit",
+            "icon": "room_service",
             "route": "/bookings/edit/object.id"
         },
         {
@@ -60,6 +80,26 @@
             "icon": "drive_file_rename_outline",
             "route": "/bookings/contract/object.id",
             "visible": ["has_contract", "=", "true"]
+        },
+        {
+            "id": "item.booking.contract",
+            "label": "Consommations",
+            "description": "",
+            "icon": "calendar_today",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Consumption",
+                "view": "list.default",
+                "domain": ["booking_id", "=", "object.id"]
+            }
+        }
+    ],
+    "checks": [
+        {
+            "id": "booking.validator.overbooking",
+            "label": "Vérifier Surbooking",
+            "description": "Voir les réservations en conflit.",
+            "controller": "lodging_booking_check-overbooking"
         }
     ],
     "layout": {
@@ -86,7 +126,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "33%"
+                                                "width": "33%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",

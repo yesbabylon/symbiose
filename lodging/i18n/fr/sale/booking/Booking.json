@@ -34,10 +34,14 @@
             "name": "Réservation",
             "description": "Formulaire d'édition d'une réservation",
             "actions": {
+                "action.quote": {
+                    "label": "Repasser en cotation",
+                    "description": "Les unités locatives ne seront plus réservées et pourront être occupés pour d'autres réservation."
+                },
                 "action.option": {
                     "label": "Placer une option"
                 },
-                "action.validate": {
+                "action.confirm": {
                     "label": "Confirmer"
                 },
                 "action.checkin": {

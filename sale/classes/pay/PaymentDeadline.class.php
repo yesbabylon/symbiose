@@ -15,7 +15,7 @@ class PaymentDeadline extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => 'The customer the payment relates to.',
+                'description'       => 'Short memo of the deadline.',
             ],
 
             'delay_from_event' => [
@@ -31,7 +31,10 @@ class PaymentDeadline extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['installment','invoice'],
+                'selection'         => [
+                                        'installment',
+                                        'invoice'
+                ],
                 'description'       => "Deadlines are installment except for last one: final invoice."
             ],
 

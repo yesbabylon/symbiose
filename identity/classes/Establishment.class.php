@@ -43,7 +43,7 @@ class Establishment extends Model {
 
             'email' => [
                 'type'          => 'string',
-                'description'   => 'Official contact email address.' 
+                'description'   => 'Official contact email address for the establishment.' 
             ],            
 
             'address_street' => [

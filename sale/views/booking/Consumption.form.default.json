@@ -40,17 +40,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "date",
-                                                "width": "50%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "schedule_from",
-                                                "width": "50%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "schedule_to",
-                                                "width": "50%"
+                                                "width": "30%"
                                             }
                                         ]
                                     },

@@ -32,12 +32,26 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'default'           => 'unit'
             ],
 
+            'is_accomodation' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the product an accomodation?',
+                'default'           => false,
+                'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
+            ],
+
+            'is_meal' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the product a meal? (meals might be part of the board / included services of the stay).',
+                'default'           => false,
+                'visible'           => [ ['type', '=', 'service'], ['is_accomodation', '=', false] ]
+            ],
+
             'rental_unit_assignement' => [
                 'type'              => 'string',
                 'description'       => 'The way the product is assigned to a rental unit (a specific unit, a specific category, or based on capacity match).',
                 'selection'         => ['unit', 'category', 'capacity'],
                 'default'           => 'category',
-                'visible'           => [ ['qty_accounting_method', '=', 'accomodation'] ]
+                'visible'           => [ ['is_accomodation', '=', true] ]
             ],
 
             'has_duration' => [
@@ -58,21 +72,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'integer',
                 'description'       => 'Capacity implied by the service (used for filtering rental units).',
                 'default'           => 1,
-                'visible'           => [ ['qty_accounting_method', '=', 'accomodation'] ]
-            ],
-
-            'is_meal' => [
-                'type'              => 'boolean',
-                'description'       => 'Is the product a meal? (meals might be part of the board / included services of the stay).',
-                'default'           => false,
-                'visible'           => [ ['type', '=', 'service'], ['is_accomodation', '=', false] ]
-            ],
-
-            'is_accomodation' => [
-                'type'              => 'boolean',
-                'description'       => 'Is the product an accomodation?',
-                'default'           => false,
-                'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
+                'visible'           => [ ['is_accomodation', '=', true] ]
             ],
 
             // a product either refers to a specific rental unit, or to a category of rental units (both allowing to find matching units for a given period and a capacity)
@@ -80,14 +80,15 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnitCategory',
                 'description'       => "Rental Unit Category this Product related to, if any.",
-                'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'category'] ]
+                'visible'           => [ ['is_accomodation', '=', true], ['rental_unit_assignement', '=', 'category'] ]
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => "Specific Rental Unit this Product related to, if any",
-                'visible'           => [ ['qty_accounting_method', '=', 'accomodation'], ['rental_unit_assignement', '=', 'unit'] ]
+                'visible'           => [ ['is_accomodation', '=', true], ['rental_unit_assignement', '=', 'unit'] ],
+                'onchange'          => 'lodging\sale\catalog\ProductModel::onchangeRentalUnitId'
             ],
 
             'products_ids' => [
@@ -110,4 +111,16 @@ class ProductModel extends \sale\catalog\ProductModel {
         ];
     }
 
+    /**
+     * Assigns the related rental unity capacity as own capacity.
+     */
+    public static function onchangeRentalUnitId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onchangeRentalUnitId", QN_REPORT_DEBUG);
+        
+        $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity'], $lang);
+
+        foreach($models as $mid => $model) {
+            $om->write(get_called_class(), $mid, ['capacity' => $model['rental_unit_id.capacity']]);
+        }
+    }
 }

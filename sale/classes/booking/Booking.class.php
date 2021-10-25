@@ -80,7 +80,8 @@ class Booking extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contact',
                 'foreign_field'     => 'booking_id',                
-                'description'       => 'List of contacts related to the booking, if any.' 
+                'description'       => 'List of contacts related to the booking, if any.',
+                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id']
             ],
 
             'has_contract' => [
@@ -100,14 +101,21 @@ class Booking extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingLine',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Detailed consumptions of the booking.' 
+                'description'       => 'Detailed lines of the booking.' 
             ],
 
             'booking_lines_groups_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Grouped consumptions of the booking.' 
+                'description'       => 'Grouped lines of the booking.' 
+            ],
+
+            'consumptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Consumption',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Consumptions related to the booking.' 
             ],
 
             'composition_id' => [
@@ -125,7 +133,17 @@ class Booking extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'selection'         => ['quote', 'option', 'validated', 'checkedin', 'checkedout', 'due_balance', 'credit_balance', 'balanced'],
+                'selection'         => [
+                    'quote',                    // booking is just informative: nothing has been booked in the planning
+                    'option',                   // booking has been placed in the planning for 10 days
+                    'confirmed',                // booking has been placed in the planning without time limit
+                    'validated',                // signed contract and first installment have been received
+                    'checkedin',                // host is currently occupying the booked rental unit
+                    'checkedout',               // host has left the booked rental unit
+                    'due_balance',              // customer still has to pay something
+                    'credit_balance',           // a reimbusrsement customer is still pending
+                    'balanced'                  // booking is over and balance is cleared
+                ],
                 'description'       => 'Status of the booking.',
                 'default'           => 'quote'
             ],

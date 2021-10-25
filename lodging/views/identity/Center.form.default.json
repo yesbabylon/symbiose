@@ -1,6 +1,6 @@
 {
     "name": "Center",
-    "description": "A center is an accommodation establishment providing overnight lodging and holding one or more rental unit(s)",
+    "description": "A center is an accommodation establishment providing overnight lodging, and holding one or more rental units.",
     "layout": {
         "groups": [
             {
@@ -16,16 +16,20 @@
                                                 "type": "field",
                                                 "label": "Center Name",
                                                 "value": "name",
-                                                "width": "60%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Code",
-                                                "value": "code",
-                                                "width": "40%"
+                                                "value": "code_alpha",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "group_code",
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -169,7 +173,17 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    }
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "email",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }                                    
                                 ]
                             }
                         ]

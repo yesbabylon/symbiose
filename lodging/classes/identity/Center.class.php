@@ -20,9 +20,15 @@ class Center extends \identity\Establishment {
 
         return [
 
-            'code' => [
+            'group_code' => [
                 'type'              => 'string',
-                'description'       => 'Short identifier of the center.'
+                'description'       => 'Numeric identifier of the logical entity of the center (1 hexadec. digit).',
+                'usage'             => 'numeric/hexadecimal:1'
+            ],
+
+            'code_alpha' => [
+                'type'              => 'string',
+                'description'       => 'Alpha identifier of the center (2 uppercase letters).'
             ],
 
             /*
@@ -114,6 +120,27 @@ class Center extends \identity\Establishment {
                 'required'          => true
             ]
 
+        ];
+    }
+
+    public function getUnique() {
+        return [
+            ['code'],
+            ['code_alpha']
+        ];
+    }
+
+
+    public static function getConstraints() {
+        return [
+            'code_alpha' =>  [
+                'invalid' => [
+                    'message'       => 'Must be 2 upper case letters.',
+                    'function'      => function ($code_alpha, $values) {
+                        return (preg_match('/^[A-Z]{2}+$/', (string) $code_alpha));
+                    }
+                ]
+            ]
         ];
     }
 }

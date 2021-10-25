@@ -8,7 +8,7 @@
 use lodging\sale\booking\Booking;
 
 list($params, $providers) = announce([
-    'description'   => "Sets booking as validated (confirmed).",
+    'description'   => "Sets booking as confirmed.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the composition has to be generated.',

@@ -115,7 +115,7 @@ class Consumption extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $consumptions = $om->read(__CLASS__, $oids, ['booking_id.customer_id.name', 'booking_id.description', 'product_id.name', 'date', 'schedule_from']);
+        $consumptions = $om->read(get_called_class(), $oids, ['booking_id.customer_id.name', 'booking_id.description', 'product_id.name', 'date', 'schedule_from']);
         foreach($consumptions as $oid => $odata) {
             $datetime = $odata['date'] + $odata['schedule_from'];
             $moment = date("d/m/Y H:i:s", $datetime);

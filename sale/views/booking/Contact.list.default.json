@@ -7,26 +7,33 @@
                 "type": "field",
                 "label": "Name",
                 "value": "name",
-                "width": "50%",
-                "widget": {
-                    "header": true
-                }
+                "width": "30%"
             },
             {
-                "type": "field",    
-                "label": "Booking",        
-                "value": "booking_id",
+                "type": "field",
+                "value": "phone",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
+                "value": "email",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Owner",
+                "value": "owner_identity_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "type",
-                "width": "20%"
+                "width": "10%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "relationship",
-                "width": "20%"
+                "width": "10%"
             }
         ]
     }

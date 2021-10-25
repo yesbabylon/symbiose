@@ -123,7 +123,7 @@ class BookingLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'description'       => 'Final (computed) price.',
+                'description'       => 'Final (computed) price (VAT included).',
                 'function'          => 'sale\booking\BookingLine::getTotalPrice',
                 'store'             => true
             ],
@@ -174,8 +174,8 @@ class BookingLine extends Model {
     /**
      * This method is called upon change on: qty
      */
-    public static function _updateConsumptions($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_updateConsumptions", QN_REPORT_DEBUG);
+    public static function _createConsumptions($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
         // #todo
     }
 
@@ -190,7 +190,10 @@ class BookingLine extends Model {
                     'auto_discounts_ids'
                 ]);
         foreach($lines as $oid => $odata) {
-            $price = (float) $odata['price_id.price'];
+            $price = 0;
+            if($odata['price_id.price']) {
+                $price = (float) $odata['price_id.price'];
+            }            
             $disc_percent = 0.0;
             $disc_value = 0.0;
             $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value', 'discount_id.discount_list_id.rate_max']);
@@ -225,7 +228,7 @@ class BookingLine extends Model {
                     'auto_discounts_ids',
                     'manual_discounts_ids'
                 ]);
-// #todo we also need to set the limit according to related DiscountLists                
+
         foreach($lines as $oid => $odata) {
             $price = (float) $odata['unit_price'];
             $disc_percent = 0.0;

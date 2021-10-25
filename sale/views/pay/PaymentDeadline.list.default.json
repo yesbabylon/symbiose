@@ -15,7 +15,7 @@
             },
             {
                 "type": "field",
-                "value": "amount_share",
+                "value": "delay_count",
                 "width": "20%"
             },
             {
@@ -25,7 +25,7 @@
             },
             {
                 "type": "field",
-                "value": "delay_count",
+                "value": "amount_share",
                 "width": "20%"
             }
         ]
