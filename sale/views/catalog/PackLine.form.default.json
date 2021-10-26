@@ -14,15 +14,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Parent's Product",
                                                 "value": "parent_product_id",
                                                 "width": "50%"
