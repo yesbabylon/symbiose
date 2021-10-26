@@ -45,63 +45,7 @@
             "controller": "lodging_booking_invoice",
             "visible": ["status", "=", "checkedout"]
         }
-    ],
-    "routes": [
-        {
-            "id": "item.booking.contract",
-            "label": "Fiche de réservation",
-            "description": "",
-            "icon": "library_books",
-            "route": "/bookings/",
-            "context": {
-                "entity": "lodging\\sale\\booking\\Booking",
-                "view": "form.default",
-                "domain": ["id", "=", "object.id"]
-            }
-        },
-        {
-            "id": "item.booking.edit",
-            "label": "Services réservés",
-            "description": "",
-            "icon": "room_service",
-            "route": "/bookings/edit/object.id"
-        },
-        {
-            "id": "item.booking.composition",
-            "label": "Composition",
-            "description": "",
-            "icon": "view_list",
-            "route": "/bookings/composition/object.id"
-        },
-        {
-            "id": "item.booking.contract",
-            "label": "Envoi du contrat",
-            "description": "",
-            "icon": "drive_file_rename_outline",
-            "route": "/bookings/contract/object.id",
-            "visible": ["has_contract", "=", "true"]
-        },
-        {
-            "id": "item.booking.contract",
-            "label": "Consommations",
-            "description": "",
-            "icon": "calendar_today",
-            "route": "/bookings/",
-            "context": {
-                "entity": "lodging\\sale\\booking\\Consumption",
-                "view": "list.default",
-                "domain": ["booking_id", "=", "object.id"]
-            }
-        }
-    ],
-    "checks": [
-        {
-            "id": "booking.validator.overbooking",
-            "label": "Vérifier Surbooking",
-            "description": "Voir les réservations en conflit.",
-            "controller": "lodging_booking_check-overbooking"
-        }
-    ],
+    ],    
     "layout": {
         "groups": [
             {
@@ -127,7 +71,10 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "width": "33%",
-                                                "readonly": true
+                                                "widget": {                                                
+                                                    "header": true,
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",

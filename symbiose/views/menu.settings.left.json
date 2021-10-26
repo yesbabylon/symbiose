@@ -187,7 +187,7 @@
                       "description": "",
                       "context": {
                         "entity": "sale\\customer\\Customer",
-                        "view": "list.customer",
+                        "view": "list.default",
                         "domain": ["relationship", "=", "customer"]
                       }
                     },
@@ -472,6 +472,64 @@
               ]
             },
             {
+              "id": "organisation",
+              "label": "Organisation",
+              "description": "",
+              "icon": "store",
+              "type": "parent",
+              "children": [
+                {
+                  "id": "centers",
+                  "label": "Centers",
+                  "description": "",
+                  "icon": "house",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "centers_centers",
+                      "type": "entry",
+                      "label": "Centers",
+                      "description": "",
+                      "context": {
+                        "entity": "lodging\\identity\\Center",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "centers_categories",
+                      "type": "entry",
+                      "label": "Center Categories",
+                      "description": "",
+                      "context": {
+                        "entity": "lodging\\identity\\CenterCategory",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "centers.rental_units",
+                      "type": "entry",
+                      "label": "Rental units",
+                      "description": "",
+                      "context": {
+                        "entity": "lodging\\realestate\\RentalUnit",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "centers.rental_units_categories",
+                      "type": "entry",
+                      "label": "Rental units categories",
+                      "description": "",
+                      "context": {
+                        "entity": "realestate\\RentalUnitCategory",
+                        "view": "list.default"
+                      }
+                    }
+                  ]
+                }                
+              ]
+            },            
+            {
               "id": "accounting",
               "label": "Accounting",
               "description": "",
@@ -564,24 +622,52 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "available_settings",
-                  "type": "entry",
-                  "label": "Available settings",
+                  "id": "calendar",
+                  "label": "Calendar",
                   "description": "",
-                  "context": {
-                    "entity": "core\\Setting",
-                    "view": "list.default"
-                  }
-                },
+                  "icon": "calendar_today",
+                  "type": "parent",
+                  "children": [                
+                    {
+                      "id": "calendar.holidays",
+                      "type": "entry",
+                      "label": "Holidays",
+                      "description": "",
+                      "context": {
+                        "entity": "calendar\\Holiday",
+                        "view": "list.default"
+                      }
+                    }
+                  ]
+                },                
                 {
-                  "id": "settings_values",
-                  "type": "entry",
-                  "label": "Settings values",
+                  "id": "settings",
+                  "label": "Application settings",
                   "description": "",
-                  "context": {
-                    "entity": "core\\SettingValue",
-                    "view": "list.default"
-                  }
+                  "icon": "person",
+                  "type": "parent",
+                  "children": [                
+                    {
+                      "id": "available_settings",
+                      "type": "entry",
+                      "label": "Available settings",
+                      "description": "",
+                      "context": {
+                        "entity": "core\\Setting",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "settings_values",
+                      "type": "entry",
+                      "label": "Settings values",
+                      "description": "",
+                      "context": {
+                        "entity": "core\\SettingValue",
+                        "view": "list.default"
+                      }
+                    }
+                  ]
                 },
                 {
                   "id": "identities",
@@ -631,56 +717,8 @@
                       }
                     }
                   ]
-                },
-                {
-                  "id": "centers",
-                  "label": "Centers",
-                  "description": "",
-                  "icon": "house",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "centers_centers",
-                      "type": "entry",
-                      "label": "Centers",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\identity\\Center",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "centers_categories",
-                      "type": "entry",
-                      "label": "Center Categories",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\identity\\CenterCategory",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "centers.rental_units",
-                      "type": "entry",
-                      "label": "Rental units",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\realestate\\RentalUnit",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "centers.rental_units_categories",
-                      "type": "entry",
-                      "label": "Rental units categories",
-                      "description": "",
-                      "context": {
-                        "entity": "realestate\\RentalUnitCategory",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
                 }
+                
               ]
             }
 

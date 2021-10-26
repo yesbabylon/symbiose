@@ -26,7 +26,8 @@
             "label": "Composition",
             "description": "",
             "icon": "view_list",
-            "route": "/bookings/composition/object.id"
+            "route": "/bookings/composition/object.id",
+            "visible": "[]"
         },
         {
             "id": "item.booking.contract",
@@ -34,27 +35,37 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/bookings/contract/object.id",
-            "visible": ["has_contract", "=", "true"]
+            "visible": ["status", "<>", "quote"]
         },
         {
-            "id": "item.booking.contract",
+            "id": "item.booking.quote",
+            "label": "Envoi du devis",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/bookings/quote/object.id",
+            "visible": ["status", "=", "quote"]
+        },
+        {
+            "id": "item.booking.consumptions",
             "label": "Consommations",
             "description": "",
             "icon": "calendar_today",
             "route": "/bookings/",
             "context": {
                 "entity": "lodging\\sale\\booking\\Consumption",
+                "target_entity": "lodging\\sale\\booking\\Booking",                
                 "view": "list.default",
                 "domain": ["booking_id", "=", "object.id"]
-            }
-        }
-    ],
-    "checks": [
+            },
+            "visible": ["status", "<>", "quote"]
+        },
         {
-            "id": "booking.validator.overbooking",
-            "label": "Vérifier Surbooking",
-            "description": "Voir les réservations en conflit.",
-            "controller": "lodging_booking_check-overbooking"
-        }
+            "id": "item.booking.quote",
+            "label": "Devis",
+            "description": "",
+            "icon": "view_list",
+            "route": "/bookings/quote/object.id",
+            "visible": "[]"
+        }        
     ]
 }
