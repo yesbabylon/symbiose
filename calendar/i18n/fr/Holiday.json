@@ -1,0 +1,48 @@
+{
+    "name": "Compte",
+    "plural": "Comptes",
+    "description": "Une ligne de plan comptable reprennent des informations relatices à un compte spécifique.",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Date / Du",
+            "description": "Date / premier jour du congé",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Dernier jour du congé.",
+            "help": ""
+        },
+        "is_single_day": {
+            "label": "Un seul jour ?",
+            "description": "Le congé est-il un jour unique?",
+            "help": ""
+        },
+        "year": {
+            "label": "Année",
+            "description": "Année sur laquelle porte le congé.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type d'opération auquel cette règle se rapporte.",
+            "selection": {
+                "school_vacation" : "Congé scolaire",
+                "public_holiday" : "Congé officiel"
+
+            },
+            "help": ""
+        }
+        
+    },
+    "view": {       
+    },
+    "error": {
+
+    }
+}

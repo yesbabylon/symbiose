@@ -30,7 +30,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 
 
-Booking::id($params['id'])->update(['status' => 'validated']);
+Booking::id($params['id'])->update(['status' => 'confirmed']);
 
 
 $context->httpResponse()

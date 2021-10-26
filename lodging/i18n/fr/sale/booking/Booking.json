@@ -36,7 +36,7 @@
             "actions": {
                 "action.quote": {
                     "label": "Repasser en cotation",
-                    "description": "Les unités locatives ne seront plus réservées et pourront être occupés pour d'autres réservation."
+                    "description": "Les unités locatives ne seront plus réservées et pourront être occupées pour d'autres réservation. Les services liées à la réservation pourront à nouveau être modifiés."
                 },
                 "action.option": {
                     "label": "Placer une option"

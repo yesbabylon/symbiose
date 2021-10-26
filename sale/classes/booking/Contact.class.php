@@ -59,7 +59,14 @@ class Contact extends \identity\Partner {
                 'result_type'       => 'string',
                 'usage'             => 'phone',
                 'description'       => 'Phone number of the contact (from Identity).'
-            ]
+            ],
+
+            'title' => [
+                'type'              => 'computed',
+                'function'          => 'sale\booking\Contact::getTitle',
+                'result_type'       => 'string',
+                'description'       => 'Title of the contact (from Identity).'
+            ]            
      
         ];
     }
@@ -88,4 +95,17 @@ class Contact extends \identity\Partner {
         }
         return $result;
     }
+
+
+    public static function getTitle($om, $oids, $lang) {
+        $result = [];
+        $partners = $om->read(__CLASS__, $oids, ['partner_identity_id.title'], $lang);
+        foreach($partners as $oid => $partner) {
+            $result[$oid] = '';
+            if(isset($partner['partner_identity_id.title'])) {
+                $result[$oid] = $partner['partner_identity_id.title'];
+            }
+        }
+        return $result;
+    }    
 }

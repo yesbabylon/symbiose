@@ -1,0 +1,12 @@
+{
+    "name": "Booking",
+    "description": "",    
+    "checks": [
+        {
+            "id": "booking.validator.overbooking",
+            "label": "Vérifier Surbooking",
+            "description": "Voir les réservations en conflit.",
+            "controller": "lodging_booking_check-overbooking"
+        }
+    ]
+}

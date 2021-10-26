@@ -19,10 +19,18 @@ class Product extends Model {
 
             'name' => [
                 'type'              => 'computed',
+                'function'          => 'sale\catalog\Product::getFullName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The full name of the product (label + sku).'
+            ],
+
+            'display_name' => [
+                'type'              => 'computed',
                 'function'          => 'sale\catalog\Product::getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
-                'description'       => 'The display name of the product (label + sku).'
+                'description'       => 'The display name of the product (label only).'
             ],
             
             'label' => [
@@ -129,6 +137,15 @@ class Product extends Model {
      *
      */
     public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(get_called_class(), $oids, ['label']);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = "{$odata['label']}";
+        }
+        return $result;
+    }
+
+    public static function getFullName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(get_called_class(), $oids, ['label', 'sku']);
         foreach($res as $oid => $odata) {

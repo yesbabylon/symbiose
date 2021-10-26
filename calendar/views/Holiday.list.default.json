@@ -1,0 +1,33 @@
+{
+    "name": "Holiday",
+    "description": "This view is intented for displaying the Holiday.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "year",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            }
+        ]
+    }
+}

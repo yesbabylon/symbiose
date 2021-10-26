@@ -25,7 +25,7 @@ class Booking extends Model {
                 'function'          => 'sale\booking\Booking::getDisplayName',
                 'store'             => true
             ],
-            
+
             'description' => [
                 'type'              => 'text',
                 'usage'             => '',
@@ -72,14 +72,14 @@ class Booking extends Model {
                 'description'       => 'Total price (vat incl.) of the booking.'
             ],
 
-// #todo            
+// #todo
             // origin ID (OTA)
 
             // A booking can have several contacts (extending identity\Partner)
             'contacts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contact',
-                'foreign_field'     => 'booking_id',                
+                'foreign_field'     => 'booking_id',
                 'description'       => 'List of contacts related to the booking, if any.',
                 'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id']
             ],
@@ -93,37 +93,37 @@ class Booking extends Model {
             'contracts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contract',
-                'foreign_field'     => 'booking_id',                
-                'description'       => 'List of contacts related to the booking, if any.' 
+                'foreign_field'     => 'booking_id',
+                'description'       => 'List of contacts related to the booking, if any.'
             ],
 
             'booking_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingLine',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Detailed lines of the booking.' 
+                'description'       => 'Detailed lines of the booking.'
             ],
 
             'booking_lines_groups_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Grouped lines of the booking.' 
+                'description'       => 'Grouped lines of the booking.'
             ],
 
             'consumptions_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Consumption',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Consumptions related to the booking.' 
+                'description'       => 'Consumptions related to the booking.'
             ],
 
             'composition_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Composition',
-                'description'       => 'The composition that relates to the booking.' 
+                'description'       => 'The composition that relates to the booking.'
             ],
-            
+
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingType',
@@ -167,7 +167,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'date',
                 'function'          => 'sale\booking\Booking::getDateTo',
-                'store'             => true                
+                'store'             => true
             ],
 
             'has_payer_organisation' => [
@@ -180,10 +180,10 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'visible'           => [ 'has_payer_organisation', '=', true ],
-                'domain'            => [ ['owner_identity_id', '=', 'object.customer_identity_id'], ['relationship', '=', 'payer'] ],                
+                'domain'            => [ ['owner_identity_id', '=', 'object.customer_identity_id'], ['relationship', '=', 'payer'] ],
                 'description'       => "The partner whom the invoices have to be sent to."
             ]
-            
+
         ];
     }
 
@@ -196,17 +196,17 @@ class Booking extends Model {
             // search for bookings made the same day by same customer, if any
             if(!empty($odata['customer_id'])) {
                 $bookings_ids = $om->search(__CLASS__, [ ['created', '=', $odata['created']], ['customer_id','=', $odata['customer_id']] ]);
-                $increment = count($bookings_ids);    
+                $increment = count($bookings_ids);
             }
             $result[$oid] = sprintf("%s-%08d-%02d", date("ymd", $odata['created']), $odata['customer_id.partner_identity_id'], $increment);
         }
-        return $result;              
+        return $result;
     }
 
     public static function getDateFrom($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-        
+
         foreach($bookings as $bid => $booking) {
             $min_date = PHP_INT_MAX;
             $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_from']);
@@ -216,7 +216,7 @@ class Booking extends Model {
                         $min_date = $group['date_from'];
                     }
                 }
-                $result[$bid] = $min_date;    
+                $result[$bid] = $min_date;
             }
         }
 
@@ -226,11 +226,11 @@ class Booking extends Model {
     public static function getDateTo($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-        
+
         foreach($bookings as $bid => $booking) {
             $max_date = 0;
             $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to']);
-            if($booking_line_groups > 0 && count($booking_line_groups)) {            
+            if($booking_line_groups > 0 && count($booking_line_groups)) {
                 foreach($booking_line_groups as $gid => $group) {
                     if($group['date_to'] > $max_date) {
                         $max_date = $group['date_to'];
@@ -260,7 +260,7 @@ class Booking extends Model {
     public static function getPrice($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-        if($bookings > 0 && count($bookings)) {            
+        if($bookings > 0 && count($bookings)) {
             foreach($bookings as $bid => $booking) {
                 $groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
                 $result[$bid] = 0.0;
@@ -272,9 +272,9 @@ class Booking extends Model {
             }
         }
         return $result;
-    }    
+    }
 
-    public static function onchangeCustomerId($om, $oids, $lang) {        
+    public static function onchangeCustomerId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null]);
         // force immediate recomputing of the name/reference
         $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'booking_lines_groups_ids']);
