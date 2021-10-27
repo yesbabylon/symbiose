@@ -65,9 +65,9 @@ class PackLine extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['child_product_id.name', 'child_product_id.sku',]);
+        $lines = $om->read(__CLASS__, $oids, ['child_product_id.name']);
         foreach($oids as $oid) {
-            $result[$oid] = $lines[$oid]['child_product_id.name'].' ('.$lines[$oid]['child_product_id.sku'].')';
+            $result[$oid] = $lines[$oid]['child_product_id.name'];
         }
         return $result;
     }

@@ -23,8 +23,8 @@
 			"help": ""
 		},
 		"category": {
-			"label": "Catégorie",
-			"description": "Type d'unité locative (qui comprend généralement des logements supplémentaires, c'est-à-dire des repas ; ou louée telle quelle).",
+			"label": "Catégorie d'unité locative",
+			"description": "Type d'unité locative (logement qui comprend des repas ; ou loué tel quel).",
 			"selection": {
 				"hostel": "GA",
 				"lodge": "GG"
