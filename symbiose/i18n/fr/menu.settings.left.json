@@ -67,6 +67,8 @@
         "centers": {"label": "Centres", "help": ""},
         "centers_centers": {"label": "Liste des centres", "help": ""},
         "centers_categories": {"label": "Catégories", "help": ""},
+        "centers.rental_units": {"label": "Unités locatives", "help": ""},
+        "centers.rental_units_categories": {"label": "Catégories d'unités", "help": ""},
         "rental_units": {"label": "Unité locatives", "help": ""},
         "rental_units_units": {"label": "Toutes les unités", "help": ""}
     }

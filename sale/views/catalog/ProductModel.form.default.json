@@ -31,39 +31,44 @@
                                                 "type": "field",
                                                 "label": "Family",
                                                 "value": "family_id",
-                                                "width": "50%"                                                
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Buying Accounting Rule",
                                                 "value": "buying_accounting_rule_id",
-                                                "width": "50%"                                                
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Selling Accounting Rule",
                                                 "value": "selling_accounting_rule_id",
-                                                "width": "50%"                                                
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "can_buy",
-                                                "width": "30%"                                                
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "can_sell",
-                                                "width": "30%"                                                
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_pack",
-                                                "width": "30%"                                                
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_own_price",
-                                                "width": "50%"                                                
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "stat_section_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -130,7 +135,7 @@
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Products",
                         "id": "section.products",
@@ -190,7 +195,7 @@
                                 ]
                             }
                         ]
-                    }                                      
+                    }
                 ]
             }
         ]
