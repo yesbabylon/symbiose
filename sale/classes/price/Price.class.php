@@ -76,9 +76,9 @@ class Price extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['product_id.name', 'product_id.sku']);
+        $res = $om->read(__CLASS__, $oids, ['product_id.name']);
         foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['product_id.name']} ({$odata['product_id.sku']})";
+            $result[$oid] = "{$odata['product_id.name']}";
         }
         return $result;
     }
