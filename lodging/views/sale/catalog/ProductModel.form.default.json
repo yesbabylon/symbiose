@@ -67,8 +67,12 @@
                                                 "type": "field",
                                                 "value": "capacity",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "stat_section_id",
+                                                "width": "50%"
                                             }
-
                                         ]
                                     },
                                     {
@@ -108,7 +112,7 @@
                                                 "type": "field",
                                                 "value": "rental_unit_assignement",
                                                 "width": "50%"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "rental_unit_category_id",

@@ -90,8 +90,8 @@
             "help": ""
         },
         "schedule_offset": {
-            "label": "Décalage horaire",
-            "description": "Nombre de jours par défaut pour compenser le service à partir d'une date de début de séjour.",
+            "label": "Décalage",
+            "description": "Décalage, en jours, à partir de la date de début de séjour.",
             "help": ""
         },
         "tracking_type": {
