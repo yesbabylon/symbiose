@@ -10,13 +10,13 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "75%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Center Name",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "40%",
                                                 "widget": {
                                                     "header": true
                                                 }
@@ -24,12 +24,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "code_alpha",
-                                                "width": "25%"
+                                                "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "group_code",
-                                                "width": "25%"
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "analytic_section_id",
+                                                "width": "20%"
                                             }
                                         ]
                                     }
