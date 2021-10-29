@@ -98,6 +98,7 @@ class Product extends Model {
                 'foreign_object'    => 'sale\price\Price',
                 'foreign_field'     => 'product_id',
                 'description'       => "Prices that are related to this product.",
+                'ondetach'          => 'delete'
             ],
 
             'stat_section_id' => [
