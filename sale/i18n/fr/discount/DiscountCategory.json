@@ -1,0 +1,30 @@
+{
+    "name": "Catégorie de remise",
+    "plural": "Catégories de remise",
+    "description": "Les remises à l'intérieur d'une liste sont exclusives, selon leur catégorie.",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Nom de la catégorie de remise.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Contexte dans lequel la catégorie de remise est destinée à être utilisée.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Catégorie de remise",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Catégories de remise",
+            "description": "Cette vue est destinée à afficher la liste des catégories.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
