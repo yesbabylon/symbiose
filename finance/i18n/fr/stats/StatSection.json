@@ -1,0 +1,44 @@
+{
+    "name": "Section des statistiques",
+    "plural": "Sections des statistiques",
+    "description": "Les sections statistiques permettent de générer une vue en regroupant les ventes de manière arbitraire (indépendamment du plan comptable et du plan comptable analytique).",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de la section des statistiques.",
+            "help": ""
+        },
+        "code": {
+            "label": "Taux",
+            "description": "Code unique identifiant la section.",
+            "help": ""
+        },
+        "label": {
+            "label": "Type",
+            "description": "Brève description de la rubrique.",
+            "help": ""
+        },
+        "stat_chart_id": {
+            "label": "Type",
+            "description": "The stats chart the line belongs to.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Section statistique",
+            "description": "Formulaire par défaut pour la section statistique avec tous les champs.",
+            "layout": {
+                "section.accounting_rules_section": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste de section statistique",
+            "description": "Cette vue est destinée à afficher la section des statistiques.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
