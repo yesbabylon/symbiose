@@ -24,14 +24,6 @@ class Product extends Model {
                 'store'             => true,
                 'description'       => 'The full name of the product (label + sku).'
             ],
-
-            'display_name' => [
-                'type'              => 'computed',
-                'function'          => 'sale\catalog\Product::getDisplayName',
-                'result_type'       => 'string',
-                'store'             => true,
-                'description'       => 'The display name of the product (label only).'
-            ],
             
             'label' => [
                 'type'              => 'string',
@@ -42,6 +34,7 @@ class Product extends Model {
             'sku' => [
                 'type'              => 'string',
                 'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
+                'required'          => true,
                 'unique'            => true
             ],
 
@@ -82,6 +75,13 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
+            ],
+
+            'product_attributes_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\ProductAttribute',
+                'foreign_field'     => 'product_id',                
+                'description'       => "Attributes set for the product.",
             ],
 
             'is_locked' => [
@@ -137,15 +137,6 @@ class Product extends Model {
      * Computes the display_name of the product as a concatenation of Label and SKU.
      *
      */
-    public static function getDisplayName($om, $oids, $lang) {
-        $result = [];
-        $res = $om->read(get_called_class(), $oids, ['label']);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['label']}";
-        }
-        return $result;
-    }
-
     public static function getFullName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(get_called_class(), $oids, ['label', 'sku']);

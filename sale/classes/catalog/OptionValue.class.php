@@ -15,12 +15,12 @@ class OptionValue extends Model {
         return [
             'name' => [
                 'type'              => 'alias',
-                'alias'             => 'value'
+                'alias'             => 'description'
             ],
 
             'value' => [
                 'type'              => 'string',
-                'description'       => "The possible value for the related option."
+                'description'       => "The choice (possible value) for the related option."
             ],
             
             'description' => [
