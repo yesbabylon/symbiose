@@ -25,13 +25,19 @@
                                                 "type": "field",
                                                 "label": "Option",
                                                 "value": "option_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "limit": 10
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Option Value",
                                                 "value": "option_value_id",
-                                                "width": "50%"                                                
+                                                "width": "50%",
+                                                "widget": {
+                                                    "limit": 20
+                                                }
                                             }
                                         ]
                                     }
