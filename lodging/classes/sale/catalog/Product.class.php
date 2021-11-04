@@ -29,9 +29,31 @@ class Product extends \sale\catalog\Product {
                 'foreign_object'    => 'lodging\sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
+            ],
+
+            'label' => [
+                'type'              => 'string',
+                'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
+                'required'          => true,
+                'onchange'          => 'lodging\sale\catalog\Product::onchangeLabel'
+            ],
+
+            'sku' => [
+                'type'              => 'string',
+                'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
+                'required'          => true,
+                'unique'            => true,
+                'onchange'          => 'lodging\sale\catalog\Product::onchangeSku'
             ]
 
         ];
     }
 
+    public static function onchangeLabel($om, $oids, $lang) {
+        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+    }
+
+    public static function onchangeSku($om, $oids, $lang) {
+        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+    }
 }

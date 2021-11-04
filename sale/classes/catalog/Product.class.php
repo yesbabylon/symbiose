@@ -141,9 +141,11 @@ class Product extends Model {
      */
     public static function getFullName($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(get_called_class(), $oids, ['label', 'sku']);
+        $res = $om->read(get_called_class(), $oids, ['label', 'sku'], $lang);
         foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['label']} ({$odata['sku']})";
+            if( (isset($odata['label']) && strlen($odata['label']) > 0 ) || (isset($odata['sku']) && strlen($odata['sku']) > 0) ) {
+                $result[$oid] = "{$odata['label']} ({$odata['sku']})";
+            }
         }
         return $result;
     }
