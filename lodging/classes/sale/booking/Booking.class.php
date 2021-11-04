@@ -39,6 +39,13 @@ class Booking extends \sale\booking\Booking {
                 'onchange'          => 'lodging\sale\booking\Booking::onchangeCenterId'
             ],
 
+            'contracts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Contract',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'List of contacts related to the booking, if any.'
+            ],
+
             'booking_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -58,6 +65,14 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => 'lodging\sale\booking\BookingLineRentalUnitAssignement',
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Rental units assignments related to the booking.'
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money',
+                'function'          => 'lodging\sale\booking\Booking::getPrice',
+                'description'       => 'Total price (vat incl.) of the booking.'
             ]
 
         ];
@@ -95,6 +110,25 @@ class Booking extends \sale\booking\Booking {
 
             $result[$oid] = ((string) $booking['center_id.group_code']) . ((string) $sequence);
 
+        }
+        return $result;
+    }
+
+
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        if($bookings > 0 && count($bookings)) {
+            foreach($bookings as $bid => $booking) {
+                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
+                $result[$bid] = 0.0;
+                if($groups > 0 && count($groups)) {
+                    foreach($groups as $group) {
+                        $result[$bid] += $group['price'];
+                    }
+                    $result[$bid] = round($result[$bid], 2);                    
+                }
+            }
         }
         return $result;
     }

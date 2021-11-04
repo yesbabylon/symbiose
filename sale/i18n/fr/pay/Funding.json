@@ -1,66 +1,71 @@
 {
-	"name": "Financement",
-	"plural": "FinancementS",
-	"description": "",
-	"model": {
-		"payments_ids": {
-			"label": "Paiements",
-			"description": "Liste de paiements.",
-			"help": ""
-		},
-		"type": {
-			"label": "Type",
-			"description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
-			"selection": {
-				"installment": "versement",
-				"invoice": "facture d'achat"
-			},
-			"help": ""
-		},
-		"due_amount": {
-			"label": "Montant dû",
-			"description": "Montant prévu pour le financement.",
-			"help": ""
-		},
-		"due_date": {
-			"label": "Date d'échéance",
-			"description": "Date limite avant laquelle le financement est attendu.",
-			"help": ""
-		},
-		"is_paid": {
-			"label": "Est payé",
-			"description": "Le paiement complet a-t-il été reçu?",
-			"help": ""
-		},
-		"payment_deadline_id": {
-			"label": "Date limite de paiement",
-			"description": "Le modèle de date limite utilisé pour créer le financement, le cas échéant.",
-			"help": ""
-		},
-		"invoice_id": {
-			"label": "Facture d'achat",
-			"description": "La facture visée par le financement, le cas échéant.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Financement",
-			"description": "",
-			"layout": {
-				"section.funding_section": {
-					"label": "Détails"
-				},
-				"section.payments_section": {
-					"label": "Paiments"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Financements",
-			"description": "Cette vue est destinée à afficher la liste des financements.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Financement",
+    "plural": "FinancementS",
+    "description": "",
+    "model": {
+        "payments_ids": {
+            "label": "Paiements",
+            "description": "Liste de paiements.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
+            "selection": {
+                "installment": "versement",
+                "invoice": "facture d'achat"
+            },
+            "help": ""
+        },
+        "due_amount": {
+            "label": "Montant dû",
+            "description": "Montant prévu pour le financement.",
+            "help": ""
+        },
+        "due_date": {
+            "label": "Date d'échéance",
+            "description": "Date limite avant laquelle le financement est attendu.",
+            "help": ""
+        },
+        "issue_date": {
+            "label": "Date d'émission",
+            "description": "Date à partir de laquelle la demande de paiment doit être émise.",
+            "help": ""
+        },
+        "is_paid": {
+            "label": "Est payé",
+            "description": "Le paiement complet a-t-il été reçu?",
+            "help": ""
+        },
+        "payment_deadline_id": {
+            "label": "Date limite de paiement",
+            "description": "Le modèle de date limite utilisé pour créer le financement, le cas échéant.",
+            "help": ""
+        },
+        "invoice_id": {
+            "label": "Facture d'achat",
+            "description": "La facture visée par le financement, le cas échéant.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Financement",
+            "description": "",
+            "layout": {
+                "section.funding_section": {
+                    "label": "Détails"
+                },
+                "section.payments_section": {
+                    "label": "Paiments"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Financements",
+            "description": "Cette vue est destinée à afficher la liste des financements.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

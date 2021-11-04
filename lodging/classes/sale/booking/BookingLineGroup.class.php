@@ -34,11 +34,45 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangePackId'
             ],
 
+            'price_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'description'       => 'The price (retrieved by price list) the pack relates to.',
+                'visible'           => ['has_pack', '=', true]
+            ],
+
+            'vat_rate' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'VAT rate that applies to this group, when relating to a pack_id.',
+                'function'          => 'lodging\sale\booking\BookingLineGroup::getVatRate',
+                'store'             => true,
+                'visible'           => ['has_pack', '=', true],
+            ],
+
+            'unit_price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Unit price (with automated discounts applied).',
+                'function'          => 'lodging\sale\booking\BookingLineGroup::getUnitPrice',
+                'store'             => true,
+                'visible'           => ['has_pack', '=', true]
+            ],
+
             'is_locked' => [
                 'type'              => 'boolean',
                 'description'       => 'Are modifications disabled for the group?',
                 'default'           => false,
+                'visible'           => ['has_pack', '=', true],
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeIsLocked'
+            ],
+
+            'qty' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Quantity of product items for the group (pack).',
+                'function'          => 'lodging\sale\booking\BookingLineGroup::getQty',
+                'visible'           => ['has_pack', '=', true]
             ],
 
             'date_from' => [
@@ -109,11 +143,122 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'description'       => 'Booking lines relating to accomodations.',
                 'ondetach'          => 'delete',
                 'domain'            => ['is_accomodation', '=', true]
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Final (computed) price for all lines.',
+                'function'          => 'lodging\sale\booking\BookingLineGroup::getPrice'
+                // #todo - set store to true
             ]
 
         ];
     }
 
+    public static function getVatRate($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
+        foreach($lines as $oid => $odata) {
+            $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
+        }
+        return $result;
+    }
+
+    public static function getQty($om, $oids, $lang) {
+        $result = [];
+        $groups = $om->read(__CLASS__, $oids, ['has_pack', 'is_locked', 'pack_id.product_model_id.qty_accounting_method', 'nb_pers', 'nb_nights']);
+        foreach($groups as $gid => $group) {
+            $result[$gid] = 1;
+            if($group['has_pack'] && $group['is_locked']) {
+                // apply quantity (either nb_pers or nb_nights) and price adapters
+                if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation') {
+                    $qty = $group['nb_nights'];
+                }
+                else if($group['pack_id.product_model_id.qty_accounting_method'] == 'person') {
+                    $qty = $group['nb_pers'] * $group['nb_nights'];
+                }
+                else {
+                    $qty = $group['nb_pers'];
+                }
+                $result[$gid] = floatval($qty);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Compute the VAT excl. unit price of the group, with automated discounts applied.
+     *
+     */
+    public static function getUnitPrice($om, $oids, $lang) {
+        $result = [];
+
+        $groups = $om->read(__CLASS__, $oids, ['price_id.price']);
+
+        if($groups > 0 && count($groups)) {
+            foreach($groups as $gid => $group) {
+
+                $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [
+                    ['booking_line_group_id', '=', $gid],
+                    ['booking_line_id','=', 0],
+                    ['is_manual_discount', '=', false]
+                ]);
+                $adapters = $om->read('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
+
+                $disc_value = 0.0;
+                $disc_percent = 0.0;
+
+                foreach($adapters as $aid => $adata) {
+                    if($adata['type'] == 'amount') {
+                        $disc_value += $adata['value'];
+                    }
+                    else if($adata['type'] == 'percent') {
+                        if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
+                            $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                        }
+                        else {
+                            $disc_percent += $adata['value'];
+                        }
+                    }
+                }
+
+                $result[$gid] = round(($group['price_id.price'] * (1-$disc_percent)) - $disc_value, 2);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Compute the VAT incl. total price of the group (pack), with manual and automated discounts applied.
+     *
+     */
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'is_locked', 'has_pack', 'unit_price', 'vat_rate', 'qty']);
+
+        if($groups > 0 && count($groups)) {
+            foreach($groups as $gid => $group) {
+                $result[$gid] = 0.0;
+
+                // if the group relates to a pack and the product_model targeted by the pack has its own Price, then this is the one to return
+                if($group['has_pack'] && $group['is_locked']) {
+                    $result[$gid] = round($group['unit_price'] * $group['qty'] * (1 + $group['vat_rate']), 2);
+                }
+                // otherwise, price is the sum of bookingLines
+                else {
+                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['price']);
+                    if($lines > 0 && count($lines)) {
+                        foreach($lines as $line) {
+                            $result[$gid] += $line['price'];
+                        }
+                        $result[$gid] = round($result[$gid], 2);
+                    }
+                }
+            }
+        }
+        return $result;
+    }
 
     public static function onchangeHasPack($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeHasPack", QN_REPORT_DEBUG);
@@ -141,6 +286,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
             if(count($update_groups_ids)) {
                 self::_updatePriceId($om, $update_groups_ids, $lang);
+                $om->write(__CLASS__, $update_groups_ids, ['vat_rate' => null, 'unit_price' => null ]);
+// reset booking total price
             }
         }
     }
@@ -168,7 +315,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         ]);
 
         foreach($groups as $gid => $group) {
-            $updated_fields = [];
+            $updated_fields = ['vat_rate' => null];
 
             // if targeted product model has its own duration, date_to is updated accordingly
             if($group['pack_id.product_model_id.has_duration']) {
@@ -226,7 +373,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                             $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * $group['nb_nights']]);
                         }
                     }
-                }                
+                }
             }
         }
     }
@@ -260,7 +407,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
         }
     }
-
 
     public static function onchangeSojournType($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournType", QN_REPORT_DEBUG);
@@ -309,7 +455,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
-        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type', 'date_from', 'date_to', 'nb_pers', 'booking_id', 'is_locked',
+        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
                                                     'booking_lines_ids', 'sojourn_type',
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
@@ -451,8 +597,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], [
                         'product_id',
                         'product_id.product_model_id',
-                        'product_id.product_model_id.is_meal',
-                        'product_id.product_model_id.is_accomodation'
+                        'is_meal',
+                        'is_accomodation',
+                        'qty_accounting_method'
                     ]);
 
                     foreach($lines as $line_id => $line) {
@@ -462,16 +609,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         if( (
                                 $group['sojourn_type'] == 'GG'
                                 &&
-                                $line['product_id.product_model_id.is_accomodation']
+                                $line['is_accomodation']
                             )
                             ||
                             (
                                 $group['sojourn_type'] == 'GA'
                                 &&
                                 (
-                                    $line['product_id.product_model_id.is_accomodation']
+                                    $line['is_accomodation']
                                     ||
-                                    $line['product_id.product_model_id.is_meal']
+                                    $line['is_meal']
                                 )
                             )
                         ) {
@@ -485,7 +632,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                                 'discount_id'           => $discount_id,
                                 'discount_list_id'      => $discount_list_id,
                                 'type'                  => $discount['type'],
-                                'value'                 => $discount['value']
+                                'value'                 => ($line['qty_accounting_method'] == 'unit')?$discount['value']:($discount['value']*$group['nb_nights'])
                             ]);
                         }
                     }
@@ -565,7 +712,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
 
-/**
+    /**
      * Find and set price list according to group settings.
      * This only applies when group targets a Pack with own price.
      *

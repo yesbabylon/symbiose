@@ -105,7 +105,7 @@ class BookingLine extends Model {
                 'description'       => 'The way the line is intended to be paid.',
             ],
 
-            'is_paid' => [
+            'is_invoiced' => [
                 'type'              => 'boolean',
                 'description'       => 'Has the line been paid already?',
                 'default'           => false
@@ -180,12 +180,12 @@ class BookingLine extends Model {
     }
 
     /**
-     * Compute the VAT excl. unit price of the line, according to manual and automated discounts.
+     * Compute the VAT excl. unit price of the line, with automated discounts applied.
      *
      */
     public static function getUnitPrice($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, [
+        $lines = $om->read(get_called_class(), $oids, [
                     'price_id.price',
                     'auto_discounts_ids'
                 ]);
@@ -216,7 +216,7 @@ class BookingLine extends Model {
     }
 
     /**
-     * Compute the VAT incl. total price of the line, according to manual and automated discounts.
+     * Compute the VAT incl. total price of the line, with manual and automated discounts applied.
      *
      */
     public static function getTotalPrice($om, $oids, $lang) {
@@ -267,7 +267,7 @@ class BookingLine extends Model {
 
     public static function getVatRate($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
+        $lines = $om->read(get_called_class(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {
             $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
         }

@@ -30,7 +30,13 @@
                 "value": "is_active",
                 "width": "10%",
                 "sortable": true
-            }
+            },
+            {
+                "type": "field",
+                "value": "accounting_rule_id",
+                "width": "10%",
+                "sortable": true
+            }                        
         ]
     }
 }

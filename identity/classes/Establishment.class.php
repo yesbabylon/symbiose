@@ -83,6 +83,16 @@ class Establishment extends Model {
                 'description'   => 'Establishment registration number (establishment unit number), if any.'
             ],
 
+            'bank_account_iban' => [
+                'type'          => 'string',
+                'description'   => 'Number of the bank account of the Establishment.'
+            ],
+
+            'bank_account_bic' => [
+                'type'          => 'string',
+                'description'   => 'Identitifer of the Bank related to the bank account.'
+            ],
+
             'analytic_section_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AnalyticSection',
@@ -91,4 +101,25 @@ class Establishment extends Model {
 
         ];
     }
+
+    public static function getConstraints() {
+        return [
+            'bank_account_iban' =>  [
+                'invalid_account' => [
+                    'message'       => 'Bank account must be a valid IBAN number.',
+                    'function'      => function ($account, $values) {
+                        return (bool) (preg_match('/^[A-Z]{2}[0-9]{2}(?:[ ]?[0-9]{4}){3,4}(?!(?:[ ]?[0-9]){3})(?:[ ]?[0-9]{1,2})?$/', $account));
+                    }    
+                ]
+            ],
+            'bank_account_bic' =>  [
+                'invalid_code' => [
+                    'message'       => 'Bank identifier must be a valid BIC code.',
+                    'function'      => function ($identifier, $values) {
+                        return (bool) (preg_match('/^[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}$/', $identifier));
+                    }    
+                ]
+            ]
+        ];
+    }    
 }

@@ -17,8 +17,11 @@ class ContractLine extends Model {
 
         return [
             'name' => [
-                'type'              => 'string',
-                'description'       => 'Short name for the contract.'
+                'type'              => 'computed',
+                'function'          => 'sale\contract\ContractLine::getDisplayName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The display name of the line.'
             ],
 
             'contract_id' => [
@@ -34,34 +37,74 @@ class ContractLine extends Model {
                 'required'          => true
             ],
 
-            'price' => [ 
+            'unit_price' => [ 
                 'type'              => 'float', 
-                'description'       => 'Price of the product related to the line.'
+                'description'       => 'Price of the product related to the line.',
+                'required'          => true
             ],
 
             'vat_rate' => [ 
                 'type'              => 'float', 
-                'description'       => 'VAT rate to be applied.'
+                'description'       => 'VAT rate to be applied.',
+                'required'          => true
             ],
             
             'qty' => [ 
                 'type'              => 'float', 
-                'description'       => 'Quantity of product.'
+                'description'       => 'Quantity of product.',
+                'required'          => true
             ],
 
             'free_qty' => [ 
                 'type'              => 'integer', 
-                'description'       => 'Free quantity.'
+                'description'       => 'Free quantity.',
+                'default'           => 0
             ],
 
             'discount' => [ 
                 'type'              => 'float', 
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Final (computed) price VAT incl.',
+                'function'          => 'sale\contract\ContractLine::getPrice',
+                'store'             => true
             ]
 
 
         ];
     }
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(__CLASS__, $oids, ['product_id.display_name']);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = "{$odata['product_id.display_name']}";
+        }
+        return $result;
+    }
+
+
+
+    /**
+     * Compute the VAT incl. total price of the line, with discounts applied.
+     *
+     */
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['unit_price', 'vat_rate', 'qty', 'free_qty', 'discount']);
+
+        if($lines > 0 && count($lines)) {
+            foreach($lines as $lid => $line) {
+                $price = $line['unit_price'] * (1-$line['discount']);
+                $result[$lid] = round($price * ($line['qty'] - $line['free_qty']) * (1 + $line['vat_rate']), 2);
+            }
+        }
+        return $result;
+    }    
 
 }

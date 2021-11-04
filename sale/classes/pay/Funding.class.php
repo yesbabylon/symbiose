@@ -39,6 +39,11 @@ class Funding extends Model {
                 'description'       => "Deadline before which the funding is expected."
             ],
 
+            'issue_date' => [
+                'type'              => 'date',
+                'description'       => "Date at which the request for payment has to be issued."
+            ],
+
             'is_paid' => [
                 'type'              => 'boolean',
                 'default'           => false,

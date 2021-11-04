@@ -34,9 +34,19 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "delay_count",
-                                                "width": "50%"
+                                                "value": "delay_from_event_offset",
+                                                "width": "25%"
                                             },
+                                            {
+                                                "type": "field",
+                                                "value": "delay_count",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Payment Plan",
@@ -44,7 +54,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }
+                                    }                                    
                                 ]
                             }
                         ]

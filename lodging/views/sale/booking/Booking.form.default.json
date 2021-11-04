@@ -15,6 +15,7 @@
             "label": "Set as Option",
             "description": "Rental units will be reserved but no funding will be claimed yet.",
             "controller": "lodging_booking_option",
+            "confirm": true,
             "visible": ["status", "=", "quote"]
         },
         {
@@ -22,6 +23,7 @@
             "label": "Confirm Booking",
             "description": "Rental units will be reserved and the invoicing plan will be set up.",
             "controller": "lodging_booking_confirm",
+            "confirm": true,
             "visible": ["status", "=", "option"]
         },
         {
@@ -29,6 +31,7 @@
             "label": "Check In",
             "description": "The host has arrived: the rental units will be marked as occupied.",
             "controller": "lodging_booking_checkin",
+            "confirm": true,
             "visible": ["status", "=", "validated"]
         },
         {
@@ -36,6 +39,7 @@
             "label": "Check Out",
             "description": "The host is leaving: the rental units will be marked for cleaning.",
             "controller": "lodging_booking_checkout",
+            "confirm": true,
             "visible": ["status", "=", "checkedin"]
         },
         {
@@ -43,9 +47,10 @@
             "label": "Invoice",
             "description": "The host has left and room has been reviewed: emit the invoice.",
             "controller": "lodging_booking_invoice",
+            "confirm": true,
             "visible": ["status", "=", "checkedout"]
         }
-    ],    
+    ],
     "layout": {
         "groups": [
             {
@@ -71,7 +76,7 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "width": "33%",
-                                                "widget": {                                                
+                                                "widget": {
                                                     "header": true,
                                                     "readonly": true
                                                 }
@@ -139,7 +144,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
@@ -185,26 +190,6 @@
                         ]
                     },
                     {
-                        "label": "Contracts",
-                        "id": "section.booking_contracts",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Products",
                         "id": "section.booking_products",
                         "rows": [
@@ -223,7 +208,49 @@
                                 ]
                             }
                         ]
-                    }                    
+                    },
+                    {
+                        "label": "Contracts",
+                        "id": "section.booking_contracts",
+                        "visible": ["status", "not in", ["quote", "option"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contracts_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Fundings",
+                        "id": "section.booking_fundings",
+                        "visible": ["status", "not in", ["quote", "option"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "fundings_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                   
                 ]
             }
         ]

@@ -7,6 +7,8 @@
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
+use core\Task;
+
 list($params, $providers) = announce([
     'description'   => "Revert a booking to 'quote' status: booking is visible but no rental units are reserved.",
     'params'        => [
@@ -29,21 +31,39 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read(['id', 'name', 'booking_lines_ids' => 'consumptions_ids'])
+                  ->read(['id', 'name', 'booking_lines_ids' => 'consumptions_ids', 'fundings_ids' => ['id', 'is_paid']])
                   ->first();
                   
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-// remove existing consumptions
+// remove existing consumptions and mark lines as not 'invoiced' (waiting for payment)
 foreach($booking['booking_lines_ids'] as $lid => $line) {
     $consumptions_ids = array_map(function($a) { return "-$a";}, $line['consumptions_ids']);
-    BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids]);
 }
+BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids, 'fundings_ids' => $fundings_ids, 'is_invoiced' => false]);
+
+// remove non-paid fundings
+$fundings_ids = [];
+foreach($booking['fundings_ids'] as $fid => $funding) {
+    if(!$funding['is_paid']) {
+        $fundings_ids[] = "-$fid";
+    }
+}
+Booking::id($params['id'])->update(['fundings_ids' => $fundings_ids]);
+
+// remove existing CRON tasks for reverting the booking to quote
+Task::search([
+        ['controller', '=', 'lodging_booking_quote'],
+        ['params', '=', '{"id": '.$params['id'].'}']
+    ])
+    ->delete(true);
+
+// #memo - generated contracts are kept for history (we never delete these)
 
 // Update booking status
-Booking::id($params['id'])->update(['status' => 'quote']);
+Booking::id($params['id'])->update(['status' => 'quote', 'has_contract' => false]);
 
 
 $context->httpResponse()

@@ -33,20 +33,27 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 
 /*
-    We need to check if rental_units assigned to the booking are still available at given dates (otherwise, generate an error).
+    Check if rental_units assigned to the booking are still available at given dates (otherwise, generate an error).
 
-    We perform this in 2-pass :
-        First, we create the consumptions
-        Second, we try to detect an overbooking for the current booking (based on booking_id)
+    We perform a 2-pass operation:
+        1. First, we create the consumptions
+        2. Second, we try to detect an overbooking for the current booking (based on booking_id)
 */
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read(['booking_lines_ids'])
+                  ->read([
+                      'status',
+                      'booking_lines_ids'
+                   ])
                   ->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
+}
+
+if($booking['status'] != 'quote') {
+    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
 if(!count($booking['booking_lines_ids'])) {

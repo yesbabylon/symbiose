@@ -132,7 +132,7 @@ class Center extends \identity\Establishment {
 
 
     public static function getConstraints() {
-        return [
+        return array_merge(parent::getConstraints(), [
             'code_alpha' =>  [
                 'invalid' => [
                     'message'       => 'Must be 2 upper case letters.',
@@ -141,6 +141,6 @@ class Center extends \identity\Establishment {
                     }
                 ]
             ]
-        ];
+        ]);
     }
 }

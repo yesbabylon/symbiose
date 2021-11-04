@@ -16,14 +16,17 @@ class Contract extends Model {
     public static function getDescription() {
         return "Contracts are formal agreement regarding the delivery of products or services concluded between two parties.";
     }
-    
+
 
     public static function getColumns() {
 
         return [
             'name' => [
-                'type'              => 'string',
-                'description'       => 'Short name for the contract.'
+                'type'              => 'computed',
+                'function'          => 'sale\contract\Contract::getDisplayName',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => 'The display name of the contract.'
             ],
 
             'description' => [
@@ -38,26 +41,42 @@ class Contract extends Model {
                 'default'           => 'pending'
             ],
 
-            'date' => [ 
-                'type'              => 'date', 
+            'date' => [
+                'type'              => 'date',
                 'description'       => 'Date at which the contract has been officially released.'
             ],
-            
-            'valid_until' => [ 
-                'type'              => 'date', 
+
+            'valid_until' => [
+                'type'              => 'date',
                 'description'       => 'Date after which the contract lapses if it has not been approved.',
                 'visible'           => [ 'status', 'in', ['pending', 'sent'] ]
             ],
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'customer'],                
+                'foreign_object'    => 'sale\customer\Customer',
+                'domain'            => ['relationship', '=', 'customer'],
                 'description'       => 'The customer the contract relates to.',
             ],
 
+            'contract_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\contract\ContractLine',
+                'foreign_field'     => 'contract_id',
+                'description'       => 'Contract lines that belong to the contract.',
+                'ondetach'          => 'delete'
+            ]
 
         ];
+    }
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(get_called_class(), $oids, ['id', 'customer_id.name']);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = "{$odata['customer_id.name']} - {$odata['id']}";
+        }
+        return $result;
     }
 
 }

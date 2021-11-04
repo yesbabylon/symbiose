@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-<title>Devis de réservation</title>
+<title>Contrat de réservation</title>
 <style type="text/css">
 @page {
   margin: 1cm;
@@ -118,9 +118,10 @@ hr {
         <div style="position: absolute; top: 84px; right: 0; height: 19px; width: 100%; text-align: right;">Le {{ date }}</div>
     </div>
 
-    <table style="width: 100%; border-collapse: collapse; border: solid 1px rgb(204, 204, 204);"  cellpadding="0" cellspacing="0">
+    <table style="width: 100%; border-spacing: 0pt;
+    border-collapse: separate;"  cellpadding="0" cellspacing="0">
         <tr valign="top">
-            <td colspan="2" style="font-size: 20px; text-align: center;background-color: rgb(204, 204, 204); width: 100%; height: 20px; border: 0; padding-left: 7px; overflow: hidden;">Devis {{ code }}</td>
+            <td colspan="2" style="font-size: 20px; text-align: center; border: 1px; background-color: rgb(204, 204, 204); width: 100%; height: 20px; border-top-left-radius: 15px; border-top-right-radius: 15px; padding-left: 7px; overflow: hidden;">Contrat {{ code }}</td>
         </tr>
         <tr valign="top">
             <td style="width: 50%; padding: 5px;">
@@ -149,15 +150,15 @@ hr {
                 </div>
             </td>
         </tr>
-    </table>    
-
+    </table>
+    
 </div>
 
 <div class="footer">
     <p style="text-align: center;">
-        {{ company_name}} - {{ company_address }} 
-        <br />        
-        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }} 
+        {{ company_name}} - {{ company_address }}
+        <br />
+        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }}
         <br />
         Email: {{ company_email }} - Web: {{ company_website }} - Tel {{ company_phone }}
         {% if company_fax %}
@@ -194,7 +195,7 @@ hr {
                     Prix HT
                 </th>
             </tr>
-            </thead>             
+            </thead>            
             <!-- for each line -->
             {% for line in lines %}
                 <tr valign="top">
@@ -270,6 +271,87 @@ hr {
                 </td>
             </tr>
         </table>
+    </div>
+</div>
+
+<div style="margin-top: 50px;">
+    <div style="margin: 0px 0px 20px 0px;"><b><u>Echéancier des paiements:</u></b></div>
+    <table width="100%" cellpadding="4" cellspacing="0" border="1" style="border-collapse: collapse;">
+        <tr valign="top">
+            <th width="25%" style="text-align: left;">
+                Paiement
+            </th>
+            <th width="25%">
+                À payer avant le
+            </th>
+            <th width="25%">
+                Déjà payé?
+            </th>
+            <th width="25%" style="text-align: right;">
+                Montant
+            </th>
+        </tr>
+
+        <!-- for each line -->
+        {% for funding in fundings %}
+            <tr valign="top">
+                <td width="25%">
+                    {{ funding.name }}
+                </td>
+                <td width="25%" style="text-align: center;">
+                    {{ funding.due_date }}
+                </td>
+                <td width="25%" style="text-align: center;">
+                    {% if funding.is_paid == true %}
+                        oui
+                    {% endif %}
+                </td>
+                <td width="25%" style="text-align: right;">
+                    {{ funding.due_amount  | format_currency('EUR') }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div style="position: relative; margin-top: 50px; border: solid 2px black; padding: 10px; ">
+    <div style="font-size: 15px;">
+        Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> : 
+    </div>
+    <div style="margin-top: 20px; font-size: 15px;">
+
+            {{ company_name}}<br />
+            {{ company_address }}<br />
+            <br />
+            IBAN : {{ company_iban }}<br />
+            BIC : {{ company_bic }}<br />
+            <b>COMMUNICATION : {{ installment_reference }}</b><br />
+
+    </div>    
+    <div style="position: absolute; right: 10px; top: 10px;">
+        <img src="{{ installment_qr_url }}" width= "150" height="150" />
+    </div>    
+</div>
+
+<div style="margin-top: 50px; height: 120px;">
+    <div style="float: left; width: 60%;">
+        <div>Membre {{ member }}
+            {% if contact_name|length > 0 %}
+            <br />{{ contact_name }}
+            {% endif %}
+        </div>
+        <div>
+            Par la présente, j'atteste avoir lu et accepte:
+            <ul>
+                <li>La présente proposition de contrat</li>
+                <li>Les conditions générales de vente</li>
+                <li>Le règlement d'ordre intérieur</li>
+            </ul>
+        </div>
+    </div>
+    <div style="float: left; width: 40%;">
+        <div>Date et Signature</div>
+        <div style="border: solid 1px black; width: 100%; height: 80px;"></div>
     </div>
 </div>
 

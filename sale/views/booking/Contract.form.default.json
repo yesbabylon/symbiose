@@ -20,7 +20,37 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                                       
+                ]
+            },            
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Status",
@@ -31,10 +61,7 @@
                                                 "type": "field",
                                                 "label": "Booking",
                                                 "value": "booking_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": true
-                                                }
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -48,17 +75,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "100%"
                                             }
@@ -67,7 +84,27 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "id": "section.lines",
+                        "label": "Contract Lines",
+                        "rows": [
+                            {
+                                "columns": [                                    
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contract_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
                 ]
             }
         ]

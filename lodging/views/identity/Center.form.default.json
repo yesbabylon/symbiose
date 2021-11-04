@@ -53,7 +53,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "60%",
+                                        "width": "45%",
                                         "items": [
                                             {
                                                 "id": "details.address",
@@ -62,6 +62,10 @@
                                                 "width": "100%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": []
                                     },
                                     {
                                         "width": "40%",
@@ -136,6 +140,16 @@
                                                 "type": "field",
                                                 "value": "registration_number",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "bank_account_iban",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "bank_account_bic",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
