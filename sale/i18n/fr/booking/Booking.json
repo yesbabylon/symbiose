@@ -117,6 +117,9 @@
                 "section.booking_contracts": {
                     "label": "Contrats"
                 },
+                "section.booking_fundings": {
+                    "label": "Financements"
+                },
                 "section.booking_products": {
                     "label": "Services"
                 }

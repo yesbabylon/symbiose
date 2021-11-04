@@ -1,6 +1,6 @@
 {
-    "name": "Date Limite de Paiement",
-    "plural": "Dates Limite de Paiement",
+    "name": "Échances de Paiement",
+    "plural": "Échances de Paiement",
     "description": "",
     "model": {
         "name": {
@@ -16,6 +16,11 @@
                 "checkin": "Arrivée (checkin)",
                 "checkout": "Départ (checkout)"
             },
+            "help": ""
+        },
+        "delay_from_event_offset": {
+            "label": "Décalage",
+            "description": "Ajustement pour obtenir la date de demande de paiement.",
             "help": ""
         },
         "delay_count": {

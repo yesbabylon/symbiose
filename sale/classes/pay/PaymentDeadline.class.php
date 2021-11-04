@@ -24,6 +24,12 @@ class PaymentDeadline extends Model {
                 'description'       => "Start event date of the deadline counter."
             ],
 
+            'delay_from_event_offset' => [
+                'type'              => 'integer',
+                'description'       => "Offset to apply on 'from_event' for getting the issue date.",
+                'default'           => 0
+            ],
+
             'delay_count' => [
                 'type'              => 'integer',
                 'description'       => "Number of days before reaching the deadline."

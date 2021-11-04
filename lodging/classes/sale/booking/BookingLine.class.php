@@ -172,18 +172,39 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeProductId", QN_REPORT_DEBUG);
 
         // reset computed fields related to product model
-        $om->write(__CLASS__, $oids, ['qty_accounting_method' => null, 'is_accomodation' => null]);
+        $om->write(__CLASS__, $oids, ['qty_accounting_method' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
         self::_updatePriceId($om, $oids, $lang);
 
-        // update rental units
         // we might change the product_id but not the quantity : we cannot know if qty is changed during the same operation
         // #memo - in ORM, a check is performed on the onchange methods to prevent handling same event multiple times
-        $lines = $om->read(__CLASS__, $oids, ['qty'], $lang);
+
+        // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)        
+        $lines = $om->read(__CLASS__, $oids, [
+            'qty',
+            'booking_line_group_id.nb_pers',
+            'booking_line_group_id.nb_nights',
+            'qty_accounting_method'
+        ], $lang);
+
         foreach($lines as $lid => $line) {
-            // make sure qty is updated in order to re-assign the rental units
-            $om->write(__CLASS__, $lid, ['qty' => $line['qty']]);
+            $qty = $line['qty'];
+            if($line['qty_accounting_method'] == 'accomodation') {
+                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                // which should have been stored in the nb_nights field
+                $qty = $line['booking_line_group_id.nb_nights'];
+            }
+            else if($line['qty_accounting_method'] == 'person') {
+                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                // which should have been stored in the nb_pers field
+                $qty = $line['booking_line_group_id.nb_pers']  * $line['booking_line_group_id.nb_nights'];
+            }
+
+            if($qty != $line['qty'] || $line['qty_accounting_method'] == 'accomodation') {
+                // make sure qty is updated in order to re-assign the rental units
+                $om->write(__CLASS__, $lid, ['qty' => $qty]);
+            }
         }
 
     }

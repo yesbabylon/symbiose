@@ -13,7 +13,14 @@
 		"form.default": {
 			"name": "Contrat",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.details" : {
+					"label": "Détails"
+				},
+				"section.lines" : {
+					"label": "Lignes de contrat"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Contrats",

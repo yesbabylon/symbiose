@@ -39,16 +39,20 @@
                     "description": "Les unités locatives ne seront plus réservées et pourront être occupées pour d'autres réservation. Les services liées à la réservation pourront à nouveau être modifiés."
                 },
                 "action.option": {
-                    "label": "Placer une option"
+                    "label": "Placer une option",
+                    "description": "Les unités locatives seront réservées pendant une courte période. Aucun paiement ne sera demandé."
                 },
                 "action.confirm": {
-                    "label": "Confirmer"
+                    "label": "Confirmer",
+                    "description": "Les unités locatives seront réservées, un contrat sera créé et un échéancier de paiement sera généré."
                 },
                 "action.checkin": {
-                    "label": "Check in"
+                    "label": "Check in",
+                    "description": "L'hôte occupe désormais l'hébergement: les unités locatives seront marquées comme occupées."
                 },
                 "action.checkout": {
-                    "label": "Checkout client"
+                    "label": "Checkout client",
+                    "description": "L'hôte quitte l'hébergement: les unités locatives seront marquées pour le nettoyage."
                 },
                 "action.invoice": {
                     "label": "Facturer le solde"

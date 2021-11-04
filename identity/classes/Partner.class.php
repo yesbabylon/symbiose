@@ -16,7 +16,7 @@ class Partner extends Model {
     public static function getDescription() {
         return "A Partner describes a relationship between two Identities (contact, employee, customer, provider, payer, other).";
     }
-    
+
     public static function getColumns() {
         return [
 
@@ -44,7 +44,7 @@ class Partner extends Model {
             'relationship' => [
                 'type'              => 'string',
                 'selection'         => [ 'contact', 'employee', 'customer', 'provider', 'payer', 'other' ],
-                'description'       => 'The kind of partnership that exists between the identities.' 
+                'description'       => 'The kind of partnership that exists between the identities.'
             ],
 
             // if partner is a contact, keep the organisation (s)he is a contact from
@@ -55,7 +55,7 @@ class Partner extends Model {
                 'visible'           => [ ['relationship', '=', 'contact'] ]
             ],
 
-            // if partner is a contact, keep its 'position' within the 
+            // if partner is a contact, keep its 'position' within the
             'partner_position' => [
                 'type'              => 'string',
                 'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
@@ -68,7 +68,30 @@ class Partner extends Model {
                 'description'       => 'External reference for customer, if any.',
                 'visible'           => ['relationship', '=', 'customer']
             ],
-            
+
+            'email' => [
+                'type'              => 'computed',
+                'function'          => 'identity\Partner::getEmail',
+                'result_type'       => 'string',
+                'usage'             => 'email',
+                'description'       => 'Email of the contact (from Identity).'
+            ],
+
+            'phone' => [
+                'type'              => 'computed',
+                'function'          => 'identity\Partner::getPhone',
+                'result_type'       => 'string',
+                'usage'             => 'phone',
+                'description'       => 'Phone number of the contact (from Identity).'
+            ],
+
+            'title' => [
+                'type'              => 'computed',
+                'function'          => 'identity\Partner::getTitle',
+                'result_type'       => 'string',
+                'description'       => 'Title of the contact (from Identity).'
+            ]
+
         ];
     }
 
@@ -76,15 +99,15 @@ class Partner extends Model {
         return [
             ['owner_identity_id', 'partner_identity_id', 'relationship']
         ];
-    }       
+    }
 
     public static function onchangeIdentity($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
+        $om->write(get_called_class(), $oids, [ 'name' => null ], $lang);
     }
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $partners = $om->read(__CLASS__, $oids, ['partner_identity_id.name'], $lang);
+        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.name'], $lang);
         foreach($partners as $oid => $partner) {
             $result[$oid] = '';
             if(isset($partner['partner_identity_id.name'])) {
@@ -93,4 +116,41 @@ class Partner extends Model {
         }
         return $result;
     }
+
+    public static function getEmail($om, $oids, $lang) {
+        $result = [];
+        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.email'], $lang);
+        foreach($partners as $oid => $partner) {
+            $result[$oid] = '';
+            if(isset($partner['partner_identity_id.email'])) {
+                $result[$oid] = $partner['partner_identity_id.email'];
+            }
+        }
+        return $result;
+    }
+
+    public static function getPhone($om, $oids, $lang) {
+        $result = [];
+        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.phone'], $lang);
+        foreach($partners as $oid => $partner) {
+            $result[$oid] = '';
+            if(isset($partner['partner_identity_id.phone'])) {
+                $result[$oid] = $partner['partner_identity_id.phone'];
+            }
+        }
+        return $result;
+    }
+
+    public static function getTitle($om, $oids, $lang) {
+        $result = [];
+        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.title'], $lang);
+        foreach($partners as $oid => $partner) {
+            $result[$oid] = '';
+            if(isset($partner['partner_identity_id.title'])) {
+                $result[$oid] = $partner['partner_identity_id.title'];
+            }
+        }
+        return $result;
+    }
+
 }

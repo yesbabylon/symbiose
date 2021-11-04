@@ -16,7 +16,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
+                                                "value": "label",
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": true

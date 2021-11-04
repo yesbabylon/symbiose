@@ -4,22 +4,22 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
                 "value": "name",
-                "width": "20%"
-            }, 
-            {
-                "type": "field",            
-                "value": "status",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "date",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "valid_until",
                 "width": "20%"
             }

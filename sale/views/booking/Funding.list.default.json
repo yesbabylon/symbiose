@@ -5,15 +5,19 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
+                "value": "payment_deadline_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Booking",
-                "value": "booking_id",
-                "width": "10%"
-            },
+                "value": "type",
+                "width": "15%"
+            },            
+            {
+                "type": "field",
+                "value": "issue_date",
+                "width": "20%"
+            },            
             {
                 "type": "field",
                 "value": "due_amount",
@@ -23,6 +27,11 @@
                 "type": "field",
                 "value": "due_date",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "10%"
             }
         ]
     }

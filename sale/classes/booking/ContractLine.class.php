@@ -6,18 +6,20 @@
 */
 namespace sale\booking;
 
-class Funding extends \sale\pay\Funding {
+class ContractLine extends \sale\contract\ContractLine {
+
+    public static function getName() {
+        return "Contract line";
+    }  
 
     public static function getColumns() {
 
         return [
 
-            'booking_id' => [
+            'contract_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\Booking',
-                'description'       => 'Booking the contract relates to.',
-                'ondelete'          => 'cascade',        // delete funding when parent booking is deleted                
-                'required'          => true
+                'foreign_object'    => 'sale\booking\Contract',
+                'description'       => 'The contract the line relates to.',
             ]
 
         ];

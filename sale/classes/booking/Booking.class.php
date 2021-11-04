@@ -182,6 +182,14 @@ class Booking extends Model {
                 'visible'           => [ 'has_payer_organisation', '=', true ],
                 'domain'            => [ ['owner_identity_id', '=', 'object.customer_identity_id'], ['relationship', '=', 'payer'] ],
                 'description'       => "The partner whom the invoices have to be sent to."
+            ],
+
+            'fundings_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Funding',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Fundings that relate to the booking.',
+                'ondetach'          => 'delete'
             ]
 
         ];
@@ -249,7 +257,7 @@ class Booking extends Model {
 
     public static function getCustomerIdentityId($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['customer_id.partner_identity_id']);
+        $bookings = $om->read(get_called_class(), $oids, ['customer_id.partner_identity_id']);
 
         foreach($bookings as $oid => $booking) {
             $result[$oid] = (int) $booking['customer_id.partner_identity_id'];
@@ -259,7 +267,7 @@ class Booking extends Model {
 
     public static function getPrice($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+        $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids']);
         if($bookings > 0 && count($bookings)) {
             foreach($bookings as $bid => $booking) {
                 $groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
@@ -268,6 +276,7 @@ class Booking extends Model {
                     foreach($groups as $group) {
                         $result[$bid] += $group['price'];
                     }
+                    $result[$bid] = round($result[$bid], 2);                    
                 }
             }
         }
@@ -275,7 +284,7 @@ class Booking extends Model {
     }
 
     public static function onchangeCustomerId($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['name' => null]);
+        $om->write(get_called_class(), $oids, ['name' => null]);
         // force immediate recomputing of the name/reference
         $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'booking_lines_groups_ids']);
         if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {

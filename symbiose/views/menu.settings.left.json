@@ -449,7 +449,126 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "id": "sales.settings",
+                  "label": "Settings",
+                  "description": "",
+                  "icon": "library_books",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "discounts",
+                      "label": "Discounts",
+                      "description": "",
+                      "icon": "money_off",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "discounts_discounts",
+                          "type": "entry",
+                          "label": "Discounts",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\discount\\Discount",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "discounts_lists",
+                          "type": "entry",
+                          "label": "Discount lists",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\discount\\DiscountList",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "discounts_lists_categories",
+                          "type": "entry",
+                          "label": "Discount lists categories",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\discount\\DiscountListCategory",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "autosale",
+                      "label": "Autosales",
+                      "description": "",
+                      "icon": "autorenew",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "autosales_lists",
+                          "type": "entry",
+                          "label": "Lists",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\autosale\\AutosaleList",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "autosales_categories",
+                          "type": "entry",
+                          "label": "Categories",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\autosale\\AutosaleCategory",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "seasons",
+                      "label": "Seasons",
+                      "description": "",
+                      "icon": "calendar_today",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "seasons_type",
+                          "type": "entry",
+                          "label": "Season Types",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\season\\SeasonType",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "seasons_category",
+                          "type": "entry",
+                          "label": "Seasons categories",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\season\\SeasonCategory",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "seasons_season",
+                          "type": "entry",
+                          "label": "Seasons",
+                          "description": "",
+                          "context": {
+                            "entity": "lodging\\sale\\season\\Season",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
+
+
+
               ]
             },
             {
@@ -479,6 +598,26 @@
               "type": "parent",
               "children": [
                 {
+                  "id": "organisation.organisations",
+                  "label": "Organisations",
+                  "description": "",
+                  "icon": "store",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "organisation.organisations.company",
+                      "type": "entry",
+                      "label": "Internal organisations",
+                      "description": "",
+                      "context": {
+                        "entity": "identity\\Identity",
+                        "view": "list.default",
+                        "domain": ["id", "<", 4]
+                      }
+                    }
+                  ]
+                },
+                {
                   "id": "centers",
                   "label": "Centers",
                   "description": "",
@@ -486,7 +625,7 @@
                   "type": "parent",
                   "children": [
                     {
-                      "id": "centers_centers",
+                      "id": "centers.centers",
                       "type": "entry",
                       "label": "Centers",
                       "description": "",
@@ -496,7 +635,7 @@
                       }
                     },
                     {
-                      "id": "centers_categories",
+                      "id": "centers.categories",
                       "type": "entry",
                       "label": "Center Categories",
                       "description": "",
@@ -526,9 +665,9 @@
                       }
                     }
                   ]
-                }                
+                }
               ]
-            },            
+            },
             {
               "id": "accounting",
               "label": "Accounting",
@@ -627,7 +766,7 @@
                   "description": "",
                   "icon": "calendar_today",
                   "type": "parent",
-                  "children": [                
+                  "children": [
                     {
                       "id": "calendar.holidays",
                       "type": "entry",
@@ -639,14 +778,14 @@
                       }
                     }
                   ]
-                },                
+                },
                 {
                   "id": "settings",
                   "label": "Application settings",
                   "description": "",
                   "icon": "person",
                   "type": "parent",
-                  "children": [                
+                  "children": [
                     {
                       "id": "available_settings",
                       "type": "entry",
@@ -718,7 +857,7 @@
                     }
                   ]
                 }
-                
+
               ]
             }
 

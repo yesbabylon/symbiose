@@ -56,7 +56,17 @@
         },
         "registration_number": {
             "label": "Numéro d'enregistrement",
-            "description": "Numéro d'enregistrement de l'établissement (numéro d'unité de l'établissement), le cas échéant.",
+            "description": "Numéro d'unité de l'établissement.",
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Numéro de compte bancaire au format international.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Numéro d'identification de la banque.",
             "help": ""
         },
         "analytic_section_id":{
@@ -77,5 +87,12 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "bank_account_iban": {
+            "invalid_account": "Le compte doit être un numéro IBAN valide."
+        },
+        "bank_account_bic": {
+            "invalid_code": "L'identifiant doit être un code BIC valide."
+        }
+    }
 }
