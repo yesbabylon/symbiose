@@ -51,8 +51,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_pack",
-                                                "width": "50%",
-                                                "readonly": true
+                                                "width": "50%"
                                             }
 
                                         ]
@@ -85,6 +84,29 @@
                         ]
                     },
                     {
+                        "label": "Attributes",
+                        "id": "section.attributes",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_attributes_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.product"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
+                    {
                         "label": "Prices",
                         "id": "section.groups",
                         "rows": [
@@ -107,6 +129,7 @@
                     {
                         "label": "Pack Products",
                         "id": "section.pack_lines",
+                        "visible": ["is_pack", "=", true],
                         "rows": [
                             {
                                 "columns": [

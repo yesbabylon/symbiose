@@ -5,6 +5,11 @@
     "model": {
         "name": {
             "label": "Identification",
+            "description": "Nom complet (calculé: libellé + SKU).",
+            "help": ""
+        },
+        "label": {
+            "label": "Libellé",
             "description": "Mnémo pour identifier le produit (doublons autorisés).",
             "help": ""
         },
@@ -57,7 +62,17 @@
             "label": "Statistiques",
             "description": "Section statistique associée au produit.",
             "help": ""
-        }        
+        },
+        "pack_lines_ids": {
+            "label": "Produits du pack",
+            "description": "Liste des produits du pack.",
+            "help": ""
+        },
+        "product_attributes_ids": {
+            "label": "Attributs",
+            "description": "Attributs définis pour le produit.",
+            "help": ""
+        }
     },
     "view": {
         "form.default": {
@@ -69,6 +84,9 @@
                 },
                 "section.prices_section": {
                     "label": "Prix"
+                },
+                "section.attributes": {
+                    "label": "Attributs"
                 },
                 "section.groups": {
                     "label": "Groupes"

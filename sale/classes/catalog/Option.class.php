@@ -14,8 +14,14 @@ class Option extends Model {
 
         return [
             'name' => [
+                'type'              => 'alias',
+                'alias'             => 'description',
+                'description'       => 'The display name of the option (description).'
+            ],
+
+            'label' => [
                 'type'              => 'string',
-                'description'       => 'Unique name of this option.'
+                'description'       => 'Unique name of the option.'
             ],
 
             'description' => [
@@ -23,7 +29,7 @@ class Option extends Model {
                 'description'       => "Short description of the option.",
                 'multilang'         => true
             ],
-            
+
             'family_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
@@ -32,4 +38,6 @@ class Option extends Model {
             ]
         ];
     }
+
+
 }
