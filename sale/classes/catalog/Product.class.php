@@ -24,18 +24,20 @@ class Product extends Model {
                 'store'             => true,
                 'description'       => 'The full name of the product (label + sku).'
             ],
-            
+
             'label' => [
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\catalog\Product::onchangeLabel'
             ],
 
             'sku' => [
                 'type'              => 'string',
                 'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
                 'required'          => true,
-                'unique'            => true
+                'unique'            => true,
+                'onchange'          => 'sale\catalog\Product::onchangeSku'
             ],
 
             'ean' => [
@@ -80,7 +82,7 @@ class Product extends Model {
             'product_attributes_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\catalog\ProductAttribute',
-                'foreign_field'     => 'product_id',                
+                'foreign_field'     => 'product_id',
                 'description'       => "Attributes set for the product.",
             ],
 
@@ -108,7 +110,7 @@ class Product extends Model {
             ],
 
             /* can_buy and can_sell are adapted when related values are changed in parent product_model */
-            
+
             'can_buy' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be purchassed?",
@@ -166,12 +168,20 @@ class Product extends Model {
         return null;
     }
 
+    public static function onchangeLabel($om, $oids, $lang) {
+        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+    }
+
+    public static function onchangeSku($om, $oids, $lang) {
+        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+    }
+
     public static function onchangeProductModelId($om, $oids, $lang) {
         $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
         foreach($products as $pid => $product) {
             $om->write(get_called_class(), $pid, [
-                'can_sell'      => $product['product_model_id.can_sell'], 
-                'groups_ids'    => $product['product_model_id.groups_ids'], 
+                'can_sell'      => $product['product_model_id.can_sell'],
+                'groups_ids'    => $product['product_model_id.groups_ids'],
                 'family_id'     => $product['product_model_id.family_id']
             ]);
         }
