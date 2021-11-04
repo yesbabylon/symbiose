@@ -1,0 +1,25 @@
+{
+    "name": "Consommation",
+    "plural": "Consommations",
+    "description": "",
+    "model": {
+        "center_id": {
+            "label": "Centre",
+            "description": "Le centre auquel se rapporte la consommation.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Consommation",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Consommations",
+            "description": "Liste des consommations.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

@@ -1,13 +1,11 @@
 {
-    "name": "Statistic Section",
-    "description": "Default form for statistic section with all fields.",
+    "name": "PackLine",
+    "description": "A Pack Line corresponds to the relation between a 'pack' product (bundle) and another product that it includes.",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.accounting_rules_section",
                         "rows": [
                             {
                                 "columns": [
@@ -16,25 +14,26 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "code",
+                                                "label": "Parent's Product",
+                                                "value": "parent_product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "label",
+                                                "label": "Child's Product",
+                                                "value": "child_product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "stat_chart_id",
+                                                "label": "Has Quantity",
+                                                "value": "has_own_qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product Quantity",
+                                                "value": "own_qty",
                                                 "width": "50%"
                                             }
                                         ]
@@ -42,9 +41,9 @@
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
-        ]
+       ]
     }
 }

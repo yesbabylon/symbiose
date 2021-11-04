@@ -1,13 +1,11 @@
 {
-    "name": "Statistic Section",
-    "description": "Default form for statistic section with all fields.",
+    "name": "Rental Unit Assignement",
+    "description": "",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.accounting_rules_section",
                         "rows": [
                             {
                                 "columns": [
@@ -16,25 +14,25 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": true
-                                                }
+                                                "label": "Booking",
+                                                "value": "booking_id",
+                                                "width": "50%"
                                             },
                                             {
-                                                "type": "field",
-                                                "value": "code",
+                                                "type": "Booking Line",
+                                                "value": "booking_line_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "label",
+                                                "label": "Quantity",
+                                                "value": "qty",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "stat_chart_id",
+                                                "label": "Rental Unit",
+                                                "value": "rental_unit_id",
                                                 "width": "50%"
                                             }
                                         ]
@@ -42,7 +40,7 @@
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

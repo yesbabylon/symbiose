@@ -1,0 +1,34 @@
+{
+    "name": "Graphique statistique",
+    "plural": "Graphiques statistique",
+    "description": "Le plan comptable est une liste organisationnelle contenant tous les comptes financiers de l'entreprise.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du graphe statistique.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "L'organisation à laquelle appartient l'organigramme.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Graphique statistique",
+            "description": "Formulaire par défaut pour le graphique statistique avec tous les champs.",
+            "layout": {
+                "section.accounting_rules_section": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste de graphique statistique",
+            "description": "Cette vue est destinée à afficher les plans comptables.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

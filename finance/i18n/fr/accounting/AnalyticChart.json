@@ -1,0 +1,34 @@
+{
+    "name": "Plan comptable analytique",
+    "plural": "Plans comptable analytique",
+    "description": "Le plan comptable analytique permet de ventiler les revenus et les dépenses indépendamment du plan comptable.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du plan comptable analytique.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "The organisation the chart belongs to.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Tableau analytique",
+            "description": "Formulaire par défaut pour le plan analytique avec tous les champs.",
+            "layout": {
+                "section.accounting_rules_section": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste de tableau analytique",
+            "description": "Cette vue est destinée à afficher les plans analytiques.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
