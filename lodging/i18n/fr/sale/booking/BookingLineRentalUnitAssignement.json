@@ -1,0 +1,40 @@
+{
+    "name": "Ligne de réservation affectation des unités locatives",
+    "plural": "Lignes de réservation affectation des unités locatives",
+    "description": "",
+    "model": {
+        "booking_id": {
+            "label": "Réservation",
+            "description": "La réservation à laquelle la ligne se rapporte.",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Nombre de personnes affectées à l'unité locative pour la ligne de réservation associée.",
+            "help": ""
+        },
+        "booking_line_id": {
+            "label": "Ligne de Réservation",
+            "description": "Ligne de réservation à laquelle se rapporte la mission.",
+            "help": ""
+        },
+        "rental_unit_id": {
+            "label": "Unité de location",
+            "description": "Unité locative affectée à la ligne de réservation.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Affectation d'unités locatives",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Affectations d'unités locatives",
+            "description": "Liste des affectations des unités locatives de la ligne de réservation.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

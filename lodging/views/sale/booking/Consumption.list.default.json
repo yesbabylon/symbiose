@@ -1,0 +1,14 @@
+{
+    "name": "Consumptions",
+    "description": "List of consumptions.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Center",
+                "value": "center_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

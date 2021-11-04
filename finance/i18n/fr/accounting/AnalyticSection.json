@@ -1,0 +1,44 @@
+{
+    "name": "Section analytique",
+    "plural": "Sections analytique",
+    "description": "Les sections analytiques permettent de regrouper les dépenses et les revenus indépendamment du plan comptable.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de la section analytique.",
+            "help": ""
+        },
+        "code": {
+            "label": "Code",
+            "description": "Code unique identifiant la section.",
+            "help": ""
+        },
+        "label": {
+            "label": "Label",
+            "description": "Brève description de la rubrique.",
+            "help": ""
+        },
+        "analytic_chart_id": {
+            "label": "Tableau analytique",
+            "description": "Le plan comptable auquel la ligne appartient.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Section analytique",
+            "description": "Formulaire par défaut pour la section analytique avec tous les champs.",
+            "layout": {
+                "section.accounting_rules_section": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste de section analytique",
+            "description": "Cette vue est destinée à afficher les sections analytiques.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

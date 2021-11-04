@@ -1,6 +1,6 @@
 {
-    "name": "Accounting Chart",
-    "description": "Default form for accounting chart with all fields.",
+    "name": "Analytic Chart",
+    "description": "Default form for analytic chart with all fields.",
     "layout": {
         "groups": [
             {

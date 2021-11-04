@@ -1,0 +1,20 @@
+{
+    "name": "Rental Unit Assignements",
+    "description": "List of booking line rental unit assignements.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "20%"
+            }
+        ]
+    }
+}

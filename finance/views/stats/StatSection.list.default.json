@@ -1,6 +1,6 @@
 {
-    "name": "Accounting Charts List",
-    "description": "This view is intented for displaying the accounting charts.",
+    "name": "Statistic Section List",
+    "description": "This view is intented for displaying the statistic section.",
     "layout": {
         "items": [
             {
