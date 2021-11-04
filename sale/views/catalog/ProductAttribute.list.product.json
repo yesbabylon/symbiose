@@ -1,0 +1,25 @@
+{
+    "name": "Product Attributes",
+    "description": "This view is intended for displaying the list of product attributes.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Option",
+                "value": "option_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Option Value",
+                "value": "option_value_id",
+                "width": "20%"
+            }
+        ]
+    }
+}
