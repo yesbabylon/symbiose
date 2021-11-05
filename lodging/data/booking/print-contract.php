@@ -244,16 +244,6 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
             'is_pack'        => true
         ];
         $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;                        
-        $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;                        
-        $lines[] = $line;
-        $lines[] = $line;                                        
-        $lines[] = $line;
     }
     else {
         $group_is_pack = false;
@@ -267,15 +257,6 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
             'is_pack'        => false
         ];
         $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;
-        $lines[] = $line;
-
-        $lines[] = $line;                                
-        $lines[] = $line;                                
-        $lines[] = $line;                                
-        $lines[] = $line;                                
-        $lines[] = $line;                                                                        
     }
 
     foreach($contract_line_group['contract_lines_ids'] as $contract_line) {

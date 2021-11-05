@@ -15,7 +15,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
@@ -27,14 +27,13 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Templates",
-                                                "value": "templates_ids",
+                                                "value": "description",
                                                 "width": "100%"
                                             }
                                         ]
                                     }
                                 ]
-                            }
+                            }                            
                         ]
                     }
                 ]

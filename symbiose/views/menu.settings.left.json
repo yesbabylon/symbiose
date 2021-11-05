@@ -754,6 +754,44 @@
               ]
             },
             {
+              "id": "communication",
+              "label": "Communication",
+              "description": "",
+              "icon": "mode_comment",
+              "type": "parent",
+              "children": [
+                {
+                  "id": "communication.templates",
+                  "label": "Templates",
+                  "description": "",
+                  "icon": "chrome_reader_mode",
+                  "type": "parent",
+                  "children": [
+                    {
+                      "id": "communication.templates.templates",
+                      "type": "entry",
+                      "label": "All templates",
+                      "description": "",
+                      "context": {
+                        "entity": "communication\\Template",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "communication.templates.categories",
+                      "type": "entry",
+                      "label": "Templates categories",
+                      "description": "",
+                      "context": {
+                        "entity": "communication\\TemplateCategory",
+                        "view": "list.default"
+                      }
+                    }
+                  ]
+                }                
+              ] 
+            },           
+            {
               "id": "settings",
               "label": "Configuration",
               "description": "",
@@ -857,7 +895,6 @@
                     }
                   ]
                 }
-
               ]
             }
 

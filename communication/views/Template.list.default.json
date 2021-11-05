@@ -10,11 +10,6 @@
             },
             {
                 "type": "field",
-                "value": "value",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Category",
                 "value": "category_id",
                 "width": "20%"

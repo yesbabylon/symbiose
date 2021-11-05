@@ -46,7 +46,8 @@ class Price extends Model {
                 'foreign_object'    => 'sale\price\PriceList',
                 'description'       => "The Price List the price belongs to.",
                 'required'          => true,
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'cascade',
+                'onchange'          => 'sale\price\Price::onchangePriceListId'
             ],
 
             'is_active' => [
@@ -67,7 +68,8 @@ class Price extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product (sku) the price applies to.",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'sale\price\Price::onchangeProductId'
             ]
 
         ];
@@ -95,11 +97,19 @@ class Price extends Model {
         return $result;
     }
 
+    public function onchangePriceListId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['name' => null], $lang);
+    }
+
+    public function onchangeProductId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['name' => null], $lang);
+    }    
+
     public function getUnique() {
         return [
             ['product_id', 'price_list_id']
         ];
-    }       
+    }
 
 
 }
