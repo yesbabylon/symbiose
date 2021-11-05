@@ -29,6 +29,7 @@ class Product extends \sale\catalog\Product {
                 'foreign_object'    => 'lodging\sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
+                'ondetach'          => 'delete'
             ],
 
             'label' => [
@@ -50,10 +51,18 @@ class Product extends \sale\catalog\Product {
     }
 
     public static function onchangeLabel($om, $oids, $lang) {
-        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+        $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     public static function onchangeSku($om, $oids, $lang) {
-        $om->write(get_called_class(), $oids, ['name' => null], $lang);
+        $products = $om->read(__CLASS__, $oids, ['prices_ids']);
+        if($products > 0 && count($products)) {
+            $prices_ids = [];
+            foreach($products as $product) {
+                $prices_ids = array_merge($prices_ids, $product['prices_ids']);
+            }
+            $om->write('sale\price\Price', $prices_ids, ['name' => null], $lang);
+        }
+        $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 }

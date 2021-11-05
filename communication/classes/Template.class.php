@@ -15,8 +15,14 @@ class Template extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short mnemo of the season.",
+                'description'       => "Code of the template (allows duplicates).",
                 'required'          => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Role and intended usage of the template.",
+                'multilang'         => true
             ],
 
             'value' => [
@@ -34,10 +40,10 @@ class Template extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => [ 'contract', 'invoice', 'email' ],
-                'description'       => 'The context template is meant to be used.' 
-            ],
-            
+                'selection'         => [ 'quote', 'contract', 'invoice', 'email' ],
+                'description'       => 'The context template is meant to be used.'
+            ]
+
         ];
     }
 

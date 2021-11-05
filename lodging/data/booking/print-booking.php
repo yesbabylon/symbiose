@@ -123,7 +123,7 @@ $fields = [
         'name',
         'has_pack',
         'is_locked',
-        'pack_id'  => ['display_name'],
+        'pack_id'  => ['label'],
         'qty',
         'unit_price',
         'vat_rate',
@@ -132,7 +132,7 @@ $fields = [
         'date_to',
         'nb_pers',
         'booking_lines_ids' => [
-            'product_id' => ['display_name'],
+            'product_id' => ['label'],
             'qty',
             'unit_price',
             'price',
@@ -224,7 +224,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
         $line = [
             'name'          => $group_label,
-            'description'   => $booking_line_group['pack_id']['display_name'],
+            'description'   => $booking_line_group['pack_id']['label'],
             'price'         => $booking_line_group['price'],
             'price_excl'    => $price_vat_e,
             'unit_price'    => $booking_line_group['unit_price'],
@@ -252,7 +252,6 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
     foreach($booking_line_group['booking_lines_ids'] as $booking_line) {
 
         $price_vat_e = $booking_line['price'] / (1 + $booking_line['vat_rate']);
-
 
         $disc_value = 0;
         $disc_percent = 0;
@@ -283,7 +282,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
         $disc_percent += (1-$disc_value_perc);
 
         $line = [
-            'name'          => $booking_line['product_id']['display_name'],
+            'name'          => $booking_line['product_id']['label'],
             'price'         => $booking_line['price'],
             'price_excl'    => $price_vat_e,
             'unit_price'    => $booking_line['unit_price'],

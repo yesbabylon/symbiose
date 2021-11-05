@@ -17,7 +17,13 @@ class TemplateCategory extends Model {
                 'type'              => 'string',
                 'description'       => "Short label to ease identification of the category."
             ],
-            
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Short description of category and intended usage.",
+                'multilang'         => true
+            ],
+                        
             'templates_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'communication\Template',

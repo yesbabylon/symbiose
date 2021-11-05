@@ -10,7 +10,7 @@
 		},
 		"templates_ids":{
 			"label":"Modèles", 
-			"description": "Modèles liés à cette catégorie, le cas échéant.",
+			"description": "Modèles liés à cette catégorie.",
 			"help": ""
 		}
 	},

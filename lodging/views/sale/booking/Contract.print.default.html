@@ -79,6 +79,15 @@ div.header {
     height: 280px;
 }
 
+div.header table {
+    width: 100%; 
+    border-spacing: 0px; 
+    border-collapse: separate; 
+    border: solid 1px rgb(204, 204, 204);    
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px; 
+}
+
 div.footer {
     bottom: 0;
     left: 0;
@@ -118,10 +127,9 @@ hr {
         <div style="position: absolute; top: 84px; right: 0; height: 19px; width: 100%; text-align: right;">Le {{ date }}</div>
     </div>
 
-    <table style="width: 100%; border-spacing: 0pt;
-    border-collapse: separate;"  cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0">
         <tr valign="top">
-            <td colspan="2" style="font-size: 20px; text-align: center; border: 1px; background-color: rgb(204, 204, 204); width: 100%; height: 20px; border-top-left-radius: 15px; border-top-right-radius: 15px; padding-left: 7px; overflow: hidden;">Contrat {{ code }}</td>
+            <td colspan="2" style=" font-size: 20px; text-align: center; border-bottom: solid 1px rgb(204, 204, 204); width: 100%; height: 20px;  padding-left: 7px; overflow: hidden;">Contrat {{ code }}</td>
         </tr>
         <tr valign="top">
             <td style="width: 50%; padding: 5px;">
@@ -274,9 +282,9 @@ hr {
     </div>
 </div>
 
-<div style="margin-top: 50px;">
+<div style="margin-top: 50px; page-break-inside: avoid;">
     <div style="margin: 0px 0px 20px 0px;"><b><u>Echéancier des paiements:</u></b></div>
-    <table width="100%" cellpadding="4" cellspacing="0" border="1" style="border-collapse: collapse;">
+    <table width="100%" cellpadding="4" cellspacing="0" style="border: solid 1px black; border-collapse: collapse; page-break-inside: avoid;">
         <tr valign="top">
             <th width="25%" style="text-align: left;">
                 Paiement
@@ -314,45 +322,49 @@ hr {
     </table>
 </div>
 
-<div style="position: relative; margin-top: 50px; border: solid 2px black; padding: 10px; ">
+<div style="position: relative; margin-top: 50px; border: solid 2px black; padding: 10px; page-break-inside: avoid;">
     <div style="font-size: 15px;">
         Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> : 
     </div>
     <div style="margin-top: 20px; font-size: 15px;">
-
-            {{ company_name}}<br />
-            {{ company_address }}<br />
-            <br />
-            IBAN : {{ company_iban }}<br />
-            BIC : {{ company_bic }}<br />
-            <b>COMMUNICATION : {{ installment_reference }}</b><br />
-
+        {{ company_name}}<br />
+        {{ company_address }}<br />
+        <br />
+        IBAN : {{ company_iban }}<br />
+        BIC : {{ company_bic }}<br />
+        <b>COMMUNICATION : {{ installment_reference }}</b><br />
     </div>    
     <div style="position: absolute; right: 10px; top: 10px;">
         <img src="{{ installment_qr_url }}" width= "150" height="150" />
     </div>    
 </div>
 
-<div style="margin-top: 50px; height: 120px;">
-    <div style="float: left; width: 60%;">
-        <div>Membre {{ member }}
-            {% if contact_name|length > 0 %}
-            <br />{{ contact_name }}
-            {% endif %}
-        </div>
-        <div>
-            Par la présente, j'atteste avoir lu et accepte:
-            <ul>
-                <li>La présente proposition de contrat</li>
-                <li>Les conditions générales de vente</li>
-                <li>Le règlement d'ordre intérieur</li>
-            </ul>
-        </div>
-    </div>
-    <div style="float: left; width: 40%;">
-        <div>Date et Signature</div>
-        <div style="border: solid 1px black; width: 100%; height: 80px;"></div>
-    </div>
+<div style="margin-top: 50px;">
+    <table style="width: 100%; page-break-inside: avoid;">
+        <tr>
+            <td style="width: 60%;">
+                <div>Membre {{ member }}
+                    {% if contact_name|length > 0 %}
+                    <br />{{ contact_name }}
+                    {% endif %}
+                </div>
+                <div>
+                    Par la présente, j'atteste avoir lu et accepte:
+                    <ul>
+                        <li>La présente proposition de contrat</li>
+                        <li>Les conditions générales de vente</li>
+                        <li>Le règlement d'ordre intérieur</li>
+                    </ul>
+                </div>
+        
+            </td>
+            <td style="width: 40%;">
+                <div>Date et Signature</div>
+                <div style="border: solid 1px black; width: 100%; height: 80px;"></div>
+        
+            </td>
+        </tr>
+    </table>
 </div>
 
 
