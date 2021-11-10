@@ -24,14 +24,14 @@ class BankStatementLine extends Model {
                 'description'       => 'Date at which the statement was issued.'
             ],
 
-            'communication' => [
+            'message' => [
                 'type'              => 'string',
-                'description'       => 'Message from the payer.'
+                'description'       => 'Message from the payer (or ref from the bank).'
             ],
 
-            'reference' => [
+            'structured_message' => [
                 'type'              => 'string',
-                'description'       => 'Reference from the bank.'
+                'description'       => 'Structured message, if any.'
             ],
 
             'customer_id' => [
@@ -44,13 +44,13 @@ class BankStatementLine extends Model {
             'amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money',
-                'description'       => 'Reference from the bank.'
+                'description'       => 'Amount of the transaction.'
             ],
 
             'account_iban' => [
                 'type'              => 'string',
                 'usage'             => 'uri/urn:iban',
-                'description'       => 'IBAN which the payment originates.'
+                'description'       => 'IBAN which the payment originates from.'
             ],
             
             'account_holder' => [

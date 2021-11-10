@@ -19,7 +19,7 @@
 			"selection": {
 				"pending": "en attente",
 				"sent": "expédié",
-				"approved": "approuvé",
+				"signed": "signé",
 				"rejected": "rejeté"
 			},
 			"help": ""

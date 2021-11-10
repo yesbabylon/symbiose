@@ -61,6 +61,23 @@ class Identity extends Model {
                 'description'       => 'A short reminder to help user identify the targeted person and its specifics.'
             ],
 
+            'bank_account_iban' => [
+                'type'          => 'string',
+                'description'   => "Number of the bank account of the Identity, if any."
+            ],
+
+            'bank_account_bic' => [
+                'type'          => 'string',
+                'description'   => "Identitifer of the Bank related to the Identity's bank account, when set."
+            ],
+
+            'signature' => [
+                'type'              => 'string',
+                'usage'             => 'markup/html',
+                'description'       => 'Identity signature to append to communications.',
+                'multilang'         => true
+            ],
+
             /*
                 Fields specific to organisations
             */

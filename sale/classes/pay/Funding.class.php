@@ -61,7 +61,13 @@ class Funding extends Model {
                 'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'The invoice targeted by the funding, if any.',
                 'visible'           => [ ['type', '=', 'invoice'] ]
-            ],            
+            ],
+
+            'payment_reference' => [
+                'type'              => 'string',
+                'description'       => 'Message for identifying the purpose of the transaction.',
+                'default'           => ''
+            ]
         ];
     }
 

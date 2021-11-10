@@ -28,7 +28,8 @@ class Template extends Model {
             'value' => [
                 'type'              => 'string',
                 'usage'             => 'markup/html',
-                'description'       => "Template body (html)."
+                'description'       => "Template body (html).",
+                'multilang'         => true
             ],
 
             'category_id' => [
@@ -40,8 +41,8 @@ class Template extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => [ 'quote', 'contract', 'invoice', 'email' ],
-                'description'       => 'The context template is meant to be used.'
+                'selection'         => [ 'quote', 'contract', 'invoice' ],
+                'description'       => 'The context in which the template is meant to be used.'
             ]
 
         ];

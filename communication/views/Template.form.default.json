@@ -33,7 +33,17 @@
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id":  "template.content",
+                        "label": "Content",
+                        "rows": [
                             {
                                 "columns": [
                                     {

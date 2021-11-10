@@ -108,7 +108,7 @@ class Establishment extends Model {
                 'invalid_account' => [
                     'message'       => 'Bank account must be a valid IBAN number.',
                     'function'      => function ($account, $values) {
-                        return (bool) (preg_match('/^[A-Z]{2}[0-9]{2}(?:[ ]?[0-9]{4}){3,4}(?!(?:[ ]?[0-9]){3})(?:[ ]?[0-9]{1,2})?$/', $account));
+                        return (bool) (preg_match('/^[A-Z]{2}[0-9]{2}(?:[0-9]{4}){3,4}(?!(?:[0-9]){3})(?:[0-9]{1,2})?$/', $account));
                     }    
                 ]
             ],

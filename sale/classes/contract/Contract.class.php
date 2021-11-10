@@ -36,7 +36,12 @@ class Contract extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'selection'         => ['pending', 'sent', 'approved', 'rejected'],
+                'selection'         => [
+                    'pending', 
+                    'sent',                 // sent to customer for signature
+                    'signed',               // signed by customer (valid)
+                    'cancelled'             // outdated or rejected
+                ],
                 'description'       => 'Status of the contract.',
                 'default'           => 'pending'
             ],

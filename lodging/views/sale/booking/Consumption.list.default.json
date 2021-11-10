@@ -1,13 +1,48 @@
 {
-    "name": "Consumptions",
-    "description": "List of consumptions.",
+    "name": "Consumption",
+    "description": "This view is intended for displaying the list of consumptions.",
     "layout": {
         "items": [
             {
                 "type": "field",
-                "label": "Center",
-                "value": "center_id",
-                "width": "20%"
+                "label": "Product",
+                "value": "product_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_from",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_to",
+                "width": "10%"
+            },            
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "is_rental_unit",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "is_meal",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "disclaimed",
+                "width": "10%"
             }
         ]
     }

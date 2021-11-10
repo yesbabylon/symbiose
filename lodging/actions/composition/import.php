@@ -13,7 +13,7 @@ list($params, $providers) = announce([
     'description'   => "Imports the composition (hosts listing) for a given booking. If a composition already exists, it is reset.",
     'params'        => [
         'data' =>  [
-            'description'   => 'XLSX file holding the dat to import as composition.',
+            'description'   => 'XLSX file holding the data to import as composition.',
             'type'          => 'file',
             'required'      => true
         ],
@@ -52,7 +52,7 @@ if($content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml
     throw new Exception('unknown_content_type', QN_ERROR_INVALID_PARAM);
 }
 
-$filename = 'bin/tmp.xlsx';
+$filename = 'bin/'.uniqid(rand(), true).'.xlsx';
 file_put_contents($filename, $content);
 
 /** @var string */

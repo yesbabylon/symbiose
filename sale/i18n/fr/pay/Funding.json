@@ -38,12 +38,12 @@
             "help": ""
         },
         "payment_deadline_id": {
-            "label": "Date limite de paiement",
+            "label": "Modèle d'échéance",
             "description": "Le modèle de date limite utilisé pour créer le financement, le cas échéant.",
             "help": ""
         },
         "invoice_id": {
-            "label": "Facture d'achat",
+            "label": "Facture associée",
             "description": "La facture visée par le financement, le cas échéant.",
             "help": ""
         }

@@ -76,8 +76,42 @@ class Invoice extends Model {
 
     public static function getNumber($om, $oids, $lang) {
         $result = [];
-// #todo        
+
+        $invoices = $om->read(__CLASS__, $oids, ['status', 'organisation_id'], $lang);
+
+        foreach($invoices as $oid => $invoice) {
+
+            // no code is generated for proforma
+            if($invoice['status'] == 'invoice') {
+                $settings_ids = $om->search('core\Setting', [
+                    ['name', '=', 'invoice.sequence.'.$invoice['organisation_id']],
+                    ['package', '=', 'sale'],
+                    ['section', '=', 'invoice']
+                ]);
+    
+                if($settings_ids < 0 || !count($settings_ids)) {
+                    // unexpected error : misconfiguration (setting is missing)
+                    $result[$oid] = 0;
+                    continue;
+                }
+    
+                $settings = $om->read('core\SettingValue', $settings_ids, ['value']);
+                if($settings < 0 || count($settings) != 1) {
+                    // unexpected error : misconfiguration (no value for setting)
+                    $result[$oid] = 0;
+                    continue;
+                }
+    
+                $setting = array_pop($settings);
+                $sequence = (int) $setting['value'];
+                $om->write('core\SettingValue', $settings_ids, ['value' => $sequence + 1]);
+    
+                $result[$oid] = sprintf("%4d-%02d-%034", date('Y'), $invoice['organisation_id'], $sequence);
+            }            
+
+        }
         return $result;
+
     }       
 
 }

@@ -18,6 +18,7 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
 use sale\booking\Funding;
+use communication\Template;
 
 
 list($params, $providers) = announce([
@@ -73,7 +74,7 @@ $twig = new TwigEnvironment($loader);
 $extension  = new IntlExtension();
 $twig->addExtension($extension);
 
-$template = $twig->load("{$class_path}.{$params['view_id']}.html");
+$twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
 
 // read contract
 $fields = [
@@ -106,6 +107,7 @@ $fields = [
             'email',
             'bank_account_iban',
             'bank_account_bic',
+            'template_category_id',
             'organisation_id' => [
                 'id',
                 'legal_name',
@@ -114,8 +116,9 @@ $fields = [
                 'phone',
                 'fax',
                 'website',
-                'registration_number'
-            ]            
+                'registration_number',
+                'signature'
+            ]
         ],
         'contacts_ids' => [
             'type',
@@ -128,6 +131,7 @@ $fields = [
         ],
         'fundings_ids' => [
             'due_date', 'is_paid', 'due_amount',
+            'payment_reference',
             'payment_deadline_id' => ['name']
         ]
     ],
@@ -162,9 +166,14 @@ if(!$contract) {
 }
 
 
+/*
+    extract required data and compose the $value map for the twig template
+*/
+
 $booking = $contract['booking_id'];
 
 
+// set header image based on the organisation of the center
 $img_path = 'public/assets/img/brand/Kaleo.png';
 $img_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
 
@@ -176,13 +185,15 @@ else if($booking['center_id']['organisation_id']['id'] == 3) {
 }
 
 if(file_exists($img_path)) {
-    $img = file_get_contents($img_path);  
-    $img_url = "data:image/png;base64, ".base64_encode($img);    
+    $img = file_get_contents($img_path);
+    $img_url = "data:image/png;base64, ".base64_encode($img);
 }
 
 
 $values = [
-    'header_img_url'        => $img_url,    
+    'header_img_url'        => $img_url,
+    'contract_header_html'  => '',
+    'contract_notice_html'  => '',
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
     'contact_name'          => '',
     'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
@@ -210,16 +221,41 @@ $values = [
     'company_fax'           => lodging_booking_print_contract_formatPhone($booking['center_id']['organisation_id']['fax']),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
-    'company_iban'          => $booking['center_id']['bank_account_iban'],
-    'company_bic'           => $booking['center_id']['bank_account_bic'],    
+    'company_iban'          => substr($booking['center_id']['bank_account_iban'], 0, 4).' '.substr($booking['center_id']['bank_account_iban'], 4, 4).' '.substr($booking['center_id']['bank_account_iban'], 8, 4).' '.substr($booking['center_id']['bank_account_iban'], 12),
+    'company_bic'           => $booking['center_id']['bank_account_bic'],
     'installment_date'      => '',
     'installment_amount'    => 0,
     'installment_reference' => '',
-    'installment_qr_url'    => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',    
+    'installment_qr_url'    => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
     'fundings'              => [],
     'lines'                 => []
 ];
 
+
+/*
+    retrieve templates
+*/
+if($booking['center_id']['template_category_id']) {
+    $template_header = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'contract.header'], ['type', '=', 'contract'] ])
+                        ->read(['value'], $params['lang'])
+                        ->first();
+
+    if($template_header) {
+        $values['contract_header_html'] = $template_header['value'].$booking['center_id']['organisation_id']['signature'];
+    }
+
+    $template_notice = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'contract.notice'], ['type', '=', 'contract'] ])
+                        ->read(['value'], $params['lang'])
+                        ->first();
+
+    if($template_notice) {
+        $values['contract_notice_html'] = $template_notice['value'];
+    }
+}
+
+/*
+    feed lines
+*/
 
 $lines = [];
 
@@ -260,7 +296,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
     }
 
     foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
-        if($contract_line['id'] == $contract_line_group['contract_line_id']['id']) {
+        if( !empty($contract_line_group['contract_line_id']) && $contract_line['id'] == $contract_line_group['contract_line_id']['id']) {
             continue;
         }
 
@@ -292,7 +328,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
 $values['lines'] = $lines;
 
 foreach($booking['contacts_ids'] as $contact) {
-    if(strlen($contact_name) == 0 || $contact['type'] == 'booking') {
+    if(strlen($values['contact_name']) == 0 || $contact['type'] == 'booking') {
         // overwrite data of customer with contact info
         $values['contact_name'] = str_replace(["Dr", "Ms", "Mrs", "Mr","Pr"], ["Dr","Melle", "Mme","Mr","Pr"], $contact['partner_identity_id']['title']).' '.$contact['partner_identity_id']['name'];
         $values['contact_phone'] = $contact['partner_identity_id']['phone'];
@@ -300,18 +336,24 @@ foreach($booking['contacts_ids'] as $contact) {
     }
 }
 
+// inject expected fundings and find the first installment 
 $installment_date = PHP_INT_MAX;
+$installment_amount = 0;
+$installment_ref = '';
+
 foreach($booking['fundings_ids'] as $funding) {
 
     if($funding['due_date'] < $installment_date) {
         $installment_date = $funding['due_date'];
         $installment_amount = $funding['due_amount'];
+        $installment_ref = $funding['payment_reference'];
     }
     $line = [
         'name'          => $funding['payment_deadline_id']['name'],
         'due_date'      => date('d/m/Y', $funding['due_date']),
         'due_amount'    => $funding['due_amount'],
-        'is_paid'       => $funding['is_paid']
+        'is_paid'       => $funding['is_paid'],
+        'reference'     => $funding['payment_reference']
     ];
     $values['fundings'][] = $line;
 }
@@ -322,35 +364,36 @@ if($installment_date == PHP_INT_MAX) {
     $installment_date = time() + (60 * 60 *24 * 20);
     // set default amount to 20%
     $installment_amount = $booking['price'] * 0.2;
+    // set installment reference    ('+++150/+++' for initial installment)
+    $control = ((76*150) + intval($booking['name']) ) % 97;
+    $control = ($control == 0)?97:$control;    
+    $installment_ref = sprintf("150%04d%03d%02d", intval($booking['name']) / 1000, intval($booking['name']) % 1000, $control);
 }
+
 $values['installment_date'] = date('d/m/Y', $installment_date);
 $values['installment_amount'] = (float) $installment_amount;
-
-$code_ref = 150;    // // '+++150/+++' for installments
-$control = ((76*$code_ref) + intval($booking['name']) ) % 97;
-$control = ($control == 0)?97:$control;
-$values['installment_reference'] = sprintf("+++150/%04d/%03d%02d+++", intval($booking['name']) / 1000, intval($booking['name']) % 1000, $control);
+$values['installment_reference'] = '+++'.substr($installment_ref, 0, 3).'/'.substr($installment_ref, 3, 4).'/'.substr($installment_ref, 8, 5).'+++';
 
 
-// generate a QR code 
+// generate a QR code
 try {
     $paymentData = Data::create()
         ->setServiceTag('BCD')
         ->setIdentification('SCT')
         ->setName($values['company_name'])
-        ->setIban(str_replace(' ', '', $booking['center_id']['bank_account_iban']))  
+        ->setIban(str_replace(' ', '', $booking['center_id']['bank_account_iban']))
         ->setBic(str_replace(' ', '', $booking['center_id']['bank_account_bic']))
         ->setRemittanceReference($values['installment_reference'])
         ->setAmount($values['installment_amount']);
-  
+
     $result = Builder::create()
         ->data($paymentData)
         ->errorCorrectionLevel(new ErrorCorrectionLevelMedium()) // required by EPC standard
         ->build();
-  
+
     $dataUri = $result->getDataUri();
     $values['installment_qr_url'] = $dataUri;
-  
+
 }
 catch(Exception $exception) {
     // unknown error
@@ -359,7 +402,7 @@ catch(Exception $exception) {
 /*
     Inject all values into the template
 */
-$html = $template->render($values);
+$html = $twigTemplate->render($values);
 
 
 

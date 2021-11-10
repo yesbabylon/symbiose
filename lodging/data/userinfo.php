@@ -32,7 +32,16 @@ if(!count($ids)) {
 }
 // user has allways READ right on its own object
 $user = User::ids($ids)
-            ->read(['id', 'login', 'name', 'identity_id' => ['firstname', 'lastname'], 'language', 'organisation_id', 'centers_ids'])
+            ->read([
+                'id', 
+                'login', 
+                'name', 
+                'groups_ids' => ['name', 'display_name'],
+                'identity_id' => ['firstname', 'lastname'], 
+                'language', 
+                'organisation_id', 
+                'centers_ids'
+            ])
             ->adapt('txt')
             ->first();
 // send back basic info of the User object

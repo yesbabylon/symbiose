@@ -11,7 +11,7 @@
 body {
     margin: 0;
     padding: 0;
-    margin-top: 300px;
+    margin-top: 280px;
     margin-bottom: 35px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.7em;
@@ -40,8 +40,13 @@ div.inner {
     border: none;
 }
 
+div.inner p {
+    margin: 0;
+}
+
 div.inner .wrapper {
     margin: 0px;
+    margin-top: 20px;
     padding: 0px;
     border: none;
 }
@@ -177,6 +182,9 @@ hr {
 
 
 <div class="inner">
+    <div class="intro">
+        {{ contract_header_html | raw }}
+    </div>
     <div class="wrapper">
         <table width="100%" cellpadding="4" cellspacing="0">
             <thead style="border: solid 1px black; border-left: 0px; border-right: 0px;">
@@ -322,11 +330,15 @@ hr {
     </table>
 </div>
 
-<div style="position: relative; margin-top: 50px; border: solid 2px black; padding: 10px; page-break-inside: avoid;">
-    <div style="font-size: 15px;">
+<div class="notice">
+    {{ contract_notice_html | raw }}
+</div>
+
+<div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
+    <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
         Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> : 
     </div>
-    <div style="margin-top: 20px; font-size: 15px;">
+    <div style="padding-top: 20px; padding-left: 15px; font-size: 15px;">
         {{ company_name}}<br />
         {{ company_address }}<br />
         <br />
@@ -334,7 +346,7 @@ hr {
         BIC : {{ company_bic }}<br />
         <b>COMMUNICATION : {{ installment_reference }}</b><br />
     </div>    
-    <div style="position: absolute; right: 10px; top: 10px;">
+    <div style="position: absolute; right: 10px; top: 15px;">
         <img src="{{ installment_qr_url }}" width= "150" height="150" />
     </div>    
 </div>

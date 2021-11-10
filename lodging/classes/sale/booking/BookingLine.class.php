@@ -559,10 +559,10 @@ class BookingLine extends \sale\booking\BookingLine {
                     $schedule_from  = $hour_from * 3600 + $minute_from * 60;
                     $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
+                    $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
                     $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
-                    $is_rental_unit = false;
                     $rental_unit_id = 0;
 
                     // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
@@ -570,7 +570,6 @@ class BookingLine extends \sale\booking\BookingLine {
                     $nb_times = $nb_pers;
 
                     if($is_accomodation) {
-                        $is_rental_unit = true;
                         ++$nb_products; // checkout is done the day following the last night
 
                         /*
@@ -639,7 +638,8 @@ class BookingLine extends \sale\booking\BookingLine {
                                 'schedule_from'         => $c_schedule_from,
                                 'schedule_to'           => $c_schedule_to,
                                 'product_id'            => $line['product_id'],
-                                'is_rental_unit'        => $is_rental_unit,
+                                'is_rental_unit'        => $is_accomodation,
+                                'is_meal'               => $is_meal,
                                 'rental_unit_id'        => $rental_unit_id
                             ];
 
