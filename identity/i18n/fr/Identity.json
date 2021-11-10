@@ -201,6 +201,9 @@
                 "section.identity_info": {
                     "label": "Infos générales"
                 },
+                "section.settings": {
+                    "label": "Paramètres"
+                },
                 "section.identity_main_address": {
                     "label": "Adresse principale"
                 },

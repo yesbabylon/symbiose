@@ -160,6 +160,27 @@
                         ]
                     },
                     {
+                        "label": "Settings",
+                        "id": "section.settings",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "signature",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
+                    {
                         "label": "Main address",
                         "id": "section.identity_main_address",
                         "rows": [

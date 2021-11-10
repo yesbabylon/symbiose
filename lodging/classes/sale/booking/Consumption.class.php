@@ -19,6 +19,34 @@ class Consumption extends \sale\booking\Consumption {
                 'description'       => "The center to which the consumption relates.",
                 'required'          => true,
                 'ondelete'          => 'cascade'         // delete consumption when parent Center is deleted
+            ],
+
+            'booking_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'description'       => 'The booking the comsumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted                
+            ],
+
+            'booking_line_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\BookingLine',
+                'description'       => 'The booking line the consumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent line is deleted
+            ],
+
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
+                'description'       => 'The booking line group the consumption relates to.',
+                'ondelete'          => 'cascade'        // delete consumption when parent group is deleted
+            ],
+
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\Product',
+                'description'       => "The Product this Attribute belongs to.",
+                'required'          => true
             ]
             
         ];

@@ -5,12 +5,12 @@
     "model": {
         "name": {
             "label": "Nom",
-            "description": "Bref mnémo de la saison.",
+            "description": "Code mnémo du modèle.",
             "help": ""
         },
         "value": {
-            "label": "Valeur",
-            "description": "Corps du modèle (html).",
+            "label": "Contenu du modèle",
+            "description": "Texte du modèle (html).",
             "help": ""
         },
         "category_id": {
@@ -20,12 +20,11 @@
         },
         "type": {
             "label": "Type",
-            "description": "Le modèle de contexte est destiné à être utilisé.",
+            "description": "Le contexte auquel le modèle est destiné.",
             "selection": {
                 "quote": "devis",
                 "contract": "contract",
-                "invoice": "facture",
-                "email": "e-mail"
+                "invoice": "facture"
             },
             "help": ""
         }
@@ -34,7 +33,11 @@
         "form.default": {
             "name": "Modèle",
             "description": "Les modèles sont utilisés dans la communication et contiennent plusieurs catégories.",
-            "layout": {}
+            "layout": {
+                "template.content": {
+                    "label": "Contenu"
+                }
+            }
         },
         "list.default": {
             "name": "Liste des Modèles",

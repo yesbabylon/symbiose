@@ -77,7 +77,7 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
-                'ondetach'          => 'delete'                
+                'ondetach'          => 'delete'
             ],
 
             'product_attributes_ids' => [
@@ -85,6 +85,7 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\ProductAttribute',
                 'foreign_field'     => 'product_id',
                 'description'       => "Attributes set for the product.",
+                'ondetach'          => 'delete'
             ],
 
             'is_locked' => [
@@ -181,9 +182,9 @@ class Product extends Model {
             $prices_ids = [];
             foreach($products as $product) {
                 $prices_ids = array_merge($prices_ids, $product['prices_ids']);
-            }            
+            }
             $om->write('sale\price\Price', $prices_ids, ['name' => null], $lang);
-        }        
+        }
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 

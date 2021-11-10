@@ -599,33 +599,24 @@
               "children": [
                 {
                   "id": "organisation.organisations",
+                  "type": "entry",
                   "label": "Organisations",
                   "description": "",
-                  "icon": "store",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "organisation.organisations.company",
-                      "type": "entry",
-                      "label": "Internal organisations",
-                      "description": "",
-                      "context": {
-                        "entity": "identity\\Identity",
-                        "view": "list.default",
-                        "domain": ["id", "<", 4]
-                      }
-                    }
-                  ]
+                  "context": {
+                    "entity": "identity\\Identity",
+                    "view": "list.default",
+                    "domain": ["id", "<", 4]
+                  }
                 },
                 {
-                  "id": "centers",
+                  "id": "organisation.centers",
                   "label": "Centers",
                   "description": "",
                   "icon": "house",
                   "type": "parent",
                   "children": [
                     {
-                      "id": "centers.centers",
+                      "id": "organisation.centers.centers",
                       "type": "entry",
                       "label": "Centers",
                       "description": "",
@@ -635,7 +626,7 @@
                       }
                     },
                     {
-                      "id": "centers.categories",
+                      "id": "organisation.centers.categories",
                       "type": "entry",
                       "label": "Center Categories",
                       "description": "",
@@ -645,7 +636,7 @@
                       }
                     },
                     {
-                      "id": "centers.rental_units",
+                      "id": "organisation.centers.rental_units",
                       "type": "entry",
                       "label": "Rental units",
                       "description": "",
@@ -655,7 +646,7 @@
                       }
                     },
                     {
-                      "id": "centers.rental_units_categories",
+                      "id": "organisation.centers.rental_units_categories",
                       "type": "entry",
                       "label": "Rental units categories",
                       "description": "",
@@ -799,7 +790,7 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "calendar",
+                  "id": "settings.calendar",
                   "label": "Calendar",
                   "description": "",
                   "icon": "calendar_today",
@@ -818,14 +809,14 @@
                   ]
                 },
                 {
-                  "id": "settings",
+                  "id": "settings.settings",
                   "label": "Application settings",
                   "description": "",
                   "icon": "person",
                   "type": "parent",
                   "children": [
                     {
-                      "id": "available_settings",
+                      "id": "settings.settings.available_settings",
                       "type": "entry",
                       "label": "Available settings",
                       "description": "",
@@ -835,7 +826,7 @@
                       }
                     },
                     {
-                      "id": "settings_values",
+                      "id": "settings.settings.settings_values",
                       "type": "entry",
                       "label": "Settings values",
                       "description": "",
@@ -847,14 +838,14 @@
                   ]
                 },
                 {
-                  "id": "identities",
+                  "id": "settings.settings.identities",
                   "label": "Identities",
                   "description": "",
                   "icon": "person",
                   "type": "parent",
                   "children": [
                     {
-                      "id": "identities_id",
+                      "id": "settings.settings.identities.identities",
                       "type": "entry",
                       "label": "Identities",
                       "description": "",
@@ -864,7 +855,7 @@
                       }
                     },
                     {
-                      "id": "partners",
+                      "id": "settings.settings.identities.partners",
                       "type": "entry",
                       "label": "Partners",
                       "description": "",
@@ -874,7 +865,7 @@
                       }
                     },
                     {
-                      "id": "addresses",
+                      "id": "settings.settings.identities.addresses",
                       "type": "entry",
                       "label": "Addresses",
                       "description": "",
@@ -884,7 +875,7 @@
                       }
                     },
                     {
-                      "id": "establishments",
+                      "id": "settings.settings.identities.establishments",
                       "type": "entry",
                       "label": "Establishments",
                       "description": "",

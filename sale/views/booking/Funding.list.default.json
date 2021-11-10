@@ -32,6 +32,11 @@
                 "type": "field",
                 "value": "is_paid",
                 "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "payment_reference",
+                "width": "20%"
             }
         ]
     }

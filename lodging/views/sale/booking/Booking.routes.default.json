@@ -27,7 +27,7 @@
             "description": "",
             "icon": "view_list",
             "route": "/bookings/composition/object.id",
-            "visible": "[]"
+            "visible": ["status", "<>", "quote"]
         },
         {
             "id": "item.booking.contract",
@@ -53,19 +53,18 @@
             "route": "/bookings/",
             "context": {
                 "entity": "lodging\\sale\\booking\\Consumption",
-                "target_entity": "lodging\\sale\\booking\\Booking",                
+                "target_entity": "lodging\\sale\\booking\\Booking",
                 "view": "list.default",
                 "domain": ["booking_id", "=", "object.id"]
             },
             "visible": ["status", "<>", "quote"]
         },
         {
-            "id": "item.booking.quote",
-            "label": "Devis",
+            "id": "item.booking.payments",
+            "label": "Paiements",
             "description": "",
             "icon": "view_list",
-            "route": "/bookings/quote/object.id",
-            "visible": "[]"
-        }        
+            "route": "/bookings/payments"
+        }
     ]
 }

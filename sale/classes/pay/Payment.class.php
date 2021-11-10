@@ -13,10 +13,9 @@ class Payment extends Model {
 
         return [
 
-            'customer_id' => [
+            'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'customer'],
                 'description'       => 'The customer the payment relates to.',
             ],
 

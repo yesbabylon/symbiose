@@ -40,8 +40,13 @@ div.inner {
     border: none;
 }
 
+div.inner p {
+    margin: 0;
+}
+
 div.inner .wrapper {
     margin: 0px;
+    margin-top: 20px;    
     padding: 0px;
     border: none;
 }
@@ -177,6 +182,10 @@ hr {
 
 
 <div class="inner">
+    <div class="intro">
+        {{ quote_header_html | raw }}
+    </div>
+
     <div class="wrapper">
         <table width="100%" cellpadding="4" cellspacing="0">
             <thead style="border: solid 1px black; border-left: 0px; border-right: 0px;">

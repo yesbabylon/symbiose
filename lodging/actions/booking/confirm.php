@@ -220,13 +220,15 @@ if($payment_plan < 0 || !count($plans_ids)) {
     throw new Exception("cannot_read_object", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+$funding_order = 0;
 foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
     $funding = [
         'payment_deadline_id'   => $deadline_id,
         'booking_id'            => $params['id'],
         'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
         'is_paid'               => false,
-        'type'                  => $deadline['type']
+        'type'                  => $deadline['type'],
+        'order'                 => $funding_order
     ];
 
     $date = time();         // default delay is starting today (at confirmation time / equivalent to 'booking')
@@ -244,7 +246,15 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
     $funding['issue_date'] = $date + $deadline['delay_from_event_offset'];
     $funding['due_date'] = $date + $deadline['delay_from_event_offset'] + ($deadline['delay_count'] * 86400);
 
-    Funding::create($funding);
+    // request funding creation
+    try {
+        Funding::create($funding);
+    }
+    catch(Exception $e) {
+        // ignore duplicates (not created)
+    }
+    
+    ++$funding_order;
 }
 
 // Update booking status

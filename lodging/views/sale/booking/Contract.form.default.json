@@ -6,7 +6,7 @@
             "id": "action.sent",
             "label": "Mark as sent",
             "description": "Contract will be marked as sent and waiting for customer's signature.",
-            "controller": "sale_contract_sent",
+            "controller": "lodging_contract_sent",
             "confirm": true,
             "visible": ["status", "=", "pending"]
         },
@@ -14,7 +14,7 @@
             "id": "action.signed",
             "label": "Mark as signed",
             "description": "Contract will be marked as signed. Booking will be validated as soon as the payment is received.",
-            "controller": "sale_contract_signed",
+            "controller": "lodging_contract_signed",
             "confirm": true,
             "visible": ["status", "=", "sent"]
         }

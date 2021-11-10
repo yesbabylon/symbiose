@@ -12,6 +12,8 @@ use Twig\Extra\Intl\IntlExtension;
 use Twig\Extension\ExtensionInterface;
 
 use lodging\sale\booking\Booking;
+use communication\Template;
+
 
 list($params, $providers) = announce([
     'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
@@ -96,7 +98,8 @@ $fields = [
         'address_zip',
         'phone',
         'email',
-        'bank_account_iban',        
+        'bank_account_iban',
+        'template_category_id',
         'organisation_id' => [
             'id',
             'legal_name',
@@ -107,7 +110,8 @@ $fields = [
             'phone',
             'fax',
             'website',
-            'registration_number'
+            'registration_number',
+            'signature'            
         ]
     ],
     'contacts_ids' => [
@@ -168,6 +172,7 @@ if(file_exists($img_path)) {
 
 $values = [
     'header_img_url'        => $img_url,
+    'quote_header_html'     => '',    
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
     'contact_name'          => '',
     'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
@@ -199,6 +204,24 @@ $values = [
     'lines'                 => []
 ];
 
+
+/*
+    retrieve templates
+*/
+if($booking['center_id']['template_category_id']) {
+    $template_header = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'quote.header'], ['type', '=', 'quote'] ])
+    ->read(['value'], $params['lang'])
+    ->first();
+
+    if($template_header) {
+        $values['quote_header_html'] = $template_header['value'].$booking['center_id']['organisation_id']['signature'];
+    }
+}
+
+
+/*
+    feed lines
+*/
 $lines = [];
 
 
