@@ -23,7 +23,7 @@
             "description": "Le contexte auquel le modèle est destiné.",
             "selection": {
                 "quote": "devis",
-                "contract": "contract",
+                "contract": "contrat",
                 "invoice": "facture"
             },
             "help": ""

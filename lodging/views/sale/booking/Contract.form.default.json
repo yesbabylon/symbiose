@@ -17,7 +17,16 @@
             "controller": "lodging_contract_signed",
             "confirm": true,
             "visible": ["status", "=", "sent"]
+        },
+        {
+            "id": "action.cancelled",
+            "label": "Mark as cancelled",
+            "description": "Contract will be marked as cancelled. All booked ressources will be freed, and cancellation fees will be issued if applicable.",
+            "controller": "lodging_contract_cancelled",
+            "confirm": true,
+            "visible": ["status", "<>", "cancelled"]
         }
+
     ],
     "layout": {
         "groups": [

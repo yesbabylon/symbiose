@@ -5,14 +5,8 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Bank Statement",
-                "value": "bank_statement_id",
-                "width": "20%"
+                "value": "id",
+                "width": "10%"
             },
             {
                 "type": "field",
@@ -26,14 +20,23 @@
             },
             {
                 "type": "field",
-                "label": "Customer",
-                "value": "customer_id",
+                "value": "account_holder",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "account_iban",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "structured_message",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "account_holder",
-                "width": "20%"
+                "value": "message",
+                "width": "30%"
             }
         ]
     }

@@ -15,7 +15,7 @@ class BankStatement extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Funding::getDisplayName',
+                'function'          => 'sale\pay\BankStatement::getDisplayName',
                 'store'             => true
             ],
         
@@ -61,7 +61,7 @@ class BankStatement extends Model {
             'bank_account_iban' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Funding::getBankAccountIban',
+                'function'          => 'sale\pay\BankStatement::getBankAccountIban',
                 'description'       => 'IBAN representation of the account number.',
                 'store'             => true
             ]
@@ -114,4 +114,10 @@ class BankStatement extends Model {
         return $result;
     }
 
+
+    public function getUnique() {
+        return [
+            ['date', 'old_balance', 'new_balance']
+        ];
+    }    
 }

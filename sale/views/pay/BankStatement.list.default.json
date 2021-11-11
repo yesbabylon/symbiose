@@ -6,7 +6,7 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%"
+                "width": "30%"
             },
             {
                 "type": "field",
@@ -16,8 +16,23 @@
             {
                 "type": "field",
                 "value": "date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "old_balance",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "new_balance",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "bank_account_iban",
                 "width": "20%"
-            }
+            }            
         ]
     }
 }

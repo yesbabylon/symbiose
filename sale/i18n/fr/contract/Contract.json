@@ -20,7 +20,7 @@
 				"pending": "en attente",
 				"sent": "expédié",
 				"signed": "signé",
-				"rejected": "rejeté"
+					"cancelled": "annulé"
 			},
 			"help": ""
 		},
