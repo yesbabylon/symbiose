@@ -114,7 +114,7 @@ class Center extends \identity\Establishment {
 
             'product_groups_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\Catalog\Group',
+                'foreign_object'    => 'lodging\sale\catalog\Group',
                 'foreign_field'     => 'center_id',
                 'description'       => "Group targeted by the center.",
                 'required'          => true
