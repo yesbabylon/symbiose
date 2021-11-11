@@ -3,8 +3,8 @@
     "layout": {
         "items": [
             {
-              "id": "item.bookings",
-              "label": "Bookings",
+              "id": "item.home",
+              "label": "Home",
               "description": "",
               "icon": "menu_book",
               "type": "entry",

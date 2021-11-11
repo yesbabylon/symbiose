@@ -1,8 +1,7 @@
 {
 	"description": "",
 	"view": {
-		"item.bookings": {"label": "Réservations", "help": ""},
-		"item.customers": {"label": "Clients", "help": ""},
+		"item.home": {"label": "Accueil", "help": ""},
 		"item.planning": {"label": "Calendrier", "help": ""}		
 	}
 }

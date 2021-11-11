@@ -123,10 +123,12 @@ class BookingLineGroup extends Model {
             foreach($groups as $gid => $group) {
                 $result[$gid] = 0.0;
 
-                $lines = $om->read('sale\booking\BookingLine', $group['booking_lines_ids'], ['price']);
+                $lines = $om->read('sale\booking\BookingLine', $group['booking_lines_ids'], ['price', 'payment_mode']);
                 if($lines > 0 && count($lines)) {
                     foreach($lines as $line) {
-                        $result[$gid] += $line['price'];
+                        if($line['payment_mode'] != 'free') {
+                            $result[$gid] += $line['price'];
+                        }
                     }
                     $result[$gid] = round($result[$gid], 2);
                 }

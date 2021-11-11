@@ -109,16 +109,6 @@
                         "view": "list.default",
                         "domain": ["status", "=", "validated"]
                       }
-                    },
-                    {
-                      "id": "consumptions",
-                      "type": "entry",
-                      "label": "Consumptions (temp))",
-                      "description": "",
-                      "context": {
-                        "entity": "sale\\booking\\Consumption",
-                        "view": "list.default"
-                      }
                     }
                   ]
                 },
@@ -713,6 +703,24 @@
                   "type": "parent",
                   "children": [
                     {
+                      "id": "accounting.payments.statements",
+                      "label": "Settings",
+                      "description": "",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "accounting.payments.statements.all",
+                          "type": "entry",
+                          "label": "Bank Statements",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\pay\\BankStatement",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    },
+                    {
                       "id": "accounting.payments.settings",
                       "label": "Settings",
                       "description": "",
@@ -797,7 +805,7 @@
                   "type": "parent",
                   "children": [
                     {
-                      "id": "calendar.holidays",
+                      "id": "settings.calendar.holidays",
                       "type": "entry",
                       "label": "Holidays",
                       "description": "",

@@ -47,6 +47,16 @@
             "label": "Est réconcilié",
             "description": "Indicateur pour marquer la ligne comme rapprochée d'un paiement.",
             "help": ""
+        },
+        "structured_message": {
+            "label": "VCS",
+            "description": "Communication structurée, si présente.",
+            "help": ""
+        },
+        "message": {
+            "label": "Communication",
+            "description": "Communication complémentaire.",
+            "help": ""
         }
     },
     "view": {

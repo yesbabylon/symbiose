@@ -222,7 +222,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "contracts_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "sort": "desc"
+                                                }
                                             }
                                         ]
                                     }

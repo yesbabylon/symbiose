@@ -1,47 +1,72 @@
 {
-	"name": "Relevé Bancaire",
-	"plural": "Relevés Bancaire",
-	"description": "",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Nom du payeur.",
-			"help": ""
-		},
-		"reference_name": {
-			"label": "Nom de référence",
-			"description": "Référence de la déclaration.",
-			"help": ""
-		},
-		"date": {
-			"label": "Date de réception du relevé",
-			"description": "Date de réception du relevé.",
-			"help": ""
-		},
-		"statement_lines_ids": {
-			"label": "Ligne de déclaration",
-			"description": "Les lignes qui sont affectées à l'instruction.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Relevé Bancaire",
-			"description": "",
-			"layout": {
-				"section.bank_statement": {
-					"label": "Détails"
-				},
-				"section.statment_lines_section": {
-					"label": "Lignes de déclaration"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Relevés Bancaire",
-			"description": "Cette vue est destinée à afficher la liste des relevés Bancaire.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Relevé Bancaire",
+    "plural": "Relevés Bancaire",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du payeur.",
+            "help": ""
+        },
+        "reference_name": {
+            "label": "Nom de référence",
+            "description": "Référence de la déclaration.",
+            "help": ""
+        },
+        "date": {
+            "label": "Date de réception du relevé",
+            "description": "Date de réception du relevé.",
+            "help": ""
+        },
+        "statement_lines_ids": {
+            "label": "Ligne de déclaration",
+            "description": "Les lignes qui sont affectées à l'instruction.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "Code BIC",
+            "description": "Code d'identification de la banque.",
+            "help": ""
+        },
+        "bank_account_number": {
+            "label": "Numéro de compte",
+            "description": "Numéro de compte bancaire.",
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "Numéro IBAN",
+            "description": "Les lignes qui sont affectées à l'instruction.",
+            "help": ""
+        },
+        "old_balance": {
+            "label": "Ancien solde",
+            "description": "Solde avant les transactions.",
+            "help": ""
+        },
+        "new_balance": {
+            "label": "Nouveau solde",
+            "description": "Solde après les transactions.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Relevé Bancaire",
+            "description": "",
+            "layout": {
+                "section.bank_statement": {
+                    "label": "Détails"
+                },
+                "section.statment_lines_section": {
+                    "label": "Lignes de transactions"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Relevés Bancaire",
+            "description": "Cette vue est destinée à afficher la liste des relevés Bancaire.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

@@ -21,7 +21,11 @@
                 "action.signed": {
                     "label": "Marquer comme signé",
                     "description": "Le contrat sera marqué comme siégné. La réservation sera validée dès que l'acompte aura été reçu."
-                }
+                },
+                "action.cancelled": {
+                    "label": "Annuler",
+                    "description": "Le contrat sera marqué comme annulé. Toutes les ressources réservées seront libérées, et des frais d'annulation éventuels seront appliqués."
+                }                
             },
             "layout": {
                 "section.details" : {

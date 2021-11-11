@@ -8,7 +8,7 @@ use sale\pay\BankStatement;
 use sale\pay\BankStatementLine;
 
 list($params, $providers) = announce([
-    'description'   => "Imports the composition (hosts listing) for a given booking. If a composition already exists, it is reset.",
+    'description'   => "Imports a Bank statements file. If statements have already been imported, an error is returned.",
     'params'        => [
         'data' =>  [
             'description'   => 'TXT file holding the data to import as statements.',
@@ -36,7 +36,7 @@ if($user_id <= 0) {
 
 $content = $params['data'];
 
-// get classes listing
+// parse the CODA data
 $json = run('get', 'lodging_payments_coda-parse', ['data' => $content]);
 $data = json_decode($json, true);
 
@@ -58,22 +58,30 @@ foreach($statements as $statement) {
         'bank_account_bic'      => $statement['account']['bic']
     ];
 
-    $bank_statement = BankStatement::create($fields)->first();
+    try {
+        $bank_statement = BankStatement::create($fields)->first();
 
-    $result[] = $bank_statement;
-
-    foreach($statement['transactions'] as $transaction) {
-        $fields = [
-            'bank_statement_id'     => $bank_statement['id'],
-            'date'                  => $statement['date'],
-            'amount'                => $transaction['amount'],
-            'account_holder'        => $transaction['account']['name'],
-            'account_iban'          => $transaction['account']['number'],
-            'message'               => $transaction['message'],
-            'structured_message'    => $transaction['structured_message']
-        ];
-        BankStatementLine::create($fields);
+        $result[] = $bank_statement;
+    
+        foreach($statement['transactions'] as $transaction) {
+            $fields = [
+                'bank_statement_id'     => $bank_statement['id'],
+                'date'                  => $statement['date'],
+                'amount'                => $transaction['amount'],
+                'account_holder'        => $transaction['account']['name'],
+                'account_iban'          => $transaction['account']['number'],
+                'message'               => $transaction['message'],
+                'structured_message'    => $transaction['structured_message']
+            ];
+            BankStatementLine::create($fields);
+        }
+    
     }
+    catch(Exception $e) {
+        // ignore duplicates (not created)
+    }
+
+
 }
 
 $context->httpResponse()
