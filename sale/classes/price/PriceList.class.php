@@ -38,6 +38,19 @@ class PriceList extends Model {
                 'description'       => "Pricelist validity duration, in days."
             ],
 
+            // #memo - once published, a pricelist shouldn't be editable
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',              // list is "under construction"
+                    'published',            // completed and ready to be used
+                    'paused'                // (temporarily) on hold (not to be used)
+                ],
+                'description'       => 'Status of the list.',
+                'default'           => 'pending'
+            ],
+
+            // needed for retrieving prices without checking the dates
             'is_active' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
@@ -46,12 +59,13 @@ class PriceList extends Model {
                 'description'       => "Is the pricelist still applicable?"
             ],
 
+            // #todo - make this field persistent
             'prices_count' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'sale\price\PriceList::getPricesCount',
                 // 'store'             => true,
-                'description'       => "Amount of prices defined in list."
+                'description'       => "Number of prices defined in list."
             ],
 
             'prices_ids' => [

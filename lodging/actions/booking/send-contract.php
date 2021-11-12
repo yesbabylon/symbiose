@@ -9,11 +9,14 @@ use \Swift_Message as Swift_Message;
 use \Swift_Mailer as Swift_Mailer;
 use \Swift_Attachment as Swift_Attachment;
 
+use lodging\sale\booking\Booking;
+use lodging\sale\booking\Contract;
+
 use core\User;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an email with given details with a booking quote as attachment.",
+    'description'	=>	"Send an email with given details with a booking contract as attachment.",
     'params' 		=>	[
         'booking_id' => [
             'description'   => 'Booking related to the sending of the email.',
@@ -68,8 +71,22 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-$result = run('get', 'lodging_booking_print-booking', [
-    'id'        => $params['booking_id'],
+$booking = Booking::id($params['booking_id'])->read(['has_contract', 'contracts_ids' => ['status']])->first();
+
+
+if(!$booking) {
+    throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
+}
+
+if(!$booking['has_contract'] || empty($booking['contracts_ids'])) {
+    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+}
+
+// by convention the most recent contract is listed first (see schema in lodging/classes/sale/booking/Booking.class.php)
+$contract_id = array_shift($booking['contracts_ids']);
+
+$result = run('get', 'lodging_booking_print-contract', [
+    'id'        => $contract_id ,
     'view_id'   =>'print.default',
     'lang'      => $params['lang']
 ]);
@@ -100,6 +117,9 @@ $message->setTo($params['recipient_email'])
 
 $mailer = new Swift_Mailer($transport);
 $result = $mailer->send($message);
+
+
+Contract::id($contract_id)->update(['status' => 'sent']);
 
 $context->httpResponse()
         ->body([])

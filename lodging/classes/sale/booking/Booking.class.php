@@ -43,6 +43,7 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Contract',
                 'foreign_field'     => 'booking_id',
+                'sort'              => 'desc',
                 'description'       => 'List of contacts related to the booking, if any.'
             ],
 

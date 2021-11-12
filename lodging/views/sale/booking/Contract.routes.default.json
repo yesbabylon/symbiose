@@ -8,7 +8,7 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/bookings/contract/object.booking_id",
-            "visible": ["status", "=", "pending"]
+            "visible": ["status", "in", ["pending", "sent"]]
         }              
     ]
 }

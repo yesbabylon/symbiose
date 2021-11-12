@@ -19,8 +19,8 @@ class Product extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\catalog\Product::getFullName',
                 'result_type'       => 'string',
+                'function'          => 'sale\catalog\Product::getFullName',
                 'store'             => true,
                 'description'       => 'The full name of the product (label + sku).'
             ],
