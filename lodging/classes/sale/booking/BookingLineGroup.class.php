@@ -287,16 +287,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             if(count($update_groups_ids)) {
                 self::_updatePriceId($om, $update_groups_ids, $lang);
                 $om->write(__CLASS__, $update_groups_ids, ['vat_rate' => null, 'unit_price' => null ]);
-// reset booking total price
+                // #todo - reset booking total price (if price set to store)
             }
         }
     }
 
     /**
      * Update is_locked field according to selected pack (pack_id).
-     * This is done when pack_id is changed, but can be manually set by the user afterward.
+     * (This is done when pack_id is changed, but can be manually set by the user afterward.)
      *
-     * Since this method is called, we assume that current group has 'has_pack' set to ture,
+     * Since this method is called, we assume that current group has 'has_pack' set to true,
      * and that pack_id relates to a product_model that is a pack.
      */
     public static function onchangePackId($om, $oids, $lang) {
@@ -307,6 +307,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $groups = $om->read(__CLASS__, $oids, [
             'date_from',
             'nb_pers',
+            'is_locked',
             'booking_lines_ids',
             'pack_id.product_model_id.qty_accounting_method',
             'pack_id.product_model_id.has_duration',
@@ -338,12 +339,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
 
         }
-    }
-
-    public static function onchangeRateClassId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
-
-        self::_updatePriceAdapters($om, $oids, $lang);
     }
 
     public static function onchangeDateFrom($om, $oids, $lang) {
@@ -408,9 +403,17 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         }
     }
 
+    public static function onchangeRateClassId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
+
+        self::_updatePriceAdapters($om, $oids, $lang);
+        $om->write(__CLASS__, $oids, ['unit_price' => null]);
+    }
+
     public static function onchangeSojournType($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournType", QN_REPORT_DEBUG);
         self::_updatePriceAdapters($om, $oids, $lang);
+        $om->write(__CLASS__, $oids, ['unit_price' => null]);        
     }
 
     public static function onchangeNbPers($om, $oids, $lang) {
@@ -456,7 +459,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
         $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
-                                                    'booking_lines_ids', 'sojourn_type',
+                                                    'booking_lines_ids', 
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
                                                     'booking_id.center_id.discount_list_category_id']);
@@ -713,7 +716,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
 
     /**
-     * Find and set price list according to group settings.
+     * Find and set price according to group settings.
      * This only applies when group targets a Pack with own price.
      *
      * Should only be called when is_locked == true
@@ -764,7 +767,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             if(!$found) {
                 $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
                 $date = date('Y-m-d', $group['booking_line_group_id.date_from']);
-                trigger_error("QN_DEBUG_ORM::no matching price list found for date {$date}", QN_REPORT_ERROR);
+                trigger_error("QN_DEBUG_ORM::no matching price list found for group at date {$date}", QN_REPORT_ERROR);
             }
         }
     }

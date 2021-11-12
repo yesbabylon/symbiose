@@ -43,11 +43,15 @@
             "description": "Nom de la personne à l'origine du paiement.",
             "help": ""
         },
-        "is_reconciled": {
-            "label": "Est réconcilié",
-            "description": "Indicateur pour marquer la ligne comme rapprochée d'un paiement.",
-            "help": ""
-        },
+        "status": {
+            "label": "Statut",
+            "description": "Indicateur d'assignation de la ligne à un paiement.",
+            "help": "",
+            "selection": {
+                "pending": "à traiter",
+                "reconciled": "traitée"
+            }
+        },        
         "structured_message": {
             "label": "VCS",
             "description": "Communication structurée, si présente.",

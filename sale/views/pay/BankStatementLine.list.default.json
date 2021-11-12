@@ -37,7 +37,12 @@
                 "type": "field",
                 "value": "message",
                 "width": "30%"
-            }
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            }            
         ]
     }
 }

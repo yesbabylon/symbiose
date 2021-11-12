@@ -28,18 +28,23 @@
                                             {
                                                 "type": "field",
                                                 "value": "date_from",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_to",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Category of Price List",
                                                 "value": "price_list_category_id",
-                                                "width": "33%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%"
                                             }
                                         ]
                                     }

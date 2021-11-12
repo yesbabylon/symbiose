@@ -1,0 +1,20 @@
+{
+    "name": "Funding",
+    "description": "",
+    "routes": [
+        {
+            "id": "item.funding.send",
+            "label": "Envoi / Rappel",
+            "description": "",
+            "icon": "email",
+            "route": "/bookings/funding/remind/object.booking_id/object.id"
+        },
+        {
+            "id": "item.funding.invoice",
+            "label": "Créer une facture",
+            "description": "",
+            "icon": "file_copy",
+            "route": "/bookings/funding/invoice/object.booking_id/object.id"
+        }
+    ]
+}

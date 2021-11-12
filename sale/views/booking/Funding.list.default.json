@@ -5,6 +5,11 @@
         "items": [
             {
                 "type": "field",
+                "value": "issue_date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "payment_deadline_id",
                 "width": "20%"
             },
@@ -12,12 +17,7 @@
                 "type": "field",
                 "value": "type",
                 "width": "15%"
-            },            
-            {
-                "type": "field",
-                "value": "issue_date",
-                "width": "20%"
-            },            
+            },
             {
                 "type": "field",
                 "value": "due_amount",

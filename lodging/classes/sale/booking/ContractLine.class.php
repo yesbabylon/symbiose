@@ -15,7 +15,7 @@ class ContractLine extends \sale\booking\ContractLine {
     public static function getColumns() {
 
         return [
-            
+
             'contract_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Contract',
@@ -26,6 +26,13 @@ class ContractLine extends \sale\booking\ContractLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\ContractLineGroup',
                 'description'       => 'The group the line relates to.',
+            ],
+
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\Product',
+                'description'       => 'The product (SKU) the line relates to.',
+                'required'          => true
             ]
 
         ];

@@ -58,11 +58,16 @@ class BankStatementLine extends Model {
                 'description'       => 'Name of the Person whom the payment originates.'
             ],            
 
-            'is_reconciled' => [
-                'type'              => 'boolean',
-                'description'       => 'Flag to mark the line as reconciled with a payment.',
-                'default'           => false
-            ],            
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',              // hasn't been processed yet
+                    'ignored',              // has been processed and ignore
+                    'reconciled'            // has been processed and assigned to a Payment
+                ],
+                'description'       => 'Status of the line.',
+                'default'           => 'pending'
+            ]
 
         ];
     }

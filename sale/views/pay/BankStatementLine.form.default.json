@@ -69,7 +69,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_reconciled",
+                                                "value": "status",
                                                 "width": "50%"
                                             }
                                         ]

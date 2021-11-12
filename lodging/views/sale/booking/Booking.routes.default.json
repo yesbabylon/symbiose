@@ -64,7 +64,8 @@
             "label": "Paiements",
             "description": "",
             "icon": "view_list",
-            "route": "/bookings/payments"
+            "route": "/bookings/payments",
+            "visible": false
         }
     ]
 }

@@ -81,9 +81,9 @@ class ContractLine extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['product_id.display_name']);
+        $res = $om->read(get_called_class(), $oids, ['product_id.label']);
         foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['product_id.display_name']}";
+            $result[$oid] = "{$odata['product_id.label']}";
         }
         return $result;
     }

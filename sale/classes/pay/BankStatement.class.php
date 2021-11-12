@@ -47,6 +47,16 @@ class BankStatement extends Model {
                 'description'       => 'The lines that are assigned to the statement.'
             ],
 
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',                // hasn't been fully processed yet
+                    'processed',              // has been fully processed (all lines either ignored or reconciled) 
+                ],
+                'description'       => 'Status of the line.',
+                'default'           => 'pending'
+            ],
+
             // #memo - CODA statements comes with BBAN numbers for reference account    
             'bank_account_number' => [
                 'type'              => 'string',
