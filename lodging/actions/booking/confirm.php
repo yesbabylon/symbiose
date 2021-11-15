@@ -198,7 +198,12 @@ BookingLine::ids($booking_lines_ids)->update(['is_invoiced' => true]);
     Genarate the payment plan (expected fundings of the booking)
 */
 
-$rate_class_id = $booking['customer_id']['rate_class_id'];
+// default rate class to 'general public'
+$rate_class_id = 4;
+
+if($booking['customer_id']['rate_class_id']) {
+    $rate_class_id = $booking['customer_id']['rate_class_id'];
+}
 
 // look for a payment plan matching the rate_class applied on the booking
 $plans_ids = PaymentPlan::search(['rate_class_id', '=', $rate_class_id])->ids();

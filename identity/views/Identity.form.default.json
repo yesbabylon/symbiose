@@ -102,17 +102,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "title",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "gender",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_of_birth",
-                                                "width": "33%"
+                                                "width": "50%"
                                             }
                                         ]
                                     },

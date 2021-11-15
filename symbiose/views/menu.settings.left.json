@@ -113,21 +113,21 @@
                   ]
                 },
                 {
-                  "id": "customers",
+                  "id": "sales.customers",
                   "label": "Customers",
                   "description": "",
                   "icon": "person",
                   "type": "parent",
                   "children": [
                     {
-                      "id": "customers_types",
+                      "id": "sales.customers.types",
                       "label": "Types",
                       "description": "",
                       "icon": "person_outline",
                       "type": "parent",
                       "children": [
                         {
-                          "id": "all_customers_types",
+                          "id": "sales.customers.types.all",
                           "type": "entry",
                           "label": "All types",
                           "description": "",
@@ -139,14 +139,14 @@
                       ]
                     },
                     {
-                      "id": "customers_natures",
+                      "id": "sales.customers.natures",
                       "label": "Natures",
                       "description": "",
                       "icon": "person_outline",
                       "type": "parent",
                       "children": [
                         {
-                          "id": "all_customers_natures",
+                          "id": "sales.customers.natures.all",
                           "type": "entry",
                           "label": "All natures",
                           "description": "",
@@ -158,7 +158,26 @@
                       ]
                     },
                     {
-                      "id": "new_customer",
+                      "id": "sales.customers.rate_classes",
+                      "label": "Natures",
+                      "description": "",
+                      "icon": "price_check",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "sales.customers.rate_classes.all",
+                          "type": "entry",
+                          "label": "All Classes",
+                          "description": "",
+                          "context": {
+                            "entity": "sale\\customer\\RateClass",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "sales.customers.new_customer",
                       "type": "entry",
                       "label": "New customer",
                       "description": "",
@@ -171,7 +190,7 @@
                       }
                     },
                     {
-                      "id": "all_customers",
+                      "id": "sales.customers.all",
                       "type": "entry",
                       "label": "All customers",
                       "description": "",
