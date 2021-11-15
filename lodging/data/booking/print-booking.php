@@ -61,15 +61,6 @@ if(!file_exists($file)) {
 }
 
 
-$loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
-
-$twig = new TwigEnvironment($loader);
-/**  @var ExtensionInterface **/
-$extension  = new IntlExtension();
-$twig->addExtension($extension);
-
-$template = $twig->load("{$class_path}.{$params['view_id']}.html");
-
 // read booking
 $fields = [
     'name',
@@ -342,8 +333,28 @@ foreach($booking['contacts_ids'] as $contact) {
 /*
     Inject all values into the template
 */
-$html = $template->render($values);
 
+try {
+    $loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
+
+    $twig = new TwigEnvironment($loader);
+    /**  @var ExtensionInterface **/
+    $extension  = new IntlExtension();
+    $twig->addExtension($extension);
+    
+    $template = $twig->load("{$class_path}.{$params['view_id']}.html");
+    
+    
+    $html = $template->render($values);    
+}
+catch(Exception $e) {
+    throw new Exception("template_parsing_issue", QN_ERROR_INVALID_CONFIG);    
+}
+
+
+/*
+    Convert HTML to PDF 
+*/
 
 
 // instantiate and use the dompdf class

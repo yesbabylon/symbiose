@@ -27,7 +27,7 @@
             "description": "",
             "icon": "view_list",
             "route": "/bookings/composition/object.id",
-            "visible": ["status", "<>", "quote"]
+            "visible": ["status", "not in", ["quote", "option"]]
         },
         {
             "id": "item.booking.contract",
@@ -35,7 +35,7 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/bookings/contract/object.id",
-            "visible": ["status", "<>", "quote"]
+            "visible": ["has_contract", "=", true]
         },
         {
             "id": "item.booking.quote",
