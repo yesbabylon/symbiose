@@ -329,14 +329,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // will update price_adapters
             }
             else {
-                // make sure to triggered _updatePriceAdapters
+                // make sure to triggered self::_updatePriceAdapters and BookingLine::_updatePack
                 $updated_fields['nb_pers'] = $group['nb_pers'];
             }
 
             $om->write(__CLASS__, $gid, $updated_fields, $lang);
 
             // notify bookinglines that pack_id has been updated
-            BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
+            // BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang); 
 
         }
     }
@@ -419,7 +419,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onchangeNbPers($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
 
-        self::_updatePriceAdapters($om, $oids, $lang);
+        self::_updatePriceAdapters($om, $oids, $lang); 
 
         $groups = $om->read(__CLASS__, $oids, ['nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids']);
 

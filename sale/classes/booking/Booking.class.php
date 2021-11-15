@@ -141,11 +141,17 @@ class Booking extends Model {
                     'checkedin',                // host is currently occupying the booked rental unit
                     'checkedout',               // host has left the booked rental unit
                     'due_balance',              // customer still has to pay something
-                    'credit_balance',           // a reimbusrsement customer is still pending
+                    'credit_balance',           // a reimbusrsement to customer is still required
                     'balanced'                  // booking is over and balance is cleared
                 ],
                 'description'       => 'Status of the booking.',
                 'default'           => 'quote'
+            ],
+
+            'is_cancelled' => [
+                'type'              => 'boolean',
+                'description'       => "Flag to mark the booking as cancelled (impacts status).",
+                'default'           => false
             ],
 
             'payment_status' => [

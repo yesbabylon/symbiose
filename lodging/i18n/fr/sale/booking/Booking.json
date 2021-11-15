@@ -56,6 +56,9 @@
                 },
                 "action.invoice": {
                     "label": "Facturer le solde"
+                },
+                "action.cancel": {
+                    "label": "Annuler"
                 }
             },
             "routes": {
