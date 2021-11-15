@@ -180,7 +180,7 @@ class BookingLine extends \sale\booking\BookingLine {
         // we might change the product_id but not the quantity : we cannot know if qty is changed during the same operation
         // #memo - in ORM, a check is performed on the onchange methods to prevent handling same event multiple times
 
-        // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)        
+        // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)
         $lines = $om->read(__CLASS__, $oids, [
             'qty',
             'booking_line_group_id.nb_pers',
@@ -270,11 +270,13 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
                 }
                 else if($rental_unit_assignement == 'category') {
+                    trigger_error("QN_DEBUG_ORM::assignment by category", QN_REPORT_DEBUG);
                     // #todo
                     $rental_unit_category_id = $product_models[$line['product_id.product_model_id']]['rental_unit_category_id'];
                     // rental_unit = this.available_rental_units.find(unit => (unit.category_id && unit.category_id.id == product.product_model_id.rental_unit_category_id.id));
                 }
                 else if($rental_unit_assignement == 'capacity') {
+                    trigger_error("QN_DEBUG_ORM::assignment by capacity", QN_REPORT_DEBUG);                    
                     // find available rental units
 
                     // retrieve list of possible rental_units based on center_id having max nb_pers (we try to assign people of a same group in a same accomodation)
@@ -472,7 +474,7 @@ class BookingLine extends \sale\booking\BookingLine {
         // map of consumptions ids for each booking_line_id
         $consumptions_ids = [];
         foreach($consumptions as $consumption) {
-            
+
             $cid = $om->create('lodging\sale\booking\Consumption', $consumption, $lang);
             if($cid > 0) {
                 $booking_line_id = $consumption['booking_line_id'];

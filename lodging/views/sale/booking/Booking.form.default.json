@@ -32,7 +32,7 @@
             "description": "The host has arrived: the rental units will be marked as occupied.",
             "controller": "lodging_booking_checkin",
             "confirm": true,
-            "visible": ["status", "=", "validated"]
+            "visible": ["status", "in", ["confirmed", "validated"]]
         },
         {
             "id": "action.checkout",
@@ -49,6 +49,13 @@
             "controller": "lodging_booking_invoice",
             "confirm": true,
             "visible": ["status", "=", "checkedout"]
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "The booking will be cancelled and rental units will be freed. Possible cancellation fee will be applied.",
+            "controller": "lodging_booking_cancel",
+            "confirm": true
         }
     ],
     "layout": {
