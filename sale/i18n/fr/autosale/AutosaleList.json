@@ -1,6 +1,6 @@
 {
-	"name": "Liste de catégorie de vente automatique",
-	"plural": "Listes de catégories de vente automatique",
+	"name": "Liste de produits automatiques",
+	"plural": "Listes de produits automatiques",
 	"description": "",
 	"model": {
 		"name": {
@@ -9,23 +9,23 @@
 			"help": ""
 		},
 		"date_from": {
-			"label": "Dater de",
+			"label": "Du",
 			"description": "Date (incluse) de début de la saison.",
 			"help": ""
 		},
 		"date_to": {
-			"label": "Dater à",
+			"label": "Au",
 			"description": "Date (exclue) à laquelle la saison se termine.",
 			"help": ""
 		},
 		"autosale_lines_ids": {
-			"label": "Lignes de vente automatique",
-			"description": "Les lignes qui s'appliquent à la liste.",
+			"label": "Produits automatiques",
+			"description": "Les produits relatifs à la liste.",
 			"help": ""
 		},
-		"autosale_category_id": {
-			"label": "Catégorie de vente automatique",
-			"description": "La catégorie de vente automatique à laquelle appartient la liste.",
+		"autosale_list_category_id": {
+			"label": "Catégorie",
+			"description": "La catégorie de liste de produits automatiques de la liste.",
 			"help": ""
 		}
 	},
@@ -38,7 +38,7 @@
 					"label": "Détails"
 				},
 				"section.autosale_lines_section": {
-					"label": "Lignes de vente automatique"
+					"label": "Produits automatiques"
 				}
 			}
 		},

@@ -13,15 +13,28 @@ class AutosaleLine extends Model {
 
         return [
 
+            'name' => [
+                'type'              => 'alias',
+                'alias'             => 'description'
+            ],
+
             'description' => [
                 'type'              => 'string',
                 'description'       => "Reason of the automatic sale.",
                 'multilang'         => true
             ],
 
+            'has_own_qty' => [
+                'type'              => 'boolean',
+                'description'       => "Item quantity is independent from the booking context.",
+                'default'           => false
+            ],
+
             'qty' => [
                 'type'              => 'integer',
-                'description'       => "Quantity of products that is sold automatically."
+                'description'       => "Quantity of products that is sold automatically.",
+                'visible'           => ['has_own_qty', '=', true],
+                'default'           => 0
             ],
 
             'product_id' => [

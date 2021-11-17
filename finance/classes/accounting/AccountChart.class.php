@@ -31,6 +31,14 @@ class AccountChart extends Model {
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The organisation the chart belongs to.",
                 'required'          => true
+            ],
+
+            'account_chart_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'foreign_field'     => 'account_chart_id',
+                'description'       => 'Account lines that belong to the chart.',
+                'ondetach'          => 'delete'
             ]
 
         ];

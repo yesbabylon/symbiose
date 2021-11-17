@@ -1,52 +1,57 @@
 {
-	"name": "Ligne de catégorie de vente automatique",
-	"plural": "Lignes de catégories de vente automatique",
-	"description": "",
-	"model": {
-		"description": {
-			"label": "Description",
-			"description": "Raison de la vente automatique.",
-			"help": ""
-		},
-		"qty": {
-			"label": "Quantité",
-			"description": "Quantité de produits vendus automatiquement.",
-			"help": ""
-		},
-		"product_id": {
-			"label": "Produit",
-			"description": "Le produit visé par la ligne.",
-			"help": ""
-		},
-		"autosale_list_id": {
-			"label": "Liste de vente automatique",
-			"description": "La liste à laquelle appartient la ligne.",
-			"help": ""
-		},
-		"conditions_ids": {
-			"label": "Conditions",
-			"description": "Les conditions qui s'appliquent à l'auto-vente.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Ligne de catégorie de vente automatique",
-			"description": "",
-			"layout": {
-				"section.autosale_line_section": {
-					"label": "Détails"
-				},
-				"section.conditions_section": {
-					"label": "Conditions"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Lignes de catégorie de vente automatique",
-			"description": "Cette vue est destinée à afficher les lignes de vente automatique.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Produit automatique",
+    "plural": "Produits automatiques",
+    "description": "",
+    "model": {
+        "description": {
+            "label": "Description",
+            "description": "Raison de la vente automatique.",
+            "help": ""
+        },		
+        "has_own_qty": {
+            "label": "Propre quantité ?",
+            "description": "La quantité du produit est-elle indépentante du contexte ?",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité de produits vendus automatiquement.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit visé par la ligne.",
+            "help": ""
+        },
+        "autosale_list_id": {
+            "label": "Liste de vente automatique",
+            "description": "La liste à laquelle appartient la ligne.",
+            "help": ""
+        },
+        "conditions_ids": {
+            "label": "Conditions",
+            "description": "Les conditions requises pour la vente automatique.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Produit automatique",
+            "description": "",
+            "layout": {
+                "section.autosale_line_section": {
+                    "label": "Détails"
+                },
+                "section.conditions_section": {
+                    "label": "Conditions"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Produits automatiques",
+            "description": "Cette vue est destinée à afficher les produits automatique.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

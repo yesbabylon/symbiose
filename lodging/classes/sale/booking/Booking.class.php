@@ -47,6 +47,13 @@ class Booking extends \sale\booking\Booking {
                 'description'       => 'List of contacts related to the booking, if any.'
             ],
 
+            'consumptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Consumption',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Consumptions related to the booking.'
+            ],
+
             'booking_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -168,6 +175,73 @@ class Booking extends \sale\booking\Booking {
                     BookingLine::_updatePriceId($om, $booking_lines_ids, $lang);
                 }
             }
+        }
+    }
+
+
+    /**
+     * Something has changed in the booking (number of nights or persons; customer change; ...)
+     */
+    public static function _updateAutosaleProducts($om, $oids, $lang) {
+
+        /*
+            remove groups related to autosales that already exist
+        */
+        $bookings = $om->read(__CLASS__, $oids, ['customer_id.count_booking_12', 'booking_lines_groups_ids']);
+
+        $groups_ids_to_delete = [];
+        foreach($bookings as $bid => $booking) {
+            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_autosale']);
+            foreach($booking_lines_groups as $gid => $group) {
+                if($group['is_autosale']) {
+                    $groups_ids_to_delete[] = $gid;
+                }
+            }
+        }
+        $om->remove('lodging\sale\booking\BookingLineGroup', $groups_ids_to_delete, true);
+
+
+        //  groups to create (by autosale)
+        /*
+            label
+            product_id
+            qty
+        */
+
+        foreach($bookings as $bid => $booking) {
+            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['sojourn_type']);
+
+            foreach($booking_lines_groups as $gid => $group) {
+                /*
+                    Find the first Autosale List that matches the booking dates
+                */
+                $autosale_list_category_id = ($group['sojourn_type'] == 'GA')?1:2;
+                $autosale_lists_ids = $om->search('sale\autosale\AutosaleList', [
+                    ['autosale_list_category_id', '=', $autosale_list_category_id],
+                    ['date_from', '<=', $group['date_from']],
+                    ['date_to', '>=', $group['date_from']]
+                ]);
+
+                $autosale_lists = $om->read('sale\autosale\AutosaleList', $autosale_lists_ids, ['id', 'autosale_lines_ids']);
+                $autosale_list_id = 0;
+                $autosale_list = null;
+                if($autosale_lists > 0 && count($autosale_lists)) {
+                    // use first match (there should always be only one or zero)
+                    $autosale_list = array_pop($autosale_lists);
+                    $autosale_list_id = $autosale_list['id'];
+                    trigger_error("QN_DEBUG_ORM:: match with autosale List {$autosale_list_id}", QN_REPORT_DEBUG);
+                }
+                else {
+                    trigger_error("QN_DEBUG_ORM:: no autosale List found", QN_REPORT_DEBUG);
+                }
+                /*
+                    Search for matching Autosale products within the found List
+                */
+                if($autosale_list_id) {
+                }
+            }
+
+
         }
     }
 

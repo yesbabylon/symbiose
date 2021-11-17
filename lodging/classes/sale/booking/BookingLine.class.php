@@ -191,14 +191,14 @@ class BookingLine extends \sale\booking\BookingLine {
         foreach($lines as $lid => $line) {
             $qty = $line['qty'];
             if($line['qty_accounting_method'] == 'accomodation') {
-                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the sojourn
                 // which should have been stored in the nb_nights field
                 $qty = $line['booking_line_group_id.nb_nights'];
             }
             else if($line['qty_accounting_method'] == 'person') {
-                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                // lines having a product 'by person' have a qty assigned to the 'duration' x 'nb_pers' of the sojourn
                 // which should have been stored in the nb_pers field
-                $qty = $line['booking_line_group_id.nb_pers']  * $line['booking_line_group_id.nb_nights'];
+                $qty = $line['booking_line_group_id.nb_pers']  * max(1, $line['booking_line_group_id.nb_nights']);
             }
 
             if($qty != $line['qty'] || $line['qty_accounting_method'] == 'accomodation') {
@@ -374,14 +374,14 @@ class BookingLine extends \sale\booking\BookingLine {
                 //default quantity (applicable for qty_accounting_method == 'unit' [with has_ own_qty set to false])
                 $qty = 1;
                 if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                    // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                    // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the sojourn
                     // which should have been stored in the nb_nights field
                     $qty = $line['booking_line_group_id.nb_nights'];
                 }
                 else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                    // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the product_model (cannot be changewhile group is_locked)
+                    // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the sojourn
                     // which should have been stored in the nb_pers field
-                    $qty = $line['booking_line_group_id.nb_pers']  * $line['booking_line_group_id.nb_nights'];
+                    $qty = $line['booking_line_group_id.nb_pers']  * max(1, $line['booking_line_group_id.nb_nights']);
                 }
 
                 // will trigger rental units assignement
@@ -607,14 +607,14 @@ class BookingLine extends \sale\booking\BookingLine {
                             if($is_accomodation) {
                                 // if day is not the arrival day
                                 if($i > 0) {
-                                    $c_schedule_from = 0;         // midnight same day
+                                    $c_schedule_from = 0;               // midnight same day
                                 }
 
-                                if($i == $nb_nights) {          // last day
+                                if($i == $nb_nights) {                  // last day
                                     $c_schedule_to = $schedule_to;
                                 }
                                 else {
-                                    $c_schedule_to = 24 * 3600;       // midnight next day
+                                    $c_schedule_to = 24 * 3600;         // midnight next day
                                 }
 
                                 // pick amongst the attached rental_units

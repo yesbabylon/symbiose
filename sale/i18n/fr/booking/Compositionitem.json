@@ -48,11 +48,11 @@
             "description": "Numéro de téléphone du contact, le cas échéant.",
             "help": ""
         },
-		"address": {
-			"label": "Adresse",
-			"description": "Adresse du contact.",
-			"help": ""
-		},
+        "address": {
+            "label": "Adresse",
+            "description": "Adresse du contact.",
+            "help": ""
+        },
         "country": {
             "label": "Nationalité",
             "description": "Nationalité du contact.",

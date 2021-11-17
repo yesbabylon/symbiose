@@ -19,19 +19,14 @@
                                                 "value": "name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "header": true,
+                                                    "readonly": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Quantity",
-                                                "value": "qty",
-                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -43,6 +38,18 @@
                                                 "type": "field",
                                                 "label": "Autosale List",
                                                 "value": "autosale_list_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Own qty ?",
+                                                "value": "has_own_qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Quantity",
+                                                "value": "qty",
                                                 "width": "50%"
                                             }
                                         ]

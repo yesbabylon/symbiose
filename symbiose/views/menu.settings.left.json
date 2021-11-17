@@ -412,7 +412,7 @@
                           "label": "Categories",
                           "description": "",
                           "context": {
-                            "entity": "sale\\autosale\\AutosaleCategory",
+                            "entity": "sale\\autosale\\AutosaleListCategory",
                             "view": "list.default"
                           }
                         }
@@ -683,7 +683,7 @@
                   "type": "parent",
                   "children": [
                     {
-                      "id": "vat_rules",
+                      "id": "accounting.settings.vat_rules",
                       "type": "entry",
                       "label": "VAT rules",
                       "description": "",
@@ -693,12 +693,22 @@
                       }
                     },
                     {
-                      "id": "accounting_rules",
+                      "id": "accounting.settings.accounting_rules",
                       "type": "entry",
                       "label": "Accounting rules",
                       "description": "",
                       "context": {
                         "entity": "lodging\\finance\\accounting\\AccountingRule",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "accounting.settings.account_chart",
+                      "type": "entry",
+                      "label": "Chart of accounts",
+                      "description": "",
+                      "context": {
+                        "entity": "finance\\accounting\\AccountChart",
                         "view": "list.default"
                       }
                     }

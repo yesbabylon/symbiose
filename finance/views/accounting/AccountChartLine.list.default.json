@@ -5,17 +5,12 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "value": "code",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "account_chart_id",
+                "value": "name",
                 "width": "20%"
             },
             {
@@ -32,7 +27,13 @@
                 "type": "field",
                 "value": "type",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_visible",
+                "width": "10%"
             }
+
         ]
     }
 }

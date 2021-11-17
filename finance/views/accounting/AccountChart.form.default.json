@@ -32,7 +32,27 @@
                                 ]
                             }
                         ]
-                    }                    
+                    },
+                    {
+                        "label": "Accounts",
+                        "id": "section.account_chart_lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "account_chart_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]

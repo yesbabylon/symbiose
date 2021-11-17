@@ -3,7 +3,7 @@
     "description": "",
     "routes": [
         {
-            "id": "item.booking.contract",
+            "id": "item.booking.file",
             "label": "Fiche de réservation",
             "description": "",
             "icon": "library_books",

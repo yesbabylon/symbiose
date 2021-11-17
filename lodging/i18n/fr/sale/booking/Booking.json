@@ -35,7 +35,7 @@
             "description": "Formulaire d'édition d'une réservation",
             "actions": {
                 "action.quote": {
-                    "label": "Repasser en cotation",
+                    "label": "Repasser en devis",
                     "description": "Les unités locatives ne seront plus réservées et pourront être occupées pour d'autres réservation. Les services liées à la réservation pourront à nouveau être modifiés."
                 },
                 "action.option": {
@@ -55,10 +55,12 @@
                     "description": "L'hôte quitte l'hébergement: les unités locatives seront marquées pour le nettoyage."
                 },
                 "action.invoice": {
-                    "label": "Facturer le solde"
+                    "label": "Facturer le solde",
+                    "description": "L'hôte a quitté l'hébergement et l'unité locative a été vérifiée; la facture de fin de séjour sera émise."
                 },
                 "action.cancel": {
-                    "label": "Annuler"
+                    "label": "Annuler",
+                    "description": "La réservation sera annulée et les unités locatives seront libérées. Les éventuels frais d'annulation seront appliqués."
                 }
             },
             "routes": {

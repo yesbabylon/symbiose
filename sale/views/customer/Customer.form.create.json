@@ -32,7 +32,10 @@
                                                 "type": "field",
                                                 "label": "Customer Nature",
                                                 "value": "customer_nature_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "limit": 40
+                                                }
                                             }                                            
                                         ]
                                     }

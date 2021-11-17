@@ -49,11 +49,18 @@ class Customer extends \identity\Partner {
                 'description'       => 'Force relationship to Customer'
             ],
 
+            'count_booking_12' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'sale\customer\Customer::getCountBooking12',
+                'description'       => 'Number of bookings made during last 12 months (one year).'
+            ],
+
             'count_booking_24' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'sale\customer\Customer::getCountBooking24',
-                'description'       => 'Number of bookings made during last 24 months.'
+                'description'       => 'Number of bookings made during last 24 months (2 years).'
             ],
 
             'address' => [
@@ -102,6 +109,20 @@ class Customer extends \identity\Partner {
         return $result;
     }
 
+    /**
+     * Computes the number of bookings made by the customer during the last 12 months.
+     * 
+     */
+    public static function getCountBooking12($om, $oids, $lang) {
+        $result = [];
+        $time = time();
+        $from = mktime(0, 0, 0, date('m', $time)-12, date('d', $time), date('Y', $time));
+        foreach($oids as $oid) {
+            $bookings_ids = $om->search('sale\booking\Booking', [ ['customer_id', '=', $oid], ['created', '>=', $from], ['is_cancelled', '=', false] ]);
+            $result[$oid] = count($bookings_ids);
+        }
+        return $result;
+    }
 
     /**
      * Computes the number of bookings made by the customer during the last two years.
@@ -112,7 +133,7 @@ class Customer extends \identity\Partner {
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-24, date('d', $time), date('Y', $time));
         foreach($oids as $oid) {
-            $bookings_ids = $om->search('sale\booking\Booking', [ ['customer_id', '=', $oid], ['created', '>=', $from], ['status', '=', 'validated'] ]);
+            $bookings_ids = $om->search('sale\booking\Booking', [ ['customer_id', '=', $oid], ['created', '>=', $from], ['is_cancelled', '=', false] ]);
             $result[$oid] = count($bookings_ids);
         }
         return $result;

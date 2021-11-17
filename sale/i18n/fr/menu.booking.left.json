@@ -4,7 +4,7 @@
 		"item.bookings": {"label": "Réservations", "help": ""},
 		"item.new_booking": {"label": "Nouvelle réservation", "help": ""},
 		"item.all_booking": {"label": "Toutes les réservations", "help": ""},
-		"item.quotes": {"label": "Cotations", "help": ""},		
+		"item.quotes": {"label": "Devis", "help": ""},		
 		"item.options": {"label": "Options", "help": ""},
 		"item.validated": {"label": "Réservations validées", "help": ""},
 		"item.customers": {"label": "Clients", "help": ""},
