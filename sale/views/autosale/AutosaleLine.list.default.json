@@ -5,13 +5,7 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Quantity",
-                "value": "qty",
+                "value": "description",
                 "width": "20%"
             },
             {
@@ -22,8 +16,14 @@
             },
             {
                 "type": "field",
-                "label": "Autosale List",
-                "value": "autosale_list_id",
+                "label": "Own qty ?",
+                "value": "has_own_qty",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
                 "width": "20%"
             }
         ]

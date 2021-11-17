@@ -103,6 +103,8 @@ class Partner extends Model {
 
     public static function onchangeIdentity($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, [ 'name' => null ], $lang);
+        // force immediate re-computing
+        $om->read(get_called_class(), $oids, [ 'name' ], $lang);        
     }
 
     public static function getDisplayName($om, $oids, $lang) {

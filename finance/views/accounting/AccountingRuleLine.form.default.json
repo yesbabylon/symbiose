@@ -19,11 +19,6 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "account",
-                                                "width": "50%"                                                
                                             }
                                         ]
                                     },
@@ -32,8 +27,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "analytic_section_id",
-                                                "width": "50%"
+                                                "value": "account",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",

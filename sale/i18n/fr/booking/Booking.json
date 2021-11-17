@@ -67,7 +67,7 @@
             "label": "Statut",
             "description": "Statut de la réservation.",
             "selection": {
-                "quote": "cotation",
+                "quote": "devis",
                 "option": "option",
                 "confirmed": "confirmée",                
                 "validated": "validée",

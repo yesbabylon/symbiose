@@ -59,6 +59,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'visible'           => ['has_pack', '=', true]
             ],
 
+            'is_autosale' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group relate to an auto sale product?',
+                'default'           => false
+            ],
+
             'is_locked' => [
                 'type'              => 'boolean',
                 'description'       => 'Are modifications disabled for the group?',
@@ -329,7 +335,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // will update price_adapters
             }
             else {
-                // make sure to triggered self::_updatePriceAdapters and BookingLine::_updatePack
+                // always update nb_pers
+                // to make sure to triggered self::_updatePriceAdapters and BookingLine::_updatePack
                 $updated_fields['nb_pers'] = $group['nb_pers'];
             }
 
@@ -434,7 +441,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['product_id.product_model_id.qty_accounting_method']);
                     foreach($lines as $lid => $line) {
                         if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * $group['nb_nights']]);
+                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * max(1, $group['nb_nights'])]);
                         }
                     }
                 }

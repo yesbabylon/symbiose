@@ -12,7 +12,12 @@
             "label": "Organisation",
             "description": "L'organisation à laquelle appartient l'organigramme.",
             "help": ""
-        }
+        },
+        "account_chart_lines_ids": {
+            "label": "Comptes",
+            "description": "Comptes relatifs au plan comptable.",
+            "help": ""
+        }        
     },
     "view": {
         "form.default": {
@@ -21,6 +26,9 @@
             "layout": {
                 "section.accounting_rules_section": {
                     "label": "Détails"
+                },
+                "section.account_chart_lines": {
+                    "label": "Comptes"
                 }
             }
         },

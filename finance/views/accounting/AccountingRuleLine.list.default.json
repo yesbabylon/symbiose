@@ -15,7 +15,12 @@
             },
             {
                 "type": "field",
-                "value": "analytic_section_id",
+                "value": "share",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "accounting_rule_id",
                 "width": "20%"
             }
         ]

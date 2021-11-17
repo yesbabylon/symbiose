@@ -34,8 +34,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Autosale Category",
-                                                "value": "autosale_category_id",
+                                                "label": "List Category",
+                                                "value": "autosale_list_category_id",
                                                 "width": "50%"
                                             }
                                         ]
