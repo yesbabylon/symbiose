@@ -113,16 +113,27 @@ class Booking extends \sale\booking\Booking {
                 continue;
             }
 
-            $settings = $om->read('core\SettingValue', $settings_ids, ['value']);
-            if($settings < 0 || count($settings) != 1) {
-                // unexpected error : misconfiguration (no value for setting)
+            // by default settings values are sorted on user_id : first value is the default one
+            $settings = $om->read('core\Setting', $settings_ids, ['setting_values_ids']);
+            if($settings < 0 || !count($settings)) {
+                // unexpected error : misconfiguration (setting is missing)
                 $result[$oid] = 0;
                 continue;
             }
 
             $setting = array_pop($settings);
-            $sequence = (int) $setting['value'];
-            $om->write('core\SettingValue', $settings_ids, ['value' => $sequence + 1]);
+            $setting_values = $om->read('core\SettingValue', $setting['setting_values_ids'], ['value']);
+            if($setting_values < 0 || !count($setting_values)) {
+                // unexpected error : misconfiguration (no value for setting)
+                $result[$oid] = 0;
+                continue;
+            }
+
+            $setting_value_id = array_keys($setting_values)[0];
+            $setting_value = array_values($setting_values)[0];
+
+            $sequence = (int) $setting_value['value'];
+            $om->write('core\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
 
             $result[$oid] = ((string) $booking['center_id.group_code']) . ((string) $sequence);
 

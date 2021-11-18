@@ -1,6 +1,6 @@
 {
-	"name": "Facture d'achat",
-	"plural": "Factures d'achat",
+	"name": "Facture",
+	"plural": "Factures",
 	"description": "",
 	"model": {
 		"booking_id": {
@@ -11,13 +11,13 @@
 	},
 	"view": {
 		"form.default": {
-			"name": "Facture d'achat",
+			"name": "Facture",
 			"description": "Une facture est un document juridique qui se rapporte à une réservation et fait partie du système comptable.",
 			"layout": {}
 		},
 		"list.default": {
-			"name": "Factures d'achat",
-			"description": "Cette vue est destinée à afficher la liste des facture d'achat.",
+			"name": "Factures",
+			"description": "Cette vue est destinée à afficher la liste des facture.",
 			"layout": {}
 		}
 	},

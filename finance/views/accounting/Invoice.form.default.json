@@ -14,21 +14,18 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
+                                                "value": "number",
+                                                "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "header": true,
+                                                    "readonly": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "status",
+                                                "label": "Partner",
+                                                "value": "partner_id",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "number",
-                                                "width": "50%"                                                
                                             },
                                             {
                                                 "type": "field",
@@ -37,14 +34,48 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date",
+                                                "value": "status",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
+                                                "label": "Organisation",
+                                                "value": "organisation_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }                                    
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "invoice_lines_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

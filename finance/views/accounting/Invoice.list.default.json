@@ -4,22 +4,27 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "name",
                 "width": "20%"
-            }, 
+            },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "status",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "is_paid",
                 "width": "20%"
             },
             {
-                "type": "field",            
+                "type": "field",
                 "value": "date",
                 "width": "20%"
             }
