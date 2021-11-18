@@ -1,54 +1,59 @@
 {
-	"name": "Facture",
-	"plural": "Factures",
-	"description": "Une facture est un document juridique délivré à un acheteur, qui se rapporte à une vente, et fait partie du système comptable.",
-	"model": {
-		"name": {
-			"label": "Identification",
-			"description": "Nom de la facture.",
-			"help": ""
-		},
-		"status": {
-			"label": "Statut",
-			"description": "La situation à un moment donné au cours d'un processus.",
-			"selection": {
-				"proforma": "pro forma",
-				"invoice": "facture d'achat"
-			},
-			"help": ""
-		},
-		"number": {
-			"label": "Numéro de la facture",
-			"description": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation).",
-			"help": ""
-		},
-		"is_paid": {
-			"label": "Payée",
-			"description": "Indicateur pour marquer la facture comme entièrement payée.",
-			"help": ""
-		},
-		"date": {
-			"label": "Date",
-			"description": "Date de création de la facture.",
-			"help": ""
-		},
-		"partner_id": {
-			"label": "Partenaire",
-			"description": "Organisation responsable de payer les biens et services liés à la vente.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Facture",
-			"description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Factures",
-			"description": "Cette vue est destinée à afficher les factures.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Facture",
+    "plural": "Factures",
+    "description": "Une facture est un document juridique délivré à un acheteur, qui se rapporte à une vente, et fait partie du système comptable.",
+    "model": {
+        "name": {
+            "label": "Numéro",
+            "description": "Identification de la facture.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "La situation à un moment donné au cours d'un processus.",
+            "selection": {
+                "proforma": "pro forma",
+                "invoice": "facture"
+            },
+            "help": ""
+        },
+        "number": {
+            "label": "Numéro de la facture",
+            "description": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation).",
+            "help": ""
+        },
+        "is_paid": {
+            "label": "Payée",
+            "description": "Indicateur pour marquer la facture comme entièrement payée.",
+            "help": ""
+        },
+        "date": {
+            "label": "Date",
+            "description": "Date de création de la facture.",
+            "help": ""
+        },
+        "partner_id": {
+            "label": "Partenaire",
+            "description": "Organisation responsable de payer les biens et services liés à la vente.",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation émettrice",
+            "description": "Organisation à l'origine de la facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "Cette vue est destinée à afficher les factures.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

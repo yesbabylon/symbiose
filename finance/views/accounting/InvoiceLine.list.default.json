@@ -5,14 +5,8 @@
         "items": [
             {
                 "type": "field",
-                "label": "Invoice Line Group",
+                "label": "Group",
                 "value": "invoice_line_group_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Invoice",
-                "value": "invoice_id",
                 "width": "20%"
             },
             {
@@ -31,7 +25,12 @@
                 "label": "Quantity",
                 "value": "qty",
                 "width": "20%"
-            }
+            },
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "width": "25%"
+            }            
         ]
     }
 }
