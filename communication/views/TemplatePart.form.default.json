@@ -1,6 +1,6 @@
 {
-    "name": "Template",
-    "description": "Templates are used in communication and contains multiple categories.",
+    "name": "Template Part",
+    "description": "Template parts can be used to populate communication messages.",
     "layout": {
         "groups": [
             {
@@ -14,7 +14,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "code",
+                                                "value": "name",
                                                 "width": "50%",
                                                 "widget": {
                                                     "header": true
@@ -22,18 +22,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "category_id",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type",
+                                                "value": "template_id",
                                                 "width": "25%"
                                             }
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
                     }
                 ]
@@ -41,8 +36,8 @@
             {
                 "sections": [
                     {
-                        "id":  "template.parts",
-                        "label": "Parts",
+                        "id":  "template.content",
+                        "label": "Content",
                         "rows": [
                             {
                                 "columns": [
@@ -51,27 +46,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "parts_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id":  "template.attachments",
-                        "label": "Attachments",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "attachments_ids",
+                                                "value": "value",
                                                 "width": "100%"
                                             }
                                         ]

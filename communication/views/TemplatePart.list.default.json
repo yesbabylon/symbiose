@@ -1,0 +1,21 @@
+{
+    "name": "Template Parts",
+    "description": "This view is intented for displaying the list of template parts.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Template",
+                "value": "template_id",
+                "width": "20%",
+                "sortable": true                
+            }            
+        ]
+    }
+}
