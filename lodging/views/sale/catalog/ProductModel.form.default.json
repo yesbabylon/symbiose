@@ -35,42 +35,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "can_sell",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_pack",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_own_price",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_meal",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_accomodation",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "qty_accounting_method",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "capacity",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "stat_section_id",
+                                                "value": "can_sell",
                                                 "width": "50%"
                                             }
                                         ]
@@ -81,6 +51,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "consumable_type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "stat_section_id",
                                                 "width": "50%"
                                             },
                                             {
@@ -107,31 +82,80 @@
                                                 "type": "field",
                                                 "value": "schedule_offset",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_accomodation",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "capacity",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "rental_unit_assignement",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "rental_unit_category_id",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "rental_unit_id",
-                                                "width": "50%"
-                                            },
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_meal",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "has_duration",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "duration",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -146,17 +170,34 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
+                                                "id": "description.delivery",
+                                                "type": "label",
+                                                "value": "Delivery",
+                                                "width": "50%"
+                                            },
+                                            {                                                
                                                 "type": "field",
                                                 "value": "description_delivery",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "id": "description.receipt",                                                
+                                                "type": "label",
+                                                "value": "Receipt",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description_receipt",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }

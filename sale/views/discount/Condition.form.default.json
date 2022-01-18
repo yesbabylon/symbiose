@@ -38,7 +38,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "discount_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "visible": false
                                             }
                                         ]
                                     }

@@ -80,7 +80,7 @@
         "organisation.organisations": {"label": "Organisations", "help": ""},
         "organisation.centers": {"label": "Centres", "help": ""},
         "organisation.centers.centers": {"label": "Liste des centres", "help": ""},
-        "organisation.centers.categories": {"label": "Catégories", "help": ""},
+        "organisation.centers.categories": {"label": "Catégories de centres", "help": ""},
         "organisation.centers.rental_units": {"label": "Unités locatives", "help": ""},
         "organisation.centers.rental_units_categories": {"label": "Catégories d'unités", "help": ""}
     }

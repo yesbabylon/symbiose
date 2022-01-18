@@ -19,6 +19,13 @@ class BookingLine extends Model {
 
     public static function getColumns() {
         return [
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Line name relates to its product.',
+                'function'          => 'sale\booking\BookingLine::getDisplayName',
+                'store'             => true
+            ],
 
             'booking_line_group_id' => [
                 'type'              => 'many2one',
@@ -140,6 +147,18 @@ class BookingLine extends Model {
     }
 
 
+    /**
+     * For BookingLines the display name is the name of the product it relates to.
+     * 
+     */
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $res = $om->read(get_called_class(), $oids, ['product_id.name'], $lang);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = $odata['product_id.name'];
+        }
+        return $result;
+    }
 
     public static function onchangeUnitPrice($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['price' => null]);

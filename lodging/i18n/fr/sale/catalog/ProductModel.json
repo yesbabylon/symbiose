@@ -29,7 +29,7 @@
             "help": ""
         },
         "can_sell": {
-            "label": "Peut être vendu",
+            "label": "Peut être vendu ou loué",
             "description": "Ce produit peut-il être vendu ?",
             "help": ""
         },
@@ -171,8 +171,8 @@
             "help": ""
         },
         "is_accomodation": {
-            "label": "Est un logement",
-            "description": "Le produit est-il un logement ?",
+            "label": "Est une unité locative",
+            "description": "Le produit est-il un logement ou une unité locative ?",
             "help": ""
         },
         "rental_unit_category_id": {
@@ -205,6 +205,12 @@
                 },
                 "section.pack_lines": {
                     "label": "Lignes de pack"
+                },
+                "description.delivery": {
+                    "label": "Pour les livraisons"
+                },
+                "description.receipt": {
+                    "label": "Pour les réceptions"
                 }
             }
         },

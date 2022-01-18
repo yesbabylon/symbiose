@@ -65,7 +65,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'integer',
                 'description'       => 'Duration of the service (in days), used for planning.',
                 'default'           => 1,
-                'visible'           => [ ['qty_accounting_method', '=', 'person'], ['has_duration', '=', true] ]
+                'visible'           => ['has_duration', '=', true]
             ],
 
             'capacity' => [

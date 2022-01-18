@@ -33,6 +33,11 @@
             "description": "Catégorie de liste de remise utilisée par le centre.",
             "help": ""
         },
+        "autosale_list_category_id": {
+            "label": "Catégorie de produits automatiques",
+            "description": "Catégorie de produits automatiques utilisée par le centre.",
+            "help": ""
+        },
         "season_category_id": {
             "label": "Catégorie de saison",
             "description": "Catégorie de saison utilisée par le centre.",

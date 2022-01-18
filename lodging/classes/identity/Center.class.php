@@ -125,7 +125,7 @@ class Center extends \identity\Establishment {
 
     public function getUnique() {
         return [
-            ['code'],
+            ['group_code'],
             ['code_alpha']
         ];
     }

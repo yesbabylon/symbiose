@@ -61,7 +61,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             'is_autosale' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the group relate to an auto sale product?',
+                'description'       => 'Does the group relate to autosale products?',
                 'default'           => false
             ],
 
@@ -354,10 +354,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['has_pack', 'nb_nights', 'booking_lines_ids']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'booking_lines_ids']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
+                // force parent booking to recompute date_from
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
                 // notify booking lines that price_id has to be updated
                 BookingLine::_updatePriceId($om, $group['booking_lines_ids'], $lang);
                 // notify bookinglines that pack_id has been updated
@@ -386,10 +388,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
+                // force parent booking to recompute date_to
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
                 // notify bookinglines that dates has been updated (update )
                 if($group['has_pack']) {
                     BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
@@ -452,7 +456,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     /**
      * Create Price adapters according to group settings.
      *
-     * create priceAdapters only for meal and accomodation products
+     * Price adapters are applied only on meal and accomodation products
      *
      * (This method is called upon booking_id.customer_id change)
      */
@@ -475,7 +479,21 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             /*
                 Find the first Discount List that matches the booking dates
             */
-            $discount_category_id = ($group['sojourn_type'] == 'GA')?1:2;
+            
+            // the discount list category to use is the one defined for the center, unless it is ('GA' or 'GG') AND sojourn_type <> category.name
+            $discount_category_id = $group['booking_id.center_id.discount_list_category_id'];
+
+            if(in_array($discount_category_id, [1 /*GA*/, 2 /*GG*/])) {
+                if($discount_category_id == 1 && $group['sojourn_type'] != 'GA') {
+                    // force GG
+                    $discount_category_id = 2;
+                }
+                else if($discount_category_id == 2 && $group['sojourn_type'] != 'GG') {
+                    // force GA
+                    $discount_category_id = 1;
+                }
+            }
+
             $discount_lists_ids = $om->search('sale\discount\DiscountList', [
                 ['rate_class_id', '=', $group['rate_class_id']],
                 ['discount_list_category_id', '=', $discount_category_id],
@@ -567,7 +585,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     }
                 }
 
-                // if guaranteed rate (rate_min) has not been reache, add a discount with rate_min
+                // if guaranteed rate (rate_min) has not been reached, add a discount with rate_min
                 if($rate_to_apply < $discount_list['rate_min'] ) {
                     // remove all 'percent' discounts
                     foreach($discounts_to_apply as $discount_id => $discount) {
@@ -603,6 +621,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     /*
                         create related price adapter for all lines, according to discount and group settings
                     */
+
                     // read all lines from group
                     $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], [
                         'product_id',
@@ -615,13 +634,17 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     foreach($lines as $line_id => $line) {
                         // do not apply discount on lines that cannot have a price
                         if($group['is_locked']) continue;
-                        // GG: apply discounts only for accomodations, for GA: apply discounts on meals and accomodations
-                        if( (
+                        // do not apply freebies on accomodations for groups
+                        if($discount['type'] == 'freebie' && $line['qty_accounting_method'] == 'accomodation') continue;                        
+                        if( 
+                            // for GG: apply discounts only on accomodations
+                            (
                                 $group['sojourn_type'] == 'GG'
                                 &&
                                 $line['is_accomodation']
                             )
                             ||
+                            // for GA: apply discounts on meals and accomodations                            
                             (
                                 $group['sojourn_type'] == 'GA'
                                 &&
@@ -642,7 +665,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                                 'discount_id'           => $discount_id,
                                 'discount_list_id'      => $discount_list_id,
                                 'type'                  => $discount['type'],
-                                'value'                 => ($line['qty_accounting_method'] == 'unit')?$discount['value']:($discount['value']*$group['nb_nights'])
+                                'value'                 => ($discount['type'] == 'freebie')?($discount['value']*$group['nb_nights']):$discount['value']
                             ]);
                         }
                     }
