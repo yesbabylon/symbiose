@@ -19,6 +19,8 @@ use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
 use sale\booking\Funding;
 use communication\Template;
+use communication\TemplatePart;
+use communication\TemplateAttachment;
 
 
 list($params, $providers) = announce([
@@ -208,7 +210,7 @@ $values = [
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
-    'center_contact1'       => $booking['center_id']['manager_id']['name'],
+    'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
     'center_contact2'       => lodging_booking_print_contract_formatPhone($booking['center_id']['phone']).' - '.$booking['center_id']['email'],
     'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $booking['price'],
@@ -236,21 +238,24 @@ $values = [
     retrieve templates
 */
 if($booking['center_id']['template_category_id']) {
-    $template_header = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'contract.header'], ['type', '=', 'contract'] ])
-                        ->read(['value'], $params['lang'])
+
+    $template = Template::search([ 
+                            ['category_id', '=', $booking['center_id']['template_category_id']], 
+                            ['code', '=', 'contract'], 
+                            ['type', '=', 'contract'] 
+                        ])
+                        ->read(['parts_ids' => ['name', 'value']])
                         ->first();
 
-    if($template_header) {
-        $values['contract_header_html'] = $template_header['value'].$booking['center_id']['organisation_id']['signature'];
+    foreach($template['parts_ids'] as $part_id => $part) {
+        if($part['name'] == 'header') {
+            $values['contract_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
+        }
+        else if($part['name'] == 'notice') {
+            $values['contract_notice_html'] = $part['value'];            
+        }
     }
 
-    $template_notice = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'contract.notice'], ['type', '=', 'contract'] ])
-                        ->read(['value'], $params['lang'])
-                        ->first();
-
-    if($template_notice) {
-        $values['contract_notice_html'] = $template_notice['value'];
-    }
 }
 
 /*
@@ -372,7 +377,7 @@ if($installment_date == PHP_INT_MAX) {
 
 $values['installment_date'] = date('d/m/Y', $installment_date);
 $values['installment_amount'] = (float) $installment_amount;
-$values['installment_reference'] = '+++'.substr($installment_ref, 0, 3).'/'.substr($installment_ref, 3, 4).'/'.substr($installment_ref, 8, 5).'+++';
+$values['installment_reference'] = '+++'.substr($installment_ref, 0, 3).'/'.substr($installment_ref, 3, 4).'/'.substr($installment_ref, 7, 5).'+++';
 
 
 // generate a QR code

@@ -93,7 +93,7 @@ class Identity extends Model {
                 'visible'           => [ ['type', '<>', 'I'] ],
                 'onchange'          => 'identity\Identity::onchangeName'
             ],
-            'has_vat' => [  
+            'has_vat' => [
                 'type'              => 'boolean',
                 'default'           => true,
                 'description'       => 'Does the this organisation have a VAT number?',
@@ -112,12 +112,12 @@ class Identity extends Model {
 
             /*
                 Fields specific to citizen: children organisations and parent company, if any
-            */            
+            */
             'citizen_identification' => [
                 'type'              => 'string',
                 'description'       => 'Citizen registration number, if any.',
                 'visible'           => [ ['type', '=', 'I'] ]
-            ],            
+            ],
 
             /*
                 Relational fields specific to organisations: children organisations and parent company, if any
@@ -126,11 +126,11 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',
-                'domain'            => ['type', '<>', 'I'],                
+                'domain'            => ['type', '<>', 'I'],
                 'description'       => 'Children organisations owned by the company, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
-            
+
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -147,8 +147,8 @@ class Identity extends Model {
                 'description'       => 'List of employees of the organisation, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
-            'customers_ids' => [ 
-                'type'              => 'one2many', 
+            'customers_ids' => [
+                'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'customer'],
@@ -156,7 +156,7 @@ class Identity extends Model {
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
             'providers_ids' => [
-                'type'              => 'one2many', 
+                'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'provider'],
@@ -168,9 +168,9 @@ class Identity extends Model {
             'contacts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
-                'foreign_field'     => 'owner_identity_id',                
+                'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'contact'],
-                'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.' 
+                'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
             ],
 
 
@@ -214,7 +214,7 @@ class Identity extends Model {
                 'usage'             => 'email',
                 'description'       => "Identity main email address."
             ],
-            
+
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
@@ -233,7 +233,7 @@ class Identity extends Model {
                 'usage'             => 'url',
                 'description'       => 'Organisation main official website URL, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
-            ],  
+            ],
 
             // an identity can have several addresses
             'addresses_ids' => [
@@ -280,25 +280,25 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
                 'visible'           => [ ['type', '=', 'I'] ],
-                'onchange'          => 'identity\Identity::onchangeName'               
+                'onchange'          => 'identity\Identity::onchangeName'
             ],
 
             'gender' => [
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.',
-                'visible'           => [ ['type', '=', 'I'] ]                
+                'visible'           => [ ['type', '=', 'I'] ]
             ],
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
-                'visible'           => [ ['type', '=', 'I'] ]                
+                'visible'           => [ ['type', '=', 'I'] ]
             ],
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
-                'visible'           => [ ['type', '=', 'I'] ]                
+                'visible'           => [ ['type', '=', 'I'] ]
             ],
             'lang' => [
                 'type'              => 'string',
@@ -376,7 +376,7 @@ class Identity extends Model {
         }
         return implode(' ', $parts);
     }
-    
+
 
     public static function getConstraints() {
         return [
@@ -431,11 +431,11 @@ class Identity extends Model {
                         if( isset($values['type']) && $values['type'] != 'I' ) {
                             return true;
                         }
-                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $firstname));                        
+                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $firstname));
                     }
                 ]
             ]
 
         ];
-    }    
+    }
 }

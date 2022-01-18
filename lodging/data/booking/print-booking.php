@@ -200,13 +200,26 @@ $values = [
     retrieve templates
 */
 if($booking['center_id']['template_category_id']) {
-    $template_header = Template::search([ ['category_id', '=', $booking['center_id']['template_category_id']], ['name', '=', 'quote.header'], ['type', '=', 'quote'] ])
-    ->read(['value'], $params['lang'])
-    ->first();
 
-    if($template_header) {
-        $values['quote_header_html'] = $template_header['value'].$booking['center_id']['organisation_id']['signature'];
+    $template = Template::search([ 
+                            ['category_id', '=', $booking['center_id']['template_category_id']], 
+                            ['code', '=', 'quote'], 
+                            ['type', '=', 'quote'] 
+                        ])
+                        ->read(['parts_ids' => ['name', 'value']])
+                        ->first();
+
+    foreach($template['parts_ids'] as $part_id => $part) {
+        if($part['name'] == 'header') {
+            $values['quote_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
+        }
+        /*
+        else if($part['name'] == 'notice') {
+
+        }
+        */
     }
+
 }
 
 
