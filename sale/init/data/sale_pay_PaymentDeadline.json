@@ -1,0 +1,38 @@
+[
+    {
+        "name": "sale\\pay\\PaymentDeadline",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Acompte signature",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-21T14:53:59+02:00",
+                "creator": 21,
+                "created": "2021-10-21T14:40:17+02:00",
+                "modifier": 21,
+                "delay_from_event": "booking",
+                "delay_count": 8,
+                "type": "installment",
+                "amount_share": 0.25,
+                "payment_plan_id": 1
+            },
+            {
+                "id": 2,
+                "name": "Acompte 1",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-21T14:56:38+02:00",
+                "creator": 21,
+                "created": "2021-10-21T14:54:15+02:00",
+                "modifier": 21,
+                "delay_from_event": "checkin",
+                "delay_count": -60,
+                "type": "installment",
+                "amount_share": 0.4,
+                "payment_plan_id": 1
+            }
+        ]
+    }
+]
