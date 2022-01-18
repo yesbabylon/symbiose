@@ -6,26 +6,32 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "25%"
+                "width": "20%"
             },
             {
                 "type": "field",
                 "label": "Imported",
                 "value": "created",
-                "width": "15%",
+                "width": "20%",
                 "readonly": true
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type",
-                "width": "15%"
+                "width": "20%"
             },
             {
                 "type": "field",
                 "label": "Hash",
                 "value": "hash",
-                "width": "15%"
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "link",
+                "width": "20%",
+                "readonly": true       
             }
         ]
     }
