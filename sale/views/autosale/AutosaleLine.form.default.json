@@ -18,15 +18,15 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "100%",
-                                                "widget": {
-                                                    "header": true,
-                                                    "readonly": true
-                                                }
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": true
+                                                }
                                             },
                                             {
                                                 "type": "field",

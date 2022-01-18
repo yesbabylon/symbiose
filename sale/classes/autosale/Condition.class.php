@@ -13,8 +13,7 @@ class Condition extends Model {
 
         return [
             'name' => [
-                'type'              => 'string',
-                'required'          => true
+                'type'              => 'string'
             ],
 
             'operand' => [

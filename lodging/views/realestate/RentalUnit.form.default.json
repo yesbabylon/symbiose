@@ -57,7 +57,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "category",
+                                                "value": "rental_unit_category_id",
                                                 "width": "50%"
                                             },
                                             {

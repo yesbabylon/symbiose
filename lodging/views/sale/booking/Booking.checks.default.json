@@ -4,8 +4,8 @@
     "checks": [
         {
             "id": "booking.validator.overbooking",
-            "label": "Vérifier Surbooking",
-            "description": "Voir les réservations en conflit.",
+            "label": "Vérifier réservation",
+            "description": "Vérifier la cohérence de la réservation.",
             "controller": "lodging_booking_check-overbooking"
         }
     ]

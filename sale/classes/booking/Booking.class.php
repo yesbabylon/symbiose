@@ -166,14 +166,16 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'date',
                 'function'          => 'sale\booking\Booking::getDateFrom',
-                'store'             => true
+                'store'             => true,
+                'default'           => time()
             ],
 
             'date_to' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
                 'function'          => 'sale\booking\Booking::getDateTo',
-                'store'             => true
+                'store'             => true,
+                'default'           => time()
             ],
 
             'has_payer_organisation' => [

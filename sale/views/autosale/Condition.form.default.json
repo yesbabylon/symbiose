@@ -39,7 +39,8 @@
                                                 "type": "field",
                                                 "label": "Autosale Line",
                                                 "value": "autosale_line_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": false
                                             }
                                         ]
                                     }

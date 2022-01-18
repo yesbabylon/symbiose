@@ -9,7 +9,7 @@
             "help": ""
         },		
         "has_own_qty": {
-            "label": "Propre quantité ?",
+            "label": "Quantité spécifique ?",
             "description": "La quantité du produit est-elle indépentante du contexte ?",
             "help": ""
         },

@@ -12,7 +12,8 @@
             {
                 "type": "field",
                 "value": "date",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -32,12 +33,14 @@
             {
                 "type": "field",
                 "value": "is_rental_unit",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true                
             },
             {
                 "type": "field",
                 "value": "is_meal",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true                
             },
             {
                 "type": "field",
