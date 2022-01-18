@@ -1,0 +1,70 @@
+{
+    "name": "Setting",
+    "description": "Simple form for displaying a Document",
+    "layout": {
+        "groups": [
+            {
+                "sections": [                    
+                    {
+                        "label":"Document details",
+                        "rows": [
+                            
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "30%"
+                                               
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "size",
+                                                "width": "30%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "40%",
+                                                "readonly": true
+                                            }                                      
+                                        ]
+                                    }                                  
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "hash",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "link",
+                                                "width": "50%",
+                                                "readonly": true
+                                                
+                                            }
+                                            
+                                        ]
+                                    }                                  
+                                ]
+                            }
+                        ]
+                    }            
+                ]
+            }
+        ]
+    }
+}

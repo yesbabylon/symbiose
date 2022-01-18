@@ -1,0 +1,23 @@
+{
+    "name": "Documents menu",
+    "layout": {
+        "items": [
+            {
+              "id": "home",
+              "label": "Home",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/"
+            },
+            {
+              "id": "documents_imports",
+              "label": "Imports",
+              "description": "",
+              "icon": "import_export",
+              "type": "entry",
+              "route": "/documents/import"
+            }                      
+        ]
+    }
+}
