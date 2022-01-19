@@ -1,0 +1,71 @@
+{
+    "name": "Catégories",
+    "description": "Cette vue permet d'afficher liste des différentes catégories.",
+    "model": {
+        "name":
+            {
+                "label": "name",
+                "description": "Nom de la catégorie",
+                "help": ""
+            },
+        "creator":  {
+            "type": "Créateur",
+            "description": "Personne qui a créé cette catégorie",
+            "help": ""
+        },
+        "created": {
+            "type": "Créée",
+            "description": "Date de création de la catégorie",
+            "help": ""
+        },
+        "modified": {
+            "label": "Modifiée",
+            "description": "Dernière modification de la catégorie",
+            "help": ""
+        },
+        "modifier":{
+            "label": "Modificateur",
+            "description": "Personne qui a modifié",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Raison de la réservation.",
+            "help": ""
+        },
+        "deleted":{
+            "label": "Supprimé",
+            "description": "L'élément est-il supprimé ou pas",
+            "hepl":""
+        },
+        "state":{
+
+        },
+        "parent_id":{
+            "label": "",
+            "description": "",
+            "hepl":""
+        },
+        "documents_ids":{
+            "label": "",
+            "description": "",
+            "hepl":""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Catégorie",
+            "description": "",
+            "layout": {
+                "section.tag_info": {
+                    "label": "Infos catégorie"
+                }
+        },
+        "list.default": {
+            "name": "Liste des catégories",
+            "description": "Cette vue est destinée à afficher la liste des catégories.",
+            "layout": {}
+            }
+        }
+    }
+}

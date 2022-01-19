@@ -16,7 +16,7 @@
               "description": "",
               "icon": "import_export",
               "type": "entry",
-              "route": "/documents/import"
+              "route": "/import"
             }                      
         ]
     }

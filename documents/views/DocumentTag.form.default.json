@@ -5,7 +5,10 @@
         "groups": [
             {
                 "sections": [
-                    {
+                    
+                    {  
+                        "label": "Infos Tag",
+                        "id": "section.tag_info",
                         "rows": [
                             {
                                 "columns": [
