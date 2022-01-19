@@ -28,6 +28,41 @@
                 "type": "field",
                 "value": "name",
                 "label": "reference",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "From",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "To",
+                "value": "date_to",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Center",
+                "value": "center_id",
                 "width": "15%"
             },
             {
@@ -41,41 +76,6 @@
                 "value": "modified",
                 "label": "Modified",
                 "width": "15%"
-            },
-            {
-                "type": "field",
-                "label": "Customer",
-                "value": "customer_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "From",
-                "value": "date_from",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "label": "To",
-                "value": "date_to",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "label": "Center",
-                "value": "center_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Type",
-                "value": "type_id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "status",
-                "width": "10%"
             }
         ]
     }

@@ -65,6 +65,8 @@
         "communication.templates": {"label": "Templates", "help": ""},
         "communication.templates.templates": {"label": "Tous les modèles", "help": ""},
         "communication.templates.categories": {"label": "Catégories", "help": ""},
+        "communication.templates.parts": {"label": "Eléments de modèle", "help": ""},
+        "communication.templates.attachments": {"label": "Pièces jointes", "help": ""},
         "settings": {"label": "Configuration", "help": ""},
         "settings.calendar": {"label": "Calendrier", "help": ""},
         "settings.calendar.holidays": {"label": "Ephémérides", "help": ""},

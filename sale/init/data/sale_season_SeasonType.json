@@ -1,0 +1,52 @@
+[
+    {
+        "name": "sale\\season\\SeasonType",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "BS",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:27+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:27+02:00",
+                "modifier": 0,
+                "description": "Basse\u00a0saison"
+            },
+            {
+                "id": 2,
+                "name": "MS",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:27+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:27+02:00",
+                "modifier": 0,
+                "description": "Moyenne\u00a0saison"
+            },
+            {
+                "id": 3,
+                "name": "HS",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:27+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:27+02:00",
+                "modifier": 0,
+                "description": "Haute\u00a0saison"
+            },
+            {
+                "id": 4,
+                "name": "THS",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:27+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:27+02:00",
+                "modifier": 0,
+                "description": "Tr\u00e8s\u00a0haute\u00a0saison"
+            }
+        ]
+    }
+]

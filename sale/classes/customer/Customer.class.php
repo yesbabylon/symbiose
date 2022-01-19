@@ -118,7 +118,12 @@ class Customer extends \identity\Partner {
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-12, date('d', $time), date('Y', $time));
         foreach($oids as $oid) {
-            $bookings_ids = $om->search('sale\booking\Booking', [ ['customer_id', '=', $oid], ['created', '>=', $from], ['is_cancelled', '=', false] ]);
+            $bookings_ids = $om->search('sale\booking\Booking', [ 
+                ['customer_id', '=', $oid], 
+                ['created', '>=', $from], 
+                ['is_cancelled', '=', false],
+                ['status', 'not in', ['quote', 'option']] 
+            ]);
             $result[$oid] = count($bookings_ids);
         }
         return $result;
@@ -133,7 +138,12 @@ class Customer extends \identity\Partner {
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-24, date('d', $time), date('Y', $time));
         foreach($oids as $oid) {
-            $bookings_ids = $om->search('sale\booking\Booking', [ ['customer_id', '=', $oid], ['created', '>=', $from], ['is_cancelled', '=', false] ]);
+            $bookings_ids = $om->search('sale\booking\Booking', [ 
+                ['customer_id', '=', $oid], 
+                ['created', '>=', $from], 
+                ['is_cancelled', '=', false],
+                ['status', 'not in', ['quote', 'option']] 
+            ]);
             $result[$oid] = count($bookings_ids);
         }
         return $result;

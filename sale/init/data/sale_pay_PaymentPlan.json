@@ -1,0 +1,19 @@
+[
+    {
+        "name": "sale\\pay\\PaymentPlan",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Plan de paiement par d\u00e9faut",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-21T14:56:46+02:00",
+                "creator": 21,
+                "created": "2021-10-21T14:20:34+02:00",
+                "modifier": 21,
+                "rate_class_id": null
+            }
+        ]
+    }
+]
