@@ -1,5 +1,5 @@
 {
-    "name": "Group",
+    "name": "Tag",
     "description": "",
     "layout": {
         "groups": [
@@ -23,7 +23,7 @@
                                             {
                                                 "type": "field",
                                                 "label": "Document",
-                                                "value": "document_ids",
+                                                "value": "documents_ids",
                                                 "width": "100%"
                                             }
                                         ]

@@ -11,7 +11,7 @@
             {
                 "type": "field",
                 "label": "Document",
-                "value": "document_ids",
+                "value": "documents_ids",
                 "width": "20%"
             }
         ]

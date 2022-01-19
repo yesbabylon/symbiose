@@ -25,9 +25,9 @@ class DocumentCategory extends Model {
                         ],
                         'path' => [
                             'type'              => 'computed',
-                            'function'          => 'documents\Document::getPath',
+                            'function'          => 'documents\DocumentCategory::getPath',
                             'result_type'       => 'string',
-                            'store'             => true,
+                            'store'             =>  false,
                             'description'       => 'Full path of the Document'
                         ],
                         'documents_ids' => [
