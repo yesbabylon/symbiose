@@ -18,16 +18,32 @@ list($params, $providers) = announce([
     'response'      => [
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm'] 
+    'providers'     => ['context', 'orm', 'auth'] 
 ]);
 
-list($context, $om) = [ $providers['context'], $providers['orm'] ];
+list($context, $om, $auth) = [ $providers['context'], $providers['orm'], $providers['auth'] ];
+
+$user_id = $auth->userId();
+echo($user_id);
+// swith to root user
+$auth->su();
+
 // documents are public : we d'ont use collections to bypass any permission check
-$document = Document::search(['hash', '=', $params['hash']])->read(['name', 'data', 'type', 'size'])->first();
+$document = Document::search(['hash', '=', $params['hash']])->read(['public'])->first();
 
 if(!$document) {
-    throw new Exception("wrong identifier '{$params['hash']}'", QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception("document_unknown", QN_ERROR_UNKNOWN_OBJECT);
 }
+var_dump($document);
+
+if(!$document['public']) {
+    $auth->su($user_id);
+    echo('not public');
+}
+$user_id = $auth->userId();
+echo($user_id);
+die();
+$document =  Document::search(['hash', '=', $params['hash']])->read(['name', 'data', 'type', 'size'])->first();
 
 $context->httpResponse()
         ->header('Content-Type', $document['type'])

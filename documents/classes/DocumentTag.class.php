@@ -16,14 +16,13 @@ class DocumentTag extends Model {
                 'type'              => 'string',
                 'description'       => "Short string describing the purpose and usage of the category."
             ],
-            'document_ids' => [
+            'documents_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'documents\Document',
                 'foreign_field'     => 'tags_ids',
-                'rel_table'         =>'documents_rel_documents_tag',
+                'rel_table'         =>'documents_rel_document_tag',
                 'rel_foreign_key'   => 'document_id',
                 'rel_local_key'     => 'tag_id',
-                'description'       => 'List of product models assigned to this tag.'
             ],
         ];
     }

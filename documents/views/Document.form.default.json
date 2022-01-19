@@ -46,17 +46,20 @@
                                             {
                                                 "type": "field",
                                                 "value": "hash",
-                                                "width": "50%",
+                                                "width": "30%",
                                                 "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "link",
-                                                "width": "50%",
-                                                "readonly": true
-                                                
+                                                "width": "30%",
+                                                "readonly": true 
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "public",
+                                                "width": "30%"        
                                             }
-                                            
                                         ]
                                     }                                  
                                 ]
