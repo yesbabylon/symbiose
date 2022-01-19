@@ -163,7 +163,7 @@
                                                 "type": "field",
                                                 "label": "Organisation of Payer",
                                                 "value": "has_payer_organisation",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",

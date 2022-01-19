@@ -814,6 +814,26 @@
                         "entity": "communication\\TemplateCategory",
                         "view": "list.default"
                       }
+                    },
+                    {
+                      "id": "communication.templates.parts",
+                      "type": "entry",
+                      "label": "All template parts",
+                      "description": "",
+                      "context": {
+                        "entity": "communication\\TemplatePart",
+                        "view": "list.default"
+                      }
+                    },
+                    {
+                      "id": "communication.templates.attachments",
+                      "type": "entry",
+                      "label": "All attachments",
+                      "description": "",
+                      "context": {
+                        "entity": "communication\\Attachment",
+                        "view": "list.default"
+                      }
                     }
                   ]
                 }                

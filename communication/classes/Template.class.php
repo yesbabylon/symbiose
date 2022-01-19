@@ -14,6 +14,14 @@ class Template extends Model {
 
         return [
             'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "Code of the template (allows duplicates).",
+                'function'          => 'communication\Template::getDisplayName',
+                'store'             => true
+            ],
+
+            'code' => [
                 'type'              => 'string',
                 'description'       => "Code of the template (allows duplicates).",
                 'required'          => true
@@ -22,13 +30,6 @@ class Template extends Model {
             'description' => [
                 'type'              => 'string',
                 'description'       => "Role and intended usage of the template.",
-                'multilang'         => true
-            ],
-
-            'value' => [
-                'type'              => 'string',
-                'usage'             => 'markup/html',
-                'description'       => "Template body (html).",
                 'multilang'         => true
             ],
 
@@ -43,9 +44,34 @@ class Template extends Model {
                 'type'              => 'string',
                 'selection'         => [ 'quote', 'contract', 'invoice' ],
                 'description'       => 'The context in which the template is meant to be used.'
+            ],
+
+            'parts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'communication\TemplatePart',
+                'foreign_field'     => 'template_id',
+                'description'       => 'List of templates parts related to the template.'
+            ],
+
+            'attachments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'communication\TemplateAttachment',
+                'foreign_field'     => 'template_id',
+                'description'       => 'List of attachments related to the template, if any.'
             ]
 
         ];
     }
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+
+        $templates = $om->read(__CLASS__, $oids, ['code', 'type', 'category_id.name'], $lang);
+
+        foreach($templates as $oid => $template) {
+            $result[$oid] = $template['category_id.name'].'.'.$template['type'].'.'.$template['code'];
+        }
+        return $result;
+    }    
 
 }

@@ -154,12 +154,24 @@ class Booking extends Model {
                 'default'           => false
             ],
 
+            'cancellation_reason' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'generic',                  // customer cancelled for a generic reason or without mentioning the reason (admin fees apply)
+                    'overbooking',              // the booking was cancelled due to failure in delivery service
+                    'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn                    
+                    'schedule_change',          // external resheduling (organisation, means of transport, ...),
+                    'health_impediment'         // cancellation for medical or mourning reason
+                ],
+                'description'       => "Reason for which the customer cancelled the booking.",
+                'default'           => 'generic'
+            ],
+
             'payment_status' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'function'          => 'sale\booking\Booking::getPaymentStatus'
             ],
-
 
             // date fields are based on dates from booking line groups
             'date_from' => [

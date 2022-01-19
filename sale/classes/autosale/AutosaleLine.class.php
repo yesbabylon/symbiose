@@ -34,7 +34,7 @@ class AutosaleLine extends Model {
                 'type'              => 'integer',
                 'description'       => "Quantity of products that is sold automatically.",
                 'visible'           => ['has_own_qty', '=', true],
-                'default'           => 0
+                'default'           => 1
             ],
 
             'product_id' => [

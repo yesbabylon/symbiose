@@ -1,0 +1,52 @@
+[
+    {
+        "name": "sale\\discount\\DiscountCategory",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "saison",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:18+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:18+02:00",
+                "modifier": 0,
+                "description": "r\u00e9ductions li\u00e9es \u00e0 la saisonnalit\u00e9"
+            },
+            {
+                "id": 2,
+                "name": "dur\u00e9e",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:18+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:18+02:00",
+                "modifier": 0,
+                "description": "r\u00e9ductions li\u00e9es \u00e0 la dur\u00e9e du s\u00e9jour"
+            },
+            {
+                "id": 3,
+                "name": "taille",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:18+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:18+02:00",
+                "modifier": 0,
+                "description": "r\u00e9ductions li\u00e9es \u00e0 la taille du groupe"
+            },
+            {
+                "id": 4,
+                "name": "fid\u00e9lit\u00e9",
+                "state": "instance",
+                "deleted": false,
+                "modified": "2021-10-11T13:35:18+02:00",
+                "creator": 1,
+                "created": "2021-10-11T13:35:18+02:00",
+                "modifier": 0,
+                "description": "r\u00e9ductions li\u00e9es \u00e0 la fid\u00e9lit\u00e9 du client"
+            }
+        ]
+    }
+]
