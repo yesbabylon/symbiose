@@ -1,0 +1,61 @@
+{
+    "name": "Étiquettes",
+    "description": "Cette vue permet d'afficher liste des différents Étiquettes",
+    "model": {
+        "name":
+            {
+                "label": "name",
+                "description": "Nom de l'étiquette",
+                "help": ""
+            },
+        "creator":  {
+            "type": "Créateur",
+            "description": "Personne qui a créé cette étiquette",
+            "help": ""
+        },
+        "created": {
+            "type": "Créée",
+            "description": "Date de création de l'étiquette",
+            "help": ""
+        },
+        "modified": {
+            "label": "Modifiée",
+            "description": "Dernière modification de l'étiquette",
+            "help": ""
+        },
+        "modifier":{
+            "label": "Modificateur",
+            "description": "Personne qui a modifié",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Raison de la réservation.",
+            "help": ""
+        },
+        "deleted":{
+            "label": "Supprimé",
+            "description": "L'élément est-il supprimé ou pas",
+            "hepl":""
+        },
+        "state":{
+
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Étiquette",
+            "description": "",
+            "layout": {
+                "section.tag_info": {
+                    "label": "Infos Étiquette"
+                }
+        },
+        "list.default": {
+            "name": "Liste des Étiquettes",
+            "description": "Cette vue est destinée à afficher la liste des étiquettes.",
+            "layout": {}
+            }
+        }
+    }
+}
