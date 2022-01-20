@@ -6,37 +6,44 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "18.3%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Imported",
                 "value": "created",
-                "width": "18.3%",
+                "width": "10%",
                 "readonly": true
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type",
-                "width": "18.3%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "label": "Hash",
                 "value": "hash",
-                "width": "18.3%"
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "link",
-                "width": "18.3%",
+                "width": "10%",
                 "readonly": true       
             },
             {
                 "type": "field",
+                "value": "categories_ids",
+                "label": "Categories",
+                "width": "10%",
+                "readonly": true
+            },
+            {
+                "type": "field",
                 "value": "public",
-                "width": "18.3%"        
+                "width": "5%"        
             }
         ]
     }

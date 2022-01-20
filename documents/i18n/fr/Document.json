@@ -71,6 +71,11 @@
             "label": "Public",
             "description": "Indique si le document est accessible par tous",
             "help": ""
+        },
+        "categories_ids":{
+            "label": "Catégorie",
+            "description": "Catégorie dans laquelle se trouve le document",
+            "help": ""
         }
     },
     "view": {
@@ -80,6 +85,9 @@
             "layout": {
                 "section.document_info": {
                     "label": "Infos Document"
+                },
+                "section.document_tag":{
+                    "label": "Étiquettes"
                 }
         },
         "list.default": {
