@@ -1,5 +1,5 @@
 {
-    "name": "Category",
+    "name": "Document Category",
     "description": "A Document's Category is a group of documents that have a common element",
     "layout": {
         "groups": [

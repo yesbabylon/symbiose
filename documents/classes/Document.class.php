@@ -13,7 +13,7 @@ class Document extends Model {
             'size'		    => array('type' => 'integer'),
             'readable_size' =>[
                 'type'              => 'computed',
-                'description'       => "Readable size",
+                'description'       => 'Readable size',
                 'function'          => 'documents\Document::getReadable_size',
                 'result_type'       => 'string',
                 'store'             => true,
@@ -21,17 +21,16 @@ class Document extends Model {
             'hash'			=> array('type' => 'string'),
             'link' => [
                 'type'              => 'computed',
-                'description'       => "URL to visual edior of the module.",
+                'description'       => 'URL to visual edior of the module.',
                 'function'          => 'documents\Document::getLink',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'store'             => true,
             ],
             'categories_ids' => [
-                'type'              => 'one2many',
+                'type'              => 'many2one',
                 'foreign_object'    => 'documents\DocumentCategory',
-                'foreign_field'     => 'documents_ids',
-                'description'       => "Documents that belong to that category"
+                'description'       => 'Documents that belong to that category'
             ],
             'tags_ids' => [
                 'type'              => 'many2many',
@@ -44,7 +43,7 @@ class Document extends Model {
             ],
             'public' => [
                 'type'              => 'boolean',
-                'description'       => "Accessibility of the document.",
+                'description'       => 'Accessibility of the document.',
                 'default'           => false,
             ],   
             

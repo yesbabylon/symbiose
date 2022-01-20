@@ -1,20 +1,21 @@
 {
-    "name": "Étiquettes",
-    "description": "Cette vue permet d'afficher liste des différents Étiquettes",
+    "name": "Étiquette",
+    "plural": "Étiquettes",
+    "description": "Cette vue permet d'afficher liste des différentes étiquettes",
     "model": {
         "name":
             {
-                "label": "name",
-                "description": "Nom de l'étiquette",
-                "help": ""
+            "label": "Nom",
+            "description": "Nom de l'étiquette",
+            "help": ""
             },
         "creator":  {
-            "type": "Créateur",
+            "label": "Créateur",
             "description": "Personne qui a créé cette étiquette",
             "help": ""
         },
         "created": {
-            "type": "Créée",
+            "label": "Créée",
             "description": "Date de création de l'étiquette",
             "help": ""
         },
@@ -39,7 +40,7 @@
             "hepl":""
         },
         "state":{
-
+            "label":"État"
         }
     },
     "view": {

@@ -2,6 +2,6 @@
     "description": "",
     "view": {
         "item.home": {"label": "Accueil", "help": ""},
-        "item.payments": {"label": "Imports", "help": ""}	
+        "item.documents_imports": {"label": "Importer", "help": ""}	
     }
 }

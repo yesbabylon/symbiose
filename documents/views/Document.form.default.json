@@ -1,5 +1,5 @@
 {
-    "name": "Setting",
+    "name": "Documents",
     "description": "Simple form for displaying a Document",
     "layout": {
         "groups": [
@@ -7,6 +7,7 @@
                 "sections": [                    
                     {
                         "label":"Document details",
+                        "id": "section.document_info",
                         "rows": [
                             
                             {

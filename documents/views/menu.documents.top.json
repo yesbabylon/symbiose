@@ -3,7 +3,7 @@
     "layout": {
         "items": [
             {
-              "id": "home",
+              "id": "item.home",
               "label": "Home",
               "description": "",
               "icon": "menu_book",
@@ -11,7 +11,7 @@
               "route": "/"
             },
             {
-              "id": "documents_imports",
+              "id": "item.documents_imports",
               "label": "Imports",
               "description": "",
               "icon": "import_export",

@@ -1,5 +1,5 @@
 {
-    "name": "Categories",
+    "name": "Document Categories",
     "description": "This view is intended for displaying the list of categories",
     "layout": {
         "items": [
