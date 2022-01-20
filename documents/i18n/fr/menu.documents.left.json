@@ -1,0 +1,9 @@
+{
+    "description": "",
+    "view": {
+      "item.documents": {"label": "Documents", "help": ""},
+		  "item.all_documents": {"label": "Tous les documents", "help": ""},
+      "item.all_tags": {"label":"Toutes les étiquettes", "help": ""},
+      "item.all_categories": {"label": "Toutes les catégories", "help": ""}
+    }
+}

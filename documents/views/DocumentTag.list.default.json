@@ -1,5 +1,5 @@
 {
-    "name": "Tags",
+    "name": "Document Tags",
     "description": "This view is intended for displaying the list of Document tags.",
     "layout": {
         "items": [

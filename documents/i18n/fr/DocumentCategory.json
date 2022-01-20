@@ -1,20 +1,21 @@
 {
-    "name": "Catégories",
+    "name": "Catégorie",
+    "plural": "Catégories",
     "description": "Cette vue permet d'afficher liste des différentes catégories.",
     "model": {
         "name":
             {
-                "label": "name",
-                "description": "Nom de la catégorie",
-                "help": ""
+            "label": "Nom",
+            "description": "Nom de la catégorie",
+            "help": ""
             },
         "creator":  {
-            "type": "Créateur",
+            "label": "Créateur",
             "description": "Personne qui a créé cette catégorie",
             "help": ""
         },
         "created": {
-            "type": "Créée",
+            "label": "Créée",
             "description": "Date de création de la catégorie",
             "help": ""
         },
@@ -39,7 +40,7 @@
             "hepl":""
         },
         "state":{
-
+            "label":"État"
         },
         "parent_id":{
             "label": "Parent",
@@ -67,7 +68,7 @@
             "name": "Catégorie",
             "description": "",
             "layout": {
-                "section.category_info": {
+                "section.category": {
                     "label": "Infos catégorie"
                 }
         },

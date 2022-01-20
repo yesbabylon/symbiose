@@ -1,8 +1,0 @@
-{
-    "description": "",
-    "view": {
-      "item.documents": {"label": "Documents", "help": ""},
-		  
-		  "item.all_documents": {"label": "Tous les documents", "help": ""}
-    }
-}

@@ -9,7 +9,7 @@ class DocumentCategory extends Model {
         return array(
                         'name' => [
                             'type'              => 'string',
-                            'description'       => "",
+                            'description'       => '',
                             'required'          => true,
                             'multilang'         => true
                             ],
@@ -20,7 +20,7 @@ class DocumentCategory extends Model {
                         ],
                         'parent_id' => [
                             'type'              => 'many2one',
-                            'description'       => "Product Family which current family belongs to, if any.",
+                            'description'       => 'Product Family which current family belongs to, if any.',
                             'foreign_object'    => 'documents\DocumentCategory'
                         ],
                         'path' => [
@@ -31,9 +31,10 @@ class DocumentCategory extends Model {
                             'description'       => 'Full path of the Document'
                         ],
                         'documents_ids' => [
-                            'type'              => 'many2one',
+                            'type'              => 'one2many',
+                            'foreign_field'     => 'categories_ids',
                             'foreign_object'    => 'documents\Document',
-                            'description'       => "Product models which current product belongs to the family."
+                            'description'       => 'Product models which current product belongs to the family.'
                         ]
                     );
     }
