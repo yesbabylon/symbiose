@@ -42,14 +42,24 @@
 
         },
         "parent_id":{
-            "label": "",
-            "description": "",
-            "hepl":""
+            "label": "Parent",
+            "description": "La catégorie parente",
+            "help":""
         },
         "documents_ids":{
-            "label": "",
-            "description": "",
-            "hepl":""
+            "label": "Document",
+            "description": "Le document auquel la catégorie se rapporte",
+            "help":""
+        },
+        "children_ids":{
+            "label":"Enfants",
+            "description":"Les catégories enfants",
+            "help":""
+        },
+        "path":{
+            "label":"chemin",
+            "description":"chemin ",
+            "help":""
         }
     },
     "view": {
@@ -57,7 +67,7 @@
             "name": "Catégorie",
             "description": "",
             "layout": {
-                "section.tag_info": {
+                "section.category_info": {
                     "label": "Infos catégorie"
                 }
         },
