@@ -76,7 +76,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "documents_ids",
-                                                "width": "100%"                              
+                                                "width": "100%",
+                                                "widget": {
+                                                    "action_select": true,
+                                                    "action_create": false
+                                                }
                                             }
                                         ]
                                     }
