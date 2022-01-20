@@ -9,7 +9,6 @@
                         "label":"Document details",
                         "id": "section.document_info",
                         "rows": [
-                            
                             {
                                 "columns": [
                                     {
@@ -19,7 +18,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "30%"
+                                                "width": "30%",
+                                                "widget":{
+                                                    "header": true
+                                                }
                                                
                                             },
                                             {
@@ -47,26 +49,54 @@
                                             {
                                                 "type": "field",
                                                 "value": "hash",
-                                                "width": "30%",
+                                                "width": "25%",
                                                 "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "link",
-                                                "width": "30%",
+                                                "width": "25%",
                                                 "readonly": true 
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "public",
-                                                "width": "30%"        
+                                                "value": "categories_ids",
+                                                "label": "Category",
+                                                "width": "25%"     
+                                            },
+                                            {
+                                                "type": "field",
+                                                 "value": "public",
+                                                 "width": "25%"   
                                             }
                                         ]
                                     }                                  
                                 ]
-                            }
+                            }       
                         ]
-                    }            
+                    },
+                        {
+                            "label":"Tags",
+                            "id": "section.document_tag",
+                            "rows": [
+                                {
+                                    "columns": [
+                                        {
+                                            "width": "100%",
+                                            "align": "left",
+                                            "items": [
+                                                {
+                                                    "type": "field",
+                                                     "value": "tags_ids"  
+                                                }
+                                            ]
+                                        }                                  
+                                    ]
+                                }
+                            ]
+                        }
+                        
+
                 ]
             }
         ]

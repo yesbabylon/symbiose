@@ -22,16 +22,6 @@
                   }
                 },
                 {
-                  "id": "item.all_tags",
-                  "type": "entry",
-                  "label": "All tags",
-                  "description": "", 
-                  "context": {
-                    "entity": "documents\\DocumentTag",
-                    "view": "list.default"
-                  }
-                },
-                {
                   "id": "item.all_categories",
                   "type": "entry",
                   "label": "All categories",
@@ -40,8 +30,17 @@
                     "entity": "documents\\DocumentCategory",
                     "view": "list.default"
                   }
+                },
+                {
+                  "id": "item.all_tags",
+                  "type": "entry",
+                  "label": "All tags",
+                  "description": "", 
+                  "context": {
+                    "entity": "documents\\DocumentTag",
+                    "view": "list.default"
+                  }
                 }
-
               ]
             }               
         ]
