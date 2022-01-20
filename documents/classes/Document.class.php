@@ -45,7 +45,14 @@ class Document extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Accessibility of the document.',
                 'default'           => false,
-            ],   
+            ], 
+            // 'preview_Image' => [
+            //     'type'              => 'computed',
+            //     'description'       => 'Image preview',
+            //     'function'          => 'documents\Document::getPreview_Image',
+            //     'result_type'       => 'string',
+            //     'store'             => true,
+            // ] 
             
         );
     }
@@ -84,7 +91,7 @@ class Document extends Model {
                 $lang);
         }
     }
-    public static function getLink($om, $oids, $lang) {
+    public static function getLink($om, $oids) {
         $res = $om->read(__CLASS__, $oids, ['hash']);
         $result = [];
         foreach($res as $oid=>$ohash) {
@@ -92,5 +99,23 @@ class Document extends Model {
             $result[$oid] = '/document/'.$content;
         }
         return $result;
+    }
+    public static function getPreview_Image($om, $oids) {
+        $res = $om->read(__CLASS__, $oids);
+        $result = [];
+        foreach($res as $oid=>$odoc) {
+            $new_width = 15;
+            $new_height = 15;
+            list($old_width, $old_height) = getimagesize($odoc);
+
+            $new_image = imagecreatetruecolor($new_width, $new_height);
+            $old_image = imagecreatefromjpeg($odoc);
+
+            imagecopyresampled($new_image, $old_image, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
+
+            $result[$oid] = imagejpeg($new_image);
+            echo(imagejpeg($new_image));
+        }
+        return $result; 
     }
 }

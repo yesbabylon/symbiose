@@ -7,7 +7,7 @@
 use documents\Document;
 
 list($params, $providers) = announce([
-    'description'   => 'Returns a list of entites according to given domain (filter), start offset, limit and order.',
+    'description'   => 'Returns the object that corresponds to the hash',
     'params'        => [
         'hash' =>  [
             'description'   => 'Unique identifier of the resource.',
