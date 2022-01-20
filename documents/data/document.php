@@ -25,10 +25,10 @@ list($context, $om, $auth) = [ $providers['context'], $providers['orm'], $provid
 
 $user_id = $auth->userId();
 
-// swith to root user
+// documents can be public : swith to root user to bypass any permission check
 $auth->su();
 
-// documents are public : we d'ont use collections to bypass any permission check
+// search for documents matching given hash code (should be only one match)
 $collection = Document::search(['hash', '=', $params['hash']]);
 $document = $collection->read(['public'])->first();
 
@@ -36,6 +36,7 @@ if(!$document) {
     throw new Exception("document_unknown", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+// if document is not public, switch back to original user: regular permission checks will apply
 if(!$document['public']) {
     $auth->su($user_id);
 }
