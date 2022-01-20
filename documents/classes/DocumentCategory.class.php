@@ -6,7 +6,7 @@ use equal\orm\Model;
 class DocumentCategory extends Model {
 
     public static function getColumns() {
-        return array(
+        return [
                         'name' => [
                             'type'              => 'string',
                             'description'       => '',
@@ -27,7 +27,7 @@ class DocumentCategory extends Model {
                             'type'              => 'computed',
                             'function'          => 'documents\DocumentCategory::getPath',
                             'result_type'       => 'string',
-                            'store'             =>  false,
+                            'store'             =>  true,
                             'description'       => 'Full path of the Document'
                         ],
                         'documents_ids' => [
@@ -36,7 +36,7 @@ class DocumentCategory extends Model {
                             'foreign_object'    => 'documents\Document',
                             'description'       => 'Product models which current product belongs to the family.'
                         ]
-                    );
+                    ];
     }
 
 
