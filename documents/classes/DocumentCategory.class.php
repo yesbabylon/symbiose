@@ -11,7 +11,8 @@ class DocumentCategory extends Model {
                             'type'              => 'string',
                             'description'       => '',
                             'required'          => true,
-                            'multilang'         => true
+                            'multilang'         => true,
+                            'onchange'          => 'documents\DocumentCategory::onchangePath'
                             ],
                         'children_ids' => [ 
                             'type'              => 'one2many', 
@@ -21,7 +22,8 @@ class DocumentCategory extends Model {
                         'parent_id' => [
                             'type'              => 'many2one',
                             'description'       => 'Product Family which current family belongs to, if any.',
-                            'foreign_object'    => 'documents\DocumentCategory'
+                            'foreign_object'    => 'documents\DocumentCategory',
+                            'onchange'          => 'documents\DocumentCategory::onchangePath'
                         ],
                         'path' => [
                             'type'              => 'computed',
@@ -54,4 +56,8 @@ class DocumentCategory extends Model {
         }
         return $result;
     }  
+
+    public static function onchangePath($om, $oids, $lang){
+        $om->write(__CLASS__, $oids, ['path'=>null]);
+    }
 }
