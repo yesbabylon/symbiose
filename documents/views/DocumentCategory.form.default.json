@@ -36,7 +36,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "path",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget":{
+                                                    "readonly":true
+                                                }
                                             }
                                         ]
                                     }
