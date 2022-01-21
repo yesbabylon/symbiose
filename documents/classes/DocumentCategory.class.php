@@ -7,39 +7,43 @@ class DocumentCategory extends Model {
 
     public static function getColumns() {
         return [
-                'name' => [
-                    'type'              => 'string',
-                    'description'       => '',
-                    'required'          => true,
-                    'multilang'         => true,
-                    'onchange'          => 'documents\DocumentCategory::onchangePath'
-                    ],
-                'children_ids' => [ 
-                    'type'              => 'one2many', 
-                    'foreign_object'    => 'documents\DocumentCategory', 
-                    'foreign_field'     => 'parent_id'
-                ],
-                'parent_id' => [
-                    'type'              => 'many2one',
-                    'description'       => 'Product Family which current family belongs to, if any.',
-                    'foreign_object'    => 'documents\DocumentCategory',
-                    'onchange'          => 'documents\DocumentCategory::onchangePath'
-                ],
-                'path' => [
-                    'type'              => 'computed',
-                    'function'          => 'documents\DocumentCategory::getPath',
-                    'result_type'       => 'string',
-                    'store'             =>  true,
-                    'description'       => 'Full path of the Document',
-                    'readonly'          => true
-                ],
-                'documents_ids' => [
-                    'type'              => 'one2many',
-                    'foreign_field'     => 'categories_ids',
-                    'foreign_object'    => 'documents\Document',
-                    'description'       => 'Product models which current product belongs to the family.'
-                ]
-            ];
+            'name' => [
+                'type'              => 'string',
+                'description'       => '',
+                'required'          => true,
+                'multilang'         => true,
+                'onchange'          => 'documents\DocumentCategory::onchangePath'
+            ],
+
+            'children_ids' => [ 
+                'type'              => 'one2many', 
+                'foreign_object'    => 'documents\DocumentCategory', 
+                'foreign_field'     => 'parent_id'
+            ],
+
+            'parent_id' => [
+                'type'              => 'many2one',
+                'description'       => 'Product Family which current family belongs to, if any.',
+                'foreign_object'    => 'documents\DocumentCategory',
+                'onchange'          => 'documents\DocumentCategory::onchangePath'
+            ],
+
+            'path' => [
+                'type'              => 'computed',
+                'function'          => 'documents\DocumentCategory::getPath',
+                'result_type'       => 'string',
+                'store'             =>  true,
+                'description'       => 'Full path of the Document',
+                'readonly'          => true
+            ],
+
+            'documents_ids' => [
+                'type'              => 'one2many',
+                'foreign_field'     => 'categories_ids',
+                'foreign_object'    => 'documents\Document',
+                'description'       => 'Product models which current product belongs to the family.'
+            ]
+        ];
     }
 
 
@@ -59,6 +63,6 @@ class DocumentCategory extends Model {
     }  
 
     public static function onchangePath($om, $oids, $lang){
-        $om->write(__CLASS__, $oids, ['path'=>null]);
+        $om->write(__CLASS__, $oids, ['path' => null]);
     }
 }

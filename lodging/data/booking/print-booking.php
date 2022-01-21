@@ -178,7 +178,7 @@ $values = [
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
-    'center_contact1'       => $booking['center_id']['manager_id']['name'],
+    'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
     'center_contact2'       => lodging_booking_print_booking_formatPhone($booking['center_id']['phone']).' - '.$booking['center_id']['email'],
     'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $booking['price'],
@@ -305,7 +305,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
         // convert discount value to a percentage
         $disc_value = $disc_value / (1 + $booking_line['vat_rate']);
         $price = $booking_line['unit_price'] * $booking_line['qty'];
-        $disc_value_perc = ($price - $disc_value) / $price;
+        $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
         $disc_percent += (1-$disc_value_perc);
 
         $line = [
