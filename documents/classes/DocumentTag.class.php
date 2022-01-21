@@ -25,7 +25,5 @@ class DocumentTag extends Model {
                 'rel_local_key'     => 'tag_id',
             ],
         ];
-    }
-
-    
+    }   
 }
