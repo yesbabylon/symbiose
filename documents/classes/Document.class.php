@@ -134,13 +134,13 @@ class Document extends Model {
             if(($old_x/$old_y)<($target_width/$target_height)){
                 $hNew = $old_y * $target_width/$old_x;
                 $wNew = $target_width;
-              }else{
-                $hNew = $target_height;
-                $wNew = $old_x * $target_height/$old_y;
-              }
+            }else{
+            $hNew = $target_height;
+            $wNew = $old_x * $target_height/$old_y;
+            }
 
             
-            $wDiff  = round(abs($target_width-$wNew)/0.5);
+            $wDiff  = round(abs($target_width-$wNew)/2);
             $hDiff  = round(abs($target_height-$hNew)/2);
             
             // // imagecreatefromstring() retourne un identifiant d'image représentant l'image obtenue depuis la chaîne data. Le type de l'image sera automatiquement détecté si vous avez compilé PHP avec les supports : JPEG, PNG, GIF, BMP, WBMP, GD2, et WEBP.
