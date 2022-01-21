@@ -91,7 +91,7 @@ $result = run('get', 'lodging_booking_print-contract', [
     'lang'      => $params['lang']
 ]);
 
-$data = json_decode($json, true);
+$data = json_decode($result, true);
 if($data != null && isset($data['errors'])) {
     // raise an exception with returned error code
     foreach($data['errors'] as $name => $message) {

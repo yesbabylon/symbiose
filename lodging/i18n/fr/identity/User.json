@@ -9,8 +9,8 @@
             "help": ""
         },
         "language": {
-            "label": "Langue",
-            "description": "",
+            "label": "Langue préférée",
+            "description": "Utilisée pour les interfaces utilisateur.",
             "help": ""
         },
         "validated": {

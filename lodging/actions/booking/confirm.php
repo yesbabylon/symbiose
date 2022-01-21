@@ -30,7 +30,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
@@ -49,12 +49,12 @@ $booking = Booking::id($params['id'])
                             'date_from',
                             'date_to',
                             'has_pack',
-                            'is_locked',                            
+                            'is_locked',
                             'pack_id' => ['id', 'display_name'],
                             'vat_rate',
                             'unit_price',
                             'qty',
-                            'nb_nights',                            
+                            'nb_nights',
                             'nb_pers',
                             'booking_lines_ids' => [
                                 'product_id',
@@ -159,7 +159,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         $disc_percent = 0;
         $free_qty = 0;
         foreach($line['price_adapters_ids'] as $aid => $adata) {
-            if($adata['is_manual_discount']) {            
+            if($adata['is_manual_discount']) {
                 if($adata['type'] == 'amount') {
                     $disc_value += $adata['value'];
                 }
@@ -170,7 +170,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                     $free_qty += $adata['value'];
                 }
             }
-            // auto granted freebies are displayed as manual discounts            
+            // auto granted freebies are displayed as manual discounts
             else {
                 if($adata['type'] == 'freebie') {
                     $free_qty += $adata['value'];
@@ -180,12 +180,12 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         // convert discount value to a percentage
         $disc_value = $disc_value / (1 + $line['vat_rate']);
         $price = $line['unit_price'] * $line['qty'];
-        $disc_value_perc = ($price - $disc_value) / $price;
+        $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
         $disc_percent += (1-$disc_value_perc);
 
         $c_line['free_qty'] = $free_qty;
         $c_line['discount'] = $disc_percent;
-        ContractLine::create($c_line);            
+        ContractLine::create($c_line);
     }
 
 }
@@ -260,7 +260,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
     catch(Exception $e) {
         // ignore duplicates (not created)
     }
-    
+
     ++$funding_order;
 }
 

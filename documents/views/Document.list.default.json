@@ -5,8 +5,14 @@
         "items": [
             {
                 "type": "field",
+                "label": "Preview",
+                "value": "preview_image",
+                "width": "5%"
+            },
+            {
+                "type": "field",
                 "value": "name",
-                "width": "10%"
+                "width": "20%"
             },
             {
                 "type": "field",
@@ -19,31 +25,25 @@
                 "type": "field",
                 "label": "Type",
                 "value": "type",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "label": "Hash",
-                "value": "hash",
-                "width": "10%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "link",
-                "width": "10%",
+                "width": "25%",
                 "readonly": true       
-            },
-            {
-                "type": "field",
-                "value": "categories_ids",
-                "label": "Categories",
-                "width": "10%",
-                "readonly": true
             },
             {
                 "type": "field",
                 "value": "public",
                 "width": "5%"        
+            },
+            {
+                "type": "field",
+                "value": "tags_ids",
+                "label": "Tags",
+                "width": "20%",
+                "readonly": true
             }
         ]
     }
