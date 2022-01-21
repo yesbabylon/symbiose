@@ -50,6 +50,9 @@
             "layout": {
                 "section.tag_info": {
                     "label": "Infos Étiquette"
+                },
+                "section.tag_documents": {
+                    "label": "Documents"
                 }
         },
         "list.default": {

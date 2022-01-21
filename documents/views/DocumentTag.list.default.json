@@ -7,12 +7,6 @@
                 "type": "field",
                 "value": "name",
                 "width": "20%"
-            },
-            {
-                "type": "field",
-                "label": "Document",
-                "value": "documents_ids",
-                "width": "20%"
             }
         ]
     }

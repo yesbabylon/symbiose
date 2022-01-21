@@ -5,8 +5,7 @@
         "groups": [
             {
                 "sections": [
-                    
-                    {  
+                    {
                         "label": "Infos Tag",
                         "id": "section.tag_info",
                         "rows": [
@@ -22,7 +21,22 @@
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Documents",
+                        "id": "section.tag_documents",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Document",
@@ -37,6 +51,6 @@
                     }
                 ]
             }
-       ]
+        ]
     }
 }
