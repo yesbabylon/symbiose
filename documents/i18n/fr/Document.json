@@ -1,6 +1,6 @@
 {
     "name": "Document",
-    "pulral": "Documents",
+    "plural": "Documents",
     "description": "Cette vue permet d'afficher liste des différents documents",
     "model": {
         "name":
@@ -53,7 +53,7 @@
             "help": ""
         },
         "readable_size":{
-            "label": "Taille simplifiée",
+            "label": "Taille",
             "description": "Taille du fichier au format humainement compréhensible",
             "help": ""
         },
@@ -80,7 +80,7 @@
     },
     "view": {
         "form.default": {
-            "name": "Étiquette",
+            "name": "Document",
             "description": "",
             "layout": {
                 "section.document_info": {
@@ -89,12 +89,12 @@
                 "section.document_tag":{
                     "label": "Étiquettes"
                 }
+        }
         },
         "list.default": {
-            "name": "Liste des Étiquettes",
-            "description": "Cette vue est destinée à afficher la liste des étiquettes.",
+            "name": "Liste des Documents",
+            "description": "Cette vue est destinée à afficher la liste des documents.",
             "layout": {}
             }
-        }
     }
 }
