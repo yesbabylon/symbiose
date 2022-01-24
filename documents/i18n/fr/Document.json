@@ -11,27 +11,27 @@
             },
         "creator":  {
             "label": "Créateur",
-            "description": "Personne qui a créé le document",
+            "description": "Utilisateur qui a créé le document.",
             "help": ""
         },
         "created": {
             "label": "Créé",
-            "description": "Date de création du document",
+            "description": "Date de création du document.",
             "help": ""
         },
         "modified": {
             "label": "Modifiée",
-            "description": "Dernière modification du document",
+            "description": "Dernière modification du document.",
             "help": ""
         },
         "modifier":{
             "label": "Modificateur",
-            "description": "Personne qui a modifié",
+            "description": "Personne qui a modifié.",
             "help": ""
         },
         "deleted":{
             "label": "Supprimé",
-            "description": "L'élément est-il supprimé ou pas",
+            "description": "L'élément est-il supprimé ou pas.",
             "hepl":""
         },
         "state":{
@@ -39,42 +39,42 @@
         },
         "data":{
             "label":"Données",
-            "description":"fichier en kilo octets",
+            "description":"fichier en kilo octets.",
             "help": ""
         },
         "type":{
             "label":"Type de média",
-            "description":"Identifiant de format de données" ,
+            "description":"Identifiant de format de données." ,
             "help": ""
         },
         "size":{
             "label": "Taille",
-            "description": "Taille du fichier",
+            "description": "Taille du fichier en octets.",
             "help": ""
         },
         "readable_size":{
-            "label": "Taille simplifiée",
-            "description": "Taille du fichier au format humainement compréhensible",
+            "label": "Taille",
+            "description": "Taille du fichier en format simplifié.",
             "help": ""
         },
         "hash":{
             "label": "Clef",
-            "description": "Clef qui pointe vers un fichier donné",
+            "description": "Clef qui pointe vers un fichier donné.",
             "help": ""
         },
         "link": {
             "label": "Lien",
-            "description": "Lien qui pointe vers un fichier donné",
+            "description": "Lien qui pointe vers un fichier donné.",
             "help":""
         },
         "public":{
             "label": "Public",
-            "description": "Indique si le document est accessible par tous",
+            "description": "Indique si le document est accessible par tous.",
             "help": ""
         },
-        "categories_ids":{
+        "category_id":{
             "label": "Catégorie",
-            "description": "Catégorie dans laquelle se trouve le document",
+            "description": "Catégorie dans laquelle se trouve le document.",
             "help": ""
         }
     },
