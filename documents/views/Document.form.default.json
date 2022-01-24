@@ -6,6 +6,8 @@
             {
                 "sections": [                    
                     {
+                        "label":"Document details",
+                        "id": "section.document_info",
                         "rows": [
                             {
                                 "columns": [
@@ -38,53 +40,33 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    }                                    
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "sections": [                    
-                    {
-                        "label":"Document details",
-                        "id": "section.document_info",
-                        "rows": [
-                            {
-                                "columns": [
+                                    },
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "readable_size",
-                                                "width": "50%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "50%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "category_id",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "align": "left",
-                                        "items": [
+                                                "width": "30%"
+                                            },
                                             {
                                                 "type": "field",
                                                  "value": "public",
-                                                 "width": "100%"   
+                                                 "width": "10%"   
                                             }
                                         ]
-                                    }                                  
+                                    }                                           
                                 ]
                             }       
                         ]
@@ -109,8 +91,6 @@
                                 }
                             ]
                         }
-                        
-
                 ]
             }
         ]
