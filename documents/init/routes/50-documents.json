@@ -1,0 +1,8 @@
+{
+    "document/:hash":{
+        "GET":{
+            "description": "Provide the Document matching a given hash, if any.",
+            "operation": "?get=documents_document"
+        }
+    }
+}
