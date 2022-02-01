@@ -707,10 +707,7 @@
                       "type": "entry",
                       "label": "Chart of accounts",
                       "description": "",
-                      "context": {
-                        "entity": "finance\\accounting\\AccountChart",
-                        "view": "list.default"
-                      }
+                      "route": "AccountingChartLines"
                     }
                   ]
                 },
@@ -874,13 +871,56 @@
                   "children": [
                     {
                       "id": "settings.settings.available_settings",
-                      "type": "entry",
                       "label": "Available settings",
                       "description": "",
-                      "context": {
-                        "entity": "core\\Setting",
-                        "view": "list.default"
-                      }
+                      "type":"parent",
+                      "icon": "settings",
+                      "children": [
+                        {
+                          "id": "settings.settings.available_settings.all",
+                          "type": "entry",
+                          "label": "All Settings",
+                          "description": "",
+                          "context": {
+                            "entity": "core\\Setting",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.settings.available_settingsValues.all",
+                          "type": "entry",
+                          "label": "All Settings Values",
+                          "description": "",
+                          "context": {
+                            "entity": "core\\SettingValue",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.settings.available_settings.general",
+                          "type": "entry",
+                          "label": "General Settings",
+                          "description": "",
+                          "icon": "settings",
+                          "route": "settings/general"
+                        },
+                        {
+                          "id": "settings.settings.available_settings.sale",
+                          "type": "entry",
+                          "label": "Sales Settings",
+                          "description": "",
+                          "icon": "store",
+                          "route": "settings/sale"
+                        },
+                        {
+                          "id": "settings.settings.available_settings.finance",
+                          "type": "entry",
+                          "label": "Finance Settings",
+                          "description": "",
+                          "icon": "monetization_on",
+                          "route": "settings/finance"
+                        }
+                      ]
                     },
                     {
                       "id": "settings.settings.settings_values",
