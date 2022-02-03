@@ -1,4 +1,9 @@
 <?php
+/*
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
+*/
 namespace documents;
 
 use equal\orm\Model;
@@ -64,5 +69,13 @@ class DocumentCategory extends Model {
 
     public static function onchangePath($om, $oids, $lang){
         $om->write(__CLASS__, $oids, ['path' => null]);
+        $res = $om->read(__CLASS__, $oids, ['children_ids']);
+
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $om->write('documents\DocumentCategory', $odata['children_ids'], ['path' => null]);
+            }                
+        }
+
     }
 }

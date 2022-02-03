@@ -1,46 +1,17 @@
 {
     "name": "Étiquette",
     "plural": "Étiquettes",
-    "description": "Cette vue permet d'afficher liste des différentes étiquettes",
+    "description": "Cette vue permet d'afficher liste des différentes étiquettes.",
     "model": {
-        "name":
-            {
+        "name": {
             "label": "Nom",
-            "description": "Nom de l'étiquette",
-            "help": ""
-            },
-        "creator":  {
-            "label": "Créateur",
-            "description": "Personne qui a créé cette étiquette",
-            "help": ""
-        },
-        "created": {
-            "label": "Créée",
-            "description": "Date de création de l'étiquette",
-            "help": ""
-        },
-        "modified": {
-            "label": "Modifiée",
-            "description": "Dernière modification de l'étiquette",
-            "help": ""
-        },
-        "modifier":{
-            "label": "Modificateur",
-            "description": "Personne qui a modifié",
+            "description": "Nom de l'étiquette.",
             "help": ""
         },
         "description": {
             "label": "Description",
             "description": "Raison de la réservation.",
             "help": ""
-        },
-        "deleted":{
-            "label": "Supprimé",
-            "description": "L'élément est-il supprimé ou pas",
-            "hepl":""
-        },
-        "state":{
-            "label":"État"
         }
     },
     "view": {
