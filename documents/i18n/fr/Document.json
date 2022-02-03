@@ -1,45 +1,16 @@
 {
     "name": "Document",
     "plural": "Documents",
-    "description": "Cette vue permet d'afficher liste des différents documents",
+    "description": "Vue par défaut pour la liste des documents.",
     "model": {
-        "name":
-            {
+        "name":{
             "label": "Nom",
-            "description": "Nom de l'étiquette",
+            "description": "Nom du document.",
             "help": ""
-            },
-        "creator":  {
-            "label": "Créateur",
-            "description": "Utilisateur qui a créé le document.",
-            "help": ""
-        },
-        "created": {
-            "label": "Créé",
-            "description": "Date de création du document.",
-            "help": ""
-        },
-        "modified": {
-            "label": "Modifiée",
-            "description": "Dernière modification du document.",
-            "help": ""
-        },
-        "modifier":{
-            "label": "Modificateur",
-            "description": "Personne qui a modifié.",
-            "help": ""
-        },
-        "deleted":{
-            "label": "Supprimé",
-            "description": "L'élément est-il supprimé ou pas.",
-            "hepl":""
-        },
-        "state":{
-            "label":"État"
         },
         "data":{
             "label":"Données",
-            "description":"fichier en kilo octets.",
+            "description":"Données binaires brutes du fichier.",
             "help": ""
         },
         "type":{
@@ -49,17 +20,17 @@
         },
         "size":{
             "label": "Taille",
-            "description": "Taille du fichier en octets.",
+            "description": "Taille du fichier (en octets).",
             "help": ""
         },
         "readable_size":{
             "label": "Taille",
-            "description": "Taille du fichier en format simplifié.",
+            "description": "Taille du fichier (format simplifié).",
             "help": ""
         },
         "hash":{
-            "label": "Clef",
-            "description": "Clef qui pointe vers un fichier donné.",
+            "label": "Clé",
+            "description": "Clé de hash unique du fichier.",
             "help": ""
         },
         "link": {
@@ -69,7 +40,7 @@
         },
         "public":{
             "label": "Public",
-            "description": "Indique si le document est accessible par tous.",
+            "description": "Le document est accessible par tous.",
             "help": ""
         },
         "category_id":{
