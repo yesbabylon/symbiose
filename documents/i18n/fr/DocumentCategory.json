@@ -3,63 +3,29 @@
     "plural": "Catégories",
     "description": "Cette vue permet d'afficher liste des différentes catégories.",
     "model": {
-        "name":
-            {
+        "name": {
             "label": "Nom",
-            "description": "Nom de la catégorie",
+            "description": "Nom de la catégorie.",
             "help": ""
-            },
-        "creator":  {
-            "label": "Créateur",
-            "description": "Personne qui a créé cette catégorie",
-            "help": ""
-        },
-        "created": {
-            "label": "Créée",
-            "description": "Date de création de la catégorie",
-            "help": ""
-        },
-        "modified": {
-            "label": "Modifiée",
-            "description": "Dernière modification de la catégorie",
-            "help": ""
-        },
-        "modifier":{
-            "label": "Modificateur",
-            "description": "Personne qui a modifié",
-            "help": ""
-        },
-        "description": {
-            "label": "Description",
-            "description": "Raison de la réservation.",
-            "help": ""
-        },
-        "deleted":{
-            "label": "Supprimé",
-            "description": "L'élément est-il supprimé ou pas",
-            "hepl":""
-        },
-        "state":{
-            "label":"État"
         },
         "parent_id":{
             "label": "Parent",
-            "description": "La catégorie parente",
+            "description": "La catégorie parente.",
             "help":""
         },
         "documents_ids":{
             "label": "Document",
-            "description": "Le document auquel la catégorie se rapporte",
+            "description": "Le document auquel la catégorie se rapporte.",
             "help":""
         },
         "children_ids":{
             "label":"Enfants",
-            "description":"Les catégories enfants",
+            "description":"Les catégories enfants.",
             "help":""
         },
         "path":{
-            "label":"chemin",
-            "description":"chemin ",
+            "label":"Path",
+            "description":"Chemin d'accès.",
             "help":""
         }
     },
