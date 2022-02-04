@@ -45,15 +45,19 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "can_sell",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_pack",
+                                                "value": "has_own_price",
                                                 "width": "50%"
                                             }
-
                                         ]
                                     }                                    
                                 ]
@@ -63,6 +67,7 @@
                     {
                         "label": "Prices",
                         "id": "section.prices_section",
+                        "visible": [ [["is_pack", "=", false]], [["has_own_price", "=", true]] ],
                         "rows": [
                             {
                                 "columns": [
@@ -107,7 +112,7 @@
                         ]
                     },                    
                     {
-                        "label": "Prices",
+                        "label": "Groups",
                         "id": "section.groups",
                         "rows": [
                             {

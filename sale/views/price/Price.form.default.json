@@ -23,8 +23,18 @@
                                             {
                                                 "type": "field",
                                                 "value": "price",
-                                                "width": "50%"                                                
-                                            }
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rate",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_vat",
+                                                "width": "50%"
+                                            }                                            
                                         ]
                                     },
                                     {

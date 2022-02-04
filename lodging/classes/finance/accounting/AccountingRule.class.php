@@ -23,15 +23,6 @@ class AccountingRule extends \finance\accounting\AccountingRule {
                 'foreign_object'    => 'lodging\identity\CenterCategory',
                 'description'       => "Center category targeted by the rule.",
                 'required'          => true
-            ],
-
-            'product_models_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'lodging\sale\catalog\ProductModel', 
-                'foreign_field'     => 'accounting_rules_ids', 
-                'rel_table'         => 'lodging_catalog_product_rel_productmodel_accountingrule', 
-                'rel_foreign_key'   => 'product_model_id',
-                'rel_local_key'     => 'accounting_rule_id'
             ]
 
         ];

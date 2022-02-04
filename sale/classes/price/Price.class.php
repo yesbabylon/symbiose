@@ -24,9 +24,20 @@ class Price extends Model {
 
             'price' => [
                 'type'              => 'float',
-                'usage'             => 'amount/money',
-                'required'          => true,
-                'description'       => "Tax excluded price."
+                'usage'             => 'amount/money:4',
+                'description'       => "Tax excluded price.",
+                'onchange'          => 'sale\price\Price::onchangePrice',
+                'required'          => true
+            ],
+
+            'price_vat' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'sale\price\Price::getPriceVat',
+                'usage'             => 'amount/money:4',
+                'description'       => "Tax included price. This field is used to allow encoding prices VAT incl.",
+                'store'             => true,
+                'onchange'          => 'sale\price\Price::onchangePriceVat'
             ],
 
             'type' => [
@@ -61,7 +72,8 @@ class Price extends Model {
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
-                'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to."
+                'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to.",
+                'onchange'          => 'sale\price\Price::onchangeAccountingRuleId'
             ],
 
             'product_id' => [
@@ -70,17 +82,52 @@ class Price extends Model {
                 'description'       => "The Product (sku) the price applies to.",
                 'required'          => true,
                 'onchange'          => 'sale\price\Price::onchangeProductId'
+            ],
+
+            'vat_rate' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/rate',
+                'function'          => 'sale\price\Price::getVatRate',
+                'description'       => 'VAT rate applied on the price (from accounting rule).',
+                'store'             => true,
+                'readonly'          => true
             ]
 
         ];
     }
 
-
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['product_id.sku', 'price_list_id.name']);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['product_id.sku']} - {$odata['price_list_id.name']}";
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $result[$oid] = "{$odata['product_id.sku']} - {$odata['price_list_id.name']}";
+            }
+        }
+        return $result;
+    }
+
+    public static function getVatRate($om, $oids, $lang) {
+        $result = [];
+        $prices = $om->read(__CLASS__, $oids, ['accounting_rule_id.vat_rule_id.rate']);
+
+        if($prices > 0 && count($prices)) {
+            foreach($prices as $pid => $price) {
+                $result[$pid] = $price['accounting_rule_id.vat_rule_id.rate'];
+            }
+        }
+        return $result;
+    }
+
+    public static function getPriceVat($om, $oids, $lang) {
+        $result = [];
+        $prices = $om->read(__CLASS__, $oids, ['price', 'vat_rate']);
+
+        if($prices > 0 && count($prices)) {
+            foreach($prices as $pid => $price) {
+                $result[$pid] = $price['price'] * (1.0 + $price['vat_rate']);
+            }
         }
         return $result;
     }
@@ -97,13 +144,34 @@ class Price extends Model {
         return $result;
     }
 
+    public function onchangeAccountingRuleId($om, $oids, $lang) {
+        $res = $om->write(__CLASS__, $oids, ['vat_rate' => null]);
+    }
+
     public function onchangePriceListId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     public function onchangeProductId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
-    }    
+    }
+
+    /**
+     * Update price, based on VAT incl. price and applied VAT rate
+     */
+    public function onchangePriceVat($om, $oids, $lang) {
+        $prices = $om->read(__CLASS__, $oids, ['price_vat', 'vat_rate']);
+
+        if($prices > 0 && count($prices)) {
+            foreach($prices as $pid => $price) {
+                $om->write(__CLASS__, $pid, ['price' => $price['price_vat'] / (1.0 + $price['vat_rate'])]);
+            }
+        }
+    }
+
+    public function onchangePrice($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price_vat' => null]);
+    }
 
     public function getUnique() {
         return [
