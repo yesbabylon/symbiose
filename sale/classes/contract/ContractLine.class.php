@@ -70,6 +70,7 @@ class ContractLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
+                'usage'             => 'amount/money:4',                
                 'description'       => 'Final (computed) price VAT incl.',
                 'function'          => 'sale\contract\ContractLine::getPrice',
                 'store'             => true

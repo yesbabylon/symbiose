@@ -67,9 +67,22 @@ class Product extends Model {
             ],
 
             'is_pack' => [
-                'type'              => 'boolean',
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'sale\catalog\Product::getIsPack',
                 'description'       => 'Is the product a pack? (from model).',
-                'default'           => 'sale\catalog\Product::defaultIsPack'
+                'store'             => true,                
+                'readonly'          => true
+            ],
+
+            'has_own_price' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'sale\catalog\Product::getHasOwnPrice',
+                'description'       => 'Product is a pack with its own price (from model).',
+                'visible'           => ['is_pack', '=', true],
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'pack_lines_ids' => [
@@ -162,14 +175,32 @@ class Product extends Model {
         return null;
     }
 
-    public static function defaultIsPack($om, $values=[]) {
-        if(isset($values['product_model_id'])) {
-            $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['is_pack']);
-            if($models > 0 && count($models)) {
-                return $models[$values['product_model_id']]['is_pack'];
+    public static function getIsPack($om, $oids, $lang) {
+        $result = [];
+
+        $res = $om->read(get_called_class(), $oids, ['product_model_id.is_pack']);
+
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $result[$oid] = $odata['product_model_id.is_pack'];
             }
         }
-        return null;
+
+        return $result;
+    }
+
+    public static function getHasOwnPrice($om, $oids, $lang) {
+        $result = [];
+
+        $res = $om->read(get_called_class(), $oids, ['product_model_id.has_own_price']);
+
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $result[$oid] = (bool) $odata['product_model_id.has_own_price'];
+            }
+        }
+
+        return $result;
     }
 
     public static function onchangeLabel($om, $oids, $lang) {

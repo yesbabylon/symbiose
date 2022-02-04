@@ -5,12 +5,6 @@
         "items": [
             {
                 "type": "field",
-                "label": "Parent's Product",
-                "value": "parent_product_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "label": "Child's Product",
                 "value": "child_product_id",
                 "width": "20%"

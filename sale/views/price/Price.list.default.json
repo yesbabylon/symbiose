@@ -27,6 +27,12 @@
             },
             {
                 "type": "field",
+                "value": "vat_rate",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "is_active",
                 "width": "10%",
                 "sortable": true

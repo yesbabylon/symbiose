@@ -9,10 +9,20 @@
             "help": ""
         },
         "price": {
-            "label": "Prix",
-            "description": "Prix ​​hors taxes.",
+            "label": "Prix HTVA",
+            "description": "Prix hors taxes.",
             "help": ""
         },
+        "price_vat": {
+            "label": "Prix TVAC",
+            "description": "Prix taxes incluses.",
+            "help": ""
+        },
+        "vat_rate": {
+            "label": "Taux TVA",
+            "description": "Taux de TVA appliqué au prix.",
+            "help": ""
+        },        
         "type": {
             "label": "Type",
             "description": "Type de prix.",

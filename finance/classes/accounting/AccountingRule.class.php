@@ -8,7 +8,7 @@ namespace finance\accounting;
 use equal\orm\Model;
 
 class AccountingRule extends Model {
-    
+
     public static function getName() {
         return "Accounting Rule";
     }
@@ -43,7 +43,7 @@ class AccountingRule extends Model {
                 'foreign_object'    => 'finance\accounting\AccountingRuleLine',
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Lines that are related to this rule."
-            ],            
+            ],
 
             'stat_section_id' => [
                 'type'              => 'many2one',
@@ -54,9 +54,28 @@ class AccountingRule extends Model {
             'vat_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\tax\VatRule',
-                'description'       => "VAT rule this line is related to."
-            ]            
+                'description'       => "VAT rule the line is related to.",
+                'onchange'          => 'finance\accounting\AccountingRule::onchangeVatRuleId'
+            ],
+
+            'prices_ids' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'foreign_field'     => 'accounting_rule_id',
+                'description'       => "Prices that relate to the accounting rule."
+            ]
+
         ];
+    }
+
+
+    public function onchangeVatRuleId($om, $oids, $lang) {
+        $res = $om->read(__CLASS__, $oids, ['prices_ids']);
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $om->write('sale\price\Price', $odata['prices_ids'], ['vat_rate' => null], $lang);
+            }
+        }
     }
 
 }
