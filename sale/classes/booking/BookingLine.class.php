@@ -130,6 +130,7 @@ class BookingLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
+                'usage'             => 'amount/money:4',                
                 'description'       => 'Final (computed) price (VAT included).',
                 'function'          => 'sale\booking\BookingLine::getTotalPrice',
                 'store'             => true
