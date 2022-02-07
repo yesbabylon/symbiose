@@ -1,0 +1,46 @@
+{
+    "name": "Détail",
+    "plural": "Détails",
+    "description": "Vue par défaut pour la liste des Détails.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom du Détail.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description du Détail.",
+            "help": ""
+        },
+        "value":{
+            "label": "Valeur",
+            "description": "Valeur du Détail.",
+            "help": ""
+        },
+        "service_id":{
+            "label": "Service",
+            "description": "Détail du service.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Détail",
+            "description": "",
+            "layout": {
+                "section.detail_info": {
+                    "label": "Infos Détail"
+                },
+                "section.detail_category_service_providers":{
+                    "label": "Catégories des détails"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des détails",
+            "description": "Cette vue est destinée à afficher la liste des détails.",
+            "layout": {}
+            }
+    }
+}

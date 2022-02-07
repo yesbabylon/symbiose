@@ -1,0 +1,22 @@
+[
+    {
+        "name": "inventory\\product\\service\\Service",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "service1",
+                "value": "No idea1",
+                "product_id": 1,
+                "service_provider_id":1
+            },
+            { 
+                "id": 2,
+                "name": "service2",
+                "value": "No idea2",
+                "product_id": 2,
+                "service_provider_id":2
+            }
+        ]
+    }
+]

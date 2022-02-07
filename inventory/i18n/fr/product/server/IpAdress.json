@@ -1,0 +1,48 @@
+{
+    "name": "Adresse IP",
+    "plural": "Adresses IP",
+    "description": "Vue par défaut pour la liste des adresses IP.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom de l'adresse IP.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description de l'adresse IP.",
+            "help": ""
+        },
+        "IPV4":{
+            "label": "IPV4",
+            "description": "Adresse IP sous format IPV4.",
+            "help": ""
+        },
+        "IPV6":{
+            "label": "IPV6",
+            "description": "Adresse IP sous format IPV6.",
+            "help": ""
+        },
+        "server_id":{
+            "label": "Serveur",
+            "description": "Adresse IP du serveur.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Adresse IP",
+            "description": "",
+            "layout": {
+                "section.ip_adress_info": {
+                    "label": "Infos Adresse IP"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des adresses Ips",
+            "description": "Cette vue est destinée à afficher la liste des adresses Ips.",
+            "layout": {}
+            }
+    }
+}

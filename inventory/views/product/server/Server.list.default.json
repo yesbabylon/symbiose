@@ -1,0 +1,21 @@
+{
+    "name": "Servers list",
+    "description": "Default listing of all servers.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "50%",
+                "sortable": true
+            }
+        ]
+    }
+}

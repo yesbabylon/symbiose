@@ -1,0 +1,29 @@
+[
+    {
+        "name": "inventory\\product\\server\\Instance",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "Instance1",
+                "version": "production",
+                "value": "No idea2",
+                "server_id": 1
+            },
+            { 
+                "id": 2,
+                "name": "Instance2",
+                "version": "production",
+                "value": "No idea2",
+                "server_id": 2
+            },
+            { 
+                "id": 3,
+                "name": "Instance3",
+                "version": "production",
+                "value": "No idea2",
+                "server_id": 3
+            }  
+        ]
+    }
+]

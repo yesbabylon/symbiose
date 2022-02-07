@@ -1,0 +1,51 @@
+{
+    "name": "Fournisseur de service",
+    "plural": "Fournisseur de services",
+    "description": "Vue par défaut pour la liste des fournisseur de services.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom du fournisseur de service.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description du Fournisseur de service.",
+            "help": ""
+        },
+        "login_url":{
+            "label": "Url de connexion",
+            "description": "Url pour arriver au portail de connexion.",
+            "help": ""
+        },
+        "service_provider_category_id":{
+            "label": "Catégories de fournisseurs",
+            "description": "Catégories de fournisseurs de service.",
+            "help": ""
+        },
+        "service_provider_detail_category_id":{
+            "label": "Catégories de détails",
+            "description": "Catégories de détails liées à un fournisseur.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Fournisseur de service",
+            "description": "",
+            "layout": {
+                "section.service_provider_info": {
+                    "label": "Infos Fournisseur"
+                },
+                "section.service_provider_services":{
+                    "label": "Catégories de fournisseur"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des fournisseurs",
+            "description": "Cette vue est destinée à afficher la liste des fournisseurs.",
+            "layout": {}
+            }
+    }
+}

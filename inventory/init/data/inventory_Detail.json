@@ -1,0 +1,14 @@
+[
+    {
+        "name": "inventory\\product\\service\\Detail",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "Cambiasso",
+                "value": "No idea",
+                "service_id":1
+            }
+        ]
+    }
+]

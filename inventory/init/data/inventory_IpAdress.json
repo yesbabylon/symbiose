@@ -1,0 +1,14 @@
+[
+    {
+        "name": "inventory\\product\\server\\IpAdress",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "server_id": 1,
+                "IPV4": "1542.6515645",
+                "IPV6": "65465456"
+            }
+        ]
+    }
+]

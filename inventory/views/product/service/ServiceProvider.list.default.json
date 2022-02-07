@@ -1,0 +1,37 @@
+{
+    "name": "Service Providers list",
+    "description": "Default listing of all service providers.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "login_url",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_provider_category_id",
+                "label": "Category",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "service_provider_detail_category_id",
+                "label": "Detail category",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

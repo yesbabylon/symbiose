@@ -1,0 +1,53 @@
+{
+    "name": "Service provider category",
+    "description": "Default form for a service provider category",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "Category Infos",
+                        "id": "section.service_provider_category_info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Service Providers",
+                        "id": "section.service_provider_category_service_providers",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "services_providers_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

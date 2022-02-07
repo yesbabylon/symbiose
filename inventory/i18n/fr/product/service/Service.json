@@ -1,0 +1,49 @@
+{
+    "name": "Service",
+    "plural": "Services",
+    "description": "Vue par défaut pour la liste des services.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom du service.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description du service.",
+            "help": ""
+        },
+        "service_provider_id":{
+            "label": "Fournisseur de service",
+            "description": "Fournisseur de service du service.",
+            "help": ""
+        },
+        "product_id":{
+            "label": "Produit",
+            "description": "Produit qui utilise le service.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Service",
+            "description": "",
+            "layout": {
+                "section.service-info": {
+                    "label": "Infos Service"
+                },
+                "section.service_access":{
+                    "label": "Accès"
+                },
+                "section.service_details":{
+                    "label": "Détails"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des Services",
+            "description": "Cette vue est destinée à afficher la liste des Services.",
+            "layout": {}
+            }
+    }
+}

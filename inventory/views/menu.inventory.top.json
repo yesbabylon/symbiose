@@ -1,0 +1,15 @@
+{
+  "name": "Documents menu",
+  "layout": {
+    "items": [
+      {
+        "id": "item.home",
+        "label": "Home",
+        "description": "",
+        "icon": "menu_book",
+        "type": "entry",
+        "route": "/"
+      }
+    ]
+  }
+}
