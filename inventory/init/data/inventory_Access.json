@@ -1,0 +1,20 @@
+[
+    {
+        "name": "inventory\\product\\Access",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "access1",
+                "username":"Elton",
+                "password":"Minou5310",
+                "type": "www",
+                "server_id":1,
+                "instance_id":1,
+                "service_id":1,
+                "host": "equal.local",
+                "port": 4000
+            }
+        ]
+    }
+]

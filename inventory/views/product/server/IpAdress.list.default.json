@@ -1,0 +1,27 @@
+{
+    "name": "Ip Adress list",
+    "description": "Default listing of all Ip Adresses.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "IPV4",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "IPV6",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}

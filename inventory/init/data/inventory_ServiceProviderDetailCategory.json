@@ -1,0 +1,16 @@
+[
+    {
+        "name": "inventory\\product\\service\\ServiceProviderDetailCategory",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "serviceproviderdetailcategory1"
+            },
+            { 
+                "id": 2,
+                "name": "serviceproviderdetailcategory2"
+            }
+        ]
+    }
+]

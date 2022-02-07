@@ -1,0 +1,83 @@
+{
+    "name": "Accès",
+    "plural": "Accès",
+    "description": "Vue par défaut pour la liste des accès.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom de l'accès.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description de la catégorie de fournisseur de service.",
+            "help": ""
+        },
+        "type":{
+            "label": "Type",
+            "description": "Protocols.",
+            "selection": {
+                "www": "www",
+                "ssh": "ssh",
+                "ftp": "ftp",
+                "sftp": "sftp",
+                "pop": "pop",
+                "smtp": "smtp",
+                "git": "git",
+                "docker": "docker"
+            },
+            "help": ""
+        },
+        "host": {
+            "label": "Hôte",
+            "description": "Hôte de l'accès.",
+            "help": ""
+        },
+        "port":{
+            "label": "Port",
+            "description": "Port de l'accès.",
+            "help": ""
+        },
+        "username":{
+            "label": "Identifiant",
+            "description": "Identifiant de l'accès.",
+            "help": ""
+        },
+        "password":{
+            "label": "Mot de passe",
+            "description": "Mot de passe de l'accès.",
+            "help": ""
+        },
+        "server_id":{
+            "label": "Serveur",
+            "description": "Serveur.",
+            "help": ""
+        },
+        "instance_id":{
+            "label": "Instance",
+            "description": "Instance.",
+            "help": ""
+        },
+        "service_id":{
+            "label": "Service",
+            "description": "Service.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Accès",
+            "description": "",
+            "layout": {
+                "section.access_info": {
+                    "label": "Infos Accès"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des accès",
+            "description": "Cette vue est destinée à afficher la liste des accès.",
+            "layout": {}
+            }
+    }
+}

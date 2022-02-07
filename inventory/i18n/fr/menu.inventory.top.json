@@ -1,0 +1,6 @@
+{
+    "description": "",
+    "view": {
+      "item.home": {"label": "home", "help": ""}
+    }
+}

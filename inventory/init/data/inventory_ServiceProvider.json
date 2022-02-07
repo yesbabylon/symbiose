@@ -1,0 +1,22 @@
+[
+    {
+        "name": "inventory\\product\\service\\ServiceProvider",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "serviceprovider1",
+                "value": "No idea1",
+                "service_provider_category_id": 1,
+                "service_provider_detail_category_id": 1
+            },
+            { 
+                "id": 2,
+                "name": "serviceprovider2",
+                "value": "No idea2",
+                "service_provider_category_id": 2,
+                "service_provider_detailcategory_id": 2
+            }
+        ]
+    }
+]

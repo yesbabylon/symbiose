@@ -1,0 +1,15 @@
+{
+    "name": "Services providers details categories  list",
+    "description": "Default listing of all service providers details categories.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "100%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}

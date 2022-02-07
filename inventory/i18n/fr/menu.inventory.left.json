@@ -1,0 +1,6 @@
+{
+    "description": "",
+    "view": {
+      "item.all_Product": {"label": "Tous les produits", "help": ""}
+    }
+}

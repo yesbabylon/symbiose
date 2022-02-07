@@ -1,0 +1,29 @@
+[
+    {
+        "name": "inventory\\product\\server\\Software",
+        "lang": "fr",
+        "data": [
+            { 
+                "id": 1,
+                "name": "lesoftware1",
+                "edition": "Software1",
+                "version":"Elton",
+                "instance_id":1
+            },
+            { 
+                "id": 2,
+                "name": "lesoftware2",
+                "edition": "Software2",
+                "version":"Elton2",
+                "instance_id":2
+            },
+            { 
+                "id": 3,
+                "name": "lesoftware3",
+                "edition": "Software3",
+                "version":"Elton3",
+                "instance_id":1
+            }
+        ]
+    }
+]

@@ -1,0 +1,39 @@
+{
+    "name": "Catégorie de détail",
+    "plural": "Catégories de détail",
+    "description": "Vue par défaut pour la liste des catégories de détail.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom de la catégorie de détail.",
+            "help": ""
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description de la catégorie de fournisseur de service.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Catégorie de fournisseur",
+            "description": "",
+            "layout": {
+                "section.service_provider_detail_category_info": {
+                    "label": "Infos Catégorie"
+                },
+                "section.service_provider_detail_category_service_providers":{
+                    "label": "Fournisseurs"
+                },
+                "section.service_provider_detail_category_details":{
+                    "label": "Détails"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des catégories",
+            "description": "Cette vue est destinée à afficher la liste des catégories de détail/fournisseur.",
+            "layout": {}
+            }
+    }
+}
