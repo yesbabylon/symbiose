@@ -19,9 +19,9 @@ class Condition extends Model {
             'operand' => [
                 'type'              => 'string',
                 'selection'         => [
-                                            'nb_pers', 
-                                            'count_booking_12'
-                                       ],
+                    'nb_pers', 
+                    'count_booking_12'
+                ],
                 'required'          => true
             ],
 

@@ -29,6 +29,7 @@ class VatRule extends Model {
 
             'rate' => [
                 'type'              => 'float',
+                'usage'             => 'amount/percent',                
                 'description'       => "Name of the VAT rule.",
                 'usage'             => 'amount/percentage',
                 'required'          => true

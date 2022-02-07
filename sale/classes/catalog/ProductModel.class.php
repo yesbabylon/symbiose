@@ -79,9 +79,10 @@ class ProductModel extends Model {
 
             'has_own_price' => [
                 'type'              => 'boolean',
-                'description'       => 'Has the bundle its own price, or do we use each sub-product price?',
+                'description'       => 'Has the pack its own price, or do we use each sub-product price?',
                 'default'           => false,
-                'visible'           => ['is_pack', '=', true]
+                'visible'           => ['is_pack', '=', true],
+                'onchange'          => 'sale\catalog\ProductModel::onchangeHasOwnPrice'
             ],
 
             'type' => [
@@ -181,6 +182,15 @@ class ProductModel extends Model {
         }
     }
 
+
+    public static function onchangeHasOwnPrice($om, $oids, $lang) {
+        $models = $om->read(get_called_class(), $oids, ['products_ids', 'has_own_price']);
+        foreach($models as $mid => $model) {
+            $om->write('sale\catalog\Product', $model['products_ids'], ['has_own_price' => $model['has_own_price']]);
+        }
+    }
+
+        
     /**
      *
      * Update related products can_sell

@@ -13,8 +13,8 @@ class Condition extends Model {
 
         return [
             'name' => [
-                'type'              => 'string',
-                'result_type'       => 'computed',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'function'          => 'sale\discount\Condition::getDisplayName',
                 'store'             => true,
                 'description'       => 'Resulting display name of the condition.'

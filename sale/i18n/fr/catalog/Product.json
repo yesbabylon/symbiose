@@ -39,8 +39,13 @@
             "help": ""
         },
         "is_pack": {
-            "label": "Pack ?",
+            "label": "Pack",
             "description": "Le produit contient d'autres produits.",
+            "help": ""
+        },
+        "has_own_price": {
+            "label": "A son propre prix",
+            "description": "Le pack a son propre prix.",
             "help": ""
         },
         "family_id": {

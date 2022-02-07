@@ -17,8 +17,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "ACPTE",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 2,
@@ -34,8 +33,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "ANIM",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 3,
@@ -51,8 +49,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "AssAn",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 4,
@@ -68,8 +65,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "BAR",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 5,
@@ -85,8 +81,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "BOUTIQ",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 6,
@@ -102,8 +97,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "degats",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 7,
@@ -119,8 +113,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "DIV",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 8,
@@ -136,8 +129,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "GITE",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 9,
@@ -153,8 +145,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "INSCR",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 10,
@@ -170,8 +161,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "LOC_LG",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 11,
@@ -187,8 +177,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "LOC_SAL",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 12,
@@ -204,8 +193,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "REMISE",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 13,
@@ -221,8 +209,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "REST",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 14,
@@ -238,8 +225,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "RESTREM",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 15,
@@ -255,8 +241,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "STAGE_E",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 16,
@@ -272,8 +257,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "STAGE_I",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 17,
@@ -289,8 +273,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "TEL",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 18,
@@ -306,8 +289,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "VISITE",
-                "center_category_id": 1,
-                "product_models_ids": []
+                "center_category_id": 1
             },
             {
                 "id": 19,
@@ -323,8 +305,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "ACPTE",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 20,
@@ -340,8 +321,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Anim",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 21,
@@ -357,8 +337,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "AnimRem",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 22,
@@ -374,8 +353,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "degats",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 23,
@@ -391,8 +369,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "DIV",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 24,
@@ -408,8 +385,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Eau",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 25,
@@ -425,8 +401,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Elec",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 26,
@@ -442,8 +417,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Gaz",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 27,
@@ -459,8 +433,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "GITE",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 28,
@@ -476,8 +449,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "INSCR",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 29,
@@ -493,8 +465,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "LOC_MAT",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 30,
@@ -510,8 +481,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "LOC_SAL",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 31,
@@ -527,8 +497,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Mazout",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 32,
@@ -544,8 +513,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Remise",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 33,
@@ -561,8 +529,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "TAXSEJ",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 34,
@@ -578,8 +545,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "TEL",
-                "center_category_id": 2,
-                "product_models_ids": []
+                "center_category_id": 2
             },
             {
                 "id": 35,
@@ -595,8 +561,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "ACPTE",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 36,
@@ -612,8 +577,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "AniDom",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 37,
@@ -629,8 +593,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "ANIM21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 38,
@@ -646,8 +609,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "ANIM6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 39,
@@ -663,8 +625,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "BOISS.6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 40,
@@ -680,8 +641,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "Boisson",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 41,
@@ -697,8 +657,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "BOUT21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 42,
@@ -714,8 +673,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "BOUT6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 43,
@@ -731,8 +689,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "COMTO21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 44,
@@ -748,8 +705,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "COMTO6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 45,
@@ -765,8 +721,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "degats",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 46,
@@ -782,8 +737,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "DIV21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 47,
@@ -799,8 +753,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "DIV6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 48,
@@ -816,8 +769,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "Eau",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 49,
@@ -833,8 +785,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "Elec",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 50,
@@ -850,8 +801,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "EXCEP21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 51,
@@ -867,8 +817,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "execpt6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 52,
@@ -884,8 +833,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "FFtEner",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 53,
@@ -901,8 +849,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "FraisBS",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 54,
@@ -918,8 +865,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "GITE",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 55,
@@ -935,8 +881,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "GITEREm",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 56,
@@ -952,8 +897,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "INSCR",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 57,
@@ -969,8 +913,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "LOC_LG",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 58,
@@ -986,8 +929,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "LOC_SAL",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 59,
@@ -1003,8 +945,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Mazout",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 60,
@@ -1020,8 +961,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Membre",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 61,
@@ -1037,8 +977,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "NETOYC8",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 62,
@@ -1054,8 +993,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "NETTOY",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 63,
@@ -1071,8 +1009,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "PDJ",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 64,
@@ -1088,8 +1025,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "PDJRem",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 65,
@@ -1105,8 +1041,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "RecDi21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 66,
@@ -1122,8 +1057,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "RecDiv6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 67,
@@ -1139,8 +1073,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "Remis0",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 68,
@@ -1156,8 +1089,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 3,
                 "code_legacy": "Remis12",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 69,
@@ -1173,8 +1105,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "Remis21",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 70,
@@ -1190,8 +1121,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "Remis6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 71,
@@ -1207,8 +1137,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "REMISE",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 72,
@@ -1224,8 +1153,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "REMNuiR",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 73,
@@ -1241,8 +1169,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 3,
                 "code_legacy": "REST",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 74,
@@ -1258,8 +1185,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "Rest6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 75,
@@ -1275,8 +1201,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 3,
                 "code_legacy": "RESTREM",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 76,
@@ -1292,8 +1217,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 3,
                 "code_legacy": "RISR12R",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 77,
@@ -1309,8 +1233,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "RISR6R",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 78,
@@ -1326,8 +1249,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 3,
                 "code_legacy": "RISTR12",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 79,
@@ -1343,8 +1265,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "RISTR6",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 80,
@@ -1360,8 +1281,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "RISTTAV",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 81,
@@ -1377,8 +1297,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "SerConf",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 82,
@@ -1394,8 +1313,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "STAGE_E",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 83,
@@ -1411,8 +1329,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "STAGE_I",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 84,
@@ -1428,8 +1345,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 2,
                 "code_legacy": "TaxSej",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 85,
@@ -1445,8 +1361,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 4,
                 "code_legacy": "TEL",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 86,
@@ -1462,8 +1377,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "TIMBRE",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             },
             {
                 "id": 87,
@@ -1479,8 +1393,7 @@
                 "stat_section_id": null,
                 "vat_rule_id": 1,
                 "code_legacy": "VISITE",
-                "center_category_id": 3,
-                "product_models_ids": []
+                "center_category_id": 3
             }
         ]
     }

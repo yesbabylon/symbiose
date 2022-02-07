@@ -47,6 +47,11 @@
             "label": "Catégorie",
             "description": "Catégorie dans laquelle se trouve le document.",
             "help": ""
+        },
+        "preview_image":{
+            "label": "Aperçu",
+            "description": "Vignette d'aperçu du document.",
+            "help": ""
         }
     },
     "view": {

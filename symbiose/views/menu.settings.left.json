@@ -358,7 +358,7 @@
                       "type": "parent",
                       "children": [
                         {
-                          "id": "discounts_discounts",
+                          "id": "discounts.discounts",
                           "type": "entry",
                           "label": "Discounts",
                           "description": "",
@@ -368,7 +368,7 @@
                           }
                         },
                         {
-                          "id": "discounts_lists",
+                          "id": "discounts.lists",
                           "type": "entry",
                           "label": "Discount lists",
                           "description": "",
@@ -378,7 +378,7 @@
                           }
                         },
                         {
-                          "id": "discounts_lists_categories",
+                          "id": "discounts.lists.categories",
                           "type": "entry",
                           "label": "Discount lists categories",
                           "description": "",
@@ -833,9 +833,9 @@
                       }
                     }
                   ]
-                }                
-              ] 
-            },           
+                }
+              ]
+            },
             {
               "id": "settings",
               "label": "Configuration",
@@ -844,25 +844,6 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "settings.calendar",
-                  "label": "Calendar",
-                  "description": "",
-                  "icon": "calendar_today",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "settings.calendar.holidays",
-                      "type": "entry",
-                      "label": "Holidays",
-                      "description": "",
-                      "context": {
-                        "entity": "calendar\\Holiday",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
                   "id": "settings.settings",
                   "label": "Application settings",
                   "description": "",
@@ -870,122 +851,139 @@
                   "type": "parent",
                   "children": [
                     {
-                      "id": "settings.settings.available_settings",
-                      "label": "Available settings",
+                      "id": "settings.settings.available_settings.general",
+                      "type": "entry",
+                      "label": "General Settings",
                       "description": "",
-                      "type":"parent",
                       "icon": "settings",
-                      "children": [
-                        {
-                          "id": "settings.settings.available_settings.all",
-                          "type": "entry",
-                          "label": "All Settings",
-                          "description": "",
-                          "context": {
-                            "entity": "core\\Setting",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.settings.available_settingsValues.all",
-                          "type": "entry",
-                          "label": "All Settings Values",
-                          "description": "",
-                          "context": {
-                            "entity": "core\\SettingValue",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.settings.available_settings.general",
-                          "type": "entry",
-                          "label": "General Settings",
-                          "description": "",
-                          "icon": "settings",
-                          "route": "settings/general"
-                        },
-                        {
-                          "id": "settings.settings.available_settings.sale",
-                          "type": "entry",
-                          "label": "Sales Settings",
-                          "description": "",
-                          "icon": "store",
-                          "route": "settings/sale"
-                        },
-                        {
-                          "id": "settings.settings.available_settings.finance",
-                          "type": "entry",
-                          "label": "Finance Settings",
-                          "description": "",
-                          "icon": "monetization_on",
-                          "route": "settings/finance"
-                        }
-                      ]
+                      "route": "settings/core"
                     },
                     {
-                      "id": "settings.settings.settings_values",
+                      "id": "settings.settings.available_settings.sale",
                       "type": "entry",
-                      "label": "Settings values",
+                      "label": "Sales Settings",
                       "description": "",
-                      "context": {
-                        "entity": "core\\SettingValue",
-                        "view": "list.default"
-                      }
+                      "icon": "store",
+                      "route": "settings/sale"
+                    },
+                    {
+                      "id": "settings.settings.available_settings.finance",
+                      "type": "entry",
+                      "label": "Finance Settings",
+                      "description": "",
+                      "icon": "monetization_on",
+                      "route": "settings/finance"
                     }
                   ]
                 },
                 {
-                  "id": "settings.settings.identities",
-                  "label": "Identities",
+                  "id": "settings.all_settings",
+                  "label": "All settings",
                   "description": "",
-                  "icon": "person",
+                  "icon": "settings",
                   "type": "parent",
                   "children": [
                     {
-                      "id": "settings.settings.identities.identities",
-                      "type": "entry",
+                      "id": "settings.all_settings.calendar",
+                      "label": "Calendar",
+                      "description": "",
+                      "icon": "calendar_today",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "settings.all_settings.calendar.holidays",
+                          "type": "entry",
+                          "label": "Holidays",
+                          "description": "",
+                          "context": {
+                            "entity": "calendar\\Holiday",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "settings.all_settings.identities",
                       "label": "Identities",
                       "description": "",
-                      "context": {
-                        "entity": "identity\\Identity",
-                        "view": "list.default"
-                      }
+                      "icon": "person",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "settings.all_settings.identities.identities",
+                          "type": "entry",
+                          "label": "Identities",
+                          "description": "",
+                          "context": {
+                            "entity": "identity\\Identity",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.all_settings.identities.partners",
+                          "type": "entry",
+                          "label": "Partners",
+                          "description": "",
+                          "context": {
+                            "entity": "identity\\Partner",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.all_settings.identities.addresses",
+                          "type": "entry",
+                          "label": "Addresses",
+                          "description": "",
+                          "context": {
+                            "entity": "identity\\Address",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.all_settings.identities.establishments",
+                          "type": "entry",
+                          "label": "Establishments",
+                          "description": "",
+                          "context": {
+                            "entity": "identity\\Establishment",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
                     },
                     {
-                      "id": "settings.settings.identities.partners",
-                      "type": "entry",
-                      "label": "Partners",
+                      "id": "settings.all_settings.settings",
+                      "label": "Settings",
                       "description": "",
-                      "context": {
-                        "entity": "identity\\Partner",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "settings.settings.identities.addresses",
-                      "type": "entry",
-                      "label": "Addresses",
-                      "description": "",
-                      "context": {
-                        "entity": "identity\\Address",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "settings.settings.identities.establishments",
-                      "type": "entry",
-                      "label": "Establishments",
-                      "description": "",
-                      "context": {
-                        "entity": "identity\\Establishment",
-                        "view": "list.default"
-                      }
-                    }
+                      "icon": "settings",
+                      "type": "parent",
+                      "children": [
+                        {
+                          "id": "settings.all_settings.settings.settings_values",
+                          "type": "entry",
+                          "label": "Settings values",
+                          "description": "",
+                          "context": {
+                            "entity": "core\\setting\\SettingValue",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.all_settings.settings.settings",
+                          "type": "entry",
+                          "label": "Available Settings",
+                          "description": "",
+                          "context": {
+                            "entity": "core\\setting\\Setting",
+                            "view": "list.default"
+                          }
+                        }
+                      ]
+                    }                   
                   ]
                 }
               ]
             }
-
         ]
     }
 }
