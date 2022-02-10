@@ -30,12 +30,6 @@
                                                 "value": "service_provider_category_id",
                                                 "label": "Category",
                                                 "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_provider_detail_category_id",
-                                                "label": "Detail category",
-                                                "width": "25%"
                                             }
                                         ]
                                     },
@@ -45,32 +39,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "100%",
                                                 "widget":{
                                                     "usage": "string/text"
                                                 }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Services",
-                        "id": "section.service_provider_services",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "services_ids",
-                                                "width": "100%"
                                             }
                                         ]
                                     }

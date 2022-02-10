@@ -32,6 +32,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "50%",
                                                 "usage": "string/text",

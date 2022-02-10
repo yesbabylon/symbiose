@@ -24,7 +24,13 @@
                                                 "type": "field",
                                                 "value": "value",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "detail_category_id",
+                                                "width": "25%"
                                             }
+                                           
                                         ]
                                     },
                                     {
@@ -33,32 +39,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "50%",
                                                 "widget":{
                                                     "usage": "string/text"
                                                 }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Categories",
-                        "id": "section.detail_category_service_providers",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "services_providers_details_categories_ids",
-                                                "width": "100%"
                                             }
                                         ]
                                     }

@@ -24,7 +24,9 @@
                 "pop": "pop",
                 "smtp": "smtp",
                 "git": "git",
-                "docker": "docker"
+                "docker": "docker",
+                "http" :"http",
+                "https": "https"
             },
             "help": ""
         },

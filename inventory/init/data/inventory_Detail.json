@@ -7,7 +7,15 @@
                 "id": 1,
                 "name": "Cambiasso",
                 "value": "No idea",
-                "service_id":1
+                "service_id":1,
+                "detail_category_id": 2
+            },
+            { 
+                "id": 2,
+                "name": "key24",
+                "value": "1321645456",
+                "service_id":1,
+                "detail_category_id": 2
             }
         ]
     }

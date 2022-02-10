@@ -1,12 +1,8 @@
 [
     {
-        "name": "inventory\\product\\service\\ServiceProviderCategory",
+        "name": "inventory\\product\\service\\DetailCategory",
         "lang": "fr",
         "data": [
-            { 
-                "id": 1,
-                "name": "Tasks Outsourcing"
-            }, 
             { 
                 "id": 2,
                 "name": "Development Tools"

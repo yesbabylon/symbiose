@@ -39,14 +39,10 @@ class Detail extends Model {
                 'description'       => 'Detail attached to a service.'
             ],
 
-            'services_providers_details_categories_ids' => [
-                'type'              => 'many2many',
-                'foreign_object'    => 'inventory\product\service\ServiceProviderDetailCategory',
-                'foreign_field'     => 'details_ids',
-                'rel_table'         => 'inventory_rel_service_provider_detail_category_detail',
-                'rel_foreign_key'   => 'serviceProviderDetailCategory_id',
-                'rel_local_key'     => 'detail_id',
-                'description'       => 'List of product models assigned to this tag.'
+            'detail_category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\product\service\DetailCategory',
+                'description'       => 'Detail attached to a service.'
             ]
         ];
     }

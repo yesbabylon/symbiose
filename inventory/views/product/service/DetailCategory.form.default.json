@@ -1,13 +1,13 @@
 {
-    "name": "Service provider detail category",
-    "description": "Default form for a service provider detail category",
+    "name": "Detail category",
+    "description": "Default form for detail category",
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
                         "label": "Categories",
-                        "id": "section.service_provider_detail_category_info",
+                        "id": "section.detail_category_info",
                         "rows": [
                             {
                                 "columns": [
@@ -27,29 +27,8 @@
                         ]
                     },
                     {
-                        "label": "Service Providers",
-                        "id": "section.service_provider_detail_category_service_providers",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "services_providers_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Details",
-                        "id": "section.service_provider_detail_category_details",
+                        "id": "section.detail_category_details",
                         "rows": [
                             {
                                 "columns": [

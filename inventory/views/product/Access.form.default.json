@@ -54,7 +54,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "url",
-                                                "width": "25%"
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -64,6 +64,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "50%",
                                                 "widget":{
