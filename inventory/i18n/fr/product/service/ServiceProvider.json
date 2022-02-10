@@ -22,11 +22,6 @@
             "label": "Catégories de fournisseurs",
             "description": "Catégories de fournisseurs de service.",
             "help": ""
-        },
-        "service_provider_detail_category_id":{
-            "label": "Catégories de détails",
-            "description": "Catégories de détails liées à un fournisseur.",
-            "help": ""
         }
     },
     "view": {
