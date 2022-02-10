@@ -6,13 +6,13 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "15%",
+                "width": "5%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "username",
-                "width": "15%"
+                "width": "10%"
             },
             {
                 "type": "field",
@@ -35,6 +35,12 @@
                 "type": "field",
                 "value": "port",
                 "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "url",
+                "width": "35%",
                 "sortable": true
             }
         ]

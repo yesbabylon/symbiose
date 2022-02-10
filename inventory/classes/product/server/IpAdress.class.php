@@ -15,20 +15,20 @@ class IpAdress extends Model {
         return [
             'IPV4' => [
                 'type'              => 'string',
+                'onchange'          => 'inventory\product\server\IpAdress::getIP',
                 'description'       => 'IPV4 adress of the server (32 bits).'
             ],
 
             'IPV6' => [
                 'type'              => 'string',
+                'onchange'          => 'inventory\product\server\IpAdress::getIP',
                 'description'       => 'IPV6 adress of the server (128 bits).'
             ],
             'name' => [
                 'type'              => 'computed',
-                'description'       => 'URL to access the product element.',
+                'description'       => 'name to access the product element.',
                 'function'          => 'inventory\product\server\IpAdress::getIP',
-                'onchange'          => 'inventory\product\server\IpAdress::getIP',
                 'result_type'       => 'string',
-                'usage'             => 'uri/url',
                 'store'             => true,
                 'readonly'          => true 
             ],
@@ -47,27 +47,54 @@ class IpAdress extends Model {
         ];
     }
 
-    public static function getIP($om, $oids, $lang) {
-        
+    public static function getIP($om, $oids, $lang) {    
         $res = $om->read(__CLASS__, $oids, ['IPV4', 'IPV6','description'], $lang);
-      
         $result = [];
         foreach($res as $oid=>$oIP) {
             $result[$oid] = '';
             if($oIP['IPV4']){
                 $result[$oid] = $oIP['IPV4'];
+                $om->write(__CLASS__, $oid, ['name' => $oIP['IPV4']]);
             }
             else if($oIP['IPV6']){
                 $result[$oid] = $oIP['IPV6'];
-            }
-            
+                $om->write(__CLASS__, $oid, ['name' => $oIP['IPV6']]);
+            }  
         }
-        ob_start();
-        var_dump($res);
-        $buff = ob_get_clean();
-        trigger_error("QN_DEBUG_ORM::{$buff}", QN_REPORT_ERROR);
-
+        
         return $result;
     }
+
+    // public static function getIPV4($om, $oids, $lang) {    
+    //     $res = $om->read(__CLASS__, $oids, ['IPV4', 'IPV6','description'], $lang);
+    //     $result = [];
+    //     foreach($res as $oid=>$oIP) {       
+    //         if($oIP['IPV4']){  
+    //             $om->write(__CLASS__, $oid, ['name' => $oIP['IPV4']]);
+    //         }
+    //         else if($oIP['IPV6']){
+    //             $om->write(__CLASS__, $oid, ['name' => $oIP['IPV6']]);
+    //         }  
+    //         $result[$oid] = $oIP['IPV4'];
+    //     }
+       
+    //     return $result;
+    // }
+
+    // public static function getIPV6($om, $oids, $lang) {    
+    //     $res = $om->read(__CLASS__, $oids, ['IPV4', 'IPV6','description'], $lang);
+    //     $result = [];
+    //     foreach($res as $oid=>$oIP) {
+    //         if($oIP['IPV4']){  
+    //             $om->write(__CLASS__, $oid, ['name' => $oIP['IPV4']]);
+    //         }
+    //         else if($oIP['IPV6']){
+    //             $om->write(__CLASS__, $oid, ['name' => $oIP['IPV6']]);
+    //         }  
+    //         $result[$oid] = $oIP['IPV6'];
+    //     }
+        
+    //     return $result;
+    // }
 
 }

@@ -42,13 +42,13 @@ class ServiceProvider extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\product\service\ServiceProviderCategory',
                 'description'       => 'category in which the service provider belongs.'
-            ],
-
-            'service_provider_detail_category_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'inventory\product\service\ServiceProviderDetailCategory',
-                'description'       => 'category in which the service provider belongs.'
             ]
+
+            // 'service_provider_detail_category_id' => [
+            //     'type'              => 'many2one',
+            //     'foreign_object'    => 'inventory\product\service\ServiceProviderDetailCategory',
+            //     'description'       => 'category in which the service provider belongs.'
+            // ]
         ];
     }
 }

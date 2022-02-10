@@ -30,7 +30,9 @@ class Access extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['www', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
+                'selection'         => ['http', 'https', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
+                'onchange'          => 'inventory\product\Access::getUrl',
+                'onchange'          => 'inventory\product\Access::getType',
                 'description'       => 'Type of the access',
                 'required'          => true
             ],
@@ -41,19 +43,20 @@ class Access extends Model {
                 'function'          => 'inventory\product\Access::getUrl',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
-                'onchange'          => 'inventory\product\Access::getUrl',
-                'store'             => false,
+                'store'             => true,
                 'readonly'          => true
             ],
 
             'host' => [
                 'type'              => 'string',
+                'onchange'          => 'inventory\product\Access::getUrl',
                 'description'       => "IP address or hostname¨of the server",
                 'required'          => true
             ],
 
             'port' => [
                 'type'              => 'string',
+                'onchange'          => 'inventory\product\Access::getUrl',
                 'description'       => "port to connect to (default based on protocol)"
             ],
 
@@ -92,13 +95,28 @@ class Access extends Model {
 
 
     public static function getUrl($om, $oids) {
-        $res = $om->read(__CLASS__, $oids, ['port', 'host', 'type']);
-    
-        $result = [];
+        $res = $om->read(__CLASS__, $oids, ['port', 'host', 'type', 'username', 'password']);
         foreach($res as $oid=>$ourl) {
-            $content = $ourl['type'].'.'.$ourl['host'].':'.$ourl['port'];
-            $result[$oid] = $content;
-        }   
-        return $result;  
+            $content = $ourl['type'].'://'.$ourl['username'].':'.$ourl['password'].'@'.$ourl['host'].($ourl['port']?':'.$ourl['port']:'');
+            $om->write(__CLASS__, $oids, ['url' => $content]);
+        }      
+    }
+
+    public static function getType($om, $oids) {
+        $res = $om->read(__CLASS__, $oids, ['type']);
+        foreach($res as $oid=>$otype) {
+            $defaultPort = ['http' => '80', 
+                            'https' => '443', 
+                            'ssh' => '22', 
+                            'ftp' => '20', 
+                            'sftp' => '22', 
+                            'pop' => '110', 
+                            'smtp' => '25', 
+                            'git' => '9418', 
+                            'docker' => '2345',
+                            ];
+            $content = $defaultPort[$otype['type']];
+            $om->write(__CLASS__, $oids, ['port' => $content]);
+        }      
     }
 }
