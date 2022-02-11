@@ -78,7 +78,6 @@ class Customer extends \identity\Partner {
                 'description'       => "The bookings history of the customer.",
             ]
 
-
         ];
     }
 

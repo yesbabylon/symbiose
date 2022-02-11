@@ -1,4 +1,9 @@
 <?php
+/*
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
+*/
 if(!file_exists(QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php')) {
     throw new Exception("missing_dependency", QN_ERROR_INVALID_CONFIG);
 }

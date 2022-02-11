@@ -8,7 +8,7 @@ use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
 use core\Task;
-use core\SettingValue;
+use core\setting\SettingValue;
 
 list($params, $providers) = announce([
     'description'   => "Update the status of given booking to 'option'. Related consumptions are added to the planning. Auto-deprecation of the option is scheduled according to setting `sale.booking.option.validity`.",

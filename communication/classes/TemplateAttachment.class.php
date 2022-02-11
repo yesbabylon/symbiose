@@ -19,6 +19,12 @@ class TemplateAttachment extends Model {
                 'required'          => true
             ],
 
+            'document_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'documents\Document',
+                'description'       => "The document that the attachment points to."
+            ],
+            
             'template_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'communication\Template',
@@ -26,12 +32,7 @@ class TemplateAttachment extends Model {
                 'required'          => true
             ],
 
-            'document_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'documents\Document',
-                'description'       => "The document that the attachment points to."
-            ],
-
+            // we use a lang_id since one2many relations cannot be multilang
             'lang_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\Lang',

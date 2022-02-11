@@ -97,14 +97,14 @@ class Booking extends \sale\booking\Booking {
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
 
-        $bookings = $om->read(__CLASS__, $oids, ['center_id.group_code'], $lang);
+        $bookings = $om->read(__CLASS__, $oids, ['center_id.center_group_id.code'], $lang);
 
         foreach($bookings as $oid => $booking) {
 
-            $settings_ids = $om->search('core\Setting', [
-                ['name', '=', 'booking.sequence.'.$booking['center_id.group_code']],
+            $settings_ids = $om->search('core\setting\Setting', [
                 ['package', '=', 'sale'],
-                ['section', '=', 'booking']
+                ['section', '=', 'booking'],                
+                ['code', '=', 'booking.sequence.'.$booking['center_id.center_group_id.code']]
             ]);
 
             if($settings_ids < 0 || !count($settings_ids)) {
@@ -114,7 +114,7 @@ class Booking extends \sale\booking\Booking {
             }
 
             // by default settings values are sorted on user_id : first value is the default one
-            $settings = $om->read('core\Setting', $settings_ids, ['setting_values_ids']);
+            $settings = $om->read('core\setting\Setting', $settings_ids, ['setting_values_ids']);
             if($settings < 0 || !count($settings)) {
                 // unexpected error : misconfiguration (setting is missing)
                 $result[$oid] = 0;
@@ -122,7 +122,7 @@ class Booking extends \sale\booking\Booking {
             }
 
             $setting = array_pop($settings);
-            $setting_values = $om->read('core\SettingValue', $setting['setting_values_ids'], ['value']);
+            $setting_values = $om->read('core\setting\SettingValue', $setting['setting_values_ids'], ['value']);
             if($setting_values < 0 || !count($setting_values)) {
                 // unexpected error : misconfiguration (no value for setting)
                 $result[$oid] = 0;
@@ -133,9 +133,9 @@ class Booking extends \sale\booking\Booking {
             $setting_value = array_values($setting_values)[0];
 
             $sequence = (int) $setting_value['value'];
-            $om->write('core\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
+            $om->write('core\setting\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
 
-            $result[$oid] = ((string) $booking['center_id.group_code']) . ((string) $sequence);
+            $result[$oid] = ((string) $booking['center_id.center_group_id.code']) . ((string) $sequence);
 
         }
         return $result;

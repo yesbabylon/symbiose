@@ -10,17 +10,22 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "40%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Center Name",
                                                 "value": "name",
-                                                "width": "40%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "header": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "60%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "code_alpha",
@@ -28,13 +33,18 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "group_code",
-                                                "width": "20%"
+                                                "value": "analytic_section_id",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "analytic_section_id",
-                                                "width": "20%"
+                                                "value": "center_group_id",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "use_group_details",
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -53,7 +63,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "45%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "id": "details.address",
@@ -64,16 +74,23 @@
                                         ]
                                     },
                                     {
-                                        "width": "15%",
-                                        "items": []
-                                    },
-                                    {
-                                        "width": "40%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "id": "details.identification",
                                                 "type": "label",
                                                 "value": "Identification",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "id": "details.contact",
+                                                "type": "label",
+                                                "value": "Contact",
                                                 "width": "100%"
                                             }
                                         ]
@@ -83,7 +100,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "45%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -118,11 +135,7 @@
                                         ]
                                     },
                                     {
-                                        "width": "15%",
-                                        "items": []
-                                    },
-                                    {
-                                        "width": "40%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -132,23 +145,32 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Manager",
-                                                "value": "manager_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "registration_number",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "bank_account_iban",
+                                                "value": "manager_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "email",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "phone",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "bank_account_bic",
+                                                "value": "fax",
                                                 "width": "50%"
                                             }
                                         ]
@@ -192,27 +214,7 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "email",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "phone",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "manager_id",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
