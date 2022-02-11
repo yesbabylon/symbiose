@@ -20,9 +20,9 @@ class DocumentCategory extends Model {
                 'onchange'          => 'documents\DocumentCategory::onchangePath'
             ],
 
-            'children_ids' => [ 
-                'type'              => 'one2many', 
-                'foreign_object'    => 'documents\DocumentCategory', 
+            'children_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'documents\DocumentCategory',
                 'foreign_field'     => 'parent_id'
             ],
 
@@ -37,8 +37,9 @@ class DocumentCategory extends Model {
                 'type'              => 'computed',
                 'function'          => 'documents\DocumentCategory::getPath',
                 'result_type'       => 'string',
-                'store'             =>  true,
                 'description'       => 'Full path of the Document',
+                'store'             => true,
+                'multilang'         => true,
                 'readonly'          => true
             ],
 
@@ -54,7 +55,7 @@ class DocumentCategory extends Model {
 
     public static function getPath($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['name', 'parent_id']);
+        $res = $om->read(__CLASS__, $oids, ['name', 'parent_id'], $lang);
         foreach($res as $oid => $odata) {
             if($odata['parent_id']) {
                 $paths = self::getPath($om, (array) $odata['parent_id'], $lang);
@@ -65,17 +66,16 @@ class DocumentCategory extends Model {
             }
         }
         return $result;
-    }  
+    }
 
     public static function onchangePath($om, $oids, $lang){
-        $om->write(__CLASS__, $oids, ['path' => null]);
+        $om->write(__CLASS__, $oids, ['path' => null], $lang);
         $res = $om->read(__CLASS__, $oids, ['children_ids']);
 
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
-                $om->write('documents\DocumentCategory', $odata['children_ids'], ['path' => null]);
-            }                
+                $om->write('documents\DocumentCategory', $odata['children_ids'], ['path' => null], $lang);
+            }
         }
-
     }
 }

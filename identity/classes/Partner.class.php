@@ -90,6 +90,13 @@ class Partner extends Model {
                 'function'          => 'identity\Partner::getTitle',
                 'result_type'       => 'string',
                 'description'       => 'Title of the contact (from Identity).'
+            ],
+
+            'lang_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\Lang',
+                'description'       => "Preferred language of the partner (relates to identity).",
+                'default'           => 1
             ]
 
         ];
@@ -102,8 +109,14 @@ class Partner extends Model {
     }
 
     public static function onchangeIdentity($om, $oids, $lang) {
+        $res = $om->read(get_called_class(), $oids, [ 'partner_identity_id.lang_id' ], $lang);        
+        if($res > 0 && count($res) ) {
+            foreach($res as $oid => $odata) {
+                $om->write(get_called_class(), $oids, [ 'lang_id' => $odata['partner_identity_id.lang_id'] ], $lang);        
+            }
+        }
         $om->write(get_called_class(), $oids, [ 'name' => null ], $lang);
-        // force immediate re-computing
+        // force immediate re-computing of the name
         $om->read(get_called_class(), $oids, [ 'name' ], $lang);        
     }
 

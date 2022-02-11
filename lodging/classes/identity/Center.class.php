@@ -20,16 +20,22 @@ class Center extends \identity\Establishment {
 
         return [
 
-            'group_code' => [
-                'type'              => 'string',
-                'description'       => 'Numeric identifier of the logical entity of the center (1 hexadec. digit).',
-                'usage'             => 'numeric/hexadecimal:1'
-            ],
+            'center_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\identity\CenterGroup',
+                'description'       => 'Management Group to which the center belongs.'
+            ],            
 
             'code_alpha' => [
                 'type'              => 'string',
-                'description'       => 'Alpha identifier of the center (2 uppercase letters).'
+                'description'       => 'Unique alpha identifier of the center (2 uppercase letters).'
             ],
+
+            'use_group_details' => [
+                'type'              => 'boolean',
+                'description'       => "Use the Center Group contact details in booking communications (instead of the ones of the center)?",
+                'default'           => false
+            ],            
 
             /*
                 The manager is stored as part of the Center object.
@@ -38,7 +44,7 @@ class Center extends \identity\Establishment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'domain'            => ['relationship', '=', 'employee'],
-                'description'       => 'List of employees of the organisation, if any.'
+                'description'       => 'Manager of the center, if any.'
             ],
 
 
@@ -125,7 +131,6 @@ class Center extends \identity\Establishment {
 
     public function getUnique() {
         return [
-            ['group_code'],
             ['code_alpha']
         ];
     }

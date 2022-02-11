@@ -23,9 +23,19 @@
 			"description": "Quantité auto-assignée pour ce produit.",
 			"help": ""
 		},
+		"has_own_duration": {
+			"label": "A sa propre durée",
+			"description": "Le produit a-t-il sa propre durée?",
+			"help": ""
+		},
+		"own_duration": {
+			"label": "Durée",
+			"description": "Durée, en jours, pour ce produit.",
+			"help": ""
+		},		
 		"share": {
 			"label": "Part",
-			"description": "Pourcentage de part de la ligne pour l'analyse.",
+			"description": "Part de la ligne pour l'analyse (en pourcentage).",
 			"help": ""
 		}
 	},

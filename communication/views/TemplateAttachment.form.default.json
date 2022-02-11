@@ -21,9 +21,14 @@
                                                 }
                                             },
                                             {
-                                                "type": "lable",
+                                                "type": "label",
                                                 "value": "",
-                                                "width": "50%"
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "lang_id",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
@@ -33,7 +38,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "template_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": false
                                             }
 
                                         ]

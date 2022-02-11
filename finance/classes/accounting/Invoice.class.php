@@ -103,7 +103,7 @@ class Invoice extends Model {
                 $result[$oid] = '[proforma]';
             }
             else if($invoice['status'] == 'invoice') {
-                $settings_ids = $om->search('core\Setting', [
+                $settings_ids = $om->search('core\setting\Setting', [
                     ['name', '=', 'invoice.sequence.'.$invoice['organisation_id']],
                     ['package', '=', 'sale'],
                     ['section', '=', 'invoice']
@@ -116,7 +116,7 @@ class Invoice extends Model {
                 }
 
                 // by default settings values are sorted on user_id : first value is the default one
-                $settings = $om->read('core\Setting', $settings_ids, ['setting_values_ids']);
+                $settings = $om->read('core\setting\Setting', $settings_ids, ['setting_values_ids']);
                 if($settings < 0 || !count($settings)) {
                     // unexpected error : misconfiguration (setting is missing)
                     $result[$oid] = 0;
@@ -124,7 +124,7 @@ class Invoice extends Model {
                 }
 
                 $setting = array_pop($settings);
-                $setting_values = $om->read('core\SettingValue', $setting['setting_values_ids'], ['value']);
+                $setting_values = $om->read('core\setting\SettingValue', $setting['setting_values_ids'], ['value']);
                 if($setting_values < 0 || !count($setting_values)) {
                     // unexpected error : misconfiguration (no value for setting)
                     $result[$oid] = 0;
@@ -135,7 +135,7 @@ class Invoice extends Model {
                 $setting_value = array_values($setting_values)[0];
                 $sequence = (int) $setting_value['value'];
 
-                $om->write('core\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
+                $om->write('core\setting\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
 
                 $result[$oid] = sprintf("%4d-%02d-%04d", date('Y'), $invoice['organisation_id'], $sequence);
             }

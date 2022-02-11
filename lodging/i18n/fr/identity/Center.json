@@ -3,9 +3,14 @@
     "plural": "Centres",
     "description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
     "model": {
-        "group_code": {
-            "label": "Code de groupe",
-            "description": "Code de regroupement centre (1 chiffre hexa).",
+        "center_group_id": {
+            "label": "Equipe de gestion",
+            "description": "Equipe de gestion du centre.",
+            "help": ""
+        },
+        "use_group_details": {
+            "label": "Coordonnées de l'Equipe de gestion?",
+            "description": "Utiliser les coordonnées de l'équipe dans les communications (plutot que celles du centre).",
             "help": ""
         },
         "code_alpha": {

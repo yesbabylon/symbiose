@@ -55,6 +55,11 @@
             "label": "Type de client",
             "description": "Type de client (en relation avec les classes tarifaires).",
             "help": ""
+        },
+        "lang_id": {
+            "label": "Langue",
+            "description": "Langue du client (en lien avec son identité).",
+            "help": ""
         }
     },
     "view": {

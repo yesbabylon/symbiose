@@ -32,6 +32,12 @@
                 "label": "Rate class",         
                 "value": "rate_class_id",
                 "width": "15%"
+            },
+            {
+                "type": "field",   
+                "label": "Lang",         
+                "value": "lang_id",
+                "width": "10%"
             }
         ]
     }
