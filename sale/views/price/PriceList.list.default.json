@@ -1,13 +1,6 @@
 {
     "name": "Price List",
-    "description": "This view is intended for displaying the list of prices.",
-    "actions": [
-        {
-            "id": "ACTIONS.CREATE",
-            "view": "form.create",
-            "description": "overload form to use for price creation"
-        }
-    ],    
+    "description": "This view is intended for displaying the list of prices.", 
     "layout": {
         "items": [
             {
