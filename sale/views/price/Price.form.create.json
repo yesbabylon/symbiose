@@ -27,11 +27,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "vat_rate",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "price_vat",
                                                 "width": "50%"
                                             }                                            
