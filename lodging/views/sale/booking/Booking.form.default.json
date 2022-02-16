@@ -75,7 +75,7 @@
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true,
+                                                    "heading": true,
                                                     "readonly": true
                                                 }
                                             },
@@ -84,7 +84,7 @@
                                                 "value": "status",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true,
+                                                    "heading": true,
                                                     "readonly": true
                                                 }
                                             },

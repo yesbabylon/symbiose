@@ -17,7 +17,7 @@
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
@@ -25,7 +25,7 @@
                                                 "value": "legal_name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
