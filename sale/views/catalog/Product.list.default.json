@@ -3,6 +3,16 @@
     "description": "This view is intended for displaying the list of products.",
     "order": "sku,product_model_id",
     "sort": "asc",
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for product creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {

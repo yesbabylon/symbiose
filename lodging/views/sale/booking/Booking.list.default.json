@@ -15,13 +15,17 @@
             "visible": ["status", "=", "quote"]
         }
     ],
-    "actions": [
-        {
-            "id": "ACTIONS.CREATE",
-            "view": "form.create",
-            "description": "overload form to use for booking creation"
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for booking creation"
+                }
+            ]
         }
-    ],    
+    },
+
     "layout": {
         "items": [
             {

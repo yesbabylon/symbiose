@@ -109,5 +109,9 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "code_alpha": {
+            "invalid": "Le code doit correspondre deux lettres majuscules."
+        }
+    }
 }
