@@ -15,8 +15,7 @@ use SepaQr\Data;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
 
-use lodging\sale\booking\Booking;
-use lodging\sale\booking\Contract;
+use lodging\sale\booking\Invoice;
 use sale\booking\Funding;
 use communication\Template;
 use communication\TemplatePart;
@@ -28,7 +27,7 @@ list($params, $providers) = announce([
     'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
     'params'        => [
         'id' => [
-            'description'   => 'Identitifier of the contract to print.',
+            'description'   => 'Identitifier of the invoice to print.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -57,7 +56,7 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
     Retrieve the requested template
 */
 
-$entity = 'lodging\sale\booking\Contract';
+$entity = 'lodging\sale\booking\Invoice';
 $parts = explode('\\', $entity);
 $package = array_shift($parts);
 $class_path = implode('/', $parts);
@@ -79,7 +78,7 @@ $twig->addExtension($extension);
 
 $twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
 
-// read contract
+// read invoice
 $fields = [
     'booking_id' => [
         'name',
@@ -138,21 +137,11 @@ $fields = [
             'payment_deadline_id' => ['name']
         ]
     ],
-    'contract_line_groups_ids' => [
+    'invoice_lines_groups_ids' => [
         'name',
-        'is_pack',
-        'description',
-        'contract_line_id' => [
-            'name',
+        'invoice_lines_ids' => [
+            'product_id',
             'qty',
-            'unit_price',
-            'price',
-            'vat_rate'
-        ],
-        'contract_lines_ids' => [
-            'name',
-            'qty',
-            'unit_price',
             'price',
             'discount',
             'free_qty',
@@ -162,10 +151,10 @@ $fields = [
 ];
 
 
-$contract = Contract::id($params['id'])->read($fields)->first();
+$invoice = Invoice::id($params['id'])->read($fields)->first();
 
-if(!$contract) {
-    throw new Exception("unknown_contract", QN_ERROR_UNKNOWN_OBJECT);
+if(!$invoice) {
+    throw new Exception("unknown_invoice", QN_ERROR_UNKNOWN_OBJECT);
 }
 
 
@@ -173,7 +162,7 @@ if(!$contract) {
     extract required data and compose the $value map for the twig template
 */
 
-$booking = $contract['booking_id'];
+$booking = $invoice['booking_id'];
 
 
 // set header image based on the organisation of the center
@@ -195,8 +184,8 @@ if(file_exists($img_path)) {
 
 $values = [
     'header_img_url'        => $img_url,
-    'contract_header_html'  => '',
-    'contract_notice_html'  => '',
+    'invoice_header_html'  => '',
+    'invoice_notice_html'  => '',
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
     'contact_name'          => '',
     'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
@@ -242,18 +231,18 @@ if($booking['center_id']['template_category_id']) {
 
     $template = Template::search([ 
                             ['category_id', '=', $booking['center_id']['template_category_id']], 
-                            ['code', '=', 'contract'], 
-                            ['type', '=', 'contract'] 
+                            ['code', '=', 'invoice'], 
+                            ['type', '=', 'invoice'] 
                         ])
                         ->read(['parts_ids' => ['name', 'value']])
                         ->first();
 
     foreach($template['parts_ids'] as $part_id => $part) {
         if($part['name'] == 'header') {
-            $values['contract_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
+            $values['invoice_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
         }
         else if($part['name'] == 'notice') {
-            $values['contract_notice_html'] = $part['value'];            
+            $values['invoice_notice_html'] = $part['value'];            
         }
     }
 
@@ -265,66 +254,30 @@ if($booking['center_id']['template_category_id']) {
 
 $lines = [];
 
-foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
+foreach($invoice['contract_line_groups_ids'] as $invoice_line_group) {
 
-    if($contract_line_group['is_pack']) {
-        $group_is_pack = true;
+    $line = [
+        'name'          => $invoice_line_group['name'],
+        'price'         => 0,
+        'unit_price'    => 0,
+        'vat_rate'      => 0,
+        'qty'           => 0,
+        'is_group'      => true
+    ];
+    $lines[] = $line;
 
-        $price_vat_e = $contract_line_group['contract_line_id']['price'] / (1 + $contract_line_group['contract_line_id']['vat_rate']);
-        $values['total'] += $price_vat_e;
-        $values['vat'] += $contract_line_group['contract_line_id']['price'] - $price_vat_e;
-
-        $line = [
-            'name'          => $contract_line_group['name'],
-            'description'   => $contract_line_group['contract_line_id']['name'],
-            'price'         => $contract_line_group['contract_line_id']['price'],
-            'price_excl'    => $price_vat_e,
-            'unit_price'    => $contract_line_group['contract_line_id']['unit_price'],
-            'vat_rate'      => $contract_line_group['contract_line_id']['vat_rate'],
-            'qty'           => $contract_line_group['contract_line_id']['qty'],
-            'is_group'       => true,
-            'is_pack'        => true
-        ];
-        $lines[] = $line;
-    }
-    else {
-        $group_is_pack = false;
-        $line = [
-            'name'          => $contract_line_group['name'],
-            'price'         => 0,
-            'unit_price'    => 0,
-            'vat_rate'      => 0,
-            'qty'           => 0,
-            'is_group'       => true,
-            'is_pack'        => false
-        ];
-        $lines[] = $line;
-    }
-
-    foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
-        if( !empty($contract_line_group['contract_line_id']) && $contract_line['id'] == $contract_line_group['contract_line_id']['id']) {
-            continue;
-        }
-
-        $price_vat_e = $contract_line['price'] / (1 + $contract_line['vat_rate']);
+    foreach($invoice_line_group['invoice_lines_ids'] as $invoice_line) {
 
         $line = [
-            'name'          => $contract_line['name'],
-            'price'         => $contract_line['price'],
-            'price_excl'    => $price_vat_e,
-            'unit_price'    => $contract_line['unit_price'],
-            'vat_rate'      => $contract_line['vat_rate'],
-            'qty'           => $contract_line['qty'],
-            'discount'      => $contract_line['discount'],
-            'free_qty'      => $contract_line['free_qty'],
-            'is_group'      => false,
-            'group_is_pack' => $group_is_pack
+            'name'          => $invoice_line['name'],
+            'price'         => $invoice_line['price'],
+            'unit_price'    => $invoice_line['unit_price'],
+            'vat_rate'      => $invoice_line['vat_rate'],
+            'qty'           => $invoice_line['qty'],
+            'discount'      => $invoice_line['discount'],
+            'free_qty'      => $invoice_line['free_qty'],
+            'is_group'      => false
         ];
-
-        if(!$group_is_pack) {
-            $values['total'] += $price_vat_e;
-            $values['vat'] += $contract_line['price'] - $price_vat_e;
-        }
 
         $lines[] = $line;
     }
@@ -334,7 +287,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
 $values['lines'] = $lines;
 
 foreach($booking['contacts_ids'] as $contact) {
-    if(strlen($values['contact_name']) == 0 || $contact['type'] == 'booking') {
+    if(strlen($values['contact_name']) == 0 || $contact['type'] == 'invoice') {
         // overwrite data of customer with contact info
         $values['contact_name'] = str_replace(["Dr", "Ms", "Mrs", "Mr","Pr"], ["Dr","Melle", "Mme","Mr","Pr"], $contact['partner_identity_id']['title']).' '.$contact['partner_identity_id']['name'];
         $values['contact_phone'] = $contact['partner_identity_id']['phone'];

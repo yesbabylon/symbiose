@@ -115,7 +115,7 @@ class Partner extends Model {
                 $om->write(get_called_class(), $oids, [ 'lang_id' => $odata['partner_identity_id.lang_id'] ], $lang);        
             }
         }
-        $om->write(get_called_class(), $oids, [ 'name' => null ], $lang);
+        $om->write(get_called_class(), $oids, [ 'name' => null, 'title' => null, 'phone' => null, 'email' => null ], $lang);
         // force immediate re-computing of the name
         $om->read(get_called_class(), $oids, [ 'name' ], $lang);        
     }

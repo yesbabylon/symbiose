@@ -27,11 +27,19 @@ class AccountingRuleLine extends Model {
             ],
 
             'account' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
                 'description'       => "Code of the related account.",
-                'required'          => true
+                'function'          => 'finance\accounting\AccountingRuleLine::getAccount',
+                'store'             => true
             ],
-            
+
+            'account_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\AccountChartLine',
+                'description'       => "Code of the related account.",
+            ],
+
             'share' => [
                 'type'              => 'float',
                 'usage'             => 'amount/percent',
@@ -42,10 +50,24 @@ class AccountingRuleLine extends Model {
             'accounting_rule_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
-                'description'       => "Accounting rule this line is related to."
+                'description'       => "Parent accounting rule this line is related to."
             ]
 
         ];
     }
+
+
+    public static function getAccount($om, $oids, $lang) {
+        $result = [];
+
+        $res = $om->read(get_called_class(), $oids, ['account_id.code']);
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $result[$oid] = $odata['account_id.code'];
+            }    
+        }
+        return $result;
+    }
+
 
 }

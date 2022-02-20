@@ -32,7 +32,16 @@ class Funding extends \sale\pay\Funding {
                 'function'          => 'sale\booking\Funding::getPaymentReference',
                 'description'       => 'Message for identifying the purpose of the transaction.',
                 'store'             => true
-            ]
+            ],
+
+            'payments_ids' => [ 
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\booking\Payment',
+                'foreign_field'     => 'fundings_ids',
+                'rel_table'         => 'sale_pay_rel_payment_funding',
+                'rel_foreign_key'   => 'payment_id',
+                'rel_local_key'     => 'funding_id'
+            ]            
 
         ];
     }

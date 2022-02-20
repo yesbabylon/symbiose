@@ -209,7 +209,7 @@ if($booking['customer_id']['rate_class_id']) {
 $plans_ids = PaymentPlan::search(['rate_class_id', '=', $rate_class_id])->ids();
 if($plans_ids < 0 || !count($plans_ids)) {
     // if no payment plan was found, use the default plan
-    $plans_ids = PaymentPlan::search(['rate_class_id', 'is', 'NULL'])->ids();
+    $plans_ids = PaymentPlan::search(['rate_class_id', 'is', NULL])->ids();
 }
 
 if($plans_ids < 0 || !count($plans_ids)) {

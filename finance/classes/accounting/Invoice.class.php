@@ -6,6 +6,7 @@
 */
 namespace finance\accounting;
 use equal\orm\Model;
+use core\setting\Setting;
 
 class Invoice extends Model {
 
@@ -38,6 +39,12 @@ class Invoice extends Model {
                 'selection'         => ['proforma', 'invoice'],
                 'default'           => 'proforma',
                 'onchange'          => 'finance\accounting\Invoice::onchangeStatus',
+            ],
+
+            'type' => [
+                'type'              => 'string',
+                'selection'         => ['invoice', 'credit_note'],
+                'default'           => 'invoice'
             ],
 
             'number' => [
@@ -85,7 +92,7 @@ class Invoice extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
-                'description'       => 'Grouped lines of the invoice.'
+                'description'       => 'Groups of lines of the invoice.'
             ]
 
         ];
@@ -94,7 +101,7 @@ class Invoice extends Model {
     public static function getNumber($om, $oids, $lang) {
         $result = [];
 
-        $invoices = $om->read(__CLASS__, $oids, ['status', 'organisation_id'], $lang);
+        $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id'], $lang);
 
         foreach($invoices as $oid => $invoice) {
 
@@ -103,41 +110,24 @@ class Invoice extends Model {
                 $result[$oid] = '[proforma]';
             }
             else if($invoice['status'] == 'invoice') {
-                $settings_ids = $om->search('core\setting\Setting', [
-                    ['name', '=', 'invoice.sequence.'.$invoice['organisation_id']],
-                    ['package', '=', 'sale'],
-                    ['section', '=', 'invoice']
-                ]);
+                $result[$oid] = '';
 
-                if($settings_ids < 0 || !count($settings_ids)) {
-                    // unexpected error : misconfiguration (setting is missing)
-                    $result[$oid] = 0;
-                    continue;
+                $organisation_id = $invoice['organisation_id'];
+                
+                $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format');
+                $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');                
+                $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+
+                if($sequence) {
+                    Setting::set_value($sequence + 1, 'sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+
+                    $result[$oid] = Setting::parse_format($format, [
+                        'year'      => $year,
+                        'org'       => $organisation_id,
+                        'sequence'  => $sequence    
+                    ]);
                 }
-
-                // by default settings values are sorted on user_id : first value is the default one
-                $settings = $om->read('core\setting\Setting', $settings_ids, ['setting_values_ids']);
-                if($settings < 0 || !count($settings)) {
-                    // unexpected error : misconfiguration (setting is missing)
-                    $result[$oid] = 0;
-                    continue;
-                }
-
-                $setting = array_pop($settings);
-                $setting_values = $om->read('core\setting\SettingValue', $setting['setting_values_ids'], ['value']);
-                if($setting_values < 0 || !count($setting_values)) {
-                    // unexpected error : misconfiguration (no value for setting)
-                    $result[$oid] = 0;
-                    continue;
-                }
-
-                $setting_value_id = array_keys($setting_values)[0];
-                $setting_value = array_values($setting_values)[0];
-                $sequence = (int) $setting_value['value'];
-
-                $om->write('core\setting\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
-
-                $result[$oid] = sprintf("%4d-%02d-%04d", date('Y'), $invoice['organisation_id'], $sequence);
+        
             }
 
         }

@@ -51,7 +51,7 @@ class BookingLine extends Model {
             'price_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
-                'description'       => 'The price (retrieved by price list) the line relates to.',
+                'description'       => 'The price the line relates to (retrieved by price list).',
                 'onchange'          => 'sale\booking\BookingLine::onchangePriceId'
             ],
 
@@ -121,7 +121,8 @@ class BookingLine extends Model {
             'unit_price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'description'       => 'Unit price (with automated discounts applied).',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Tax-excluded unit price (with automated discounts applied).',
                 'function'          => 'sale\booking\BookingLine::getUnitPrice',
                 'store'             => true,
                 'onchange'          => 'sale\booking\BookingLine::onchangeUnitPrice'
@@ -130,8 +131,8 @@ class BookingLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money:4',                
-                'description'       => 'Final (computed) price (VAT included).',
+                'usage'             => 'amount/money:2',                
+                'description'       => 'Final tax-included price (computed).',
                 'function'          => 'sale\booking\BookingLine::getTotalPrice',
                 'store'             => true
             ],

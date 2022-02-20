@@ -18,7 +18,8 @@ class Template extends Model {
                 'result_type'       => 'string',
                 'description'       => "Code of the template (allows duplicates).",
                 'function'          => 'communication\Template::getDisplayName',
-                'store'             => true
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'code' => [

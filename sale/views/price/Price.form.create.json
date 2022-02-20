@@ -22,8 +22,13 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "vat_rate",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "price",
-                                                "width": "50%"
+                                                "width": "33%"
                                             }
                                         ]
                                     },

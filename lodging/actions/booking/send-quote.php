@@ -21,7 +21,7 @@ use lodging\sale\booking\Booking;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an email with given details with a booking quote as attachment.",
+    'description'	=>	"Send an instant email with given details with a booking quote as attachment.",
     'params' 		=>	[
         'booking_id' => [
             'description'   => 'Identifier of the booking related to the sending of the email.',

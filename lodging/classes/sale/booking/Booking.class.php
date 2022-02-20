@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\sale\booking;
-
+use core\setting\Setting;
 
 class Booking extends \sale\booking\Booking {
 
@@ -16,7 +16,7 @@ class Booking extends \sale\booking\Booking {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => "Code to serve as reference (might not be unique)",
+                'description'       => "Code to serve as reference (should be unique)",
                 'function'          => 'lodging\sale\booking\Booking::getDisplayName',
                 'store'             => true,
                 'readonly'          => true
@@ -78,9 +78,9 @@ class Booking extends \sale\booking\Booking {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:2',
                 'function'          => 'lodging\sale\booking\Booking::getPrice',
-                'description'       => 'Total price (vat incl.) of the booking.'
+                'description'       => 'Final total tax-included price of the booking (computed).'
             ],
 
             'fundings_ids' => [
@@ -98,44 +98,22 @@ class Booking extends \sale\booking\Booking {
         $result = [];
 
         $bookings = $om->read(__CLASS__, $oids, ['center_id.center_group_id.code'], $lang);
+        $format = Setting::get_value('sale', 'booking', 'booking.sequence_format');
 
         foreach($bookings as $oid => $booking) {
+            $result[$oid] = '';
+            
+            $code = 'booking.sequence.'.$booking['center_id.center_group_id.code'];
+            $sequence = Setting::get_value('sale', 'booking', $code);
+            
+            if($sequence) {
+                Setting::set_value($sequence + 1, 'sale', 'booking', $code);
 
-            $settings_ids = $om->search('core\setting\Setting', [
-                ['package', '=', 'sale'],
-                ['section', '=', 'booking'],                
-                ['code', '=', 'booking.sequence.'.$booking['center_id.center_group_id.code']]
-            ]);
-
-            if($settings_ids < 0 || !count($settings_ids)) {
-                // unexpected error : misconfiguration (setting is missing)
-                $result[$oid] = 0;
-                continue;
+                $result[$oid] = Setting::parse_format($format, [
+                    'center'    => $booking['center_id.center_group_id.code'],
+                    'sequence'  => $sequence
+                ]);
             }
-
-            // by default settings values are sorted on user_id : first value is the default one
-            $settings = $om->read('core\setting\Setting', $settings_ids, ['setting_values_ids']);
-            if($settings < 0 || !count($settings)) {
-                // unexpected error : misconfiguration (setting is missing)
-                $result[$oid] = 0;
-                continue;
-            }
-
-            $setting = array_pop($settings);
-            $setting_values = $om->read('core\setting\SettingValue', $setting['setting_values_ids'], ['value']);
-            if($setting_values < 0 || !count($setting_values)) {
-                // unexpected error : misconfiguration (no value for setting)
-                $result[$oid] = 0;
-                continue;
-            }
-
-            $setting_value_id = array_keys($setting_values)[0];
-            $setting_value = array_values($setting_values)[0];
-
-            $sequence = (int) $setting_value['value'];
-            $om->write('core\setting\SettingValue', $setting_value_id, ['value' => $sequence + 1]);
-
-            $result[$oid] = ((string) $booking['center_id.center_group_id.code']) . ((string) $sequence);
 
         }
         return $result;

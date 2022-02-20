@@ -39,7 +39,7 @@
                                             {
                                                 "type": "field",
                                                 "label": "Has Duration",
-                                                "value": "has_own_durationy",
+                                                "value": "has_own_duration",
                                                 "width": "50%"
                                             },
                                             {

@@ -14,7 +14,7 @@
 			"help": ""
 		},
 		"has_own_qty": {
-			"label": "A sa propre quantité",
+			"label": "Quantité spécifique",
 			"description": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?",
 			"help": ""
 		},
@@ -24,7 +24,7 @@
 			"help": ""
 		},
 		"has_own_duration": {
-			"label": "A sa propre durée",
+			"label": "Durée spécifique",
 			"description": "Le produit a-t-il sa propre durée?",
 			"help": ""
 		},

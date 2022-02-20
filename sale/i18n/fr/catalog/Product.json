@@ -25,12 +25,12 @@
         },
         "description": {
             "label": "Description",
-            "description": "Description de la variante (spécificités).",
+            "description": "Description du produit variant (spécificités).",
             "help": ""
         },
         "product_model_id": {
             "label": "Modèle de produit",
-            "description": "Modèle de produit de la variante.",
+            "description": "Modèle de produit du variant.",
             "help": ""
         },
         "prices_ids": {

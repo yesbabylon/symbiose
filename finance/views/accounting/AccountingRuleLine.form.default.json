@@ -27,7 +27,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "account",
+                                                "value": "account_id",
                                                 "width": "100%"
                                             },
                                             {
