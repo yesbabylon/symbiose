@@ -3,9 +3,9 @@
 	"plural": "Paiements",
 	"description": "",
 	"model": {
-		"customer_id": {
-			"label": "Client",
-			"description": "Le client auquel le paiement se rapporte.",
+		"partner_id": {
+			"label": "Partenaire",
+			"description": "Le partenaire à l'origine du paiement.",
 			"help": ""
 		},
 		"amount": {

@@ -5,8 +5,8 @@
         "items": [
             {
                 "type": "field",
-                "label": "Customer",
-                "value": "customer_id",
+                "label": "Partner",
+                "value": "partner_id",
                 "width": "10%"
             },
             {

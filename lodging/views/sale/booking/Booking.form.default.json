@@ -173,13 +173,7 @@
                                         ]
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Description",
-                        "id": "section.booking_description",
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {
@@ -235,7 +229,7 @@
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Contracts",
                         "id": "section.booking_contracts",
@@ -280,7 +274,28 @@
                                 ]
                             }
                         ]
-                    }                   
+                    },
+                    {
+                        "label": "Invoices",
+                        "id": "section.booking_invoices",
+                        "visible": ["status", "not in", ["quote", "option"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "invoices_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]

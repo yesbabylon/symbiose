@@ -48,7 +48,6 @@ class Booking extends Model {
                 'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
             ],
 
-
             'customer_identity_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
@@ -67,9 +66,9 @@ class Booking extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:2',
                 'function'          => 'sale\booking\Booking::getPrice',
-                'description'       => 'Total price (vat incl.) of the booking.'
+                'description'       => 'Total tax-included price of the booking.'
             ],
 
 // #todo
@@ -210,6 +209,13 @@ class Booking extends Model {
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Fundings that relate to the booking.',
                 'ondetach'          => 'delete'
+            ],
+
+            'invoices_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\Invoice',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Invoices that relate to the booking.'
             ]
 
         ];

@@ -224,33 +224,33 @@ hr {
                         {% endif %}
                     </td>
                     <td width="8%">
-                        {% if (line.is_group == false) or (line.is_pack == true) %}
+                        {% if (line.is_group == false) %}
                             {{ line.qty }}
                         {% endif %}
                     </td>
                     <td width="8%">
-                        {% if (line.is_group == false) or (line.is_pack == true) %}
+                        {% if (line.is_group == false) %}
                             {{ line.free_qty }}
                         {% endif %}
                     </td>
                     <td width="10%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if (line.is_group == false) %}
                             {{ line.unit_price | format_currency('EUR') }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if (line.is_group == false) %}
                             {{ line.discount | format_number(style='percent') }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if (line.is_group == false)  %}
                             {{ line.vat_rate | format_number(style='percent') }}
                         {% endif %}
                     </td>
                     <td width="13%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
-                            {{ line.price_excl | format_currency('EUR') }}
+                        {% if (line.is_group == false) %}
+                            {{ line.price | format_currency('EUR') }}
                         {% endif %}
                     </td>
                 </tr>

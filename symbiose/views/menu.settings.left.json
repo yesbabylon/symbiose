@@ -679,7 +679,7 @@
                   "id": "accounting.settings",
                   "label": "Settings",
                   "description": "",
-                  "icon": "monetization_on",
+                  "icon": "settings",
                   "type": "parent",
                   "children": [
                     {
@@ -707,7 +707,10 @@
                       "type": "entry",
                       "label": "Chart of accounts",
                       "description": "",
-                      "route": "AccountingChartLines"
+                      "context": {
+                        "entity": "finance\\accounting\\AccountChart",
+                        "view": "list.default"
+                      }
                     }
                   ]
                 },
@@ -725,7 +728,7 @@
                   "id": "accounting.payments",
                   "label": "Payments",
                   "description": "",
-                  "icon": "monetization_on",
+                  "icon": "payments",
                   "type": "parent",
                   "children": [
                     {

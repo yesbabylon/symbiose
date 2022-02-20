@@ -19,7 +19,7 @@ list($params, $providers) = announce([
     'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
     'params'        => [
         'id' => [
-            'description'   => 'Identitifier of the object to print.',
+            'description'   => 'Identitifier of the booking to print.',
             'type'          => 'integer',
             'required'      => true
         ],

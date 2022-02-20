@@ -21,7 +21,7 @@ use core\User;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an email with given details with a booking contract as attachment.",
+    'description'	=>	"Send an instant email with given details with a booking contract as attachment.",
     'params' 		=>	[
         'booking_id' => [
             'description'   => 'Booking related to the sending of the email.',

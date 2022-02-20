@@ -16,7 +16,8 @@ class Payment extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'description'       => 'The customer the payment relates to.',
+                'description'       => "The partner to whom the booking relates.",
+                'required'          => true
             ],
 
             'amount' => [
@@ -68,14 +69,14 @@ class Payment extends Model {
                 'visible'           => [ ['payment_method', '=', 'voucher'] ]
             ],
 
-            'fundings_ids' => [ 
+            'fundings_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\pay\Funding',
                 'foreign_field'     => 'payments_ids',
                 'rel_table'         => 'sale_pay_rel_payment_funding',
                 'rel_foreign_key'   => 'funding_id',
                 'rel_local_key'     => 'payment_id'
-            ]            
+            ]
 
         ];
     }

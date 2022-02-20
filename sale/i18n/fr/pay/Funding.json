@@ -33,7 +33,7 @@
             "help": ""
         },
         "is_paid": {
-            "label": "Est payé",
+            "label": "Payé",
             "description": "Le paiement complet a-t-il été reçu?",
             "help": ""
         },

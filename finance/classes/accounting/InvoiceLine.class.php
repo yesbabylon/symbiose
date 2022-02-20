@@ -43,7 +43,14 @@ class InvoiceLine extends Model {
 
             'price' => [ 
                 'type'              => 'float', 
-                'description'       => 'Price of the product related to the line.'
+                'description'       => 'Unit price of the product related to the line.'
+            ],
+
+            'price_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'description'       => 'The price the line relates to (assigned at line creation).',
+                'required'          => true
             ],
 
             'vat_rate' => [ 
@@ -67,6 +74,10 @@ class InvoiceLine extends Model {
                 'default'           => 0.0
             ],
 
+            'description' => [ 
+                'type'              => 'string', 
+                'description'       => 'Short description for arbitrary line (no product).'
+            ]
          
         ];
     }
