@@ -47,6 +47,7 @@ class PriceList extends Model {
                     'paused'                // (temporarily) on hold (not to be used)
                 ],
                 'description'       => 'Status of the list.',
+                'onchange'          => 'sale\price\PriceList::onchangeStatus',
                 'default'           => 'pending'
             ],
 
@@ -55,8 +56,9 @@ class PriceList extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'sale\price\PriceList::getIsActive',
-                'store'             => true,
-                'description'       => "Is the pricelist still applicable?"
+                'description'       => "Is the pricelist currently applicable?",
+                'store'             => true,                
+                'readonly'          => true
             ],
 
             // #todo - make this field persistent
@@ -98,13 +100,13 @@ class PriceList extends Model {
 
     public static function getIsActive($om, $oids, $lang) {
         $result = [];
-        $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
+        $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to', 'status']);
 
         $now = time();
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
-                $result[$lid] = boolval($list['date_to'] > $now);
+                $result[$lid] = boolval( ($list['date_to'] > $now) && ($list['status'] == 'published') );
             }
         }
         return $result;
@@ -115,8 +117,6 @@ class PriceList extends Model {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['prices_ids']);
 
-        $now = time();
-
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
                 $result[$lid] = count($list['prices_ids']);
@@ -125,5 +125,11 @@ class PriceList extends Model {
         return $result;        
     }
 
+    public static function onchangeStatus($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['is_active' => null]);
+        $om->read(__CLASS__, $oids, ['is_active']);
+    }
+
+    
 
 }

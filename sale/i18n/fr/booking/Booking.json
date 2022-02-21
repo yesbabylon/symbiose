@@ -120,6 +120,9 @@
                 "section.booking_fundings": {
                     "label": "Financements"
                 },
+                "section.booking_invoices": {
+                    "label": "Factures"
+                },
                 "section.booking_products": {
                     "label": "Services"
                 }

@@ -18,13 +18,15 @@ class Template extends Model {
                 'result_type'       => 'string',
                 'description'       => "Code of the template (allows duplicates).",
                 'function'          => 'communication\Template::getDisplayName',
-                'store'             => true
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'code' => [
                 'type'              => 'string',
                 'description'       => "Code of the template (allows duplicates).",
-                'required'          => true
+                'required'          => true,
+                'onchange'          => 'communication\Template::onChangeCode'
             ],
 
             'description' => [
@@ -43,7 +45,8 @@ class Template extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [ 'quote', 'contract', 'invoice' ],
-                'description'       => 'The context in which the template is meant to be used.'
+                'description'       => 'The context in which the template is meant to be used.',
+                'onchange'          => 'communication\Template::onChangeType'
             ],
 
             'parts_ids' => [
@@ -72,6 +75,16 @@ class Template extends Model {
             $result[$oid] = $template['category_id.name'].'.'.$template['type'].'.'.$template['code'];
         }
         return $result;
-    }    
+    }
+
+    public static function onChangeCode($orm, $oids, $lang) {
+        $orm->write(__CLASS__, $oids, ['name' => null], $lang);
+        $orm->read(__CLASS__, $oids, ['name'], $lang);
+    }
+
+    public static function onChangeType($orm, $oids, $lang) {
+        $orm->write(__CLASS__, $oids, ['name' => null], $lang);
+        $orm->read(__CLASS__, $oids, ['name'], $lang);
+    }
 
 }

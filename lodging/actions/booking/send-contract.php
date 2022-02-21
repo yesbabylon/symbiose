@@ -1,4 +1,9 @@
 <?php
+/*
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
+*/
 if(!file_exists(QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php')) {
     throw new Exception("missing_dependency", QN_ERROR_INVALID_CONFIG);
 }
@@ -16,7 +21,7 @@ use core\User;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an email with given details with a booking contract as attachment.",
+    'description'	=>	"Send an instant email with given details with a booking contract as attachment.",
     'params' 		=>	[
         'booking_id' => [
             'description'   => 'Booking related to the sending of the email.',

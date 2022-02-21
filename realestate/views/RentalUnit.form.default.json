@@ -19,7 +19,7 @@
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {

@@ -17,23 +17,23 @@
                                                 "value": "product_id",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "price",
-                                                "width": "50%"
+                                                "value": "vat_rate",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "vat_rate",
-                                                "width": "50%"
+                                                "value": "price",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_vat",
-                                                "width": "50%"
+                                                "width": "33%"
                                             }                                            
                                         ]
                                     },

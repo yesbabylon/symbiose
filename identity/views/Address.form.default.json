@@ -18,7 +18,7 @@
                                                 "value": "identity_id",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {

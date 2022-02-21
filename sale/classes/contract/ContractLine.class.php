@@ -39,7 +39,8 @@ class ContractLine extends Model {
 
             'unit_price' => [ 
                 'type'              => 'float', 
-                'description'       => 'Price of the product related to the line.',
+                'usage'             => 'amount/money:4',                
+                'description'       => 'Tax-excluded price of the product related to the line.',
                 'required'          => true
             ],
 
@@ -71,7 +72,7 @@ class ContractLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',                
-                'description'       => 'Final (computed) price VAT incl.',
+                'description'       => 'Final tax-included price of the line.',
                 'function'          => 'sale\contract\ContractLine::getPrice',
                 'store'             => true
             ]

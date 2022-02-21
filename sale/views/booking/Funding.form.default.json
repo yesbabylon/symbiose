@@ -6,8 +6,8 @@
             {
                 "sections": [
                     {
-                        "label": "General Info",
                         "id": "section.funding",
+                        "label": "General Info",
                         "rows": [
                             {
                                 "columns": [
@@ -61,22 +61,22 @@
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.payments",
+                        "label": "Payments",
+                        "rows": [
                             {
-                                "label": "Payments",
-                                "id": "section.payments",
-                                "rows": [
+                                "columns": [
                                     {
-                                        "columns": [
+                                        "width": "100%",
+                                        "items": [
                                             {
-                                                "width": "100%",
-                                                "items": [
-                                                    {
-                                                        "type": "field",
-                                                        "value": "payments_ids",
-                                                        "width": "100%"
-                                                    }
-                                                ]
+                                                "type": "field",
+                                                "value": "payments_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

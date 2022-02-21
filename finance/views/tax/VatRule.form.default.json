@@ -17,7 +17,7 @@
                                                 "value": "name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
@@ -28,7 +28,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "50%"                                                
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "account_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     }

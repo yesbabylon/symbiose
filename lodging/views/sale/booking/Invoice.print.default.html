@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<title>Contrat de réservation</title>
+<style type="text/css">
+@page {
+  margin: 1cm;
+}
+body {
+    margin: 0;
+    padding: 0;
+    margin-top: 280px;
+    margin-bottom: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.7em;
+    text-align: justify;
+    width: 100%;
+}
+
+div, table, table tr td {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.header,
+div.footer {
+    box-sizing: border-box;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+}
+
+div.inner {
+    height: auto;
+    box-sizing: border-box;
+    border: none;
+}
+
+div.inner p {
+    margin: 0;
+}
+
+div.inner .wrapper {
+    margin: 0px;
+    margin-top: 20px;
+    padding: 0px;
+    border: none;
+}
+
+div.inner .wrapper table {
+    page-break-inside: auto; 
+    border: solid 1px black;
+}
+
+div.inner .wrapper table tr td {
+    border-right: solid 1px black;
+    border-bottom: solid 1px lightgrey;
+}
+
+div.inner .wrapper table tr td:last-child {
+    border-right: none;
+}
+
+div.inner .wrapper table tr:last-child td {
+    border-bottom: none;
+    border-bottom: solid 1px black;
+}
+
+div.trailer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: visible;
+    z-index: 100;
+}
+
+div.header {
+    top: 0;
+    left: 0;
+    height: 280px;
+}
+
+div.header table {
+    width: 100%; 
+    border-spacing: 0px; 
+    border-collapse: separate; 
+    border: solid 1px rgb(204, 204, 204);    
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px; 
+}
+
+div.footer {
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    overflow: visible;
+    z-index: 200;
+    font-size: 0.8em !important;
+}
+
+hr {
+    page-break-after: always;
+    border: 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <div style="position: absolute; height: 80px; width: 276px; z-index: -1;">
+        <img src="{{ header_img_url }}" width="276" height="80" border="0" />
+    </div>
+    <div style="position: absolute; top: 0px; right: 100px; height: 103px; font-size: 13px;">
+        {{ customer_name }}<br />
+        {{ contact_name }}<br />
+        {{ customer_address1 }}<br />
+        {{ customer_address2 }}<br />
+        {% if has_vat > 0 %}
+        TVA {{ customer_vat }}
+        {% endif %}
+    </div>
+
+    <!-- spacer -->
+    <div style="position: relative; height: 103px; width: 100%;">
+        <div style="height: 40px; width: 100%"></div>
+        <div style="position: absolute; top: 84px; right: 0; height: 19px; width: 100%; text-align: right;">Le {{ date }}</div>
+    </div>
+
+    <table cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <td colspan="2" style=" font-size: 20px; text-align: center; border-bottom: solid 1px rgb(204, 204, 204); width: 100%; height: 20px;  padding-left: 7px; overflow: hidden;">Contrat {{ code }}</td>
+        </tr>
+        <tr valign="top">
+            <td style="width: 50%; padding: 5px;">
+                <div style="margin-bottom: 5px; margin-top: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Votre séjour à </b></div> <div style="display: inline-block;">{{ center }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px; vertical-align: top;"><b>Adresse</b></div> <div style="display: inline-block;">{{ center_address1 }} <br /> {{ center_address2 }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px; vertical-align: top;"><b>Contact</b></div> <div style="display: inline-block;">{{ center_contact1 }} <br /> {{ center_contact2 }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Période</b></div> <div style="display: inline-block;">{{ period }}</div>
+                </div>
+            </td>
+            <td style="width: 50%; padding: 5px; background-color: rgb(204, 204, 204); ">
+                <div style="margin-bottom: 5px; margin-top: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Membre</b></div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ member }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Tél</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ contact_phone }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>email</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ contact_email }}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+</div>
+
+<div class="footer">
+    <p style="text-align: center;">
+        {{ company_name}} - {{ company_address }}
+        <br />
+        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }}
+        <br />
+        Email: {{ company_email }} - Web: {{ company_website }} - Tel {{ company_phone }}
+        {% if company_fax %}
+            - {{ company_fax }}
+        {% endif %}
+    </p>
+</div>
+
+
+<div class="inner">
+    <div class="intro">
+        {{ contract_header_html | raw }}
+    </div>
+    <div class="wrapper">
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <thead style="border: solid 1px black; border-left: 0px; border-right: 0px;">
+                <tr>
+                <th width="45%" style="padding-left: 7px; font-weight: bold; text-align: left;">
+                    Libellé produit
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: left;  border-left: solid 1px black; padding-right: 7px;">
+                    Qté
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: left;  border-left: solid 1px black; padding-right: 7px;">
+                    Gté
+                </th>
+                <th width="10%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    Prix unit.
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    Rem%
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    TVA
+                </th>
+                <th width="13%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    Prix HT
+                </th>
+            </tr>
+            </thead>            
+            <!-- for each line -->
+            {% for line in lines %}
+                <tr valign="top">
+                    <td width="45%">
+                        {% if line.is_group %}
+                            <b>{{ line.name }}</b> <br />
+                            {{ line.description }}
+                        {% else %}
+                            {{ line.name }}
+                        {% endif %}
+                    </td>
+                    <td width="8%">
+                        {% if (line.is_group == false) %}
+                            {{ line.qty }}
+                        {% endif %}
+                    </td>
+                    <td width="8%">
+                        {% if (line.is_group == false) %}
+                            {{ line.free_qty }}
+                        {% endif %}
+                    </td>
+                    <td width="10%" style="text-align: right;">
+                        {% if (line.is_group == false) %}
+                            {{ line.unit_price | format_currency('EUR') }}
+                        {% endif %}
+                    </td>
+                    <td width="8%" style="text-align: right;">
+                        {% if (line.is_group == false) %}
+                            {{ line.discount | format_number(style='percent') }}
+                        {% endif %}
+                    </td>
+                    <td width="8%" style="text-align: right;">
+                        {% if (line.is_group == false)  %}
+                            {{ line.vat_rate | format_number(style='percent') }}
+                        {% endif %}
+                    </td>
+                    <td width="13%" style="text-align: right;">
+                        {% if (line.is_group == false) %}
+                            {{ line.price | format_currency('EUR') }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="trailer">
+    <div class="wrapper" style="margin-top: -1px;">
+        <table width="100%" style="border: 0px; border-right: solid 1px black;" cellpadding="4" cellspacing="0">
+            <tr valign="top">
+                <td width="87%" style="text-align: right; padding-right: 10px;">
+                    MONTANT TOTAL
+                </td>
+                <td width="13%" style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ total | format_currency('EUR') }}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding-right: 10px;">
+                    TVA
+                </td>
+                <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ vat | format_currency('EUR') }}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding-right: 10px;">
+                    TOTAL DU SÉJOUR TTC
+                </td>
+                <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ price | format_currency('EUR') }}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div style="margin-top: 50px; page-break-inside: avoid;">
+    <div style="margin: 0px 0px 20px 0px;"><b><u>Echéancier des paiements:</u></b></div>
+    <table width="100%" cellpadding="4" cellspacing="0" style="border: solid 1px black; border-collapse: collapse; page-break-inside: avoid;">
+        <tr valign="top">
+            <th width="25%" style="text-align: left;">
+                Paiement
+            </th>
+            <th width="25%">
+                À payer avant le
+            </th>
+            <th width="25%">
+                Déjà payé?
+            </th>
+            <th width="25%" style="text-align: right;">
+                Montant
+            </th>
+        </tr>
+
+        <!-- for each line -->
+        {% for funding in fundings %}
+            <tr valign="top">
+                <td width="25%">
+                    {{ funding.name }}
+                </td>
+                <td width="25%" style="text-align: center;">
+                    {{ funding.due_date }}
+                </td>
+                <td width="25%" style="text-align: center;">
+                    {% if funding.is_paid == true %}
+                        oui
+                    {% endif %}
+                </td>
+                <td width="25%" style="text-align: right;">
+                    {{ funding.due_amount  | format_currency('EUR') }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="notice">
+    {{ contract_notice_html | raw }}
+</div>
+
+<div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
+    <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
+        Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> : 
+    </div>
+    <div style="padding-top: 20px; padding-left: 15px; font-size: 15px;">
+        {{ company_name}}<br />
+        {{ company_address }}<br />
+        <br />
+        IBAN : {{ company_iban }}<br />
+        BIC : {{ company_bic }}<br />
+        <b>COMMUNICATION : {{ installment_reference }}</b><br />
+    </div>    
+    <div style="position: absolute; right: 10px; top: 15px;">
+        <img src="{{ installment_qr_url }}" width= "150" height="150" />
+    </div>    
+</div>
+
+<div style="margin-top: 50px;">
+    <table style="width: 100%; page-break-inside: avoid;">
+        <tr>
+            <td style="width: 60%;">
+                <div>Membre {{ member }}
+                    {% if contact_name|length > 0 %}
+                    <br />{{ contact_name }}
+                    {% endif %}
+                </div>
+                <div>
+                    Par la présente, j'atteste avoir lu et accepte:
+                    <ul>
+                        <li>La présente proposition de contrat</li>
+                        <li>Les conditions générales de vente</li>
+                        <li>Le règlement d'ordre intérieur</li>
+                    </ul>
+                </div>
+        
+            </td>
+            <td style="width: 40%;">
+                <div>Date et Signature</div>
+                <div style="border: solid 1px black; width: 100%; height: 80px;"></div>
+        
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

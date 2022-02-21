@@ -1,11 +1,11 @@
 {
-    "name": "Graphique statistique",
-    "plural": "Graphiques statistique",
-    "description": "Le plan comptable est une liste organisationnelle contenant tous les comptes financiers de l'entreprise.",
+    "name": "Plan statistique",
+    "plural": "Plan statistique",
+    "description": "Le plan statistique est une liste des groupes statistiques de l'entreprise.",
     "model": {
         "name": {
             "label": "Nom",
-            "description": "Nom du graphe statistique.",
+            "description": "Nom du Plan statistique.",
             "help": ""
         },
         "organisation_id": {
@@ -16,8 +16,8 @@
     },
     "view": {
         "form.default": {
-            "name": "Graphique statistique",
-            "description": "Formulaire par défaut pour le graphique statistique avec tous les champs.",
+            "name": "Plan statistique",
+            "description": "Formulaire par défaut pour le plan statistique avec tous les champs.",
             "layout": {
                 "section.accounting_rules_section": {
                     "label": "Détails"
@@ -25,8 +25,8 @@
             }
         },
         "list.default": {
-            "name": "Liste de graphique statistique",
-            "description": "Cette vue est destinée à afficher les plans comptables.",
+            "name": "Liste de plan statistique",
+            "description": "Cette vue est destinée à afficher les plans statistiques.",
             "layout": {}
         }
     },

@@ -35,6 +35,18 @@
                                                 "label": "Product Quantity",
                                                 "value": "own_qty",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Has Duration",
+                                                "value": "has_own_duration",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product Duration",
+                                                "value": "own_duration",
+                                                "width": "50%"
                                             }
                                         ]
                                     }

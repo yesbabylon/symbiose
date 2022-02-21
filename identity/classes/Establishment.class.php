@@ -8,7 +8,7 @@ namespace identity;
 use equal\orm\Model;
 
 class Establishment extends Model {
-    
+
     public static function getName() {
         return "Establishment unit";
     }
@@ -17,15 +17,15 @@ class Establishment extends Model {
 
         return [
             'name' => [
-                'type'          => 'string',
-                'description'   => "Name of the establishment unit.",
-                'required'      => true
+                'type'              => 'string',
+                'description'       => "Name of the establishment unit.",
+                'required'          => true
             ],
 
             'legal_name' => [
-                'type'          => 'string',
-                'description'   => "Official name of the establishment (as displayed in the address).",
-                'required'      => true
+                'type'              => 'string',
+                'description'       => "Official name of the establishment (as displayed in the address).",
+                'required'          => true
             ],
 
             /* parent organisation */
@@ -37,34 +37,41 @@ class Establishment extends Model {
             ],
 
             'phone' => [
-                'type'          => 'string',
-                'description'   => 'Official contact phone number.' 
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => 'Official contact phone number.'
+            ],
+
+            'fax' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity main fax number."
             ],
 
             'email' => [
-                'type'          => 'string',
-                'description'   => 'Official contact email address for the establishment.' 
-            ],            
+                'type'              => 'string',
+                'description'       => 'Official contact email address for the establishment.'
+            ],
 
             'address_street' => [
-                'type'          => 'string',
-                'description'   => 'Street and number of the estalishment address.',
-                'required'      => true
+                'type'              => 'string',
+                'description'       => 'Street and number of the estalishment address.',
+                'required'          => true
             ],
 
             'address_dispatch' => [
-                'type'          => 'string',
-                'description'   => 'Optional info for mail dispatch (appartment, box, floor, ...).'
+                'type'              => 'string',
+                'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).'
             ],
 
             'address_city' => [
-                'type'          => 'string',
-                'description'   => 'City in which estalishment is located.'
+                'type'              => 'string',
+                'description'       => 'City in which establishment is located.'
             ],
 
             'address_zip' => [
-                'type'          => 'string',
-                'description'   => 'Postal code of the estalishment address.'
+                'type'              => 'string',
+                'description'       => 'Postal code of the establishment address.'
             ],
 
             'address_state' => [
@@ -73,24 +80,24 @@ class Establishment extends Model {
             ],
 
             'address_country' => [
-                'type'          => 'string',
-                'usage'         => 'country/iso-3166:2',
-                'description'   => 'Country in which the establishment is located (ISO 3166).' 
+                'type'              => 'string',
+                'usage'             => 'country/iso-3166:2',
+                'description'       => 'Country in which the establishment is located (ISO 3166).'
             ],
-            
+
             'registration_number' => [
-                'type'          => 'string',
-                'description'   => 'Establishment registration number (establishment unit number), if any.'
+                'type'              => 'string',
+                'description'       => 'Establishment registration number (establishment unit number), if any.'
             ],
 
             'bank_account_iban' => [
-                'type'          => 'string',
-                'description'   => 'Number of the bank account of the Establishment.'
+                'type'              => 'string',
+                'description'       => 'Number of the bank account of the Establishment.'
             ],
 
             'bank_account_bic' => [
-                'type'          => 'string',
-                'description'   => 'Identitifer of the Bank related to the bank account.'
+                'type'              => 'string',
+                'description'       => 'Identitifer of the Bank related to the bank account.'
             ],
 
             'analytic_section_id' => [
@@ -109,7 +116,7 @@ class Establishment extends Model {
                     'message'       => 'Bank account must be a valid IBAN number.',
                     'function'      => function ($account, $values) {
                         return (bool) (preg_match('/^[A-Z]{2}[0-9]{2}(?:[0-9]{4}){3,4}(?!(?:[0-9]){3})(?:[0-9]{1,2})?$/', $account));
-                    }    
+                    }
                 ]
             ],
             'bank_account_bic' =>  [
@@ -117,9 +124,9 @@ class Establishment extends Model {
                     'message'       => 'Bank identifier must be a valid BIC code.',
                     'function'      => function ($identifier, $values) {
                         return (bool) (preg_match('/^[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}$/', $identifier));
-                    }    
+                    }
                 ]
             ]
         ];
-    }    
+    }
 }

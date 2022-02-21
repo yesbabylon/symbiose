@@ -14,7 +14,8 @@ class Document extends Model {
     public static function getColumns() {
         return [
             'name' => [
-                'type'              => 'string'
+                'type'              => 'string',
+                'required'          => true
             ],
 
             'data' => [

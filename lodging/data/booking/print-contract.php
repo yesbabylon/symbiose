@@ -21,13 +21,14 @@ use sale\booking\Funding;
 use communication\Template;
 use communication\TemplatePart;
 use communication\TemplateAttachment;
+use equal\data\DataFormatter;
 
 
 list($params, $providers) = announce([
     'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
     'params'        => [
         'id' => [
-            'description'   => 'Identitifier of the object to print.',
+            'description'   => 'Identitifier of the contract to print.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -211,7 +212,7 @@ $values = [
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
     'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
-    'center_contact2'       => lodging_booking_print_contract_formatPhone($booking['center_id']['phone']).' - '.$booking['center_id']['email'],
+    'center_contact2'       => DataFormatter::format($booking['center_id']['phone'], 'phone').' - '.$booking['center_id']['email'],
     'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $booking['price'],
     'vat'                   => 0,
@@ -219,8 +220,8 @@ $values = [
     'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
     'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
     'company_email'         => $booking['center_id']['organisation_id']['email'],
-    'company_phone'         => lodging_booking_print_contract_formatPhone($booking['center_id']['organisation_id']['phone']),
-    'company_fax'           => lodging_booking_print_contract_formatPhone($booking['center_id']['organisation_id']['fax']),
+    'company_phone'         => DataFormatter::format($booking['center_id']['organisation_id']['phone'], 'phone'),
+    'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
     'company_iban'          => substr($booking['center_id']['bank_account_iban'], 0, 4).' '.substr($booking['center_id']['bank_account_iban'], 4, 4).' '.substr($booking['center_id']['bank_account_iban'], 8, 4).' '.substr($booking['center_id']['bank_account_iban'], 12),
@@ -441,59 +442,4 @@ function lodging_booking_print_contract_formatMember($booking) {
     $id = $booking['customer_id']['partner_identity_id']['id'];
     $code = ltrim(sprintf("%3d.%03d.%03d", intval($id) / 1000000, (intval($id) / 1000) % 1000, intval($id)% 1000), '0');
     return $code.' - '.$booking['customer_id']['partner_identity_id']['display_name'];
-}
-
-/*
-    +32489532419  12    +32 489 53 24 19
-    +3286434407   11    +32 86 43 44 07
-    +326736276    10    +32 673 62 76
-    +32488100      9    +32 48 81 00
-*/
-function lodging_booking_print_contract_formatPhone($phone) {
-    // invalid number
-    if(strlen($phone) < 6) return '';
-
-    // normalize number, with BE prefix
-    if(substr($phone, 0, 2) == '32') {
-        $phone = '+'.$phone;
-    }
-    if(substr($phone, 0, 1) == '0') {
-        $phone = '+32'.substr($phone, 1);
-    }
-    if(substr($phone, 0, 1) != '+') {
-        $phone = '+32'.$phone;
-    }
-
-    switch(strlen($phone)) {
-        case 12:
-            $to = sprintf("%s %s %s %s %s",
-                    substr($phone, 0, 3),
-                    substr($phone, 3, 3),
-                    substr($phone, 6, 2),
-                    substr($phone, 8, 2),
-                    substr($phone, 10));
-            break;
-        case 11:
-            $to = sprintf("%s %s %s %s %s",
-                    substr($phone, 0, 3),
-                    substr($phone, 3, 2),
-                    substr($phone, 5, 2),
-                    substr($phone, 7, 2),
-                    substr($phone, 9));
-            break;
-        case 10:
-            $to = sprintf("%s %s %s %s",
-                    substr($phone, 0, 3),
-                    substr($phone, 3, 3),
-                    substr($phone, 6, 2),
-                    substr($phone, 8));
-        case 8:
-        default:
-            $to = sprintf("%s %s %s %s",
-                    substr($phone, 0, 3),
-                    substr($phone, 3, 2),
-                    substr($phone, 5, 2),
-                    substr($phone, 7));
-    }
-    return $to;
 }

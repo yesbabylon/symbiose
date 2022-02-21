@@ -26,6 +26,7 @@ class Funding extends \sale\booking\Funding {
                 'description'       => "The center to which the booking relates to.",
                 'required'          => true
             ]
+
             
         ];
     }

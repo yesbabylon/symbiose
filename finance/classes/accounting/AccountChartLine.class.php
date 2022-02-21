@@ -22,7 +22,8 @@ class AccountChartLine extends Model {
         return [
 
             'name' => [
-                'type'              => 'string',
+                'type'              => 'alias',
+                'alias'             => 'code',
                 'description'       => "Name of the account."
             ],
 
@@ -30,6 +31,11 @@ class AccountChartLine extends Model {
                 'type'              => 'string',
                 'description'       => "A variable length string representing the number of the account.",
                 'required'          => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Short description of the account."
             ],
 
             /* parent chart of accounts */

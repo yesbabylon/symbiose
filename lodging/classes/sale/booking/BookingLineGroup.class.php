@@ -53,7 +53,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'unit_price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'description'       => 'Unit price (with automated discounts applied).',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Tax-excluded unit price (with automated discounts applied).',
                 'function'          => 'lodging\sale\booking\BookingLineGroup::getUnitPrice',
                 'store'             => true,
                 'visible'           => ['has_pack', '=', true]
@@ -154,7 +155,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'description'       => 'Final (computed) price for all lines.',
+                'description'       => 'Final tax-included price for all lines (computed).',
                 'function'          => 'lodging\sale\booking\BookingLineGroup::getPrice'
                 // #todo - set store to true
             ]
@@ -770,8 +771,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'sale\price\PriceList',
                 [
                     ['price_list_category_id', '=', $group['booking_id.center_id.price_list_category_id']],
-                    ['date_from', '<=', $group['date_from']],
-                    ['date_to', '>=', $group['date_from']]
+                    ['is_active', '=', true]
                 ],
                 ['duration' => 'asc']
             );

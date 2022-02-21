@@ -84,7 +84,7 @@
                                             {
                                                 "type": "field",
                                                 "label": "Language",
-                                                "value": "lang",
+                                                "value": "lang_id",
                                                 "width": "50%"
                                             },
                                             {

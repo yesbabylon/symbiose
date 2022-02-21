@@ -13,13 +13,13 @@ use Twig\Extension\ExtensionInterface;
 
 use lodging\sale\booking\Booking;
 use communication\Template;
-
+use equal\data\DataFormatter;
 
 list($params, $providers) = announce([
     'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
     'params'        => [
         'id' => [
-            'description'   => 'Identitifier of the object to print.',
+            'description'   => 'Identitifier of the booking to print.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -179,7 +179,7 @@ $values = [
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
     'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
-    'center_contact2'       => lodging_booking_print_booking_formatPhone($booking['center_id']['phone']).' - '.$booking['center_id']['email'],
+    'center_contact2'       => DataFormatter::format($booking['center_id']['phone'], 'phone').' - '.$booking['center_id']['email'],
     'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $booking['price'],
     'vat'                   => 0,
@@ -187,8 +187,8 @@ $values = [
     'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
     'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
     'company_email'         => $booking['center_id']['organisation_id']['email'],
-    'company_phone'         => lodging_booking_print_booking_formatPhone($booking['center_id']['organisation_id']['phone']),
-    'company_fax'           => lodging_booking_print_booking_formatPhone($booking['center_id']['organisation_id']['fax']),
+    'company_phone'         => DataFormatter::format($booking['center_id']['organisation_id']['phone'], 'phone'),
+    'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
     'company_iban'          => $booking['center_id']['bank_account_iban'],    
@@ -206,7 +206,7 @@ if($booking['center_id']['template_category_id']) {
                             ['code', '=', 'quote'], 
                             ['type', '=', 'quote'] 
                         ])
-                        ->read(['parts_ids' => ['name', 'value']])
+                        ->read(['parts_ids' => ['name', 'value']], $params['lang'])
                         ->first();
 
     foreach($template['parts_ids'] as $part_id => $part) {
