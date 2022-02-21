@@ -40,12 +40,24 @@
                                     },
                                     {
                                         "width": "50%",
-                                        "items": [
+                                        "items": [ 
                                             {
                                                 "type": "field",
                                                 "label": "Identity",
                                                 "value": "identity_id",
                                                 "width": "100%"
+                                            }, 
+                                            {
+                                                "type": "field",
+                                                "label": "Password",
+                                                "value": "password",
+                                                "width": "50%"
+                                            }, 
+                                            {
+                                                "type": "field",
+                                                "label": "Organisation",
+                                                "value": "organisation_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -115,6 +127,30 @@
                                                 "type": "field",
                                                 "value": "setting_values_ids",
                                                 "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Permissions",
+                        "id": "section.permissions",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "permissions_ids",
+                                                "label": "permissions",
+                                                "widget": {
+                                                    "view": "list.default"
+                                                }                                                
                                             }
                                         ]
                                     }
