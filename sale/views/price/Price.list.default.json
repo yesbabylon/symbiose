@@ -1,6 +1,16 @@
 {
     "name": "Price List",
     "description": "This view is intended for displaying the list of prices.",
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for price creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
@@ -42,7 +52,7 @@
                 "value": "accounting_rule_id",
                 "width": "10%",
                 "sortable": true
-            }                        
+            }
         ]
     }
 }

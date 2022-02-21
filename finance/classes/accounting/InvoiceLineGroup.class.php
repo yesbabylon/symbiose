@@ -31,6 +31,13 @@ class InvoiceLineGroup extends Model {
                 'required'          => true
             ],
 
+            'invoice_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\InvoiceLine',
+                'foreign_field'     => 'invoice_line_group_id',
+                'description'       => 'Detailed lines of the group.'
+            ]
+
         ];
     }
 

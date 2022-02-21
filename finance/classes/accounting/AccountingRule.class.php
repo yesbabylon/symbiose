@@ -69,7 +69,7 @@ class AccountingRule extends Model {
     }
 
 
-    public function onchangeVatRuleId($om, $oids, $lang) {
+    public static function onchangeVatRuleId($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {

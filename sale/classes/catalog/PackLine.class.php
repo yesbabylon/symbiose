@@ -40,13 +40,26 @@ class PackLine extends Model {
 
             'has_own_qty' => [
                 'type'              => 'boolean',
-                'description'       => "Does product have its own quantity (whatever the quantityt applied to the parent product)?"
+                'description'       => "Does product have its own quantity (whatever the quantity applied to the parent product)?",
+                'default'           => false
             ],
 
             'own_qty' => [
                 'type'              => 'integer',
                 'description'       => "Self assigned quantity for this product.",
                 'visible'           => ['has_own_qty', '=', true]
+            ],
+
+            'has_own_duration' => [
+                'type'              => 'boolean',
+                'description'       => "Does product have its own duration?",
+                'default'           => false
+            ],
+
+            'own_duration' => [
+                'type'              => 'integer',
+                'description'       => "Self assigned duration, in days.",
+                'visible'           => ['has_own_duration', '=', true]
             ],
 
             'share' => [

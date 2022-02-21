@@ -6,7 +6,7 @@
               "id": "item.home",
               "label": "Home",
               "description": "",
-              "icon": "menu_book",
+              "icon": "home",
               "type": "entry",
               "route": "/"
             },
@@ -17,7 +17,23 @@
               "icon": "person_outline",
               "type": "entry",
               "route": "/planning"
+            },
+            {
+              "id": "item.bookings",
+              "label": "Bookings",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/",
+              "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "list.default",
+                "order": "id",
+                "sort": "desc",
+                "domain": ["status", "=", "quote"]
+              }
             }                      
+            
         ]
     }
 }

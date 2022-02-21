@@ -289,30 +289,35 @@ class Identity extends Model {
                 'description'       => 'Reference contact gender.',
                 'visible'           => [ ['type', '=', 'I'] ]
             ],
+
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
                 'visible'           => [ ['type', '=', 'I'] ]
             ],
+
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
                 'visible'           => [ ['type', '=', 'I'] ]
             ],
-            'lang' => [
-                'type'              => 'string',
-                'usage'             => 'language/iso-639:2',
-                'description'       => 'Prefered spoken language.',
-                'default'           => 'fr'
+
+            'lang_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\Lang',
+                'description'       => "Preferred language of the identity.",
+                'default'           => 1,
+                'onchange'          => 'identity\Identity::onchangeLangId'
             ],
 
+            // field for retrieving all partners related to the identity
             'partners_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Partnerships that relate to the identity.'
-            ],
+            ]
 
         ];
     }
@@ -349,6 +354,19 @@ class Identity extends Model {
                 if($odata['type'] == 'I' ) {
                     $om->write(__CLASS__, $oid, [ 'display_name' => null ], $lang);
                 }
+            }
+        }
+    }
+
+    /**
+     * When lang_id is updated, perform cascading trought the partners to update related lang_id
+     */
+    public static function onchangeLangId($om, $oids, $lang) {
+        $res = $om->read(__CLASS__, $oids, ['partners_ids', 'lang_id']);
+
+        if($res > 0 && count($res)) {
+            foreach($res as $oid => $odata) {
+                $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);                
             }
         }
     }

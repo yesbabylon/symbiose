@@ -14,14 +14,21 @@
                 "label": "Category",
                 "value": "category_id",
                 "width": "20%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
                 "label": "Type",
                 "value": "type",
                 "width": "20%",
-                "sortable": true                
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type",
+                "width": "20%",
+                "sortable": true
             }
         ]
     }

@@ -1,0 +1,34 @@
+{
+    "name": "Center Group",
+    "description": "Fefault view for displaying center groups.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Name",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Code",
+                "value": "code",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Manager",
+                "value": "manager_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Bank account",
+                "value": "bank_account_iban",
+                "width": "25%"
+            }            
+        ]
+    }
+}

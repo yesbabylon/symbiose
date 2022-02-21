@@ -11,14 +11,14 @@
             },
             {
                 "type": "field",
-                "label": "Code",
-                "value": "group_code",
+                "label": "Mnemo",
+                "value": "code_alpha",
                 "width": "15%"
             },
             {
                 "type": "field",
-                "label": "Mnemo",
-                "value": "code_alpha",
+                "label": "Group",
+                "value": "center_group_id",
                 "width": "15%"
             },
             {

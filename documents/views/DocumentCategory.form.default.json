@@ -19,7 +19,7 @@
                                                 "value": "name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
@@ -81,8 +81,12 @@
                                                 "value": "documents_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "action_select": true,
-                                                    "action_create": false
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": true,
+                                                            "ACTION.CREATE": false        
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]

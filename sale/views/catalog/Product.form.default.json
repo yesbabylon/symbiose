@@ -19,7 +19,7 @@
                                                 "value": "label",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
@@ -36,7 +36,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "100%"                                                
+                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -59,7 +59,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
@@ -67,7 +67,7 @@
                     {
                         "label": "Prices",
                         "id": "section.prices_section",
-                        "visible": [ [["is_pack", "=", false]], [["has_own_price", "=", true]] ],
+                        "visible": [ [["is_pack", "=", false], ["state", "<>", "draft"]], [["has_own_price", "=", true], ["state", "<>", "draft"]] ],
                         "rows": [
                             {
                                 "columns": [
@@ -91,6 +91,7 @@
                     {
                         "label": "Attributes",
                         "id": "section.attributes",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -110,10 +111,11 @@
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Groups",
                         "id": "section.groups",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -134,7 +136,7 @@
                     {
                         "label": "Pack Products",
                         "id": "section.pack_lines",
-                        "visible": ["is_pack", "=", true],
+                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"]],
                         "rows": [
                             {
                                 "columns": [
@@ -151,7 +153,7 @@
                                 ]
                             }
                         ]
-                    }                      
+                    }
                 ]
             }
         ]

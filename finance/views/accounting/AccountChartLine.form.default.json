@@ -16,15 +16,15 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
+                                                "value": "code",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "header": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "code",
+                                                "value": "description",
                                                 "width": "50%"
                                             },                                
                                             {

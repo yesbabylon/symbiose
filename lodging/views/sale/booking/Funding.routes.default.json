@@ -14,7 +14,7 @@
             "label": "Créer une facture",
             "description": "",
             "icon": "file_copy",
-            "route": "/bookings/funding/invoice/object.booking_id/object.id"
+            "route": "/bookings/funding/object.booking_id/object.id"
         }
     ]
 }

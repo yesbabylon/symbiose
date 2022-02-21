@@ -1,0 +1,55 @@
+{
+    "name": "Gestion de centres",
+    "plural": "Gestions de centres",
+    "description": "Une gestion de centres regroupe plusieurs centres qui ont une gestion administative en commmun.",
+    "model": {
+        "group_code": {
+            "label": "Code de groupe",
+            "description": "Code unique de regroupement centre (1 chiffre hexa).",
+            "help": ""
+        },
+        "manager_id": {
+            "label": "Gérant",
+            "description": "Personne de référence pour la gérance, le cas échéant.",
+            "help": ""
+        },
+        "template_category_id": {
+            "label": "Catégorie de modèle",
+            "description": "Catégorie de modèle utilisée par le centre.",
+            "help": ""
+        },
+        "centers_ids": {
+            "label": "Centres",
+            "description": "Liste des centres faisant partie du groupe.",
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Numéro de compte bancaire au format international.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Numéro d'identification de la banque.",
+            "help": ""
+        }        
+
+    },
+    "view": {
+        "form.default": {
+            "name": "Centre",
+            "description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
+            "layout": {
+                "section.centers_ids": {
+                    "label": "Centres"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Centres",
+            "description": "Cette vue est destinée à afficher la liste des centres.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

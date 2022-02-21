@@ -144,22 +144,22 @@ class Price extends Model {
         return $result;
     }
 
-    public function onchangeAccountingRuleId($om, $oids, $lang) {
+    public static function onchangeAccountingRuleId($om, $oids, $lang) {
         $res = $om->write(__CLASS__, $oids, ['vat_rate' => null]);
     }
 
-    public function onchangePriceListId($om, $oids, $lang) {
+    public static function onchangePriceListId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public function onchangeProductId($om, $oids, $lang) {
+    public static function onchangeProductId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     /**
      * Update price, based on VAT incl. price and applied VAT rate
      */
-    public function onchangePriceVat($om, $oids, $lang) {
+    public static function onchangePriceVat($om, $oids, $lang) {
         $prices = $om->read(__CLASS__, $oids, ['price_vat', 'vat_rate']);
 
         if($prices > 0 && count($prices)) {
@@ -169,7 +169,7 @@ class Price extends Model {
         }
     }
 
-    public function onchangePrice($om, $oids, $lang) {
+    public static function onchangePrice($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['price_vat' => null]);
     }
 

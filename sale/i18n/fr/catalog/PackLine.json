@@ -14,7 +14,7 @@
 			"help": ""
 		},
 		"has_own_qty": {
-			"label": "A sa propre quantité",
+			"label": "Quantité spécifique",
 			"description": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?",
 			"help": ""
 		},
@@ -23,9 +23,19 @@
 			"description": "Quantité auto-assignée pour ce produit.",
 			"help": ""
 		},
+		"has_own_duration": {
+			"label": "Durée spécifique",
+			"description": "Le produit a-t-il sa propre durée?",
+			"help": ""
+		},
+		"own_duration": {
+			"label": "Durée",
+			"description": "Durée, en jours, pour ce produit.",
+			"help": ""
+		},		
 		"share": {
 			"label": "Part",
-			"description": "Pourcentage de part de la ligne pour l'analyse.",
+			"description": "Part de la ligne pour l'analyse (en pourcentage).",
 			"help": ""
 		}
 	},
