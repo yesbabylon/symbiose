@@ -1,6 +1,9 @@
 {
     "name": "Rental Unit Assignement",
     "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

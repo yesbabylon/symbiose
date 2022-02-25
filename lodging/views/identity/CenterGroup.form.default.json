@@ -1,6 +1,9 @@
 {
     "name": "Center Group",
     "description": "A center group groups centers that are managed by the same person or team.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

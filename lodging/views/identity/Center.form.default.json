@@ -1,6 +1,9 @@
 {
     "name": "Center",
     "description": "A center is an accommodation establishment providing overnight lodging, and holding one or more rental units.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

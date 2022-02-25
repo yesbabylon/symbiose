@@ -1,6 +1,9 @@
 {
     "name": "Center Group",
     "description": "Fefault view for displaying center groups.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Cashdesk Logs",
     "description": "This view is intended for displaying the list of cashdesk logs.",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
     "layout": {
         "items": [
             {

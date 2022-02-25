@@ -1,6 +1,9 @@
 {
     "name": "Partner",
     "description": "Basic form for displaying a Partner",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

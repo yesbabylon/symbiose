@@ -1,6 +1,9 @@
 {
     "name": "Booking",
     "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

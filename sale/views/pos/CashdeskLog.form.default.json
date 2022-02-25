@@ -1,6 +1,9 @@
 {
     "name": "Cashdesk Log",
     "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
     "layout": {
         "groups": [
             {

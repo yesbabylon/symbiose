@@ -1,6 +1,9 @@
 {
     "name": "Products",
     "description": "This view is intended for displaying the list of products.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "order": "sku,product_model_id",
     "sort": "asc",
     "header": {

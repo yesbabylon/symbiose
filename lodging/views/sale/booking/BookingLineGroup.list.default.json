@@ -1,6 +1,9 @@
 {
     "name": "Booking Line Group",
     "description": "List of booking lines groups for products.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Options",
     "description": "This view is intended for dispaying the list of options.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "layout": {
         "items": [
             {

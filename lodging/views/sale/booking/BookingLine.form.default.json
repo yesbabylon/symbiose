@@ -1,6 +1,9 @@
 {
     "name": "Booking Line",
     "description": "Les lignes de réservation décrivent les produits et les quantités qui font partie d'une réservation.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

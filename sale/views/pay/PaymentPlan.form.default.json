@@ -1,6 +1,9 @@
 {
     "name": "Payment Plan",
     "description": "",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Bank Statement",
     "description": "",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

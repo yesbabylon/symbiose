@@ -1,5 +1,8 @@
 {
     "name": "Sale menu",
+    "access": {
+      "groups": ["booking.sale.user"]
+   },
     "layout": {
         "items": [
             {

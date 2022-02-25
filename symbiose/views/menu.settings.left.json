@@ -1,5 +1,8 @@
 {
     "name": "Settings menu",
+    "access": {
+      "groups": ["setting.default.user"]
+    },
     "layout": {
         "items": [
             {

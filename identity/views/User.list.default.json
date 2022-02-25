@@ -1,6 +1,9 @@
 {
     "name": "Users",
     "description": "This view is intended for displaying basic listing of existing Users.",
+    "access": {
+        "groups": ["*"]
+     },
     "layout": {
         "items": [
             {

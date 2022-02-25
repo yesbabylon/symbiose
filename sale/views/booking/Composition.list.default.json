@@ -1,6 +1,9 @@
 {
     "name": "Compositions",
     "description": "This view is intended for displaying the list of compositions.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

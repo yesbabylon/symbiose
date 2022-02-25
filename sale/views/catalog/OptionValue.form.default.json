@@ -1,6 +1,9 @@
 {
     "name": "Option Value",
     "description": "OptionValue objects are the possible values to which an option, for a given Product Attriubute, can be set to.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

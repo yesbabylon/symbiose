@@ -1,6 +1,9 @@
 {
     "name": "Booking Line Price Adapter",
     "description": "Adapters allow to get the final price of a booking line, either by performing a direct computation, or by using a discount definition.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Operation",
     "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
     "layout": {
         "groups": [
             {

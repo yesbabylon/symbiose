@@ -1,6 +1,9 @@
 {
     "name": "Booking",
-    "description": "",    
+    "description": "", 
+    "access": {
+        "groups": ["booking.default.user"]
+     },   
     "checks": [
         {
             "id": "booking.validator.overbooking",

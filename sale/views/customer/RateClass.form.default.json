@@ -1,6 +1,9 @@
 {
     "name": "Rate Classes",
     "description": "",
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

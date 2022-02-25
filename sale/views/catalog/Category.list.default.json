@@ -1,6 +1,9 @@
 {
     "name": "Categories",
     "description": "This view is intended for displaying the list of categories.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "layout": {
         "items": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Contract",
     "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "routes": [
         {
             "id": "item.contract.send",

@@ -2,6 +2,9 @@
     "name": "Customers",
     "description": "This view is intended for displaying basic listing of existing Customers.",
     "domain": ["relationship", "=", "customer"],
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+     },
     "layout": {
         "items": [
             {

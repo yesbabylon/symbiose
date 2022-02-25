@@ -1,6 +1,9 @@
 {
     "name": "Discount List",
     "description": "This view is intended for displaying the list of discounts.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

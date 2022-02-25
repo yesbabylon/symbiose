@@ -1,6 +1,9 @@
 {
     "name": "Prices Adapter",
     "description": "List of price adapters.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

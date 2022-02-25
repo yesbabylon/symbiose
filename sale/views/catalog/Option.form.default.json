@@ -1,6 +1,9 @@
 {
     "name": "Option",
     "description": "",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

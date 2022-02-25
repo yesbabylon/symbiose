@@ -1,6 +1,9 @@
 {
     "name": "Booking Followup",
     "description": "Followup entries are notes created by users to ease the internal communication related to bookings.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

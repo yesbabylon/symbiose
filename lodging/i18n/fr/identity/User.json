@@ -32,6 +32,11 @@
             "label": "Valeurs de Réglage",
             "description": "",
             "help": ""
+        },
+        "permissions_ids":{
+            "label": "Permissions",
+            "description": "",
+            "help": ""
         }
     },
     "view": {
@@ -47,6 +52,9 @@
                 },
                 "section.preferences": {
                     "label": "Préférences"
+                },
+                "section.permissions":{
+                    "label": "Permissions"
                 }
             }
         }

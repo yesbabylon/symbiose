@@ -1,6 +1,9 @@
 {
     "name": "Addresses",
     "description": "This view is intended for displaying basic listing of existing Addresses.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {
