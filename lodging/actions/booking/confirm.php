@@ -30,11 +30,11 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']
+    'providers'     => ['context', 'orm', 'cron']
 ]);
 
 
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
 
 // read booking object
 $booking = Booking::id($params['id'])
@@ -77,12 +77,8 @@ if($booking['status'] != 'option') {
 }
 
 // remove existing CRON tasks for reverting the booking to quote
+$cron->cancel("booking.option.deprecation.{$params['id']}");
 
-Task::search([
-    ['controller', '=', 'lodging_booking_quote'],
-    ['params', '=', '{"id": '.$params['id'].'}']
-])
-->delete(true);
 
 /*
     Generate the contract

@@ -357,4 +357,24 @@ class Booking extends Model {
         return parent::ondelete($om, $oids);
     }
 
+
+    public static function onupdate($om, $oids, $values) {
+        if(isset($values['status'])) {
+            // status can be updated 
+            return true;
+        }
+        else {
+            $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+
+            if($res > 0) {
+                foreach($res as $oids => $odata) {
+                    if($odata['status'] != 'quote') {
+                        return false;
+                    }
+                }
+            }    
+        }
+        return parent::ondelete($om, $oids);
+    }
+
 }

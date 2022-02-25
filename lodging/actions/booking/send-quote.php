@@ -17,7 +17,7 @@ use \Swift_Attachment as Swift_Attachment;
 use communication\TemplateAttachment;
 use documents\Document;
 use lodging\sale\booking\Booking;
-
+use core\setting\Setting;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -63,22 +63,24 @@ list($params, $providers) = announce([
             'default'       => DEFAULT_LANG
         ]
     ],
+    /*
     'access' => [
         'visibility'        => 'public',
         'users'             => [ROOT_USER_ID],
         'groups'            => ['sales.bookings.users'],
     ],
-    'response'      => [
+    */
+    'response' => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',
         'accept-origin'     => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth', 'access']
+    'providers' => ['context', 'cron']
 ]);
 
 
 // init local vars with inputs
-list($om, $context, $auth, $access) = [ $providers['orm'], $providers['context'], $providers['auth'], $providers['access'] ];
+list($context, $cron) = [ $providers['context'], $providers['cron'] ];
 
 
 $booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
@@ -141,7 +143,9 @@ if(count($params['attachments_ids'])) {
     $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
     foreach($template_attachments as $tid => $tdata) {
         $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
-        $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+        if($document) {
+            $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+        }
     }
 }
 
@@ -164,6 +168,17 @@ foreach($attachments as $attachment) {
 
 $mailer = new Swift_Mailer($transport);
 $result = $mailer->send($message);
+
+
+// #todo store reminder delay in Settings
+
+// add a task to the CRON
+$cron->schedule(
+    "booking.quote.reminder.{$params['booking_id']}",
+    time() + 7 * 86400,                                  // remind after 1 week (7 days)
+    'lodging_booking_quote',
+    '{"id": '.$params['booking_id'].'}'
+); 
 
 $context->httpResponse()
         ->body([])
