@@ -1,6 +1,6 @@
 {
     "name": "Invoice",
-    "description": "An invoice is a legal document that relates to a booking, and is part of the accounting system.",
+    "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
     "layout": {
         "groups": [
             {
@@ -14,23 +14,24 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
+                                                "value": "number",
+                                                "width": "33%",
                                                 "widget": {
-                                                    "heading": true
+                                                    "heading": true,
+                                                    "readonly": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partner",
+                                                "value": "partner_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Booking",
                                                 "value": "booking_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Organisation",
-                                                "value": "organisation_id",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
@@ -41,17 +42,46 @@
                                                 "type": "field",
                                                 "value": "is_paid",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Organisation",
+                                                "value": "organisation_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    }                                    
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
-                                                "width": "50%"
+                                                "value": "invoice_lines_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

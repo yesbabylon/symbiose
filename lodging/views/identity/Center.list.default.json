@@ -18,7 +18,7 @@
             {
                 "type": "field",
                 "label": "Group",
-                "value": "center_group_id",
+                "value": "center_office_id",
                 "width": "15%"
             },
             {

@@ -35,6 +35,9 @@ if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+if(!count($booking['booking_lines_ids'])) {
+    throw new Exception("empty_booking", QN_ERROR_MISSING_PARAM);
+}
 
 /*
     Get in-memory consumptions resulting from the booking lines, in order to check booking consumptions against existing consumptions.

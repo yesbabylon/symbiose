@@ -6,7 +6,7 @@
             "id": "booking.validator.overbooking",
             "label": "Vérifier réservation",
             "description": "Vérifier la cohérence de la réservation.",
-            "controller": "lodging_booking_check-overbooking"
+            "controller": "lodging_booking_check"
         }
     ]
 }

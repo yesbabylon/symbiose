@@ -61,9 +61,9 @@ if(!count($booking['booking_lines_ids'])) {
 }
 
 
-// check overbooking
+// check booking consistency
 
-$json = run('get', 'lodging_booking_check-overbooking', ['id' => $params['id']]);
+$json = run('get', 'lodging_booking_check', ['id' => $params['id']]);
 $data = json_decode($json, true);
 if(isset($data['errors'])) {
 

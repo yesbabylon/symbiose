@@ -4,10 +4,12 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
+use identity\Partner;
 use lodging\sale\booking\Funding;
-use sale\booking\Invoice;
-
+use lodging\sale\booking\Invoice;
+use finance\accounting\InvoiceLine;
+use lodging\sale\catalog\Product;
+use core\setting\Setting;
 
 list($params, $providers) = announce([
     'description'   => "Convert given funding into an invoice.",
@@ -30,26 +32,32 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 
-// #todo - handle 'due_balance', 'credit_balance', 'balanced'
+$partners = Partner::search(['id', '=', $params['partner_id']])->get();
+
+if(!count($partners)) {
+    throw new Exception("unknown_partner", QN_ERROR_UNKNOWN_OBJECT);
+}
+
 $funding = Funding::id($params['id'])
                     ->read([
                         'booking_id' => [
-                            'center_id' => [ 'organisation_id' ]
+                            'center_id' => [ 'organisation_id', 'center_office_id' ]
                         ],
-                        'type'
+                        'type',
+                        'due_amount'
                     ])
                     ->first();
 
 if(!$funding) {
     // unknonw funding
-    throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception("unknown_funding", QN_ERROR_UNKNOWN_OBJECT);
 }
 
 if($funding['type'] == 'invoice') {
@@ -58,14 +66,45 @@ if($funding['type'] == 'invoice') {
 }
 
 $organisation_id = $funding['booking_id']['center_id']['organisation_id'];
+$center_office_id = $funding['booking_id']['center_id']['center_office_id'];
 
 $invoice = Invoice::create([
-    'organisation_id'   => $organisation_id, 
-    'status'            => 'invoice', 
-    'booking_id'        => $funding['booking_id']['id']
+    'organisation_id'   => $organisation_id,
+    'center_office_id'   => $center_office_id,
+    'status'            => 'invoice',
+    'booking_id'        => $funding['booking_id']['id'],
+    'partner_id'        => $params['partner_id'],
+    'funding_id'        => $params['id']
 ])->first();
 
-// covnert funding to 'invoice' type
+
+// #todo - handle journal entries
+// default credit account
+// default downpayment account (debit)
+
+
+// retrieve downpayment product
+$downpayment_product_id = 0;
+
+$downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku');
+if($downpayment_sku) {
+    $product = Product::search(['sku', '=', $downpayment_sku])->read(['id'])->first();
+    if($product) {
+        $downpayment_product_id = $product['id'];
+    }
+}
+
+// create invoice line related to the downpayment
+InvoiceLine::create([
+    'invoice_id' => $invoice['id'],
+    'product_id' => $downpayment_product_id,
+    'unit_price' => $funding['due_amount'],
+    'qty'        => 1,
+    'vat_rate'   => 0.0
+]);
+
+
+// convert funding to 'invoice' type
 $funding = Funding::id($params['id'])->update(['type' => 'invoice', 'invoice_id' => $invoice['id']]);
 
 

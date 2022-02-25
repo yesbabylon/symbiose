@@ -38,12 +38,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "center_group_id",
+                                                "value": "center_office_id",
                                                 "width": "30%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "use_group_details",
+                                                "value": "use_office_details",
                                                 "width": "25%"
                                             }
                                         ]

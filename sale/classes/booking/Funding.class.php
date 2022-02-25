@@ -16,7 +16,7 @@ class Funding extends \sale\pay\Funding {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'Booking the contract relates to.',
-                'ondelete'          => 'cascade',        // delete funding when parent booking is deleted                
+                'ondelete'          => 'cascade',        // delete funding when parent booking is deleted
                 'required'          => true
             ],
 
@@ -24,6 +24,13 @@ class Funding extends \sale\pay\Funding {
                 'type'              => 'integer',
                 'description'       => 'Order by which the funding have to be sorted when presented.',
                 'default'           => 0
+            ],
+
+            'invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Invoice',
+                'description'       => 'The invoice targeted by the funding, if any.',
+                'visible'           => [ ['type', '=', 'invoice'] ]
             ],
 
             'payment_reference' => [
@@ -34,38 +41,59 @@ class Funding extends \sale\pay\Funding {
                 'store'             => true
             ],
 
-            'payments_ids' => [ 
+            'payments_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\booking\Payment',
                 'foreign_field'     => 'fundings_ids',
                 'rel_table'         => 'sale_pay_rel_payment_funding',
                 'rel_foreign_key'   => 'payment_id',
                 'rel_local_key'     => 'funding_id'
-            ]            
+            ]
 
         ];
     }
 
     public static function getPaymentReference($om, $oids, $lang) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'type', 'order']);
+        $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'type', 'order', 'payment_deadline_id.code']);
         foreach($fundings as $oid => $funding) {
             $booking_code = intval($funding['booking_id.name']);
-            $code_ref = 150;                    // '+++150/+++' for initial installment
-            if($funding['order']) {
-                $code_ref += $funding['order']; 
+            if($funding['payment_deadline_id.code']) {
+                $code_ref = intval($funding['payment_deadline_id.code']);
             }
-            $control = ((76*$code_ref) + $booking_code ) % 97;
-            $control = ($control == 0)?97:$control;            
-            $result[$oid] = sprintf("%3d%04d%03d%02d", $code_ref, $booking_code / 1000, $booking_code % 1000, $control);
+            else {
+                // arbitrary value : 151 for first funding, 152 for second funding, ...
+                $code_ref = 150;
+                if($funding['order']) {
+                    $code_ref += $funding['order'];
+                }
+            }
+            $result[$oid] = self::get_payment_reference($code_ref, $booking_code);
         }
         return $result;
     }
-    
+
+    /**
+     * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
+     *
+     * Note:
+     *  format is aaa-bbbbbbb-XX
+     *  where Xaaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
+     *  as 10000000 % 97 = 76
+     *  we do (aaa * 76 + bbbbbbb) % 97
+     */
+    public static function get_payment_reference($prefix, $suffix) {
+        $a = intval($prefix);
+        $b = intval($suffix);
+        $control = ((76*$a) + $b ) % 97;
+        $control = ($control == 0)?97:$control;
+        return sprintf("%3d%04d%03d%02d", $a, $b / 1000, $b % 1000, $control);
+    }
+
     public function getUnique() {
         return [
             ['payment_deadline_id', 'booking_id']
         ];
-    }        
+    }
 
 }

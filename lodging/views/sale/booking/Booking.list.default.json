@@ -32,7 +32,8 @@
                 "type": "field",
                 "value": "name",
                 "label": "reference",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -55,7 +56,8 @@
             {
                 "type": "field",
                 "value": "status",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -67,7 +69,8 @@
                 "type": "field",
                 "label": "Center",
                 "value": "center_id",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -77,8 +80,21 @@
             },
             {
                 "type": "field",
+                "value": "creator",
+                "label": "Creator",
+                "width": "15%"
+            },
+            {
+                "type": "field",
                 "value": "modified",
                 "label": "Modified",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "modifier",
+                "label": "Modifier",
                 "width": "15%"
             }
         ]

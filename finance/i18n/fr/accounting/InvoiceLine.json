@@ -19,12 +19,17 @@
 			"help": ""
 		},
 		"price": {
-			"label": "Prix",
-			"description": "Prix ​​du produit lié à la ligne.",
+			"label": "Prix TVAC",
+			"description": "Montant TTC associé à la ligne.",
+			"help": ""
+		},
+		"total": {
+			"label": "Total HTVA",
+			"description": "Montant HT associé à la ligne.",
 			"help": ""
 		},
 		"vat_rate": {
-			"label": "Taux de TVA",
+			"label": "TVA %",
 			"description": "Taux de TVA à appliquer.",
 			"help": ""
 		},
@@ -34,12 +39,12 @@
 			"help": ""
 		},
 		"free_qty": {
-			"label": "Quantité gratuite",
-			"description": "Quantité gratuite du produit.",
+			"label": "Gratuités",
+			"description": "Quantité(s) offertes.",
 			"help": ""
 		},
 		"discount": {
-			"label": "Remise",
+			"label": "Rem.%",
 			"description": "Montant total de la remise à appliquer, le cas échéant.",
 			"help": ""
 		}

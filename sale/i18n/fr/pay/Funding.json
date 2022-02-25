@@ -13,7 +13,7 @@
             "description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
             "selection": {
                 "installment": "versement",
-                "invoice": "facture d'achat"
+                "invoice": "facture"
             },
             "help": ""
         },

@@ -59,7 +59,7 @@ class AccountingRule extends Model {
             ],
 
             'prices_ids' => [
-                'type'              => 'many2one',
+                'type'              => 'one2many',
                 'foreign_object'    => 'sale\price\Price',
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Prices that relate to the accounting rule."
