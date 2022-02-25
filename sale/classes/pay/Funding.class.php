@@ -37,8 +37,8 @@ class Funding extends Model {
 
             'due_amount' => [
                 'type'              => 'float',
-                'usage'             => 'amount/money',
-                'description'       => 'Amount expected for the funding.'
+                'usage'             => 'amount/money:2',
+                'description'       => 'Amount expected for the funding (computed based on VAT incl. price).'
             ],
 
             'due_date' => [

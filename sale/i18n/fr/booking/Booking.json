@@ -8,21 +8,6 @@
             "description": "Utilisateur qui a créé l'entrée.",
             "help": ""
         },
-        "creator": {
-            "label": "Créateur",
-            "description": "La personne qui a effectué cette réservation.",
-            "help": ""
-        },
-        "created": {
-            "label": "Créée",
-            "description": "Date de création de la réservation.",
-            "help": ""
-        },
-        "modified": {
-            "label": "Modifiée",
-            "description": "Dernière modification de la réservation.",
-            "help": ""
-        },
         "description": {
             "label": "Description",
             "description": "Raison de la réservation.",

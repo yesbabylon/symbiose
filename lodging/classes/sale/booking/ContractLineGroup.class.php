@@ -26,7 +26,7 @@ class ContractLineGroup extends \sale\booking\ContractLineGroup {
             'contract_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\ContractLine',
-                'description'       => 'Contract lines that belong to the contract.',
+                'description'       => 'Contract line that describes the pack.',
                 'visible'           => ['is_pack', '=', true]
             ],
 

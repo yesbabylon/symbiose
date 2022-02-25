@@ -24,7 +24,7 @@
               "description": "",
               "icon": "menu_book",
               "type": "entry",
-              "route": "/",
+              "route": "/bookings",
               "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "list.default",

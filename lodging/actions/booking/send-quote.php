@@ -36,7 +36,7 @@ list($params, $providers) = announce([
         'message' => [
             'description'   => 'Body of the message.',
             'type'          => 'string',
-            'usage'         => 'email',            
+            'usage'         => 'email',
             'required'      => true
         ],
         'sender_email' => [
@@ -58,10 +58,15 @@ list($params, $providers) = announce([
         ],
         'lang' =>  [
             'description'   => 'Language to use for multilang contents.',
-            'type'          => 'string', 
-            'usage'         => 'language/iso-639',            
+            'type'          => 'string',
+            'usage'         => 'language/iso-639',
             'default'       => DEFAULT_LANG
-        ]        
+        ]
+    ],
+    'access' => [
+        'visibility'        => 'public',
+        'users'             => [ROOT_USER_ID],
+        'groups'            => ['sales.bookings.users'],
     ],
     'response'      => [
         'content-type'      => 'application/json',
@@ -72,13 +77,8 @@ list($params, $providers) = announce([
 ]);
 
 
-// initalise local vars with inputs
+// init local vars with inputs
 list($om, $context, $auth, $access) = [ $providers['orm'], $providers['context'], $providers['auth'], $providers['access'] ];
-
-// restrict to granted users
-if(!$access->hasGroup('sales.bookings.users')) {
-    throw new Exception('missing_right', QN_ERROR_NOT_ALLOWED);
-}
 
 
 $booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
@@ -106,9 +106,9 @@ if($data != null && isset($data['errors'])) {
 // #todo - store these terms in i18n
 $main_attachment_name = 'quote';
 switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'devis';        
-        break;        
-    case 'nl': $main_attachment_name = 'offerte';        
+    case 'fr': $main_attachment_name = 'devis';
+        break;
+    case 'nl': $main_attachment_name = 'offerte';
         break;
     case 'en': $main_attachment_name = 'quote';
         break;
@@ -120,11 +120,11 @@ try {
     $data = eQual::run('get', 'lodging_identity_center-signature', [
         'center_id'     => $booking['center_id'],
         'lang'          => $params['lang']
-    ]);    
-    $signature = (isset($data['signature']))?$data['signature']:'';    
+    ]);
+    $signature = (isset($data['signature']))?$data['signature']:'';
 }
 catch(Exception $e) {}
-              
+
 $params['message'] .= $signature;
 
 

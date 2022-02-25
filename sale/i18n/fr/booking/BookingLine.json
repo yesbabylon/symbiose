@@ -47,7 +47,7 @@
             "label": "Mode de paiement",
             "description": "La façon dont la ligne est destinée à être payée.",
             "selection": {
-                "invoice": "facture d'achat",
+                "invoice": "facture",
                 "cash": "en espèces",
                 "free": "gratuit"
             },

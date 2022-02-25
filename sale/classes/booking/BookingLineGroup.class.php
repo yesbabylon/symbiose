@@ -96,11 +96,22 @@ class BookingLineGroup extends Model {
                 'ondelete'          => 'cascade'        // delete group when parent booking is deleted
             ],
 
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price for all lines (computed).',
+                'function'          => 'sale\booking\BookingLineGroup::getTotal',
+                'store'             => true
+            ],
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'description'       => 'Final (computed) price for all lines.',
-                'function'          => 'sale\booking\BookingLineGroup::getPrice'
+                'usage'             => 'amount/money:2',                
+                'description'       => 'Final tax-included price for all lines (computed).',
+                'function'          => 'sale\booking\BookingLineGroup::getPrice',
+                'store'             => true
             ]
 
         ];
@@ -115,26 +126,40 @@ class BookingLineGroup extends Model {
         return $result;
     }
 
+
+    /**
+     * Get total tax-excluded price of the group, with discount applied.
+     * 
+     */
+    public static function getTotal($om, $oids, $lang) {
+        $result = [];
+
+        $groups = $om->read(get_called_class(), $oids, ['booking_lines_ids.total']);
+
+        foreach($groups as $oid => $group) {
+            $result[$oid] = array_reduce($group['booking_lines_ids.total'], function ($c, $a) {
+                return $c + $a['total'];
+            }, 0.0);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get final tax-included price of the group.
+     * 
+     */
     public static function getPrice($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids']);
 
-        if($groups > 0 && count($groups)) {
-            foreach($groups as $gid => $group) {
-                $result[$gid] = 0.0;
+        $groups = $om->read(get_called_class(), $oids, ['booking_lines_ids.price']);
 
-                $lines = $om->read('sale\booking\BookingLine', $group['booking_lines_ids'], ['price', 'payment_mode']);
-                if($lines > 0 && count($lines)) {
-                    foreach($lines as $line) {
-                        if($line['payment_mode'] != 'free') {
-                            $result[$gid] += $line['price'];
-                        }
-                    }
-                    $result[$gid] = round($result[$gid], 2);
-                }
-
-            }
+        foreach($groups as $oid => $group) {
+            $result[$oid] = array_reduce($group['booking_lines_ids.price'], function ($c, $a) {
+                return $c + $a['price'];
+            }, 0.0);
         }
+
         return $result;
     }
 

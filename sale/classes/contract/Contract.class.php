@@ -70,6 +70,24 @@ class Contract extends Model {
                 'foreign_field'     => 'contract_id',
                 'description'       => 'Contract lines that belong to the contract.',
                 'ondetach'          => 'delete'
+            ],
+
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'sale\contract\Contract::getTotal',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the contract (computed).',
+                'store'             => true
+            ],
+    
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'sale\contract\Contract::getPrice',                
+                'usage'             => 'amount/money:2',
+                'store'             => true,
+                'description'       => "Final tax-included contract amount (computed)."
             ]
 
         ];
@@ -83,5 +101,40 @@ class Contract extends Model {
         }
         return $result;
     }
+
+
+    /**
+     * Compute the VAT excl. total price of the contract, with discounts applied.
+     *
+     */
+    public static function getTotal($om, $oids, $lang) {
+        $result = [];
+        $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.total']);
+
+        foreach($contracts as $oid => $contract) {
+            $result[$oid] = array_reduce($contract['contract_lines_ids.total'], function ($c, $a) {
+                return $c + $a['total'];
+            }, 0.0);
+        }
+        
+        return $result;
+    }  
+
+    /**
+     * Compute the final VAT incl. price of the contract.
+     *
+     */
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.price']);
+
+        foreach($contracts as $oid => $contract) {
+            $result[$oid] = array_reduce($contract['contract_lines_ids.price'], function ($c, $a) {
+                return $c + $a['price'];
+            }, 0.0);
+        }
+
+        return $result;
+    }    
 
 }

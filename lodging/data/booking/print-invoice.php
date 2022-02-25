@@ -36,6 +36,12 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'default'       => 'print.default'
         ],
+        'mode' =>  [
+            'description'   => 'Mode in which document has to be rendered: simple (default) or detailed.',
+            'type'          => 'string',
+            'selection'     => ['simple', 'detailed'],
+            'default'       => 'simple'
+        ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'          => 'string',
@@ -80,25 +86,27 @@ $twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
 
 // read invoice
 $fields = [
+    'name',
+    'created',
+    'partner_id' => [
+        'partner_identity_id' => [
+            'id',
+            'display_name',
+            'type',
+            'address_street', 'address_dispatch', 'address_city', 'address_zip',
+            'type',
+            'phone',
+            'email',
+            'has_vat',
+            'vat_number'
+        ]
+    ],
     'booking_id' => [
         'name',
         'modified',
         'date_from',
         'date_to',
         'price',
-        'customer_id' => [
-            'partner_identity_id' => [
-                'id',
-                'display_name',
-                'type',
-                'address_street', 'address_dispatch', 'address_city', 'address_zip',
-                'type',
-                'phone',
-                'email',
-                'has_vat',
-                'vat_number'
-            ]
-        ],
         'center_id' => [
             'name',
             'manager_id' => ['name'],
@@ -110,6 +118,18 @@ $fields = [
             'bank_account_iban',
             'bank_account_bic',
             'template_category_id',
+            'use_office_details',
+            'center_office_id' => [
+                'code',
+                'address_street',
+                'address_city',
+                'address_zip',
+                'phone',
+                'email',
+                'signature',
+                'bank_account_iban',
+                'bank_account_bic'
+            ],
             'organisation_id' => [
                 'id',
                 'legal_name',
@@ -119,7 +139,9 @@ $fields = [
                 'fax',
                 'website',
                 'registration_number',
-                'signature'
+                'signature',
+                'bank_account_iban',
+                'bank_account_bic'
             ]
         ],
         'contacts_ids' => [
@@ -130,24 +152,34 @@ $fields = [
                 'email',
                 'title'
             ]
-        ],
-        'fundings_ids' => [
-            'due_date', 'is_paid', 'due_amount',
-            'payment_reference',
-            'payment_deadline_id' => ['name']
         ]
     ],
-    'invoice_lines_groups_ids' => [
+    'invoice_lines_ids' => [
+        'product_id',
+        'qty',
+        'unit_price',
+        'discount',
+        'free_qty',
+        'vat_rate',
+        'total',
+        'price'
+    ],
+    'invoice_line_groups_ids' => [
         'name',
         'invoice_lines_ids' => [
             'product_id',
             'qty',
-            'price',
+            'unit_price',
             'discount',
             'free_qty',
-            'vat_rate'
+            'vat_rate',
+            'total',
+            'price'
         ]
-    ]
+    ],
+    'funding_id' => ['payment_reference', 'due_date'],
+    'total',
+    'price'
 ];
 
 
@@ -186,26 +218,32 @@ $values = [
     'header_img_url'        => $img_url,
     'invoice_header_html'  => '',
     'invoice_notice_html'  => '',
-    'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
+
+    'customer_name'         => $invoice['partner_id']['partner_identity_id']['display_name'],
     'contact_name'          => '',
-    'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
-    'contact_email'         => $booking['customer_id']['partner_identity_id']['email'],
-    'customer_address1'     => $booking['customer_id']['partner_identity_id']['address_street'],
-    'customer_address2'     => $booking['customer_id']['partner_identity_id']['address_zip'].' '.$booking['customer_id']['partner_identity_id']['address_city'],
-    'customer_has_vat'      => (int) $booking['customer_id']['partner_identity_id']['has_vat'],
-    'customer_vat'          => $booking['customer_id']['partner_identity_id']['vat_number'],
-    'member'                => lodging_booking_print_contract_formatMember($booking),
-    'date'                  => date('d/m/Y', $booking['modified']),
-    'code'                  => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
+    'contact_phone'         => $invoice['partner_id']['partner_identity_id']['phone'],
+    'contact_email'         => $invoice['partner_id']['partner_identity_id']['email'],
+    'customer_address1'     => $invoice['partner_id']['partner_identity_id']['address_street'],
+    'customer_address2'     => $invoice['partner_id']['partner_identity_id']['address_zip'].' '.$invoice['partner_id']['partner_identity_id']['address_city'],
+    'customer_has_vat'      => (int) $invoice['partner_id']['partner_identity_id']['has_vat'],
+    'customer_vat'          => $invoice['partner_id']['partner_identity_id']['vat_number'],
+    'date'                  => date('d/m/Y', $invoice['created']),
+    'code'                  => $invoice['name'],
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
     'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
     'center_contact2'       => DataFormatter::format($booking['center_id']['phone'], 'phone').' - '.$booking['center_id']['email'],
-    'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
-    'price'                 => $booking['price'],
-    'vat'                   => 0,
-    'total'                 => 0,
+
+    // by default, we use center contact details (overridden in case Center has a management Office, see below)
+    'center_phone'          => DataFormatter::format($booking['center_id']['phone'], 'phone'),
+    'center_email'          => $booking['center_id']['email'],
+    'center_signature'      => $booking['center_id']['organisation_id']['signature'],
+
+    'period'                => 'du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
+    'price'                 => $invoice['price'],
+    'total'                 => $invoice['total'],
+
     'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
     'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
     'company_email'         => $booking['center_id']['organisation_id']['email'],
@@ -213,15 +251,32 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
-    'company_iban'          => substr($booking['center_id']['bank_account_iban'], 0, 4).' '.substr($booking['center_id']['bank_account_iban'], 4, 4).' '.substr($booking['center_id']['bank_account_iban'], 8, 4).' '.substr($booking['center_id']['bank_account_iban'], 12),
-    'company_bic'           => $booking['center_id']['bank_account_bic'],
-    'installment_date'      => '',
-    'installment_amount'    => 0,
-    'installment_reference' => '',
-    'installment_qr_url'    => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
-    'fundings'              => [],
-    'lines'                 => []
+
+    // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
+    'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
+    'company_bic'           => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_bic'], 'bic'),
+
+    'payment_deadline'      => '',
+    'payment_reference'     => '',
+    'payment_qr_uri'        => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
+
+    'lines'                 => [],
+    'tax_lines'             => []
 ];
+
+
+/*
+    override contact and payment details with center's office, if set
+*/
+if($booking['center_id']['use_office_details']) {
+    $office = $booking['center_id']['center_office_id'];
+    $values['company_iban'] = DataFormatter::format($office['bank_account_iban'], 'iban');
+    $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
+    $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
+    $values['center_email'] = $office['email'];
+    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];    
+}
+
 
 
 /*
@@ -229,21 +284,23 @@ $values = [
 */
 if($booking['center_id']['template_category_id']) {
 
-    $template = Template::search([ 
-                            ['category_id', '=', $booking['center_id']['template_category_id']], 
-                            ['code', '=', 'invoice'], 
-                            ['type', '=', 'invoice'] 
+    $template = Template::search([
+                            ['category_id', '=', $booking['center_id']['template_category_id']],
+                            ['code', '=', 'invoice'],
+                            ['type', '=', 'invoice']
                         ])
                         ->read(['parts_ids' => ['name', 'value']])
                         ->first();
+    if($template && count($templace) > 0) {
+        foreach($template['parts_ids'] as $part_id => $part) {
+            if($part['name'] == 'header') {
+                $values['invoice_header_html'] = $part['value'].$values['center_signature'];
+            }
+            else if($part['name'] == 'notice') {
+                $values['invoice_notice_html'] = $part['value'];
+            }
+        }
 
-    foreach($template['parts_ids'] as $part_id => $part) {
-        if($part['name'] == 'header') {
-            $values['invoice_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
-        }
-        else if($part['name'] == 'notice') {
-            $values['invoice_notice_html'] = $part['value'];            
-        }
     }
 
 }
@@ -254,23 +311,34 @@ if($booking['center_id']['template_category_id']) {
 
 $lines = [];
 
-foreach($invoice['contract_line_groups_ids'] as $invoice_line_group) {
+// display lines by groups, when present
+foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
 
     $line = [
         'name'          => $invoice_line_group['name'],
-        'price'         => 0,
-        'unit_price'    => 0,
-        'vat_rate'      => 0,
-        'qty'           => 0,
+        'price'         => null,
+        'price'         => null,        
+        'unit_price'    => null,
+        'vat_rate'      => null,
+        'qty'           => null,
+        'free_qty'      => null,
         'is_group'      => true
     ];
     $lines[] = $line;
 
+    $group_lines = [];
+
     foreach($invoice_line_group['invoice_lines_ids'] as $invoice_line) {
+
+        // prevent displaying same line twice
+        if(isset($invoice['invoice_lines_ids'][$invoice_line['id']])) {
+            unset($invoice['invoice_lines_ids'][$invoice_line['id']]);
+        }
 
         $line = [
             'name'          => $invoice_line['name'],
             'price'         => $invoice_line['price'],
+            'total'         => $invoice_line['total'],
             'unit_price'    => $invoice_line['unit_price'],
             'vat_rate'      => $invoice_line['vat_rate'],
             'qty'           => $invoice_line['qty'],
@@ -279,12 +347,81 @@ foreach($invoice['contract_line_groups_ids'] as $invoice_line_group) {
             'is_group'      => false
         ];
 
-        $lines[] = $line;
+        $group_lines[] = $line;
     }
+    if($params['mode'] == 'detailed') {
+        foreach($group_lines as $line) {
+            $lines[] = $line;
+        }
+    }
+    // group lines by VAT rate
+    else {
+        $group_tax_lines = [];
+        foreach($group_lines as $line) {
+            $vat_rate = strval($line['vat_rate']);
+            if(!isset($group_tax_lines[$vat_rate])) {
+                $group_tax_lines[$vat_rate] = 0;
+            }
+            $group_tax_lines[$vat_rate] += $line['total'];
+        }
+
+        if(count(array_keys($group_tax_lines)) <= 1) {
+            $pos = count($lines)-1;
+            foreach($group_tax_lines as $vat_rate => $total) {
+                $lines[$pos]['qty'] = 1;
+                $lines[$pos]['vat_rate'] = $vat_rate;
+                $lines[$pos]['total'] = $total;
+                $lines[$pos]['price'] = $total * (1 + $vat_rate);
+            }
+        }
+        else {
+            foreach($group_tax_lines as $vat_rate => $total) {
+                $line = [
+                    'name'      => 'Services avec TVA '.($vat_rate*100).'%',                    
+                    'qty'       => 1,
+                    'vat_rate'  => $vat_rate,
+                    'total'     => $total,
+                    'price'     => $total * (1 + $vat_rate)
+                ];
+                $lines[] = $line;
+            }
+        }
+    }
+}
+
+// process remainging stand-alone lines 
+foreach($invoice['invoice_lines_ids'] as $invoice_line) {
+    $line = [
+        'name'          => $invoice_line['name'],
+        'price'         => $invoice_line['price'],
+        'total'         => $invoice_line['total'],
+        'unit_price'    => $invoice_line['unit_price'],
+        'vat_rate'      => $invoice_line['vat_rate'],
+        'qty'           => $invoice_line['qty'],
+        'discount'      => $invoice_line['discount'],
+        'free_qty'      => $invoice_line['free_qty'],
+        'is_group'      => false
+    ];
+
+    $lines[] = $line;
 }
 
 
 $values['lines'] = $lines;
+
+/*
+    retrieve final VAT and group by rate
+*/
+foreach($lines as $line) {
+    $vat_rate = $line['vat_rate'];
+    $tax_label = 'TVA '.strval( intval($vat_rate * 100) ).'%';
+    $vat = $line['price'] - $line['total'];
+    if(!isset($values['tax_lines'][$tax_label])) {
+        $values['tax_lines'][$tax_label] = 0;
+    }
+    $values['tax_lines'][$tax_label] += $vat;
+}
+
 
 foreach($booking['contacts_ids'] as $contact) {
     if(strlen($values['contact_name']) == 0 || $contact['type'] == 'invoice') {
@@ -295,55 +432,27 @@ foreach($booking['contacts_ids'] as $contact) {
     }
 }
 
-// inject expected fundings and find the first installment 
-$installment_date = PHP_INT_MAX;
-$installment_amount = 0;
-$installment_ref = '';
 
-foreach($booking['fundings_ids'] as $funding) {
-
-    if($funding['due_date'] < $installment_date) {
-        $installment_date = $funding['due_date'];
-        $installment_amount = $funding['due_amount'];
-        $installment_ref = $funding['payment_reference'];
-    }
-    $line = [
-        'name'          => $funding['payment_deadline_id']['name'],
-        'due_date'      => date('d/m/Y', $funding['due_date']),
-        'due_amount'    => $funding['due_amount'],
-        'is_paid'       => $funding['is_paid'],
-        'reference'     => $funding['payment_reference']
-    ];
-    $values['fundings'][] = $line;
+// add payment terms
+if(isset($invoice['funding_id']['due_date'])) {
+    $values['payment_deadline'] = date('d/m/Y', $invoice['funding_id']['due_date']);
 }
-
-// no funding found
-if($installment_date == PHP_INT_MAX) {
-    // set default delay to 20 days
-    $installment_date = time() + (60 * 60 *24 * 20);
-    // set default amount to 20%
-    $installment_amount = $booking['price'] * 0.2;
-    // set installment reference    ('+++150/+++' for initial installment)
-    $control = ((76*150) + intval($booking['name']) ) % 97;
-    $control = ($control == 0)?97:$control;    
-    $installment_ref = sprintf("150%04d%03d%02d", intval($booking['name']) / 1000, intval($booking['name']) % 1000, $control);
-}
-
-$values['installment_date'] = date('d/m/Y', $installment_date);
-$values['installment_amount'] = (float) $installment_amount;
-$values['installment_reference'] = '+++'.substr($installment_ref, 0, 3).'/'.substr($installment_ref, 3, 4).'/'.substr($installment_ref, 7, 5).'+++';
 
 
 // generate a QR code
 try {
+    if(!isset($invoice['funding_id']['payment_reference'])) {
+        throw new Exception('no payment ref');
+    }
+    $values['payment_reference'] = DataFormatter::format($invoice['funding_id']['payment_reference'], 'scor');
     $paymentData = Data::create()
         ->setServiceTag('BCD')
         ->setIdentification('SCT')
         ->setName($values['company_name'])
-        ->setIban(str_replace(' ', '', $booking['center_id']['bank_account_iban']))
-        ->setBic(str_replace(' ', '', $booking['center_id']['bank_account_bic']))
-        ->setRemittanceReference($values['installment_reference'])
-        ->setAmount($values['installment_amount']);
+        ->setIban(str_replace(' ', '', $values['company_iban']))
+        ->setBic(str_replace(' ', '', $values['company_bic']))
+        ->setRemittanceReference($values['payment_reference'])
+        ->setAmount($values['total']);
 
     $result = Builder::create()
         ->data($paymentData)
@@ -351,12 +460,13 @@ try {
         ->build();
 
     $dataUri = $result->getDataUri();
-    $values['installment_qr_url'] = $dataUri;
+    $values['payment_qr_uri'] = $dataUri;
 
 }
 catch(Exception $exception) {
     // unknown error
 }
+
 
 /*
     Inject all values into the template
@@ -364,6 +474,9 @@ catch(Exception $exception) {
 $html = $twigTemplate->render($values);
 
 
+/*
+    Convert HTML to PDF 
+*/
 
 // instantiate and use the dompdf class
 $options = new DompdfOptions();
@@ -371,7 +484,7 @@ $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
 
 $dompdf->setPaper('A4', 'portrait');
-$dompdf->loadHtml((string) $html);
+$dompdf->loadHtml((string) $html, 'UTF-8');
 $dompdf->render();
 
 $canvas = $dompdf->getCanvas();
@@ -388,11 +501,3 @@ $context->httpResponse()
         ->header('Content-Disposition', 'inline; filename="document.pdf"')
         ->body($output)
         ->send();
-
-
-
-function lodging_booking_print_contract_formatMember($booking) {
-    $id = $booking['customer_id']['partner_identity_id']['id'];
-    $code = ltrim(sprintf("%3d.%03d.%03d", intval($id) / 1000000, (intval($id) / 1000) % 1000, intval($id)% 1000), '0');
-    return $code.' - '.$booking['customer_id']['partner_identity_id']['display_name'];
-}

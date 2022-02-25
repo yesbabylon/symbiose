@@ -89,28 +89,34 @@ class Booking extends \sale\booking\Booking {
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Fundings that relate to the booking.',
                 'ondetach'          => 'delete'
-            ]
+            ],
 
+            'invoices_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Invoice',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'Invoices that relate to the booking.'
+            ]
         ];
     }
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
 
-        $bookings = $om->read(__CLASS__, $oids, ['center_id.center_group_id.code'], $lang);
-        $format = Setting::get_value('sale', 'booking', 'booking.sequence_format');
+        $bookings = $om->read(__CLASS__, $oids, ['center_id.center_office_id.code'], $lang);
+        $format = Setting::get_value('sale', 'booking', 'booking.sequence_format', '%05d{sequence}');
 
         foreach($bookings as $oid => $booking) {
             $result[$oid] = '';
-            
-            $code = 'booking.sequence.'.$booking['center_id.center_group_id.code'];
+
+            $code = 'booking.sequence.'.$booking['center_id.center_office_id.code'];
             $sequence = Setting::get_value('sale', 'booking', $code);
-            
+
             if($sequence) {
-                Setting::set_value($sequence + 1, 'sale', 'booking', $code);
+                Setting::set_value('sale', 'booking', $code, $sequence + 1);
 
                 $result[$oid] = Setting::parse_format($format, [
-                    'center'    => $booking['center_id.center_group_id.code'],
+                    'center'    => $booking['center_id.center_office_id.code'],
                     'sequence'  => $sequence
                 ]);
             }
@@ -182,17 +188,17 @@ class Booking extends \sale\booking\Booking {
         */
         $bookings = $om->read(__CLASS__, $oids, [
                                                     'id',
-                                                    'customer_id.rate_class_id',            
+                                                    'customer_id.rate_class_id',
                                                     'customer_id.count_booking_12',
                                                     'booking_lines_groups_ids',
                                                     'date_from',
                                                     'date_to',
                                                     'center_id.autosale_list_category_id'
-                                                ]);
+                                                ], $lang);
 
         $groups_ids_to_delete = [];
         foreach($bookings as $bid => $booking) {
-            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_autosale']);
+            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_autosale'], $lang);
             foreach($booking_lines_groups as $gid => $group) {
                 if($group['is_autosale']) {
                     $groups_ids_to_delete[] = $gid;
@@ -236,11 +242,12 @@ class Booking extends \sale\booking\Booking {
                 $operands['count_booking_12'] = $booking['customer_id.count_booking_12'];
 
                 $autosales = $om->read('sale\autosale\AutosaleLine', $autosale_list['autosale_lines_ids'], [
-                    'product_id', 
-                    'has_own_qty', 
-                    'qty', 
+                    'product_id.id',
+                    'product_id.name',
+                    'has_own_qty',
+                    'qty',
                     'conditions_ids'
-                ]);
+                ], $lang);
 
                 // filter discounts based on related conditions
                 $products_to_apply = [];
@@ -277,7 +284,8 @@ class Booking extends \sale\booking\Booking {
                     if($valid) {
                         trigger_error("QN_DEBUG_ORM:: all conditions fullfilled", QN_REPORT_DEBUG);
                         $products_to_apply[$autosale_id] = [
-                            'id'            => $autosale['product_id'],
+                            'id'            => $autosale['product_id.id'],
+                            'name'          => $autosale['product_id.name'],
                             'has_own_qty'   => $autosale['has_own_qty'],
                             'qty'           => $autosale['qty']
                         ];
@@ -285,16 +293,25 @@ class Booking extends \sale\booking\Booking {
                 }
 
                 // apply all applicable products
+                $count = count($products_to_apply);
 
-                if(count($products_to_apply)) {
-                    // create a new BookingLine Group dedicated to autosale products
-                    $gid = $om->create('lodging\sale\booking\BookingLineGroup', [
-                        'booking_id'    => $booking_id,                        
+                if($count) {
+                    // create a new BookingLine Group dedicated to autosale products                    
+                    $group = [
+                        'name'          => 'Suppléments obligatoires',
+                        'booking_id'    => $booking_id,
                         'rate_class_id' => $booking['customer_id.rate_class_id'],
                         'date_from'     => $booking['date_from'],
                         'date_to'       => $booking['date_to'],
                         'is_autosale'   => true
-                    ], $lang);
+                    ];
+                    if($count == 1) {
+                        // in case of a single line, overwrite group name
+                        foreach($products_to_apply as $autosale_id => $product) {
+                            $group['name'] = $product['name'];
+                        }
+                    }
+                    $gid = $om->create('lodging\sale\booking\BookingLineGroup', $group, $lang);
 
                     // add all applicable products to the group
                     $order = 1;
@@ -309,9 +326,8 @@ class Booking extends \sale\booking\Booking {
                             'qty'                       => $product['qty']
                         ];
                         $om->create('lodging\sale\booking\BookingLine', $line, $lang);
-
                     }
-                    
+
                 }
 
 

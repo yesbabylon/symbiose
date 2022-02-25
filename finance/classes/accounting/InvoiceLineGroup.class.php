@@ -21,7 +21,13 @@ class InvoiceLineGroup extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Label for the group (displayed on invoice).'
+                'description'       => 'Label of the group (displayed on invoice).',
+                'required'          => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Short description of the group (displayed on invoice).'
             ],
 
             'invoice_id' => [

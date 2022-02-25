@@ -16,8 +16,15 @@ class Funding extends \sale\booking\Funding {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Booking',
                 'description'       => 'Booking the contract relates to.',
-                'ondelete'          => 'cascade',        // delete funding when parent booking is deleted                
+                'ondelete'          => 'cascade',        // delete funding when parent booking is deleted
                 'required'          => true
+            ],
+
+            'invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Invoice',
+                'description'       => 'The invoice targeted by the funding, if any.',
+                'visible'           => [ ['type', '=', 'invoice'] ]
             ],
 
             'center_id' => [
@@ -27,13 +34,12 @@ class Funding extends \sale\booking\Funding {
                 'required'          => true
             ]
 
-            
         ];
     }
 
-    
+
     public function getUnique() {
         return parent::getUnique();
-    }        
+    }
 
 }

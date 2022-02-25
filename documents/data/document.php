@@ -7,7 +7,7 @@
 use documents\Document;
 
 list($params, $providers) = announce([
-    'description'   => 'Returns the object that corresponds to the hash',
+    'description'   => 'Return raw data (with original MIME) of a document identified by given hash.',
     'params'        => [
         'hash' =>  [
             'description'   => 'Unique identifier of the resource.',

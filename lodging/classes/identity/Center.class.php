@@ -20,9 +20,9 @@ class Center extends \identity\Establishment {
 
         return [
 
-            'center_group_id' => [
+            'center_office_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\identity\CenterGroup',
+                'foreign_object'    => 'lodging\identity\CenterOffice',
                 'description'       => 'Management Group to which the center belongs.'
             ],            
 
@@ -31,7 +31,7 @@ class Center extends \identity\Establishment {
                 'description'       => 'Unique alpha identifier of the center (2 uppercase letters).'
             ],
 
-            'use_group_details' => [
+            'use_office_details' => [
                 'type'              => 'boolean',
                 'description'       => "Use the Center Group contact details in booking communications (instead of the ones of the center)?",
                 'default'           => false
