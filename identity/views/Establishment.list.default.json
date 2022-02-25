@@ -1,6 +1,9 @@
 {
     "name": "Establishments",
     "description": "This view is intended for displaying basic listing of existing Establishments.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

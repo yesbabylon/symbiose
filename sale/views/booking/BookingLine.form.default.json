@@ -1,6 +1,9 @@
 {
     "name": "Booking Line",
     "description": "Booking lines describe the products and quantities that are part of a booking.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

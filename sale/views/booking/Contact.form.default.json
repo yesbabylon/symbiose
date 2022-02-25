@@ -1,6 +1,9 @@
 {
     "name": "Contact",
     "description": "Booking contacts are persons involved in the organisation of a booking.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

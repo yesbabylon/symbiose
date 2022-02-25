@@ -1,6 +1,9 @@
 {
     "name": "Contacts",
     "description": "This view is intended for displaying the list of contacts.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

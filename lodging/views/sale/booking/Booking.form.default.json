@@ -1,6 +1,9 @@
 {
     "name": "Booking",
     "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "actions": [
         {
             "id": "action.quote",
@@ -55,7 +58,8 @@
             "label": "Cancel",
             "description": "The booking will be cancelled and rental units will be freed. Possible cancellation fee will be applied.",
             "controller": "lodging_booking_cancel",
-            "confirm": true
+            "confirm": true,
+            "visible": ["status", "=", "quote"]
         }
     ],
     "layout": {

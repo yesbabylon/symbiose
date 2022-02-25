@@ -1,6 +1,9 @@
 {
     "name": "Price Adapter",
     "description": "Les adaptateurs permettent d'adapter le prix final des lignes de réservation, soit en effectuant un calcul direct, soit en utilisant une définition de remise.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

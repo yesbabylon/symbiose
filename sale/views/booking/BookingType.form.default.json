@@ -1,6 +1,9 @@
 {
     "name": "Booking Type",
     "description": "Booking types are used to associate a reason to a given booking (ex. 'individual', 'group', ...) for statistics purpose.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

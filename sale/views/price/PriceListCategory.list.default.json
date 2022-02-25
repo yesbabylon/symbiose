@@ -1,6 +1,9 @@
 {
     "name": "Price Categorie List",
     "description": "This view is intended for displaying the list of price categories.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

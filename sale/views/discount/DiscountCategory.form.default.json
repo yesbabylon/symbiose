@@ -1,6 +1,9 @@
 {
     "name": "Discount Categories",
     "description": "",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

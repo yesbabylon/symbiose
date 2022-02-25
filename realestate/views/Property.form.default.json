@@ -1,6 +1,9 @@
 {
     "name": "Properties",
     "description": "Properties available.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

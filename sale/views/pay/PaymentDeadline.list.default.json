@@ -1,6 +1,9 @@
 {
     "name": "Payment Deadlines",
     "description": "This view is intended for displaying the list of payment deadlines.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

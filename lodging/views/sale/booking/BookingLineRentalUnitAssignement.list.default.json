@@ -1,6 +1,9 @@
 {
     "name": "Rental Unit Assignements",
     "description": "List of booking line rental unit assignements.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

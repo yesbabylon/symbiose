@@ -1,6 +1,9 @@
 {
     "name": "Discount Categories List",
     "description": "This view is intended for displaying the list of categories.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

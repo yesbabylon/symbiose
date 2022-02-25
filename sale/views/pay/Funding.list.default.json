@@ -1,6 +1,9 @@
 {
     "name": "Fundings",
     "description": "This view is intended for displaying the list of fundings.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

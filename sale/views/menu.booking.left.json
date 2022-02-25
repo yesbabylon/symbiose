@@ -1,5 +1,8 @@
 {
     "name": "Booking menu",
+    "access": {
+      "groups": ["booking.default.user"]
+   },
     "layout": {
         "items": [
             {

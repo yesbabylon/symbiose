@@ -1,6 +1,9 @@
 {
     "name": "Cashdesks",
     "description": "This view is intended for displaying the list of cashdesks.",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
     "layout": {
         "items": [
             {

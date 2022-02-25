@@ -1,6 +1,9 @@
 {
     "name": "Contract List",
     "description": "This view is intended for displaying the list of contracts.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

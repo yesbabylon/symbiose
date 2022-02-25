@@ -1,6 +1,9 @@
 {
     "name": "Composition Items",
     "description": "This view is intended for displaying the list of compostion items.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "order": "rental_unit_id",
     "layout": {
         "items": [

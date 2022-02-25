@@ -1,6 +1,9 @@
 {
     "name": "Season Categories",
     "description": "This view is intended for displaying the list of season categories.",
+    "access": {
+        "groups": ["sale.default.admin"]
+     },
     "layout": {
         "items": [
             {

@@ -22,13 +22,6 @@
                 "value": "type",
                 "width": "20%",
                 "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Type",
-                "value": "type",
-                "width": "20%",
-                "sortable": true
             }
         ]
     }

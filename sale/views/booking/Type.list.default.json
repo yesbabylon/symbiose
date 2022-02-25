@@ -1,5 +1,8 @@
 {
     "name": "Types",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

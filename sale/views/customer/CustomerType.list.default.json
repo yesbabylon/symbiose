@@ -1,6 +1,9 @@
 {
     "name": "Customer Type List",
     "description": "This view is intended for displaying the list of customer types.",
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+     },
     "layout": {
         "items": [
             {

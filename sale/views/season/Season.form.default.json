@@ -1,6 +1,9 @@
 {
     "name": "Season",
     "description": "",
+    "access": {
+        "groups": ["sale.default.admin"]
+     },
     "layout": {
         "groups": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Cashdesk",
     "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
     "layout": {
         "groups": [
             {

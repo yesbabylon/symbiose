@@ -1,6 +1,9 @@
 {
     "name": "Contract Line",
     "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

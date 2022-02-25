@@ -1,6 +1,9 @@
 {
     "name": "Booking Line Groups",
     "description": "This view is intended for displaying the list of booking line groups.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {

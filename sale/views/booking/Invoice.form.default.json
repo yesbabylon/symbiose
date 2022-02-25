@@ -1,6 +1,9 @@
 {
     "name": "Invoice",
     "description": "An invoice is a legal document that relates to a booking, and is part of the accounting system.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "groups": [
             {

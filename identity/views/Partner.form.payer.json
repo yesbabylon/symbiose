@@ -1,6 +1,9 @@
 {
     "name": "Partner",
     "description": "Form for Payer Partners",
+    "access": {
+        "groups": ["booking.default.user", "sale.default.user"]
+     },
     "layout": {
         "groups": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Autosale Lines",
     "description": "This view is intended for displaying the autosale lines.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
     "layout": {
         "items": [
             {

@@ -1,6 +1,9 @@
 {
     "name": "Contacts",
     "description": "Listing of existing contacts Partners.",
+    "access": {
+        "groups": ["booking.default.user", "sale.default.user"]
+     },
     "domain": ["relationship", "=", "contact"],
     "layout": {
         "items": [

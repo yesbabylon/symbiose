@@ -1,6 +1,9 @@
 {
     "name": "Option Values",
     "description": "This view is intended for displaying the list of option values.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+     },
     "layout": {
         "items": [
             {

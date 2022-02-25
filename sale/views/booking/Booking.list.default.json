@@ -1,6 +1,9 @@
 {
     "name": "Booking list",
     "description": "This view is intended for displaying the list of bookings.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
     "layout": {
         "items": [
             {
