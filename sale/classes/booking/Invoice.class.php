@@ -25,9 +25,15 @@ class Invoice extends \finance\accounting\Invoice {
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'Booking the invoice relates to.',
                 'required'          => true
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Funding',
+                'description'       => 'The funding the invoice originates from, if any.'
             ]
 
         ];
-    }    
+    }
 
 }

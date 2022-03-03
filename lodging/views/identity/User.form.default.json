@@ -2,7 +2,7 @@
     "name": "User",
     "description": "Basic form for displaying a User",
     "access": {
-        "groups": ["*"]
+        "groups": ["admin"]
      },
     "layout": {
         "groups": [

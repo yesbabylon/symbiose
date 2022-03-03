@@ -30,6 +30,12 @@ class ContractLine extends Model {
                 'description'       => 'The contract the line relates to.',
             ],
 
+            'contract_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\contract\ContractLineGroup',
+                'description'       => 'The contract the line relates to.',
+            ],
+
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
@@ -68,15 +74,23 @@ class ContractLine extends Model {
                 'default'           => 0.0
             ],
 
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the line.',
+                'function'          => 'sale\contract\ContractLine::getTotal',
+                'store'             => true
+            ],
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money:4',                
+                'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price of the line.',
                 'function'          => 'sale\contract\ContractLine::getPrice',
                 'store'             => true
             ]
-
 
         ];
     }
@@ -90,20 +104,34 @@ class ContractLine extends Model {
         return $result;
     }
 
-
-
     /**
-     * Compute the VAT incl. total price of the line, with discounts applied.
+     * Compute the VAT excl. total price of the line, with discounts applied.
      *
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function getTotal($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['unit_price', 'vat_rate', 'qty', 'free_qty', 'discount']);
+        $lines = $om->read(__CLASS__, $oids, ['unit_price', 'qty', 'free_qty', 'discount']);
 
         if($lines > 0 && count($lines)) {
             foreach($lines as $lid => $line) {
                 $price = $line['unit_price'] * (1-$line['discount']);
-                $result[$lid] = round($price * ($line['qty'] - $line['free_qty']) * (1 + $line['vat_rate']), 2);
+                $result[$lid] = $price * ($line['qty'] - $line['free_qty']);
+            }
+        }
+        return $result;
+    }  
+
+    /**
+     * Compute the final VAT incl. price of the line.
+     *
+     */
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, ['price', 'vat_rate']);
+
+        if($lines > 0 && count($lines)) {
+            foreach($lines as $lid => $line) {
+                $result[$lid] = round($line['price'] * (1 + $line['vat_rate']), 2);
             }
         }
         return $result;

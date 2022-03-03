@@ -215,26 +215,6 @@
                         ]
                     },
                     {
-                        "label": "Products",
-                        "id": "section.booking_products",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "booking_lines_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Contracts",
                         "id": "section.booking_contracts",
                         "visible": ["status", "not in", ["quote", "option"]],

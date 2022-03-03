@@ -16,6 +16,11 @@ list($params, $providers) = announce([
             'required'      => true
         ],
     ],
+    'access' => [
+        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
+        'users'             => [ROOT_USER_ID],		// list of users ids granted 
+        'groups'            => ['admin'],// list of groups ids or names granted 
+    ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',

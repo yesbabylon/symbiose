@@ -37,6 +37,12 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'default'       => 'print.default'
         ],
+        'mode' =>  [
+            'description'   => 'Mode in which document has to be rendered: simple or detailed.',
+            'type'          => 'string',
+            'selection'     => ['simple', 'detailed'],
+            'default'       => 'detailed'
+        ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'          => 'string',
@@ -81,6 +87,7 @@ $twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
 
 // read contract
 $fields = [
+    'created',
     'booking_id' => [
         'name',
         'modified',
@@ -111,6 +118,18 @@ $fields = [
             'bank_account_iban',
             'bank_account_bic',
             'template_category_id',
+            'use_office_details',
+            'center_office_id' => [
+                'code',
+                'address_street',
+                'address_city',
+                'address_zip',
+                'phone',
+                'email',
+                'signature',
+                'bank_account_iban',
+                'bank_account_bic'
+            ],
             'organisation_id' => [
                 'id',
                 'legal_name',
@@ -120,7 +139,9 @@ $fields = [
                 'fax',
                 'website',
                 'registration_number',
-                'signature'
+                'signature',
+                'bank_account_iban',
+                'bank_account_bic'
             ]
         ],
         'contacts_ids' => [
@@ -146,19 +167,25 @@ $fields = [
             'name',
             'qty',
             'unit_price',
-            'price',
-            'vat_rate'
+            'discount',
+            'free_qty',
+            'vat_rate',
+            'total',
+            'price'
         ],
         'contract_lines_ids' => [
             'name',
             'qty',
             'unit_price',
-            'price',
             'discount',
             'free_qty',
-            'vat_rate'
+            'vat_rate',
+            'total',
+            'price'
         ]
-    ]
+    ],
+    'price',
+    'total'
 ];
 
 
@@ -206,17 +233,24 @@ $values = [
     'customer_has_vat'      => (int) $booking['customer_id']['partner_identity_id']['has_vat'],
     'customer_vat'          => $booking['customer_id']['partner_identity_id']['vat_number'],
     'member'                => lodging_booking_print_contract_formatMember($booking),
-    'date'                  => date('d/m/Y', $booking['modified']),
+    'date'                  => date('d/m/Y', $contract['created']),
     'code'                  => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
     'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
     'center_contact2'       => DataFormatter::format($booking['center_id']['phone'], 'phone').' - '.$booking['center_id']['email'],
-    'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
-    'price'                 => $booking['price'],
-    'vat'                   => 0,
-    'total'                 => 0,
+
+    // by default, we use center contact details (overridden in case Center has a management Office, see below)
+    'center_phone'          => DataFormatter::format($booking['center_id']['phone'], 'phone'),
+    'center_email'          => $booking['center_id']['email'],
+    'center_signature'      => $booking['center_id']['organisation_id']['signature'],
+
+    'period'                => 'du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
+
+    'price'                 => $contract['price'],
+    'total'                 => $contract['total'],
+
     'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
     'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
     'company_email'         => $booking['center_id']['organisation_id']['email'],
@@ -224,15 +258,35 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
-    'company_iban'          => substr($booking['center_id']['bank_account_iban'], 0, 4).' '.substr($booking['center_id']['bank_account_iban'], 4, 4).' '.substr($booking['center_id']['bank_account_iban'], 8, 4).' '.substr($booking['center_id']['bank_account_iban'], 12),
-    'company_bic'           => $booking['center_id']['bank_account_bic'],
+
+    // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
+    'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
+    'company_bic'           => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_bic'], 'bic'),
+
     'installment_date'      => '',
     'installment_amount'    => 0,
     'installment_reference' => '',
     'installment_qr_url'    => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
+
     'fundings'              => [],
-    'lines'                 => []
+
+    'lines'                 => [],
+    'tax_lines'             => []
 ];
+
+
+/*
+    override contact and payment details with center's office, if set
+*/
+if($booking['center_id']['use_office_details']) {
+    $office = $booking['center_id']['center_office_id'];
+    $values['company_iban'] = DataFormatter::format($office['bank_account_iban'], 'iban');
+    $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
+    $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
+    $values['center_email'] = $office['email'];
+    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];    
+}
+
 
 
 /*
@@ -240,20 +294,20 @@ $values = [
 */
 if($booking['center_id']['template_category_id']) {
 
-    $template = Template::search([ 
-                            ['category_id', '=', $booking['center_id']['template_category_id']], 
-                            ['code', '=', 'contract'], 
-                            ['type', '=', 'contract'] 
+    $template = Template::search([
+                            ['category_id', '=', $booking['center_id']['template_category_id']],
+                            ['code', '=', 'contract'],
+                            ['type', '=', 'contract']
                         ])
                         ->read(['parts_ids' => ['name', 'value']])
                         ->first();
 
     foreach($template['parts_ids'] as $part_id => $part) {
         if($part['name'] == 'header') {
-            $values['contract_header_html'] = $part['value'].$booking['center_id']['organisation_id']['signature'];
+            $values['contract_header_html'] = $part['value'].$values['center_signature'];
         }
         else if($part['name'] == 'notice') {
-            $values['contract_notice_html'] = $part['value'];            
+            $values['contract_notice_html'] = $part['value'];
         }
     }
 
@@ -265,74 +319,120 @@ if($booking['center_id']['template_category_id']) {
 
 $lines = [];
 
+// all lines are in groups
 foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
 
     if($contract_line_group['is_pack']) {
-        $group_is_pack = true;
-
-        $price_vat_e = $contract_line_group['contract_line_id']['price'] / (1 + $contract_line_group['contract_line_id']['vat_rate']);
-        $values['total'] += $price_vat_e;
-        $values['vat'] += $contract_line_group['contract_line_id']['price'] - $price_vat_e;
-
+        // group is a bundle with own price and VAT: add a single line with details
         $line = [
             'name'          => $contract_line_group['name'],
-            'description'   => $contract_line_group['contract_line_id']['name'],
             'price'         => $contract_line_group['contract_line_id']['price'],
-            'price_excl'    => $price_vat_e,
+            'total'         => $contract_line_group['contract_line_id']['total'],
             'unit_price'    => $contract_line_group['contract_line_id']['unit_price'],
             'vat_rate'      => $contract_line_group['contract_line_id']['vat_rate'],
             'qty'           => $contract_line_group['contract_line_id']['qty'],
-            'is_group'       => true,
-            'is_pack'        => true
+            'free_qty'      => $contract_line_group['contract_line_id']['free_qty'],
+            'discount'      => $contract_line_group['contract_line_id']['discount'],
+            'is_group'      => false
         ];
         $lines[] = $line;
     }
     else {
-        $group_is_pack = false;
+        // group is a pack with no own price: add a line with no price
         $line = [
             'name'          => $contract_line_group['name'],
-            'price'         => 0,
-            'unit_price'    => 0,
-            'vat_rate'      => 0,
-            'qty'           => 0,
-            'is_group'       => true,
-            'is_pack'        => false
+            'price'         => null,
+            'total'         => null,
+            'unit_price'    => null,
+            'vat_rate'      => null,
+            'qty'           => null,
+            'free_qty'      => null,
+            'discount'      => null,
+            'is_group'      => true
         ];
         $lines[] = $line;
-    }
 
-    foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
-        if( !empty($contract_line_group['contract_line_id']) && $contract_line['id'] == $contract_line_group['contract_line_id']['id']) {
-            continue;
+        $group_lines = [];
+
+        foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
+
+            $line = [
+                'name'          => $contract_line['name'],
+                'price'         => $contract_line['price'],
+                'total'         => $contract_line['total'],
+                'unit_price'    => $contract_line['unit_price'],
+                'vat_rate'      => $contract_line['vat_rate'],
+                'qty'           => $contract_line['qty'],
+                'discount'      => $contract_line['discount'],
+                'free_qty'      => $contract_line['free_qty'],
+                'is_group'      => false
+            ];
+
+            $group_lines[] = $line;
         }
 
-        $price_vat_e = $contract_line['price'] / (1 + $contract_line['vat_rate']);
-
-        $line = [
-            'name'          => $contract_line['name'],
-            'price'         => $contract_line['price'],
-            'price_excl'    => $price_vat_e,
-            'unit_price'    => $contract_line['unit_price'],
-            'vat_rate'      => $contract_line['vat_rate'],
-            'qty'           => $contract_line['qty'],
-            'discount'      => $contract_line['discount'],
-            'free_qty'      => $contract_line['free_qty'],
-            'is_group'      => false,
-            'group_is_pack' => $group_is_pack
-        ];
-
-        if(!$group_is_pack) {
-            $values['total'] += $price_vat_e;
-            $values['vat'] += $contract_line['price'] - $price_vat_e;
+        if($params['mode'] == 'detailed') {
+            foreach($group_lines as $line) {
+                $lines[] = $line;
+            }
         }
+        // group lines by VAT rate        
+        else {
+            $group_tax_lines = [];
+            foreach($group_lines as $line) {
+                $vat_rate = strval($line['vat_rate']);
+                if(!isset($group_tax_lines[$vat_rate])) {
+                    $group_tax_lines[$vat_rate] = 0;
+                }
+                $group_tax_lines[$vat_rate] += $line['total'];
+            }
 
-        $lines[] = $line;
+            if(count(array_keys($group_tax_lines)) <= 1) {
+                $pos = count($lines)-1;
+                foreach($group_tax_lines as $vat_rate => $total) {
+                    $lines[$pos]['qty'] = 1;
+                    $lines[$pos]['vat_rate'] = $vat_rate;
+                    $lines[$pos]['total'] = $total;
+                    $lines[$pos]['price'] = $total * (1 + $vat_rate);
+                }
+            }
+            else {
+                foreach($group_tax_lines as $vat_rate => $total) {
+                    $line = [
+                        'name'      => 'Services avec TVA '.($vat_rate*100).'%',                        
+                        'qty'       => 1,
+                        'vat_rate'  => $vat_rate,
+                        'total'     => $total,
+                        'price'     => $total * (1 + $vat_rate)
+                    ];
+                    $lines[] = $line;
+                }
+            }
+        }
     }
 }
 
 
 $values['lines'] = $lines;
 
+
+/*
+    retrieve final VAT and group by rate
+*/
+foreach($lines as $line) {
+    $vat_rate = $line['vat_rate'];
+    $tax_label = 'TVA '.strval( intval($vat_rate * 100) ).'%';
+    $vat = $line['price'] - $line['total'];
+    if(!isset($values['tax_lines'][$tax_label])) {
+        $values['tax_lines'][$tax_label] = 0;
+    }
+    $values['tax_lines'][$tax_label] += $vat;
+}
+
+
+/*
+    retrieve contact for booking
+*/
 foreach($booking['contacts_ids'] as $contact) {
     if(strlen($values['contact_name']) == 0 || $contact['type'] == 'booking') {
         // overwrite data of customer with contact info
@@ -342,7 +442,9 @@ foreach($booking['contacts_ids'] as $contact) {
     }
 }
 
-// inject expected fundings and find the first installment 
+/*
+    inject expected fundings and find the first installment
+*/
 $installment_date = PHP_INT_MAX;
 $installment_amount = 0;
 $installment_ref = '';
@@ -370,16 +472,13 @@ if($installment_date == PHP_INT_MAX) {
     $installment_date = time() + (60 * 60 *24 * 20);
     // set default amount to 20%
     $installment_amount = $booking['price'] * 0.2;
-    // set installment reference    ('+++150/+++' for initial installment)
-    $control = ((76*150) + intval($booking['name']) ) % 97;
-    $control = ($control == 0)?97:$control;    
-    $installment_ref = sprintf("150%04d%03d%02d", intval($booking['name']) / 1000, intval($booking['name']) % 1000, $control);
+    // set installment reference    ('+++xxx/+++' where xxx is 150 for initial installment)
+    $installment_ref = Funding::get_payment_reference(150, $booking['name']);
 }
 
 $values['installment_date'] = date('d/m/Y', $installment_date);
 $values['installment_amount'] = (float) $installment_amount;
-$values['installment_reference'] = '+++'.substr($installment_ref, 0, 3).'/'.substr($installment_ref, 3, 4).'/'.substr($installment_ref, 7, 5).'+++';
-
+$values['installment_reference'] = DataFormatter::format($installment_ref, 'scor');
 
 // generate a QR code
 try {

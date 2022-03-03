@@ -17,7 +17,7 @@ use \Swift_Attachment as Swift_Attachment;
 use communication\TemplateAttachment;
 use documents\Document;
 use lodging\sale\booking\Booking;
-
+use core\setting\Setting;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -36,7 +36,7 @@ list($params, $providers) = announce([
         'message' => [
             'description'   => 'Body of the message.',
             'type'          => 'string',
-            'usage'         => 'email',            
+            'usage'         => 'email',
             'required'      => true
         ],
         'sender_email' => [
@@ -58,27 +58,27 @@ list($params, $providers) = announce([
         ],
         'lang' =>  [
             'description'   => 'Language to use for multilang contents.',
-            'type'          => 'string', 
-            'usage'         => 'language/iso-639',            
+            'type'          => 'string',
+            'usage'         => 'language/iso-639',
             'default'       => DEFAULT_LANG
-        ]        
+        ]
     ],
-    'response'      => [
+    // 'access' => [
+    //     'visibility'        => 'public',
+    //     'users'             => [ROOT_USER_ID],
+    //     'groups'            => ['sales.bookings.users'],
+    // ],
+    'response' => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',
         'accept-origin'     => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth', 'access']
+    'providers' => ['context', 'cron']
 ]);
 
 
-// initalise local vars with inputs
-list($om, $context, $auth, $access) = [ $providers['orm'], $providers['context'], $providers['auth'], $providers['access'] ];
-
-// restrict to granted users
-if(!$access->hasGroup('sales.bookings.users')) {
-    throw new Exception('missing_right', QN_ERROR_NOT_ALLOWED);
-}
+// init local vars with inputs
+list($context, $cron) = [ $providers['context'], $providers['cron'] ];
 
 
 $booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
@@ -106,9 +106,9 @@ if($data != null && isset($data['errors'])) {
 // #todo - store these terms in i18n
 $main_attachment_name = 'quote';
 switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'devis';        
-        break;        
-    case 'nl': $main_attachment_name = 'offerte';        
+    case 'fr': $main_attachment_name = 'devis';
+        break;
+    case 'nl': $main_attachment_name = 'offerte';
         break;
     case 'en': $main_attachment_name = 'quote';
         break;
@@ -120,11 +120,11 @@ try {
     $data = eQual::run('get', 'lodging_identity_center-signature', [
         'center_id'     => $booking['center_id'],
         'lang'          => $params['lang']
-    ]);    
-    $signature = (isset($data['signature']))?$data['signature']:'';    
+    ]);
+    $signature = (isset($data['signature']))?$data['signature']:'';
 }
 catch(Exception $e) {}
-              
+
 $params['message'] .= $signature;
 
 
@@ -141,7 +141,9 @@ if(count($params['attachments_ids'])) {
     $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
     foreach($template_attachments as $tid => $tdata) {
         $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
-        $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+        if($document) {
+            $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+        }
     }
 }
 
@@ -164,6 +166,17 @@ foreach($attachments as $attachment) {
 
 $mailer = new Swift_Mailer($transport);
 $result = $mailer->send($message);
+
+
+// #todo store reminder delay in Settings
+
+// add a task to the CRON
+$cron->schedule(
+    "booking.quote.reminder.{$params['booking_id']}",
+    time() + 7 * 86400,                                  // remind after 1 week (7 days)
+    'lodging_booking_quote',
+    '{"id": '.$params['booking_id'].'}'
+); 
 
 $context->httpResponse()
         ->body([])

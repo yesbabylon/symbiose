@@ -38,8 +38,8 @@ $signature = '';
 $center = Center::id($params['center_id'])
                 ->read([
                     'organisation_id' => ['website'],
-                    'center_group_id' => ['signature', 'phone', 'fax', 'email', 'address_street', 'address_city', 'address_zip'],
-                    'use_group_details',
+                    'center_office_id' => ['signature', 'phone', 'fax', 'email', 'address_street', 'address_city', 'address_zip'],
+                    'use_office_details',
                     'address_street',
                     'address_city',
                     'address_zip',
@@ -51,27 +51,27 @@ $center = Center::id($params['center_id'])
 
 if($center && count($center)) {
 
-  if(isset($center['center_group_id']['signature'])) {
-    $signature .= "{$center['center_group_id']['signature']}";
+  if(isset($center['center_office_id']['signature'])) {
+    $signature .= "{$center['center_office_id']['signature']}";
   }
 
-  if($center['use_group_details']) {
-    if(isset($center['center_group_id']['address_street'])) {
-      $signature .= "{$center['center_group_id']['address_street']} <br />";
+  if($center['use_office_details']) {
+    if(isset($center['center_office_id']['address_street'])) {
+      $signature .= "{$center['center_office_id']['address_street']} <br />";
     }
-    if(isset($center['center_group_id']['address_city']) && isset($center['center_group_id']['address_zip'])) {
-      $signature .= "{$center['center_group_id']['address_zip']} {$center['center_group_id']['address_city']} <br />";
+    if(isset($center['center_office_id']['address_city']) && isset($center['center_office_id']['address_zip'])) {
+      $signature .= "{$center['center_office_id']['address_zip']} {$center['center_office_id']['address_city']} <br />";
     }
-    if(isset($center['center_group_id']['phone'])) {
-      $center_phone = DataFormatter::format($center['center_group_id']['phone'], 'phone');
+    if(isset($center['center_office_id']['phone'])) {
+      $center_phone = DataFormatter::format($center['center_office_id']['phone'], 'phone');
       $signature .= "☎ {$center_phone} <br />";
     }
-    if(isset($center['center_group_id']['fax'])) {
-      $center_fax = DataFormatter::format($center['center_group_id']['fax'], 'phone');
+    if(isset($center['center_office_id']['fax'])) {
+      $center_fax = DataFormatter::format($center['center_office_id']['fax'], 'phone');
       $signature .= "🖷 {$center_fax} <br />";
     }
-    if(isset($center['center_group_id']['email'])) {
-      $signature .= "@ <a href=\"mailto:{$center['center_group_id']['email']}\">{$center['center_group_id']['email']}</a> <br />";
+    if(isset($center['center_office_id']['email'])) {
+      $signature .= "@ <a href=\"mailto:{$center['center_office_id']['email']}\">{$center['center_office_id']['email']}</a> <br />";
     }
   }
   else {

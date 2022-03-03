@@ -31,14 +31,16 @@ class Partner extends Model {
             'owner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The organisation which the targeted identity is a partner of.'
+                'description'       => 'The organisation which the targeted identity is a partner of.',
+                'required'          => true
             ],
 
             'partner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => 'The targeted identity (the partner).',
-                'onchange'          => 'identity\Partner::onchangeIdentity'
+                'onchange'          => 'identity\Partner::onchangeIdentity',
+                'required'          => true
             ],
 
             'relationship' => [
@@ -109,15 +111,15 @@ class Partner extends Model {
     }
 
     public static function onchangeIdentity($om, $oids, $lang) {
-        $res = $om->read(get_called_class(), $oids, [ 'partner_identity_id.lang_id' ], $lang);        
+        $res = $om->read(get_called_class(), $oids, [ 'partner_identity_id.lang_id' ], $lang);
         if($res > 0 && count($res) ) {
             foreach($res as $oid => $odata) {
-                $om->write(get_called_class(), $oids, [ 'lang_id' => $odata['partner_identity_id.lang_id'] ], $lang);        
+                $om->write(get_called_class(), $oids, [ 'lang_id' => $odata['partner_identity_id.lang_id'] ], $lang);
             }
         }
         $om->write(get_called_class(), $oids, [ 'name' => null, 'title' => null, 'phone' => null, 'email' => null ], $lang);
         // force immediate re-computing of the name
-        $om->read(get_called_class(), $oids, [ 'name' ], $lang);        
+        $om->read(get_called_class(), $oids, [ 'name' ], $lang);
     }
 
     public static function getDisplayName($om, $oids, $lang) {

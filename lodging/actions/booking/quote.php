@@ -20,15 +20,20 @@ list($params, $providers) = announce([
             'required'      => true
         ]
     ],
+    // 'access' => [
+    //     'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
+    //     'users'             => [ROOT_USER_ID],		// list of users ids granted 
+    //     'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+    // ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']     
+    'providers'     => ['context', 'orm', 'cron']     
 ]);
 
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
 
 // read booking object
 $booking = Booking::id($params['id'])
@@ -58,11 +63,7 @@ if($booking['status'] != 'quote') {
     Booking::id($params['id'])->update(['fundings_ids' => $fundings_ids]);
 
     // remove existing CRON tasks for reverting the booking to quote
-    Task::search([
-            ['controller', '=', 'lodging_booking_quote'],
-            ['params', '=', '{"id": '.$params['id'].'}']
-        ])
-        ->delete(true);
+    $cron->cancel("booking.option.deprecation.{$params['id']}");
 
     // #memo - generated contracts are kept for history (we never delete these)
 

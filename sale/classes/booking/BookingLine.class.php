@@ -107,15 +107,35 @@ class BookingLine extends Model {
 
             'payment_mode' => [
                 'type'              => 'string',
-                'selection'         => ['invoice', 'cash', 'free'],
+                'selection'         => [
+                    'invoice',                  // consumption has to be added to an invoice
+                    'cash',                     // consumption is paid in cash (money or bank transfer)
+                    'free'                      // related consumption is a gift
+                ],
                 'default'           => 'invoice',
                 'description'       => 'The way the line is intended to be paid.',
             ],
 
             'is_invoiced' => [
                 'type'              => 'boolean',
-                'description'       => 'Has the line been paid already?',
+                'description'       => 'Has the line been accounted already?',
                 'default'           => false
+            ],
+
+            'free_qty' => [ 
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'description'       => 'Free quantity.',
+                'function'          => 'sale\booking\BookingLine::getFreeQty',
+                'store'             => true
+            ],
+
+            'discount' => [ 
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'description'       => 'Total amount of discount to apply, if any.',
+                'function'          => 'sale\booking\BookingLine::getDiscount',
+                'store'             => true
             ],
 
             'unit_price' => [
@@ -128,12 +148,21 @@ class BookingLine extends Model {
                 'onchange'          => 'sale\booking\BookingLine::onchangeUnitPrice'
             ],
 
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the line (computed).',
+                'function'          => 'sale\booking\BookingLine::getTotal',
+                'store'             => true
+            ],
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',                
                 'description'       => 'Final tax-included price (computed).',
-                'function'          => 'sale\booking\BookingLine::getTotalPrice',
+                'function'          => 'sale\booking\BookingLine::getPrice',
                 'store'             => true
             ],
 
@@ -163,7 +192,7 @@ class BookingLine extends Model {
     }
 
     public static function onchangeUnitPrice($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['price' => null]);
+        $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
     public static function onchangeVatRate($om, $oids, $lang) {
@@ -172,12 +201,12 @@ class BookingLine extends Model {
 
     public static function onchangePriceId($om, $oids, $lang) {
         // reset computed fields related to price
-        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
+        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null, 'total' => null, 'discount' => null]);
     }
 
     public static function onchangePriceAdaptersIds($om, $oids, $lang) {
         // reset computed fields related to price
-        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null ]);
+        $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null, 'total' => null, 'discount' => null, 'free_qty' => null ]);
     }
 
 
@@ -236,25 +265,85 @@ class BookingLine extends Model {
         return $result;
     }
 
+
+    public static function getFreeQty($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(get_called_class(), $oids, ['auto_discounts_ids','manual_discounts_ids']);
+
+        foreach($lines as $oid => $odata) {
+            $free_qty = 0;
+
+            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
+            foreach($adapters as $aid => $adata) {
+                if($adata['type'] == 'freebie') {
+                    $free_qty += $adata['value'];
+                }
+            }
+            // check additional manual discounts
+            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
+            foreach($discounts as $aid => $adata) {
+                if($adata['type'] == 'freebie') {
+                    $free_qty += $adata['value'];
+                }
+            }
+            $result[$oid] = $free_qty;
+        }
+        return $result;        
+    }
+
+    public static function getDiscount($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(get_called_class(), $oids, ['total', 'unit_price', 'qty']);
+
+        foreach($lines as $oid => $line) {
+            $price = $line['unit_price'] * $line['qty'];
+            $result[$oid] = ($price)?(1-$line['total']/$price):0;
+        }
+        return $result;        
+    }
+
     /**
-     * Compute the VAT incl. total price of the line, with manual and automated discounts applied.
-     *
+     * Get final tax-included price of the line.
+     * 
      */
-    public static function getTotalPrice($om, $oids, $lang) {
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+
+        $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
+
+        foreach($lines as $oid => $odata) {
+            $price = (float) $odata['total'];
+            $vat = (float) $odata['vat_rate'];
+
+            $result[$oid] = round( $price  * (1.0 + $vat), 2);
+        }           
+        return $result;
+    }
+
+    /**
+     * Get total tax-excluded price of the line, with all discounts applied.
+     * 
+     */
+    public static function getTotal($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(get_called_class(), $oids, [
                     'qty',
-                    'vat_rate',
                     'unit_price',
                     'auto_discounts_ids',
-                    'manual_discounts_ids'
+                    'manual_discounts_ids',
+                    'payment_mode'
                 ]);
 
         foreach($lines as $oid => $odata) {
+
+            if($odata['payment_mode'] == 'free') {
+                $result[$oid] = 0;
+                continue;
+            }
+
             $price = (float) $odata['unit_price'];
             $disc_percent = 0.0;
             $disc_value = 0.0;
-            $vat = (float) $odata['vat_rate'];
             $qty = intval($odata['qty']);
             // apply freebies from auto-discounts
             $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
@@ -277,14 +366,14 @@ class BookingLine extends Model {
                     $qty -= $adata['value'];
                 }
             }
-            $price = ($price * (1-$disc_percent));
-            // apply discount amount VAT excl.
-            // $result[$oid] = round( (($price * $qty) - $disc_value) * (1 + $vat), 2);
-            // apply discount amount VAT incl.
-            $result[$oid] = round( ($price * $qty)  * (1 + $vat) - $disc_value, 2);
+            // apply discount amount VAT excl.            
+            $price = ($price * (1.0-$disc_percent)) - $disc_value;
+
+            $result[$oid] = $price * $qty;
         }
         return $result;
     }
+
 
     public static function getVatRate($om, $oids, $lang) {
         $result = [];
