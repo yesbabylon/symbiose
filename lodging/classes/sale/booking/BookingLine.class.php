@@ -158,7 +158,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.has_pack', 'product_id.product_model_id.qty_accounting_method'], $lang);
 
         foreach($lines as $lid => $line) {
-//#todo - is this necessary ?
+            //#todo - is this necessary ?
         }
 
     }

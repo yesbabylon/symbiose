@@ -63,15 +63,25 @@ class Booking extends Model {
                 'onchange'          => 'sale\booking\Booking::onchangeCenterId'
             ],
 
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'function'          => 'sale\booking\Booking::getTotal',
+                'description'       => 'Total tax-excluded price of the booking.',
+                'store'             => true
+            ],
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'function'          => 'sale\booking\Booking::getPrice',
-                'description'       => 'Total tax-included price of the booking.'
+                'description'       => 'Final tax-included price of the booking.',
+                'store'             => true
             ],
 
-// #todo
+            // #todo
             // origin ID (OTA)
 
             // A booking can have several contacts (extending identity\Partner)
@@ -158,7 +168,7 @@ class Booking extends Model {
                 'selection'         => [
                     'generic',                  // customer cancelled for a generic reason or without mentioning the reason (admin fees apply)
                     'overbooking',              // the booking was cancelled due to failure in delivery service
-                    'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn                    
+                    'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
                     'schedule_change',          // external resheduling (organisation, means of transport, ...),
                     'health_impediment'         // cancellation for medical or mourning reason
                 ],
@@ -293,17 +303,25 @@ class Booking extends Model {
 
     public static function getPrice($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids']);
-        if($bookings > 0 && count($bookings)) {
+        $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids.price']);
+        if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
-                $groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
-                $result[$bid] = 0.0;
-                if($groups > 0 && count($groups)) {
-                    foreach($groups as $group) {
-                        $result[$bid] += $group['price'];
-                    }
-                    $result[$bid] = round($result[$bid], 2);                    
-                }
+                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.price'], function ($c, $a) {
+                    return $c + $a['price'];
+                }, 0.0);
+            }
+        }
+        return $result;
+    }
+
+    public static function getTotal($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids.total']);
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.total'], function ($c, $a) {
+                    return $c + $a['total'];
+                }, 0.0);    
             }
         }
         return $result;
@@ -323,6 +341,40 @@ class Booking extends Model {
         if($booking_lines_ids > 0 && count($booking_lines_ids)) {
             BookingLine::_updatePriceId($om, $booking_lines_ids, $lang);
         }
+    }
+
+
+    public static function ondelete($om, $oids) {
+        $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+
+        if($res > 0) {
+            foreach($res as $oids => $odata) {
+                if($odata['status'] != 'quote') {
+                    return false;
+                }
+            }
+        }
+        return parent::ondelete($om, $oids);
+    }
+
+
+    public static function onupdate($om, $oids, $values) {
+        if(isset($values['status'])) {
+            // status can be updated 
+            return true;
+        }
+        else {
+            $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+
+            if($res > 0) {
+                foreach($res as $oids => $odata) {
+                    if($odata['status'] != 'quote') {
+                        return false;
+                    }
+                }
+            }    
+        }
+        return parent::ondelete($om, $oids);
     }
 
 }

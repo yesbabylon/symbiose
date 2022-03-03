@@ -7,14 +7,14 @@
 namespace lodging\identity;
 use equal\orm\Model;
 
-class CenterGroup extends Model {
+class CenterOffice extends Model {
 
     public static function getName() {
-        return 'Center management group';
+        return 'Center management office';
     }
 
     public static function getDescription() {
-        return 'Allows support for Centers management organized by groups (contacts, signature, bank details, ...).';
+        return 'Allow support for management of centers by distinct offices.';
     }
 
     public static function getColumns() {
@@ -28,14 +28,14 @@ class CenterGroup extends Model {
 
             'code' => [
                 'type'              => 'string',
-                'description'       => 'Numeric identifier of group (1 hexadec. digit).',
+                'description'       => 'Numeric identifier of group (1 hex. digit).',
                 'usage'             => 'numeric/hexadecimal:1'
             ],
 
             'centers_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\identity\Center',
-                'foreign_field'     => 'center_group_id',
+                'foreign_field'     => 'center_office_id',
                 'description'       => 'List of centers attached to the group.'
             ],
 

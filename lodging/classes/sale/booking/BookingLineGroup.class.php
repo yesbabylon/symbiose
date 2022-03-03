@@ -38,7 +38,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price (retrieved by price list) the pack relates to.',
-                'visible'           => ['has_pack', '=', true]
+                'visible'           => ['has_pack', '=', true],
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangePriceId'
             ],
 
             'vat_rate' => [
@@ -297,6 +298,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // #todo - reset booking total price (if price set to store)
             }
         }
+    }
+
+    public static function onchangePriceId($om, $oids, $lang) {
+        $om->write(get_called_class(), $oids, ['vat_rate' => null,'unit_price' => null]);
     }
 
     /**

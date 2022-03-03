@@ -59,6 +59,7 @@ class Invoice extends Model {
                 'type'              => 'boolean',
                 'default'           => false,
                 'description'       => "Flag to mark the invoice as fully paid.",
+                'visible'           => ['status', '=', 'invoice']
             ],
 
             'date' => [
@@ -70,7 +71,26 @@ class Invoice extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'description'       => "Organisation which has to pay for the goods and services related to the sale."
+                'description'       => "Organisation which has to pay for the goods and services related to the sale.",
+                'required'          => true
+            ],
+
+            'price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'finance\accounting\Invoice::getPrice',
+                'usage'             => 'amount/money:2',
+                'store'             => true,
+                'description'       => "Final tax-included invoiced amount (computed)."
+            ],
+
+            'total' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'function'          => 'finance\accounting\Invoice::getTotal',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Total tax-excluded price of the invoice (computed).',
+                'store'             => true
             ],
 
             /* the organisation the invoice relates to (multi-company support) */
@@ -88,7 +108,7 @@ class Invoice extends Model {
                 'description'       => 'Detailed lines of the invoice.'
             ],
 
-            'invoice_lines_groups_ids' => [
+            'invoice_line_groups_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
@@ -113,26 +133,49 @@ class Invoice extends Model {
                 $result[$oid] = '';
 
                 $organisation_id = $invoice['organisation_id'];
-                
-                $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format');
-                $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');                
+
+                $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
+                $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');
                 $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
 
                 if($sequence) {
-                    Setting::set_value($sequence + 1, 'sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+                    Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
 
                     $result[$oid] = Setting::parse_format($format, [
                         'year'      => $year,
                         'org'       => $organisation_id,
-                        'sequence'  => $sequence    
+                        'sequence'  => $sequence
                     ]);
                 }
-        
             }
-
         }
         return $result;
+    }
 
+    public static function getPrice($om, $oids, $lang) {
+        $result = [];
+
+        $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.price'], $lang);
+
+        foreach($invoices as $oid => $invoice) {
+            $result[$oid] = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
+                return $c + $a['price'];
+            }, 0.0);
+        }
+        return $result;
+    }
+
+    public static function getTotal($om, $oids, $lang) {
+        $result = [];
+
+        $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.total'], $lang);
+
+        foreach($invoices as $oid => $invoice) {
+            $result[$oid] = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
+                return $c + $a['total'];
+            }, 0.0);
+        }
+        return $result;
     }
 
     public static function onchangeStatus($om, $ids, $lang) {

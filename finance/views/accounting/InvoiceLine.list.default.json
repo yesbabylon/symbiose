@@ -1,36 +1,62 @@
 {
     "name": "Invoice Lines",
     "description": "This view is intented for displaying the invoice lines.",
+    "limit": 100,
     "layout": {
         "items": [
             {
                 "type": "field",
                 "label": "Group",
                 "value": "invoice_line_group_id",
-                "width": "20%"
+                "width": "25%"
             },
             {
                 "type": "field",
                 "label": "Product",
                 "value": "product_id",
-                "width": "20%"
+                "width": "25%"
             },
             {
                 "type": "field",
-                "value": "price",
-                "width": "20%"
+                "value": "unit_price",
+                "width": "15%"
             },
             {
                 "type": "field",
                 "label": "Quantity",
                 "value": "qty",
-                "width": "20%"
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Free qty",
+                "value": "free_qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Disc.%",
+                "value": "discount",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "vat_rate",
                 "width": "25%"
-            }            
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%"
+            }
         ]
+    },
+    "operations": {
+        "total": {
+            "price": {
+                "type": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
     }
 }

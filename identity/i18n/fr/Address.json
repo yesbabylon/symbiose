@@ -28,7 +28,7 @@
 			"description": "L'objectif principal pour lequel l'adresse doit être préférée.",
 			"selection": {
 				"legal": "légal",
-				"invoice": "facture d'achat",
+				"invoice": "facture",
 				"delivery": "livraison",
 				"other": "autre"
 			},

@@ -121,7 +121,7 @@ hr {
         {{ contact_name }}<br />
         {{ customer_address1 }}<br />
         {{ customer_address2 }}<br />
-        {% if has_vat > 0 %}
+        {% if customer_has_vat > 0 %}
         TVA {{ customer_vat }}
         {% endif %}
     </div>
@@ -142,7 +142,7 @@ hr {
                     <div style="display: inline-block; width: 100px;"><b>Votre séjour à </b></div> <div style="display: inline-block;">{{ center }}</div>
                 </div>
                 <div style="margin-bottom: 5px;">
-                    <div style="display: inline-block; width: 100px; vertical-align: top;"><b>Adresse</b></div> <div style="display: inline-block;">{{ center_address1 }} <br /> {{ center_address2 }}</div>
+                    <div style="display: inline-block; width: 100px; vertical-align: top;"></div> <div style="display: inline-block;">{{ center_address1 }} <br /> {{ center_address2 }}</div>
                 </div>
                 <div style="margin-bottom: 5px;">
                     <div style="display: inline-block; width: 100px; vertical-align: top;"><b>Contact</b></div> <div style="display: inline-block;">{{ center_contact1 }} <br /> {{ center_contact2 }}</div>
@@ -217,40 +217,35 @@ hr {
                 <tr valign="top">
                     <td width="45%">
                         {% if line.is_group %}
-                            <b>{{ line.name }}</b> <br />
-                            {{ line.description }}
+                            <b>{{ line.name }}</b>
                         {% else %}
                             {{ line.name }}
                         {% endif %}
                     </td>
-                    <td width="8%">
-                        {% if (line.is_group == false) or (line.is_pack == true) %}
-                            {{ line.qty }}
-                        {% endif %}
+                    <td width="8%" style="text-align: center;">                        
+                        {{ line.qty }}
                     </td>
-                    <td width="8%">
-                        {% if (line.is_group == false) or (line.is_pack == true) %}
-                            {{ line.free_qty }}
-                        {% endif %}
+                    <td width="8%" style="text-align: center;">
+                        {{ line.free_qty }}
                     </td>
                     <td width="10%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if line.unit_price is not null %}
                             {{ line.unit_price | format_currency('EUR') }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if line.discount is not null %}
                             {{ line.discount | format_number(style='percent') }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
+                        {% if line.vat_rate is not null %}
                             {{ line.vat_rate | format_number(style='percent') }}
-                        {% endif %}
+                        {% endif %}                            
                     </td>
                     <td width="13%" style="text-align: right;">
-                        {% if ( (line.is_group == false) and (line.group_is_pack == false) ) or (line.is_pack == true) %}
-                            {{ line.price_excl | format_currency('EUR') }}
+                        {% if line.total is not null %}
+                            {{ line.total | format_currency('EUR') }}
                         {% endif %}
                     </td>
                 </tr>
@@ -270,20 +265,24 @@ hr {
                     {{ total | format_currency('EUR') }}
                 </td>
             </tr>
+            {% for tax_label, tax_total in tax_lines %}
+            {% if (tax_total > 0.0) %}
             <tr>
                 <td style="text-align: right; padding-right: 10px;">
-                    TVA
+                    {{tax_label}}
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ vat | format_currency('EUR') }}
+                    {{ tax_total | format_currency('EUR') }}
                 </td>
             </tr>
+            {% endif %}
+            {% endfor %}
             <tr>
                 <td style="text-align: right; padding-right: 10px;">
-                    TOTAL DU SÉJOUR TTC
+                    <b>TOTAL DU SÉJOUR TTC</b>
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ price | format_currency('EUR') }}
+                    <b>{{ price | format_currency('EUR') }}</b>
                 </td>
             </tr>
         </table>
@@ -336,15 +335,15 @@ hr {
 
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
-        Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> : 
+        Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> 
     </div>
     <div style="padding-top: 20px; padding-left: 15px; font-size: 15px;">
-        {{ company_name}}<br />
-        {{ company_address }}<br />
-        <br />
+        <b>COMMUNICATION : {{ installment_reference }}</b><br />
         IBAN : {{ company_iban }}<br />
         BIC : {{ company_bic }}<br />
-        <b>COMMUNICATION : {{ installment_reference }}</b><br />
+        <br />
+        {{ company_name}}<br />
+        {{ company_address }}<br />
     </div>    
     <div style="position: absolute; right: 10px; top: 15px;">
         <img src="{{ installment_qr_url }}" width= "150" height="150" />

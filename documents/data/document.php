@@ -7,13 +7,18 @@
 use documents\Document;
 
 list($params, $providers) = announce([
-    'description'   => 'Returns the object that corresponds to the hash',
+    'description'   => 'Return raw data (with original MIME) of a document identified by given hash.',
     'params'        => [
         'hash' =>  [
             'description'   => 'Unique identifier of the resource.',
             'type'          => 'string',
             'required'      => true
         ]
+    ],
+    'access' => [
+        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
+        'users'             => [ROOT_USER_ID],		// list of users ids granted 
+        'groups'            => ['documents.default.user'],// list of groups ids or names granted 
     ],
     'response'      => [
         'accept-origin' => '*'

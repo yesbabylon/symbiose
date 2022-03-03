@@ -8,7 +8,7 @@ use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
 use core\Task;
-use core\setting\SettingValue;
+use core\setting\Setting;
 
 list($params, $providers) = announce([
     'description'   => "Update the status of given booking to 'option'. Related consumptions are added to the planning. Auto-deprecation of the option is scheduled according to setting `sale.booking.option.validity`.",
@@ -20,16 +20,21 @@ list($params, $providers) = announce([
             'required'      => true
         ]
     ],
+    // 'access' => [
+    //     'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
+    //     'users'             => [ROOT_USER_ID],		// list of users ids granted 
+    //     'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+    // ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'cron'] 
 ]);
 
 
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
 
 
 /*
@@ -61,9 +66,9 @@ if(!count($booking['booking_lines_ids'])) {
 }
 
 
-// check overbooking
+// check booking consistency
 
-$json = run('get', 'lodging_booking_check-overbooking', ['id' => $params['id']]);
+$json = run('get', 'lodging_booking_check', ['id' => $params['id']]);
 $data = json_decode($json, true);
 if(isset($data['errors'])) {
 
@@ -102,21 +107,16 @@ Booking::id($params['id'])->update(['status' => 'option']);
     Setup a scheduled job to set back the booking to a quote according to delay set by Setting `option.validity`
 */
 
-$limit = 10;    // default value
-$setting = SettingValue::search(['name', '=', 'option.validity'])->read(['value'])->first();
+$limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
 
-if($setting) {
-    $limit = $setting['value'];
-}
 
 // add a task to the CRON
-Task::create([
-    'name'          => "Booking {$params['id']} - option deprecation",
-    'moment'        => time() + $limit * 86400,
-    'controller'    => 'lodging_booking_quote',
-    'params'        => '{"id": '.$params['id'].'}'
-]);
-
+$cron->schedule(
+    "booking.option.deprecation.{$params['id']}",
+    time() + $limit * 86400,                                  // remind after 1 week (7 days)
+    'lodging_booking_quote',
+    '{"id": '.$params['id'].'}'
+); 
 
 $context->httpResponse()
         // ->status(204)

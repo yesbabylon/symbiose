@@ -21,13 +21,20 @@
                                                 "type": "field",
                                                 "label": "Center",
                                                 "value": "center_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "domain": ["id", "in", "user.centers_ids"],
+                                                    "limit": 30
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Type",
                                                 "value": "type_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "limit": 15
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -68,13 +75,7 @@
                                         ]
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Description",
-                        "id": "section.booking_description",
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {

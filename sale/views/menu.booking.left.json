@@ -9,6 +9,10 @@
               "id": "item.bookings",
               "label": "Bookings",
               "description": "",
+              "access": {
+                "users": [],
+                "groups": []
+              },
               "icon": "menu_book",
               "type": "parent",
               "children": [
@@ -16,7 +20,8 @@
                   "id": "item.all_booking",
                   "type": "entry",
                   "label": "All bookings",
-                  "description": "", 
+                  "description": "",
+                  "route": "/bookings",
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
@@ -28,7 +33,8 @@
                   "id": "item.quotes",
                   "type": "entry",
                   "label": "Quotes",
-                  "description": "", 
+                  "description": "",
+                  "route": "/bookings",                   
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
@@ -39,7 +45,8 @@
                   "id": "item.options",
                   "type": "entry",
                   "label": "Options",
-                  "description": "", 
+                  "description": "",
+                  "route": "/bookings",                  
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
@@ -51,6 +58,7 @@
                   "type": "entry",
                   "label": "Validated bookings",
                   "description": "",
+                  "route": "/bookings",                  
                   "context": {
                     "entity": "sale\\booking\\Booking",
                     "view": "list.default",

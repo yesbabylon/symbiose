@@ -15,7 +15,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "number",
-                                                "width": "50%",
+                                                "width": "33%",
                                                 "widget": {
                                                     "heading": true,
                                                     "readonly": true
@@ -25,7 +25,13 @@
                                                 "type": "field",
                                                 "label": "Partner",
                                                 "value": "partner_id",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Booking",
+                                                "value": "booking_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
@@ -45,26 +51,35 @@
                                             {
                                                 "type": "label",
                                                 "value": "",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Organisation",
                                                 "value": "organisation_id",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Management",
+                                                "value": "center_office_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "label",
                                                 "value": "",
-                                                "width": "50%"
+                                                "width": "66%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date",
-                                                "width": "50%"
+                                                "width": "33%",
+                                                "widget": {
+                                                    "type": "date"
+                                                }
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             },
                             {
@@ -75,7 +90,15 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false        
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

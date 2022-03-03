@@ -22,7 +22,7 @@ class Payment extends Model {
 
             'amount' => [
                 'type'              => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Reference from the bank.'
             ],
 

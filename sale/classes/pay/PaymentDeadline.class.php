@@ -18,6 +18,13 @@ class PaymentDeadline extends Model {
                 'description'       => 'Short memo of the deadline.',
             ],
 
+            'code' => [
+                'type'              => 'string',
+                'type'              => 'numeric/integer:3',
+                'description'       => '3 digits code to serve in payment references.',
+                'required'          => true
+            ],
+
             'delay_from_event' => [
                 'type'              => 'string',
                 'selection'         => ['booking','checkin', 'checkout'],
@@ -38,10 +45,10 @@ class PaymentDeadline extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                                        'installment',
-                                        'invoice'
+                    'installment',                 // pre-payment (can be converted to invoice): there can be many of those
+                    'invoice'                      // balance invoice (theorically, only one) 
                 ],
-                'description'       => "Deadlines are installment except for last one: final invoice."
+                'description'       => "Deadlines are installment except for last one, the final invoice."
             ],
 
             'amount_share' => [
