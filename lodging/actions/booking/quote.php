@@ -45,22 +45,6 @@ if(!$booking) {
 }
 
 if($booking['status'] != 'quote') {
-    // remove existing consumptions and mark lines as not 'invoiced' (waiting for payment)
-    foreach($booking['booking_lines_ids'] as $lid => $line) {
-        $consumptions_ids = array_map(function($a) { return "-$a";}, $line['consumptions_ids']);
-    }
-
-    
-    BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids, 'is_invoiced' => false]);
-
-    // remove non-paid fundings
-    $fundings_ids = [];
-    foreach($booking['fundings_ids'] as $fid => $funding) {
-        if(!$funding['is_paid']) {
-            $fundings_ids[] = "-$fid";
-        }
-    }
-    Booking::id($params['id'])->update(['fundings_ids' => $fundings_ids]);
 
     // remove existing CRON tasks for reverting the booking to quote
     $cron->cancel("booking.option.deprecation.{$params['id']}");
@@ -70,8 +54,24 @@ if($booking['status'] != 'quote') {
     // mark contracts as expired    
     Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
 
-    // Update booking status
-    Booking::id($params['id'])->update(['status' => 'quote', 'has_contract' => false]);
+    // Update booking
+
+    // remove non-paid fundings
+    $fundings_ids = [];
+    foreach($booking['fundings_ids'] as $fid => $funding) {
+        if(!$funding['is_paid']) {
+            $fundings_ids[] = "-$fid";
+        }
+    }
+
+    Booking::id($params['id'])->update(['status' => 'quote', 'has_contract' => false, 'fundings_ids' => $fundings_ids]);
+
+    // remove existing consumptions and mark lines as not 'invoiced' (waiting for payment)
+    foreach($booking['booking_lines_ids'] as $lid => $line) {
+        $consumptions_ids = array_map(function($a) { return "-$a";}, $line['consumptions_ids']);
+    }
+    
+    BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids, 'is_invoiced' => false]);
 }
 
 $context->httpResponse()
