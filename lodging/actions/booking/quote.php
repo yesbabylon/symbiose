@@ -41,6 +41,9 @@ if(!$booking) {
 
 if($booking['status'] != 'quote') {
 
+    // set booking status to quote
+    Booking::id($params['id'])->update(['status' => 'quote']);
+
     // remove existing CRON tasks for reverting the booking to quote
     $cron->cancel("booking.option.deprecation.{$params['id']}");
 
@@ -59,7 +62,7 @@ if($booking['status'] != 'quote') {
         }
     }
 
-    Booking::id($params['id'])->update(['status' => 'quote', 'has_contract' => false, 'fundings_ids' => $fundings_ids]);
+    Booking::id($params['id'])->update(['has_contract' => false, 'fundings_ids' => $fundings_ids]);
 
     // remove existing consumptions and mark lines as not 'invoiced' (waiting for payment)
     foreach($booking['booking_lines_ids'] as $lid => $line) {
