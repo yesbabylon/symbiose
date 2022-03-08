@@ -212,21 +212,24 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     ['booking_line_id','=', 0],
                     ['is_manual_discount', '=', false]
                 ]);
-                $adapters = $om->read('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
 
                 $disc_value = 0.0;
                 $disc_percent = 0.0;
 
-                foreach($adapters as $aid => $adata) {
-                    if($adata['type'] == 'amount') {
-                        $disc_value += $adata['value'];
-                    }
-                    else if($adata['type'] == 'percent') {
-                        if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
-                            $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                if($price_adapters_ids > 0 && count($price_adapters_ids)) {
+                    $adapters = $om->read('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
+
+                    foreach($adapters as $aid => $adata) {
+                        if($adata['type'] == 'amount') {
+                            $disc_value += $adata['value'];
                         }
-                        else {
-                            $disc_percent += $adata['value'];
+                        else if($adata['type'] == 'percent') {
+                            if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
+                                $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                            }
+                            else {
+                                $disc_percent += $adata['value'];
+                            }
                         }
                     }
                 }
