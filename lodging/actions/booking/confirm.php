@@ -26,7 +26,7 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)	// list of users ids granted 
+        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
         'groups'            => ['booking.default.user'],// list of groups ids or names granted 
     ],
     'response'      => [
