@@ -19,6 +19,12 @@
             },
             {
                 "type": "field",
+                "label": "Scope",
+                "value": "scope",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "label": "Own qty ?",
                 "value": "has_own_qty",
                 "width": "20%"

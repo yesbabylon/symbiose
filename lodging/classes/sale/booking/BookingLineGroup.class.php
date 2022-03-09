@@ -316,7 +316,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      */
     public static function onchangePackId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangePackId", QN_REPORT_DEBUG);
-
+        
+        // generate booking lines 
         self::_updatePackId($om, $oids, $lang);
 
         $groups = $om->read(__CLASS__, $oids, [
@@ -345,14 +346,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
             else {
                 // always update nb_pers
-                // to make sure to triggered self::_updatePriceAdapters and BookingLine::_updatePack
+                // to make sure to triggered self::_updatePriceAdapters and BookingLine::_updateQty
                 $updated_fields['nb_pers'] = $group['nb_pers'];
             }
 
             $om->write(__CLASS__, $gid, $updated_fields, $lang);
-
-            // notify bookinglines that pack_id has been updated
-            // BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang); 
 
         }
     }
@@ -362,31 +360,18 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
+        self::_updateAutosaleProducts($om, $oids, $lang);
 
+        // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'booking_lines_ids']);
-
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
                 // force parent booking to recompute date_from
                 $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
                 // notify booking lines that price_id has to be updated
                 BookingLine::_updatePriceId($om, $group['booking_lines_ids'], $lang);
-                // notify bookinglines that pack_id has been updated
-                if($group['has_pack']) {
-                    BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }
-                else {
-                    // if lines do not belong to a pack, update qty and price if their product has qty_accounting_method set to 'person'
-                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['product_id.product_model_id.qty_accounting_method']);
-                    foreach($lines as $lid => $line) {
-                        if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_nights']]);
-                        }
-                        else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * $group['nb_nights']]);
-                        }
-                    }
-                }
+                // recompute bookinglines quantities
+                BookingLine::_updateQty($om, $group['booking_lines_ids'], $lang);
             }
         }
     }
@@ -396,29 +381,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
         self::_updatePriceAdapters($om, $oids, $lang);
+        self::_updateAutosaleProducts($om, $oids, $lang);
 
+        // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
-
-        if($groups > 0 && count($groups)) {
+        if($groups > 0) {
             foreach($groups as $group) {
                 // force parent booking to recompute date_to
                 $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
-                // notify bookinglines that dates has been updated (update )
-                if($group['has_pack']) {
-                    BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }
-                else {
-                    // if lines do not belong to a pack, update qty and price if their product has qty_accounting_method set to 'person'
-                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['product_id.product_model_id.qty_accounting_method']);
-                    foreach($lines as $lid => $line) {
-                        if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_nights']]);
-                        }
-                        else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * $group['nb_nights']]);
-                        }
-                    }
-                }
+                // recompute bookinglines quantities
+                BookingLine::_updateQty($om, $group['booking_lines_ids'], $lang);
             }
         }
     }
@@ -440,24 +412,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
 
         self::_updatePriceAdapters($om, $oids, $lang); 
+        self::_updateAutosaleProducts($om, $oids, $lang);
 
+        // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids']);
-
-        if($groups > 0 && count($groups)) {
+        if($groups > 0) {
             foreach($groups as $group) {
-                // notify bookinglines that pack_id has been updated (qty will be updated)
-                if($group['has_pack']) {
-                    BookingLine::_updatePack($om, $group['booking_lines_ids'], $lang);
-                }
-                else {
-                    // if lines do not belong to a pack, update qty and price if their product has qty_accounting_method set to 'person'
-                    $lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['product_id.product_model_id.qty_accounting_method']);
-                    foreach($lines as $lid => $line) {
-                        if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                            $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $group['nb_pers'] * max(1, $group['nb_nights'])]);
-                        }
-                    }
-                }
+                // recompute bookinglines quantities
+                BookingLine::_updateQty($om, $group['booking_lines_ids'], $lang);
             }
         }
     }
@@ -726,7 +688,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 Create booking lines according to pack composition
             */
             $pack_lines = $om->read('lodging\sale\catalog\PackLine', $group['pack_id.pack_lines_ids'], [
-                'child_product_id', 'has_own_qty', 'own_qty', 'child_product_id.product_model_id.qty_accounting_method'
+                'child_product_id', 
+                'has_own_qty', 'own_qty', 
+                'has_own_duration', 'own_duration', 
+                'child_product_id.product_model_id.qty_accounting_method'
             ]);
             $order = 1;
 
@@ -741,6 +706,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 if($pack_line['has_own_qty']) {
                     $line['has_own_qty'] = true;
                     $line['qty'] = $pack_line['own_qty'];
+                }
+                if($pack_line['has_own_duration']) {
+                    $line['has_own_duration'] = true;
+                    $line['own_duration'] = $pack_line['own_duration'];
                 }
                 $lid = $om->create('lodging\sale\booking\BookingLine', $line, $lang);
                 if($lid > 0) {
@@ -809,4 +778,158 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
         }
     }
+
+    /**
+     * Generate one or more groups for products saled automatically.
+     * We generate services groups related to autosales when the  is updated
+     * customer, date_from, date_to, center_id
+     *
+     */
+    public static function _updateAutosaleProducts($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLineGroup:_updateAutosaleProducts", QN_REPORT_DEBUG);
+
+        /*
+            remove groups related to autosales that already exist
+        */
+        $groups = $om->read(__CLASS__, $oids, [
+                                                    'nb_pers',
+                                                    'nb_nights',
+                                                    'date_from',
+                                                    'date_to',
+                                                    'booking_id', 
+                                                    'booking_id.center_id.autosale_list_category_id',
+                                                    'booking_lines_ids'
+                                                ], $lang);
+
+        $lines_ids_to_delete = [];
+        foreach($groups as $bid => $group) {
+            $booking_lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['is_autosale'], $lang);
+            foreach($booking_lines as $lid => $line) {
+                if($line['is_autosale']) {
+                    $lines_ids_to_delete[] = $lid;
+                }
+            }
+        }
+        $om->remove('lodging\sale\booking\BookingLine', $lines_ids_to_delete, true);
+
+        // loop through groups and create lines for autosale products, if any
+        foreach($groups as $group_id => $group) {
+
+            /*
+                Find the first Autosale List that matches the booking dates
+            */
+
+            $autosale_lists_ids = $om->search('sale\autosale\AutosaleList', [
+                ['autosale_list_category_id', '=', $group['booking_id.center_id.autosale_list_category_id']],
+                ['date_from', '<=', $group['date_from']],
+                ['date_to', '>=', $group['date_from']]
+            ]);
+
+            $autosale_lists = $om->read('sale\autosale\AutosaleList', $autosale_lists_ids, ['id', 'autosale_lines_ids']);
+            $autosale_list_id = 0;
+            $autosale_list = null;
+            if($autosale_lists > 0 && count($autosale_lists)) {
+                // use first match (there should always be only one or zero)
+                $autosale_list = array_pop($autosale_lists);
+                $autosale_list_id = $autosale_list['id'];
+                trigger_error("QN_DEBUG_ORM:: match with autosale List {$autosale_list_id}", QN_REPORT_DEBUG);
+            }
+            else {
+                trigger_error("QN_DEBUG_ORM:: no autosale List found", QN_REPORT_DEBUG);
+            }
+            /*
+                Search for matching Autosale products within the found List
+            */
+            if($autosale_list_id) {
+                $operands = [];
+
+                // for now, we only support member cards for customer that haven't booked a service for more thant 12 months
+                $operands['nb_pers'] = $group['nb_pers'];
+                $operands['nb_nights'] = $group['nb_nights'];
+
+                $autosales = $om->read('sale\autosale\AutosaleLine', $autosale_list['autosale_lines_ids'], [
+                    'product_id.id',
+                    'product_id.name',
+                    'has_own_qty',
+                    'qty',
+                    'scope',
+                    'conditions_ids'
+                ], $lang);
+
+                // filter discounts based on related conditions
+                $products_to_apply = [];
+
+                // pass-1: filter discounts to be applied on booking lines
+                foreach($autosales as $autosale_id => $autosale) {
+                    if($autosale['scope'] != 'group') continue;
+                    $conditions = $om->read('sale\autosale\Condition', $autosale['conditions_ids'], ['operand', 'operator', 'value']);
+                    $valid = true;
+                    foreach($conditions as $c_id => $condition) {
+                        if(!in_array($condition['operator'], ['>', '>=', '<', '<=', '='])) {
+                            // unknown operator
+                            continue;
+                        }
+                        $operator = $condition['operator'];
+                        if($operator == '=') {
+                            $operator = '==';
+                        }
+                        if(!isset($operands[$condition['operand']])) {
+                            $valid = false;
+                            break;
+                        }
+                        $operand = $operands[$condition['operand']];
+                        $value = $condition['value'];
+                        if(!is_numeric($operand)) {
+                            $operand = "'$operand'";
+                        }
+                        if(!is_numeric($value)) {
+                            $value = "'$value'";
+                        }
+                        trigger_error(" testing {$operand} {$operator} {$value}", QN_REPORT_DEBUG);
+                        $valid = $valid && (bool) eval("return ( {$operand} {$operator} {$value});");
+                        if(!$valid) break;
+                    }
+                    if($valid) {
+                        trigger_error("QN_DEBUG_ORM:: all conditions fullfilled", QN_REPORT_DEBUG);
+                        $products_to_apply[$autosale_id] = [
+                            'id'            => $autosale['product_id.id'],
+                            'name'          => $autosale['product_id.name'],
+                            'has_own_qty'   => $autosale['has_own_qty'],
+                            'qty'           => $autosale['qty']
+                        ];
+                    }
+                }
+
+                // pass-2: apply all applicable products
+                $count = count($products_to_apply);
+
+                if($count) {
+
+                    // add all applicable products at the end of the group
+                    $order = 1000;
+                    foreach($products_to_apply as $autosale_id => $product) {
+                        $qty = $product['qty'];
+                        if(!$product['has_own_qty']) {
+                            $qty = $group['nb_pers'] * $group['nb_nights'];
+                        }
+                        // create a line relating to the product
+                        $line = [
+                            'order'                     => $order++,
+                            'booking_id'                => $group['booking_id'],
+                            'booking_line_group_id'     => $group_id,
+                            'product_id'                => $product['id'],
+                            'qty'                       => $qty,                            
+                            'has_own_qty'               => true,
+                            'is_autosale'               => true
+                        ];
+                        $om->create('lodging\sale\booking\BookingLine', $line, $lang);
+                    }
+                }
+            }
+            else {
+                $date = date('Y-m-d', $group['date_from']);
+                trigger_error("QN_DEBUG_ORM::no matching autosale list found for date {$date}", QN_REPORT_DEBUG);
+            }
+        }
+    }    
 }

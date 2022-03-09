@@ -51,6 +51,18 @@ class BookingLine extends \sale\booking\BookingLine {
                 'store'             => true
             ],
 
+            'qty_vars' => [
+                'type'              => 'string',
+                'description'       => 'JSON array holding qty variation deltas (for \'by person\' products), if any.',
+                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQtyVars'
+            ],
+
+            'is_autosale' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the line relate to an autosale product?',
+                'default'           => false
+            ],
+
             'booking_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
@@ -183,6 +195,7 @@ class BookingLine extends \sale\booking\BookingLine {
         // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)
         $lines = $om->read(__CLASS__, $oids, [
             'qty',
+            'has_own_qty',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
             'is_accomodation',
@@ -192,19 +205,21 @@ class BookingLine extends \sale\booking\BookingLine {
 
         foreach($lines as $lid => $line) {
             $qty = $line['qty'];
-            if($line['qty_accounting_method'] == 'accomodation') {
-                // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the sojourn
-                // which should have been stored in the nb_nights field
-                $qty = $line['booking_line_group_id.nb_nights'];
-            }
-            else if($line['qty_accounting_method'] == 'person') {
-                // lines having a product 'by person' have a qty assigned to the 'duration' x 'nb_pers' of the sojourn
-                // which should have been stored in the nb_pers field                
-                if($line['is_meal'] || $line['is_accomodation']) {
-                    $qty = $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights']);
+            if(!$line['has_own_qty']) {
+                if($line['qty_accounting_method'] == 'accomodation') {
+                    // lines having a product 'by accomodation' have a qty assigned to the 'duration' of the sojourn
+                    // which should have been stored in the nb_nights field
+                    $qty = $line['booking_line_group_id.nb_nights'];
                 }
-                else {
-                    $qty = $line['booking_line_group_id.nb_pers'];
+                else if($line['qty_accounting_method'] == 'person') {
+                    // lines having a product 'by person' have a qty assigned to the 'duration' x 'nb_pers' of the sojourn
+                    // which should have been stored in the nb_pers field
+                    if($line['is_meal'] || $line['is_accomodation']) {
+                        $qty = $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights']);
+                    }
+                    else {
+                        $qty = $line['booking_line_group_id.nb_pers'];
+                    }
                 }
             }
 
@@ -216,10 +231,35 @@ class BookingLine extends \sale\booking\BookingLine {
 
     }
 
+    public static function onchangeQtyVars($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeQtyVars", QN_REPORT_DEBUG);
+        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.nb_pers','qty_vars']);
+
+        if($lines > 0) {
+            // set quantities according to qty_vars arrays
+            foreach($lines as $lid => $line) {
+                $nb_pers = $line['booking_line_group_id.nb_pers'];
+                // qty_vars should be a JSON array holding a series of deltas
+                $qty_vars = json_decode($line['qty_vars']);
+                if($qty_vars) {
+                    $qty = 0;
+                    foreach($qty_vars as $variation) {
+                        $qty += $nb_pers + $variation;
+                    }
+                    $om->write(__CLASS__, $lid, ['qty' => $qty]);
+                }
+                else {
+                    self::_updateQty($om, $oids, $lang);
+                }
+            }
+        }
+    }
+
+
     /**
      * Update the quantity of products.
      *
-     * This handler is called at booking line creation and is in charge of updating the consumptions related to the line.
+     * This handler is called at booking line creation and is in charge of updating the rental units assignments related to the line.
      */
     public static function onchangeQty($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeQty", QN_REPORT_DEBUG);
@@ -286,9 +326,8 @@ class BookingLine extends \sale\booking\BookingLine {
                     */
 
                     trigger_error("QN_DEBUG_ORM::assignment by category", QN_REPORT_DEBUG);
-                    // #todo
+
                     $rental_unit_category_id = $product_models[$line['product_id.product_model_id']]['rental_unit_category_id'];
-                    // rental_unit = this.available_rental_units.find(unit => (unit.category_id && unit.category_id.id == product.product_model_id.rental_unit_category_id.id));
 
                     $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id] ]);
                     // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
@@ -341,7 +380,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
                             $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
                             if($remainder <= 0) break;
-                        }                        
+                        }
                     }
 
                 }
@@ -349,7 +388,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     /*
                         Assign rental units by capacity
                     */
-                    trigger_error("QN_DEBUG_ORM::assignment by capacity", QN_REPORT_DEBUG);                    
+                    trigger_error("QN_DEBUG_ORM::assignment by capacity", QN_REPORT_DEBUG);
                     // find available rental units
 
                     // retrieve list of possible rental_units based on center_id having max nb_pers (we try to assign people of a same group in a same accomodation)
@@ -416,55 +455,59 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         // reset total price
-        $om->write(__CLASS__, $oids, ['price' => null]);
+        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
 
     }
 
 
     /**
-     * Update booking line quantities according to the newly set pack_id.
-     * Booking lines have been created, but their qty not necessarily set.
-     *
-     * pack_id refers to the parent booking_line_group_id.pack_id (there is no pack_id in BookingLine schema)
-     *
-     * This method is called by BookingLineGroup::onchangePackId (and derived classes overloads)
-     * Should be called upon change on: group pack_id, nb_pers, nb_nights
+     * Update the quantity according to parent group (pack_id, nb_pers, nb_nights) and variation array.
+     * This method is triggered on update of BookingLineGroup::nb_pers or BookingLineGroup::nb_nights
+     * 
      */
-    public static function _updatePack($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updatePack", QN_REPORT_DEBUG);
+    public static function _updateQty($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updateQty", QN_REPORT_DEBUG);
 
-        // read product_model from parent group pack_id
         $lines = $om->read(__CLASS__, $oids, [
             'has_own_qty',
+            'qty_vars',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
-            'booking_line_group_id.pack_id.product_model_id',
             'product_id.product_model_id.qty_accounting_method'
         ], $lang);
 
-        foreach($lines as $lid => $line) {
-            if(!$line['has_own_qty']) {
-                //default quantity (applicable for qty_accounting_method == 'unit' [with has_ own_qty set to false])
-                $qty = 1;
-                if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                    // lines having a product 'by accomodation' have a qty assigned to the duration of the sojourn
-                    // which should have been stored in the nb_nights field
-                    $qty = $line['booking_line_group_id.nb_nights'];
+        if($lines > 0) {
+            foreach($lines as $lid => $line) {
+                if(!$line['has_own_qty']) {
+                    if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
+                        $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
+                    }
+                    else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
+                        if(!$line['qty_vars']) {
+                            $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights'])]);
+                        }
+                        else {
+                            $qty_vars = json_decode($line['qty_vars']);
+                            // qty_vars is set and valid
+                            if($qty_vars) {
+                                $diff = $line['booking_line_group_id.nb_nights'] - count($qty_vars);
+                                if($diff > 0) {
+                                    $qty_vars = array_pad($qty_vars, $line['booking_line_group_id.nb_nights'], 0);
+                                }
+                                else if($diff < 0) {
+                                    $qty_vars = array_slice($qty_vars, 0, $line['booking_line_group_id.nb_nights']);
+                                }
+                                $om->write(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
+                                // will trigger onchangeQtyVar which will update  qty 
+                            }    
+                        }
+                    }
                 }
-                else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                    // lines having a product 'by person' have a qty assigned to the number of participants of the sojourn
-                    // which should have been stored in the nb_pers field
-                    $qty = $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights']);
+                else {
+                    // own quantity has been assigned in onchangeProductId
                 }
-
-                // will trigger rental units assignement
-                $om->write(__CLASS__, $lid, ['qty' => $qty ]);
-            }
-            else {
-                // own quantity has been assigned in onchangeProductId
             }
         }
-
     }
 
 
@@ -578,7 +621,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $consumptions = [];
 
         $lines = $om->read(__CLASS__, $oids, [
-            'product_id', 'qty',
+            'product_id', 'qty', 'qty_vars',
             'booking_id', 'booking_id.center_id',
             'booking_line_group_id', 'booking_line_group_id.nb_pers', 'booking_line_group_id.nb_nights', 'booking_line_group_id.date_from',
             'consumptions_ids',
@@ -666,43 +709,63 @@ class BookingLine extends \sale\booking\BookingLine {
                     }
 
                     list($day, $month, $year) = [ date('j', $line['booking_line_group_id.date_from']), date('n', $line['booking_line_group_id.date_from']), date('Y', $line['booking_line_group_id.date_from']) ];
+                    // fetch the offset, in days, for the scheduling
                     $offset = $product_models[$line['product_id.product_model_id']]['schedule_offset'];
 
-                    for($n = 0; $n < $nb_times; ++$n) {
-                        for($i = 0; $i < $nb_products; ++$i) {
-                            $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
-                            $c_schedule_from = $schedule_from;
-                            $c_schedule_to = $schedule_to;
-
-                            $rental_unit_id = 0;
-
+                    $days_nb_times = array_fill(0, $nb_products, $nb_times);
+                    if( $qty_accounting_method == 'person' && ($nb_times * $nb_products) != $line['qty']) {
+                        // $nb_times varies from one day to another : load specific days_nb_times array
+                        $qty_vars = json_decode($line['qty_vars']);
+                        // qty_vars is set and valid
+                        if($qty_vars) {
+                            $i = 0;
+                            foreach($qty_vars as $variation) {
+                                $days_nb_times[$i] = $nb_times + $variation;
+                                ++$i;
+                            }
+                            // handle last day for acccomodations
                             if($is_accomodation) {
-                                // if day is not the arrival day
-                                if($i > 0) {
-                                    $c_schedule_from = 0;               // midnight same day
-                                }
+                                $days_nb_times[$i] = $nb_times + $variation;
+                            }
+                        }
+                    }
 
-                                if($i == $nb_nights) {                  // last day
-                                    $c_schedule_to = $schedule_to;
-                                }
-                                else {
-                                    $c_schedule_to = 24 * 3600;         // midnight next day
-                                }
+                    // $nb_products represents each day of the stay
+                    for($i = 0; $i < $nb_products; ++$i) {
+                        $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
+                        $c_schedule_from = $schedule_from;
+                        $c_schedule_to = $schedule_to;
 
-                                // pick amongst the attached rental_units
-                                foreach($rental_units as $rid => $qty) {
-                                    $rental_unit_id = $rid;
-                                    if($qty == 1) {
-                                        // it was last place available : remove the rental_unit from the candidates list
-                                        unset($rental_units[$rid]);
-                                    }
-                                    else {
-                                        // withdraw one place from the rental unit
-                                        --$rental_units[$rid];
-                                    }
-                                }
+                        $rental_unit_id = 0;
+
+                        if($is_accomodation) {
+                            // if day is not the arrival day
+                            if($i > 0) {
+                                $c_schedule_from = 0;               // midnight same day
                             }
 
+                            if($i == $nb_nights) {                  // last day
+                                $c_schedule_to = $schedule_to;
+                            }
+                            else {
+                                $c_schedule_to = 24 * 3600;         // midnight next day
+                            }
+
+                            // pick amongst the attached rental_units
+                            foreach($rental_units as $rid => $qty) {
+                                $rental_unit_id = $rid;
+                                if($qty == 1) {
+                                    // it was last place available : remove the rental_unit from the candidates list
+                                    unset($rental_units[$rid]);
+                                }
+                                else {
+                                    // withdraw one place from the rental unit
+                                    --$rental_units[$rid];
+                                }
+                            }
+                        }
+                        // $nb_times is the number of persons, it may vary from one day to another
+                        for($n = 0; $n < $days_nb_times[$i]; ++$n) {
                             $consumptions[] = [
                                 'booking_id'            => $line['booking_id'],
                                 'center_id'             => $line['booking_id.center_id'],
@@ -716,8 +779,8 @@ class BookingLine extends \sale\booking\BookingLine {
                                 'is_meal'               => $is_meal,
                                 'rental_unit_id'        => $rental_unit_id
                             ];
-
                         }
+
                     }
 
                 }
