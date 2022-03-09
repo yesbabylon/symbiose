@@ -65,8 +65,7 @@ list($params, $providers) = announce([
     ],
     // 'access' => [
     //     'visibility'        => 'public',
-    //     'users'             => [ROOT_USER_ID],
-    //     'groups'            => ['sales.bookings.users'],
+    //     'groups'            => ['booking.default.user'],
     // ],
     'response' => [
         'content-type'      => 'application/json',
@@ -148,10 +147,10 @@ if(count($params['attachments_ids'])) {
 }
 
 // send message
-$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
+$transport = new Swift_SmtpTransport('smtp.mailtrap.io', 2525 /*, 'ssl'*/);
 
-$transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
-          ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
+$transport->setUsername('bb2fb45eb604d0')
+          ->setPassword('ea2a3f06a9d6bf');
 
 $message = new Swift_Message();
 $message->setTo($params['recipient_email'])
