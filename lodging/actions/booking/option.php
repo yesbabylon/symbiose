@@ -61,7 +61,9 @@ if(!count($booking['booking_lines_ids'])) {
 }
 
 
-// check booking consistency
+/*
+    Check booking consistency
+*/
 
 $json = run('get', 'lodging_booking_check', ['id' => $params['id']]);
 $data = json_decode($json, true);
@@ -86,7 +88,7 @@ else if(is_array($data) && count($data)) {
 
 
 /*
-    Create the consumptions in order to see them in the planning (scheduled services) and to reserve related rental units.
+    Create the consumptions in order to see them in the planning (scheduled services) and to mark related rental units as booked.
 */
 
 BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
@@ -107,7 +109,7 @@ $limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
 
 // add a task to the CRON
 $cron->schedule(
-    "booking.option.deprecation.{$params['id']}",
+    "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
     time() + $limit * 86400,                                  // remind after 1 week (7 days)
     'lodging_booking_quote',
     '{"id": '.$params['id'].'}'

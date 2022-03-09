@@ -69,7 +69,7 @@ if($booking['status'] != 'quote') {
         $consumptions_ids = array_map(function($a) { return "-$a";}, $line['consumptions_ids']);
     }
     
-    BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids, 'is_invoiced' => false]);
+    BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids, 'is_contractual' => false]);
 }
 
 $context->httpResponse()

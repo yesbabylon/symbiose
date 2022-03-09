@@ -99,6 +99,18 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
+            'has_own_duration' => [
+                'type'              => 'boolean',
+                'description'       => 'Set according to related pack line.',
+                'default'           => false
+            ],
+
+            'own_duration' => [
+                'type'              => 'integer',
+                'description'       => "Self assigned duration, in days (from pack line).",
+                'visible'           => ['has_own_duration', '=', true]
+            ],
+
             'order' => [
                 'type'              => 'integer',
                 'description'       => 'Order by which the line have to be sorted when presented visually.',
@@ -116,9 +128,9 @@ class BookingLine extends Model {
                 'description'       => 'The way the line is intended to be paid.',
             ],
 
-            'is_invoiced' => [
+            'is_contractual' => [
                 'type'              => 'boolean',
-                'description'       => 'Has the line been accounted already?',
+                'description'       => 'Is the line part of the original contract (or added afterward)?',
                 'default'           => false
             ],
 
@@ -207,17 +219,6 @@ class BookingLine extends Model {
     public static function onchangePriceAdaptersIds($om, $oids, $lang) {
         // reset computed fields related to price
         $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null, 'total' => null, 'discount' => null, 'free_qty' => null ]);
-    }
-
-
-    /**
-     * Update booking line quantities according to current pack (supposely after change occured).
-     * 
-     * pack_id refers to the parent booking_line_group_id.pack_id (there is no pack_id in BookingLine schema)
-     * This method is called by BookingLineGroup::onchangePackId (and derived classes overloads)
-     */
-    public static function _updatePack($om, $oids, $lang) {
-        // #todo                
     }
 
             
