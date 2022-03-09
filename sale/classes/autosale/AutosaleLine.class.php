@@ -37,6 +37,16 @@ class AutosaleLine extends Model {
                 'default'           => 1
             ],
 
+            'scope' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'booking',
+                    'group'
+                ],
+                'description'       => 'The scope on which the autosale has to be applied.',
+                'default'           => 'booking'
+            ],
+
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',

@@ -186,8 +186,8 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 
 }
 
-// mark all booking lines as 'is_invoiced'
-BookingLine::ids($booking_lines_ids)->update(['is_invoiced' => true]);
+// mark all booking lines as contractual
+BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 
 
 /*

@@ -20,6 +20,7 @@ class Condition extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'nb_pers', 
+                    'nb_nights',                     
                     'count_booking_12'
                 ],
                 'required'          => true

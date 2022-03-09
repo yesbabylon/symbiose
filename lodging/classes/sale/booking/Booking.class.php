@@ -246,6 +246,7 @@ class Booking extends \sale\booking\Booking {
                     'product_id.name',
                     'has_own_qty',
                     'qty',
+                    'scope',
                     'conditions_ids'
                 ], $lang);
 
@@ -254,6 +255,7 @@ class Booking extends \sale\booking\Booking {
 
                 // filter discounts to be applied on booking lines
                 foreach($autosales as $autosale_id => $autosale) {
+                    if($autosale['scope'] != 'booking') continue;
                     $conditions = $om->read('sale\autosale\Condition', $autosale['conditions_ids'], ['operand', 'operator', 'value']);
                     $valid = true;
                     foreach($conditions as $c_id => $condition) {
@@ -327,17 +329,12 @@ class Booking extends \sale\booking\Booking {
                         ];
                         $om->create('lodging\sale\booking\BookingLine', $line, $lang);
                     }
-
                 }
-
-
             }
             else {
                 $date = date('Y-m-d', $booking['date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching autosale list found for date {$date}", QN_REPORT_DEBUG);
             }
-
-
         }
     }
 

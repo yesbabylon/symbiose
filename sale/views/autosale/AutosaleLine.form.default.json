@@ -48,6 +48,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Scope",
+                                                "value": "scope",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
                                                 "width": "50%"
