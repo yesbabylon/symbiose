@@ -26,7 +26,7 @@ class Template extends Model {
                 'type'              => 'string',
                 'description'       => "Code of the template (allows duplicates).",
                 'required'          => true,
-                'onchange'          => 'communication\Template::onChangeCode'
+                'onchange'          => 'communication\Template::onchangeCode'
             ],
 
             'description' => [
@@ -39,6 +39,7 @@ class Template extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'communication\TemplateCategory',
                 'description'       => "The category the template belongs to.",
+                'onchange'          => 'communication\Template::onchangeCategoryId',
                 'required'          => true
             ],
 
@@ -46,7 +47,7 @@ class Template extends Model {
                 'type'              => 'string',
                 'selection'         => [ 'quote', 'contract', 'invoice' ],
                 'description'       => 'The context in which the template is meant to be used.',
-                'onchange'          => 'communication\Template::onChangeType'
+                'onchange'          => 'communication\Template::onchangeType'
             ],
 
             'parts_ids' => [
@@ -77,12 +78,17 @@ class Template extends Model {
         return $result;
     }
 
-    public static function onChangeCode($orm, $oids, $lang) {
+    public static function onchangeCode($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['name' => null], $lang);
         $orm->read(__CLASS__, $oids, ['name'], $lang);
     }
 
-    public static function onChangeType($orm, $oids, $lang) {
+    public static function onchangeType($orm, $oids, $lang) {
+        $orm->write(__CLASS__, $oids, ['name' => null], $lang);
+        $orm->read(__CLASS__, $oids, ['name'], $lang);
+    }
+
+    public static function onchangeCategoryId($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['name' => null], $lang);
         $orm->read(__CLASS__, $oids, ['name'], $lang);
     }
