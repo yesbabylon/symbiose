@@ -10,8 +10,8 @@
         },
         "use_office_details": {
             "label": "Coordonnées de l'Equipe de gestion?",
-            "description": "Utiliser les coordonnées de l'équipe dans les communications (plutot que celles du centre).",
-            "help": ""
+            "description": "Ne pas utiliser les coordonnées de l'organisation.",
+            "help": "Lorsque cette option est sélectionnée, lors des communications avec les clients, ce sont les coordonnées de l'équipe de gestion qui seront utilisées, plutot que celles de l'organisation."
         },
         "code_alpha": {
             "label": "Mnémo",

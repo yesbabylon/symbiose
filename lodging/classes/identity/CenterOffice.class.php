@@ -70,6 +70,7 @@ class CenterOffice extends Model {
 
             'email' => [
                 'type'              => 'string',
+                'usage'             => 'email',
                 'description'       => 'Official contact email address for the group.'
             ],
 

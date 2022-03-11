@@ -266,6 +266,7 @@ $values = [
     'installment_date'      => '',
     'installment_amount'    => 0,
     'installment_reference' => '',
+    // default to transparent pixel
     'installment_qr_url'    => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
 
     'fundings'              => [],

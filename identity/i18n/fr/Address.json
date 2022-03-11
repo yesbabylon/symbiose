@@ -40,7 +40,7 @@
 			"help": ""
 		},
 		"address_dispatch": {
-			"label": "Adresse d'expédition",
+			"label": "Complément d'adresse",
 			"description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
 			"help": ""
 		},

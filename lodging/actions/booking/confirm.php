@@ -16,10 +16,10 @@ use lodging\sale\booking\Funding;
 
 
 list($params, $providers) = announce([
-    'description'   => "Sets booking as confirmed.",
+    'description'   => "Sets booking as confirmed, create contract and generate payment plan.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the booking for which the composition has to be generated.',
+            'description'   => 'Identifier of the booking to mark as confirmed.',
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
@@ -87,6 +87,7 @@ $cron->cancel("booking.option.deprecation.{$params['id']}");
 // remember all booking lines involved
 $booking_lines_ids = [];
 
+// create contract and contract lines
 $contract = Contract::create([
         'date'          => time(),
         'booking_id'    => $params['id'],
@@ -189,12 +190,15 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 // mark all booking lines as contractual
 BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 
+// Update booking status
+Booking::id($params['id'])->update(['status' => 'confirmed', 'has_contract' => true]);
+
 
 /*
     Genarate the payment plan (expected fundings of the booking)
 */
 
-// default rate class to 'general public'
+// set rate class default to 'general public'
 $rate_class_id = 4;
 
 if($booking['customer_id']['rate_class_id']) {
@@ -259,10 +263,6 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
 
     ++$funding_order;
 }
-
-// Update booking status
-Booking::id($params['id'])->update(['status' => 'confirmed', 'has_contract' => true]);
-
 
 $context->httpResponse()
         // ->status(204)
