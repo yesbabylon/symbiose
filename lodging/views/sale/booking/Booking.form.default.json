@@ -59,7 +59,7 @@
             "description": "The booking will be cancelled and rental units will be freed. Possible cancellation fee will be applied.",
             "controller": "lodging_booking_cancel",
             "confirm": true,
-            "visible": ["status", "=", "quote"]
+            "visible": ["status", "<>", "balanced"]
         }
     ],
     "layout": {
@@ -206,6 +206,27 @@
                                             {
                                                 "type": "field",
                                                 "value": "contacts_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Consumptions",
+                        "id": "section.booking_consumptions",
+                        "visible": ["status", "<>", "quote"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "consumptions_ids",
                                                 "width": "100%"
                                             }
                                         ]

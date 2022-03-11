@@ -13,41 +13,37 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "40%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Center Name",
                                                 "value": "name",
-                                                "width": "100%",
+                                                "width": "24%",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "60%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "code_alpha",
-                                                "width": "20%"
+                                                "width": "8%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "analytic_section_id",
-                                                "width": "25%"
+                                                "width": "16%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Organization",
+                                                "value": "organisation_id",
+                                                "width": "24%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "center_office_id",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "use_office_details",
-                                                "width": "25%"
+                                                "width": "24%"
                                             }
                                         ]
                                     }
@@ -142,8 +138,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Organization",
-                                                "value": "organisation_id",
+                                                "value": "use_office_details",
                                                 "width": "100%"
                                             },
                                             {

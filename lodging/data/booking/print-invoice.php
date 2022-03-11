@@ -182,6 +182,7 @@ $fields = [
         ]
     ],
     'funding_id' => ['payment_reference', 'due_date'],
+    'is_paid',
     'total',
     'price'
 ];
@@ -233,6 +234,8 @@ $values = [
     'customer_vat'          => $invoice['partner_id']['partner_identity_id']['vat_number'],
     'date'                  => date('d/m/Y', $invoice['created']),
     'code'                  => $invoice['name'],
+    'is_paid'               => $invoice['is_paid'],
+    'booking_code'          => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],
     'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
@@ -278,7 +281,7 @@ if($booking['center_id']['use_office_details']) {
     $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
     $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
     $values['center_email'] = $office['email'];
-    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];    
+    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];
 }
 
 
@@ -321,7 +324,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
     $line = [
         'name'          => $invoice_line_group['name'],
         'price'         => null,
-        'price'         => null,        
+        'price'         => null,
         'unit_price'    => null,
         'vat_rate'      => null,
         'qty'           => null,
@@ -381,7 +384,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
         else {
             foreach($group_tax_lines as $vat_rate => $total) {
                 $line = [
-                    'name'      => 'Services avec TVA '.($vat_rate*100).'%',                    
+                    'name'      => 'Services avec TVA '.($vat_rate*100).'%',
                     'qty'       => 1,
                     'vat_rate'  => $vat_rate,
                     'total'     => $total,
@@ -393,7 +396,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
     }
 }
 
-// process remainging stand-alone lines 
+// process remainging stand-alone lines
 foreach($invoice['invoice_lines_ids'] as $invoice_line) {
     $line = [
         'name'          => $invoice_line['name'],
@@ -479,7 +482,7 @@ $html = $twigTemplate->render($values);
 
 
 /*
-    Convert HTML to PDF 
+    Convert HTML to PDF
 */
 
 // instantiate and use the dompdf class

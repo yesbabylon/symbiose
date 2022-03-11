@@ -84,6 +84,9 @@
                 "section.bookingLineGroups_section": {
                     "label": "Groupes de Lignes de Réservation"
                 },
+                "section.booking_consumptions": {
+                    "label": "Consommations"
+                },
                 "section.booking_contacts": {
                     "label": "Contacts"
                 },

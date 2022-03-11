@@ -31,8 +31,8 @@ list($params, $providers) = announce([
         'mode' =>  [
             'description'   => 'Mode in which document has to be rendered: simple or detailed.',
             'type'          => 'string',
-            'selection'     => ['simple', 'detailed'],
-            'default'       => 'detailed'
+            'selection'     => ['simple', 'grouped', 'detailed'],
+            'default'       => 'grouped'
         ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
@@ -339,18 +339,35 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
         // group is a pack with no price
         $group_is_pack = false;
-        $line = [
-            'name'          => $group_label,
-            'price'         => null,
-            'total'         => null,
-            'unit_price'    => null,
-            'vat_rate'      => null,
-            'qty'           => null,
-            'free_qty'      => null,
-            'discount'      => null,
-            'is_group'      => true,
-            'is_pack'       => false
-        ];
+
+        if($params['mode'] == 'grouped') {
+            $line = [
+                'name'          => $group_label,
+                'price'         => $booking_line_group['price'],
+                'total'         => $booking_line_group['total'],
+                'unit_price'    => $booking_line_group['total'],
+                'vat_rate'      => (floatval($booking_line_group['price'])/floatval($booking_line_group['total']) - 1.0),
+                'qty'           => 1,
+                'free_qty'      => 0,
+                'discount'      => 0,
+                'is_group'      => true,
+                'is_pack'       => false
+            ];    
+        }
+        else {
+            $line = [
+                'name'          => $group_label,
+                'price'         => null,
+                'total'         => null,
+                'unit_price'    => null,
+                'vat_rate'      => null,
+                'qty'           => null,
+                'free_qty'      => null,
+                'discount'      => null,
+                'is_group'      => true,
+                'is_pack'       => false
+            ];    
+        }        
         $lines[] = $line;
 
 
@@ -358,27 +375,43 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
         foreach($booking_line_group['booking_lines_ids'] as $booking_line) {
 
-            $line = [
-                'name'          => $booking_line['name'],
-                'price'         => $booking_line['price'],
-                'total'         => $booking_line['total'],
-                'unit_price'    => $booking_line['unit_price'],
-                'vat_rate'      => $booking_line['vat_rate'],
-                'qty'           => $booking_line['qty'],
-                'discount'      => $booking_line['discount'],
-                'free_qty'      => $booking_line['free_qty'],
-                'is_group'      => false,
-                'is_pack'       => false
-            ];
+            if($params['mode'] == 'grouped') {
+                $line = [
+                    'name'          => $booking_line['name'],
+                    'price'         => null,
+                    'total'         => null,
+                    'unit_price'    => null,
+                    'vat_rate'      => null,
+                    'qty'           => $booking_line['qty'],
+                    'discount'      => null,
+                    'free_qty'      => null,
+                    'is_group'      => false,
+                    'is_pack'       => false
+                ];    
+            }
+            else {
+                $line = [
+                    'name'          => $booking_line['name'],
+                    'price'         => $booking_line['price'],
+                    'total'         => $booking_line['total'],
+                    'unit_price'    => $booking_line['unit_price'],
+                    'vat_rate'      => $booking_line['vat_rate'],
+                    'qty'           => $booking_line['qty'],
+                    'discount'      => $booking_line['discount'],
+                    'free_qty'      => $booking_line['free_qty'],
+                    'is_group'      => false,
+                    'is_pack'       => false
+                ];    
+            }
 
             $group_lines[] = $line;
         }
-        if($params['mode'] == 'detailed') {
+        if($params['mode'] == 'detailed' || $params['mode'] == 'grouped') {
             foreach($group_lines as $line) {
                 $lines[] = $line;
             }
         }
-        // group lines by VAT rate        
+        // mode is 'simple' : group lines by VAT rate        
         else {
             $group_tax_lines = [];
             foreach($group_lines as $line) {
