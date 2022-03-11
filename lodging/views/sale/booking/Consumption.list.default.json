@@ -1,6 +1,8 @@
 {
     "name": "Consumption",
     "description": "This view is intended for displaying the list of consumptions.",
+    "group_by": ["date", "product_id"],
+    "limit": 100,
     "layout": {
         "items": [
             {
@@ -25,11 +27,6 @@
                 "value": "schedule_to",
                 "width": "10%"
             },            
-            {
-                "type": "field",
-                "value": "type",
-                "width": "15%"
-            },
             {
                 "type": "field",
                 "value": "is_rental_unit",
