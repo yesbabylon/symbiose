@@ -72,7 +72,7 @@ class InvoiceLine extends Model {
                 'function'          => 'finance\accounting\InvoiceLine::getVatRate',                
                 'store'             => true,
                 'default'           => 0.0,
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangeVateRate'
+                'onchange'          => 'finance\accounting\InvoiceLine::onchangeVatRate'
             ],
 
             'qty' => [
@@ -206,7 +206,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
             foreach($lines as $oid => $line) {
-                $om->write(get_called_class(), $line[], ['price' => null, 'total' => null]);
+                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
             }
         }
     }
@@ -217,7 +217,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
             foreach($lines as $oid => $line) {
-                $om->write(get_called_class(), $line[], ['price' => null]);
+                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null]);
             }
         }
     }
@@ -232,7 +232,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
             foreach($lines as $oid => $line) {
-                $om->write(get_called_class(), $line[], ['price' => null, 'total' => null]);
+                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
             }
         }
     }
@@ -243,7 +243,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
             foreach($lines as $oid => $line) {
-                $om->write(get_called_class(), $line[], ['price' => null, 'total' => null]);
+                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
             }
         }
     }
