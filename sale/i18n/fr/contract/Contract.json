@@ -10,12 +10,12 @@
         },
         "description": {
             "label": "Description",
-            "description": "Brève description de la raison du contrat (c'est-à-dire l'objet de l'accord).",
+            "description": "Brève description du motif de la réservation (optionel).",
             "help": ""
         },
         "status": {
             "label": "Statut",
-            "description": "Status of the contract.",
+            "description": "Etat actuel du contrat.",
             "selection": {
                 "pending": "en attente",
                 "sent": "expédié",
@@ -26,7 +26,7 @@
         },
         "date": {
             "label": "Date",
-            "description": "Date à laquelle le contrat a été officiellement publié.",
+            "description": "Date à laquelle le contrat a été émis.",
             "help": ""
         },
         "valid_until": {

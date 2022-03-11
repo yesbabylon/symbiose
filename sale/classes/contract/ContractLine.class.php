@@ -127,11 +127,11 @@ class ContractLine extends Model {
      */
     public static function getPrice($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price', 'vat_rate']);
+        $lines = $om->read(__CLASS__, $oids, ['total', 'vat_rate']);
 
         if($lines > 0 && count($lines)) {
             foreach($lines as $lid => $line) {
-                $result[$lid] = round($line['price'] * (1 + $line['vat_rate']), 2);
+                $result[$lid] = round($line['total'] * (1 + $line['vat_rate']), 2);
             }
         }
         return $result;
