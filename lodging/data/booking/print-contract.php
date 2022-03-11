@@ -50,8 +50,8 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)	
-        'groups'            => ['booking.default.administrator'],// list of groups ids or names granted 
+        'visibility'        => 'public',
+        'groups'            => ['booking.default.user'],
     ],
     'response'      => [
         'content-type'      => 'application/pdf',
