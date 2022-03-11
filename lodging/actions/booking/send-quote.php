@@ -63,10 +63,10 @@ list($params, $providers) = announce([
             'default'       => DEFAULT_LANG
         ]
     ],
-    // 'access' => [
-    //     'visibility'        => 'public',
-    //     'groups'            => ['booking.default.user'],
-    // ],
+    'access' => [
+        'visibility'        => 'public',
+        'groups'            => ['booking.default.user'],
+    ],
     'response' => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',
