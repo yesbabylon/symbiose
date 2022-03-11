@@ -37,7 +37,7 @@ class TemplateAttachment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\Lang',
                 'description'       => "Language of the attachment (related document).",
-                'default'           => 'en'
+                'default'           => '1'
             ]
 
         ];

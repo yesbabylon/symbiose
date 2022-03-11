@@ -47,8 +47,7 @@ class Consumption extends \sale\booking\Consumption {
                 'foreign_object'    => 'lodging\sale\catalog\Product',
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true
-            ]
-            
+            ]   
         ];
     }
 

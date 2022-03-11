@@ -1,6 +1,9 @@
 {
     "name": "Analytic Section List",
     "description": "This view is intented for displaying the analytic section.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "items": [
             {

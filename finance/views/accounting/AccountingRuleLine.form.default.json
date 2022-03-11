@@ -1,6 +1,9 @@
 {
     "name": "Accounting Rule Lines",
     "description": "Accounting rules have one or more lines associating them with an account and a VAT rule.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "groups": [
             {

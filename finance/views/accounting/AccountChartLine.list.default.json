@@ -1,6 +1,9 @@
 {
     "name": "Accounting Charts List",
     "description": "This view is intented for displaying the accounting charts.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "items": [
             {

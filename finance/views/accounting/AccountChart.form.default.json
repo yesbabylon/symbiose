@@ -1,6 +1,9 @@
 {
     "name": "Accounting Chart",
     "description": "Default form for accounting chart with all fields.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "groups": [
             {

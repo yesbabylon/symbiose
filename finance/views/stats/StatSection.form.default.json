@@ -1,6 +1,9 @@
 {
     "name": "Statistic Section",
     "description": "Default form for statistic section with all fields.",
+    "access": {
+        "groups": ["stat.default.user"]
+     },
     "layout": {
         "groups": [
             {

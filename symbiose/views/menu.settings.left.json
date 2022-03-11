@@ -834,7 +834,7 @@
                       "label": "All attachments",
                       "description": "",
                       "context": {
-                        "entity": "communication\\Attachment",
+                        "entity": "communication\\TemplateAttachment",
                         "view": "list.default"
                       }
                     }
