@@ -32,8 +32,47 @@
             "label": "BIC",
             "description": "Numéro d'identification de la banque.",
             "help": ""
-        }        
-
+        },
+        "phone": {
+            "label": "Téléphone",
+            "description": "Numéro de téléphone de contact officiel.",
+            "help": ""
+        },
+        "email": {
+            "label": "Email",
+            "description": "Adresse e-mail de contact officielle.",
+            "help": ""
+        },
+        "address_street": {
+            "label": "Rue",
+            "description": "Rue et numéro de l'adresse du centre de gestion.",
+            "help": ""
+        },
+        "address_dispatch": {
+            "label": "Complément d'adresse",
+            "description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
+            "help": ""
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville dans laquelle se situe le centre de gestion.",
+            "help": ""
+        },
+        "address_zip": {
+            "label": "Code postal",
+            "description": "Code Postal.",
+            "help": ""
+        },
+        "address_state": {
+            "label": "État",
+            "description": "État ou région.",
+            "help": ""
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays dans lequel se situe le centre de gestion.",
+            "help": ""
+        }
     },
     "view": {
         "form.default": {

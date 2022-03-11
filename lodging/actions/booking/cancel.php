@@ -61,9 +61,8 @@ if(isset($data['errors'])) {
 // mark the booking as cancelled
 Booking::id($params['id'])->update(['is_cancelled' => true]);
 
-// if cancellation fees are aplicable, set status to 'due_balance'
+// #todo : if cancellation fees are applicable, set status to 'due_balance'
 
-// #todo
 
 // if booking is balanced, set status to balanced and archive booking
 Booking::id($params['id'])->update(['status' => 'balanced', 'state' => 'archive']);
