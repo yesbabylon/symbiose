@@ -1,6 +1,9 @@
 {
     "name": "Invoice Lines",
     "description": "This view is intented for displaying the invoice lines.",
+    "access": {
+        "groups": ["finance.default.user", "sale.default.user"]
+     },
     "limit": 100,
     "layout": {
         "items": [

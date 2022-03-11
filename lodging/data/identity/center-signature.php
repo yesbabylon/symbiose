@@ -23,6 +23,10 @@ list($params, $providers) = announce([
             'default'       => DEFAULT_LANG
         ]
     ],
+    'access' => [
+      'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)	
+      'groups'            => ['booking.default.administrator'],// list of groups ids or names granted 
+    ],
     'response' => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',

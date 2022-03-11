@@ -1,6 +1,9 @@
 {
     "name": "Statistic Chart",
     "description": "Default form for statistic chart with all fields.",
+    "access": {
+        "groups": ["stat.default.user"]
+     },
     "layout": {
         "groups": [
             {

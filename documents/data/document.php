@@ -17,7 +17,6 @@ list($params, $providers) = announce([
     ],
     'access' => [
         'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'users'             => [ROOT_USER_ID],		// list of users ids granted 
         'groups'            => ['documents.default.user'],// list of groups ids or names granted 
     ],
     'response'      => [

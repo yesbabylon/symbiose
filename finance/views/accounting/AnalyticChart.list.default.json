@@ -1,6 +1,9 @@
 {
     "name": "Analytic Charts List",
     "description": "This view is intented for displaying the analytic charts.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "items": [
             {

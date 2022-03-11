@@ -1,6 +1,9 @@
 {
     "name": "Analytic Chart",
     "description": "Default form for analytic chart with all fields.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "groups": [
             {

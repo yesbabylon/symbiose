@@ -1,6 +1,9 @@
 {
     "name": "Statistic Section List",
     "description": "This view is intented for displaying the statistic section.",
+    "access": {
+        "groups": ["stat.default.user"]
+     },
     "layout": {
         "items": [
             {

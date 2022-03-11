@@ -62,7 +62,7 @@
                   "context": {
                     "entity": "sale\\booking\\Booking",
                     "view": "list.default",
-                    "domain": ["status", "=", "validated"]  
+                    "domain": ["status", "=", "confirmed"]  
                   }
                 }
               ]

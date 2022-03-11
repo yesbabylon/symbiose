@@ -1,6 +1,9 @@
 {
     "name": "Analytic Section",
     "description": "Default form for analytic section with all fields.",
+    "access": {
+        "groups": ["finance.default.user"]
+     },
     "layout": {
         "groups": [
             {
