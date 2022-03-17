@@ -58,6 +58,9 @@
             "label": "Cancel",
             "description": "The booking will be cancelled and rental units will be freed. Possible cancellation fee will be applied.",
             "controller": "lodging_booking_cancel",
+            "params": {
+                "id": "object.id"
+            },
             "confirm": true,
             "visible": ["status", "<>", "balanced"]
         }

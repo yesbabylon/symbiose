@@ -166,10 +166,11 @@ class Booking extends Model {
             'cancellation_reason' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'generic',                  // customer cancelled for a generic reason or without mentioning the reason (admin fees apply)
-                    'overbooking',              // the booking was cancelled due to failure in delivery service
+                    'other',                    // customer cancelled for a non-listed reason or without mentionning the reason (cancellation fees might apply)
+                    'overbooking',              // the booking was cancelled due to failure in delivery of the service
                     'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
-                    'schedule_change',          // external resheduling (organisation, means of transport, ...),
+                    'internal_impediment',      // cancellation due to an incident impacting the rental units                    
+                    'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
                     'health_impediment'         // cancellation for medical or mourning reason
                 ],
                 'description'       => "Reason for which the customer cancelled the booking.",

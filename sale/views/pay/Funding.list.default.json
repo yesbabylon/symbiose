@@ -8,6 +8,11 @@
         "items": [
             {
                 "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
                 "value": "due_date",
                 "width": "20%"
             },

@@ -3,7 +3,16 @@
     "description": "This view is intended for displaying the list of bank statement lines.",
     "access": {
         "groups": ["sale.default.user"]
-     },
+    },
+    "actions": [
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import from a Bank Statements file.",
+            "controller": "lodging_payments_import",
+            "confirm": true
+        }
+    ],
     "layout": {
         "items": [
             {

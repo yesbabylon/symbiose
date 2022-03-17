@@ -49,12 +49,13 @@
             "help": "",
             "selection": {
                 "pending": "à traiter",
-                "reconciled": "traitée"
+                "ignored": "ignoré",
+                "reconciled": "réconcilié"
             }
-        },        
+        },
         "structured_message": {
-            "label": "VCS",
-            "description": "Communication structurée, si présente.",
+            "label": "Communication structurée",
+            "description": "Communication structurée (VCS/SCOR), si présente.",
             "help": ""
         },
         "message": {
@@ -72,8 +73,18 @@
         "list.default": {
             "name": "Lignes de Relevé Bancaire",
             "description": "Cette vue est destinée à afficher la liste des ligne de relevé bancaire.",
-            "layout": {}
+            "layout": {
+            },
+            "actions": {
+                "action.import": {
+                    "label": "Importer"
+                }
+            }
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "already_imported": "Fichier déjà importé."
+        }
+    }
 }

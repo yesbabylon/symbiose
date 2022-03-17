@@ -22,6 +22,17 @@ class Booking extends \sale\booking\Booking {
                 'readonly'          => true
             ],
 
+            'type'  => [
+                'type'              => 'string',
+                'selection'         => [
+                    'general_public',
+                    'school_stay',
+                    'sport_camp'
+                ],
+                'readonly'          => true,
+                'default'           => 'general_public'
+            ],
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -155,9 +166,9 @@ class Booking extends \sale\booking\Booking {
                 if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
                     BookingLineGroup::_updatePriceAdapters($om, $booking_lines_groups_ids, $lang);
                 }
-                $om->write(__CLASS__, $oids, ['description' => $booking['customer_id.partner_identity_id.description']]);
-                Booking::_updateAutosaleProducts($om, $oids, $lang);
+                $om->write(__CLASS__, $bid, ['description' => $booking['customer_id.partner_identity_id.description']]);
             }
+            Booking::_updateAutosaleProducts($om, $oids, $lang);            
         }
     }
 

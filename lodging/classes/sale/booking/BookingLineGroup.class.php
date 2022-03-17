@@ -276,9 +276,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $groups = $om->read(__CLASS__, $oids, ['has_pack']);
         if($groups > 0 && count($groups)) {
-            foreach($groups as $group) {
+            foreach($groups as $gid => $group) {
                 if(!$group['has_pack']) {
-                    $om->write(__CLASS__, $oids, ['is_locked' => false, 'pack_id' => null ]);
+                    $om->write(__CLASS__, $gid, ['is_locked' => false, 'pack_id' => null ]);
                 }
             }
         }
@@ -340,15 +340,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // will update price_adapters, nb_nights
             }
 
-            if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation') {
+            // always update nb_pers
+            // to make sure to triggered self::_updatePriceAdapters and BookingLine::_updateQty
+            $updated_fields['nb_pers'] = $group['nb_pers'];
+            if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation' && $group['pack_id.product_model_id.capacity'] > 0) {
                 $updated_fields['nb_pers'] = $group['pack_id.product_model_id.capacity'];
-                // will update price_adapters
-            }
-            else {
-                // always update nb_pers
-                // to make sure to triggered self::_updatePriceAdapters and BookingLine::_updateQty
-                $updated_fields['nb_pers'] = $group['nb_pers'];
-            }
+            }            
 
             $om->write(__CLASS__, $gid, $updated_fields, $lang);
 
@@ -718,8 +715,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 ++$order;
             }
         }
-
-        //#memo - consumptions are updated by the bookingLines
     }
 
 

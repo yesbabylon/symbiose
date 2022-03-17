@@ -70,27 +70,12 @@
                                                 "label": "Voucher Reference",
                                                 "value": "voucher_ref",
                                                 "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Fundings",
-                        "id": "section.fundings_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
-                                                "value": "fundings_ids",
+                                                "value": "funding_id",
                                                 "width": "100%"
-                                            }
+                                            }                                            
                                         ]
                                     }
                                 ]

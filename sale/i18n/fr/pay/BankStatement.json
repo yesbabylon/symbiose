@@ -5,12 +5,7 @@
     "model": {
         "name": {
             "label": "Nom",
-            "description": "Nom du payeur.",
-            "help": ""
-        },
-        "reference_name": {
-            "label": "Nom de référence",
-            "description": "Référence de la déclaration.",
+            "description": "Identifiant de l'extrait.",
             "help": ""
         },
         "date": {
@@ -19,8 +14,8 @@
             "help": ""
         },
         "statement_lines_ids": {
-            "label": "Ligne de déclaration",
-            "description": "Les lignes qui sont affectées à l'instruction.",
+            "label": "Transaction",
+            "description": "Les lignes de transaction qui sont affectées à l'extrait.",
             "help": ""
         },
         "bank_account_bic": {
@@ -35,18 +30,27 @@
         },
         "bank_account_iban": {
             "label": "Numéro IBAN",
-            "description": "Les lignes qui sont affectées à l'instruction.",
+            "description": "Compte bancaire associée à l'extrait.",
             "help": ""
         },
         "old_balance": {
             "label": "Ancien solde",
-            "description": "Solde avant les transactions.",
+            "description": "Solde du compte avant les transactions.",
             "help": ""
         },
         "new_balance": {
             "label": "Nouveau solde",
-            "description": "Solde après les transactions.",
+            "description": "Solde du compte après les transactions.",
             "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Indicateur d'assignation de l'extrait aux paiements.",
+            "help": "",
+            "selection": {
+                "pending": "à traiter",
+                "reconciled": "réconcilié"
+            }
         }
     },
     "view": {

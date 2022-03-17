@@ -3,7 +3,7 @@
     "description": "",
     "access": {
         "groups": ["sale.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
@@ -47,12 +47,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "communication",
+                                                "value": "message",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "reference",
+                                                "value": "structured_message",
                                                 "width": "50%"
                                             },
                                             {
@@ -74,6 +74,31 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "payments_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.statement",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": [ {
+                                                                "view": "form.statement",
+                                                                "domain": [ ["amount", "=", "object.amount"], ["receipt_date", "=", "object.date"] ]
+                                                            } ]
+                                                        }    
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

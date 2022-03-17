@@ -34,6 +34,7 @@ class Payment extends Model {
             'receipt_date' => [
                 'type'              => 'datetime',
                 'description'       => "Time of reception of the payment.",
+                'default'           => time()
             ],
 
             'payment_method' => [
@@ -69,13 +70,10 @@ class Payment extends Model {
                 'visible'           => [ ['payment_method', '=', 'voucher'] ]
             ],
 
-            'fundings_ids' => [
-                'type'              => 'many2many',
+            'funding_id' => [
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
-                'foreign_field'     => 'payments_ids',
-                'rel_table'         => 'sale_pay_rel_payment_funding',
-                'rel_foreign_key'   => 'funding_id',
-                'rel_local_key'     => 'payment_id'
+                'description'       => 'The funding the payement relates to, if any.'
             ]
 
         ];
