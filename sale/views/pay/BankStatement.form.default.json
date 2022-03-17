@@ -9,8 +9,6 @@
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.bank_statement",
                         "rows": [
                             {
                                 "columns": [
@@ -20,15 +18,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
-                                                    "heading": true
+                                                    "heading": true,
+                                                    "readonly": true                                                    
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "reference_name",
-                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -36,15 +30,28 @@
                                                 "width": "50%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "25%"
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "old_balance",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "new_balance",
+                                                "width": "100%"
+                                            }
+                                        ]
                                     }
+
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Statement Lines",
-                        "id": "section.statment_lines_section",
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {

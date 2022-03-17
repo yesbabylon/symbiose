@@ -84,7 +84,7 @@
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": true,
-                                                            "ACTION.CREATE": false        
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }

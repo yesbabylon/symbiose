@@ -5,12 +5,20 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\booking;
+use core\setting\Setting;
 
 class Funding extends \sale\pay\Funding {
 
     public static function getColumns() {
 
         return [
+
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'sale\booking\Funding::getDisplayName',
+                'store'             => true
+            ],
 
             'booking_id' => [
                 'type'              => 'many2one',
@@ -42,16 +50,26 @@ class Funding extends \sale\pay\Funding {
             ],
 
             'payments_ids' => [
-                'type'              => 'many2many',
+                'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Payment',
-                'foreign_field'     => 'fundings_ids',
-                'rel_table'         => 'sale_pay_rel_payment_funding',
-                'rel_foreign_key'   => 'payment_id',
-                'rel_local_key'     => 'funding_id'
+                'foreign_field'     => 'funding_id'
             ]
 
         ];
     }
+
+
+    public static function getDisplayName($om, $oids, $lang) {
+        $result = [];
+        $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'payment_deadline_id.name', 'due_amount'], $lang);
+
+        if($fundings > 0) {            
+            foreach($fundings as $oid => $funding) {
+                $result[$oid] = $funding['booking_id.name'].'    '.Setting::format_number_currency($funding['due_amount']).'    '.$funding['payment_deadline_id.name'];
+            }    
+        }
+        return $result;
+    }    
 
     public static function getPaymentReference($om, $oids, $lang) {
         $result = [];

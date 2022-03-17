@@ -19,25 +19,25 @@ class BankStatement extends Model {
                 'store'             => true
             ],
         
-            'reference_name' => [
-                'type'              => 'string',
-                'description'       => 'Reference of the statement.',
-            ],
-
             'date' => [
                 'type'              => 'date',
                 'description'       => 'Date the statement was received.',
-                'required'          => true
+                'required'          => true,
+                'readonly'          => true
             ],
 
             'old_balance' => [
                 'type'              => 'float',
-                'description'       => 'Account balance before the transactions.'
+                'description'       => 'Account balance before the transactions.',
+                'required'          => true,                
+                'readonly'          => true
             ],
 
             'new_balance' => [
                 'type'              => 'float',
-                'description'       => 'Account balance after the transactions.'
+                'description'       => 'Account balance after the transactions.',
+                'required'          => true,                
+                'readonly'          => true
             ],
 
             'statement_lines_ids' => [
@@ -48,13 +48,15 @@ class BankStatement extends Model {
             ],
 
             'status' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'sale\pay\BankStatement::getStatus',
                 'selection'         => [
                     'pending',                // hasn't been fully processed yet
-                    'processed',              // has been fully processed (all lines either ignored or reconciled) 
+                    'reconciled',             // has been fully processed (all lines either ignored or reconciled) 
                 ],
-                'description'       => 'Status of the line.',
-                'default'           => 'pending'
+                'description'       => 'Status of the statement (depending on lines).',
+                'store'             => true
             ],
 
             // #memo - CODA statements comes with BBAN numbers for reference account    
@@ -119,6 +121,25 @@ class BankStatement extends Model {
                 $dummy = intval($check_digits.$check_digits.$code_num.'00');
                 $control = 98 - ($dummy % 97);
                 $result[$oid] = sprintf("BE%s%s", $control, $statement['bank_account_number']);    
+            }
+        }
+        return $result;
+    }
+
+    public static function getStatus($om, $oids, $lang) {
+        $result = [];
+        $statements = $om->read(get_called_class(), $oids, ['statement_lines_ids.status']);
+
+        if($statements > 0) {
+            foreach($statements as $sid => $statement) {
+                $is_reconciled = true;
+                foreach($statement['statement_lines_ids.status'] as $lid => $line) {
+                    if($line['status'] != 'reconciled') {
+                        $is_reconciled = false;
+                        break;
+                    }
+                }
+                $result[$sid] = ($is_reconciled)?'reconciled':'pending';
             }
         }
         return $result;

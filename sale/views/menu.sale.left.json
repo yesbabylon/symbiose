@@ -1,60 +1,37 @@
 {
     "name": "Sale menu",
     "access": {
-      "groups": ["booking.sale.user"]
+      "groups": ["sale.default.user"]
    },
     "layout": {
         "items": [
             {
-              "id": "item.bookings",
-              "label": "Bookings",
+              "id": "item.bank_statements",
+              "label": "Statements",
               "description": "",
               "icon": "menu_book",
               "type": "parent",
               "children": [
                 {
-                  "id": "item.all_booking",
+                  "id": "item.all_lines",
                   "type": "entry",
-                  "label": "All bookings",
+                  "label": "All lines",
                   "description": "", 
                   "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
+                    "entity": "sale\\booking\\BankStatementLine",
                     "view": "list.default",
                     "order": "id",
                     "sort": "desc"
                   }
                 },
                 {
-                  "id": "item.quotes",
+                  "id": "item.statements",
                   "type": "entry",
-                  "label": "Quotes",
+                  "label": "Statements",
                   "description": "", 
                   "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "list.default",
-                    "domain": ["status", "=", "quote"]
-                  }
-                },
-                {
-                  "id": "item.options",
-                  "type": "entry",
-                  "label": "Options",
-                  "description": "", 
-                  "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "list.default",
-                    "domain": ["status", "=", "option"]
-                  }
-                },
-                {
-                  "id": "item.validated",
-                  "type": "entry",
-                  "label": "Validated bookings",
-                  "description": "",
-                  "context": {
-                    "entity": "sale\\booking\\Booking",
-                    "view": "list.default",
-                    "domain": ["status", "=", "validated"]  
+                    "entity": "sale\\booking\\BankStatement",
+                    "view": "list.default"
                   }
                 }
               ]

@@ -11,14 +11,29 @@ use lodging\sale\booking\Contract;
 use core\Task;
 
 list($params, $providers) = announce([
-    'description'   => "Cancels a booking, whatever its current status. Adjust balance is cancellation fees are applied.",
+    'description'   => "This will cancel the booking, whatever its current status. Balance will be adjusted if cancellation fees apply.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the targeted booking.',
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
+        ],
+        // this must remain synched with field definition Booking::cancellation_reason
+        'reason' =>  [
+            'description'   => 'Reason of the booking cancellation.',
+            'type'          => 'string',
+            'selection'     => [
+                'other',                    // customer cancelled for a non-listed reason or without mentionning the reason (cancellation fees might apply)
+                'overbooking',              // the booking was cancelled due to failure in delivery of the service
+                'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
+                "internal_impediment",      // cancellation due to an incident impacting the rental units
+                'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
+                'health_impediment'         // cancellation for medical or mourning reason
+            ],
+            'required'       => true
         ]
+
     ],
     'access' => [
         'visibility'        => 'public',

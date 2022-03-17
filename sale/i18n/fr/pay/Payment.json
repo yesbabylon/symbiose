@@ -1,86 +1,86 @@
 {
-	"name": "Paiement",
-	"plural": "Paiements",
-	"description": "",
-	"model": {
-		"partner_id": {
-			"label": "Partenaire",
-			"description": "Le partenaire à l'origine du paiement.",
-			"help": ""
-		},
-		"amount": {
-			"label": "Montant",
-			"description": "Référence de la banque.",
-			"help": ""
-		},
-		"communication": {
-			"label": "Communication",
-			"description": "Message du payeur.",
-			"help": ""
-		},
-		"receipt_date": {
-			"label": "Date de réception",
-			"description": "Heure de réception du paiement.",
-			"help": ""
-		},
-		"payment_method": {
-			"label": "Mode de paiement",
-			"description": "Le mode de paiement utilisé.",
-			"selection": {
-				"voucher": "bon",
-				"cashdesk": "caisse",
-				"bank": "banc"
-			},
-			"help": ""
-		},
-		"payment_origin": {
-			"label": "Origine de paiment",
-			"description": "Origine de l'argent reçu.",
-			"selection": {
-				"cash": "en espèces",
-				"bank": "banc"
-			},
-			"help": ""
-		},
-		"operation_id": {
-			"label": "Operation",
-			"description": "L'opération à laquelle se rapporte le paiement.",
-			"help": ""
-		},
-		"statement_line_id": {
-			"label": "Ligne de déclaration",
-			"description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
-			"help": ""
-		},
-		"voucher_ref": {
-			"label": "Référence du bon",
-			"description": "La référence du bon auquel se rapporte le paiement.",
-			"help": ""
-		},
-		"fundings_ids": {
-			"label": "Financements",
-			"description": "Liste de financements.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Paiement",
-			"description": "",
-			"layout": {
-				"section.payment_section": {
-					"label": "Détails"
-				},
-				"section.fundings_section": {
-					"label": "Financements"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Paiements",
-			"description": "Cette vue est destinée à afficher la liste des paiements.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Paiement",
+    "plural": "Paiements",
+    "description": "",
+    "model": {
+        "partner_id": {
+            "label": "Client",
+            "description": "Client de la réservation associée au paiement.",
+            "help": ""
+        },
+        "amount": {
+            "label": "Montant",
+            "description": "Montant assigné au paiement.",
+            "help": ""
+        },
+        "communication": {
+            "label": "Communication",
+            "description": "Message du payeur.",
+            "help": ""
+        },
+        "receipt_date": {
+            "label": "Date de réception",
+            "description": "Heure de réception du paiement.",
+            "help": ""
+        },
+        "payment_method": {
+            "label": "Mode de paiement",
+            "description": "Le mode de paiement utilisé.",
+            "selection": {
+                "voucher": "chèque cadeau, promo",
+                "cashdesk": "caisse",
+                "bank": "virement bancaire"
+            },
+            "help": ""
+        },
+        "payment_origin": {
+            "label": "Origine de paiment",
+            "description": "Origine de l'argent reçu.",
+            "selection": {
+                "cash": "en espèces",
+                "bank": "banque"
+            },
+            "help": ""
+        },
+        "operation_id": {
+            "label": "Operation",
+            "description": "L'opération à laquelle se rapporte le paiement.",
+            "help": ""
+        },
+        "statement_line_id": {
+            "label": "Ligne de déclaration",
+            "description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
+            "help": ""
+        },
+        "voucher_ref": {
+            "label": "Référence du bon",
+            "description": "La référence du bon auquel se rapporte le paiement.",
+            "help": ""
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Financement de réservation lié au paiement.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Paiement",
+            "description": "",
+            "layout": {
+                "section.payment_section": {
+                    "label": "Détails"
+                },
+                "section.fundings_section": {
+                    "label": "Financements"
+                }
+            }            
+        },
+        "list.default": {
+            "name": "Paiements",
+            "description": "Cette vue est destinée à afficher la liste des paiements.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

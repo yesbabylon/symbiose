@@ -8,7 +8,7 @@ use sale\pay\BankStatement;
 use sale\pay\BankStatementLine;
 
 list($params, $providers) = announce([
-    'description'   => "Imports a Bank statements file. If statements have already been imported, an error is returned.",
+    'description'   => "Import a Bank statements file and return the list of created statements. Already existing statements will be ignored.",
     'params'        => [
         'data' =>  [
             'description'   => 'TXT file holding the data to import as statements.',
@@ -17,8 +17,8 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'groups'            => ['sale.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'public',
+        'groups'            => ['sale.default.user'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -38,16 +38,8 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-$content = $params['data'];
-
 // parse the CODA data
-$json = run('get', 'lodging_payments_coda-parse', ['data' => $content]);
-$data = json_decode($json, true);
-
-// relay error if any
-if(isset($data['errors'])) {
-    foreach($data['errors'] as $name => $message) throw new Exception($message, qn_error_code($name));
-}
+$data = eQual::run('get', 'lodging_payments_coda-parse', ['data' => $params['data']]);
 
 $result = [];
 
@@ -63,27 +55,36 @@ foreach($statements as $statement) {
     ];
 
     try {
+        // unique constraint on ['date', 'old_balance', 'new_balance']
         $bank_statement = BankStatement::create($fields)->first();
 
         $result[] = $bank_statement;
     
         foreach($statement['transactions'] as $transaction) {
-            $fields = [
-                'bank_statement_id'     => $bank_statement['id'],
-                'date'                  => $statement['date'],
-                'amount'                => $transaction['amount'],
-                'account_holder'        => $transaction['account']['name'],
-                'account_iban'          => $transaction['account']['number'],
-                'message'               => $transaction['message'],
-                'structured_message'    => $transaction['structured_message']
-            ];
-            BankStatementLine::create($fields);
-        }
+
+            try {
+                $fields = [
+                    'bank_statement_id'     => $bank_statement['id'],
+                    'date'                  => $statement['date'],
+                    'amount'                => $transaction['amount'],
+                    'account_holder'        => $transaction['account']['name'],
+                    'account_iban'          => $transaction['account']['number'],
+                    'message'               => $transaction['message'],
+                    'structured_message'    => $transaction['structured_message']
+                ];
+                BankStatementLine::create($fields);
+            }
+            catch(Exception $e) {
+                // ignore duplicates (not created)
+                // we cannot stop the process : as there might be several statements
+            }    
     
+        }        
     }
     catch(Exception $e) {
-        // ignore duplicates (not created)
+        throw new Exception('already_imported', QN_ERROR_CONFLICT_OBJECT);
     }
+
 
 
 }

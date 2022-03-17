@@ -42,9 +42,13 @@
                                                 "label": "Document",
                                                 "value": "documents_ids",
                                                 "width": "100%",
-                                                "widget":{
-                                                    "action_select": true,
-                                                    "action_create": false
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": true,
+                                                            "ACTION.CREATE": false
+                                                        }    
+                                                    }
                                                 }
                                             }
                                         ]

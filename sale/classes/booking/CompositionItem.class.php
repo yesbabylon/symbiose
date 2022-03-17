@@ -93,8 +93,8 @@ class CompositionItem extends Model {
             // for filtering rental_unit_id field in forms
             'rental_units_ids' => [
                 'type'              => 'computed',
-                'function'          => 'sale\booking\CompositionItem::getRentalUnitsIds',
                 'result_type'       => 'one2many',
+                'function'          => 'sale\booking\CompositionItem::getRentalUnitsIds',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental units attached to the current booking."
             ]

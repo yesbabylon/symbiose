@@ -60,7 +60,7 @@
                 "checkedout": "terminé",
                 "due_balance": "solde dû",
                 "credit_balance": "solde créditeur",
-                "balanced": "soldée"
+                "balanced": "clôturée"
             },
             "help": ""
         },
