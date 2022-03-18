@@ -284,12 +284,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function getTotal($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'is_locked', 'has_pack', 'unit_price', 'qty']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids', 'is_locked', 'has_pack', 'unit_price', 'qty']);
+        $bookings_ids = [];
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
                 $result[$gid] = 0.0;
 
+                $bookings_ids[] = $group['booking_id'];
                 // if the group relates to a pack and the product_model targeted by the pack has its own Price, then this is the one to return
                 if($group['has_pack'] && $group['is_locked']) {
                     $result[$gid] = $group['unit_price'] * $group['qty'];
@@ -306,6 +308,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
             }
         }
+
+        // reset parent booking total price
+        $om->write('lodging\sale\booking\Booking', array_unique($bookings_ids), ['total' => null, 'price' => null]);
+
         return $result;
     }
 

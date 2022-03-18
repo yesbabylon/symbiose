@@ -337,10 +337,14 @@ class BookingLine extends Model {
                     'unit_price',
                     'auto_discounts_ids',
                     'manual_discounts_ids',
-                    'payment_mode'
+                    'payment_mode',
+                    'booking_ling_group_id'
                 ]);
 
+        $booking_line_groups_ids = [];
+
         foreach($lines as $oid => $odata) {
+            $booking_line_groups_ids[] = $odata['booking_ling_group_id'];
 
             if($odata['payment_mode'] == 'free') {
                 $result[$oid] = 0;
@@ -377,6 +381,10 @@ class BookingLine extends Model {
 
             $result[$oid] = $price * $qty;
         }
+
+        // reset parent group total price
+        $om->write('sale\booking\BookingLineGroup', array_unique($booking_line_groups_ids), ['total' => null, 'price' => null]);
+
         return $result;
     }
 

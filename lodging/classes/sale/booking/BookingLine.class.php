@@ -268,6 +268,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
         $lines = $om->read(__CLASS__, $oids, [
             'booking_id', 'booking_id.center_id',
+            'booking_line_group_id',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.date_from',
             'booking_line_group_id.date_to',
@@ -280,6 +281,7 @@ class BookingLine extends \sale\booking\BookingLine {
         // drop lines that do not relate to accomodations
         $lines = array_filter($lines, function($a) { return $a['is_accomodation']; });
 
+        $booking_line_groups_ids = [];
         // there is at least one accomodation
         if(count($lines)) {
 
@@ -293,6 +295,8 @@ class BookingLine extends \sale\booking\BookingLine {
             ], $lang);
 
             foreach($lines as $lid => $line) {
+                $booking_line_groups_ids[] = $line['booking_line_group_id'];
+
                 // remove all previous rental_unit assignements
                 $om->write(__CLASS__, $lid, ['rental_unit_assignments_ids' => array_map(function($a) { return "-$a";}, $line['rental_unit_assignments_ids'])]);
 
@@ -456,7 +460,6 @@ class BookingLine extends \sale\booking\BookingLine {
 
         // reset total price
         $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
-
     }
 
 
