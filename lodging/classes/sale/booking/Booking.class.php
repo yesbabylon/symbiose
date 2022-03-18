@@ -86,14 +86,6 @@ class Booking extends \sale\booking\Booking {
                 'description'       => 'Rental units assignments related to the booking.'
             ],
 
-            'price' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
-                'usage'             => 'amount/money:2',
-                'function'          => 'lodging\sale\booking\Booking::getPrice',
-                'description'       => 'Final total tax-included price of the booking (computed).'
-            ],
-
             'fundings_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Funding',
@@ -132,25 +124,6 @@ class Booking extends \sale\booking\Booking {
                 ]);
             }
 
-        }
-        return $result;
-    }
-
-
-    public static function getPrice($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-        if($bookings > 0 && count($bookings)) {
-            foreach($bookings as $bid => $booking) {
-                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['price']);
-                $result[$bid] = 0.0;
-                if($groups > 0 && count($groups)) {
-                    foreach($groups as $group) {
-                        $result[$bid] += $group['price'];
-                    }
-                    $result[$bid] = round($result[$bid], 2);
-                }
-            }
         }
         return $result;
     }
