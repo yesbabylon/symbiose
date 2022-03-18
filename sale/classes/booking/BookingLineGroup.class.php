@@ -134,13 +134,19 @@ class BookingLineGroup extends Model {
     public static function getTotal($om, $oids, $lang) {
         $result = [];
 
-        $groups = $om->read(get_called_class(), $oids, ['booking_lines_ids.total']);
+        $groups = $om->read(get_called_class(), $oids, ['booking_id', 'booking_lines_ids.total']);
+
+        $bookings_ids = [];
 
         foreach($groups as $oid => $group) {
+            $bookings_ids[] = $group['booking_id'];
             $result[$oid] = array_reduce($group['booking_lines_ids.total'], function ($c, $a) {
                 return $c + $a['total'];
             }, 0.0);
         }
+
+        // reset parent booking total price
+        $om->write('sale\booking\Booking', array_unique($bookings_ids), ['total' => null, 'price' => null]);
 
         return $result;
     }
