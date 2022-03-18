@@ -338,13 +338,13 @@ class BookingLine extends Model {
                     'auto_discounts_ids',
                     'manual_discounts_ids',
                     'payment_mode',
-                    'booking_ling_group_id'
+                    'booking_line_group_id'
                 ]);
 
         $booking_line_groups_ids = [];
 
         foreach($lines as $oid => $odata) {
-            $booking_line_groups_ids[] = $odata['booking_ling_group_id'];
+            $booking_line_groups_ids[] = $odata['booking_line_group_id'];
 
             if($odata['payment_mode'] == 'free') {
                 $result[$oid] = 0;
