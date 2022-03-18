@@ -359,7 +359,7 @@ class Booking extends Model {
     }
 
 
-    public static function onupdate($om, $oids, $values) {
+    public static function onupdate($om, $oids, $values, $lang) {
         if(isset($values['status'])) {
             // status can be updated 
             return true;
@@ -370,12 +370,12 @@ class Booking extends Model {
             if($res > 0) {
                 foreach($res as $oids => $odata) {
                     if($odata['status'] != 'quote') {
-                        return false;
+                        return ['status' => ['non_editable' => 'Booking can only be updated while its status is quote.']];
                     }
                 }
             }    
         }
-        return parent::ondelete($om, $oids);
+        return parent::onupdate($om, $oids, $values, $lang);
     }
 
 }

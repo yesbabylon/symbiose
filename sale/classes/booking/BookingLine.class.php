@@ -90,7 +90,8 @@ class BookingLine extends Model {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'default'           => 1.0
+                'default'           => 1.0,
+                'onchange'          => 'sale\booking\BookingLine::onchangeQty'
             ],
 
             'has_own_qty' => [
@@ -201,6 +202,10 @@ class BookingLine extends Model {
             $result[$oid] = $odata['product_id.name'];
         }
         return $result;
+    }
+
+    public static function onchangeQty($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
     public static function onchangeUnitPrice($om, $oids, $lang) {
