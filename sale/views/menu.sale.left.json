@@ -13,25 +13,39 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "item.all_lines",
+                  "id": "item.bank_statements.lines_to_review",
+                  "type": "entry",
+                  "label": "Lines to review",
+                  "description": "", 
+                  "context": {
+                    "entity": "sale\\booking\\BankStatementLine",
+                    "view": "list.default",
+                    "order": "date",
+                    "sort": "desc",
+                    "domain": ["status", "=", "pending"]
+                  }
+                },
+                {
+                  "id": "item.bank_statements.all_lines",
                   "type": "entry",
                   "label": "All lines",
                   "description": "", 
                   "context": {
                     "entity": "sale\\booking\\BankStatementLine",
                     "view": "list.default",
-                    "order": "id",
+                    "order": "date",
                     "sort": "desc"
                   }
                 },
                 {
-                  "id": "item.statements",
+                  "id": "item.bank_statements.statements_ready",
                   "type": "entry",
                   "label": "Statements",
                   "description": "", 
                   "context": {
                     "entity": "sale\\booking\\BankStatement",
-                    "view": "list.default"
+                    "view": "list.default",
+                    "domain":["status", "=", "reconciled"]
                   }
                 }
               ]

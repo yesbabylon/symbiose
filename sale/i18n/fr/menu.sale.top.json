@@ -2,6 +2,6 @@
 	"description": "",
 	"view": {
 		"item.home": {"label": "Accueil", "help": ""},
-		"item.payments": {"label": "Paiements", "help": ""}		
+		"item.payments": {"label": "Import des extraits", "help": ""}		
 	}
 }

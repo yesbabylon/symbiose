@@ -32,13 +32,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "date",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%"
+                                                "value": "amount",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "33%"
                                             }
                                         ]
                                     },
@@ -57,22 +61,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "amount",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "account_iban",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "account_holder",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
                                                 "width": "50%"
                                             }
                                         ]

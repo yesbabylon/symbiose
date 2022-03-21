@@ -129,6 +129,9 @@
         "type_id": {
             "missing_mandatory": "Champ obligatoire."
         },
+        "status": {
+            "non_editable": "Le statut de la réservation ne permet pas son édition."
+        },
         "errors": {
             "overbooking_detected": "Surbooking détecté"
         }

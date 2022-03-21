@@ -76,6 +76,13 @@ class Customer extends \identity\Partner {
                 'foreign_object'    => 'sale\booking\Booking',
                 'foreign_field'     => 'customer_id',
                 'description'       => "The bookings history of the customer.",
+            ],
+
+            'ref_account' => [
+                'type'              => 'string',
+                'usage'             => 'uri/urn.iban',
+                'description'       => 'Arbitrary reference account number for identifying the customer in external accounting softwares.',
+                'store'             => true
             ]
 
         ];
