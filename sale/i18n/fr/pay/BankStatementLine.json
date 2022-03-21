@@ -30,7 +30,7 @@
         },
         "amount": {
             "label": "Montant",
-            "description": "Référence de la banque.",
+            "description": "Montant du paiement.",
             "help": ""
         },
         "account_iban": {
@@ -45,7 +45,7 @@
         },
         "status": {
             "label": "Statut",
-            "description": "Indicateur d'assignation de la ligne à un paiement.",
+            "description": "Assignation de la ligne à un paiement.",
             "help": "",
             "selection": {
                 "pending": "à traiter",

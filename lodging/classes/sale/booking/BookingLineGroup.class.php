@@ -839,6 +839,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             remove groups related to autosales that already exist
         */
         $groups = $om->read(__CLASS__, $oids, [
+                                                    'is_autosale',
                                                     'nb_pers',
                                                     'nb_nights',
                                                     'date_from',
@@ -846,21 +847,23 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                                                     'booking_id', 
                                                     'booking_id.center_id.autosale_list_category_id',
                                                     'booking_lines_ids'
-                                                ], $lang);
-
-        $lines_ids_to_delete = [];
-        foreach($groups as $bid => $group) {
-            $booking_lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['is_autosale'], $lang);
-            foreach($booking_lines as $lid => $line) {
-                if($line['is_autosale']) {
-                    $lines_ids_to_delete[] = $lid;
-                }
-            }
-        }
-        $om->remove('lodging\sale\booking\BookingLine', $lines_ids_to_delete, true);
+                                                ], $lang);            
 
         // loop through groups and create lines for autosale products, if any
         foreach($groups as $group_id => $group) {
+
+            if($group['is_autosale']) continue;
+
+            $lines_ids_to_delete = [];
+            $booking_lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['is_autosale'], $lang);
+            if($booking_lines > 0) {
+                foreach($booking_lines as $lid => $line) {
+                    if($line['is_autosale']) {
+                        $lines_ids_to_delete[] = -$lid;
+                    }
+                }
+                $om->write(__CLASS__, $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
+            }
 
             /*
                 Find the first Autosale List that matches the booking dates

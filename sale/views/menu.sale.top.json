@@ -15,7 +15,7 @@
             },
             {
               "id": "item.payments",
-              "label": "Payments",
+              "label": "Import bank statements",
               "description": "",
               "icon": "person_outline",
               "type": "entry",

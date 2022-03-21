@@ -69,7 +69,12 @@
         "list.default": {
             "name": "Relevés Bancaire",
             "description": "Cette vue est destinée à afficher la liste des relevés Bancaire.",
-            "layout": {}
+            "layout": {},
+            "actions": {
+                "action.import": {
+                    "label": "Importer"
+                }
+            }
         }
     },
     "error": {}

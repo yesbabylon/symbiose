@@ -1,8 +1,21 @@
 {
 	"description": "",
 	"view": {
-		"item.bookings": {"label": "Réservations", "help": ""},
-		"item.new_booking": {"label": "Nouvelle réservation", "help": ""},
-		"item.all_booking": {"label": "Toutes les réservations", "help": ""}
+		"item.bank_statements": {
+			"label": "Extraits bancaires", 
+			"help": ""
+		},
+		"item.bank_statements.lines_to_review": {
+			"label": "Paiements à réconcilier", 
+			"help": ""
+		},
+		"item.bank_statements.all_lines": {
+			"label": "Tous les paiements", 
+			"help": ""
+		},
+		"item.bank_statements.statements_ready": {
+			"label": "Extraits à envoyer", 
+			"help": ""
+		}
 	}
 }

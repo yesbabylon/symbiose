@@ -24,7 +24,8 @@ class Payment extends \sale\pay\Payment {
             'funding_id' => [ 
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Funding',
-                'description'       => 'The funding the payement relates to, if any.'
+                'description'       => 'The funding the payement relates to, if any.',
+                'onchange'          => 'sale\pay\Payment::onchangeFundingId'
             ]            
 
         ];
@@ -58,10 +59,18 @@ class Payment extends \sale\pay\Payment {
             if($fundings > 0) {
                 $funding = reset($fundings);
                 $result['partner_id'] = [ 'id' => $funding['booking_id.customer_id.id'], 'name' => $funding['booking_id.customer_id.name'] ];
-                $result['amount'] = $funding['due_amount'];
+
+                if(isset($values['amount']) && $values['amount'] > $funding['due_amount']) {
+                    $result['amount'] = $funding['due_amount'];
+                }
             }            
         }
 
         return $result;
-    }    
+    }
+    
+
+    public static function getConstraints() {
+        return parent::getConstraints();
+    }
 }

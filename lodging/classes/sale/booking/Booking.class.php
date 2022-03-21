@@ -141,7 +141,7 @@ class Booking extends \sale\booking\Booking {
                 }
                 $om->write(__CLASS__, $bid, ['description' => $booking['customer_id.partner_identity_id.description']]);
             }
-            Booking::_updateAutosaleProducts($om, $oids, $lang);            
+            Booking::_updateAutosaleProducts($om, $oids, $lang);
         }
     }
 
@@ -180,19 +180,19 @@ class Booking extends \sale\booking\Booking {
                                                     'center_id.autosale_list_category_id'
                                                 ], $lang);
 
-        $groups_ids_to_delete = [];
-        foreach($bookings as $bid => $booking) {
-            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_autosale'], $lang);
-            foreach($booking_lines_groups as $gid => $group) {
-                if($group['is_autosale']) {
-                    $groups_ids_to_delete[] = $gid;
-                }
-            }
-        }
-        $om->remove('lodging\sale\booking\BookingLineGroup', $groups_ids_to_delete, true);
-
         // loop through bookings and create groups for autosale products, if any
         foreach($bookings as $booking_id => $booking) {
+
+            $groups_ids_to_delete = [];
+            $booking_lines_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_autosale'], $lang);
+            if($booking_lines_groups > 0) {
+                foreach($booking_lines_groups as $gid => $group) {
+                    if($group['is_autosale']) {
+                        $groups_ids_to_delete[] = -$gid;
+                    }
+                }
+                $om->write(__CLASS__, $booking_id, ['booking_lines_groups_ids' => $groups_ids_to_delete], $lang);
+            }
 
             /*
                 Find the first Autosale List that matches the booking dates
@@ -282,7 +282,7 @@ class Booking extends \sale\booking\Booking {
                 $count = count($products_to_apply);
 
                 if($count) {
-                    // create a new BookingLine Group dedicated to autosale products                    
+                    // create a new BookingLine Group dedicated to autosale products
                     $group = [
                         'name'          => 'Suppléments obligatoires',
                         'booking_id'    => $booking_id,

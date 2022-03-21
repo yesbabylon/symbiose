@@ -82,5 +82,9 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "amount": {
+            "excessive_amount": "Le montant du paiement ne peut pas être supérieur à celui de la ligne d'extrait."
+        }
+    }
 }

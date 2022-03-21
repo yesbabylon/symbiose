@@ -73,10 +73,46 @@ class Payment extends Model {
             'funding_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
-                'description'       => 'The funding the payement relates to, if any.'
+                'description'       => 'The funding the payement relates to, if any.',
+                'onchange'          => 'sale\pay\Payment::onchangeFundingId'
             ]
 
         ];
     }
+
+    public static function onchangeFundingId($om, $ids, $lang) {
+        $payments = $om->read(__CLASS__, $ids, ['funding_id', 'funding_id.due_amount', 'amount', 'partner_id', 'statement_line_id']);
+
+        if($payments > 0) {
+            foreach($payments as $pid => $payment) {
+
+                if($payment['funding_id'] && $payment['amount'] > $payment['funding_id.due_amount']) {
+                    $diff = $payment['funding_id.due_amount'] - $payment['amount'];
+                    // create a new payment with negative amount
+                    $om->create('sale\pay\Payment', [
+                        'funding_id'        => $payment['funding_id'],
+                        'partner_id'        => $payment['partner_id'],
+                        'statement_line_id' => $payment['statement_line_id'],
+                        'amount'            => $diff
+                    ], $lang);
+                }
+            }
+        }
+    }
+
+    public static function onupdate($om, $oids, $values, $lang) {        
+        if(isset($values['amount'])) {
+            $payments = $om->read('sale\pay\Payment', $oids, ['statement_line_id.amount'], $lang);
+
+            foreach($payments as $pid => $payment) {
+                if($values['amount'] > $payment['statement_line_id.amount']) {
+                    return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
+                }
+            }
+        }        
+        return parent::onupdate($om, $oids, $values, $lang);
+    }
+
+
 
 }

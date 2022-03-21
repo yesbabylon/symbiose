@@ -18,6 +18,11 @@ class BankStatement extends Model {
                 'function'          => 'sale\pay\BankStatement::getDisplayName',
                 'store'             => true
             ],
+
+            'raw_data'  => [
+                'type'              => 'binary',
+                'description'       => 'Original file used for creating the statement.'
+            ],
         
             'date' => [
                 'type'              => 'date',
@@ -59,10 +64,10 @@ class BankStatement extends Model {
                 'store'             => true
             ],
 
-            // #memo - CODA statements comes with BBAN numbers for reference account    
+            // #memo - CODA statements comes with IBAN or BBAN numbers for reference account    
             'bank_account_number' => [
                 'type'              => 'string',
-                'description'       => 'Number of the account (as provided in the statement).'
+                'description'       => 'Original number of the account (as provided in the statement).'
             ],
 
             'bank_account_bic' => [
@@ -73,6 +78,7 @@ class BankStatement extends Model {
             'bank_account_iban' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'usage '            => 'uri/urn.iban',
                 'function'          => 'sale\pay\BankStatement::getBankAccountIban',
                 'description'       => 'IBAN representation of the account number.',
                 'store'             => true
@@ -98,7 +104,7 @@ class BankStatement extends Model {
             create numeric code of the target country 
         */
 
-        // #todo - adapt based on settings
+        // #todo - adapt based on settings (might not be imported from CODA)
         $country_code = 'BE';
 
         $code_alpha = $country_code;
@@ -112,15 +118,15 @@ class BankStatement extends Model {
 
         foreach($statements as $oid => $statement) {
             // account number has IBAN format
-            if(substr($statement['bank_account_number'], 0, 2) == $country_code) {
+            if( !is_numeric(substr($statement['bank_account_number'], 0, 2)) ) {
                 $result[$oid] = $statement['bank_account_number'];
             }
-            // convert to IBAN
+            // if code is not a country code, then convert BBAN to IBAN
             else {
                 $check_digits = substr($statement['bank_account_number'], -2);
                 $dummy = intval($check_digits.$check_digits.$code_num.'00');
                 $control = 98 - ($dummy % 97);
-                $result[$oid] = sprintf("BE%s%s", $control, $statement['bank_account_number']);    
+                $result[$oid] = trim(sprintf("BE%s%s", $control, $statement['bank_account_number']));
             }
         }
         return $result;
