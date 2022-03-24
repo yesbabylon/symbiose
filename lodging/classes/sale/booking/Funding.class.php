@@ -27,10 +27,10 @@ class Funding extends \sale\booking\Funding {
                 'visible'           => [ ['type', '=', 'invoice'] ]
             ],
 
-            'center_id' => [
+            'center_office_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\identity\Center',
-                'description'       => "The center to which the booking relates to.",
+                'foreign_object'    => 'lodging\identity\CenterOffice',
+                'description'       => "The center office the booking relates to.",
                 'required'          => true
             ]
 

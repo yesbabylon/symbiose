@@ -32,7 +32,7 @@ class Partner extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => 'The organisation which the targeted identity is a partner of.',
-                'required'          => true
+                'default'           => 1
             ],
 
             'partner_identity_id' => [

@@ -6,7 +6,7 @@
      },
     "order": "created",
     "sort": "desc",
-    "domain": ["center_id", "in", "user.centers_ids"],
+    "domain": ["center_office_id", "in", "user.center_offices_ids"],
     "exports": [
         {
             "id": "export.print.contract",
@@ -82,12 +82,6 @@
             },
             {
                 "type": "field",
-                "value": "creator",
-                "label": "Creator",
-                "width": "15%"
-            },
-            {
-                "type": "field",
                 "value": "modified",
                 "label": "Modified",
                 "width": "15%",
@@ -95,9 +89,10 @@
             },
             {
                 "type": "field",
-                "value": "modifier",
-                "label": "Modifier",
-                "width": "15%"
+                "label": "Nb Pers",                
+                "value": "nb_pers",
+                "width": "15%",
+                "sortable": true                
             }
         ]
     }

@@ -5,9 +5,8 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\identity;
-use equal\orm\Model;
 
-class CenterOffice extends Model {
+class CenterOffice extends \identity\Establishment {
 
     public static function getName() {
         return 'Center management office';
@@ -17,13 +16,18 @@ class CenterOffice extends Model {
         return 'Allow support for management of centers by distinct offices.';
     }
 
+    public function getTable() {
+        // force table name to use distinct tables and ID columns
+        return 'lodging_identity_centeroffice';
+    }
+
     public static function getColumns() {
 
         return [
 
             'name' => [
                 'type'              => 'string',
-                'description'       => 'Group name.'
+                'description'       => 'Name of the Office.'
             ],
 
             'code' => [
@@ -39,55 +43,20 @@ class CenterOffice extends Model {
                 'description'       => 'List of centers attached to the group.'
             ],
 
+            'users_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\identity\User',
+                'foreign_field'     => 'center_offices_ids',
+                'rel_table'         => 'lodging_identity_rel_center_office_user',
+                'rel_foreign_key'   => 'user_id',
+                'rel_local_key'     => 'center_office_id'
+            ],
+
             'signature' => [
                 'type'              => 'string',
                 'usage'             => 'markup/html',
-                'description'       => 'Group signature to append to communications.',
+                'description'       => 'Office signature to append to communications.',
                 'multilang'         => true
-            ],
-
-            'bank_account_iban' => [
-                'type'              => 'string',
-                'description'       => 'Number of the bank account of the group.'
-            ],
-
-            'bank_account_bic' => [
-                'type'              => 'string',
-                'description'       => 'Identitifer of the Bank related to the bank account.'
-            ],
-
-            'phone' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'description'       => 'Official contact phone number.'
-            ],
-
-            'fax' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'description'       => "Identity main fax number."
-            ],
-
-            'email' => [
-                'type'              => 'string',
-                'usage'             => 'email',
-                'description'       => 'Official contact email address for the group.'
-            ],
-
-            'address_street' => [
-                'type'              => 'string',
-                'description'       => 'Street and number of the group.',
-                'required'          => true
-            ],
-
-            'address_city' => [
-                'type'              => 'string',
-                'description'       => 'City in which the management group is located.'
-            ],
-
-            'address_zip' => [
-                'type'              => 'string',
-                'description'       => 'Postal code of the management group address.'
             ]
 
         ];

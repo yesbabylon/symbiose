@@ -8,6 +8,12 @@
         "items": [
             {
                 "type": "field",
+                "label": "Identifier",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "label": "Child's Product",
                 "value": "child_product_id",
                 "width": "20%"

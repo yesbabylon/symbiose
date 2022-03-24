@@ -15,7 +15,7 @@ class Booking extends Model {
             'creator' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
-                'description'       => 'User who created the entry.',
+                'description'       => 'User who created the entry.'
             ],
 
             'name' => [
@@ -42,17 +42,16 @@ class Booking extends Model {
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'domain'            => ['relationship', '=', 'customer'],
-                'description'       => "The customer whom the booking relates to.",
-                'required'          => true,
-                'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
+                'description'       => "The customer whom the booking relates to (computed).",
+                'required'          => true
             ],
 
             'customer_identity_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'integer',
-                'function'          => 'sale\booking\Booking::getCustomerIdentityId',
-                'description'       => "The identifier of the Customer identity."
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => "The Customer identity.",
+                'required'          => true,
+                'onchange'          => 'sale\booking\Booking::onchangeCustomerIdentityId'
             ],
 
             'center_id' => [
@@ -82,7 +81,7 @@ class Booking extends Model {
             ],
 
             // #todo
-            // origin ID (OTA)
+            // origin ID (internal, OTA, TO)
 
             // A booking can have several contacts (extending identity\Partner)
             'contacts_ids' => [
@@ -137,7 +136,7 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingType',
                 'description'       => "The kind of booking it is about.",
-                'required'          => true
+                'default'           => 1                // default to 'general public'
             ],
 
             'status' => [
@@ -169,7 +168,7 @@ class Booking extends Model {
                     'other',                    // customer cancelled for a non-listed reason or without mentionning the reason (cancellation fees might apply)
                     'overbooking',              // the booking was cancelled due to failure in delivery of the service
                     'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
-                    'internal_impediment',      // cancellation due to an incident impacting the rental units                    
+                    'internal_impediment',      // cancellation due to an incident impacting the rental units
                     'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
                     'health_impediment'         // cancellation for medical or mourning reason
                 ],
@@ -200,6 +199,14 @@ class Booking extends Model {
                 'default'           => time()
             ],
 
+            'nb_pers' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'description'       => 'Approx. amount of persons involved in the booking.',
+                'function'          => 'getNbPers',
+                'store'             => true
+            ],
+
             'has_payer_organisation' => [
                 'type'              => 'boolean',
                 'description'       => "Flag to know if invoice must be sent to another Identity.",
@@ -211,7 +218,7 @@ class Booking extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'visible'           => [ 'has_payer_organisation', '=', true ],
                 'domain'            => [ ['owner_identity_id', '=', 'object.customer_identity_id'], ['relationship', '=', 'payer'] ],
-                'description'       => "The partner whom the invoices have to be sent to."
+                'description'       => "The partner whom the invoices have to be sent to, if any."
             ],
 
             'fundings_ids' => [
@@ -234,16 +241,16 @@ class Booking extends Model {
 
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_id', 'customer_id.partner_identity_id'], $lang);
+        $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_identity_id', 'customer_identity_id.name'], $lang);
 
         foreach($bookings as $oid => $odata) {
             $increment = 1;
             // search for bookings made the same day by same customer, if any
             if(!empty($odata['customer_id'])) {
-                $bookings_ids = $om->search(__CLASS__, [ ['created', '=', $odata['created']], ['customer_id','=', $odata['customer_id']] ]);
+                $bookings_ids = $om->search(__CLASS__, [ ['created', '=', $odata['created']], ['customer_identity_id','=', $odata['customer_identity_id']] ]);
                 $increment = count($bookings_ids);
             }
-            $result[$oid] = sprintf("%s-%08d-%02d", date("ymd", $odata['created']), $odata['customer_id.partner_identity_id'], $increment);
+            $result[$oid] = sprintf("%s-%08d-%02d", date("ymd", $odata['created']), $odata['customer_identity_id.name'], $increment);
         }
         return $result;
     }
@@ -272,19 +279,35 @@ class Booking extends Model {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
 
-        foreach($bookings as $bid => $booking) {
-            $max_date = 0;
-            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to']);
-            if($booking_line_groups > 0 && count($booking_line_groups)) {
-                foreach($booking_line_groups as $gid => $group) {
-                    if($group['date_to'] > $max_date) {
-                        $max_date = $group['date_to'];
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $max_date = 0;
+                $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to']);
+                if($booking_line_groups > 0 && count($booking_line_groups)) {
+                    foreach($booking_line_groups as $gid => $group) {
+                        if($group['date_to'] > $max_date) {
+                            $max_date = $group['date_to'];
+                        }
                     }
+                    $result[$bid] = $max_date;
                 }
-                $result[$bid] = $max_date;
             }
         }
 
+        return $result;
+    }
+
+    public static function getNbPers($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids.nb_pers']);
+
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.nb_pers'], function ($c, $group) {
+                    return $c + $group['nb_pers'];
+                }, 0);
+            }
+        }
         return $result;
     }
 
@@ -292,23 +315,13 @@ class Booking extends Model {
         // #todo
     }
 
-    public static function getCustomerIdentityId($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(get_called_class(), $oids, ['customer_id.partner_identity_id']);
-
-        foreach($bookings as $oid => $booking) {
-            $result[$oid] = (int) $booking['customer_id.partner_identity_id'];
-        }
-        return $result;
-    }
-
     public static function getPrice($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids.price']);
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
-                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.price'], function ($c, $a) {
-                    return $c + $a['price'];
+                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.price'], function ($c, $group) {
+                    return $c + $group['price'];
                 }, 0.0);
             }
         }
@@ -322,30 +335,30 @@ class Booking extends Model {
             foreach($bookings as $bid => $booking) {
                 $result[$bid] = array_reduce($booking['booking_lines_groups_ids.total'], function ($c, $a) {
                     return $c + $a['total'];
-                }, 0.0);    
+                }, 0.0);
             }
         }
         return $result;
     }
 
-    public static function onchangeCustomerId($om, $oids, $lang) {
-        $om->write(get_called_class(), $oids, ['name' => null]);
+    public static function onchangeCustomerIdentityId($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['name' => null, 'customer_id' => null]);
         // force immediate recomputing of the name/reference
-        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'booking_lines_groups_ids']);
+        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'customer_id', 'booking_lines_groups_ids']);
         if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
-            BookingLineGroup::_updatePriceAdapters($om, $booking_lines_groups_ids, $lang);
+            $om->call('sale\booking\BookingLineGroup', '_updatePriceAdapters', $booking_lines_groups_ids, $lang);
         }
     }
 
     public static function onchangeCenterId($om, $oids, $lang) {
         $booking_lines_ids = $om->read(__CLASS__, $oids, ['booking_lines_ids']);
         if($booking_lines_ids > 0 && count($booking_lines_ids)) {
-            BookingLine::_updatePriceId($om, $booking_lines_ids, $lang);
+            $om->call('sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, $lang);
         }
     }
 
 
-    public static function ondelete($om, $oids) {
+    public static function ondelete($om, $oids, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);
 
         if($res > 0) {
@@ -355,14 +368,23 @@ class Booking extends Model {
                 }
             }
         }
-        return parent::ondelete($om, $oids);
+        return parent::ondelete($om, $oids, $lang);
     }
 
-
-    public static function onupdate($om, $oids, $values, $lang) {
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  Object   $om         ObjectManager instance.
+     * @param  Array    $oids       List of objects identifiers.
+     * @param  Array   $values     Associative array holding the new values to be assigned.
+     * @param  String   $lang       Language in which multilang fields are being updated.
+     * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         if(isset($values['status'])) {
-            // status can be updated 
-            return true;
+            // status can always be updated
+            return [];
         }
         else {
             $res = $om->read(get_called_class(), $oids, [ 'status' ]);
@@ -373,7 +395,7 @@ class Booking extends Model {
                         return ['status' => ['non_editable' => 'Booking can only be updated while its status is quote.']];
                     }
                 }
-            }    
+            }
         }
         return parent::onupdate($om, $oids, $values, $lang);
     }

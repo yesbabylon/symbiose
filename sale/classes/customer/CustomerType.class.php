@@ -5,9 +5,8 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\customer;
-use equal\orm\Model;
 
-class CustomerType extends Model {
+class CustomerType extends \identity\IdentityType {
 
     public static function getColumns() {
         return [

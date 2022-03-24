@@ -187,7 +187,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
-        self::_updatePriceId($om, $oids, $lang);
+        $om->call(__CLASS__, '_updatePriceId', $oids, $lang);
 
         // we might change the product_id but not the quantity : we cannot know if qty is changed during the same operation
         // #memo - in ORM, a check is performed on the onchange methods to prevent handling same event multiple times
@@ -249,7 +249,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->write(__CLASS__, $lid, ['qty' => $qty]);
                 }
                 else {
-                    self::_updateQty($om, $oids, $lang);
+                    $om->call(__CLASS__, '_updateQty', $oids, $lang);            
                 }
             }
         }
@@ -465,8 +465,8 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      * Update the quantity according to parent group (pack_id, nb_pers, nb_nights) and variation array.
-     * This method is triggered on update of BookingLineGroup::nb_pers or BookingLineGroup::nb_nights
-     * 
+     * This method is triggered on fields update from BookingLineGroup.
+     *
      */
     public static function _updateQty($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updateQty", QN_REPORT_DEBUG);
@@ -476,7 +476,11 @@ class BookingLine extends \sale\booking\BookingLine {
             'qty_vars',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
-            'product_id.product_model_id.qty_accounting_method'
+            'product_id.product_model_id.qty_accounting_method',
+            'product_id.product_model_id.is_accomodation',
+            'product_id.product_model_id.is_meal',
+            'product_id.product_model_id.has_duration',
+            'product_id.product_model_id.duration'
         ], $lang);
 
         if($lines > 0) {
@@ -487,22 +491,33 @@ class BookingLine extends \sale\booking\BookingLine {
                     }
                     else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
                         if(!$line['qty_vars']) {
-                            $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights'])]);
+                            $factor = 1;
+                            if($line['product_id.product_model_id.has_duration']) {
+                                $factor = $line['product_id.product_model_id.duration'];
+                            }
+                            else if($line['product_id.product_model_id.is_accomodation'] || $line['product_id.product_model_id.is_meal'] ) {
+                                $factor = max(1, $line['booking_line_group_id.nb_nights']);
+                            }
+                            $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_pers'] * $factor]);
                         }
                         else {
                             $qty_vars = json_decode($line['qty_vars']);
                             // qty_vars is set and valid
                             if($qty_vars) {
-                                $diff = $line['booking_line_group_id.nb_nights'] - count($qty_vars);
+                                $factor = $line['booking_line_group_id.nb_nights'];
+                                if($line['product_id.product_model_id.has_duration']) {
+                                    $factor = $line['product_id.product_model_id.duration'];
+                                }
+                                $diff = $factor - count($qty_vars);
                                 if($diff > 0) {
-                                    $qty_vars = array_pad($qty_vars, $line['booking_line_group_id.nb_nights'], 0);
+                                    $qty_vars = array_pad($qty_vars, $factor, 0);
                                 }
                                 else if($diff < 0) {
-                                    $qty_vars = array_slice($qty_vars, 0, $line['booking_line_group_id.nb_nights']);
+                                    $qty_vars = array_slice($qty_vars, 0, $factor);
                                 }
                                 $om->write(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
-                                // will trigger onchangeQtyVar which will update  qty 
-                            }    
+                                // will trigger onchangeQtyVar which will update  qty
+                            }
                         }
                     }
                 }
@@ -582,29 +597,28 @@ class BookingLine extends \sale\booking\BookingLine {
         /*
             get in-memory list of consumptions for all lines
         */
-
-        $consumptions = self::_getResultingConsumptions($om, $oids, $lang);
+        $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, $lang);
 
         /*
             create consumptions objects
         */
 
         // map of consumptions ids for each booking_line_id
-        $consumptions_ids = [];
+        $lines_consumptions_ids = [];
         foreach($consumptions as $consumption) {
 
             $cid = $om->create('lodging\sale\booking\Consumption', $consumption, $lang);
             if($cid > 0) {
                 $booking_line_id = $consumption['booking_line_id'];
-                if(!isset($consumptions_ids[$booking_line_id])) {
-                    $consumptions_ids[$booking_line_id] = [];
+                if(!isset($lines_consumptions_ids[$booking_line_id])) {
+                    $lines_consumptions_ids[$booking_line_id] = [];
                 }
-                $consumptions_ids[$booking_line_id][] = $cid;
+                $lines_consumptions_ids[$booking_line_id][] = $cid;
             }
         }
 
-        foreach($consumptions_ids as $lid => $consumptions_ids) {
-            $om->write(__CLASS__, $lid, ['consumptions_ids' => [$consumptions_ids] ]);
+        foreach($lines_consumptions_ids as $lid => $consumptions_ids) {
+            $om->write(__CLASS__, $lid, ['consumptions_ids' => $consumptions_ids ]);
         }
 
     }

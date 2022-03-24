@@ -15,17 +15,27 @@
         },
         "customer_id": {
             "label": "Client",
-            "description": "Le client auquel se rapporte la réservation.",
+            "description": "Le client au nom de qui sera établie la réservation.",
             "help": ""
         },
         "center_id": {
             "label": "Centre",
-            "description": "Le centre auquel se rapporte la réservation.",
+            "description": "Le centre pour lequel est prise la réservation.",
             "help": ""
         },
-        "price_total": {
-            "label": "Prix total",
-            "description": "Prix ​​total (tva incl.) de la réservation.",
+        "nb_pers": {
+            "label": "Participants",
+            "description": "Le total approximatif de participants.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix TTC",
+            "description": "Prix total TTC de la réservation.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total HT",
+            "description": "Prix total hors-taxes de la réservation.",
             "help": ""
         },
         "contacts_ids": {
@@ -54,7 +64,7 @@
             "selection": {
                 "quote": "devis",
                 "option": "option",
-                "confirmed": "confirmée",                
+                "confirmed": "confirmée",
                 "validated": "validée",
                 "checkedin": "en cours",
                 "checkedout": "terminé",
@@ -76,7 +86,7 @@
         },
         "has_payer_organisation": {
             "label": "Payeur distinct",
-            "description": "Indicateur pour savoir si la facture doit être envoyée à une autre identité.",
+            "description": "Factures à une autre identité ?",
             "help": ""
         },
         "payer_organisation_id": {
@@ -119,7 +129,7 @@
             "layout": {}
         }
     },
-    "error": {        
+    "error": {
         "customer_id": {
             "missing_mandatory": "Champ obligatoire."
         },

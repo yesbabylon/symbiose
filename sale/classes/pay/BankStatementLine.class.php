@@ -115,13 +115,26 @@ class BankStatementLine extends Model {
     }
 
     public static function onchangeStatus($om, $oids, $lang) {
-        $lines = $om->read(__CLASS__, $oids, ['status', 'bank_statement_id']);
+        trigger_error("QN_DEBUG_ORM::calling sale\pay\BankStatementLine::onchangeStatus", QN_REPORT_DEBUG);
+
+        $lines = $om->read(get_called_class(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
+
+        ob_start();
+        print_r($lines);
+        $msg = ob_get_clean();
+        trigger_error("QN_DEBUG_ORM::$msg", QN_REPORT_DEBUG);
 
         if($lines > 0) {
             $bank_statements_ids = [];
             foreach($lines as $lid => $line) {
                 if($line['status'] == 'reconciled') {
+                    // mark related statement for re-computing
                     $bank_statements_ids[$line['bank_statement_id']] = true;
+                    // resolve customer_id: retrieve first payment
+                    if(isset($line['payments_ids.partner_id']) && count($line['payments_ids.partner_id'])) {
+                        $payment = reset($line['payments_ids.partner_id']);
+                        $om->write(get_called_class(), $lid, ['customer_id' => $payment['partner_id']]);
+                    }
                 }
             }
             $bank_statements_ids = array_keys($bank_statements_ids);

@@ -5,7 +5,7 @@
     "model": {
         "name": {
             "label": "Nom",
-            "description": "Nom affiché du client (lié au nom de l'identité).",
+            "description": "Nom complet du client (lié à l'identité).",
             "help": ""
         },
         "owner_identity_id": {
@@ -15,7 +15,7 @@
         },
         "partner_identity_id": {
             "label": "Identité",
-            "description": "L'identité ciblée (le partenaire).",
+            "description": "L'identité ciblée.",
             "help": ""
         },
         "partner_organisation_id": {

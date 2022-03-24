@@ -7,7 +7,7 @@
 namespace lodging\identity;
 
 class User extends \identity\User {
-    
+
     public static function getColumns() {
         return [
 
@@ -15,12 +15,40 @@ class User extends \identity\User {
                 'type'              => 'many2many',
                 'foreign_object'    => 'lodging\identity\Center',
                 'foreign_field'     => 'users_ids',
-                'rel_table'         => 'sale_identity_rel_center_user',
+                'rel_table'         => 'lodging_identity_rel_center_user',
                 'rel_foreign_key'   => 'center_id',
                 'rel_local_key'     => 'user_id'
+            ],
+
+            'center_offices_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'lodging\identity\CenterOffice',
+                'foreign_field'     => 'users_ids',
+                'rel_table'         => 'lodging_identity_rel_center_office_user',
+                'rel_foreign_key'   => 'center_office_id',
+                'rel_local_key'     => 'user_id',
+                'onchange'          => 'lodging\identity\User::onchangeCenterOfficesIds'
             ]
 
         ];
     }
 
+
+    public static function onchangeCenterOfficesIds($om, $oids, $lang) {
+
+        $users = $om->read(__CLASS__, $oids, ['centers_ids', 'center_offices_ids.centers_ids'], $lang);
+        if($users > 0) {
+
+            foreach($users as $uid => $user) {
+                // pass-1 remove previous centers_ids
+                $om->write(__CLASS__, $uid, ['centers_ids' => array_map(function($id) { return "-{$id}";}, $user['centers_ids'])], $lang);
+                // pass-2 add new centers_ids
+                $centers_ids = [];
+                foreach($user['center_offices_ids.centers_ids'] as $oid => $office) {
+                    $centers_ids = array_merge($centers_ids, $office['centers_ids']);
+                }
+                $om->write(__CLASS__, $uid, ['centers_ids' => $centers_ids], $lang);
+            }
+        }
+    }
 }
