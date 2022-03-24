@@ -49,8 +49,8 @@ $tests = [
             ])->read(['price'])->first();
 
 
-            $booking_price = $booking->read('price')->first();
-            return ($bookingLineGroup['name']);
+            $booking_price = $booking->read('total')->first();
+            return ($booking_price['total']);
         },
         'assert'            =>  function ($price) {
             return ($price == 146);
