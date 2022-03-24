@@ -47,7 +47,7 @@ script:
   - php run.php --do=test_db-connectivity
   # create an empty database 
   - php run.php --do=init_db  
-  
+  # new test
   # initialise database with demo data
   #- php run.php --do=init_package --package=core --import=true
   # run test units
