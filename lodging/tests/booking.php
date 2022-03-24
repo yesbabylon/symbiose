@@ -22,8 +22,8 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-            $om = &ObjectManager::getInstance();
-            $booking = $om->create(['lodging\sale\booking\Booking',
+
+            $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-08'),
                 'state'       => 'instance',
@@ -33,10 +33,9 @@ $tests = [
             ]);
 
 
-            // $booking_id = $booking->first();
+            $booking_id = $booking->first();
            
-
-            $bookingLineGroup = $om->create(['lodging\sale\booking\BookingLineGroup',
+            $bookingLineGroup = BookingLineGroup::create([
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
@@ -45,13 +44,13 @@ $tests = [
                 'date_to'       => strtotime('2021-11-08'),
                 'has_pack'      => true,
                 'pack_id'       => 378,
-                'booking_id'    => $booking['id'],
+                'booking_id'    => $booking_id['id'],
                 'nb_pers'       => 3
-            ]);
+            ])->read(['price'])->first();
 
 
-            // $booking_price = $booking->read('price')->first();
-            return ($bookingLineGroup);
+            $booking_price = $booking->read('price')->first();
+            return ($booking_id['id']);
         },
         'assert'            =>  function ($price) {
             return ($price == 146);
