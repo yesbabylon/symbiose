@@ -18,44 +18,44 @@ $providers = eQual::inject(['context', 'orm', 'auth', 'access']);
 
 $tests = [
     //0xxx : calls related to QN methods
-    '0101' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
-        'return'            =>  array('double'),
-        'test'              =>  function () {
+    // '0101' => array(
+    //     'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+    //     'return'            =>  array('double'),
+    //     'test'              =>  function () {
 
-            $booking = Booking::create([
-                'date_from'   => strtotime('2021-11-07'),
-                'date_to'     => strtotime('2021-11-08'),
-                'state'       => 'instance',
-                'type_id'     => 1,
-                'center_id'   => 29,
-                'customer_id' => 124,
-            ]);
+    //         $booking = Booking::create([
+    //             'date_from'   => strtotime('2021-11-07'),
+    //             'date_to'     => strtotime('2021-11-08'),
+    //             'state'       => 'instance',
+    //             'type_id'     => 1,
+    //             'center_id'   => 29,
+    //             'customer_id' => 124,
+    //         ]);
 
 
-            $booking_id = $booking->first();
+    //         $booking_id = $booking->first();
            
-            $bookingLineGroup = BookingLineGroup::create([
-                'name'          => 'Séjour Rochefort',
-                'order'         => 1,
-                'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
-                'date_from'     => strtotime('2021-11-07'),
-                'date_to'       => strtotime('2021-11-08'),
-                'has_pack'      => true,
-                'pack_id'       => 378,
-                'booking_id'    => $booking_id['id'],
-                'nb_pers'       => 3
-            ])->read(['price', 'pack_id'])->first();
+    //         $bookingLineGroup = BookingLineGroup::create([
+    //             'name'          => 'Séjour Rochefort',
+    //             'order'         => 1,
+    //             'rate_class_id' => 4,
+    //             'sojourn_type'  => 'GA',
+    //             'date_from'     => strtotime('2021-11-07'),
+    //             'date_to'       => strtotime('2021-11-08'),
+    //             'has_pack'      => true,
+    //             'pack_id'       => 378,
+    //             'booking_id'    => $booking_id['id'],
+    //             'nb_pers'       => 3
+    //         ])->read(['price', 'pack_id'])->first();
 
 
-            $booking_price = $booking->read('price')->first();
-            return ($bookingLineGroup['price']);
-        },
-        'assert'            =>  function ($price) {
-            return ($price == 146);
-        }
-    ),
+    //         $booking_price = $booking->read('price')->first();
+    //         return ($bookingLineGroup['price']);
+    //     },
+    //     'assert'            =>  function ($price) {
+    //         return ($price == 146);
+    //     }
+    // ),
 
     // '0102' => array(
     //     'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
@@ -709,105 +709,105 @@ $tests = [
     //         return ($price == 19556.1);
     //     }
     // ),
-    // '0114' => array(
-    //     'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
-    //     'return'            =>  array('double'),
-    //     'test'              =>  function () {
+    '0114' => array(
+        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'return'            =>  array('double'),
+        'test'              =>  function () {
 
-    //         $booking = Booking::create([
-    //             'date_from'   => strtotime('2022-07-28'),
-    //             'date_to'     => strtotime('2021-07-31'),
-    //             'state'       => 'instance',
-    //             'type_id'     => 1,
-    //             'center_id'   => 25,
-    //             'customer_id' => 102,
-    //         ]);
+            $booking = Booking::create([
+                'date_from'   => strtotime('2022-07-28'),
+                'date_to'     => strtotime('2021-07-31'),
+                'state'       => 'instance',
+                'type_id'     => 1,
+                'center_id'   => 25,
+                'customer_id' => 102,
+            ]);
 
-    //         $booking_id = $booking->first();
+            $booking_id = $booking->first();
             
 
-    //         $bookingLineGroup1 = BookingLineGroup::create([
-    //             'name'          => 'Séjour Villers-Sainte-Gertrude',
-    //             'order'         => 1,
-    //             'rate_class_id' => 4,
-    //             'sojourn_type'  => 'GA',
-    //             'date_from'     => strtotime('2022-07-28'),
-    //             'date_to'       => strtotime('2022-07-31'),
-    //             'booking_id'    => $booking_id['id'],
-    //             'nb_pers'       => 3
-    //         ])->read(['price'])->first();
+            $bookingLineGroup1 = BookingLineGroup::create([
+                'name'          => 'Séjour Villers-Sainte-Gertrude',
+                'order'         => 1,
+                'rate_class_id' => 4,
+                'sojourn_type'  => 'GA',
+                'date_from'     => strtotime('2022-07-28'),
+                'date_to'       => strtotime('2022-07-31'),
+                'booking_id'    => $booking_id['id'],
+                'nb_pers'       => 3
+            ])->read(['price'])->first();
 
-    //         $bookingLine1 = BookingLine::create([
-    //             'booking_id'            => $booking_id['id'],
-    //             'booking_line_group_id' => $bookingLineGroup1['id'],
-    //             'product_id'            => 352,
-    //             'qty'                   => 11,
-    //             'order'                 => 1
-    //         ])->first();
+            $bookingLine1 = BookingLine::create([
+                'booking_id'            => $booking_id['id'],
+                'booking_line_group_id' => $bookingLineGroup1['id'],
+                'product_id'            => 352,
+                'qty'                   => 11,
+                'order'                 => 1
+            ])->first();
 
-    //         $bookingLine2 = BookingLine::create([
-    //             'booking_id'            => $booking_id['id'],
-    //             'booking_line_group_id' => $bookingLineGroup1['id'],
-    //             'product_id'            => 353,
-    //             'qty'                   => 22,
-    //             'order'                 => 2
-    //         ])->first();
+            $bookingLine2 = BookingLine::create([
+                'booking_id'            => $booking_id['id'],
+                'booking_line_group_id' => $bookingLineGroup1['id'],
+                'product_id'            => 353,
+                'qty'                   => 22,
+                'order'                 => 2
+            ])->first();
 
-    //         $bookingLine3 = BookingLine::create([
-    //             'booking_id'            => $booking_id['id'],
-    //             'booking_line_group_id' => $bookingLineGroup1['id'],
-    //             'product_id'            => 354,
-    //             'qty'                   => 12,
-    //             'order'                 => 3
-    //         ])->first();
+            $bookingLine3 = BookingLine::create([
+                'booking_id'            => $booking_id['id'],
+                'booking_line_group_id' => $bookingLineGroup1['id'],
+                'product_id'            => 354,
+                'qty'                   => 12,
+                'order'                 => 3
+            ])->first();
 
-    //         $bookingLine4 = BookingLine::create([
-    //             'booking_id'            => $booking_id['id'],
-    //             'booking_line_group_id' => $bookingLineGroup1['id'],
-    //             'product_id'            => 2102,
-    //             'qty'                   => 1,
-    //             'order'                 => 4
-    //         ])->first();
+            $bookingLine4 = BookingLine::create([
+                'booking_id'            => $booking_id['id'],
+                'booking_line_group_id' => $bookingLineGroup1['id'],
+                'product_id'            => 2102,
+                'qty'                   => 1,
+                'order'                 => 4
+            ])->first();
 
-    //         $om = &ObjectManager::getInstance();
-    //         $om->write('lodging\sale\booking\BookingLineGroup', $bookingLineGroup1['id'], ['nb_pers' => 44]);
-    //         $om->write('lodging\sale\booking\BookingLine', $bookingLine1['id'], ['qty' => 11]);
-    //         $om->write('lodging\sale\booking\BookingLine', $bookingLine2['id'], ['qty' => 22]);
-    //         $om->write('lodging\sale\booking\BookingLine', $bookingLine3['id'], ['qty' => 12]);
+            $om = &ObjectManager::getInstance();
+            $om->write('lodging\sale\booking\BookingLineGroup', $bookingLineGroup1['id'], ['nb_pers' => 44]);
+            // $om->write('lodging\sale\booking\BookingLine', $bookingLine1['id'], ['qty' => 11]);
+            // $om->write('lodging\sale\booking\BookingLine', $bookingLine2['id'], ['qty' => 22]);
+            // $om->write('lodging\sale\booking\BookingLine', $bookingLine3['id'], ['qty' => 12]);
            
-    //         $bookingLineGroup2 = BookingLineGroup::create([
-    //             'name'          => 'Séjour Villers-Sainte-Gertrude',
-    //             'order'         => 2,
-    //             'rate_class_id' => 4,
-    //             'sojourn_type'  => 'GA',
-    //             'date_from'     => strtotime('2022-07-28'),
-    //             'date_to'       => strtotime('2022-07-31'),
-    //             'has_pack'      => true,
-    //             'pack_id'       => 1762,
-    //             'booking_id'    => $booking_id['id'],
-    //             'nb_pers'       => 12
-    //         ])->read(['price'])->first();
+            $bookingLineGroup2 = BookingLineGroup::create([
+                'name'          => 'Séjour Villers-Sainte-Gertrude',
+                'order'         => 2,
+                'rate_class_id' => 4,
+                'sojourn_type'  => 'GA',
+                'date_from'     => strtotime('2022-07-28'),
+                'date_to'       => strtotime('2022-07-31'),
+                'has_pack'      => true,
+                'pack_id'       => 1762,
+                'booking_id'    => $booking_id['id'],
+                'nb_pers'       => 12
+            ])->read(['price'])->first();
 
-    //         $bookingLineGroup3 = BookingLineGroup::create([
-    //             'name'          => 'Séjour Villers-Sainte-Gertrude',
-    //             'order'         => 2,
-    //             'rate_class_id' => 4,
-    //             'sojourn_type'  => 'GA',
-    //             'date_from'     => strtotime('2022-07-28'),
-    //             'date_to'       => strtotime('2022-07-31'),
-    //             'has_pack'      => true,
-    //             'pack_id'       => 378,
-    //             'booking_id'    => $booking_id['id'],
-    //             'nb_pers'       => 18
-    //         ])->read(['price'])->first();
+            $bookingLineGroup3 = BookingLineGroup::create([
+                'name'          => 'Séjour Villers-Sainte-Gertrude',
+                'order'         => 2,
+                'rate_class_id' => 4,
+                'sojourn_type'  => 'GA',
+                'date_from'     => strtotime('2022-07-28'),
+                'date_to'       => strtotime('2022-07-31'),
+                'has_pack'      => true,
+                'pack_id'       => 378,
+                'booking_id'    => $booking_id['id'],
+                'nb_pers'       => 18
+            ])->read(['price'])->first();
 
-    //         $booking_price = $booking->read(['price'])->first();
-    //         return ($booking_price['price']);
-    //     },
-    //     'assert'            =>  function ($price) {
-    //         return ($price == 2845.99);
-    //     }
-    // ),
+            $booking_price = $booking->read(['price'])->first();
+            return ($booking_price['price']);
+        },
+        'assert'            =>  function ($price) {
+            return ($price == 2845.99);
+        }
+    ),
 
     // '0115' => array(
     //     'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
