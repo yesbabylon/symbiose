@@ -35,6 +35,8 @@ before_script:
   - cp -r ./equal/packages-core/* ./equal/packages/
   - rm -rf ./equal/packages-core
   - mv ./equal/* ./
+  - curl -o database.sql http://yb.run/discope_db.sql
+  - cat database.sql | mysql -u root --password="" test
 
 script: 
   # check that mandatory directories are present and have correct access rights set
@@ -43,7 +45,8 @@ script:
   - php run.php --do=test_db-connectivity
   # create an empty database 
   - php run.php --do=init_db  
+  
   # initialise database with demo data
   #- php run.php --do=init_package --package=core --import=true
   # run test units
-  #- php run.php --do=test_package --package=core
+  - php run.php --do=test_package --package=lodging
