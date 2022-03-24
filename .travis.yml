@@ -45,4 +45,5 @@ script:
   # check ability to connect to the dbms service
   - php run.php --do=test_db-connectivity
   # run test units
-  - php run.php --do=test_package --package=lodging --logs=true
+  # - php run.php --do=test_package --package=lodging --logs=true
+  - php run.php --do=test_package --package=lodging
