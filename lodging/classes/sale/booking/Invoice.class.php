@@ -18,7 +18,7 @@ class Invoice extends \sale\booking\Invoice {
                 'description'       => 'Office the invoice relates to (for center management).',
                 'required'          => true
             ]
-
+            
         ];
     }    
 

@@ -883,6 +883,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->write(__CLASS__, $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
             }
 
+         
+
             /*
                 Find the first Autosale List that matches the booking dates
             */
@@ -893,6 +895,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 ['date_to', '>=', $group['date_from']]
             ]);
 
+            // ob_start();
+            // var_dump($autosale_lists_ids);
+            // $buff = ob_get_clean();
+            // trigger_error("QN_DEBUG_ORM::{$buff}", QN_REPORT_ERROR);
             $autosale_lists = $om->read('sale\autosale\AutosaleList', $autosale_lists_ids, ['id', 'autosale_lines_ids']);
             $autosale_list_id = 0;
             $autosale_list = null;
