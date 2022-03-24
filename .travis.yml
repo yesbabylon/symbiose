@@ -25,6 +25,7 @@ before_script:
   # install apache2
   - chmod +x .travis/*.sh
   - .travis/init-php7.sh
+  - mkdir packages
   - mv * ./packages
   - mv .* ./packages
   - git clone https://github.com/cedricfrancoys/equal.git
