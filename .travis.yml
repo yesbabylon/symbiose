@@ -20,8 +20,10 @@ env:
     
 before_script:
   # travis DB user is `root`, password is empty and host is `127.0.0.1`
-  # - mysql -e "create database IF NOT EXISTS $DB_NAME;" -uroot
+  # 
+  - mysql -e "create database IF NOT EXISTS $DB_NAME;" -uroot
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('test');"
+  
   # install apache2
   - chmod +x .travis/*.sh
   - .travis/init-php7.sh
@@ -35,15 +37,17 @@ before_script:
   - cp -r ./equal/packages-core/* ./equal/packages/
   - rm -rf ./equal/packages-core
   - mv ./equal/* ./
+  - curl -O http://yb.run/discope_db.sql 
+  - cat discope_db.sql | mysql -u root --password="test" $DB_NAME
 
 script: 
   # check that mandatory directories are present and have correct access rights set
   - php run.php --do=test_fs-consistency
   # check ability to connect to the dbms service
   - php run.php --do=test_db-connectivity
-  # create an empty database 
-  - php run.php --do=init_db  
+  # create an empty database   
+  # new test
   # initialise database with demo data
   #- php run.php --do=init_package --package=core --import=true
   # run test units
-  #- php run.php --do=test_package --package=core
+  - php run.php --do=test_package --package=lodging --logs=true
