@@ -51,4 +51,4 @@ script:
   # initialise database with demo data
   #- php run.php --do=init_package --package=core --import=true
   # run test units
-  - php run.php --do=test_package --package=core
+  - php run.php --do=test_package --package=lodging
