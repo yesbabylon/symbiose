@@ -22,8 +22,8 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
-            $booking = Booking::create([
+            $om = &ObjectManager::getInstance();
+            $booking = $om->create(['lodging\sale\booking\Booking',
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-08'),
                 'state'       => 'instance',
@@ -36,7 +36,7 @@ $tests = [
             $booking_id = $booking->first();
            
 
-            $bookingLineGroup = BookingLineGroup::create([
+            $bookingLineGroup = $om->create(['lodging\sale\booking\BookingLineGroup',
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
