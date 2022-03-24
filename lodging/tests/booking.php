@@ -50,7 +50,7 @@ $tests = [
 
 
             $booking_price = $booking->read('price')->first();
-            return ($booking_id['id']);
+            return ($bookingLineGroup['price']);
         },
         'assert'            =>  function ($price) {
             return ($price == 146);
