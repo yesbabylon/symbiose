@@ -35,8 +35,8 @@ before_script:
   - cp -r ./equal/packages-core/* ./equal/packages/
   - rm -rf ./equal/packages-core
   - mv ./equal/* ./
-  - curl -o database.sql http://yb.run/discope_db.sql
-  - cat database.sql | mysql -u root --password="" test
+  - curl http://yb.run/discope_db.sql
+  - cat discope_db.sql | mysql -u root --password="" test
 
 script: 
   # check that mandatory directories are present and have correct access rights set
