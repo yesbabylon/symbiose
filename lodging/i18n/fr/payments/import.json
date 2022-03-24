@@ -1,0 +1,20 @@
+{
+    "name": "Import",
+    "description": "Importe un fichier d'extrait bancaire et retourne la liste des extraits créés. Le extraits précédemment importés seront ignorés.",
+    "model": {
+        "data": {
+            "label": "Fichier CODA",
+            "description": "Fichier TXT contenant les données à importer comme extrait.",
+            "help": ""
+        }
+    },
+    "error": {
+        "code_alpha": {
+            "invalid": "Le code doit correspondre deux lettres majuscules."
+        },
+        "errors": {
+            "already_imported": "Cet extrait é déjà été importé.",
+            "unknown_account_number": "Le numéro de l'extrait ne correspond à aucun compte interne."
+        }
+    }
+}
