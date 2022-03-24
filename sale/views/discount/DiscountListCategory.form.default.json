@@ -2,7 +2,7 @@
     "name": "Discount List Category",
     "description": "Discount lists can be arranged by categories.",
     "access": {
-        "groups": ["sale.default.administrator"]
+        "groups": ["sale.default.user"]
      },
     "layout": {
         "groups": [
