@@ -28,7 +28,7 @@ before_script:
   - mkdir .packages
   - mv * ./.packages
   - mv .packages packages
-  - mv .* ./packages
+  - rm -rf ./packages/.travis*
   - git clone https://github.com/cedricfrancoys/equal.git
   - mv ./equal/packages/ ./equal/packages-core
   - mv ./packages ./equal/
