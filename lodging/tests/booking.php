@@ -20,7 +20,7 @@ $tests = [
     //0xxx : calls related to QN methods
     '0101' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
-        'return'            =>  array('double'),
+        'return'            =>  array('integer'),
         'test'              =>  function () {
 
             $booking = Booking::create([
