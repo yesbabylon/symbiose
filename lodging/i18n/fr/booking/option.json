@@ -1,0 +1,13 @@
+{
+    "name": "Prise d'option",
+    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, mais une annulation automatique de l'option sera planifiée.",
+    "model": {
+        "id": {
+            "label": "Identifian",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        }
+    },
+    "error": {
+    }
+}
