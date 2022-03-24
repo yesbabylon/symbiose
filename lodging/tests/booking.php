@@ -20,7 +20,7 @@ $tests = [
     //0xxx : calls related to QN methods
     '0101' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
-        'return'            =>  array('integer'),
+        'return'            =>  array('double'),
         'test'              =>  function () {
 
             $booking = Booking::create([
@@ -51,10 +51,10 @@ $tests = [
 
 
             $booking_price = $booking->read('price')->first();
-            return ($booking_price['price']);
+            return ($bookingLineGroup['price']);
         },
         'assert'            =>  function ($price) {
-            return ($price);
+            return ($price == 146);
         }
     ),
 
