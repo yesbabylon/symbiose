@@ -18,7 +18,7 @@ class Invoice extends \sale\booking\Invoice {
                 'description'       => 'Center the invoice relates to (for retrieving the center management group).',
                 'required'          => true
             ]
-
+            
         ];
     }    
 
