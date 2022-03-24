@@ -51,10 +51,10 @@ $tests = [
 
 
             $booking_price = $booking->read('price')->first();
-            return true;
+            return ($booking_price['price']);
         },
         'assert'            =>  function ($price) {
-            return true;
+            return ($price);
         }
     ),
 
