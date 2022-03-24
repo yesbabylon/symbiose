@@ -22,7 +22,7 @@ before_script:
   # travis DB user is `root`, password is empty and host is `127.0.0.1`
   # 
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('test');"
-  - mysql -e "create database IF NOT EXISTS equal;"
+  - mysql -e "create database IF NOT EXISTS equal;" -uroot
   # install apache2
   - chmod +x .travis/*.sh
   - .travis/init-php7.sh
