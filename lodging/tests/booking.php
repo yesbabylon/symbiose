@@ -33,7 +33,7 @@ $tests = [
             ]);
 
 
-            $booking_id = $booking->first();
+            // $booking_id = $booking->first();
            
 
             $bookingLineGroup = $om->create(['lodging\sale\booking\BookingLineGroup',
@@ -45,13 +45,13 @@ $tests = [
                 'date_to'       => strtotime('2021-11-08'),
                 'has_pack'      => true,
                 'pack_id'       => 378,
-                'booking_id'    => $booking_id['id'],
+                'booking_id'    => $booking['id'],
                 'nb_pers'       => 3
-            ])->read(['price'])->first();
+            ]);
 
 
-            $booking_price = $booking->read('price')->first();
-            return ($bookingLineGroup['price']);
+            // $booking_price = $booking->read('price')->first();
+            return ($bookingLineGroup);
         },
         'assert'            =>  function ($price) {
             return ($price == 146);
