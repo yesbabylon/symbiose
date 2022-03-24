@@ -45,10 +45,9 @@ script:
   - php run.php --do=test_fs-consistency
   # check ability to connect to the dbms service
   - php run.php --do=test_db-connectivity
-  # create an empty database 
-  - php run.php --do=init_db  
+  # create an empty database   
   # new test
   # initialise database with demo data
   #- php run.php --do=init_package --package=core --import=true
   # run test units
-  - php run.php --do=test_package --package=lodging
+  - php run.php --do=test_package --package=lodging --logs=true
