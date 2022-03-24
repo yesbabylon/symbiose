@@ -105,7 +105,14 @@ class Establishment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AnalyticSection',
                 'description'       => "Related analytic section, if any."
-            ]
+            ],
+
+            'signature' => [
+                'type'              => 'string',
+                'usage'             => 'markup/html',
+                'description'       => 'Establishment signature to append to communications.',
+                'multilang'         => true
+            ]            
 
         ];
     }

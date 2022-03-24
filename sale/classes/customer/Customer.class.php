@@ -31,7 +31,7 @@ class Customer extends \identity\Partner {
             'customer_nature_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
-                'description'       => 'Nature of the customer (map with rate classes).',            
+                'description'       => 'Nature of the customer (map with rate classes).',
                 'onchange'          => 'sale\customer\Customer::onchangeCustomerNatureId'
             ],
 
@@ -40,9 +40,10 @@ class Customer extends \identity\Partner {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerType',
                 'description'       => 'Type of customer (map with rate classes).',
-                'visible'           => ['relationship', '=', 'customer']
+                'visible'           => ['relationship', '=', 'customer'],
+                'default'           => 1                                                // default is 'individual'
             ],
-            
+
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'customer',
@@ -96,20 +97,20 @@ class Customer extends \identity\Partner {
                 $rate_class_id = $customer['customer_nature_id.rate_class_id'];
                 if(!empty($customer_type_id) && !empty($rate_class_id)) {
                     $om->write(__CLASS__, $oids, ['rate_class_id' => $rate_class_id, 'customer_type_id' => $customer_type_id]);
-                }                
+                }
             }
-        }        
+        }
     }
 
     /**
      * Computes the number of bookings made by the customer during the last two years.
-     * 
+     *
      */
     public static function getAddress($om, $oids, $lang) {
         $result = [];
 
         $customers = $om->read(__CLASS__, $oids, ['partner_identity_id.address_street', 'partner_identity_id.address_city'], $lang);
-        foreach($customers as $oid => $customer) {            
+        foreach($customers as $oid => $customer) {
             $result[$oid] = "{$customer['partner_identity_id.address_street']} {$customer['partner_identity_id.address_city']}";
         }
         return $result;
@@ -117,18 +118,18 @@ class Customer extends \identity\Partner {
 
     /**
      * Computes the number of bookings made by the customer during the last 12 months.
-     * 
+     *
      */
     public static function getCountBooking12($om, $oids, $lang) {
         $result = [];
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-12, date('d', $time), date('Y', $time));
         foreach($oids as $oid) {
-            $bookings_ids = $om->search('sale\booking\Booking', [ 
-                ['customer_id', '=', $oid], 
-                ['created', '>=', $from], 
+            $bookings_ids = $om->search('sale\booking\Booking', [
+                ['customer_id', '=', $oid],
+                ['created', '>=', $from],
                 ['is_cancelled', '=', false],
-                ['status', 'not in', ['quote', 'option']] 
+                ['status', 'not in', ['quote', 'option']]
             ]);
             $result[$oid] = count($bookings_ids);
         }
@@ -137,21 +138,21 @@ class Customer extends \identity\Partner {
 
     /**
      * Computes the number of bookings made by the customer during the last two years.
-     * 
+     *
      */
     public static function getCountBooking24($om, $oids, $lang) {
         $result = [];
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-24, date('d', $time), date('Y', $time));
         foreach($oids as $oid) {
-            $bookings_ids = $om->search('sale\booking\Booking', [ 
-                ['customer_id', '=', $oid], 
-                ['created', '>=', $from], 
+            $bookings_ids = $om->search('sale\booking\Booking', [
+                ['customer_id', '=', $oid],
+                ['created', '>=', $from],
                 ['is_cancelled', '=', false],
-                ['status', 'not in', ['quote', 'option']] 
+                ['status', 'not in', ['quote', 'option']]
             ]);
             $result[$oid] = count($bookings_ids);
         }
         return $result;
-    }    
+    }
 }

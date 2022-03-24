@@ -105,11 +105,14 @@
                                                 "type": "field",
                                                 "value": "centers_ids",
                                                 "width": "100%",
-                                                "domain": [
-                                                    "organisation_id",
-                                                    "=",
-                                                    "user.organisation_id"
-                                                ]
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -117,6 +120,33 @@
                             }
                         ]
                     },
+                    {
+                        "label": "Center Offices",
+                        "id": "section.center_offices",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "center_offices_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
                     {
                         "label": "Preferences",
                         "id": "section.preferences",
@@ -136,31 +166,7 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Permissions",
-                        "id": "section.permissions",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "permissions_ids",
-                                                "label": "permissions",
-                                                "widget": {
-                                                    "view": "list.default"
-                                                }                                                
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+                    }                   
                 ]
             }
         ]

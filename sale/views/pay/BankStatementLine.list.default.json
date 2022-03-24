@@ -4,6 +4,9 @@
     "access": {
         "groups": ["sale.default.user"]
     },
+    "order": "created",
+    "sort": "desc",    
+    "domain": ["center_office_id", "in", "user.center_offices_ids"],
     "actions": [
         {
             "id": "action.import",

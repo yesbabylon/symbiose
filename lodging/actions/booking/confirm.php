@@ -47,7 +47,7 @@ $booking = Booking::id($params['id'])
                         'date_from',
                         'date_to',
                         'price',                                  // total price VAT incl.
-                        'center_id',
+                        'center_id' => ['center_office_id'],
                         'booking_lines_groups_ids' => [
                             'name',
                             'date_from',
@@ -235,7 +235,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
     $funding = [
         'payment_deadline_id'   => $deadline_id,
         'booking_id'            => $params['id'],
-        'center_id'             => $booking['center_id'],
+        'center_office_id'      => $booking['center_id']['center_office_id'],
         'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
         'is_paid'               => false,
         'type'                  => $deadline['type'],

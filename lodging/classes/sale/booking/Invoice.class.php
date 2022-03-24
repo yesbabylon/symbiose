@@ -15,7 +15,7 @@ class Invoice extends \sale\booking\Invoice {
             'center_office_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
-                'description'       => 'Center the invoice relates to (for retrieving the center management group).',
+                'description'       => 'Office the invoice relates to (for center management).',
                 'required'          => true
             ]
 

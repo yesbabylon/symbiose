@@ -15,12 +15,17 @@
         },
         "validated": {
             "label": "Validé",
-            "description": "",
+            "description": "Compte validé ?",
             "help": ""
         },
         "groups_ids": {
             "label": "Groupes",
             "description": "",
+            "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "L'organisation à laquelle appartient l'utilisateur.",
             "help": ""
         },
         "centers_ids": {
@@ -29,7 +34,7 @@
             "help": ""
         },
         "setting_values_ids": {
-            "label": "Valeurs de Réglage",
+            "label": "Préférences",
             "description": "",
             "help": ""
         },

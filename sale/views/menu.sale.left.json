@@ -18,7 +18,7 @@
                   "label": "Lines to review",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\BankStatementLine",
+                    "entity": "lodging\\sale\\booking\\BankStatementLine",
                     "view": "list.default",
                     "order": "date",
                     "sort": "desc",
@@ -28,11 +28,11 @@
                 {
                   "id": "item.bank_statements.all_lines",
                   "type": "entry",
-                  "label": "All lines",
+                  "label": "Reconciled lines",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\BankStatementLine",
-                    "view": "list.default",
+                    "entity": "lodging\\sale\\booking\\BankStatementLine",
+                    "view": "list.reconciled",
                     "order": "date",
                     "sort": "desc"
                   }
@@ -43,8 +43,8 @@
                   "label": "Statements",
                   "description": "", 
                   "context": {
-                    "entity": "sale\\booking\\BankStatement",
-                    "view": "list.default",
+                    "entity": "lodging\\sale\\booking\\BankStatement",
+                    "view": "list.reconciled",
                     "domain":["status", "=", "reconciled"]
                   }
                 }

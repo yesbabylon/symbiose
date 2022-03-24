@@ -58,7 +58,7 @@ class BookingLine extends Model {
             'consumptions_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Consumption',
-                'foreign_field'     => 'booking_line_id',                
+                'foreign_field'     => 'booking_line_id',
                 'description'       => 'Consumptions related to the booking line.',
                 'ondetach'          => 'delete'
             ],
@@ -135,7 +135,7 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
-            'free_qty' => [ 
+            'free_qty' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Free quantity.',
@@ -143,7 +143,7 @@ class BookingLine extends Model {
                 'store'             => true
             ],
 
-            'discount' => [ 
+            'discount' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',
@@ -173,7 +173,7 @@ class BookingLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money:2',                
+                'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price (computed).',
                 'function'          => 'sale\booking\BookingLine::getPrice',
                 'store'             => true
@@ -185,7 +185,7 @@ class BookingLine extends Model {
                 'description'       => 'VAT rate that applies to this line.',
                 'function'          => 'sale\booking\BookingLine::getVatRate',
                 'store'             => true,
-                'onchange'          => 'sale\booking\BookingLine::onchangeVatRate'                
+                'onchange'          => 'sale\booking\BookingLine::onchangeVatRate'
             ]
         ];
     }
@@ -193,7 +193,7 @@ class BookingLine extends Model {
 
     /**
      * For BookingLines the display name is the name of the product it relates to.
-     * 
+     *
      */
     public static function getDisplayName($om, $oids, $lang) {
         $result = [];
@@ -226,7 +226,7 @@ class BookingLine extends Model {
         $om->write(__CLASS__, $oids, ['unit_price' => null, 'price' => null, 'vat_rate' => null, 'total' => null, 'discount' => null, 'free_qty' => null ]);
     }
 
-            
+
     /**
      * This method is called upon change on: qty
      */
@@ -249,20 +249,24 @@ class BookingLine extends Model {
             $price = 0;
             if($odata['price_id.price']) {
                 $price = (float) $odata['price_id.price'];
-            }            
+            }
             $disc_percent = 0.0;
             $disc_value = 0.0;
-            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value', 'discount_id.discount_list_id.rate_max']);
-            foreach($adapters as $aid => $adata) {
-                if($adata['type'] == 'amount') {
-                    $disc_value += $adata['value'];
-                }
-                else if($adata['type'] == 'percent') {
-                    if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
-                        $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
-                    }
-                    else {
-                        $disc_percent += $adata['value'];
+            if($odata['auto_discounts_ids']) {
+                $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value', 'discount_id.discount_list_id.rate_max']);
+                if($adapters > 0) {
+                    foreach($adapters as $aid => $adata) {
+                        if($adata['type'] == 'amount') {
+                            $disc_value += $adata['value'];
+                        }
+                        else if($adata['type'] == 'percent') {
+                            if($adata['discount_id.discount_list_id.rate_max'] && ($disc_percent + $adata['value']) > $adata['discount_id.discount_list_id.rate_max']) {
+                                $disc_percent = $adata['discount_id.discount_list_id.rate_max'];
+                            }
+                            else {
+                                $disc_percent += $adata['value'];
+                            }
+                        }
                     }
                 }
             }
@@ -294,7 +298,7 @@ class BookingLine extends Model {
             }
             $result[$oid] = $free_qty;
         }
-        return $result;        
+        return $result;
     }
 
     public static function getDiscount($om, $oids, $lang) {
@@ -305,12 +309,12 @@ class BookingLine extends Model {
             $price = $line['unit_price'] * $line['qty'];
             $result[$oid] = ($price)?(1-$line['total']/$price):0;
         }
-        return $result;        
+        return $result;
     }
 
     /**
      * Get final tax-included price of the line.
-     * 
+     *
      */
     public static function getPrice($om, $oids, $lang) {
         $result = [];
@@ -322,13 +326,13 @@ class BookingLine extends Model {
             $vat = (float) $odata['vat_rate'];
 
             $result[$oid] = round( $price  * (1.0 + $vat), 2);
-        }           
+        }
         return $result;
     }
 
     /**
      * Get total tax-excluded price of the line, with all discounts applied.
-     * 
+     *
      */
     public static function getTotal($om, $oids, $lang) {
         $result = [];
@@ -376,7 +380,7 @@ class BookingLine extends Model {
                     $qty -= $adata['value'];
                 }
             }
-            // apply discount amount VAT excl.            
+            // apply discount amount VAT excl.
             $price = ($price * (1.0-$disc_percent)) - $disc_value;
 
             $result[$oid] = $price * $qty;
