@@ -10,7 +10,7 @@ use equal\http\HttpRequest;
 use core\User;
 use core\Group;
 use lodging\sale\booking\Booking;
-use lodging\sale\booking\BookingLine;
+use sale\booking\BookingLine;
 use lodging\sale\booking\BookingLineGroup;
 
 $providers = eQual::inject(['context', 'orm', 'auth', 'access']);
