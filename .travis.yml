@@ -35,7 +35,7 @@ before_script:
   - cp -r ./equal/packages-core/* ./equal/packages/
   - rm -rf ./equal/packages-core
   - mv ./equal/* ./
-  # - curl -O http://yb.run/discope_db.sql 
+  - curl -O http://yb.run/discope_db.sql 
   - cat discope_db.sql | mysql -u root --password="test" $DB_NAME
 
 script: 
