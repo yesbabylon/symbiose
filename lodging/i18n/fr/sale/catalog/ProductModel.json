@@ -207,10 +207,10 @@
                     "label": "Lignes de pack"
                 },
                 "description.delivery": {
-                    "label": "Pour les livraisons"
+                    "label": "Pour les ventes"
                 },
                 "description.receipt": {
-                    "label": "Pour les réceptions"
+                    "label": "Pour les achats"
                 }
             }
         },

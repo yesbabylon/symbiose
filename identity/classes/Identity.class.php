@@ -42,6 +42,14 @@ class Identity extends Model {
                 "
             ],
 
+            'type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\IdentityType',
+                'onchange'          => 'identity\Identity::onchangeTypeId',
+                'default'           => 1,                                    // default is 'I' individual
+                'description'       => 'Type of identity.'
+            ],
+
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -52,8 +60,7 @@ class Identity extends Model {
                                         'PA' => 'Public administration'
                 ],
                 'default'           => 'I',
-                'onchange'          => 'identity\Identity::onchangeType',
-                'description'       => 'Type of organisation.'
+                'description'       => 'Code of the type of identity.'
             ],
 
             'description' => [
@@ -347,13 +354,16 @@ class Identity extends Model {
         $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
     }
 
-    public static function onchangeType($om, $oids, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['type', 'firstname', 'lastname']);
-        foreach($res as $oid => $odata) {
-            if( isset($odata['type']) ) {
-                if($odata['type'] == 'I' ) {
-                    $om->write(__CLASS__, $oid, [ 'display_name' => null ], $lang);
+
+    public static function onchangeTypeId($om, $oids, $lang) {
+        $res = $om->read(__CLASS__, $oids, ['type_id.code']);
+        if($res > 0) {
+            foreach($res as $oid => $odata) {
+                $values = [ 'type' => $odata['type_id.code'] ];
+                if($odata['type_id.code'] == 'I' ) {
+                    $values['display_name'] = null;
                 }
+                $om->write(__CLASS__, $oid, $values, $lang);
             }
         }
     }

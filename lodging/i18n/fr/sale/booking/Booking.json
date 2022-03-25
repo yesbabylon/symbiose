@@ -3,14 +3,14 @@
     "plural": "Réservations",
     "description": "",
     "model": {
-        "customer_id": {
+        "customer_identity_id": {
             "label": "Client",
-            "description": "Le client auquel se rapporte la réservation.",
+            "description": "Le client au nom de qui sera établie la facture.",
             "help": ""
         },
         "center_id": {
             "label": "Centre",
-            "description": "Le centre auquel se rapporte la réservation.",
+            "description": "Le centre visé par la réservation.",
             "help": ""
         },
         "type_id": {

@@ -21,12 +21,9 @@ class Funding extends Model {
             ],
 
             'payments_ids' => [ 
-                'type'              => 'many2many',
+                'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Payment',
-                'foreign_field'     => 'fundings_ids',
-                'rel_table'         => 'sale_pay_rel_payment_funding',
-                'rel_foreign_key'   => 'payment_id',
-                'rel_local_key'     => 'funding_id'
+                'foreign_field'     => 'funding_id'
             ],
 
             'type' => [
@@ -52,9 +49,11 @@ class Funding extends Model {
             ],
 
             'is_paid' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'description'       => "Has the full payment been received?"
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'store'             => true,
+                'description'       => "Has the full payment been received?",
+                'function'          => 'getIsPaid'
             ],
 
             'payment_deadline_id' => [
@@ -90,6 +89,24 @@ class Funding extends Model {
             }    
         }
         return $result;
+    }
+
+    public static function getIsPaid($om, $oids, $lang) {
+        $result = [];
+        $fundings = $om->read(get_called_class(), $oids, ['due_amount', 'payments_ids.amount'], $lang);
+        if($fundings > 0) {
+            foreach($fundings as $fid => $funding) {
+                $result[$fid] = false;
+                $sum = array_reduce($funding['payments_ids.amount'], function ($c, $a) {
+                    return $c + $a['amount'];
+                }, 0.0);
+
+                if($sum >= $funding['due_amount']) {
+                    $result[$fid] = true;
+                }
+            }
+        }
+        return $result;        
     }
 
     public static function onchangePaymentDeadlineId($orm, $oids, $lang) {
