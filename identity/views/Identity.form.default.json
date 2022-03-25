@@ -173,7 +173,12 @@
                                                 "type": "field",
                                                 "value": "signature",
                                                 "width": "50%"
-                                            }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            }                                            
                                         ]
                                     }
                                 ]
@@ -248,27 +253,6 @@
                         ]
                     },
                     {
-                        "label": "Description",
-                        "id": "section.identity_description",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Contacts",
                         "id": "section.identity_contacts",
                         "rows": [
@@ -287,8 +271,27 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Relations",
+                        "id": "section.identity_relations",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "partners_ids",
+                                                "width": "100%"
+                                            }                        
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
-
                 ]
             }
         ]

@@ -13,7 +13,7 @@ class Center extends \identity\Establishment {
     }
 
     public static function getDescription() {
-        return "A center is an accommodation establishment providing overnight lodging and holding one or more rental unit(s).";
+        return "A center is an accommodation establishment (Property) providing overnight lodging and holding one or more rental unit(s).";
     }
 
     public static function getColumns() {
@@ -113,7 +113,7 @@ class Center extends \identity\Establishment {
                 'type'              => 'many2many',
                 'foreign_object'    => 'lodging\identity\User',
                 'foreign_field'     => 'centers_ids',
-                'rel_table'         => 'sale_identity_rel_center_user',
+                'rel_table'         => 'lodging_identity_rel_center_user',
                 'rel_foreign_key'   => 'user_id',
                 'rel_local_key'     => 'center_id'
             ],

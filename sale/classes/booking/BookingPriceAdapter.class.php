@@ -84,12 +84,14 @@ class BookingPriceAdapter extends Model {
     }
 
     public static function onchangeValue($om, $oids, $lang) {
-// #todo - reset bookings and booking_line_groups        
-        $discounts = $om->read(__CLASS__, $oids, ['booking_line_id']);
+        // reset computed price for related bookings and booking_line_groups
+        $discounts = $om->read(__CLASS__, $oids, ['booking_line_id', 'booking_line_group_id']);
 
-        if($discounts > 0 && count($discounts)) {
+        if($discounts > 0) {
             $booking_lines_ids = array_map( function($a) { return $a['booking_line_id']; }, $discounts);
-            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['unit_price' => null, 'price' => null]);
+            $booking_line_groups_ids = array_map( function($a) { return $a['booking_line_group_id']; }, $discounts);
+            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['unit_price' => null, 'price' => null, 'total' => null]);
+            $om->write('sale\booking\BookingLineGroup', $booking_line_groups_ids, ['price' => null, 'total' => null]);
         }
     }
 

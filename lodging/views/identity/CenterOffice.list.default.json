@@ -21,13 +21,6 @@
             },
             {
                 "type": "field",
-                "label": "Manager",
-                "value": "manager_id",
-                "width": "25%",
-                "sortable": true
-            },
-            {
-                "type": "field",
                 "label": "Bank account",
                 "value": "bank_account_iban",
                 "width": "25%"

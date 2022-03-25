@@ -67,7 +67,7 @@ class BankStatement extends Model {
             // #memo - CODA statements comes with IBAN or BBAN numbers for reference account    
             'bank_account_number' => [
                 'type'              => 'string',
-                'description'       => 'Original number of the account (as provided in the statement).'
+                'description'       => 'Original number of the account (as provided in the statement might not be IBAN).'
             ],
 
             'bank_account_bic' => [
@@ -100,34 +100,8 @@ class BankStatement extends Model {
         $result = [];
         $statements = $om->read(get_called_class(), $oids, ['bank_account_number', 'bank_account_bic']);
 
-        /*
-            create numeric code of the target country 
-        */
-
-        // #todo - adapt based on settings (might not be imported from CODA)
-        $country_code = 'BE';
-
-        $code_alpha = $country_code;
-        $code_num = '';
-        
-        for($i = 0; $i < strlen($code_alpha); ++$i) {
-            $letter = substr($code_alpha, $i, 1);
-            $order = ord($letter) - ord('A');
-            $code_num .= '1'.$order;
-        }
-
         foreach($statements as $oid => $statement) {
-            // account number has IBAN format
-            if( !is_numeric(substr($statement['bank_account_number'], 0, 2)) ) {
-                $result[$oid] = $statement['bank_account_number'];
-            }
-            // if code is not a country code, then convert BBAN to IBAN
-            else {
-                $check_digits = substr($statement['bank_account_number'], -2);
-                $dummy = intval($check_digits.$check_digits.$code_num.'00');
-                $control = 98 - ($dummy % 97);
-                $result[$oid] = trim(sprintf("BE%s%s", $control, $statement['bank_account_number']));
-            }
+            $result[$oid] = self::_convert_to_iban($statement['bank_account_number']);
         }
         return $result;
     }
@@ -149,6 +123,38 @@ class BankStatement extends Model {
             }
         }
         return $result;
+    }
+
+    public static function _convert_to_iban($account_number) {
+
+        /*
+            account number already has IBAN format
+        */
+
+        if( !is_numeric(substr($account_number, 0, 2)) ) {
+            return $account_number;
+        }
+
+        /*
+            if code is not a country code, then convert BBAN to IBAN
+        */
+
+        // create numeric code of the target country
+        $country_code = 'BE';
+
+        $code_alpha = $country_code;
+        $code_num = '';
+        
+        for($i = 0; $i < strlen($code_alpha); ++$i) {
+            $letter = substr($code_alpha, $i, 1);
+            $order = ord($letter) - ord('A');
+            $code_num .= '1'.$order;
+        }
+
+        $check_digits = substr($account_number, -2);
+        $dummy = intval($check_digits.$check_digits.$code_num.'00');
+        $control = 98 - ($dummy % 97);
+        return trim(sprintf("BE%s%s", $control, $account_number));
     }
 
 

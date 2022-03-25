@@ -21,7 +21,7 @@
                                                 "type": "field",
                                                 "label": "Center",
                                                 "value": "center_id",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "domain": ["id", "in", "user.centers_ids"],
                                                     "limit": 30
@@ -29,27 +29,24 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Type",
-                                                "value": "type_id",
+                                                "label": "Customer",
+                                                "value": "customer_identity_id",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "limit": 15
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "100%",
-                                                "widget": {
                                                     "view": "form.create",
+                                                    "domain": ["id", ">", 3],
                                                     "limit": 8
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "customer_identity_id",
-                                                "width": "0%",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
                                                 "visible": false
                                             }
                                         ]

@@ -34,7 +34,7 @@
                   "type": "entry",
                   "label": "Quotes",
                   "description": "",
-                  "route": "/bookings",                   
+                  "route": "/bookings",
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
@@ -46,7 +46,7 @@
                   "type": "entry",
                   "label": "Options",
                   "description": "",
-                  "route": "/bookings",                  
+                  "route": "/bookings",
                   "context": {
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
@@ -58,11 +58,11 @@
                   "type": "entry",
                   "label": "Validated bookings",
                   "description": "",
-                  "route": "/bookings",                  
+                  "route": "/bookings",
                   "context": {
-                    "entity": "sale\\booking\\Booking",
+                    "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
-                    "domain": ["status", "=", "confirmed"]  
+                    "domain": ["status", "=", "confirmed"]
                   }
                 }
               ]
@@ -85,7 +85,8 @@
                       "id": "item.all_customers_types",
                       "type": "entry",
                       "label": "All types",
-                      "description": "", 
+                      "description": "",
+                      "route": "/bookings",
                       "context": {
                         "entity": "sale\\customer\\CustomerType",
                         "view": "list.default"
@@ -105,6 +106,7 @@
                       "type": "entry",
                       "label": "All natures",
                       "description": "",
+                      "route": "/bookings",
                       "context": {
                         "entity": "sale\\customer\\CustomerNature",
                         "view": "list.default"
@@ -116,8 +118,9 @@
                   "id": "item.new_customer",
                   "type": "entry",
                   "label": "New customer",
-                  "description": "", 
+                  "description": "",
                   "icon": "add",
+                  "route": "/bookings",
                   "context": {
                     "entity": "sale\\customer\\Customer",
                     "view": "form.create",
@@ -129,7 +132,8 @@
                   "id": "item.all_customers",
                   "type": "entry",
                   "label": "All customers",
-                  "description": "", 
+                  "description": "",
+                  "route": "/bookings",
                   "context": {
                     "entity": "sale\\customer\\Customer",
                     "view": "list.default",
@@ -140,14 +144,15 @@
                   "id": "item.all_partners",
                   "type": "entry",
                   "label": "All partners",
-                  "description": "", 
+                  "description": "",
+                  "route": "/bookings",
                   "context": {
                     "entity": "identity\\Partner",
                     "view": "list.default"
                   }
-                }                
+                }
               ]
-            }                      
+            }
         ]
     }
 }

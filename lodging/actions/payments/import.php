@@ -4,8 +4,10 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use sale\pay\BankStatement;
-use sale\pay\BankStatementLine;
+
+use lodging\identity\CenterOffice;
+use lodging\sale\booking\BankStatement;
+use lodging\sale\booking\BankStatementLine;
 
 list($params, $providers) = announce([
     'description'   => "Import a Bank statements file and return the list of created statements. Already existing statements will be ignored.",
@@ -46,13 +48,24 @@ $result = [];
 $statements = $data;
 
 foreach($statements as $statement) {
+
+    $iban = BankStatement::_convert_to_iban($statement['account']['number']);
+
+    $center_office = CenterOffice::search(['bank_account_iban', '=', $iban])->read(['id'])->first();
+
+    if(!$center_office) {
+        // restricted to identified users
+        throw new Exception('unknown_account_number', QN_ERROR_INVALID_PARAM);
+    }
+
     $fields = [
         'raw_data'              => $params['data'],
         'date'                  => $statement['date'],
         'old_balance'           => $statement['old_balance'],
         'new_balance'           => $statement['new_balance'],
         'bank_account_number'   => $statement['account']['number'],
-        'bank_account_bic'      => $statement['account']['bic']
+        'bank_account_bic'      => $statement['account']['bic'],
+        'center_office_id'      => $center_office['id']
     ];
 
     try {
@@ -69,9 +82,11 @@ foreach($statements as $statement) {
                     'date'                  => $statement['date'],
                     'amount'                => $transaction['amount'],
                     'account_holder'        => $transaction['account']['name'],
-                    'account_iban'          => $transaction['account']['number'],
+                    // should be an IBAN (though could theorically not be)
+                    'account_iban'          => $transaction['account']['number'],   
                     'message'               => $transaction['message'],
-                    'structured_message'    => $transaction['structured_message']
+                    'structured_message'    => $transaction['structured_message'],
+                    'center_office_id'      => $center_office['id']                    
                 ];
                 BankStatementLine::create($fields);
             }
@@ -124,7 +139,7 @@ sinon
 	=> statement_line_id, booking_funding_id
 
 	(sinon on n'est pas certain de la raison du paiement)
-    
+
 */
 
 $context->httpResponse()

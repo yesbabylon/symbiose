@@ -40,7 +40,8 @@ $user = User::ids($ids)
                 'identity_id' => ['firstname', 'lastname'], 
                 'language', 
                 'organisation_id', 
-                'centers_ids'
+                'centers_ids',
+                'center_offices_ids'
             ])
             ->adapt('txt')
             ->first();
