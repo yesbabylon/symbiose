@@ -43,14 +43,13 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The customer whom the booking relates to (computed).",
-                'required'          => true
+                'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
             ],
 
             'customer_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The Customer identity.",
-                'required'          => true,
                 'onchange'          => 'sale\booking\Booking::onchangeCustomerIdentityId'
             ],
 
@@ -341,12 +340,53 @@ class Booking extends Model {
         return $result;
     }
 
+    public static function onchangeCustomerId($om, $oids, $lang) {
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id'], $lang);
+
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                if(!$booking['customer_identity_id']) {
+                    $om->write(__CLASS__, $bid, ['customer_identity_id' => $booking['customer_id.partner_identity_id']], $lang);
+                }
+            }
+        }
+    }
+
     public static function onchangeCustomerIdentityId($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['name' => null, 'customer_id' => null]);
-        // force immediate recomputing of the name/reference
-        $booking_lines_groups_ids = $om->read(__CLASS__, $oids, ['name', 'customer_id', 'booking_lines_groups_ids']);
-        if($booking_lines_groups_ids > 0 && count($booking_lines_groups_ids)) {
-            $om->call('sale\booking\BookingLineGroup', '_updatePriceAdapters', $booking_lines_groups_ids, $lang);
+        // reset name
+        $om->write(__CLASS__, $oids, ['name' => null]);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
+
+        if($bookings > 0) {
+            foreach($bookings as $oid => $booking) {
+                if(!$booking['customer_id']) {
+                    $partner_id = null;
+
+                    // find the partner that related to this identity, if any
+                    $partners_ids = $om->search('sale\customer\Customer', [
+                        ['relationship', '=', 'customer'],
+                        ['owner_identity_id', '=', 1],
+                        ['partner_identity_id', '=', $booking['customer_identity_id']]
+                    ]);
+                    if(count($partners_ids)) {
+                        $partner_id = reset($partners_ids);
+                    }
+                    else {
+                        // read Identity [type_id]
+                        $identities = $om->read('identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                        if($identities > 0) {
+                            $identity = reset($identities);
+                            $partner_id = $om->create('sale\customer\Customer', [
+                                'partner_identity_id'   => $booking['customer_identity_id'],
+                                'customer_type_id'      => $identity['type_id']
+                            ]);
+                        }
+                    }
+                    if($partner_id) {
+                        $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
+                    }
+                }
+            }
         }
     }
 
@@ -387,12 +427,15 @@ class Booking extends Model {
             return [];
         }
         else {
-            $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+            $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
 
             if($res > 0) {
                 foreach($res as $oids => $odata) {
                     if($odata['status'] != 'quote') {
                         return ['status' => ['non_editable' => 'Booking can only be updated while its status is quote.']];
+                    }
+                    if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
+                        return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
                     }
                 }
             }

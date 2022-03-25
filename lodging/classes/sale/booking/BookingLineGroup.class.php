@@ -349,7 +349,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             if(count($update_groups_ids)) {
                 $om->call(__CLASS__, '_updatePriceId', $update_groups_ids, $lang);
                 $om->write(__CLASS__, $update_groups_ids, ['vat_rate' => null, 'unit_price' => null, 'price' => null, 'total' => null ]);
-                // #todo - reset booking total price (if price set to store)
             }
         }
     }
