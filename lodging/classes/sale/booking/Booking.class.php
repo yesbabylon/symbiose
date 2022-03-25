@@ -33,7 +33,6 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The customer whom the booking relates to.",
-                'required'          => true,
                 'onchange'          => 'onchangeCustomerIdentityId'
             ],
 
@@ -198,14 +197,29 @@ class Booking extends \sale\booking\Booking {
         if($bookings > 0) {
             foreach($bookings as $oid => $booking) {
                 if(!$booking['customer_id']) {
-                    // read Identity [type_id]
-                    $identities = $om->read('identity\Identity', $booking['customer_identity_id'], ['type_id']);
-                    if($identities > 0) {
-                        $identity = reset($identities);
-                        $partner_id = $om->create('sale\customer\Customer', [
-                            'partner_identity_id'   => $booking['customer_identity_id'],
-                            'customer_type_id'      => $identity['type_id']
-                        ]);
+                    $partner_id = null;
+
+                    // find the partner that related to this identity, if any
+                    $partners_ids = $om->search('sale\customer\Customer', [
+                        ['relationship', '=', 'customer'],
+                        ['owner_identity_id', '=', 1],
+                        ['partner_identity_id', '=', $booking['customer_identity_id']]
+                    ]);
+                    if(count($partners_ids)) {
+                        $partner_id = reset($partners_ids);
+                    }
+                    else {
+                        // read Identity [type_id]
+                        $identities = $om->read('identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                        if($identities > 0) {
+                            $identity = reset($identities);
+                            $partner_id = $om->create('sale\customer\Customer', [
+                                'partner_identity_id'   => $booking['customer_identity_id'],
+                                'customer_type_id'      => $identity['type_id']
+                            ]);
+                        }
+                    }
+                    if($partner_id) {
                         $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
                     }
                 }
@@ -215,7 +229,7 @@ class Booking extends \sale\booking\Booking {
 
     public static function onchangeCustomerId($om, $oids, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids', 'customer_id.partner_identity_id.description'], $lang);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'booking_lines_groups_ids', 'customer_id.partner_identity_id', 'customer_id.partner_identity_id.description'], $lang);
 
         if($bookings > 0) {
             $booking_line_groups_ids = [];
@@ -223,8 +237,15 @@ class Booking extends \sale\booking\Booking {
                 if($booking['booking_lines_groups_ids']) {
                     $booking_line_groups_ids = array_merge($booking_line_groups_ids, $booking['booking_line_groups_ids']);
                 }
+                $values = [];
                 if($booking['customer_id.partner_identity_id.description']) {
-                    $om->write(__CLASS__, $bid, ['description' => $booking['customer_id.partner_identity_id.description']], $lang);
+                    $values['description'] = $booking['customer_id.partner_identity_id.description'];
+                }
+                if(!$booking['customer_identity_id']) {
+                    $values['customer_identity_id'] = $booking['customer_id.partner_identity_id'];
+                }
+                if(count($values)) {
+                    $om->write(__CLASS__, $bid, $values, $lang);
                 }
             }
             if(count($booking_line_groups_ids)) {
@@ -267,7 +288,7 @@ class Booking extends \sale\booking\Booking {
 
         if(isset($event['customer_identity_id'])) {
 
-            // find the partner that related to this identioty, if any
+            // find the partner that related to this identity, if any
             $partners_ids = $om->search('sale\customer\Customer', [
                 ['relationship', '=', 'customer'],
                 ['owner_identity_id', '=', 1],
