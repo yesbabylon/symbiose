@@ -35,8 +35,7 @@ before_script:
   - cp -r ./equal/packages-core/* ./equal/packages/
   - rm -rf ./equal/packages-core
   - mv ./equal/* ./
-  # import staging data  
-  - curl -O http://yb.run/discope_db.sql 
+  # - curl -O http://yb.run/discope_db.sql 
   - cat discope_db.sql | mysql -u root --password="test" $DB_NAME
 
 script: 
@@ -45,5 +44,4 @@ script:
   # check ability to connect to the dbms service
   - php run.php --do=test_db-connectivity
   # run test units
-  # - php run.php --do=test_package --package=lodging --logs=true
-  - php run.php --do=test_package --package=lodging
+  - php run.php --do=test_package --package=lodging 
