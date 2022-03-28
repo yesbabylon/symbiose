@@ -13,7 +13,7 @@
             "invalid": "Le code doit correspondre deux lettres majuscules."
         },
         "errors": {
-            "already_imported": "Cet extrait é déjà été importé.",
+            "already_imported": "Cet extrait a déjà été importé.",
             "unknown_account_number": "Le numéro de l'extrait ne correspond à aucun compte interne."
         }
     }

@@ -11,21 +11,14 @@ use lodging\sale\booking\BankStatementLine;
 use sale\customer\Customer;
 
 list($params, $providers) = announce([
-    'description'   => "Export a reconciled bank statement file for importing in an external accounting software.",
-    'params'        => [
-        'id' =>  [
-            'description'   => 'identifier of the BankStatement to export.',
-            'type'          => 'integer',
-            'required'      => true
-        ]
-    ],
+    'description'   => "Export a zip archive containing all reconciled bank statements for importing in an external accounting software.",
     'access' => [
         'visibility'        => 'public',
         'groups'            => ['sale.default.user'],
     ],
     'response'      => [
-        'content-type'        => 'text/plain',
-        'content-disposition' => 'attachment; filename="export.coda"',
+        'content-type'        => 'application/zip',
+        'content-disposition' => 'attachment; filename="export.zip"',
         'charset'             => 'utf-8',
         'accept-origin'       => '*'
     ],
@@ -34,34 +27,43 @@ list($params, $providers) = announce([
 
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
-$statement = BankStatement::id($params['id'])
-                          ->read(['raw_data', 'status', 'statement_lines_ids' => ['account_iban', 'customer_id' => ['id', 'ref_account'] ]])
-                          ->first();
 
-if(!$statement) {
-  throw new Exception('unknown_statement', QN_ERROR_INVALID_PARAM);
-}
+$statements = BankStatement::search(['status', '=', 'reconciled'])
+  ->read(['name', 'raw_data', 'status', 'statement_lines_ids' => ['account_iban', 'customer_id' => ['id', 'ref_account'] ]])
+  ->get();
 
-if($statement['status'] != 'reconciled') {
-  throw new Exception('statement_not_ready', QN_ERROR_NOT_ALLOWED);
-}
 
-$coda = $statement['raw_data'];
+if($statements) {
 
-foreach($statement['statement_lines_ids'] as $lid => $line) {
-  if( $line['customer_id'] ) {
+  // create zip archive
+  $tmpfile = tempnam(sys_get_temp_dir(), "zip");
+  $zip = new ZipArchive();
+  $zip->open($tmpfile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+  
 
-    $ref_account = $line['customer_id']['ref_account'];
-    if(!$ref_account) {
-      $ref_account = $line['account_iban'];
-      $orm->write('sale\customer\Customer', $line['customer_id']['id'], ['ref_account' => $ref_account]);
+  foreach($statements as $statement) {
+    $coda = $statement['raw_data'];
+
+    // adapt account numbers with customers ref_account
+    foreach($statement['statement_lines_ids'] as $lid => $line) {
+      if( $line['customer_id'] ) {    
+        $ref_account = $line['customer_id']['ref_account'];
+        if(!$ref_account) {
+          $ref_account = $line['account_iban'];
+          $orm->write('sale\customer\Customer', $line['customer_id']['id'], ['ref_account' => $ref_account]);
+        }
+        else {
+          $coda = str_replace($line['account_iban'], $ref_account, $coda);
+        }    
+      }
     }
-    else {
-      $coda = str_replace($line['account_iban'], $ref_account, $coda);
-    }    
+    $zip->addFromString($statement['name'].'.cod', $coda);
   }
+  $zip->close();
+  $data = file_get_contents($tmpfile);
+  unlink($tmpfile);   
 }
 
 $context->httpResponse()
-        ->body($coda)
+        ->body($data)
         ->send();
