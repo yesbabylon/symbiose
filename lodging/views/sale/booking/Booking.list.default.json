@@ -89,10 +89,17 @@
             },
             {
                 "type": "field",
-                "label": "Nb Pers",                
+                "label": "Nb Pers",
                 "value": "nb_pers",
                 "width": "15%",
-                "sortable": true                
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Price",
+                "value": "price",
+                "width": "15%",
+                "sortable": true
             }
         ]
     }

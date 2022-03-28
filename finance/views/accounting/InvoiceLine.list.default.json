@@ -4,6 +4,14 @@
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
      },
+    "operations": {
+        "total": {
+            "price": {
+                "type": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "limit": 100,
     "layout": {
         "items": [
@@ -53,13 +61,5 @@
                 "width": "15%"
             }
         ]
-    },
-    "operations": {
-        "total": {
-            "price": {
-                "type": "SUM",
-                "usage": "amount/money:2"
-            }
-        }
     }
 }
