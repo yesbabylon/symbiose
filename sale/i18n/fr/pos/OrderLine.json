@@ -1,0 +1,44 @@
+{
+    "name": "Line d'operation",
+    "plural": "Lines d'operation",
+    "description": "",
+    "model": {
+        "type": {
+            "label": "Type",
+            "description": "Le genre d'opération.",
+            "selection": {
+                "direct": "direct",
+                "booking": "réservation"
+            },
+            "help": ""
+        },
+        "operation_id": {
+            "label": "Opération",
+            "description": "L'opération à laquelle se rapporte le paiement.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit visé par la ligne.",
+            "help": ""
+        },
+        "booking_line_id": {
+            "label": "Ligne de réservation",
+            "description": "La ligne de réservation ciblée par la ligne d'opération.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne d'operation",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Lignes d'operation",
+            "description": "Cette vue est destinée à afficher la liste des lignes d'operation.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

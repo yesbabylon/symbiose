@@ -1,5 +1,5 @@
 {
-    "name": "Cashdesk Log",
+    "name": "Cashdesk",
     "description": "",
     "access": {
         "groups": ["pos.default.user"]
@@ -13,28 +13,19 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "date",
-                                                "width": "100%"
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "amount",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "User",
-                                                "value": "user_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Cashdesk",
-                                                "value": "cashdesk_id",
+                                                "value": "center_id",
                                                 "width": "50%"
                                             }
                                         ]

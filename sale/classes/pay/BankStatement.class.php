@@ -78,7 +78,7 @@ class BankStatement extends Model {
             'bank_account_iban' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'usage '            => 'uri/urn.iban',
+                'usage'             => 'uri/urn.iban',
                 'function'          => 'sale\pay\BankStatement::getBankAccountIban',
                 'description'       => 'IBAN representation of the account number.',
                 'store'             => true

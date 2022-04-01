@@ -49,10 +49,10 @@ class Document extends Model {
 
             'link' => [
                 'type'              => 'computed',
-                'description'       => 'URL to visual edior of the module.',
-                'function'          => 'documents\Document::getLink',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
+                'description'       => 'URL to visual edior of the module.',
+                'function'          => 'documents\Document::getLink',
                 'store'             => true,
                 'readonly'          => true
             ],

@@ -1,6 +1,6 @@
 {
-    "name": "Cashdesk Logs",
-    "description": "This view is intended for displaying the list of cashdesk logs.",
+    "name": "Cashdesk Sessions",
+    "description": "List of cashdesk logs (sessions).",
     "access": {
         "groups": ["pos.default.user"]
      },
@@ -8,7 +8,7 @@
         "items": [
             {
                 "type": "field",
-                "value": "date",
+                "value": "created",
                 "width": "20%"
             },
             {

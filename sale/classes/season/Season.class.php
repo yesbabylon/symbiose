@@ -50,7 +50,8 @@ class Season extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\season\SeasonPeriod',
                 'foreign_field'     => 'season_id',
-                'description'       => 'Periods that are part of the season (on a yearly basis).'
+                'description'       => 'Periods that are part of the season (on a yearly basis).',
+                'ondetach'          => 'delete'
             ]
 
         ];

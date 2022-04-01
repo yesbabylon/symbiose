@@ -13,19 +13,9 @@
             "description": "Ordre du groupe dans la liste.",
             "help": ""
         },
-        "has_pack": {
-            "label": "Utilise un Pack ?",
-            "description": "Le groupe se rapporte-t-il à un pack ?",
-            "help": ""
-        },
         "pack_id": {
             "label": "Pack",
             "description": "Pack (produit) auquel le groupe se rapporte, le cas échéant.",
-            "help": ""
-        },
-        "is_locked": {
-            "label": "Est verrouillé",
-            "description": "Les modifications sont-elles désactivées pour le groupe ?",
             "help": ""
         },
         "date_from": {
@@ -36,15 +26,6 @@
         "date_to": {
             "label": "Date à",
             "description": "Heure de départ.",
-            "help": ""
-        },
-        "sojourn_type": {
-            "label": "Type de séjour",
-            "description": "Le genre de séjour que le groupe est sur.",
-            "selection": {
-                "GA": "GA",
-                "GG": "GG"
-            },
             "help": ""
         },
         "nb_pers": {

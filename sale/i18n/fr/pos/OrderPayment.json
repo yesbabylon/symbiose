@@ -1,0 +1,61 @@
+{
+    "name": "Paiement de commande",
+    "plural": "Paiements de commandes",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Name",
+            "description": "Identifant du paiement.",
+            "help": ""
+        },
+        "order_id": {
+            "label": "Commande",
+            "description": "The order the line relates to."
+        },
+        "status": {
+            "label": "Statut",
+            "selection": {
+                "pending": "en cours",
+                "paid": "payé"
+            }
+        },
+        "order_lines_ids": {
+            "label": "Lignes de commande",
+            "description": "Les lignes de commande sélectionnées pour le paiement."
+        },
+        "order_payment_parts_ids": {
+            "label": "Lignes de paiement",
+            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement."
+        },
+        "total_due": {
+            "label": "Total dû",
+            "description": "Montant total (TTC) des lignes de commande sélectionnées.",
+            "help": ""
+        },
+        "total_paid": {
+            "label": "Total payé",
+            "description": "Montant total reçu.",
+            "help": ""
+        }                
+    },
+    "view": {
+        "form.default": {
+            "layout": {
+                "section.order_lines": {
+                    "label": "Lignes de commande"
+                },
+                "section.payment_parts": {
+                    "label": "Lignes de paiement"
+                }
+            },
+            "actions": {
+                "action.validate": {
+                    "description": "Le paiement sera marqué comme payé et les operations de caisse seront créées."
+                }
+            }
+        }
+    },
+    "error": {
+
+    }
+}

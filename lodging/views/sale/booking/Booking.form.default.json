@@ -3,7 +3,7 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "actions": [
         {
             "id": "action.quote",
@@ -65,6 +65,73 @@
             "visible": ["status", "<>", "balanced"]
         }
     ],
+    "routes": [
+        {
+            "id": "item.booking.file",
+            "label": "Booking form",
+            "description": "",
+            "icon": "library_books",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "form.default",
+                "domain": ["id", "=", "object.id"]
+            }
+        },
+        {
+            "id": "item.booking.edit",
+            "label": "Booked services",
+            "description": "",
+            "icon": "room_service",
+            "route": "/bookings/edit/object.id"
+        },
+        {
+            "id": "item.booking.composition",
+            "label": "Hosts details",
+            "description": "",
+            "icon": "view_list",
+            "route": "/bookings/composition/object.id",
+            "visible": ["status", "not in", ["quote", "option"]]
+        },
+        {
+            "id": "item.booking.contract",
+            "label": "Send contrat",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/bookings/contract/object.id",
+            "visible": ["has_contract", "=", true]
+        },
+        {
+            "id": "item.booking.quote",
+            "label": "Send quote",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/bookings/quote/object.id",
+            "visible": ["status", "=", "quote"]
+        },
+        {
+            "id": "item.booking.consumptions",
+            "label": "Consumptions",
+            "description": "",
+            "icon": "calendar_today",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Consumption",
+                "target_entity": "lodging\\sale\\booking\\Booking",
+                "view": "list.default",
+                "domain": ["booking_id", "=", "object.id"]
+            },
+            "visible": ["status", "<>", "quote"]
+        },
+        {
+            "id": "item.booking.payments",
+            "label": "Payments",
+            "description": "",
+            "icon": "view_list",
+            "route": "/bookings/payments",
+            "visible": false
+        }
+    ],    
     "layout": {
         "groups": [
             {

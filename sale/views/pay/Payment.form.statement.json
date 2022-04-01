@@ -29,12 +29,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "funding_id",
                                                 "width": "100%",
                                                 "widget": {
@@ -45,7 +39,13 @@
                                                     },
                                                     "domain": ["is_paid", "=", false]
                                                 }
-                                            }                                            
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partner",
+                                                "value": "partner_id",
+                                                "width": "50%"
+                                            }
                                         ]
                                     }
                                 ]

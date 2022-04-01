@@ -11,12 +11,13 @@ class Operation extends Model {
 
     public static function getColumns() {
 
-        return [
+        return [       
 
             'name' => [
-                'type'              => 'string',
-                'description'       => "Short mnemo to identify the desk.",
-                'required'          => true
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'getDisplayName',
+                'store'             => true
             ],
 
             'user_id' => [
@@ -29,8 +30,9 @@ class Operation extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [ 
+                    'opening',        // operation is a session opening
                     'sale',           // operation is a sale
-                    'move',           // operation is a cash movement (cash refill or cash out)
+                    'move',           // operation is a cash movement (cash in or cash out)
                 ],
                 'description'       => 'The kind of operation.'
             ],
@@ -42,29 +44,35 @@ class Operation extends Model {
                 'required'          => true
             ],
 
-            'total' => [
+            'amount' => [
                 'type'              => 'float',
-                'required'          => true,
-                'description'       => "Total amount of the sale."
-            ],
-
-            'amount_paid' => [
-                'type'              => 'float',
+                'usage'             => 'amount/money',
+                'description'       => 'Amount of the operation (cash in for positive amount, cash out otherwise).',    
                 'default'           => 0.0
             ],
 
-            'amount_returned' => [
-                'type'              => 'float',
-                'default'           => 0.0
-            ],
+            'description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Reason of the movement.'
+            ]
 
-            'payments_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'sale\pay\Payment',
-                'foreign_field'     => 'operation_id',
-                'description'       => 'The payments that are part of the operation.'
-            ],            
         ];
     }
+
+
+    public static function getDisplayName($om, $ids, $lang) {
+        $result = [];
+
+        $operations = $om->read(get_called_class(), $ids, ['cashdesk_id.name', 'type', 'amount'], $lang);
+
+        if($operations > 0) {
+            foreach($operations as $oid => $operation) {
+                $result[$oid] = $operation['cashdesk_id.name'].' - '.$operation['type'].': '.$operation['amount'];
+            }
+        }
+
+        return $result;
+    }    
 
 }

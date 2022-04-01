@@ -1,0 +1,41 @@
+{
+    "name": "Cashdesk Sessions",
+    "description": "List of cashdesk logs (sessions).",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for session creation"
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "created",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "center_id",
+                "width": "25%"
+            }
+        ]
+    }
+}

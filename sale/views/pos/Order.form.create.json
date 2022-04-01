@@ -1,0 +1,78 @@
+{
+    "name": "Order",
+    "description": "Point of Sale order.",
+    "access": {
+        "groups": ["pos.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Session",
+                                                "value": "session_id",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "domain": [ ["user_id", "=", "user.id"], ["status", "=", "pending"] ]
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Has invoice",
+                                                "value": "has_invoice",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Invoice",
+                                                "value": "invoice_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "",
+                        "label": "Order Lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "order_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }            
+        ]
+    }
+}

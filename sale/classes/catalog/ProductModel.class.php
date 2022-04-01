@@ -133,12 +133,14 @@ class ProductModel extends Model {
             ],
 
             'description_delivery' => [
-                'type'              => 'text',
+                'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => "Description for delivery notes."
             ],
 
             'description_receipt' => [
-                'type'              => 'text',
+                'type'              => 'string',
+                'usage'             => 'text/plain',                
                 'description'       => "Description for reception vouchers."
             ],
 

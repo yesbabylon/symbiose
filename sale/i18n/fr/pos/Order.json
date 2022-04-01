@@ -1,0 +1,57 @@
+{
+    "name": "Commande",
+    "plural": "Commandes",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Name",
+            "description": "Identifant de la commande.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "selection": {
+                "pending": "en cours",
+                "payment": "paiement",
+                "paid": "payé"
+            }
+        },
+        "session_id": {
+            "label": "Session",
+            "description": "La session de caisse à laquelle appartient la commande."
+        },
+        "order_lines_ids": {
+            "label": "Lignes de commande",
+            "description": "Les lignes de commande sélectionnées pour le paiement."
+        },
+        "order_payment_ids": {
+            "label": "Paiement",
+            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement."
+        },
+        "total": {
+            "label": "Total HT",
+            "description": "Somme des totaux HT des lignes de commande.",
+            "help": ""
+        },
+        "price": {
+            "label": "Total TTC",
+            "description": "Somme des totaux TTC des lignes de commande.",
+            "help": ""
+        }                
+    },
+    "view": {
+        "form.default": {
+            "layout": {
+                "section.order_lines": {
+                    "label": "Lignes de commande"
+                },
+                "section.payments": {
+                    "label": "Paiements"
+                }
+            }
+        }
+    },
+    "error": {
+
+    }
+}

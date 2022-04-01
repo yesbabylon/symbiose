@@ -1,5 +1,5 @@
 {
-    "name": "Operation Line",
+    "name": "Order Payment line",
     "description": "",
     "access": {
         "groups": ["pos.default.user"]
@@ -17,25 +17,23 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "label": "Amount",
+                                                "value": "amount",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Method",
+                                                "value": "payment_method",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Operation",
-                                                "value": "operation_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Product",
-                                                "value": "product_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Booking Line",
-                                                "value": "booking_line_id",
+                                                "label": "Reference",
+                                                "value": "voucher_ref",
                                                 "width": "50%"
                                             }
                                         ]

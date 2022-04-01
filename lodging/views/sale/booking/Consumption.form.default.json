@@ -3,7 +3,21 @@
     "description": "A Consumption is a service delivery that can be scheduled and is related to a booking.",  
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "routes": [
+        {
+            "id": "item.booking.file",
+            "label": "Fiche de réservation",
+            "description": "",
+            "icon": "library_books",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "form.default",
+                "domain": ["id", "=", "object.booking_id"]
+            }
+        }        
+    ],    
     "layout": {
         "groups": [
             {

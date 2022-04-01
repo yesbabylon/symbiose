@@ -1,0 +1,42 @@
+{
+    "name": "Order payment line",
+    "description": "List of order payment lines.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "operations": {
+        "total": {
+            "amount": {
+                "type": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,    
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "receipt_date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Method",
+                "value": "payment_method",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Operation",
+                "value": "operation_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

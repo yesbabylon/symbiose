@@ -47,7 +47,8 @@ class Product extends Model {
             ],
 
             'description' => [
-                'type'              => 'text',
+                'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => "Description of the variant (specifics)."
             ],
 

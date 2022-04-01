@@ -29,8 +29,17 @@
             "confirm": true,
             "visible": ["status", "<>", "cancelled"]
         }
-
     ],
+    "routes": [
+        {
+            "id": "item.contract.send",
+            "label": "Envoi du contrat",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/bookings/contract/object.booking_id",
+            "visible": ["status", "in", ["pending", "sent"]]
+        }              
+    ],    
     "layout": {
         "groups": [
             {

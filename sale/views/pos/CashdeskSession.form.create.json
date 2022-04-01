@@ -1,0 +1,71 @@
+{
+    "name": "Cashdesk Log",
+    "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true,
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "amount",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%"
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "User",
+                                                "value": "user_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["id", "=", "user.id"]
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Cashdesk",
+                                                "value": "cashdesk_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["center_id", "in", "user.centers_ids"]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

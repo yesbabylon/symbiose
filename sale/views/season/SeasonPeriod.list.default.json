@@ -3,7 +3,10 @@
     "description": "This view is intended for displaying the list of season period.",
     "access": {
         "groups": ["sale.default.admin"]
-     },
+    },
+    "order": "date_from",
+    "group_by": ["month"],
+    "limit": 100,
     "layout": {
         "items": [
             {
@@ -12,6 +15,17 @@
                 "value": "season_id",
                 "width": "20%"
             },
+            {
+                "type": "field",
+                "value": "year",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "month",
+                "width": "20%"
+            },
+
             {
                 "type": "field",
                 "value": "date_from",

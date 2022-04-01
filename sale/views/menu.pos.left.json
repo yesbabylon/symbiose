@@ -1,0 +1,76 @@
+{
+    "name": "PoS menu",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+              "id": "item.pos_sessions",
+              "label": "Sessions",
+              "description": "",
+              "icon": "menu_book",
+              "type": "parent",
+              "children": [
+                {
+                    "id": "item.pos_sessions.pending",
+                    "type": "entry",
+                    "label": "Pending sessions",
+                    "description": "", 
+                    "context": {
+                        "entity": "lodging\\sale\\pos\\CashdeskSession",
+                        "view": "list.default",
+                        "order": "created",
+                        "sort": "desc",
+                        "domain": [ ["status", "=", "pending"], ["center_id", "in", "user.centers_ids"] ]
+                    }
+                },
+                {
+                  "id": "item.pos_sessions.history",
+                  "type": "entry",
+                  "label": "Reconciled lines",
+                  "description": "", 
+                  "context": {
+                    "entity": "lodging\\sale\\pos\\CashdeskSession",
+                    "view": "list.reconciled",
+                    "order": "created",
+                    "sort": "desc",
+                    "domain": [ ["status", "=", "closed"], ["center_id", "in", "user.centers_ids"] ]
+                  }
+                },
+                {
+                  "id": "item.pos_orders.orders",
+                  "type": "entry",
+                  "label": "Orders  ",
+                  "description": "", 
+                  "context": {
+                    "entity": "lodging\\sale\\pos\\Order",
+                    "view": "list.default"
+                  }
+                },
+                {
+                    "id": "item.pos_orders.operations",
+                    "type": "entry",
+                    "label": "Operations",
+                    "description": "", 
+                    "context": {
+                      "entity": "sale\\pos\\Operation",
+                      "view": "list.default"
+                    }
+                },
+                {
+                    "id": "item.pos_orders.payments",
+                    "type": "entry",
+                    "label": "Payments",
+                    "description": "", 
+                    "context": {
+                      "entity": "sale\\pos\\OrderPayment",
+                      "view": "list.default"
+                    }
+                }  
+
+              ]
+            }               
+        ]
+    }
+}

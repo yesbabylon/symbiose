@@ -1,0 +1,119 @@
+{
+    "name": "Order Payment",
+    "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "actions": [
+        {
+            "id": "action.validate",
+            "label": "Validate",
+            "controller": "sale_pos_payment_validate",
+            "confirm": true,
+            "visible": ["status", "=", "pending"]
+        }
+    ],    
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Order",
+                                                "value": "order_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Total",
+                                                "value": "total_paid",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Total",
+                                                "value": "total_due",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.payment_parts",
+                        "label": "Payment parts",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "order_payment_parts_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["payment_origin", "=", "cashdesk"]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
+                    {
+                        "id": "section.order_lines",
+                        "label": "Order lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "order_lines_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": true,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    },
+                                                    "domain": ["order_id", "=", "object.order_id"]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
+                ]
+            }            
+        ]
+    }
+}
