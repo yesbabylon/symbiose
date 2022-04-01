@@ -26,7 +26,19 @@ class Payment extends \sale\pay\Payment {
                 'foreign_object'    => 'sale\booking\Funding',
                 'description'       => 'The funding the payement relates to, if any.',
                 'onchange'          => 'sale\pay\Payment::onchangeFundingId'
-            ]
+            ],
+
+            'payment_method' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'voucher',              // gift, coupon, or tour-operator voucher
+                    'cash',                 // cash money                    
+                    'bank_card',            // electronic payment with bank (or credit) card
+                    'booking'               // electronic payment with bank (or credit) card                    
+                ],
+                'description'       => "The method used for payment at the cashdesk.",
+                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ]
+            ]            
 
         ];
     }

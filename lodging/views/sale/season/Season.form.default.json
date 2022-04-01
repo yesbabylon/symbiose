@@ -3,7 +3,12 @@
     "description": "",
     "access": {
         "groups": ["sale.default.user"]
-     },
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [{"id": "SAVE_AND_CONTINUE"}, {"id": "SAVE_AND_CLOSE"}]
+        }
+    },
     "layout": {
         "groups": [
             {

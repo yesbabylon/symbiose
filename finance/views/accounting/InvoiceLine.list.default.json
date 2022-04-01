@@ -3,7 +3,7 @@
     "description": "This view is intented for displaying the invoice lines.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
-     },
+    },
     "operations": {
         "total": {
             "price": {

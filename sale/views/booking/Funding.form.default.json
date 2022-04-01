@@ -3,7 +3,35 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "routes": [
+        {
+            "id": "item.booking.file",
+            "label": "Fiche de réservation",
+            "description": "",
+            "icon": "library_books",
+            "route": "/bookings/",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "form.default",
+                "domain": ["id", "=", "object.booking_id"]
+            }
+        },
+        {
+            "id": "item.funding.send",
+            "label": "Envoi / Rappel",
+            "description": "",
+            "icon": "email",
+            "route": "/bookings/funding/remind/object.booking_id/object.id"
+        },
+        {
+            "id": "item.funding.invoice",
+            "label": "Créer une facture",
+            "description": "",
+            "icon": "file_copy",
+            "route": "/bookings/funding/object.booking_id/object.id"
+        }
+    ],    
     "layout": {
         "groups": [
             {

@@ -25,7 +25,8 @@ class SeasonPeriod extends Model {
                 'type'              => 'date',
                 'description'       => "Date (included) at which the season starts.",
                 'required'          => true,
-                'default'           => time()
+                'default'           => time(),
+                'onchange'          => 'onchangeDateFrom'
             ],
 
             'date_to' => [
@@ -50,9 +51,19 @@ class SeasonPeriod extends Model {
                 'required'          => true
             ],
 
+            'month' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'usage'             => 'date/month',
+                'description'       => "The month during which the season starts.",
+                'function'          => 'getMonth',
+                'store'             => true
+            ],
+
             'year' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
+                'usage'             => 'date/year',
                 'description'       => "The Year the season is part of.",
                 'function'          => 'sale\season\SeasonPeriod::getYear',
                 'store'             => true
@@ -69,10 +80,25 @@ class SeasonPeriod extends Model {
         ];
     }
 
+    public static function onchangeDateFrom($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['month' => null]);
+        // force immediate re-computing
+        $om->read(__CLASS__, $oids, ['month']);
+    }
+
     public static function onchangeSeason($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['year', 'season_category_id']);
+    }
+
+    public static function getMonth($om, $oids, $lang) {
+        $result = [];
+        $periods = $om->read(__CLASS__, $oids, ['date_from']);
+        foreach($periods as $oid => $odata) {
+            $result[$oid] = date('n', $odata['date_from']);
+        }
+        return $result;
     }
 
     public static function getYear($om, $oids, $lang) {

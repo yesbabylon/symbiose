@@ -23,22 +23,22 @@
             "description": "Heure de réception du paiement.",
             "help": ""
         },
-        "payment_method": {
-            "label": "Mode de paiement",
-            "description": "Le mode de paiement utilisé.",
-            "selection": {
-                "voucher": "chèque cadeau, promo",
-                "cashdesk": "caisse",
-                "bank": "virement bancaire"
-            },
-            "help": ""
-        },
         "payment_origin": {
             "label": "Origine de paiment",
             "description": "Origine de l'argent reçu.",
             "selection": {
-                "cash": "en espèces",
-                "bank": "banque"
+                "cashdesk": "Caisse",
+                "bank": "Banque"
+            },
+            "help": ""
+        },
+        "payment_method": {
+            "label": "Mode de paiement",
+            "description": "Le mode de paiement utilisé.",
+            "selection": {
+                "voucher": "Chèque cadeau (voucher)",
+                "cash": "Espèces",
+                "bank_card": "Carte bancaire"
             },
             "help": ""
         },
@@ -53,8 +53,8 @@
             "help": ""
         },
         "voucher_ref": {
-            "label": "Référence du bon",
-            "description": "La référence du bon auquel se rapporte le paiement.",
+            "label": "Référence du voucher",
+            "description": "La référence du chèque utilisé pour le paiement.",
             "help": ""
         },
         "funding_id": {

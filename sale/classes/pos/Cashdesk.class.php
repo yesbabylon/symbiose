@@ -14,9 +14,9 @@ class Cashdesk extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short mnemo to identify the desk.",
+                'description'       => "Short mnemo to identify the cashdesk.",
                 'required'          => true
-            ],
+            ]
 
         ];
     }

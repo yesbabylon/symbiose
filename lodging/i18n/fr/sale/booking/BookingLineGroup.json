@@ -13,8 +13,8 @@
 			"description": "Méthode de comptabilité quantitative (à partir de product_model).",
 			"help": ""
 		},
-        "is_locked": {
-			"label": "Est Verrouillé",
+		"is_locked": {
+			"label": "Verrouillé",
 			"description": "Les modifications sont-elles désactivées pour le groupe ?",
 			"help": ""
 		},
@@ -28,7 +28,7 @@
 			"description": "Heure de départ.",
 			"help": ""
 		},
-        "sojourn_type": {
+		"sojourn_type": {
 			"label": "Type de Séjour",
 			"description": "Le genre de séjour que le groupe est sur.",
 			"selection":{ "GA" : "GA", "GG": "GG"},
@@ -39,12 +39,12 @@
 			"description": "Le nombre de personnes qui composent ce groupe.",
 			"help": ""
 		},
-        "rate_class_id": {
+		"rate_class_id": {
 			"label": "Classe Tarifaire",
 			"description": "La classe tarifaire qui s'applique au groupe.",
 			"help": ""
 		},
-        "booking_lines_ids": {
+		"booking_lines_ids": {
 			"label": "Lignes de Réservation",
 			"description": "Lignes de réservation qui appartiennent au groupe.",
 			"help": ""
@@ -54,7 +54,7 @@
 			"description": "Des adaptateurs de prix qui s'appliquent à toutes les lignes du groupe (en fonction des paramètres du groupe).",
 			"help": ""
 		},
-        "booking_id": {
+		"booking_id": {
 			"label": "Réservation",
 			"description": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
 			"help": ""

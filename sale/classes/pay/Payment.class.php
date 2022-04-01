@@ -22,7 +22,7 @@ class Payment extends Model {
             'amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Reference from the bank.'
+                'description'       => 'Amount paid (whatever the origin).'
             ],
 
             'communication' => [
@@ -36,31 +36,39 @@ class Payment extends Model {
                 'default'           => time()
             ],
 
-            'payment_method' => [
-                'type'              => 'string',
-                'selection'         => ['voucher','cashdesk','bank'],
-                'description'       => "The method used for payment."
-            ],
-
             'payment_origin' => [
                 'type'              => 'string',
-                'selection'         => ['cash','bank'],
+                'selection'         => [
+                    'cashdesk',             // money was received at the cashdesk
+                    'bank'                  // money was received on a bank account
+                ],
                 'description'       => "Origin of the received money.",
-                'visible'           => [ ['payment_method', '=', 'cashdesk'] ]
+                'default'           => 'bank'
+            ],
+
+            'payment_method' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'voucher',              // gift, coupon, or tour-operator voucher
+                    'cash',                 // cash money
+                    'bank_card'             // electronic payment with bank (or credit) card
+                ],
+                'description'       => "The method used for payment at the cashdesk.",
+                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ]
             ],
 
             'operation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Operation',
                 'description'       => 'The operation the payment relates to.',
-                'visible'           => [ ['payment_method', '=', 'cashdesk'] ]
+                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ]
             ],
 
             'statement_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\BankStatementLine',
                 'description'       => 'The bank statement line the payment relates to.',
-                'visible'           => [ ['payment_method', '=', 'bank'] ]
+                'visible'           => [ ['payment_origin', '=', 'bank'] ]
             ],
 
             'voucher_ref' => [
@@ -115,7 +123,7 @@ class Payment extends Model {
                             'amount'            => $diff
                         ], $lang);
                     }
-    
+
                     $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null]);
                     $fundings_ids[] = $payment['funding_id'];
                 }

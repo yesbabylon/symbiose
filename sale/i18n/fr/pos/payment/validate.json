@@ -1,0 +1,13 @@
+{
+    "name": "Validation d'un paiement en caisse.",
+    "description": "Le paiement sera marqué comme payé et les operations de caisse subséquentes seront créées.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant du paiement ciblé.",
+            "help": ""
+        }
+    },
+    "error": {
+    }
+}

@@ -27,7 +27,8 @@ class BookingFollowup extends Model {
             ],
 
             'message' => [
-                'type'              => 'text',
+                'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => "Communication regarding the booking."
             ],
 

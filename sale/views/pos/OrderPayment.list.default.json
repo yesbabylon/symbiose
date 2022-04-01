@@ -1,0 +1,52 @@
+{
+    "name": "Order payment",
+    "description": "List of order payments.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "operations": {
+        "total": {
+            "total_paid": {
+                "type": "SUM",
+                "usage": "amount/money:2"
+            },
+            "total_due": {
+                "type": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,    
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Order",
+                "value": "order_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Due Amount",
+                "value": "total_due",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Paid Amount",
+                "value": "total_paid",
+                "width": "20%"
+            }
+        ]
+    }
+}

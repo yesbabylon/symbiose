@@ -149,8 +149,8 @@ if(count($params['attachments_ids'])) {
 // send message
 $transport = new Swift_SmtpTransport('smtp.mailtrap.io', 2525 /*, 'ssl'*/);
 
-$transport->setUsername('bb2fb45eb604d0')
-          ->setPassword('ea2a3f06a9d6bf');
+$transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
+          ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
 
 $message = new Swift_Message();
 $message->setTo($params['recipient_email'])

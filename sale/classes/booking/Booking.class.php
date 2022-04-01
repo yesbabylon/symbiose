@@ -27,8 +27,8 @@ class Booking extends Model {
             ],
 
             'description' => [
-                'type'              => 'text',
-                'usage'             => '',
+                'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => "Reason of the booking, for internal use.",
                 'default'           => ''
             ],
@@ -415,16 +415,15 @@ class Booking extends Model {
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
      *
-     * @param  Object   $om         ObjectManager instance.
-     * @param  Array    $oids       List of objects identifiers.
-     * @param  Array   $values     Associative array holding the new values to be assigned.
-     * @param  String   $lang       Language in which multilang fields are being updated.
-     * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         if(isset($values['status'])) {
             // status can always be updated
-            return [];
         }
         else {
             $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);

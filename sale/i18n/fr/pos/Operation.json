@@ -1,71 +1,62 @@
 {
-	"name": "Operation",
-	"plural": "Operations",
-	"description": "",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Mnémo court pour identifier le bureau.",
-			"help": ""
-		},
-		"type": {
-			"label": "Type",
-			"description": "Le genre d'opération.",
-			"selection": {
-				"sale": "vendre",
-				"move": "mouvement"
-			},
-			"help": ""
-		},
-		"user_id": {
-			"label": "Utilisateur",
-			"description": "Utilisateur à l'origine de l'opération.",
-			"help": ""
-		},
-		"cashdesk_id": {
-			"label": "Caisse",
-			"description": "Caisse à laquelle appartiennent les opérations.",
-			"help": ""
-		},
-		"total": {
-			"label": "Montant total",
-			"description": "Montant total de la vente.",
-			"help": ""
-		},
-		"amount_paid": {
-			"label": "Montant payé",
-			"description": "Montant d'argent payé.",
-			"help": ""
-		},
-		"amount_returned": {
-			"label": "Montant retourné",
-			"description": "Montant d'argent retourné.",
-			"help": ""
-		},
-		"payments_ids": {
-			"label": "Paiements",
-			"description": "Les paiements qui font partie de l'opération.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Operation",
-			"description": "",
-			"layout": {
-				"section.operation_section": {
-					"label": "Détails"
-				},
-				"section.payments_section": {
-					"label": "Paiements"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Operations",
-			"description": "Cette vue est destinée à afficher la liste des operations.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Operation",
+    "plural": "Operations",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Mnémo court pour identifier l'opération.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Le genre d'opération.",
+            "selection": {
+                "opening": "ouverture",
+                "sale": "vente",
+                "move": "mouvement"
+            },
+            "help": ""
+        },
+        "user_id": {
+            "label": "Utilisateur",
+            "description": "Utilisateur à l'origine de l'opération.",
+            "help": ""
+        },
+        "cashdesk_id": {
+            "label": "Caisse",
+            "description": "Caisse à laquelle se rapporte l'opération.",
+            "help": ""
+        },
+        "amount": {
+            "label": "Montant de l'opération",
+            "description": "Variation dans la caisse (montant positif ou négatif).",
+            "help": ""
+        },
+        "payments_ids": {
+            "label": "Paiements",
+            "description": "Les paiements qui font partie de l'opération.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Operation",
+            "description": "",
+            "layout": {
+                "section.operation_section": {
+                    "label": "Détails"
+                },
+                "section.payments_section": {
+                    "label": "Paiements"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Operations",
+            "description": "Cette vue est destinée à afficher la liste des operations.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

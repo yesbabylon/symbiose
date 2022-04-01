@@ -1,0 +1,44 @@
+{
+    "name": "Orders",
+    "description": "List of Point of Sale orders.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for order creation"
+                }
+            ]
+        }
+    },     
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Date",
+                "value": "created",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Total",
+                "value": "total",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Price",
+                "value": "price",
+                "width": "20%"
+            }
+        ]
+    }
+}

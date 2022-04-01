@@ -1,0 +1,29 @@
+{
+    "description": "",
+    "view": {
+        "item.pos_sessions": {
+            "label": "Sessions", 
+            "help": ""
+        },
+        "item.pos_sessions.pending": {
+            "label": "Sessions en cours", 
+            "help": ""
+        },
+        "item.pos_sessions.history": {
+            "label": "Historique", 
+            "help": ""
+        },
+        "item.pos_orders.orders":{
+            "label": "Commandes", 
+            "help": ""
+        },
+        "item.pos_orders.operations": {
+            "label": "Opérations", 
+            "help": ""
+        },
+        "item.pos_orders.payments": {
+            "label": "Paiements", 
+            "help": ""
+        }
+    }
+}

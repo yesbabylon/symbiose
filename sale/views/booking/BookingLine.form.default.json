@@ -59,12 +59,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Paid",
-                                                "value": "is_paid",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "vat_rate",
                                                 "width": "100%"
                                             },

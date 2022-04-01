@@ -263,7 +263,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function getPrice($om, $oids, $lang) {
         $result = [];
 
-        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'total', 'is_locked', 'has_pack']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'total', 'vat_rate', 'is_locked', 'has_pack']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {

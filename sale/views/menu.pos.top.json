@@ -1,0 +1,26 @@
+{
+    "name": "PoS menu",
+    "access": {
+      "groups": ["pos.default.user"]
+   },
+    "layout": {
+        "items": [
+            {
+              "id": "item.home",
+              "label": "Home",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/"
+            },
+            {
+              "id": "item.orders",
+              "label": "Pending orders",
+              "description": "",
+              "icon": "person_outline",
+              "type": "entry",
+              "route": "/orders/"      
+            }                      
+        ]
+    }
+}

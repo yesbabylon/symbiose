@@ -65,7 +65,8 @@ foreach($statements as $statement) {
         'new_balance'           => $statement['new_balance'],
         'bank_account_number'   => $statement['account']['number'],
         'bank_account_bic'      => $statement['account']['bic'],
-        'center_office_id'      => $center_office['id']
+        'center_office_id'      => $center_office['id'],
+        'status'                => 'pending'
     ];
 
     try {
@@ -104,7 +105,7 @@ foreach($statements as $statement) {
 
 
 /*
-// try to resolve payments 
+// #todo - try to resolve payments 
 
 
 si la statement_line dispose d'un structured_message 

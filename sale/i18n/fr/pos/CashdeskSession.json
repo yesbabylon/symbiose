@@ -1,0 +1,48 @@
+{
+	"name": "Session de Caisse",
+	"plural": "Sessions de Caisse",
+	"description": "",
+	"model": {
+		"created": {
+			"label": "Date d'ouverture",
+			"description": "Date et heure d'ouverte de la session.",
+			"help": ""
+		},
+		"amount": {
+			"label": "Montant d'ouverture",
+			"description": "Espèces dans la caisse à l'ouverture de la session.",
+			"help": ""
+		},
+		"user_id": {
+			"label": "Utilisateur",
+			"description": "Utilisateur rattaché à la session.",
+			"help": ""
+		},
+		"cashdesk_id": {
+			"label": "Caisse",
+			"description": "Caisse correspondante à la session.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Session de Caisse",
+			"description": "",
+            "routes": {
+                "session.orders": {
+                    "label": "Caisse"
+                },
+                "session.close": {
+                    "label": "Fermer la session"
+                }
+            },
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Sessions de Caisse",
+			"description": "Cette vue est destinée à afficher la liste des journaux de Caisse.",
+			"layout": {}
+		}
+	},
+	"error": {}
+}

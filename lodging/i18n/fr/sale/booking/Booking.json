@@ -64,15 +64,27 @@
                 }
             },
             "routes": {
+                "item.booking.file": {
+                    "label": "Fiche de réservation"
+                },
                 "item.booking.edit": {
-                    "label": "Définir le séjour"
+                    "label": "Services réservés"
                 },
                 "item.booking.composition": {
-                    "label": "Liste de hôtes"
+                    "label": "Composition"
                 },
                 "item.booking.contract": {
                     "label": "Envoyer le contrat"
-                }
+                },
+                "item.booking.quote": {
+                    "label": "Envoi du devis"
+                },
+                "item.booking.consumptions": {
+                    "label": "Consommations"
+                },
+                "item.booking.payments": {
+                    "label": "Paiements"
+                }    
             },
             "layout": {
                 "section.booking_info": {

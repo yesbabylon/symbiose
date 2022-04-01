@@ -64,7 +64,8 @@ class Identity extends Model {
             ],
 
             'description' => [
-                'type'              => 'text',
+                'type'              => 'string',
+                'uusage'            => 'text/plain',
                 'description'       => 'A short reminder to help user identify the targeted person and its specifics.'
             ],
 
