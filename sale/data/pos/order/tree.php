@@ -85,6 +85,7 @@ switch($params['variant']) {
                 'order_lines_ids' => [
                     'id',
                     'order_id',
+                    'order_payment_id',
                     'name',
                     'unit_price',
                     'vat_rate',

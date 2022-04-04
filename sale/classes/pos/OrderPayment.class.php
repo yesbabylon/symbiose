@@ -16,7 +16,8 @@ class OrderPayment extends Model {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
-                'description'       => 'The order the line relates to.'
+                'description'       => 'The order the line relates to.',
+                'onchange'          => 'onchangeOrderId'
             ],
 
             'status' => [
@@ -64,6 +65,23 @@ class OrderPayment extends Model {
         ];
     }
 
+    /**
+     * Populate the payement with remaining orderLines.
+     * This handled is mostly called upon creation and assignation to an order.
+     * 
+     */
+    public static function onchangeOrderId($om, $ids, $lang) {
+        $payments = $om->read(get_called_class(), $ids, ['order_id'], $lang);
+        if($payments > 0) {
+            foreach($payments as $pid => $payment) {
+                // search for remaining (non-assigned) lines from the order
+                $order_lines_ids = $om->search('sale\pos\OrderLine', [ ['order_id', '=', $payment['order_id']], ['order_payment_id', '=', '0'] ]);
+                if($order_lines_ids > 0 && count($order_lines_ids)) {
+                    $om->write(get_called_class(), $pid, ['order_lines_ids' => $order_lines_ids]);    
+                }
+            }            
+        }
+    }
 
     public static function getTotalPaid($om, $ids, $lang) {
         $result = [];
@@ -74,6 +92,7 @@ class OrderPayment extends Model {
                 foreach($payment['order_payment_parts_ids.amount'] as $part) {
                     $result[$oid] += $part['amount'];
                 }
+                $result[$oid] = round($result[$oid], 2);
             }
         }
         return $result;
@@ -88,6 +107,7 @@ class OrderPayment extends Model {
                 foreach($payment['order_lines_ids.price'] as $line) {
                     $result[$oid] += $line['price'];
                 }
+                $result[$oid] = round($result[$oid], 2);
             }
         }
         return $result;
