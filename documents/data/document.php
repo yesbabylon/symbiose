@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the Resipedia project <http://www.github.com/cedricfrancoys/resipedia>
-    Some Rights Reserved, Cedric Francoys, 2018, Yegen
-    Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use documents\Document;
 
@@ -16,8 +16,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'groups'            => ['documents.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'public'
     ],
     'response'      => [
         'accept-origin' => '*'
