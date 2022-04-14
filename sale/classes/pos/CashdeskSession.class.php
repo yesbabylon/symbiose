@@ -104,11 +104,11 @@ class CashdeskSession extends Model {
     public static function getDisplayName($om, $ids, $lang) {
         $result = [];
 
-        $sessions = $om->read(get_called_class(), $ids, ['user_id.name'], $lang);
+        $sessions = $om->read(get_called_class(), $ids, ['cashdesk_id.name', 'user_id.name'], $lang);
 
         if($sessions > 0) {
             foreach($sessions as $sid => $session) {
-                $result[$sid] = $session['user_id.name'];
+                $result[$sid] = $session['user_id.name'].' - '.$session['cashdesk_id.name'];
             }
         }
 

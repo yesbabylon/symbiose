@@ -45,9 +45,9 @@ if(!count($booking['booking_lines_ids'])) {
 
 $consumptions = BookingLine::_getResultingConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
 
-// filter to keep only is_rental_unit
+// filter to keep only accomodations
 $consumptions = array_filter($consumptions, function($a) {
-    return $a['is_rental_unit'];
+    return $a['is_accomodation'];
 });
 
 // sort ascending on date

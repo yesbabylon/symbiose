@@ -35,7 +35,7 @@ class Consumption extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'The booking the comsumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted                
+                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted
             ],
 
             'booking_line_id' => [
@@ -69,10 +69,10 @@ class Consumption extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => [ 
+                'selection'         => [
                     'book',          // consumption relates to a booking
                     'ooo',           // out-of-order
-                ],                
+                ],
                 'description'       => 'The reason the unit is reserved.',
                 'default'           => 'book'
             ],
@@ -84,7 +84,7 @@ class Consumption extends Model {
                 'required'          => true
             ],
 
-            'is_rental_unit' => [
+            'is_accomodation' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the consumption relate to a rental unit?',
                 'default'           => false
@@ -93,8 +93,7 @@ class Consumption extends Model {
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
-                'description'       => "The rental unit the person is assigned to.",
-                'visible'           => ['is_rental_unit', '=', true]
+                'description'       => "The rental unit the consumption is assigned to."
             ],
 
             'disclaimed' => [
@@ -107,6 +106,18 @@ class Consumption extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Does the consumption relate to a meal?',
                 'default'           => false
+            ],
+
+            'is_first' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the consumption the first of a sojourn?',
+                'default'           => false
+            ],
+
+            'qty' => [
+                'type'              => 'integer',
+                'description'       => "How many times the consumption is booked for.",
+                'required'          => true
             ]
 
         ];

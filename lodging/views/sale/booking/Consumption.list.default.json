@@ -4,7 +4,7 @@
     "access": {
         "groups": ["booking.default.user"]
     },
-    "group_by": ["date", "product_id"],
+    "group_by": ["date"],
     "limit": 100,
     "layout": {
         "items": [
@@ -12,13 +12,19 @@
                 "type": "field",
                 "label": "Product",
                 "value": "product_id",
-                "width": "25%"
+                "width": "30%"
             },
             {
                 "type": "field",
+                "value": "qty",
+                "width": "10%"
+            },
+
+            {
+                "type": "field",
                 "value": "date",
-                "width": "15%",
-                "sortable": true
+                "width": "0%",
+                "visible": false
             },
             {
                 "type": "field",
@@ -29,18 +35,18 @@
                 "type": "field",
                 "value": "schedule_to",
                 "width": "10%"
-            },            
+            },
             {
                 "type": "field",
-                "value": "is_rental_unit",
+                "value": "is_accomodation",
                 "width": "10%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
                 "value": "is_meal",
                 "width": "10%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
