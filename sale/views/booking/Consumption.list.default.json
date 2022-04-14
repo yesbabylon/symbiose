@@ -34,7 +34,7 @@
             },
             {
                 "type": "field",
-                "value": "is_rental_unit",
+                "value": "is_accomodation",
                 "width": "10%"
             },
             {

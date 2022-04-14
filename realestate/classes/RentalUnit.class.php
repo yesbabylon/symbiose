@@ -34,12 +34,12 @@ class RentalUnit extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'building', 
-                    'bedroom', 
-                    'bed', 
-                    'meetingroom', 
-                    'diningroom', 
-                    'room', 
+                    'building',
+                    'bedroom',
+                    'bed',
+                    'meetingroom',
+                    'diningroom',
+                    'room',
                     'FFE'               // Furniture, Fixtures, and Equipment
                 ],
                 'description'       => 'Type of rental unit (that relates to capacity).',
@@ -69,13 +69,13 @@ class RentalUnit extends Model {
                 'description'       => 'Flag to mark the unit as (temporarily) unavailable for renting.'
             ],
 
-            'children_ids' => [ 
-                'type'              => 'one2many', 
+            'children_ids' => [
+                'type'              => 'one2many',
                 'description'       => "The list of rental units the current unit can be divided into, if any (i.e. a dorm might be rent as individual beds).",
-                'foreign_object'    => 'realestate\RentalUnit', 
+                'foreign_object'    => 'realestate\RentalUnit',
                 'foreign_field'     => 'parent_id'
             ],
-            
+
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
@@ -86,13 +86,25 @@ class RentalUnit extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'ready',                // unit is clean and ready for customers
-                    'ooo',                  // unit is out-of-order
-                    'cleanup_daily',        // unit requires a daily cleanup
-                    'cleanup_full'          // unit requires a full cleanup
-                ],       
+                    'ready',               // unit is clean and ready for customers
+                    'busy_full',           // unit is fully occupied
+                    'busy_part',           // unit is partially occupied
+                    'ooo'                  // unit is out-of-order
+                ],
                 'description'       => 'Status of the rental unit.',
-                'default'           => 'clean'
+                'default'           => 'ready'
+            ],
+
+            'action_required' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'none',                 // unit does not require any action
+                    'cleanup_daily',        // unit requires a daily cleanup
+                    'cleanup_full',         // unit requires a full cleanup
+                    'repair'                // unit requires repair or maintenance
+                ],
+                'description'       => 'Action required for the rental unit.',
+                'default'           => 'none'
             ],
 
             'consumptions_ids' => [
@@ -130,5 +142,5 @@ class RentalUnit extends Model {
             ]
 
         ];
-    }    
+    }
 }

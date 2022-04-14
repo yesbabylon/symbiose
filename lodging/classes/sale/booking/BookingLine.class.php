@@ -335,7 +335,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
                     $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id] ]);
                     // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
+                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_accomodation', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
                     if($consumptions_ids > 0 && count($consumptions_ids)) {
                         $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
                         $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
@@ -398,7 +398,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     // retrieve list of possible rental_units based on center_id having max nb_pers (we try to assign people of a same group in a same accomodation)
                     $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['capacity', '<=', $nb_pers] ]);
                     // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
+                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_accomodation', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
                     if($consumptions_ids > 0 && count($consumptions_ids)) {
                         $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
                         $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
@@ -654,7 +654,9 @@ class BookingLine extends \sale\booking\BookingLine {
             'schedule_type',
             'schedule_default_value',
             'qty_accounting_method',
-            'is_accomodation',
+            'has_duration',
+            'duration',
+            'is_accomodation',            
             'is_meal'
         ]);
 
@@ -675,6 +677,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 */
                 $product_type = $product_models[$line['product_id.product_model_id']]['type'];
                 $service_type = $product_models[$line['product_id.product_model_id']]['service_type'];
+                $has_duration = $product_models[$line['product_id.product_model_id']]['has_duration'];
 
                 // consumptions are schedulable services
                 if($product_type == 'service' && $service_type == 'schedulable') {
@@ -720,6 +723,9 @@ class BookingLine extends \sale\booking\BookingLine {
                         }
 
                     }
+                    else if($has_duration) {
+                        $nb_products = $product_models[$line['product_id.product_model_id']]['duration'];
+                    }
 
                     if($qty_accounting_method == 'accomodation') {
                         $nb_times = 1;  // an accomodation is accounted independently from the number of persons
@@ -747,7 +753,7 @@ class BookingLine extends \sale\booking\BookingLine {
                         }
                     }
 
-                    // $nb_products represents each day of the stay
+                    // $nb_products represent each day of the stay
                     for($i = 0; $i < $nb_products; ++$i) {
                         $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
                         $c_schedule_from = $schedule_from;
@@ -781,6 +787,10 @@ class BookingLine extends \sale\booking\BookingLine {
                                 }
                             }
                         }
+
+
+                        /*
+                        // #memo create only one consumption with the quantity set accordingly
                         // $nb_times is the number of persons, it may vary from one day to another
                         for($n = 0; $n < $days_nb_times[$i]; ++$n) {
                             $consumptions[] = [
@@ -792,12 +802,28 @@ class BookingLine extends \sale\booking\BookingLine {
                                 'schedule_from'         => $c_schedule_from,
                                 'schedule_to'           => $c_schedule_to,
                                 'product_id'            => $line['product_id'],
-                                'is_rental_unit'        => $is_accomodation,
+                                'is_accomodation'       => $is_accomodation,
                                 'is_meal'               => $is_meal,
                                 'rental_unit_id'        => $rental_unit_id
                             ];
                         }
+                        */
 
+                        $consumptions[] = [
+                            'is_first'              => ($i == 0),
+                            'booking_id'            => $line['booking_id'],
+                            'center_id'             => $line['booking_id.center_id'],
+                            'booking_line_group_id' => $line['booking_line_group_id'],
+                            'booking_line_id'       => $lid,
+                            'date'                  => $c_date,
+                            'schedule_from'         => $c_schedule_from,
+                            'schedule_to'           => $c_schedule_to,
+                            'product_id'            => $line['product_id'],
+                            'is_accomodation'       => $is_accomodation,
+                            'is_meal'               => $is_meal,
+                            'rental_unit_id'        => $rental_unit_id,
+                            'qty'                   => $days_nb_times[$i]
+                        ];
                     }
 
                 }

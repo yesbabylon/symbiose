@@ -17,9 +17,53 @@ class Invoice extends \sale\booking\Invoice {
                 'foreign_object'    => 'lodging\identity\CenterOffice',
                 'description'       => 'Office the invoice relates to (for center management).',
                 'required'          => true
-            ]
+            ],
+
+
+            'number' => [
+                'type'              => 'computed',
+                'function'          => 'getNumber',
+                'result_type'       => 'string',
+                'store'             => true,
+                'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
+            ]            
             
         ];
+    }
+
+    public static function getNumber($om, $oids, $lang) {
+        $result = [];
+
+        $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
+
+        foreach($invoices as $oid => $invoice) {
+
+            // no number is generated for proforma
+            if($invoice['status'] == 'proforma') {
+                $result[$oid] = '[proforma]';
+            }
+            else if($invoice['status'] == 'invoice') {
+                $result[$oid] = '';
+
+                $organisation_id = $invoice['organisation_id'];
+
+                $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
+                $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');
+                $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+
+                if($sequence) {
+                    Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
+
+                    $result[$oid] = Setting::parse_format($format, [
+                        'year'      => $year,
+                        'office'    => $invoice['center_office_id.code'],
+                        'org'       => $organisation_id,
+                        'sequence'  => $sequence
+                    ]);
+                }
+            }
+        }
+        return $result;
     }    
 
 }

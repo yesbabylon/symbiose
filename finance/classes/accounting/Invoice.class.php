@@ -26,13 +26,13 @@ class Invoice extends Model {
                 'alias'             => "number"
             ],
 
-            /* owner organisation */
+           /* the (owner) organisation the invoice relates to (multi-company support) */
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation the invoice belongs to.",
-                'required'          => true
-            ],
+                'description'       => "The organisation that emitted the invoice.",
+                'default'           => 1
+            ],            
 
             'status' => [
                 'type'              => 'string',
@@ -91,14 +91,6 @@ class Invoice extends Model {
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the invoice (computed).',
                 'store'             => true
-            ],
-
-            /* the organisation the invoice relates to (multi-company support) */
-            'organisation_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation that emitted the invoice.",
-                'default'           => 1
             ],
 
             'invoice_lines_ids' => [

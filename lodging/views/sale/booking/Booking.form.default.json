@@ -48,7 +48,7 @@
         {
             "id": "action.invoice",
             "label": "Invoice",
-            "description": "The host has left and room has been reviewed: emit the invoice.",
+            "description": "The host has left and room has been reviewed: emit the invoice, if necessary.",
             "controller": "lodging_booking_invoice",
             "confirm": true,
             "visible": ["status", "=", "checkedout"]
@@ -274,6 +274,27 @@
                             }
                         ]
                     },
+                    {
+                        "label": "Composition",
+                        "id": "section.booking_composition",
+                        "visible": ["status", "not in", ["quote", "option"]],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "consumptions_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                                        
                     {
                         "label": "Consumptions",
                         "id": "section.booking_consumptions",
