@@ -85,10 +85,16 @@ class CompositionItem extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Composition',
                 'description'       => "The composition the item refers to.",
+                'onchange'          => 'onchangeCompositionId',
                 'ondelete'          => 'cascade',        // delete item when parent composition is deleted
                 'required'          => true
             ],
 
+            'booking_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Booking',
+                'description'       => 'The booking the composition relates to.'
+            ],
 
             // for filtering rental_unit_id field in forms
             'rental_units_ids' => [
@@ -101,6 +107,14 @@ class CompositionItem extends Model {
 
 
         ];
+    }
+
+    public static function onchangeCompositionId($om, $oids, $lang) {
+        $items = $om->read(get_called_class(), $oids, ['composition_id.booking_id'], $lang);
+
+        foreach($items as $oid => $odata) {
+            $om->write(get_called_class(), $oid, ['booking_id' => $odata['composition_id.booking_id']], $lang);
+        }
     }
 
     public static function getRentalUnitsIds($om, $oids, $lang) {

@@ -7,11 +7,11 @@
     "operations": {
         "total": {
             "total_paid": {
-                "type": "SUM",
+                "operation": "SUM",
                 "usage": "amount/money:2"
             },
             "total_due": {
-                "type": "SUM",
+                "operation": "SUM",
                 "usage": "amount/money:2"
             }
         }

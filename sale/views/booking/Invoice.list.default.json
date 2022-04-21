@@ -26,6 +26,11 @@
                 "type": "field",
                 "value": "date",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "20%"
             }
         ]
     }

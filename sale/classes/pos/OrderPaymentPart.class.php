@@ -38,7 +38,6 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'onchange'          => 'onchangeOrderId'
             ]
 
-
         ];
     }
 
@@ -49,7 +48,6 @@ class OrderPaymentPart extends \sale\booking\Payment {
             $om->write('sale\pos\OrderPayment', $order_payments_ids, ['total_paid' => null ], $lang);
         }
     }
-
 
     public static function onchangeOrderPaymentId($om, $ids, $lang) {
         $parts = $om->read(get_called_class(), $ids, ['order_payment_id.order_id'], $lang);

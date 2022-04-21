@@ -7,7 +7,7 @@
     "operations": {
         "total": {
             "amount": {
-                "type": "SUM",
+                "operation": "SUM",
                 "usage": "amount/money:2"
             }
         }

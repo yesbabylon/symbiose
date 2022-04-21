@@ -3,7 +3,17 @@
     "description": "This view is intended for displaying the list of compostion items.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "group_by": ["rental_unit_id"],
+    "operations": {
+        "total": {
+            "rental_unit_id": {
+                "operation": "COUNT",
+                "usage": "numeric/integer",
+                "suffix": "p."
+            }
+        }
+    },
     "order": "rental_unit_id",
     "layout": {
         "items": [

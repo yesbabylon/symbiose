@@ -8,7 +8,7 @@ namespace calendar;
 use equal\orm\Model;
 
 class Holiday extends Model {
-    
+
     public static function getName() {
         return "Ephemeris entry";
     }
@@ -28,7 +28,7 @@ class Holiday extends Model {
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Date/first day of the holiday.",
-                'onchange'          => 'calendar\Holiday::onChangeDateFrom'
+                'onchange'          => 'calendar\Holiday::onchangeDateFrom'
             ],
 
             'is_single_day' => [
@@ -44,24 +44,48 @@ class Holiday extends Model {
             ],
 
             'year' => [
-                'type'              => 'integer',
+                'description'       => "Year on which the holiday applies (based first date).",
+                'type'              => 'computed',
+                'result_type'       => 'integer',
                 'usage'             => 'date:year',
-                'description'       => "Year on which the holiday applies (based first date)."
+                'description'       => 'Year of the holiday.',
+                'function'          => 'getYear',
+                'store'             => true
+            ],
+
+            'holiday_year_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'calendar\HolidayYear',
+                'description'       => "The Year the holiday belongs to.",
+                'required'          => true,
+                'onchange'          => 'onchangeHolidayYearId'
             ],
 
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'school_vacation', 
+                    'school_vacation',
                     'public_holiday'
                 ]
             ]
-            
+
         ];
     }
 
+    public static function getYear($orm, $oids, $lang) {
+        $result = [];
+        $res = $orm->read(__CLASS__, $oids, ['holiday_year_id.year'], $lang);
+        foreach($res as $oid => $odata) {
+            $result[$oid] = $odata['holiday_year_id.year'];
+        }
+        return $result;
+    }
 
-    public static function onChangeDateFrom($orm, $oids, $lang) {
+    public static function onchangeHolidayYearId($orm, $oids, $lang) {
+        $orm->write(__CLASS__, $oids, ['year' => null]);
+    }
+
+    public static function onchangeDateFrom($orm, $oids, $lang) {
         $res = $orm->read(__CLASS__, $oids, ['date_from', 'is_single_day'], $lang);
 
         if($res > 0 && count($res)) {

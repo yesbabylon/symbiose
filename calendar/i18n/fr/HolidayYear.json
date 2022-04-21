@@ -1,0 +1,22 @@
+{
+    "name": "Année d'éphémérides",
+    "plural": "Années d'éphémérides",
+    "description": "Les congés scolaires et jours fériés légaux.",
+    "model": {
+        "name": {
+            "label": "Libellé",
+            "description": "",
+            "help": ""
+        },
+        "year": {
+            "label": "Année",
+            "description": "Année de listes d'éphémérides.",
+            "help": ""
+        }        
+    },
+    "view": {       
+    },
+    "error": {
+
+    }
+}

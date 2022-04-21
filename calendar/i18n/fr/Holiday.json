@@ -1,7 +1,7 @@
 {
-    "name": "Compte",
-    "plural": "Comptes",
-    "description": "Une ligne de plan comptable reprennent des informations relatices à un compte spécifique.",
+    "name": "Ephémérides",
+    "plural": "Ephémérides",
+    "description": "Les congés scolaires et jours fériés légaux.",
     "model": {
         "name": {
             "label": "Libellé",
@@ -21,6 +21,11 @@
         "is_single_day": {
             "label": "Un seul jour ?",
             "description": "Le congé est-il un jour unique?",
+            "help": ""
+        },
+        "holiday_year_id": {
+            "label": "Année",
+            "description": "Année sur laquelle porte le congé.",
             "help": ""
         },
         "year": {
