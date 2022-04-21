@@ -10,7 +10,7 @@
             "label": "Fiche de réservation",
             "description": "",
             "icon": "library_books",
-            "route": "/bookings/",
+            "route": "/booking/object.booking_id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "form.default",

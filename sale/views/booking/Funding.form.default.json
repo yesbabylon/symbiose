@@ -6,11 +6,11 @@
     },
     "routes": [
         {
-            "id": "item.booking.file",
+            "id": "item.funding.booking.file",
             "label": "Fiche de réservation",
             "description": "",
             "icon": "library_books",
-            "route": "/bookings/",
+            "route": "/booking/object.booking_id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "form.default",
@@ -20,16 +20,16 @@
         {
             "id": "item.funding.send",
             "label": "Envoi / Rappel",
-            "description": "",
+            "description": "Envoyer la demande",
             "icon": "email",
-            "route": "/bookings/funding/remind/object.booking_id/object.id"
+            "route": "/booking/object.booking_id/funding/object.id/remind"
         },
         {
             "id": "item.funding.invoice",
             "label": "Créer une facture",
             "description": "",
             "icon": "file_copy",
-            "route": "/bookings/funding/object.booking_id/object.id"
+            "route": "/booking/object.booking_id/funding/object.id"
         }
     ],    
     "layout": {

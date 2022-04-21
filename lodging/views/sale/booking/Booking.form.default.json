@@ -115,7 +115,7 @@
             "label": "Consumptions",
             "description": "",
             "icon": "calendar_today",
-            "route": "/booking/object.id/consumptions",
+            "route": "/booking/object.id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Consumption",
                 "target_entity": "lodging\\sale\\booking\\Booking",
