@@ -3,11 +3,11 @@
     "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
     "routes": [
         {
-            "id": "item.booking.file",
+            "id": "item.invoice.booking.file",
             "label": "Fiche de réservation",
             "description": "",
             "icon": "library_books",
-            "route": "/bookings",
+            "route": "/booking/object.booking_id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "form.default",
@@ -19,7 +19,7 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
-            "route": "/bookings/invoice/object.booking_id/object.id"
+            "route": "/booking/object.booking_id/invoice"
         }              
     ],    
     "layout": {
