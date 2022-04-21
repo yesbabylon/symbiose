@@ -81,6 +81,11 @@
                                                 "type": "field",
                                                 "value": "disclaimed",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "25%"
                                             }
                                         ]
                                     }

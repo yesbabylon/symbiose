@@ -131,6 +131,13 @@ class Booking extends Model {
                 'description'       => 'The composition that relates to the booking.'
             ],
 
+            'composition_items_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\CompositionItem',
+                'foreign_field'     => 'booking_id',
+                'description'       => "The items that refer to the composition."
+            ],
+
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingType',
@@ -152,7 +159,8 @@ class Booking extends Model {
                     'balanced'                  // booking is over and balance is cleared
                 ],
                 'description'       => 'Status of the booking.',
-                'default'           => 'quote'
+                'default'           => 'quote',
+                'onchange'          => 'onchangeStatus'
             ],
 
             'is_cancelled' => [
@@ -310,8 +318,13 @@ class Booking extends Model {
         return $result;
     }
 
+    /**
+     * Payment status tells if a given booking is in order regarding the expected payment up to now.
+     */
     public static function getPaymentStatus($om, $oids, $lang) {
         // #todo
+        $result = [];
+        return $result;
     }
 
     public static function getPrice($om, $oids, $lang) {
@@ -338,6 +351,18 @@ class Booking extends Model {
             }
         }
         return $result;
+    }
+
+
+    public static function onchangeStatus($om, $oids, $lang) {
+        $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                if($booking['status'] == 'confirmed') {
+                    $om->write(get_called_class(), $bid, ['has_contract' => true], $lang);
+                }
+            }
+        }
     }
 
     public static function onchangeCustomerId($om, $oids, $lang) {
@@ -422,8 +447,11 @@ class Booking extends Model {
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        if(isset($values['status'])) {
-            // status can always be updated
+        if(count($values) == 1 && (
+                isset($values['status'])                // status can always be updated
+            ||  isset($values['composition_id'])        // composition can be assigned at any time
+            ) ) {
+            
         }
         else {
             $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);

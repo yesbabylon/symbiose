@@ -1,6 +1,6 @@
 {
     "name": "Annulation",
-    "description": "Ceci annulera la réservation, quel que soit sont statut courant. La balance sera ajustée si des frais d'annulation sont dus.",
+    "description": "Ceci annulera la réservation, quel que soit son statut courant. La balance sera ajustée si des frais d'annulation sont dus.",
     "model": {
         "id": {
             "label": "Identifian",

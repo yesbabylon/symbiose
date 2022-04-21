@@ -897,7 +897,17 @@
                       "type": "parent",
                       "children": [
                         {
-                          "id": "settings.all_settings.calendar.holidays",
+                          "id": "settings.all_settings.calendar.holidays.years",
+                          "type": "entry",
+                          "label": "Holidays Years",
+                          "description": "",
+                          "context": {
+                            "entity": "calendar\\HolidayYear",
+                            "view": "list.default"
+                          }
+                        },
+                        {
+                          "id": "settings.all_settings.calendar.holidays.holydays",
                           "type": "entry",
                           "label": "Holidays",
                           "description": "",

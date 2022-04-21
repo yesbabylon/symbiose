@@ -1,0 +1,18 @@
+{
+    "name": "Holiday Year",
+    "description": "Yearly list of Holidays.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "year",
+                "width": "20%"
+            }
+        ]
+    }
+}

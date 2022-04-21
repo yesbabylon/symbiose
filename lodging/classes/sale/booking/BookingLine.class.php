@@ -249,7 +249,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->write(__CLASS__, $lid, ['qty' => $qty]);
                 }
                 else {
-                    $om->call(__CLASS__, '_updateQty', $oids, $lang);            
+                    $om->call(__CLASS__, '_updateQty', $oids, $lang);
                 }
             }
         }
@@ -656,7 +656,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'qty_accounting_method',
             'has_duration',
             'duration',
-            'is_accomodation',            
+            'is_accomodation',
             'is_meal'
         ]);
 
@@ -697,6 +697,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
                     $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
+                    // is_accomodation is used as "it is attached to a rental_unit (accomodation or other)"
                     $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 

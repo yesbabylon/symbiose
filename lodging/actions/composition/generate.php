@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use lodging\realestate\RentalUnit;
 use sale\booking\Composition;
 use sale\booking\CompositionItem;
@@ -25,8 +24,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'users'             => [ROOT_USER_ID],		// list of users ids granted 
+        'visibility'        => 'public',                // 'public' (default) or 'private' (can be invoked by CLI only)
         'groups'            => ['booking.default.user'],// list of groups ids or names granted 
     ],
     'response'      => [

@@ -195,7 +195,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 
 // Update booking status
-Booking::id($params['id'])->update(['status' => 'confirmed', 'has_contract' => true]);
+Booking::id($params['id'])->update(['status' => 'confirmed']);
 
 
 /*

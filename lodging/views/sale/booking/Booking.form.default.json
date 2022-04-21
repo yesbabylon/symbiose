@@ -71,11 +71,12 @@
             "label": "Booking form",
             "description": "",
             "icon": "library_books",
-            "route": "/bookings/",
+            "route": "/booking/object.id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "form.default",
-                "domain": ["id", "=", "object.id"]
+                "domain": ["id", "=", "object.id"],
+                "reset": true
             }
         },
         {
@@ -83,22 +84,22 @@
             "label": "Booked services",
             "description": "",
             "icon": "room_service",
-            "route": "/bookings/edit/object.id"
+            "route": "/booking/object.id/services"
         },
         {
             "id": "item.booking.composition",
             "label": "Hosts details",
             "description": "",
             "icon": "view_list",
-            "route": "/bookings/composition/object.id",
+            "route": "/booking/object.id/composition",
             "visible": ["status", "not in", ["quote", "option"]]
         },
         {
             "id": "item.booking.contract",
-            "label": "Send contrat",
+            "label": "Send contract",
             "description": "",
             "icon": "drive_file_rename_outline",
-            "route": "/bookings/contract/object.id",
+            "route": "/booking/object.id/contract",
             "visible": ["has_contract", "=", true]
         },
         {
@@ -106,7 +107,7 @@
             "label": "Send quote",
             "description": "",
             "icon": "drive_file_rename_outline",
-            "route": "/bookings/quote/object.id",
+            "route": "/booking/object.id/quote",
             "visible": ["status", "=", "quote"]
         },
         {
@@ -114,7 +115,7 @@
             "label": "Consumptions",
             "description": "",
             "icon": "calendar_today",
-            "route": "/bookings/",
+            "route": "/booking/object.id/consumptions",
             "context": {
                 "entity": "lodging\\sale\\booking\\Consumption",
                 "target_entity": "lodging\\sale\\booking\\Booking",
@@ -122,14 +123,6 @@
                 "domain": ["booking_id", "=", "object.id"]
             },
             "visible": ["status", "<>", "quote"]
-        },
-        {
-            "id": "item.booking.payments",
-            "label": "Payments",
-            "description": "",
-            "icon": "view_list",
-            "route": "/bookings/payments",
-            "visible": false
         }
     ],    
     "layout": {
@@ -286,7 +279,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "consumptions_ids",
+                                                "value": "composition_items_ids",
                                                 "width": "100%"
                                             }
                                         ]

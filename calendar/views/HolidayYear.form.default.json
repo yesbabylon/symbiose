@@ -1,5 +1,5 @@
 {
-    "name": "Holiday",
+    "name": "Holiday Year",
     "description": "Default form for Holiday with all fields.",
     "layout": {
         "groups": [
@@ -27,36 +27,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "holiday_year_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_from",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_single_day",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date_to",
+                                                "value": "year",
                                                 "width": "50%"
                                             }
                                         ]
@@ -66,7 +37,32 @@
                         ]
                     }
                 ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.holidays",
+                        "label": "Holidays",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "holidays_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
+            
         ]
     }
 }
