@@ -370,7 +370,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // generate booking lines
         $om->call(__CLASS__, '_updatePackId', $oids, $lang);
 
-        $groups = $om->read(__CLASS__, $oids, [
+        $groups = $om->read(__CLASS__, $oids, [            
+            'booking_id',
             'date_from',
             'nb_pers',
             'is_locked',
@@ -378,10 +379,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'pack_id.product_model_id.qty_accounting_method',
             'pack_id.product_model_id.has_duration',
             'pack_id.product_model_id.duration',
-            'pack_id.product_model_id.capacity'
+            'pack_id.product_model_id.capacity',
+            'pack_id.product_model_id.booking_type'
         ]);
 
         foreach($groups as $gid => $group) {
+            // if model of chosen product has a non-generic booking type, update the booking of the group accordingly            
+            if(isset($group['pack_id.product_model_id.booking_type']) && $group['pack_id.product_model_id.booking_type'] != 'general') {
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type' => $group['pack_id.product_model_id.booking_type']]);
+            }
+
             $updated_fields = ['vat_rate' => null, 'price' => null, 'total' => null];
 
             // if targeted product model has its own duration, date_to is updated accordingly
@@ -478,7 +485,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $bookings_ids[] = $group['booking_id'];
             }
             // reset parent bookings nb_pers
-            $om->write('sale\booking\Booking', $bookings_ids, ['nb_pers'=>null]);
+            $om->write('sale\booking\Booking', $bookings_ids, ['nb_pers' => null]);
             // re-compute bookinglines quantities
             $om->call('lodging\sale\booking\BookingLine', '_updateQty', $booking_lines_ids, $lang);
         }

@@ -3,7 +3,7 @@
     "description": "A rental unit is a ressource that can be rented to a customer.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
@@ -27,13 +27,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Rentable",
-                                                "value": "can_rent",
-                                                "width": "50%"                                                
+                                                "value": "type",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "label": "Rentable",
+                                                "value": "can_rent",
                                                 "width": "50%"
                                             }
                                         ]
@@ -53,15 +53,21 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Children",
-                                                "value": "has_children",
-                                                "width": "50%"                                                
+                                                "label": "Parent",
+                                                "value": "parent_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Parent",
-                                                "value": "parent_id",
-                                                "width": "50%"                                                
+                                                "label": "Children",
+                                                "value": "has_children",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partial rent?",
+                                                "value": "can_partial_rent",
+                                                "width": "33%"
                                             }
                                         ]
                                     }
@@ -88,7 +94,7 @@
                                 ]
                             }
                         ]
-                    }
+                    }                                        
                 ]
             }
         ]

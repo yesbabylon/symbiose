@@ -1,89 +1,121 @@
 {
-	"name": "Unité locative",
-	"plural": "Unités locatives",
-	"description": "Une unité locative est une ressource qui peut être louée à un client.",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Nom de l'untié.",
-			"help": ""
-		},
-		"type": {
-			"label": "Type",
-			"description": "Type d'unité locative (en lien avec la capacité).",
-			"selection": {
-				"building": "Bâtiment",
-				"bedroom": "Chambre",
-				"bed": "Lit",
-				"meetingroom": "Salle de réunion",
-				"diningroom": "Réfectoire",
-				"room": "Salle",
-				"FFE": "Mobilier, accessoires et équipement"
-			},
-			"help": ""
-		},
-		"category": {
-			"label": "Type d'unité locative",
-			"description": "Renseigne si le logement comprend des repas ou est loué tel quel.",
-			"selection": {
-				"hostel": "GA",
-				"lodge": "GG"
-			},
-			"help": ""
-		},
-		"rental_unit_category_id": {
-			"label": "Catégorie d'unité locative",
-			"description": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives.",
-			"help": ""
-		},
-		"capacity": {
-			"label": "Capacité",
-			"description": "Le nombre de personnes pouvant séjourner dans l'unité.",
-			"help": ""
-		},
-		"has_children": {
-			"label": "Sous-unités ?",
-			"description": "Drapeau indiquant que l'unité a des sous-unités.",
-			"help": ""
-		},
-		"can_rent": {
-			"label": "Peut être loué",
-			"description": "Drapeau pour marquer l'unité comme (temporairement) indisponible à la location.",
-			"help": ""
-		},
-		"children_ids": {
-			"label": "Sous-unités",
-			"description": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée, le cas échéant (c'est-à-dire qu'un dortoir peut être loué en tant que lits individuels).",
-			"help": ""
-		},
-		"parent_id": {
-			"label": "Unité parente",
-			"description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Unité locative",
-			"description": "Une unité locative est une ressource qui peut être louée à un client.",
-			"layout": {
-				"section.rental_units": {
-					"label": "Détails"
-				},
-				"section.children_section": {
-					"label": "Sous-unités"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Liste des Unités locatives",
-			"description": "Cette vue est destinée à afficher la liste des unités locatives.",
-			"layout": {
+    "name": "Unité locative",
+    "plural": "Unités locatives",
+    "description": "Une unité locative est une ressource qui peut être louée à un client.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'untié.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type d'unité locative (en lien avec la capacité).",
+            "selection": {
+                "building": "Bâtiment",
+                "bedroom": "Chambre",
+                "bed": "Lit",
+                "meetingroom": "Salle de réunion",
+                "diningroom": "Réfectoire",
+                "room": "Salle",
+                "FFE": "Mobilier, accessoires et équipement"
+            },
+            "help": ""
+        },
+        "category": {
+            "label": "Type d'unité locative",
+            "description": "Renseigne si le logement comprend des repas ou est loué tel quel.",
+            "selection": {
+                "hostel": "GA",
+                "lodge": "GG"
+            },
+            "help": ""
+        },
+        "rental_unit_category_id": {
+            "label": "Catégorie d'unité locative",
+            "description": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives.",
+            "help": ""
+        },
+        "capacity": {
+            "label": "Capacité",
+            "description": "Le nombre de personnes pouvant séjourner dans l'unité.",
+            "help": ""
+        },
+        "is_accomodation": {
+            "label": "Logement",
+            "description": "L'unité locative est un logement.",
+            "help": ""
+        },        
+        "has_children": {
+            "label": "Sous-unités",
+            "description": "Drapeau indiquant que l'unité a des sous-unités.",
+            "help": ""
+        },
+        "can_rent": {
+            "label": "Peut être loué",
+            "description": "Unité disponible à la location ?",
+            "help": ""
+        },
+        "can_partial_rent": {
+            "label": "Location partielle ?",
+            "description": "L'unité peut être louée partiellement.",
+            "help": ""
+        },        
+        "children_ids": {
+            "label": "Sous-unités",
+            "description": "Unités locatives 'enfants' composant l'unité.",
+            "help": "La liste des unités locatives dans lesquelles l'unité actuelle peut être divisée. C'est-à-dire qu'un dortoir peut être loué en tant que lits individuels."
+        },
+        "parent_id": {
+            "label": "Unité parente",
+            "description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "selection": {
+                "ready": "En ordre",
+                "busy_full": "Complètement occupé",
+                "busy_part": "Partiellement occupé",
+                "ooo": "En dérangement"
+            },
+            "description": "",
+            "help": ""
+        },
+        "action_required": {
+            "label": "Action requise",
+            "selection": {
+                "none": "Aucune",
+                "cleanup_daily": "Nettoyage quotidien",
+                "cleanup_full": "Nettoyage complet",
+                "repair": "Réparation & Maintenance"
+            },
+            "description": "",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Unité locative",
+            "description": "Une unité locative est une ressource qui peut être louée à un client.",
+            "layout": {
+                "section.rental_units": {
+                    "label": "Détails"
+                },
+                "section.children_section": {
+                    "label": "Sous-unités"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste des Unités locatives",
+            "description": "Cette vue est destinée à afficher la liste des unités locatives.",
+            "layout": {
 
-			}
-		}
-	},
-	"error": {
+            }
+        }
+    },
+    "error": {
         "name": {
             "missing_mandatory": "Champ obligatoire."
         },
@@ -95,6 +127,6 @@
         },
         "capacity": {
             "lte_zero": "Doit être une valeur positive."
-        }		
-	}
+        }        
+    }
 }

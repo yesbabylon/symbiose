@@ -32,6 +32,18 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'default'           => 'unit'
             ],
 
+            'booking_type' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'general',          // general public
+                    'school_trip',      // school class
+                    'sport_camp',       // sport camp (special products)
+                    'ota'               // booking made on an Online Travel Agency (through channel manager)
+                ],
+                'description'       => 'Type to which assign a bookin that has this pproduct.',
+                'default'           => 'general'
+            ],
+
             'is_accomodation' => [
                 'type'              => 'boolean',
                 'description'       => 'Is the product an accomodation?',
@@ -65,7 +77,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'integer',
                 'description'       => 'Duration of the service (in days), used for planning.',
                 'default'           => 1,
-                'visible'           => ['has_duration', '=', true]
+                'visible'           => [ ['type', '=', 'service'], ['has_duration', '=', true] ]
             ],
 
             'capacity' => [

@@ -17,7 +17,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Identity of Partner",
+                                                "label": "Partner identity",
                                                 "value": "partner_identity_id",
                                                 "width": "80%"
                                             }
@@ -28,7 +28,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Identity of Owner",
+                                                "label": "Owner identity",
                                                 "value": "owner_identity_id",
                                                 "width": "50%"
                                             },

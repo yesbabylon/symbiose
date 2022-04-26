@@ -28,13 +28,19 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Family",
                                                 "value": "family_id",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Booking type",
+                                                "value": "booking_type",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",

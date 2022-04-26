@@ -54,17 +54,19 @@ class Consumption extends Model {
 
             'date' => [
                 'type'              => 'date',
-                'description'       => 'Date at which the service delivery is planed.'
+                'description'       => 'Date at which the event is planed.'
             ],
 
             'schedule_from' => [
                 'type'              => 'time',
-                'description'       => 'Moment of the day at which the service delivery is planed.'
+                'description'       => 'Moment of the day at which the events starts.',
+                'default'           => 0
             ],
 
             'schedule_to' => [
                 'type'              => 'time',
-                'description'       => 'Moment of the day at which the service delivery is over, if applicable.'
+                'description'       => 'Moment of the day at which the event stops, if applicable.',
+                'default'           => 24 * 3600
             ],
 
             'type' => [
@@ -84,7 +86,7 @@ class Consumption extends Model {
                 'required'          => true
             ],
 
-            'is_accomodation' => [
+            'is_rental_unit' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the consumption relate to a rental unit?',
                 'default'           => false
@@ -105,12 +107,6 @@ class Consumption extends Model {
             'is_meal' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the consumption relate to a meal?',
-                'default'           => false
-            ],
-
-            'is_first' => [
-                'type'              => 'boolean',
-                'description'       => 'Is the consumption the first of a sojourn?',
                 'default'           => false
             ],
 

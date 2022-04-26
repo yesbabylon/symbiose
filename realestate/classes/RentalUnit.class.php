@@ -53,6 +53,12 @@ class RentalUnit extends Model {
                 'default'           => 'hostel'
             ],
 
+            'is_accomodation' => [
+                'type'              => 'boolean',
+                'description'       => 'The rental unit is an accomodation (having at least one bed).',
+                'default'           => true
+            ],
+
             'capacity' => [
                 'type'              => 'integer',
                 'description'       => 'The number of persons that may stay in the unit.',
@@ -61,12 +67,21 @@ class RentalUnit extends Model {
 
             'has_children' => [
                 'type'              => 'boolean',
-                'description'       => 'Flag to mark the unit as having sub-units.'
+                'description'       => 'Flag to mark the unit as having sub-units.',
+                'default'           => false
             ],
 
             'can_rent' => [
                 'type'              => 'boolean',
-                'description'       => 'Flag to mark the unit as (temporarily) unavailable for renting.'
+                'description'       => 'Flag to mark the unit as (temporarily) unavailable for renting.',
+                'default'           => true
+            ],
+
+            'can_partial_rent' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag to mark the unit as rentable partially (when children units).',
+                'visible'           => [ 'has_children', '=', true ],
+                'default'           => false
             ],
 
             'children_ids' => [
@@ -92,7 +107,9 @@ class RentalUnit extends Model {
                     'ooo'                  // unit is out-of-order
                 ],
                 'description'       => 'Status of the rental unit.',
-                'default'           => 'ready'
+                'default'           => 'ready',
+                // cannot be set manually
+                'readonly'          => true
             ],
 
             'action_required' => [
@@ -125,6 +142,16 @@ class RentalUnit extends Model {
                 'type'              => 'many2one',
                 'description'       => "Category which current unit belongs to, if any.",
                 'foreign_object'    => 'realestate\RentalUnitCategory'
+            ],
+
+            'repairings_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\booking\Repairing',
+                'foreign_field'     => 'rental_units_ids',
+                'rel_table'         => 'sale_rel_repairing_rentalunit',
+                'rel_foreign_key'   => 'repairing_id',
+                'rel_local_key'     => 'rental_unit_id',
+                'description'       => 'List of scheduled repairing assigned to the rental units.'
             ]
 
         ];

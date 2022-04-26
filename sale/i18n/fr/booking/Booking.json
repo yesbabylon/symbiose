@@ -5,7 +5,7 @@
     "model": {
         "name": {
             "label": "Référence",
-            "description": "Utilisateur qui a créé l'entrée.",
+            "description": "Numéro de la réservation.",
             "help": ""
         },
         "description": {
@@ -26,6 +26,11 @@
         "nb_pers": {
             "label": "Participants",
             "description": "Le total approximatif de participants.",
+            "help": ""
+        },
+        "is_price_tbc": {
+            "label": "Prix à confirmer",
+            "description": "Liste de prix temporaire, en attente de confirmation.",
             "help": ""
         },
         "price": {

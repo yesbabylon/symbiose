@@ -22,6 +22,20 @@ class Booking extends \sale\booking\Booking {
                 'readonly'          => true
             ],
 
+            'type' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'general',          // general public
+                    'school_trip',      // school class
+                    'sport_camp',       // sport camp (special products)
+                    'ota'               // booking made on an Online Travel Agency (through channel manager)
+                ],
+                'description'       => 'Type for distinguishing the payment plans and prices.',
+                // type is set and changed programmatically only
+                'readonly'          => true,
+                'default'           => 'general'
+            ],
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -31,7 +45,7 @@ class Booking extends \sale\booking\Booking {
 
             'customer_identity_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
+                'foreign_object'    => 'lodging\identity\Identity',
                 'description'       => "The customer whom the booking relates to.",
                 'onchange'          => 'onchangeCustomerIdentityId'
             ],
@@ -40,7 +54,8 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
                 'description'       => 'Nature of the customer (synched with customer) for views convenience.',
-                'onchange'          => 'onchangeCustomerNatureId'
+                'onchange'          => 'onchangeCustomerNatureId',
+                'required'          => true
             ],
 
             'center_id' => [
@@ -57,12 +72,20 @@ class Booking extends \sale\booking\Booking {
                 'description'       => 'Office the invoice relates to (for center management).',
             ],
 
+            'contacts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Contact',
+                'foreign_field'     => 'booking_id',
+                'description'       => 'List of contacts related to the booking, if any.',
+                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id']
+            ],
+
             'contracts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Contract',
                 'foreign_field'     => 'booking_id',
                 'sort'              => 'desc',
-                'description'       => 'List of contacts related to the booking, if any.'
+                'description'       => 'List of contracts related to the booking, if any.'
             ],
 
             'consumptions_ids' => [
@@ -210,7 +233,7 @@ class Booking extends \sale\booking\Booking {
                     }
                     else {
                         // read Identity [type_id]
-                        $identities = $om->read('identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                        $identities = $om->read('lodging\identity\Identity', $booking['customer_identity_id'], ['type_id']);
                         if($identities > 0) {
                             $identity = reset($identities);
                             $partner_id = $om->create('sale\customer\Customer', [
@@ -229,7 +252,13 @@ class Booking extends \sale\booking\Booking {
 
     public static function onchangeCustomerId($om, $oids, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'booking_lines_groups_ids', 'customer_id.partner_identity_id', 'customer_id.partner_identity_id.description'], $lang);
+        $bookings = $om->read(__CLASS__, $oids, [
+            'customer_identity_id', 
+            'booking_lines_groups_ids', 
+            'customer_id.partner_identity_id', 
+            'customer_id.partner_identity_id.description',
+            'contacts_ids.partner_identity_id'
+        ], $lang);
 
         if($bookings > 0) {
             $booking_line_groups_ids = [];
@@ -247,6 +276,12 @@ class Booking extends \sale\booking\Booking {
                 if(count($values)) {
                     $om->write(__CLASS__, $bid, $values, $lang);
                 }
+
+                if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
+                    // create a contact with the customer as 'booking' contact
+                    $om->create('lodging\sale\booking\Contact', ['booking_id' => $bid, 'owner_identity_id' => $booking['customer_identity_id'], 'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
+                }
+
             }
             if(count($booking_line_groups_ids)) {
                 // BookingLineGroup::_updatePriceAdapters($om, array_unique($booking_line_groups_ids), $lang);
@@ -255,10 +290,6 @@ class Booking extends \sale\booking\Booking {
             $om->call(__CLASS__, '_updateAutosaleProducts', $oids, $lang);
         }
     }
-
-
-
-
 
     public static function onchangeCenterId($om, $oids, $lang) {
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'center_id.center_office_id']);

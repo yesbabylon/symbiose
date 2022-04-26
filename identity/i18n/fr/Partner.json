@@ -9,12 +9,12 @@
             "help": ""
         },
         "owner_identity_id": {
-            "label": "Origine",
+            "label": "Identité Origine",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
             "help": ""
         },
         "partner_identity_id": {
-            "label": "Identité du partenaire",
+            "label": "Identité Partenaire",
             "description": "L'identité ciblée (le partenaire).",
             "help": ""
         },

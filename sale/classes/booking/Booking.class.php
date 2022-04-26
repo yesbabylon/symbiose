@@ -53,14 +53,6 @@ class Booking extends Model {
                 'onchange'          => 'sale\booking\Booking::onchangeCustomerIdentityId'
             ],
 
-            'center_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'lodging\identity\Center',
-                'description'       => "The center to which the booking relates to.",
-                'required'          => true,
-                'onchange'          => 'sale\booking\Booking::onchangeCenterId'
-            ],
-
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -68,6 +60,12 @@ class Booking extends Model {
                 'function'          => 'sale\booking\Booking::getTotal',
                 'description'       => 'Total tax-excluded price of the booking.',
                 'store'             => true
+            ],
+
+            'is_price_tbc' => [
+                'type'              => 'boolean',
+                'description'       => 'The booking contains products with prices to be confirmed.',
+                'default'           => false
             ],
 
             'price' => [
@@ -187,7 +185,12 @@ class Booking extends Model {
             'payment_status' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Booking::getPaymentStatus'
+                'selection'         => [
+                    'due',                       // some due payment have not been received yet
+                    'paid'                       // all expected payments have been received
+                ],
+                'function'          => 'getPaymentStatus',
+                'store'             => true
             ],
 
             // date fields are based on dates from booking line groups
@@ -367,18 +370,25 @@ class Booking extends Model {
     }
 
     public static function onchangeCustomerId($om, $oids, $lang) {
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id'], $lang);
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onchangeCustomerId", QN_REPORT_DEBUG);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
 
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 if(!$booking['customer_identity_id']) {
                     $om->write(__CLASS__, $bid, ['customer_identity_id' => $booking['customer_id.partner_identity_id']], $lang);
                 }
+
+                if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
+                    // create a contact with the customer as 'booking' contact
+                    $om->create('sale\booking\Contact', ['booking_id' => $bid, 'owner_identity_id' => $booking['customer_identity_id'], 'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
+                }
             }
         }
     }
 
     public static function onchangeCustomerIdentityId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onchangeCustomerIdentityId", QN_REPORT_DEBUG);
         // reset name
         $om->write(__CLASS__, $oids, ['name' => null]);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
@@ -415,14 +425,6 @@ class Booking extends Model {
             }
         }
     }
-
-    public static function onchangeCenterId($om, $oids, $lang) {
-        $booking_lines_ids = $om->read(__CLASS__, $oids, ['booking_lines_ids']);
-        if($booking_lines_ids > 0 && count($booking_lines_ids)) {
-            $om->call('sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, $lang);
-        }
-    }
-
 
     public static function ondelete($om, $oids, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);

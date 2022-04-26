@@ -232,7 +232,7 @@ class BookingLine extends Model {
      */
     public static function _createConsumptions($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
-        // #todo
+        // done upon status change : when booking status is set to 'option'
     }
 
     /**
@@ -252,7 +252,7 @@ class BookingLine extends Model {
             }
             $disc_percent = 0.0;
             $disc_value = 0.0;
-            if($odata['auto_discounts_ids']) {
+            if(isset($odata['auto_discounts_ids']) && $odata['auto_discounts_ids']) {
                 $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value', 'discount_id.discount_list_id.rate_max']);
                 if($adapters > 0) {
                     foreach($adapters as $aid => $adata) {

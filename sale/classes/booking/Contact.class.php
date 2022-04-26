@@ -9,12 +9,17 @@ namespace sale\booking;
 class Contact extends \identity\Partner {
 
     public static function getName() {
-        return "Contact";
+        return "Booking Contact";
     }
 
     public static function getDescription() {
         return "Booking contacts are persons involved in the organisation of a booking.";
     }
+
+    public function getTable() {
+        // force table name to use distinct tables and ID columns
+        return 'sale_booking_contact';
+    }    
 
     public static function getColumns() {
 
@@ -45,6 +50,12 @@ class Contact extends \identity\Partner {
                 'default'           => 'booking'
             ]
 
+        ];
+    }
+
+    public function getUnique() {
+        return [
+            ['owner_identity_id', 'partner_identity_id', 'booking_id']
         ];
     }
 

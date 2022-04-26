@@ -6,6 +6,7 @@
 */
 namespace identity;
 use equal\orm\Model;
+use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 /**
  * This class is meant to be used as an interface for other entities (organisation and partner).
@@ -65,7 +66,7 @@ class Identity extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'uusage'            => 'text/plain',
+                'usage'             => 'text/plain',
                 'description'       => 'A short reminder to help user identify the targeted person and its specifics.'
             ],
 
@@ -177,7 +178,7 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['relationship', '=', 'contact'],
+                'domain'            => ['partner_identity_id', '<>', 'object.id'],
                 'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
             ],
 
@@ -324,12 +325,13 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Partnerships that relate to the identity.'
+                'description'       => 'Partnerships that relate to the identity.',
+                'domain'            => ['owner_identity_id', '<>', 'object.id']
             ]
+
 
         ];
     }
-
 
     /**
      * For organisations the display name is the legal name

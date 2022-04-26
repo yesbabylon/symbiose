@@ -140,6 +140,17 @@
             },
             "help": ""
         },
+        "booking_type": {
+            "label": "Type de réservation",
+            "description": "Type à assigner aux réservations avec ce produit.",
+            "selection": {
+                "general": "tout public",
+                "school_trip": "séjour scolaire",
+                "sport_camp": "stage",
+                "ota": "OTA"
+            },
+            "help": ""
+        },
         "rental_unit_assignement": {
             "label": "Attribution des unités locatives",
             "description": "Manière dont le produit est affecté à une unité locative (une unité spécifique, une catégorie spécifique, ou en fonction de la capacité).",
