@@ -18,6 +18,12 @@
             },
             {
                 "type": "field",
+                "value": "is_accomodation",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "capacity",
                 "width": "20%"                                                
             },

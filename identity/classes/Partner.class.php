@@ -22,7 +22,7 @@ class Partner extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Partner::getDisplayName',
+                'function'          => 'getDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the partner (related organisation name).'
@@ -73,25 +73,28 @@ class Partner extends Model {
 
             'email' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Partner::getEmail',
+                'function'          => 'getEmail',
                 'result_type'       => 'string',
                 'usage'             => 'email',
                 'description'       => 'Email of the contact (from Identity).'
+                // #memo - email origin remains the related identity
             ],
 
             'phone' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Partner::getPhone',
+                'function'          => 'getPhone',
                 'result_type'       => 'string',
                 'usage'             => 'phone',
                 'description'       => 'Phone number of the contact (from Identity).'
+                // #memo - phone origin remains the related identity
             ],
 
             'title' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Partner::getTitle',
+                'function'          => 'getTitle',
                 'result_type'       => 'string',
                 'description'       => 'Title of the contact (from Identity).'
+                // #memo - title origin remains the related identity
             ],
 
             'lang_id' => [
@@ -126,7 +129,6 @@ class Partner extends Model {
         $result = [];
         $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.name'], $lang);
         foreach($partners as $oid => $partner) {
-            $result[$oid] = '';
             if(isset($partner['partner_identity_id.name'])) {
                 $result[$oid] = $partner['partner_identity_id.name'];
             }

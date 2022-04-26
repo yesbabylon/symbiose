@@ -93,6 +93,14 @@ class Center extends \identity\Establishment {
                 'description'       => 'List of categories the center belgons to, if any.'
             ],
 
+            'repairings_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Repairing',
+                'foreign_field'     => 'center_id',
+                'description'       => 'List of rental units of the center.',
+                'ondetach'          => 'delete'
+            ],
+
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
@@ -122,8 +130,7 @@ class Center extends \identity\Establishment {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\catalog\Group',
                 'foreign_field'     => 'center_id',
-                'description'       => "Group targeted by the center.",
-                'required'          => true
+                'description'       => "Group targeted by the center."
             ]
 
         ];

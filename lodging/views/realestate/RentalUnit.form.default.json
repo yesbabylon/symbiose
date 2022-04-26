@@ -52,6 +52,12 @@
                                                 "type": "field",
                                                 "value": "type",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Accomodation",
+                                                "value": "is_accomodation",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -70,20 +76,36 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Children",
-                                                "value": "has_children",
-                                                "width": "50%"
+                                                "label": "Parent",
+                                                "value": "parent_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Parent",
-                                                "value": "parent_id",
-                                                "width": "50%"
+                                                "label": "Children",
+                                                "value": "has_children",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partial rent?",
+                                                "value": "can_partial_rent",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "action_required",
+                                                "width": "33%"
                                             }
                                         ]
                                     }
@@ -110,7 +132,7 @@
                                 ]
                             }
                         ]
-                    }                   
+                    }                    
                 ]
             }
         ]

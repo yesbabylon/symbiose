@@ -1,1014 +1,1034 @@
 {
     "name": "Settings menu",
     "access": {
-      "groups": ["setting.default.user"]
+        "groups": ["setting.default.user"]
     },
     "layout": {
         "items": [
             {
-              "id": "security",
-              "label": "Security",
-              "description": "",
-              "icon": "lock_open",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "permissions",
-                  "type": "entry",
-                  "label": "Permissions",
-                  "description": "",
-                  "context": {
-                    "entity": "core\\Permission",
-                    "view": "list.default"
-                  }
-                },
-                {
-                  "id": "users",
-                  "type": "entry",
-                  "label": "Users",
-                  "description": "",
-                  "context": {
-                    "entity": "lodging\\identity\\User",
-                    "view": "list.default"
-                  }
-                },
-                {
-                  "id": "groups",
-                  "type": "entry",
-                  "label": "Groups",
-                  "description": "",
-                  "context": {
-                    "entity": "core\\Group",
-                    "view": "list.default"
-                  }
-                }
-              ]
+                "id": "security",
+                "label": "Security",
+                "description": "",
+                "icon": "lock_open",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "permissions",
+                        "type": "entry",
+                        "label": "Permissions",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\Permission",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "users",
+                        "type": "entry",
+                        "label": "Users",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\identity\\User",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "groups",
+                        "type": "entry",
+                        "label": "Groups",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\Group",
+                            "view": "list.default"
+                        }
+                    }
+                ]
             },
             {
-              "id": "sales",
-              "label": "Sales",
-              "description": "",
-              "icon": "store",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "bookings",
-                  "label": "Bookings",
-                  "description": "",
-                  "icon": "menu_book",
-                  "type": "parent",
-                  "children": [
+                "id": "sales",
+                "label": "Sales",
+                "description": "",
+                "icon": "store",
+                "type": "parent",
+                "children": [
                     {
-                      "id": "new_booking",
-                      "type": "entry",
-                      "label": "New booking",
-                      "description": "",
-                      "icon": "add",
-                      "context": {
-                        "entity": "lodging\\sale\\booking\\Booking",
-                        "view": "form.default",
-                        "purpose": "create"
-                      }
+                        "id": "bookings",
+                        "label": "Bookings",
+                        "description": "",
+                        "icon": "menu_book",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "new_booking",
+                                "type": "entry",
+                                "label": "New booking",
+                                "description": "",
+                                "icon": "add",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "form.default",
+                                    "purpose": "create"
+                                }
+                            },
+                            {
+                                "id": "all_bookings",
+                                "type": "entry",
+                                "label": "All bookings",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "quotes",
+                                "type": "entry",
+                                "label": "Quotes",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "list.default",
+                                    "domain": ["status", "=", "quote"]
+                                }
+                            },
+                            {
+                                "id": "options",
+                                "type": "entry",
+                                "label": "Options",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "list.default",
+                                    "domain": ["status", "=", "option"]
+                                }
+                            },
+                            {
+                                "id": "validated_bookings",
+                                "type": "entry",
+                                "label": "Validated bookings",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "list.default",
+                                    "domain": ["status", "=", "validated"]
+                                }
+                            }
+                        ]
                     },
                     {
-                      "id": "all_bookings",
-                      "type": "entry",
-                      "label": "All bookings",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\sale\\booking\\Booking",
-                        "view": "list.default"
-                      }
+                        "id": "sales.customers",
+                        "label": "Customers",
+                        "description": "",
+                        "icon": "person",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "sales.customers.types",
+                                "label": "Types",
+                                "description": "",
+                                "icon": "person_outline",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "sales.customers.types.all",
+                                        "type": "entry",
+                                        "label": "All types",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\customer\\CustomerType",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "sales.customers.natures",
+                                "label": "Natures",
+                                "description": "",
+                                "icon": "person_outline",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "sales.customers.natures.all",
+                                        "type": "entry",
+                                        "label": "All natures",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\customer\\CustomerNature",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "sales.customers.rate_classes",
+                                "label": "Natures",
+                                "description": "",
+                                "icon": "price_check",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "sales.customers.rate_classes.all",
+                                        "type": "entry",
+                                        "label": "All Classes",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\customer\\RateClass",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "sales.customers.new_customer",
+                                "type": "entry",
+                                "label": "New customer",
+                                "description": "",
+                                "icon": "add",
+                                "context": {
+                                    "entity": "sale\\customer\\Customer",
+                                    "view": "form.customer",
+                                    "purpose": "create",
+                                    "domain": ["relationship", "=", "customer"]
+                                }
+                            },
+                            {
+                                "id": "sales.customers.all",
+                                "type": "entry",
+                                "label": "All customers",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\customer\\Customer",
+                                    "view": "list.default",
+                                    "domain": ["relationship", "=", "customer"]
+                                }
+                            },
+                            {
+                                "id": "all_partners",
+                                "type": "entry",
+                                "label": "All partners",
+                                "description": "",
+                                "context": {
+                                    "entity": "identity\\Partner",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     },
                     {
-                      "id": "quotes",
-                      "type": "entry",
-                      "label": "Quotes",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\sale\\booking\\Booking",
-                        "view": "list.default",
-                        "domain": ["status", "=", "quote"]
-                      }
+                        "id": "catalog",
+                        "label": "Catalog",
+                        "description": "",
+                        "icon": "library_books",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "products",
+                                "label": "Products",
+                                "description": "",
+                                "icon": "style",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "products_current_products",
+                                        "type": "entry",
+                                        "label": "Current Products",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\Product",
+                                            "view": "list.default",
+                                            "domain": ["can_sell", "=", true]
+                                        }
+                                    },
+                                    {
+                                        "id": "products_products",
+                                        "type": "entry",
+                                        "label": "Products",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\Product",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "products_current_models",
+                                        "type": "entry",
+                                        "label": "Current Models",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\ProductModel",
+                                            "view": "list.default",
+                                            "domain": ["can_sell", "=", true]
+                                        }
+                                    },
+                                    {
+                                        "id": "products_product_models",
+                                        "type": "entry",
+                                        "label": "Products Models",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\ProductModel",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "products_product_categories",
+                                        "type": "entry",
+                                        "label": "Categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\catalog\\Category",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "products_product_families",
+                                        "type": "entry",
+                                        "label": "Families",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\Family",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "products_product_groups",
+                                        "type": "entry",
+                                        "label": "Groups",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\catalog\\Group",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "prices",
+                                "label": "Prices",
+                                "description": "",
+                                "icon": "attach_money",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "prices_pricelists_active",
+                                        "type": "entry",
+                                        "label": "Active Price Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\PriceList",
+                                            "view": "list.default",
+                                            "domain": ["is_active", "=", true]
+                                        }
+                                    },
+                                    {
+                                        "id": "prices_pricelists_all",
+                                        "type": "entry",
+                                        "label": "All Price Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\PriceList",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "prices_prices_all",
+                                        "type": "entry",
+                                        "label": "All Prices",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\Price",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "prices_pricelists_categories",
+                                        "type": "entry",
+                                        "label": "Price list Categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\PriceListCategory",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "discounts",
+                                "label": "Discounts",
+                                "description": "",
+                                "icon": "money_off",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "discounts.discounts",
+                                        "type": "entry",
+                                        "label": "Discounts",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\Discount",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "discounts.lists",
+                                        "type": "entry",
+                                        "label": "Discount lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\DiscountList",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "discounts.lists.categories",
+                                        "type": "entry",
+                                        "label": "Discount lists categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\DiscountListCategory",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "autosale",
+                                "label": "Autosales",
+                                "description": "",
+                                "icon": "autorenew",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "autosales_lists",
+                                        "type": "entry",
+                                        "label": "Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\autosale\\AutosaleList",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "autosales_categories",
+                                        "type": "entry",
+                                        "label": "Categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\autosale\\AutosaleListCategory",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "seasons",
+                                "label": "Seasons",
+                                "description": "",
+                                "icon": "calendar_today",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "seasons_type",
+                                        "type": "entry",
+                                        "label": "Season Types",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\season\\SeasonType",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "seasons_category",
+                                        "type": "entry",
+                                        "label": "Seasons categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\season\\SeasonCategory",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "seasons_season",
+                                        "type": "entry",
+                                        "label": "Seasons",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\season\\Season",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
-                      "id": "options",
-                      "type": "entry",
-                      "label": "Options",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\sale\\booking\\Booking",
-                        "view": "list.default",
-                        "domain": ["status", "=", "option"]
-                      }
-                    },
-                    {
-                      "id": "validated_bookings",
-                      "type": "entry",
-                      "label": "Validated bookings",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\sale\\booking\\Booking",
-                        "view": "list.default",
-                        "domain": ["status", "=", "validated"]
-                      }
+                        "id": "sales.settings",
+                        "label": "Settings",
+                        "description": "",
+                        "icon": "library_books",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "discounts",
+                                "label": "Discounts",
+                                "description": "",
+                                "icon": "money_off",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "discounts_discounts",
+                                        "type": "entry",
+                                        "label": "Discounts",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\Discount",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "discounts_lists",
+                                        "type": "entry",
+                                        "label": "Discount lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\DiscountList",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "discounts_lists_categories",
+                                        "type": "entry",
+                                        "label": "Discount lists categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\discount\\DiscountListCategory",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "autosale",
+                                "label": "Autosales",
+                                "description": "",
+                                "icon": "autorenew",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "autosales_lists",
+                                        "type": "entry",
+                                        "label": "Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\autosale\\AutosaleList",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "autosales_categories",
+                                        "type": "entry",
+                                        "label": "Categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\autosale\\AutosaleCategory",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "seasons",
+                                "label": "Seasons",
+                                "description": "",
+                                "icon": "calendar_today",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "seasons_type",
+                                        "type": "entry",
+                                        "label": "Season Types",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\season\\SeasonType",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "seasons_category",
+                                        "type": "entry",
+                                        "label": "Seasons categories",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\season\\SeasonCategory",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "seasons_season",
+                                        "type": "entry",
+                                        "label": "Seasons",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\season\\Season",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
-                  ]
-                },
-                {
-                  "id": "sales.customers",
-                  "label": "Customers",
-                  "description": "",
-                  "icon": "person",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "sales.customers.types",
-                      "label": "Types",
-                      "description": "",
-                      "icon": "person_outline",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "sales.customers.types.all",
-                          "type": "entry",
-                          "label": "All types",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\customer\\CustomerType",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "sales.customers.natures",
-                      "label": "Natures",
-                      "description": "",
-                      "icon": "person_outline",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "sales.customers.natures.all",
-                          "type": "entry",
-                          "label": "All natures",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\customer\\CustomerNature",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "sales.customers.rate_classes",
-                      "label": "Natures",
-                      "description": "",
-                      "icon": "price_check",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "sales.customers.rate_classes.all",
-                          "type": "entry",
-                          "label": "All Classes",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\customer\\RateClass",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "sales.customers.new_customer",
-                      "type": "entry",
-                      "label": "New customer",
-                      "description": "",
-                      "icon": "add",
-                      "context": {
-                        "entity": "sale\\customer\\Customer",
-                        "view": "form.customer",
-                        "purpose": "create",
-                        "domain": ["relationship", "=", "customer"]
-                      }
-                    },
-                    {
-                      "id": "sales.customers.all",
-                      "type": "entry",
-                      "label": "All customers",
-                      "description": "",
-                      "context": {
-                        "entity": "sale\\customer\\Customer",
-                        "view": "list.default",
-                        "domain": ["relationship", "=", "customer"]
-                      }
-                    },
-                    {
-                      "id": "all_partners",
-                      "type": "entry",
-                      "label": "All partners",
-                      "description": "",
-                      "context": {
-                        "entity": "identity\\Partner",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "id": "catalog",
-                  "label": "Catalog",
-                  "description": "",
-                  "icon": "library_books",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "products",
-                      "label": "Products",
-                      "description": "",
-                      "icon": "style",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "products_current_products",
-                          "type": "entry",
-                          "label": "Current Products",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\Product",
-                            "view": "list.default",
-                            "domain": ["can_sell", "=", true]
-                          }
-                        },
-                        {
-                          "id": "products_products",
-                          "type": "entry",
-                          "label": "Products",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\Product",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "products_current_models",
-                          "type": "entry",
-                          "label": "Current Models",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\ProductModel",
-                            "view": "list.default",
-                            "domain": ["can_sell", "=", true]
-                          }
-                        },
-                        {
-                          "id": "products_product_models",
-                          "type": "entry",
-                          "label": "Products Models",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\ProductModel",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "products_product_categories",
-                          "type": "entry",
-                          "label": "Categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\catalog\\Category",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "products_product_families",
-                          "type": "entry",
-                          "label": "Families",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\Family",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "products_product_groups",
-                          "type": "entry",
-                          "label": "Groups",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\catalog\\Group",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "prices",
-                      "label": "Prices",
-                      "description": "",
-                      "icon": "attach_money",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "prices_pricelists_active",
-                          "type": "entry",
-                          "label": "Active Price Lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\price\\PriceList",
-                            "view": "list.default",
-                            "domain": ["is_active", "=", true]
-                          }
-                        },
-                        {
-                          "id": "prices_pricelists_all",
-                          "type": "entry",
-                          "label": "All Price Lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\price\\PriceList",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "prices_prices_all",
-                          "type": "entry",
-                          "label": "All Prices",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\price\\Price",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "prices_pricelists_categories",
-                          "type": "entry",
-                          "label": "Price list Categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\price\\PriceListCategory",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "discounts",
-                      "label": "Discounts",
-                      "description": "",
-                      "icon": "money_off",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "discounts.discounts",
-                          "type": "entry",
-                          "label": "Discounts",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\Discount",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "discounts.lists",
-                          "type": "entry",
-                          "label": "Discount lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\DiscountList",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "discounts.lists.categories",
-                          "type": "entry",
-                          "label": "Discount lists categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\DiscountListCategory",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "autosale",
-                      "label": "Autosales",
-                      "description": "",
-                      "icon": "autorenew",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "autosales_lists",
-                          "type": "entry",
-                          "label": "Lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\autosale\\AutosaleList",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "autosales_categories",
-                          "type": "entry",
-                          "label": "Categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\autosale\\AutosaleListCategory",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "seasons",
-                      "label": "Seasons",
-                      "description": "",
-                      "icon": "calendar_today",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "seasons_type",
-                          "type": "entry",
-                          "label": "Season Types",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\season\\SeasonType",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "seasons_category",
-                          "type": "entry",
-                          "label": "Seasons categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\season\\SeasonCategory",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "seasons_season",
-                          "type": "entry",
-                          "label": "Seasons",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\season\\Season",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "id": "sales.settings",
-                  "label": "Settings",
-                  "description": "",
-                  "icon": "library_books",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "discounts",
-                      "label": "Discounts",
-                      "description": "",
-                      "icon": "money_off",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "discounts_discounts",
-                          "type": "entry",
-                          "label": "Discounts",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\Discount",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "discounts_lists",
-                          "type": "entry",
-                          "label": "Discount lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\DiscountList",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "discounts_lists_categories",
-                          "type": "entry",
-                          "label": "Discount lists categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\discount\\DiscountListCategory",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "autosale",
-                      "label": "Autosales",
-                      "description": "",
-                      "icon": "autorenew",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "autosales_lists",
-                          "type": "entry",
-                          "label": "Lists",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\autosale\\AutosaleList",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "autosales_categories",
-                          "type": "entry",
-                          "label": "Categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\autosale\\AutosaleCategory",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "seasons",
-                      "label": "Seasons",
-                      "description": "",
-                      "icon": "calendar_today",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "seasons_type",
-                          "type": "entry",
-                          "label": "Season Types",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\season\\SeasonType",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "seasons_category",
-                          "type": "entry",
-                          "label": "Seasons categories",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\season\\SeasonCategory",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "seasons_season",
-                          "type": "entry",
-                          "label": "Seasons",
-                          "description": "",
-                          "context": {
-                            "entity": "lodging\\sale\\season\\Season",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
 
 
 
-              ]
+                ]
             },
             {
-              "id": "documents",
-              "label": "Documents",
-              "description": "",
-              "icon": "insert_drive_file",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "documents_documents",
-                  "type": "entry",
-                  "label": "Documents",
-                  "description": "",
-                  "context": {
-                    "entity": "documents\\Document",
-                    "view": "list.default"
-                  }
-               }
-              ]
-            },
-            {
-              "id": "organisation",
-              "label": "Organisation",
-              "description": "",
-              "icon": "store",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "organisation.organisations",
-                  "type": "entry",
-                  "label": "Organisations",
-                  "description": "",
-                  "context": {
-                    "entity": "identity\\Identity",
-                    "view": "list.default",
-                    "domain": ["id", "<", 4]
-                  }
-                },
-                {
-                  "id": "organisation.centers",
-                  "label": "Centers",
-                  "description": "",
-                  "icon": "house",
-                  "type": "parent",
-                  "children": [
+                "id": "documents",
+                "label": "Documents",
+                "description": "",
+                "icon": "insert_drive_file",
+                "type": "parent",
+                "children": [
                     {
-                      "id": "organisation.centers.centers",
-                      "type": "entry",
-                      "label": "Centers",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\identity\\Center",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "organisation.centers.categories",
-                      "type": "entry",
-                      "label": "Center Categories",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\identity\\CenterCategory",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "organisation.centers.rental_units",
-                      "type": "entry",
-                      "label": "Rental units",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\realestate\\RentalUnit",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "organisation.centers.rental_units_categories",
-                      "type": "entry",
-                      "label": "Rental units categories",
-                      "description": "",
-                      "context": {
-                        "entity": "realestate\\RentalUnitCategory",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "id": "accounting",
-              "label": "Accounting",
-              "description": "",
-              "icon": "monetization_on",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "accounting.settings",
-                  "label": "Settings",
-                  "description": "",
-                  "icon": "settings",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "accounting.settings.vat_rules",
-                      "type": "entry",
-                      "label": "VAT rules",
-                      "description": "",
-                      "context": {
-                        "entity": "finance\\tax\\VatRule",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "accounting.settings.accounting_rules",
-                      "type": "entry",
-                      "label": "Accounting rules",
-                      "description": "",
-                      "context": {
-                        "entity": "lodging\\finance\\accounting\\AccountingRule",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "accounting.settings.account_chart",
-                      "type": "entry",
-                      "label": "Chart of accounts",
-                      "description": "",
-                      "context": {
-                        "entity": "finance\\accounting\\AccountChart",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "id": "accounting.invoices",
-                  "type": "entry",
-                  "label": "Invoices",
-                  "description": "",
-                  "context": {
-                    "entity": "finance\\accounting\\Invoice",
-                    "view": "list.default"
-                  }
-                },
-                {
-                  "id": "accounting.payments",
-                  "label": "Payments",
-                  "description": "",
-                  "icon": "payments",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "accounting.payments.statements",
-                      "label": "Settings",
-                      "description": "",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "accounting.payments.statements.all",
-                          "type": "entry",
-                          "label": "Bank Statements",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\pay\\BankStatement",
+                        "id": "documents.documents",
+                        "type": "entry",
+                        "label": "Documents",
+                        "description": "",
+                        "context": {
+                            "entity": "documents\\Document",
                             "view": "list.default"
-                          }
                         }
-                      ]
                     },
                     {
-                      "id": "accounting.payments.settings",
-                      "label": "Settings",
-                      "description": "",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "accounting.payments.settings.plans",
-                          "type": "entry",
-                          "label": "Payment plans",
-                          "description": "",
-                          "context": {
-                            "entity": "sale\\pay\\PaymentPlan",
+                        "id": "documents.categories",
+                        "type": "entry",
+                        "label": "Categories",
+                        "description": "",
+                        "context": {
+                            "entity": "documents\\DocumentCategory",
                             "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "accounting.payments.settings.deadlines",
-                          "type": "entry",
-                          "label": "Payment deadlines",
-                          "description": "",
-                          "context": {
-                              "entity": "sale\\pay\\PaymentDeadline",
-                            "view": "list.default"
-                          }
                         }
-                      ]
+                    },
+                    {
+                        "id": "documents.tags",
+                        "type": "entry",
+                        "label": "Tags",
+                        "description": "",
+                        "context": {
+                            "entity": "documents\\DocumentTag",
+                            "view": "list.default"
+                        }
                     }
-                  ]
-                }
-              ]
+                ]
             },
             {
-              "id": "communication",
-              "label": "Communication",
-              "description": "",
-              "icon": "mode_comment",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "communication.templates",
-                  "label": "Templates",
-                  "description": "",
-                  "icon": "chrome_reader_mode",
-                  "type": "parent",
-                  "children": [
+                "id": "organisation",
+                "label": "Organisation",
+                "description": "",
+                "icon": "store",
+                "type": "parent",
+                "children": [
                     {
-                      "id": "communication.templates.templates",
-                      "type": "entry",
-                      "label": "All templates",
-                      "description": "",
-                      "context": {
-                        "entity": "communication\\Template",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "communication.templates.categories",
-                      "type": "entry",
-                      "label": "Templates categories",
-                      "description": "",
-                      "context": {
-                        "entity": "communication\\TemplateCategory",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "communication.templates.parts",
-                      "type": "entry",
-                      "label": "All template parts",
-                      "description": "",
-                      "context": {
-                        "entity": "communication\\TemplatePart",
-                        "view": "list.default"
-                      }
-                    },
-                    {
-                      "id": "communication.templates.attachments",
-                      "type": "entry",
-                      "label": "All attachments",
-                      "description": "",
-                      "context": {
-                        "entity": "communication\\TemplateAttachment",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "id": "settings",
-              "label": "Configuration",
-              "description": "",
-              "icon": "settings",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "settings.settings",
-                  "label": "Application settings",
-                  "description": "",
-                  "icon": "person",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "settings.settings.available_settings.general",
-                      "type": "entry",
-                      "label": "General Settings",
-                      "description": "",
-                      "icon": "settings",
-                      "route": "settings/core"
-                    },
-                    {
-                      "id": "settings.settings.available_settings.sale",
-                      "type": "entry",
-                      "label": "Sales Settings",
-                      "description": "",
-                      "icon": "store",
-                      "route": "settings/sale"
-                    },
-                    {
-                      "id": "settings.settings.available_settings.finance",
-                      "type": "entry",
-                      "label": "Finance Settings",
-                      "description": "",
-                      "icon": "monetization_on",
-                      "route": "settings/finance"
-                    }
-                  ]
-                },
-                {
-                  "id": "settings.all_settings",
-                  "label": "All settings",
-                  "description": "",
-                  "icon": "settings",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "settings.all_settings.calendar",
-                      "label": "Calendar",
-                      "description": "",
-                      "icon": "calendar_today",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "settings.all_settings.calendar.holidays.years",
-                          "type": "entry",
-                          "label": "Holidays Years",
-                          "description": "",
-                          "context": {
-                            "entity": "calendar\\HolidayYear",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.calendar.holidays.holydays",
-                          "type": "entry",
-                          "label": "Holidays",
-                          "description": "",
-                          "context": {
-                            "entity": "calendar\\Holiday",
-                            "view": "list.default"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "id": "settings.all_settings.identities",
-                      "label": "Identities",
-                      "description": "",
-                      "icon": "person",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "settings.all_settings.identities.identities",
-                          "type": "entry",
-                          "label": "Identities",
-                          "description": "",
-                          "context": {
+                        "id": "organisation.organisations",
+                        "type": "entry",
+                        "label": "Organisations",
+                        "description": "",
+                        "context": {
                             "entity": "identity\\Identity",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.identities.partners",
-                          "type": "entry",
-                          "label": "Partners",
-                          "description": "",
-                          "context": {
-                            "entity": "identity\\Partner",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.identities.addresses",
-                          "type": "entry",
-                          "label": "Addresses",
-                          "description": "",
-                          "context": {
-                            "entity": "identity\\Address",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.identities.establishments",
-                          "type": "entry",
-                          "label": "Establishments",
-                          "description": "",
-                          "context": {
-                            "entity": "identity\\Establishment",
-                            "view": "list.default"
-                          }
+                            "view": "list.default",
+                            "domain": ["id", "<", 4]
                         }
-                      ]
                     },
                     {
-                      "id": "settings.all_settings.settings",
-                      "label": "Settings",
-                      "description": "",
-                      "icon": "settings",
-                      "type": "parent",
-                      "children": [
-                        {
-                          "id": "settings.all_settings.settings.settings_values",
-                          "type": "entry",
-                          "label": "Settings values",
-                          "description": "",
-                          "context": {
-                            "entity": "core\\setting\\SettingValue",
+                        "id": "organisation.centers",
+                        "label": "Centers",
+                        "description": "",
+                        "icon": "house",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "organisation.centers.centers",
+                                "type": "entry",
+                                "label": "Centers",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\identity\\Center",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "organisation.centers.categories",
+                                "type": "entry",
+                                "label": "Center Categories",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\identity\\CenterCategory",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "organisation.centers.rental_units",
+                                "type": "entry",
+                                "label": "Rental units",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\realestate\\RentalUnit",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "organisation.centers.rental_units_categories",
+                                "type": "entry",
+                                "label": "Rental units categories",
+                                "description": "",
+                                "context": {
+                                    "entity": "realestate\\RentalUnitCategory",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "accounting",
+                "label": "Accounting",
+                "description": "",
+                "icon": "monetization_on",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "accounting.settings",
+                        "label": "Settings",
+                        "description": "",
+                        "icon": "settings",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "accounting.settings.vat_rules",
+                                "type": "entry",
+                                "label": "VAT rules",
+                                "description": "",
+                                "context": {
+                                    "entity": "finance\\tax\\VatRule",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "accounting.settings.accounting_rules",
+                                "type": "entry",
+                                "label": "Accounting rules",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\finance\\accounting\\AccountingRule",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "accounting.settings.account_chart",
+                                "type": "entry",
+                                "label": "Chart of accounts",
+                                "description": "",
+                                "context": {
+                                    "entity": "finance\\accounting\\AccountChart",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "accounting.invoices",
+                        "type": "entry",
+                        "label": "Invoices",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\Invoice",
                             "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.settings.settings_choices",
-                          "type": "entry",
-                          "label": "Settings choices",
-                          "description": "",
-                          "context": {
-                            "entity": "core\\setting\\SettingChoice",
-                            "view": "list.default"
-                          }
-                        },
-                        {
-                          "id": "settings.all_settings.settings.settings",
-                          "type": "entry",
-                          "label": "Available Settings",
-                          "description": "",
-                          "context": {
-                            "entity": "core\\setting\\Setting",
-                            "view": "list.default"
-                          }
                         }
-                      ]
-                    }                   
-                  ]
-                }
-              ]
+                    },
+                    {
+                        "id": "accounting.payments",
+                        "label": "Payments",
+                        "description": "",
+                        "icon": "payments",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "accounting.payments.statements",
+                                "label": "Settings",
+                                "description": "",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "accounting.payments.statements.all",
+                                        "type": "entry",
+                                        "label": "Bank Statements",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\pay\\BankStatement",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "accounting.payments.settings",
+                                "label": "Settings",
+                                "description": "",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "accounting.payments.settings.plans",
+                                        "type": "entry",
+                                        "label": "Payment plans",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\pay\\PaymentPlan",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "accounting.payments.settings.deadlines",
+                                        "type": "entry",
+                                        "label": "Payment deadlines",
+                                        "description": "",
+                                        "context": {
+                                                "entity": "sale\\pay\\PaymentDeadline",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "communication",
+                "label": "Communication",
+                "description": "",
+                "icon": "mode_comment",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "communication.templates",
+                        "label": "Templates",
+                        "description": "",
+                        "icon": "chrome_reader_mode",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "communication.templates.templates",
+                                "type": "entry",
+                                "label": "All templates",
+                                "description": "",
+                                "context": {
+                                    "entity": "communication\\Template",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "communication.templates.categories",
+                                "type": "entry",
+                                "label": "Templates categories",
+                                "description": "",
+                                "context": {
+                                    "entity": "communication\\TemplateCategory",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "communication.templates.parts",
+                                "type": "entry",
+                                "label": "All template parts",
+                                "description": "",
+                                "context": {
+                                    "entity": "communication\\TemplatePart",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "communication.templates.attachments",
+                                "type": "entry",
+                                "label": "All attachments",
+                                "description": "",
+                                "context": {
+                                    "entity": "communication\\TemplateAttachment",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "settings",
+                "label": "Configuration",
+                "description": "",
+                "icon": "settings",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "settings.settings",
+                        "label": "Application settings",
+                        "description": "",
+                        "icon": "person",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "settings.settings.available_settings.general",
+                                "type": "entry",
+                                "label": "General Settings",
+                                "description": "",
+                                "icon": "settings",
+                                "route": "settings/core"
+                            },
+                            {
+                                "id": "settings.settings.available_settings.sale",
+                                "type": "entry",
+                                "label": "Sales Settings",
+                                "description": "",
+                                "icon": "store",
+                                "route": "settings/sale"
+                            },
+                            {
+                                "id": "settings.settings.available_settings.finance",
+                                "type": "entry",
+                                "label": "Finance Settings",
+                                "description": "",
+                                "icon": "monetization_on",
+                                "route": "settings/finance"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.all_settings",
+                        "label": "All settings",
+                        "description": "",
+                        "icon": "settings",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "settings.all_settings.calendar",
+                                "label": "Calendar",
+                                "description": "",
+                                "icon": "calendar_today",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "settings.all_settings.calendar.holidays.years",
+                                        "type": "entry",
+                                        "label": "Holidays Years",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "calendar\\HolidayYear",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.calendar.holidays.holydays",
+                                        "type": "entry",
+                                        "label": "Holidays",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "calendar\\Holiday",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "settings.all_settings.identities",
+                                "label": "Identities",
+                                "description": "",
+                                "icon": "person",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "settings.all_settings.identities.identities",
+                                        "type": "entry",
+                                        "label": "Identities",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "identity\\Identity",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.identities.partners",
+                                        "type": "entry",
+                                        "label": "Partners",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "identity\\Partner",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.identities.addresses",
+                                        "type": "entry",
+                                        "label": "Addresses",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "identity\\Address",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.identities.establishments",
+                                        "type": "entry",
+                                        "label": "Establishments",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "identity\\Establishment",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "settings.all_settings.settings",
+                                "label": "Settings",
+                                "description": "",
+                                "icon": "settings",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "settings.all_settings.settings.settings_values",
+                                        "type": "entry",
+                                        "label": "Settings values",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "core\\setting\\SettingValue",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.settings.settings_choices",
+                                        "type": "entry",
+                                        "label": "Settings choices",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "core\\setting\\SettingChoice",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "settings.all_settings.settings.settings",
+                                        "type": "entry",
+                                        "label": "Available Settings",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "core\\setting\\Setting",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

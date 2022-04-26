@@ -194,6 +194,8 @@ class BookingLine extends \sale\booking\BookingLine {
 
         // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)
         $lines = $om->read(__CLASS__, $oids, [
+            'product_id.product_model_id.booking_type',
+            'booking_id',
             'qty',
             'has_own_qty',
             'booking_line_group_id.nb_pers',
@@ -204,6 +206,10 @@ class BookingLine extends \sale\booking\BookingLine {
         ], $lang);
 
         foreach($lines as $lid => $line) {
+            // if model of chosen product has a non-generic booking type, update the booking of the line accordingly            
+            if(isset($line['product_id.product_model_id.booking_type']) && $line['product_id.product_model_id.booking_type'] != 'general') {
+                $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type' => $line['product_id.product_model_id.booking_type']]);
+            }
             $qty = $line['qty'];
             if(!$line['has_own_qty']) {
                 if($line['qty_accounting_method'] == 'accomodation') {
@@ -333,9 +339,9 @@ class BookingLine extends \sale\booking\BookingLine {
 
                     $rental_unit_category_id = $product_models[$line['product_id.product_model_id']]['rental_unit_category_id'];
 
-                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id] ]);
+                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id], ['is_accomodation', '=', true]]);
                     // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_accomodation', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
+                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
                     if($consumptions_ids > 0 && count($consumptions_ids)) {
                         $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
                         $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
@@ -396,9 +402,9 @@ class BookingLine extends \sale\booking\BookingLine {
                     // find available rental units
 
                     // retrieve list of possible rental_units based on center_id having max nb_pers (we try to assign people of a same group in a same accomodation)
-                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['capacity', '<=', $nb_pers] ]);
+                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['capacity', '<=', $nb_pers], ['is_accomodation', '=', true] ]);
                     // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_accomodation', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
+                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
                     if($consumptions_ids > 0 && count($consumptions_ids)) {
                         $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
                         $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
@@ -531,9 +537,12 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      * Try to assign the price_id according to the current product_id.
-     * Resolve the price from the applicable price lists, based on booking_line_group settings and booking center.
+     * Resolve the price from the first applicable price list, based on booking_line_group settings and booking center.
+     * If found price list is pending, mark the booking as TBC.
      *
      * _updatePriceId is also called upon booking_id.center_id and booking_line_group_id.date_from changes.
+     * 
+     * @param \equal\orm\ObjectManager $om
      */
     public static function _updatePriceId($om, $oids, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updatePriceId", QN_REPORT_DEBUG);
@@ -541,6 +550,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(get_called_class(), $oids, [
             'booking_line_group_id.date_from',
             'product_id',
+            'booking_id',
             'booking_id.center_id.price_list_category_id'
         ]);
 
@@ -572,6 +582,15 @@ class BookingLine extends \sale\booking\BookingLine {
                         */
                         $found = true;
                         $om->write(get_called_class(), $line_id, ['price_id' => $prices_ids[0]]);
+
+                        // update booking depending on the status of the pricelist
+                        $pricelists = $om->read('sale\price\PriceList', $price_list_id, [ 'status' ]);
+                        if($pricelists > 0) {
+                            $pricelist = reset($pricelists);
+                            if($pricelist['status'] == 'pending') {
+                                $om->write('sale\booking\Booking', $line['booking_id'], ['is_price_tbc' => true]);
+                            }
+                        }
                         break;
                     }
                 }
@@ -586,9 +605,8 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      *
-     * This method is called upon change on: qty (self::onchangeQty)
-     * (consumptions are used in the planning)
-     * change on the satus => option or confirmed
+     * This method is called upon setting booking status to 'option' or 'confirmed'
+     * #memo - consumptions are used in the planning.
      *
      */
     public static function _createConsumptions($om, $oids, $lang) {
@@ -625,14 +643,12 @@ class BookingLine extends \sale\booking\BookingLine {
 
 
 
-
-
     /**
      * Process targeted BookineLines to create an in-memory list of consumptions objects.
      *
      */
     public static function _getResultingConsumptions($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_getResultingConsumptions", QN_REPORT_DEBUG);
 
         // resulting consumptions objects
         $consumptions = [];
@@ -789,29 +805,9 @@ class BookingLine extends \sale\booking\BookingLine {
                             }
                         }
 
-
-                        /*
-                        // #memo create only one consumption with the quantity set accordingly
-                        // $nb_times is the number of persons, it may vary from one day to another
-                        for($n = 0; $n < $days_nb_times[$i]; ++$n) {
-                            $consumptions[] = [
-                                'booking_id'            => $line['booking_id'],
-                                'center_id'             => $line['booking_id.center_id'],
-                                'booking_line_group_id' => $line['booking_line_group_id'],
-                                'booking_line_id'       => $lid,
-                                'date'                  => $c_date,
-                                'schedule_from'         => $c_schedule_from,
-                                'schedule_to'           => $c_schedule_to,
-                                'product_id'            => $line['product_id'],
-                                'is_accomodation'       => $is_accomodation,
-                                'is_meal'               => $is_meal,
-                                'rental_unit_id'        => $rental_unit_id
-                            ];
-                        }
-                        */
+                        // #memo - create a single consumption with the quantity set accordingly (may vary from one day to another)
 
                         $consumptions[] = [
-                            'is_first'              => ($i == 0),
                             'booking_id'            => $line['booking_id'],
                             'center_id'             => $line['booking_id.center_id'],
                             'booking_line_group_id' => $line['booking_line_group_id'],
@@ -820,7 +816,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             'schedule_from'         => $c_schedule_from,
                             'schedule_to'           => $c_schedule_to,
                             'product_id'            => $line['product_id'],
-                            'is_accomodation'       => $is_accomodation,
+                            'is_rental_unit'        => $is_accomodation,
                             'is_meal'               => $is_meal,
                             'rental_unit_id'        => $rental_unit_id,
                             'qty'                   => $days_nb_times[$i]

@@ -1,0 +1,41 @@
+{
+    "name": "Repair",
+    "description": "List of scheduled repairs.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "rental_unit_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_from",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_to",
+                "width": "10%"
+            },            
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            }
+        ]
+    }
+}

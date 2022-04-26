@@ -1,0 +1,28 @@
+{
+    "name": "Repairs & Maintenance",
+    "description": "List of scheduled repairs.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "From",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "To",
+                "value": "date_to",
+                "width": "15%"
+            }
+        ]
+    }
+}

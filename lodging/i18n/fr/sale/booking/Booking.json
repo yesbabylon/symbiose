@@ -8,6 +8,22 @@
             "description": "Le client au nom de qui sera établie la facture.",
             "help": ""
         },
+        "type": {
+            "label": "Type",
+            "description": "Type de réservation (automatique, selon les produits choisis).",
+            "selection": {
+                "general": "tout public",
+                "school_trip": "séjour scolaire",
+                "sport_camp": "stage",
+                "ota": "OTA"
+            },
+            "help": ""
+        },
+        "customer_nature_id": {
+            "label": "Nature client",
+            "description": "Nature applicable au client.",
+            "help": ""
+        },
         "center_id": {
             "label": "Centre",
             "description": "Le centre visé par la réservation.",

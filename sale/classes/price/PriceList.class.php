@@ -44,7 +44,8 @@ class PriceList extends Model {
                 'selection'         => [
                     'pending',              // list is "under construction"
                     'published',            // completed and ready to be used
-                    'paused'                // (temporarily) on hold (not to be used)
+                    'paused',               // (temporarily) on hold (not to be used)
+                    'closed'                // can no longer be used          
                 ],
                 'description'       => 'Status of the list.',
                 'onchange'          => 'sale\price\PriceList::onchangeStatus',
@@ -106,7 +107,7 @@ class PriceList extends Model {
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
-                $result[$lid] = boolval( ($list['date_to'] > $now) && ($list['status'] == 'published') );
+                $result[$lid] = boolval( ($list['date_to'] > $now) && (in_array($list['status'], ['pending', 'published'])) );
             }
         }
         return $result;
@@ -127,9 +128,9 @@ class PriceList extends Model {
 
     public static function onchangeStatus($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['is_active' => null]);
+        // immediate re-compute
         $om->read(__CLASS__, $oids, ['is_active']);
     }
-
     
 
 }

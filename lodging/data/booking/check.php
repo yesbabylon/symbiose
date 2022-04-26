@@ -47,7 +47,7 @@ $consumptions = BookingLine::_getResultingConsumptions($orm, $booking['booking_l
 
 // filter to keep only accomodations
 $consumptions = array_filter($consumptions, function($a) {
-    return $a['is_accomodation'];
+    return $a['is_rental_unit'];
 });
 
 // sort ascending on date
@@ -117,7 +117,7 @@ foreach($consumptions_map as $booking_line_group_id => $rental_units) {
                 }
             }
 
-            // collision array is not empty : surbooking !  
+            // collision array is not empty : overbooking or assignment to an OOO rental unit
             if(count($colliding_consumptions)) {
 
                 foreach($colliding_consumptions as $cid => $consumption) {
@@ -129,6 +129,8 @@ foreach($consumptions_map as $booking_line_group_id => $rental_units) {
 
     }
 }
+
+// #todo - handle OOO
 
 $colliding_bookings_ids = array_keys($colliding_bookings_map);
 

@@ -79,6 +79,7 @@ $fields = [
     'date_to',
     'total',
     'price',
+    'is_price_tbc',
     'customer_id' => [
         'partner_identity_id' => [
             'id',
@@ -195,6 +196,7 @@ $values = [
     'quote_header_html'     => '',
     'quote_notice_html'     => '',
 
+    'is_price_tbc'          => $booking['is_price_tbc'],
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
     'contact_name'          => '',
     'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],

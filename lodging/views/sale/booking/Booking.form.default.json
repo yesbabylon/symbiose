@@ -91,7 +91,7 @@
             "label": "Hosts details",
             "description": "",
             "icon": "view_list",
-            "route": "/booking/object.id/composition",
+            "route": "/booking/object.id/composition",            
             "visible": ["status", "not in", ["quote", "option"]]
         },
         {
@@ -140,7 +140,7 @@
                                                 "type": "field",
                                                 "label": "Reference",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "33%",
                                                 "widget": {
                                                     "heading": true,
                                                     "readonly": true
@@ -149,9 +149,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "50%",
+                                                "width": "33%",
                                                 "widget": {
                                                     "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "33%",
+                                                "widget": {
                                                     "readonly": true
                                                 }
                                             }
@@ -220,7 +228,13 @@
                                                 "type": "field",
                                                 "label": "Organisation of Payer",
                                                 "value": "has_payer_organisation",
-                                                "width": "100%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Price to be confirmed",
+                                                "value": "is_price_tbc",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",

@@ -3,7 +3,21 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_EDIT" ,
+                    "view": "form.default"
+                },
+                {
+                    "id": "SAVE_AND_VIEW" ,
+                    "view": "form.default"
+                }
+            ]
+        }
+    },
     "layout": {
         "groups": [
             {

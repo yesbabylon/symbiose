@@ -316,7 +316,27 @@
                                 ]
                             }
                         ]
-                    }
+                    },
+                    {
+                        "label": "Repairs & Maintenance",
+                        "id": "section.repairings_ids",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "repairings_ids",                                                
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
                 ]
             }
         ]

@@ -15,31 +15,49 @@
             {
                 "type": "field",
                 "value": "code",
-                "width": "20%",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "action_required",
+                "width": "15%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "type",
-                "width": "20%",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_accomodation",
+                "width": "10%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "capacity",
-                "width": "20%",
+                "width": "10%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "rental_unit_category_id",
-                "width": "20%",
+                "width": "15%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "value": "center_id",
-                "width": "20%",
+                "width": "15%",
                 "sortable": true
             }
         ]

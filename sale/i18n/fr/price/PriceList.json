@@ -13,9 +13,10 @@
             "description": "Statut de la liste.",
             "help": "",
             "selection": {
-                "pending": "brouillon",
+                "pending": "à confirmer",
                 "published": "publiée",
-                "paused": "en pause"
+                "paused": "en pause",
+                "closed": "clôturée"
             }
         },
         "is_active": {

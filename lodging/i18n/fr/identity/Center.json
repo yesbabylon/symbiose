@@ -15,7 +15,7 @@
         },
         "code_alpha": {
             "label": "Mnémo",
-            "description": "Code alpha d'identification du centre (2 lettres majuscules).",
+            "description": "Code alpha du centre (2 lettres majuscules).",
             "help": ""
         },
         "manager_id": {
@@ -55,7 +55,7 @@
         },
         "categories_ids": {
             "label": "Catégories",
-            "description": "Liste des catégories auxquelles appartient le centre belge, le cas échéant.",
+            "description": "Catégories auxquelles appartient le centre, le cas échéant.",
             "help": ""
         },
         "rental_units_ids": {
