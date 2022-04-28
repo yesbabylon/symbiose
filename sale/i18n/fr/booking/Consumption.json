@@ -58,17 +58,17 @@
             "help": ""
         },
         "disclaimed": {
-            "label": "Absent?",
+            "label": "Absent",
             "description": "La livraison est prévue par le client qui y a expressément renoncé.",
             "help": ""
         },
-		"is_accomodation": {
-			"label": "Logement?",
-			"description": "Le service est un logement.",
+		"is_rental_unit": {
+			"label": "Logement",
+			"description": "Le service correspond à une unité locative.",
 			"help": ""
 		},
 		"is_meal": {
-			"label": "Repas?",
+			"label": "Repas",
 			"description": "Le service est un repas.",
 			"help": ""
 		}

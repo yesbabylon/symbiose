@@ -7,6 +7,7 @@
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
+use lodging\sale\booking\Consumption;
 
 use core\Task;
 
@@ -35,7 +36,7 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read(['id', 'name', 'status', 'contracts_ids', 'booking_lines_ids', 'consumptions_ids', 'fundings_ids' => ['id', 'is_paid']])
+                  ->read(['id', 'name', 'status', 'contracts_ids', 'booking_lines_ids', 'fundings_ids' => ['id', 'is_paid']])
                   ->first();
                   
 if(!$booking) {
@@ -67,12 +68,13 @@ if($booking['status'] != 'quote') {
             $fundings_ids_to_remove[] = "-$fid";
         }
     }
-    $consumptions_ids_to_remove = array_map(function($a) { return "-$a";}, $booking['consumptions_ids']);
+    // remove consumptions + link & part
+    $consumptions_ids_to_remove = Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 
     // mark lines as not 'invoiced' (waiting for payment)
     BookingLine::ids($booking['booking_lines_ids'])->update(['is_contractual' => false]);
     // mark booking as non-having contract, remove non-paid fundings and remove existing consumptions
-    Booking::id($params['id'])->update(['has_contract' => false, 'fundings_ids' => $fundings_ids_to_remove, 'consumptions_ids' => $consumptions_ids_to_remove]);
+    Booking::id($params['id'])->update(['has_contract' => false, 'fundings_ids' => $fundings_ids_to_remove]);
 }
 
 $context->httpResponse()

@@ -12,6 +12,11 @@ class BookingLineRentalUnitAssignement extends Model {
     public static function getName() {
         return "Rental Unit Assignement";
     }
+
+    /*
+        Assignements are created while selecting the services for a booking.
+        Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.
+    */
     
     public static function getColumns() {
         return [
