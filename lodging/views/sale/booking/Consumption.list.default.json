@@ -38,8 +38,14 @@
             },
             {
                 "type": "field",
-                "value": "is_accomodation",
+                "value": "is_rental_unit",
                 "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "rental_unit_id",
+                "width": "15%",
                 "sortable": true
             },
             {

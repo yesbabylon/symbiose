@@ -910,6 +910,25 @@
                         "type": "parent",
                         "children": [
                             {
+                                "id": "settings.all_settings.scheduler",
+                                "label": "Scheduler",
+                                "description": "",
+                                "icon": "schedule",
+                                "type": "parent",
+                                "children": [
+                                    {
+                                        "id": "settings.all_settings.cron.tasks",
+                                        "type": "entry",
+                                        "label": "Scheduled tasks",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "core\\Task",
+                                            "view": "list.default"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
                                 "id": "settings.all_settings.calendar",
                                 "label": "Calendar",
                                 "description": "",

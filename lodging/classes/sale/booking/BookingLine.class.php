@@ -206,7 +206,7 @@ class BookingLine extends \sale\booking\BookingLine {
         ], $lang);
 
         foreach($lines as $lid => $line) {
-            // if model of chosen product has a non-generic booking type, update the booking of the line accordingly            
+            // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
             if(isset($line['product_id.product_model_id.booking_type']) && $line['product_id.product_model_id.booking_type'] != 'general') {
                 $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type' => $line['product_id.product_model_id.booking_type']]);
             }
@@ -278,6 +278,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.date_from',
             'booking_line_group_id.date_to',
+            'product_id',
             'product_id.product_model_id',
             'qty_accounting_method',
             'is_accomodation',
@@ -307,161 +308,87 @@ class BookingLine extends \sale\booking\BookingLine {
                 $om->write(__CLASS__, $lid, ['rental_unit_assignments_ids' => array_map(function($a) { return "-$a";}, $line['rental_unit_assignments_ids'])]);
 
                 $center_id = $line['booking_id.center_id'];
-                $capacity = $product_models[$line['product_id.product_model_id']]['capacity'];
                 $nb_pers = $line['booking_line_group_id.nb_pers'];
                 $date_from = $line['booking_line_group_id.date_from'];
                 $date_to = $line['booking_line_group_id.date_to'];
 
-
                 $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
 
-                if($rental_unit_assignement == 'unit') {
-                    /*
-                        Assign to a specific rental unit
-                    */
+                // find available rental units (sorted by capacity desc)
+                $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
+                // retrieve rental units capacities
+                $rental_units = [];
+                $assigned_rental_units = [];
+                if($rental_units_ids > 0 && count($rental_units_ids)) {
+                    $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']));
+                }
 
-                    $rental_unit_id = $product_models[$line['product_id.product_model_id']]['rental_unit_id'];
+                for($i = 0, $n = count($rental_units), $available_capacity = 0; $i < $n; ++$i) {
+                    $tmp_rental_units = array_slice($rental_units, $i);
+                    $sum = array_reduce($tmp_rental_units, function ($c, $a) { return $c + $a['capacity'];}, 0);
+                    if($sum < $nb_pers) {
+                        break;
+                    }
+                    // if delta at previous index is lower than remaining list, prefer a single unit
+                    if($available_capacity >= $nb_pers && abs($nb_pers-$sum) <= abs($nb_pers-$available_capacity)) {
+                        // start using rental units at previous index
+                        --$i;
+                        break;
+                    }
+                    $available_capacity = $sum;
+                }
+
+                $remaining = $nb_pers;
+
+                if($available_capacity >= $nb_pers) {
+
+                    if($rental_unit_assignement == 'unit') {
+                        /*
+                            Assign to a specific rental unit
+                        */
+                        $rental_unit = reset($rental_units);
+                        $rental_unit['assigned'] = $remaining;
+                        $assigned_rental_units[] = $rental_unit;
+                    }
+                    else {
+                        // min serie for available capacity starts from max(0, i-1)
+                        for($j = max(0, $i-1); $j < $n; ++$j) {
+                            $rental_unit = $rental_units[$j];
+                            $assigned = min($rental_unit['capacity'], $remaining);
+
+                            $rental_unit['assigned'] = $assigned;
+                            $assigned_rental_units[] = $rental_unit;
+
+                            $remaining -= $assigned;
+                            if($remaining <= 0) break;
+                        }
+                    }
+                }
+
+                if($remaining > 0) {
+                    // no availability !
                     $assignement = [
                         'booking_id'        => $line['booking_id'],
                         'booking_line_id'   => $lid,
-                        'rental_unit_id'    => $rental_unit_id,
+                        'rental_unit_id'    => 0,
                         'qty'               => $nb_pers
                     ];
-                    trigger_error("QN_DEBUG_ORM::assigning {$rental_unit_id}", QN_REPORT_DEBUG);
+                    trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
                     $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
                 }
-                else if($rental_unit_assignement == 'category') {
-                    /*
-                        Assign rental units by category
-                    */
-
-                    trigger_error("QN_DEBUG_ORM::assignment by category", QN_REPORT_DEBUG);
-
-                    $rental_unit_category_id = $product_models[$line['product_id.product_model_id']]['rental_unit_category_id'];
-
-                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id], ['is_accomodation', '=', true]]);
-                    // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
-                    if($consumptions_ids > 0 && count($consumptions_ids)) {
-                        $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
-                        $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
-                        // remove from rental_units list the ones that are already assigned
-                        $rental_units_ids = array_filter($rental_units_ids, function($rental_unit_id) use($booked_rental_units_ids) {return !in_array($rental_unit_id, $booked_rental_units_ids);});
-                    }
-                    if(!count($rental_units_ids)) {
-                        // no availability !
+                else {
+                    foreach($assigned_rental_units as $rental_unit) {
                         $assignement = [
                             'booking_id'        => $line['booking_id'],
                             'booking_line_id'   => $lid,
-                            'rental_unit_id'    => 0,
-                            'qty'               => $nb_pers
+                            'rental_unit_id'    => $rental_unit['id'],
+                            'qty'               => $rental_unit['assigned']
                         ];
-                        trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
+                        trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
                         $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
                     }
-                    else {
-                        // retrieve rental units capacities
-                        $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']);
-
-                        // sort rental units by descending capacities
-                        usort($rental_units, function($a, $b) {
-                            return $b['capacity'] - $a['capacity'];
-                        });
-
-                        $last_index = count($rental_units) - 1;
-
-                        $remainder = $nb_pers;
-
-                        foreach($rental_units as $index => $rental_unit) {
-
-                            if($rental_unit['capacity'] > $remainder && $index != $last_index ) {
-                                continue;
-                            }
-
-                            $assigned = ($rental_unit['capacity'] > $remainder)?$remainder:$rental_unit['capacity'];
-                            $remainder -= $assigned;
-
-                            $assignement = [
-                                'booking_id'        => $line['booking_id'],
-                                'booking_line_id'   => $lid,
-                                'rental_unit_id'    => $rental_unit['id'],
-                                'qty'               => $assigned
-                            ];
-                            trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
-                            $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
-                            if($remainder <= 0) break;
-                        }
-                    }
-
                 }
-                else if($rental_unit_assignement == 'capacity') {
-                    /*
-                        Assign rental units by capacity
-                    */
-                    trigger_error("QN_DEBUG_ORM::assignment by capacity", QN_REPORT_DEBUG);
-                    // find available rental units
-
-                    // retrieve list of possible rental_units based on center_id having max nb_pers (we try to assign people of a same group in a same accomodation)
-                    $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['capacity', '<=', $nb_pers], ['is_accomodation', '=', true] ]);
-                    // retrieve existing consumptions for selected center occuring between chosen dates relating to rental_units
-                    $consumptions_ids = $om->search('lodging\sale\booking\Consumption', [ ['is_rental_unit', '=', true], ['center_id', '=', $center_id], ['date', '>=', $date_from], ['date', '<=', $date_to]]);
-                    if($consumptions_ids > 0 && count($consumptions_ids)) {
-                        $consumptions = $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['rental_unit_id']);
-                        $booked_rental_units_ids = array_map(function($a) {return $a['rental_unit_id'];}, $consumptions);
-                        // remove from rental_units list the ones that are already assigned
-                        $rental_units_ids = array_filter($rental_units_ids, function($rental_unit_id) use($booked_rental_units_ids) {return !in_array($rental_unit_id, $booked_rental_units_ids);});
-                    }
-
-                    if(!count($rental_units_ids)) {
-                        // no availability !
-                        $assignement = [
-                            'booking_id'        => $line['booking_id'],
-                            'booking_line_id'   => $lid,
-                            'rental_unit_id'    => 0,
-                            'qty'               => $nb_pers
-                        ];
-                        trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
-                        $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
-                    }
-                    else {
-
-                        // retrieve rental units capacities
-                        $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']);
-
-                        // sort rental units by descending capacities
-                        usort($rental_units, function($a, $b) {
-                            return $b['capacity'] - $a['capacity'];
-                        });
-
-                        $last_index = count($rental_units) - 1;
-
-                        $remainder = $nb_pers;
-
-                        foreach($rental_units as $index => $rental_unit) {
-
-                            if($rental_unit['capacity'] > $remainder && $index != $last_index ) {
-                                continue;
-                            }
-
-                            $assigned = ($rental_unit['capacity'] > $remainder)?$remainder:$rental_unit['capacity'];
-                            $remainder -= $assigned;
-
-                            $assignement = [
-                                'booking_id'        => $line['booking_id'],
-                                'booking_line_id'   => $lid,
-                                'rental_unit_id'    => $rental_unit['id'],
-                                'qty'               => $assigned
-                            ];
-                            trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
-                            $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
-                            if($remainder <= 0) break;
-                        }
-
-                    }
-                }
-
             }
-
         }
 
         // reset total price
@@ -541,7 +468,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * If found price list is pending, mark the booking as TBC.
      *
      * _updatePriceId is also called upon booking_id.center_id and booking_line_group_id.date_from changes.
-     * 
+     *
      * @param \equal\orm\ObjectManager $om
      */
     public static function _updatePriceId($om, $oids, $lang) {
@@ -605,7 +532,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      *
-     * This method is called upon setting booking status to 'option' or 'confirmed'
+     * This method is called upon setting booking status to 'option' or 'confirmed' (#see `option.php`)
      * #memo - consumptions are used in the planning.
      *
      */
@@ -644,7 +571,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
 
     /**
-     * Process targeted BookineLines to create an in-memory list of consumptions objects.
+     * Process targeted BookingLines to create an in-memory list of consumptions objects.
      *
      */
     public static function _getResultingConsumptions($om, $oids, $lang) {
@@ -713,31 +640,25 @@ class BookingLine extends \sale\booking\BookingLine {
                     $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
                     $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
-                    // is_accomodation is used as "it is attached to a rental_unit (accomodation or other)"
-                    $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
+                    // is_accomodation is used as "is it attached to a rental_unit (accomodation or other)"
+                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
-
-                    $rental_unit_id = 0;
 
                     // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
                     $nb_products = $nb_nights;
                     $nb_times = $nb_pers;
 
-                    if($is_accomodation) {
+                    if($is_rental_unit) {
+                        // #todo - we should check if the rental unit is an acoomodation
                         ++$nb_products; // checkout is done the day following the last night
 
                         /*
-                            retrieve all assigned rental units
+                            retrieve assigned rental units
                             rental units have been assigned during booking in BookingLineRentalUnitAssignement objects
                         */
 
-                        $rental_units = [];
                         $assignments_ids = $om->search('lodging\sale\booking\BookingLineRentalUnitAssignement', ['booking_line_id', '=', $lid]);
-                        $assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id','qty']);
-
-                        foreach($assignments as $aid => $assignement) {
-                            $rental_units[$assignement['rental_unit_id']] = $assignement['qty'] * $nb_products;
-                        }
+                        $rental_units_assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id','qty']);
 
                     }
                     else if($has_duration) {
@@ -764,11 +685,38 @@ class BookingLine extends \sale\booking\BookingLine {
                                 ++$i;
                             }
                             // handle last day for acccomodations
-                            if($is_accomodation) {
+                            if($is_rental_unit) {
+                                // #todo - we should check if related rental_unit is an accomodation
                                 $days_nb_times[$i] = $nb_times + $variation;
                             }
                         }
                     }
+
+                    /*
+                        retrieve all involved rental units (limited to 2 levels above and 2 levels below)
+                    */
+                    $rental_units = [];
+                    $rental_units_ids = [];
+                    if($rental_units_assignments > 0) {
+                        $rental_units_ids = array_map(function ($a) { return $a['rental_unit_id']; }, $rental_units_assignments);
+                        // read first level
+                        $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids']);
+                        if($units > 0) {
+                            foreach($units as $uid => $unit) {
+                                $rental_units_ids[] = $uid;
+
+                                if($unit['parent_id'] > 0) {
+                                    $rental_units_ids[] = $unit['parent_id'];
+                                }
+                                if(count($unit['children_ids'])) {
+                                    $rental_units_ids = array_merge($rental_units_ids, $unit['children_ids']);
+                                }
+                            }
+                        }
+                        // read second level
+                        $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent', 'is_accomodation']);
+                    }
+
 
                     // $nb_products represent each day of the stay
                     for($i = 0; $i < $nb_products; ++$i) {
@@ -776,9 +724,8 @@ class BookingLine extends \sale\booking\BookingLine {
                         $c_schedule_from = $schedule_from;
                         $c_schedule_to = $schedule_to;
 
-                        $rental_unit_id = 0;
-
-                        if($is_accomodation) {
+                        // create as many consumptions as the number of rental units assigned to the line
+                        if($is_rental_unit) {
                             // if day is not the arrival day
                             if($i > 0) {
                                 $c_schedule_from = 0;               // midnight same day
@@ -791,36 +738,78 @@ class BookingLine extends \sale\booking\BookingLine {
                                 $c_schedule_to = 24 * 3600;         // midnight next day
                             }
 
-                            // pick amongst the attached rental_units
-                            foreach($rental_units as $rid => $qty) {
-                                $rental_unit_id = $rid;
-                                if($qty == 1) {
-                                    // it was last place available : remove the rental_unit from the candidates list
-                                    unset($rental_units[$rid]);
-                                }
-                                else {
-                                    // withdraw one place from the rental unit
-                                    --$rental_units[$rid];
+                            if($rental_units_assignments > 0) {
+                                foreach($rental_units_assignments as $assignment) {
+                                    $rental_unit_id = $assignment['rental_unit_id'];
+                                    $consumption = [
+                                        'booking_id'            => $line['booking_id'],
+                                        'center_id'             => $line['booking_id.center_id'],
+                                        'booking_line_group_id' => $line['booking_line_group_id'],
+                                        'booking_line_id'       => $lid,
+                                        'date'                  => $c_date,
+                                        'schedule_from'         => $c_schedule_from,
+                                        'schedule_to'           => $c_schedule_to,
+                                        'product_id'            => $line['product_id'],
+                                        'is_rental_unit'        => true,
+                                        'is_meal'               => $is_meal,
+                                        'rental_unit_id'        => $rental_unit_id,
+                                        'qty'                   => $assignment['qty'],
+                                        'type'                  => 'book'
+                                    ];
+                                    $consumptions[] = $consumption;
+
+                                    // 1) recurse through children : all child units aer blocked as 'link'
+                                    $children_ids = [];
+                                    $children_stack = $rental_units[$rental_unit_id]['children_ids'];
+                                    while(count($children_stack)) {
+                                        $unit_id = array_pop($children_stack);
+                                        $children_ids[] = $unit_id;
+                                        if(isset($rental_units[$unit_id]) && $rental_units[$unit_id]['children_ids']) {
+                                            foreach($units[$unit_id]['children_ids'] as $child_id) {
+                                                $children_stack[] = $child_id;
+                                            }
+                                        }
+                                    }
+                                    $consumption['type'] = 'link';
+                                    foreach($children_ids as $child_id) {
+                                        $consumption['rental_unit_id'] = $child_id;
+                                        $consumptions[] = $consumption;
+                                    }
+                                    // 2) loop through parents : if a parent has 'can_partial_rent', it is partially blocked as 'part', otherwise fully blocked as 'link'
+                                    $parents_ids = [];
+                                    $unit_id = $rental_unit_id;
+                                    while( isset($rental_units[$unit_id]) ) {
+                                        $parent_id = $rental_units[$unit_id]['parent_id'];
+                                        if($parent_id > 0) {
+                                            $parents_ids[] = $parent_id;
+                                        }
+                                        $unit_id = $parent_id;
+                                    }
+                                    foreach($parents_ids as $parent_id) {
+                                        $consumption['type'] = ($rental_units[$parent_id]['can_partial_rent'])?'part':'link';
+                                        $consumption['rental_unit_id'] = $parent_id;
+                                        $consumptions[] = $consumption;
+                                    }
                                 }
                             }
                         }
-
-                        // #memo - create a single consumption with the quantity set accordingly (may vary from one day to another)
-
-                        $consumptions[] = [
-                            'booking_id'            => $line['booking_id'],
-                            'center_id'             => $line['booking_id.center_id'],
-                            'booking_line_group_id' => $line['booking_line_group_id'],
-                            'booking_line_id'       => $lid,
-                            'date'                  => $c_date,
-                            'schedule_from'         => $c_schedule_from,
-                            'schedule_to'           => $c_schedule_to,
-                            'product_id'            => $line['product_id'],
-                            'is_rental_unit'        => $is_accomodation,
-                            'is_meal'               => $is_meal,
-                            'rental_unit_id'        => $rental_unit_id,
-                            'qty'                   => $days_nb_times[$i]
-                        ];
+                        // create a single consumption with the quantity set accordingly (may vary from one day to another)
+                        else {
+                            $consumptions[] = [
+                                'booking_id'            => $line['booking_id'],
+                                'center_id'             => $line['booking_id.center_id'],
+                                'booking_line_group_id' => $line['booking_line_group_id'],
+                                'booking_line_id'       => $lid,
+                                'date'                  => $c_date,
+                                'schedule_from'         => $c_schedule_from,
+                                'schedule_to'           => $c_schedule_to,
+                                'product_id'            => $line['product_id'],
+                                'is_rental_unit'        => false,
+                                'is_meal'               => $is_meal,
+                                'qty'                   => $days_nb_times[$i],
+                                'type'                  => 'book'
+                            ];
+                        }
                     }
 
                 }
