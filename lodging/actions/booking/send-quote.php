@@ -36,7 +36,6 @@ list($params, $providers) = announce([
         'message' => [
             'description'   => 'Body of the message.',
             'type'          => 'string',
-            'usage'         => 'email',
             'required'      => true
         ],
         'sender_email' => [
@@ -52,9 +51,15 @@ list($params, $providers) = announce([
             'required'      => true
         ],
         'attachments_ids' => [
-            'description'   => 'Email address TO.',
+            'description'   => 'List of identitiers of attachments to join.',
             'type'          => 'array',
             'default'       => []
+        ],
+        'mode' =>  [
+            'description'   => 'Mode in which document has to be rendered: simple or detailed.',
+            'type'          => 'string',
+            'selection'     => ['simple', 'grouped', 'detailed'],
+            'default'       => 'grouped'
         ],
         'lang' =>  [
             'description'   => 'Language to use for multilang contents.',
@@ -64,7 +69,6 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',
         'groups'            => ['booking.default.user'],
     ],
     'response' => [
@@ -79,7 +83,6 @@ list($params, $providers) = announce([
 // init local vars with inputs
 list($context, $cron) = [ $providers['context'], $providers['cron'] ];
 
-
 $booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
 
 if(!$booking) {
@@ -88,19 +91,12 @@ if(!$booking) {
 
 
 // generate attachment
-$result = run('get', 'lodging_booking_print-booking', [
+$attachment = eQual::run('get', 'lodging_booking_print-booking', [
     'id'        => $params['booking_id'],
     'view_id'   =>'print.default',
-    'lang'      => $params['lang']
+    'lang'      => $params['lang'],
+    'mode'      => $params['mode']
 ]);
-
-$data = json_decode($result, true);
-if($data != null && isset($data['errors'])) {
-    // raise an exception with returned error code
-    foreach($data['errors'] as $name => $message) {
-        throw new Exception($message, qn_error_code($name));
-    }
-}
 
 // #todo - store these terms in i18n
 $main_attachment_name = 'quote';
@@ -122,21 +118,21 @@ try {
     ]);
     $signature = (isset($data['signature']))?$data['signature']:'';
 }
-catch(Exception $e) {}
+catch(Exception $e) {
+    // ignore errors
+}
 
 $params['message'] .= $signature;
 
 
-// #todo - add attachments that are specific to quote.mail => $params['attachments_ids']
-
-$params['attachments_ids'] = array_unique($params['attachments_ids']);
-
 $attachments = [];
 
 // push main attachment
-$attachments[] = new Swift_Attachment($result, $main_attachment_name.'.pdf', 'application/pdf');
+$attachments[] = new Swift_Attachment($attachment, $main_attachment_name.'.pdf', 'application/pdf');
 
+// add attachments whose ids have been received as param ($params['attachments_ids'])
 if(count($params['attachments_ids'])) {
+    $params['attachments_ids'] = array_unique($params['attachments_ids']);
     $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
     foreach($template_attachments as $tid => $tdata) {
         $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
@@ -147,7 +143,7 @@ if(count($params['attachments_ids'])) {
 }
 
 // send message
-$transport = new Swift_SmtpTransport('smtp.mailtrap.io', 2525 /*, 'ssl'*/);
+$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
 
 $transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
           ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
@@ -169,14 +165,20 @@ $result = $mailer->send($message);
 
 // #todo store reminder delay in Settings
 
+/*
+    Setup a scheduled job to remind the customer about the quote (if still in 'quote' within the delay)
+*/
+
+$limit = Setting::get_value('sale', 'booking', 'quote.remind_delay', 7);
+
 // add a task to the CRON
 $cron->schedule(
     "booking.quote.reminder.{$params['booking_id']}",
-    time() + 7 * 86400,                                  // remind after 1 week (7 days)
-    'lodging_booking_quote',
+    time() + $limit * 86400,
+    'lodging_booking_remind-quote',
     '{"id": '.$params['booking_id'].'}'
-); 
+);
 
 $context->httpResponse()
-        ->body([])
+        ->status(204)
         ->send();

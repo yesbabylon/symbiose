@@ -91,7 +91,7 @@
             "label": "Hosts details",
             "description": "",
             "icon": "view_list",
-            "route": "/booking/object.id/composition",            
+            "route": "/booking/object.id/composition",
             "visible": ["status", "not in", ["quote", "option"]]
         },
         {
@@ -118,13 +118,14 @@
             "route": "/booking/object.id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Consumption",
-                "target_entity": "lodging\\sale\\booking\\Booking",
                 "view": "list.default",
-                "domain": ["booking_id", "=", "object.id"]
+                "domain": ["booking_id", "=", "object.id"],
+                "target_entity": "lodging\\sale\\booking\\Booking",
+                "target_view": "form.default"
             },
             "visible": ["status", "<>", "quote"]
         }
-    ],    
+    ],
     "layout": {
         "groups": [
             {
@@ -301,7 +302,7 @@
                                 ]
                             }
                         ]
-                    },                                        
+                    },
                     {
                         "label": "Consumptions",
                         "id": "section.booking_consumptions",

@@ -25,7 +25,8 @@ class Repairing extends \sale\booking\Repairing {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Repair',
                 'foreign_field'     => 'repairing_id',
-                'description'       => 'Consumptions related to the booking.'
+                'description'       => 'Consumptions related to the booking.',
+                'ondetach'          => 'delete'
             ],
 
             'rental_units_ids' => [

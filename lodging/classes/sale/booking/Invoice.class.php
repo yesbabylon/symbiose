@@ -6,11 +6,25 @@
 */
 namespace lodging\sale\booking;
 
+use core\setting\Setting;
 class Invoice extends \sale\booking\Invoice {
     
     public static function getColumns() {
 
         return [
+
+            'booking_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'description'       => 'Booking the invoice relates to.',
+                'required'          => true
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Funding',
+                'description'       => 'The funding the invoice originates from, if any.'
+            ],
 
             'center_office_id' => [
                 'type'              => 'many2one',
@@ -18,7 +32,6 @@ class Invoice extends \sale\booking\Invoice {
                 'description'       => 'Office the invoice relates to (for center management).',
                 'required'          => true
             ],
-
 
             'number' => [
                 'type'              => 'computed',

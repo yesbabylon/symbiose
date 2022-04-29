@@ -38,6 +38,11 @@
             "description": "Moment de la journée auquel la prestation est terminée.",
             "help": ""
         },
+        "qty": {
+            "label": "Quantité",
+            "description": "Noombre de fois que la consommation est comptabilisée.",
+            "help": ""
+        },
         "type": {
             "label": "Type",
             "description": "La raison pour laquelle le service est réservé.",

@@ -10,8 +10,7 @@
             "route": "/booking/object.booking_id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
-                "view": "form.default",
-                "domain": ["id", "=", "object.booking_id"]
+                "view": "form.default"
             }
         },
         {
@@ -19,7 +18,7 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
-            "route": "/booking/object.booking_id/invoice"
+            "route": "/booking/object.booking_id/invoice/object.id"
         }              
     ],    
     "layout": {
