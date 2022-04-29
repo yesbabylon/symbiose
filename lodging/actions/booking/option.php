@@ -120,7 +120,5 @@ $cron->schedule(
 ); 
 
 $context->httpResponse()
-        // ->status(204)
-        ->status(200)
-        ->body([])
+        ->status(204)
         ->send();

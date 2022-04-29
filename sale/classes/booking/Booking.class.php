@@ -99,6 +99,7 @@ class Booking extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Contract',
                 'foreign_field'     => 'booking_id',
+                'sort'              => 'desc',
                 'description'       => 'List of contacts related to the booking, if any.'
             ],
 

@@ -47,8 +47,8 @@ $today = time();
 $consumptions = Consumption::search([['date', '=', $today], ['is_rental_unit', '=', true]])->read(['type', 'schedule_to', 'rental_unit_id'])->get();
 
 foreach($consumptions as $cid => $consumption) {
-    if($consumption['type'] == 'ooo') {    
-        RentalUnit::id($consumption['rental_unit_id'])->update(['status' => 'ooo', 'action_required' => 'repair']);
+    if($consumption['type'] == 'ooo') {
+        $orm->write('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => 'ooo', 'action_required' => 'repair']);
     }
     else {
         $rental_unit = RentalUnit::id($consumption['rental_unit_id'])->read(['is_accomodation'])->first();
@@ -57,12 +57,12 @@ foreach($consumptions as $cid => $consumption) {
             $action_required = 'cleanup_daily';
             $status = 'busy_full';
             if($consumption['schedule_to'] < 24*3600) {
-                $action_required = 'clenup_full';
+                $action_required = 'cleanup_full';
             }
             if($consumption['type'] == 'part') {
                 $status = 'busy_part';
             }
-            RentalUnit::id($consumption['rental_unit_id'])->update(['status' => $status, 'action_required' => $action_required]);
+            $orm->write('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => $status, 'action_required' => $action_required]);
         }
     }
 }

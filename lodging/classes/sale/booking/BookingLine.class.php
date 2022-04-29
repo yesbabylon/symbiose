@@ -322,20 +322,49 @@ class BookingLine extends \sale\booking\BookingLine {
                 if($rental_units_ids > 0 && count($rental_units_ids)) {
                     $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']));
                 }
-
-                for($i = 0, $n = count($rental_units), $available_capacity = 0; $i < $n; ++$i) {
-                    $tmp_rental_units = array_slice($rental_units, $i);
-                    $sum = array_reduce($tmp_rental_units, function ($c, $a) { return $c + $a['capacity'];}, 0);
-                    if($sum < $nb_pers) {
+                $n = count($rental_units);
+                $available_capacity = 0;
+                // pass-1 - check for exact capacity match
+                $min_id = -1;   // index of the rental unit with the minimum capacity
+                for($i = 0; $i < $n; ++$i) {
+                    $rental_unit = $rental_units[$i];
+                    if($rental_unit['capacity'] == $nb_pers) {
+                        $rental_unit_assignement = 'unit';
+                        $rental_units = [$rental_unit];
+                        $available_capacity = $nb_pers;
                         break;
                     }
-                    // if delta at previous index is lower than remaining list, prefer a single unit
-                    if($available_capacity >= $nb_pers && abs($nb_pers-$sum) <= abs($nb_pers-$available_capacity)) {
-                        // start using rental units at previous index
-                        --$i;
-                        break;
+                    if($min_id < 0) {
+                        $min_id = $i;
                     }
-                    $available_capacity = $sum;
+                    else if($rental_unit['capacity'] < $rental_units[$min_id]['capacity']) {
+                        $min_id = $i;
+                    }
+                }
+                if(!$available_capacity) {
+                    // handle special case : smallest rental unit has bigger capacity than nb_pers                    
+                    if($min_id >= 0 && $nb_pers < $rental_units[$min_id]['capacity']) {
+                        $rental_unit_assignement = 'unit';
+                        $available_capacity = $rental_units[$min_id]['capacity'];
+                        $rental_units = [$rental_units[$min_id]];                        
+                    }
+                    else {
+                        // pass-2 - no exact match, try to find a close match or spread pers across units
+                        for($i = 0, $available_capacity = 0; $i < $n; ++$i) {
+                            $tmp_rental_units = array_slice($rental_units, $i);
+                            $sum = array_reduce($tmp_rental_units, function ($c, $a) { return $c + $a['capacity'];}, 0);
+                            if($sum < $nb_pers) {
+                                break;
+                            }
+                            // if delta at previous index is lower than remaining list, prefer a single unit
+                            if($available_capacity >= $nb_pers && abs($nb_pers-$sum) <= abs($nb_pers-$available_capacity)) {
+                                // start using rental units at previous index
+                                --$i;
+                                break;
+                            }
+                            $available_capacity = $sum;
+                        }
+                    }
                 }
 
                 $remaining = $nb_pers;
@@ -346,13 +375,18 @@ class BookingLine extends \sale\booking\BookingLine {
                         /*
                             Assign to a specific rental unit
                         */
+                        $assigned = min($rental_unit['capacity'], $nb_pers);
                         $rental_unit = reset($rental_units);
-                        $rental_unit['assigned'] = $remaining;
+                        $rental_unit['assigned'] = $assigned;
                         $assigned_rental_units[] = $rental_unit;
+                        $remaining -= $assigned;
                     }
                     else {
+                        /*
+                            Assign to selected rental units
+                        */
                         // min serie for available capacity starts from max(0, i-1)
-                        for($j = max(0, $i-1); $j < $n; ++$j) {
+                        for($j = max(0, $i-1); $j >= 0 && $j < $n; ++$j) {
                             $rental_unit = $rental_units[$j];
                             $assigned = min($rental_unit['capacity'], $remaining);
 
