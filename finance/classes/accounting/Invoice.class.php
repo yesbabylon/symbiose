@@ -36,7 +36,10 @@ class Invoice extends Model {
 
             'status' => [
                 'type'              => 'string',
-                'selection'         => ['proforma', 'invoice'],
+                'selection'         => [
+                    'proforma', 
+                    'invoice'
+                ],
                 'default'           => 'proforma',
                 'onchange'          => 'finance\accounting\Invoice::onchangeStatus',
             ],
@@ -57,9 +60,22 @@ class Invoice extends Model {
 
             'is_paid' => [
                 'type'              => 'boolean',
-                'default'           => false,
                 'description'       => "Flag to mark the invoice as fully paid.",
-                'visible'           => ['status', '=', 'invoice']
+                'visible'           => ['status', '=', 'invoice'],
+                'default'           => false
+            ],
+
+            'payment_status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',          // non-paid, payment terms delay running
+                    'overdue',          // non-paid, and payment terms delay is over
+                    'debit_balance',    // partially paid: customer still has to pay something
+                    'credit_balance',   // fully paid and a reimbusrsement to customer is required
+                    'balanced'          // fully paid and balanced
+                ],
+                'visible'           => ['status', '=', 'invoice'],
+                'default'           => 'pending'
             ],
 
             'date' => [
