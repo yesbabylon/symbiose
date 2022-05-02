@@ -152,6 +152,17 @@
                   }
                 }
               ]
+            },
+            {
+                "id": "item.dashboard_booking",
+                "type": "entry",
+                "label": "Dashboard",
+                "description": "",
+                "route": "/bookings",
+                "context": {
+                    "entity": "lodging\\sale\\booking\\Booking",
+                    "view": "dashboard.default"
+                }
             }
         ]
     }

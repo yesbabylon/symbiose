@@ -73,7 +73,7 @@
                 "validated": "validée",
                 "checkedin": "en cours",
                 "checkedout": "terminé",
-                "due_balance": "solde dû",
+                "debit_balance": "solde dû",
                 "credit_balance": "solde créditeur",
                 "balanced": "clôturée"
             },

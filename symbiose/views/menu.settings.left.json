@@ -797,6 +797,16 @@
                                                 "entity": "sale\\pay\\PaymentDeadline",
                                             "view": "list.default"
                                         }
+                                    },
+                                    {
+                                        "id": "accounting.payments.settings.terms",
+                                        "type": "entry",
+                                        "label": "Payment terms",
+                                        "description": "",
+                                        "context": {
+                                                "entity": "sale\\pay\\PaymentTerms",
+                                            "view": "list.default"
+                                        }
                                     }
                                 ]
                             }

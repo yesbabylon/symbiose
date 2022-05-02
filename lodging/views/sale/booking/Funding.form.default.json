@@ -3,7 +3,35 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-    },    
+    },
+    "routes": [
+        {
+            "id": "item.funding.booking.file",
+            "label": "Fiche de réservation",
+            "description": "",
+            "icon": "library_books",
+            "route": "/booking/object.booking_id",
+            "context": {
+                "entity": "lodging\\sale\\booking\\Booking",
+                "view": "form.default",
+                "domain": ["id", "=", "object.booking_id"]
+            }
+        },
+        {
+            "id": "item.funding.send",
+            "label": "Envoi / Rappel",
+            "description": "Envoyer la demande",
+            "icon": "email",
+            "route": "/booking/object.booking_id/funding/object.id/remind"
+        },
+        {
+            "id": "item.funding.invoice",
+            "label": "Créer une facture",
+            "description": "",
+            "icon": "file_copy",
+            "route": "/booking/object.booking_id/funding/object.id/invoice"
+        }
+    ],    
     "layout": {
         "groups": [
             {
@@ -32,7 +60,12 @@
                                                 "type": "field",
                                                 "value": "is_paid",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "due_amount",
@@ -62,7 +95,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }
+                                    }                                    
                                 ]
                             }
                         ]

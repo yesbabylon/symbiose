@@ -25,6 +25,12 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
+        ],
+        'payment_terms_id' =>  [
+            'description'   => 'Identifier of the payment terms to apply.',
+            'type'          => 'integer',
+            'min'           => 1,
+            'required'      => true
         ]
     ],
     'access' => [
@@ -77,9 +83,12 @@ $invoice = Invoice::create([
     'status'            => 'invoice',
     'booking_id'        => $funding['booking_id']['id'],
     'partner_id'        => $params['partner_id'],
-    'funding_id'        => $params['id']
+    'funding_id'        => $params['id'],
+    'payment_terms_id'  => $params['payment_terms_id']
 ])->first();
 
+
+// #todo - create scheduled tasks for setting payment_status
 
 // #todo - handle journal entries
 // default credit account

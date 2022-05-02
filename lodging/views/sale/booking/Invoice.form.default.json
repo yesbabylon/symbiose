@@ -56,12 +56,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "due_date",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_paid",
-                                                "width": "50%"
+                                                "width": "33%"
                                             }
                                         ]
                                     },

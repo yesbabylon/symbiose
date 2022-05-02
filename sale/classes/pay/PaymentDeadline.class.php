@@ -46,7 +46,7 @@ class PaymentDeadline extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'installment',                 // pre-payment (can be converted to invoice): there can be many of those
-                    'invoice'                      // balance invoice (theorically, only one) 
+                    'invoice'                      // balance invoice (there should be only one ot that type) 
                 ],
                 'description'       => "Deadlines are installment except for last one, the final invoice."
             ],
@@ -64,7 +64,6 @@ class PaymentDeadline extends Model {
                 'description'       => "The payment plan the deadline applies to.",
                 'required'          => true
             ]
-
         ];
     }
 

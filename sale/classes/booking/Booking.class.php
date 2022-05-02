@@ -154,8 +154,8 @@ class Booking extends Model {
                     'checkedin',                // host is currently occupying the booked rental unit
                     'checkedout',               // host has left the booked rental unit
                     'invoiceable',
-                    'due_balance',              // customer still has to pay something
-                    'credit_balance',           // a reimbusrsement to customer is still required
+                    'debit_balance',            // customer still has to pay something
+                    'credit_balance',           // a reimbusrsement to customer is required
                     'balanced'                  // booking is over and balance is cleared
                 ],
                 'description'       => 'Status of the booking.',

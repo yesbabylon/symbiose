@@ -82,6 +82,12 @@ class Payment extends Model {
                 'foreign_object'    => 'sale\pay\Funding',
                 'description'       => 'The funding the payement relates to, if any.',
                 'onchange'          => 'sale\pay\Payment::onchangeFundingId'
+            ],
+
+            'invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'finance\accounting\Invoice',
+                'description'       => 'The invoice targeted by the payment, if any.'
             ]
 
         ];
@@ -100,16 +106,17 @@ class Payment extends Model {
                     $partner_id = $payment['partner_id'];
                     // make sure a partner_id is assigned to the payment
                     if(!$payment['partner_id']) {
-                        $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);
+                        $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);
                         if($fundings > 0) {
                             $funding = reset($fundings);
+                            $values = [
+                                'partner_id' => $funding['booking_id.customer_id.id']
+                            ];
                             if($funding['type'] == 'invoice')  {
-                                $partner_id = $funding['invoice_id.partner_id.id'];
+                                $values['partner_id'] = $funding['invoice_id.partner_id.id'];
+                                $values['invoice_id'] = $funding['invoice_id'];
                             }
-                            else {
-                                $partner_id = $funding['booking_id.customer_id.id'];
-                            }
-                            $om->write(get_called_class(), $pid, ['partner_id' => $partner_id]);
+                            $om->write(get_called_class(), $pid, $values);
                         }
                     }
 

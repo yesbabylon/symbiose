@@ -1,0 +1,50 @@
+{
+    "name": "Conditions de Paiement",
+    "plural": "Conditions de Paiement",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Court mémo de l'échéance.",
+            "help": ""
+        },
+        "delay_from": {
+            "label": "À partir de",
+            "description": "Événement de départ du délai avant échéance.",
+            "selection": {
+                "created": "Création",
+                "nex_month": "Fin de mois"
+            },
+            "help": ""
+        },
+        "delay_count": {
+            "label": "Délai",
+            "description": "Nombre de jours avant échéance.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Descriptif à afficher sur les documents.",
+            "help": ""
+        },
+        "is_active": {
+            "label": "Actif",
+            "description": "Ces conditions peuvent être utilisées ?",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Condition de Paiement",
+            "description": "",
+            "layout": {
+            }
+        },
+        "list.default": {
+            "name": "Conditions de paiement",
+            "description": "Liste des conditions de paiement applicables.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

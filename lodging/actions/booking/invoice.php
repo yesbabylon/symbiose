@@ -33,7 +33,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 
-// #todo - handle 'due_balance', 'credit_balance', 'balanced'
+// #todo - handle 'debit_balance', 'credit_balance', 'balanced'
 Booking::id($params['id'])->update(['status' => 'balanced']);
 
 
