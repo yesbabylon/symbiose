@@ -15,7 +15,8 @@ class PriceList extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short label to ease identification of the list."
+                'description'       => "Short label to ease identification of the list.",
+                'onchange'          => 'onchangeName'
             ],
 
             'date_from' => [
@@ -126,11 +127,23 @@ class PriceList extends Model {
         return $result;        
     }
 
+    /**
+     * Invalidate related prices names.
+     */
+    public static function onchangeName($om, $oids, $lang) {
+        $lists = $om->read(__CLASS__, $oids, ['prices_ids'], $lang);
+
+        if($lists > 0) {
+            foreach($lists as $lid => $list) {
+                $om->write('sale\price\Price', $list['prices_ids'], ['name' => null]);        
+            }
+        }
+    }
+
     public static function onchangeStatus($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['is_active' => null]);
         // immediate re-compute
         $om->read(__CLASS__, $oids, ['is_active']);
     }
     
-
 }
