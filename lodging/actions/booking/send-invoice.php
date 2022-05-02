@@ -16,14 +16,14 @@ use \Swift_Attachment as Swift_Attachment;
 
 use communication\TemplateAttachment;
 use documents\Document;
-use lodging\sale\booking\Booking;
+use lodging\sale\booking\Invoice;
 use core\setting\Setting;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an instant email with given details with a booking quote as attachment.",
+    'description'	=>	"Send an instant email with given details with an invoice as attachment.",
     'params' 		=>	[
-        'booking_id' => [
+        'invoice_id' => [
             'description'   => 'Identifier of the booking related to the sending of the email.',
             'type'          => 'integer',
             'required'      => true
@@ -83,29 +83,34 @@ list($params, $providers) = announce([
 // init local vars with inputs
 list($context, $cron) = [ $providers['context'], $providers['cron'] ];
 
-$booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
+$invoice = Invoice::id($params['invoice_id'])->read(['booking_id' => ['id', 'center_id']])->first();
+
+if(!$invoice) {
+    throw new Exception("unknown_invoice", QN_ERROR_UNKNOWN_OBJECT);
+}
+
+$booking = $invoice['booking_id'];
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-
 // generate attachment
-$attachment = eQual::run('get', 'lodging_booking_print-booking', [
-    'id'        => $params['booking_id'],
+$attachment = eQual::run('get', 'lodging_booking_print-invoice', [
+    'id'        => $params['invoice_id'],
     'view_id'   =>'print.default',
     'lang'      => $params['lang'],
     'mode'      => $params['mode']
 ]);
 
 // #todo - store these terms in i18n
-$main_attachment_name = 'quote';
+$main_attachment_name = 'invoice';
 switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'devis';
+    case 'fr': $main_attachment_name = 'facture';
         break;
-    case 'nl': $main_attachment_name = 'offerte';
+    case 'nl': $main_attachment_name = 'factuur';
         break;
-    case 'en': $main_attachment_name = 'quote';
+    case 'en': $main_attachment_name = 'invoice';
         break;
 }
 
@@ -162,20 +167,6 @@ foreach($attachments as $attachment) {
 $mailer = new Swift_Mailer($transport);
 $result = $mailer->send($message);
 
-
-/*
-    Setup a scheduled job to remind the customer about the quote (if still in 'quote' within the delay)
-*/
-
-$limit = Setting::get_value('sale', 'booking', 'quote.remind_delay', 7);
-
-// add a task to the CRON
-$cron->schedule(
-    "booking.quote.reminder.{$params['booking_id']}",
-    time() + $limit * 86400,
-    'lodging_booking_remind-quote',
-    '{"id": '.$params['booking_id'].'}'
-);
 
 $context->httpResponse()
         ->status(204)

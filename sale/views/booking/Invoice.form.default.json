@@ -45,6 +45,11 @@
                                                 "type": "field",
                                                 "value": "is_paid",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_terms_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },

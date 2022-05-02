@@ -1,0 +1,36 @@
+{
+    "name": "Payment Terms",
+    "description": "This view is intended for displaying the list of payment deadlines.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "delay_count",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "delay_from",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_active",
+                "width": "15%"
+            }
+        ]
+    }
+}

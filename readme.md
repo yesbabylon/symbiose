@@ -1,6 +1,6 @@
-Symbiose is a set of application components intended for agile companies, made to fit the needs of any business logic in an ever-changing marketplace.
+Symbiose is a set of application components intended for Agile projects and organisations, made to fit the needs of any business logic in an ever-changing marketplace.
 
-Its highly customizable user interface allows the development of tailor-made applications on any type of device.
+Its highly customizable back-end logic and its versatile user interface confiugration allow fast development of tailor-made applications on any type of device.
 
 
 ## Installation

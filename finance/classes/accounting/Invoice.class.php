@@ -105,7 +105,22 @@ class Invoice extends Model {
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.'
-            ]
+            ],
+
+            'payment_terms_id' => [
+                'type'              => 'many2one',                
+                'foreign_object'    => 'sale\pay\PaymentTerms',
+                'description'       => "The payment terms to apply to the invoice."
+            ],
+
+            'due_date' => [
+                'type'              => 'computed',
+                'result_type'       => 'date',
+                'description'       => "Deadline before which the funding is expected.",
+                'function'          => 'calcDueDate',
+                'store'             => true
+            ],
+
 
         ];
     }
@@ -170,9 +185,57 @@ class Invoice extends Model {
         return $result;
     }
 
+    public static function calcDueDate($om, $oids, $lang) {
+        $result = [];
+
+        $invoices = $om->read(get_called_class(), $oids, ['created', 'payment_terms_id.delay_from', 'payment_terms_id.delay_count'], $lang);
+        if($invoices > 0) {
+            foreach($invoices as $oid => $invoice) {
+                $from = $invoice['payment_terms_id.delay_from'];
+                $delay = $invoice['payment_terms_id.delay_count'];
+                $origin = $invoice['created'];                
+                switch($from) {
+                    case 'created':                        
+                        $due_date = $origin + ($delay*24*3600);
+                        break;
+                    case 'next_month':
+                    default:
+                        $due_date = strtotime(date("Y-m-t", $origin)) + ($delay*24*3600);
+                        break;
+                }
+                $result[$oid] = $due_date;
+            }
+        }
+        return $result;
+    }
+
     public static function onchangeStatus($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
+        // immediate recompute
         $om->read(__CLASS__, $ids, ['number'], $lang);
     }
 
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+
+        if($res > 0) {
+            foreach($res as $oids => $odata) {
+                if($odata['status'] != 'proforma') {
+                    return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                }
+            }
+        }
+        return parent::onupdate($om, $oids, $values, $lang);
+    }
 }

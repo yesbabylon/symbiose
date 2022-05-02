@@ -16,15 +16,17 @@ use \Swift_Attachment as Swift_Attachment;
 
 use communication\TemplateAttachment;
 use documents\Document;
+use lodging\sale\booking\Funding;
 use lodging\sale\booking\Booking;
+use lodging\sale\booking\Contract;
 use core\setting\Setting;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an instant email with given details with a booking quote as attachment.",
+    'description'	=>	"Send an instant email with given details with a booking contract as attachment.",
     'params' 		=>	[
-        'booking_id' => [
-            'description'   => 'Identifier of the booking related to the sending of the email.',
+        'funding_id' => [
+            'description'   => 'Funding related to the sending of the email.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -50,62 +52,62 @@ list($params, $providers) = announce([
             'usage'         => 'email',
             'required'      => true
         ],
-        'attachments_ids' => [
-            'description'   => 'List of identitiers of attachments to join.',
-            'type'          => 'array',
-            'default'       => []
-        ],
-        'mode' =>  [
-            'description'   => 'Mode in which document has to be rendered: simple or detailed.',
-            'type'          => 'string',
-            'selection'     => ['simple', 'grouped', 'detailed'],
-            'default'       => 'grouped'
-        ],
         'lang' =>  [
-            'description'   => 'Language to use for multilang contents.',
+            'description'   => 'Language for multilang contents (2 letters ISO 639-1).',
             'type'          => 'string',
-            'usage'         => 'language/iso-639',
             'default'       => DEFAULT_LANG
         ]
     ],
     'access' => [
         'groups'            => ['booking.default.user'],
     ],
-    'response' => [
+    'response'      => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',
         'accept-origin'     => '*'
     ],
-    'providers' => ['context', 'cron']
+    'providers'     => ['context']
 ]);
 
 
-// init local vars with inputs
-list($context, $cron) = [ $providers['context'], $providers['cron'] ];
+// initalise local vars with inputs
+list($context) = [ $providers['context'] ];
 
-$booking = Booking::id($params['booking_id'])->read(['center_id'])->first();
+$funding = Funding::id($params['funding_id'])->read(['booking_id' => ['id', 'center_id', 'has_contract', 'contracts_ids']])->first();
+
+if(!$funding) {
+    throw new Exception("unknown_funding", QN_ERROR_UNKNOWN_OBJECT);
+}
+
+$booking = $funding['booking_id'];
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+if(!$booking['has_contract'] || empty($booking['contracts_ids'])) {
+    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+}
+
+// by convention the most recent contract is listed first (see schema in lodging/classes/sale/booking/Booking.class.php)
+$contract_id = array_shift($booking['contracts_ids']);
 
 // generate attachment
-$attachment = eQual::run('get', 'lodging_booking_print-booking', [
-    'id'        => $params['booking_id'],
+$attachment = eQual::run('get', 'lodging_booking_print-contract', [
+    'id'        => $contract_id ,
     'view_id'   =>'print.default',
     'lang'      => $params['lang'],
     'mode'      => $params['mode']
 ]);
 
 // #todo - store these terms in i18n
-$main_attachment_name = 'quote';
+$main_attachment_name = 'contract';
 switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'devis';
+    case 'fr': $main_attachment_name = 'contrat';
         break;
-    case 'nl': $main_attachment_name = 'offerte';
+    case 'nl': $main_attachment_name = 'contract';
         break;
-    case 'en': $main_attachment_name = 'quote';
+    case 'en': $main_attachment_name = 'contract';
         break;
 }
 
@@ -130,18 +132,6 @@ $attachments = [];
 // push main attachment
 $attachments[] = new Swift_Attachment($attachment, $main_attachment_name.'.pdf', 'application/pdf');
 
-// add attachments whose ids have been received as param ($params['attachments_ids'])
-if(count($params['attachments_ids'])) {
-    $params['attachments_ids'] = array_unique($params['attachments_ids']);
-    $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
-    foreach($template_attachments as $tid => $tdata) {
-        $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
-        if($document) {
-            $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
-        }
-    }
-}
-
 // send message
 $transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
 
@@ -162,20 +152,6 @@ foreach($attachments as $attachment) {
 $mailer = new Swift_Mailer($transport);
 $result = $mailer->send($message);
 
-
-/*
-    Setup a scheduled job to remind the customer about the quote (if still in 'quote' within the delay)
-*/
-
-$limit = Setting::get_value('sale', 'booking', 'quote.remind_delay', 7);
-
-// add a task to the CRON
-$cron->schedule(
-    "booking.quote.reminder.{$params['booking_id']}",
-    time() + $limit * 86400,
-    'lodging_booking_remind-quote',
-    '{"id": '.$params['booking_id'].'}'
-);
 
 $context->httpResponse()
         ->status(204)

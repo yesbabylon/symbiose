@@ -72,14 +72,6 @@ if(!count($booking['booking_lines_ids'])) {
 $json = run('get', 'lodging_booking_check', ['id' => $params['id']]);
 $data = json_decode($json, true);
 if(isset($data['errors'])) {
-
-    // rollback - remove the created consumptions
-    foreach($booking['booking_lines_ids'] as $lid) {
-        $line = BookingLine::id($lid)->read(['consumptions_ids'])->first();
-        $consumptions_ids = array_map(function($a) { return "-$a";}, $line['consumptions_ids']);
-        BookingLine::id($lid)->update(['consumptions_ids' => $consumptions_ids]);
-    }
-
     // raise an exception with returned error code
     foreach($data['errors'] as $name => $message) {
         throw new Exception($message, qn_error_code($name));
