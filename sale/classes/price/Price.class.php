@@ -145,7 +145,7 @@ class Price extends Model {
     }
 
     public static function onchangeAccountingRuleId($om, $oids, $lang) {
-        $res = $om->write(__CLASS__, $oids, ['vat_rate' => null]);
+        $res = $om->write(__CLASS__, $oids, ['vat_rate' => null, 'price_vat' => null]);
     }
 
     public static function onchangePriceListId($om, $oids, $lang) {

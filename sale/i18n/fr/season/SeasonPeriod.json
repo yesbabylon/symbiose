@@ -18,6 +18,16 @@
             "description": "Date (incluse) à laquelle la saison se termine.",
             "help": ""
         },
+        "month": {
+            "label": "Mois",
+            "description": "Le mois du premier jour de la période.",
+            "help": ""
+        },
+        "year": {
+            "label": "Année",
+            "description": "L'année pour laquelle s'applique la période.",
+            "help": ""
+        },
         "season_type_id": {
             "label": "Type",
             "description": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...).",

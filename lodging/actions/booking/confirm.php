@@ -26,24 +26,31 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'protected',
+        'groups'            => ['booking.default.user'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron']
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
-
-list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\cron\Scheduler               $cron
+ * @var \equal\dispatch\Dispatcher          $dispatch
+ */
+list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch']];
 
 // read booking object
 $booking = Booking::id($params['id'])
                   ->read([
                         'status',
+                        'is_price_tbc',
+                        'type',
                         'date_from',
                         'date_to',
                         'price',                                  // total price VAT incl.
@@ -77,6 +84,10 @@ if(!$booking) {
 }
 
 if($booking['status'] != 'option') {
+    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+}
+
+if($booking['is_price_tbc']) {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
@@ -197,6 +208,9 @@ BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 // Update booking status
 Booking::id($params['id'])->update(['status' => 'confirmed']);
 
+// remove messages about readyness for this booking, if any
+$dispatch->cancel('lodging.booking.ready', 'lodging\sale\booking\Booking', $params['id']);
+
 
 /*
     Genarate the payment plan (expected fundings of the booking)
@@ -208,6 +222,10 @@ $rate_class_id = 4;
 if($booking['customer_id']['rate_class_id']) {
     $rate_class_id = $booking['customer_id']['rate_class_id'];
 }
+
+// #todo - adapt payment plan assignment based on booking type
+// search for matching type, if none search on rate_class_id, else select the one matching rate_class_id otherwise the first one
+
 
 // look for a payment plan matching the rate_class applied on the booking
 $plans_ids = PaymentPlan::search(['rate_class_id', '=', $rate_class_id])->ids();
@@ -255,7 +273,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
             break;
     }
     $funding['issue_date'] = $date + $deadline['delay_from_event_offset'];
-    $funding['due_date'] = $date + $deadline['delay_from_event_offset'] + ($deadline['delay_count'] * 86400);
+    $funding['due_date'] = min($booking['date_from'], $date + $deadline['delay_from_event_offset'] + ($deadline['delay_count'] * 86400));
 
     // request funding creation
     try {

@@ -18,35 +18,40 @@ class Consumption extends \sale\booking\Consumption {
                 'foreign_object'    => 'lodging\identity\Center',
                 'description'       => "The center to which the consumption relates.",
                 'required'          => true,
-                'ondelete'          => 'cascade'         // delete consumption when parent Center is deleted
+                'ondelete'          => 'cascade',         // delete consumption when parent Center is deleted
+                'readonly'          => true
             ],
 
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Booking',
                 'description'       => 'The booking the comsumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent booking is deleted
+                'readonly'          => true
             ],
 
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
                 'description'       => 'The booking line the consumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent line is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent line is deleted
+                'readonly'          => true
             ],
 
             'booking_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
                 'description'       => 'The booking line group the consumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent group is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent group is deleted
+                'readonly'          => true
             ],
 
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
                 'description'       => "The Product this Attribute belongs to.",
-                'required'          => true
+                'required'          => true,
+                'readonly'          => true
             ]
         ];
     }
@@ -218,13 +223,18 @@ class Consumption extends \sale\booking\Consumption {
         if($rental_unit_assignement == 'unit') {
             $rental_units_ids = [$product_model['rental_unit_id']];
         }
-        else if($rental_unit_assignement == 'category') {
-            $rental_unit_category_id = $product_model['rental_unit_category_id'];
-            $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['rental_unit_category_id', '=', $rental_unit_category_id], ['is_accomodation', '=', true]], ['capacity' => 'desc']);
-        }
         else {
+            $domain = [ ['center_id', '=', $center_id], ['is_accomodation', '=', true] ];
+            if($rental_unit_assignement == 'category') {
+                $rental_unit_category_id = $product_model['rental_unit_category_id'];
+
+                if($rental_unit_category_id) {
+                    $domain[] = ['rental_unit_category_id', '=', $rental_unit_category_id];
+                }
+            }
             // retrieve list of possible rental_units based on center_id
-            $rental_units_ids = $om->search('lodging\realestate\RentalUnit', [ ['center_id', '=', $center_id], ['is_accomodation', '=', true] ], ['capacity' => 'desc']);
+            $rental_units_ids = $om->search('lodging\realestate\RentalUnit', $domain, ['capacity' => 'desc']);
+
         }
 
         /*

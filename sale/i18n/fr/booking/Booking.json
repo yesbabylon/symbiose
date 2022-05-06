@@ -79,6 +79,16 @@
             },
             "help": ""
         },
+        "is_cancelled": {
+            "label": "Annulée",
+            "description": "Réservation annulée par le client.",
+            "help": ""
+        },
+        "is_noexpiry": {
+            "label": "Pas d'expiration",
+            "description": "Option sans limite de temps.",
+            "help": ""
+        },
         "date_from": {
             "label": "Du",
             "description": "Premier jour du séjour.",

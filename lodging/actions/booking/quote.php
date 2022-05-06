@@ -29,10 +29,16 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron']     
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']     
 ]);
 
-list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\cron\Scheduler               $cron
+ * @var \equal\dispatch\Dispatcher          $dispatch
+ */
+list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch']];
 
 // read booking object
 $booking = Booking::id($params['id'])
@@ -48,10 +54,13 @@ if($booking['status'] != 'quote') {
     // set booking status to quote
     Booking::id($params['id'])->update(['status' => 'quote']);
 
+    // remove messages about readyness for this booking, if any
+    $dispatch->cancel('lodging.booking.ready', 'lodging\sale\booking\Booking', $params['id']);
+
     // remove existing CRON tasks for reverting the booking to quote
     $cron->cancel("booking.option.deprecation.{$params['id']}");
 
-    // #memo - generated contracts are kept for history (we never delete these)
+    // #memo - generated contracts are kept for history (we never delete them)
 
     // mark contracts as expired    
     Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);

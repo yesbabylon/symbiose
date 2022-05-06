@@ -23,7 +23,8 @@ class Consumption extends Model {
                 'type'              => 'computed',
                 'function'          => 'sale\booking\Consumption::getDisplayName',
                 'result_type'       => 'string',
-                'store'             => true
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'description' => [
@@ -35,38 +36,44 @@ class Consumption extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'The booking the comsumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent booking is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent booking is deleted
+                'readonly'          => true
             ],
 
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLine',
                 'description'       => 'The booking line the consumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent line is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent line is deleted
+                'readonly'          => true
             ],
 
             'booking_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'description'       => 'The booking line group the consumption relates to.',
-                'ondelete'          => 'cascade'        // delete consumption when parent group is deleted
+                'ondelete'          => 'cascade',        // delete consumption when parent group is deleted
+                'readonly'          => true
             ],
 
             'date' => [
                 'type'              => 'date',
-                'description'       => 'Date at which the event is planed.'
+                'description'       => 'Date at which the event is planed.',
+                'readonly'          => true
             ],
 
             'schedule_from' => [
                 'type'              => 'time',
                 'description'       => 'Moment of the day at which the events starts.',
-                'default'           => 0
+                'default'           => 0,
+                'readonly'          => true
             ],
 
             'schedule_to' => [
                 'type'              => 'time',
                 'description'       => 'Moment of the day at which the event stops, if applicable.',
-                'default'           => 24 * 3600
+                'default'           => 24 * 3600,
+                'readonly'          => true                
             ],
 
             'type' => [
@@ -78,7 +85,8 @@ class Consumption extends Model {
                     'part'           // rental unit is the parent of another booked unit and can partially booked
                 ],
                 'description'       => 'The reason the unit is reserved.',
-                'default'           => 'book'
+                'default'           => 'book',
+                'readonly'          => true
             ],
 
             'product_id' => [
@@ -97,7 +105,8 @@ class Consumption extends Model {
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
-                'description'       => "The rental unit the consumption is assigned to."
+                'description'       => "The rental unit the consumption is assigned to.",
+                'readonly'          => true
             ],
 
             'disclaimed' => [

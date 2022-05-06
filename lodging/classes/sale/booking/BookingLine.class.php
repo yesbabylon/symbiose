@@ -52,7 +52,7 @@ class BookingLine extends \sale\booking\BookingLine {
             ],
 
             'qty_vars' => [
-                'type'              => 'string',
+                'type'              => 'text',
                 'description'       => 'JSON array holding qty variation deltas (for \'by person\' products), if any.',
                 'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQtyVars'
             ],
@@ -262,6 +262,46 @@ class BookingLine extends \sale\booking\BookingLine {
     }
 
 
+    public static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
+        $result = [];
+
+        // current sum matches target
+        if($sum == $target) {
+            return [$collect];
+        }
+
+        // try sub-combinations
+        for($i = $start, $n = count($list); $i < $n; ++$i) {
+
+            // check if the sum exceeds target
+            if( ($sum + $list[$i]['capacity']) > $target ) {
+                continue;
+            }
+
+            // check if it is repeated or not
+            if( ($i > $start) && ($list[$i]['capacity'] == $list[$i-1]['capacity']) ) {
+                continue;
+            }
+
+            // take the element into the combination
+            $collect[] = $list[$i];
+
+            // recursive call
+            $res = self::_get_rental_units_combinations($list, $target, $i + 1, $sum + $list[$i]['capacity'], $collect);
+
+            if(count($res)) {
+                foreach($res as $r) {
+                    $result[] = $r;
+                }
+            }
+
+            // Remove element from the combination
+            array_pop($collect);
+        }
+
+        return $result;
+    }
+
     /**
      * Update the quantity of products.
      *
@@ -314,90 +354,103 @@ class BookingLine extends \sale\booking\BookingLine {
 
                 $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
 
-                // find available rental units (sorted by capacity desc)
+                // find available rental units (sorted by capacity, desc)
                 $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
                 // retrieve rental units capacities
                 $rental_units = [];
                 $assigned_rental_units = [];
+
                 if($rental_units_ids > 0 && count($rental_units_ids)) {
                     $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']));
                 }
-                $n = count($rental_units);
-                $available_capacity = 0;
-                // pass-1 - check for exact capacity match
-                $min_id = -1;   // index of the rental unit with the minimum capacity
-                for($i = 0; $i < $n; ++$i) {
-                    $rental_unit = $rental_units[$i];
-                    if($rental_unit['capacity'] == $nb_pers) {
-                        $rental_unit_assignement = 'unit';
-                        $rental_units = [$rental_unit];
-                        $available_capacity = $nb_pers;
+
+                $found = false;
+                // pass-1 - search for an exact capacity match
+                for($i = 0, $n = count($rental_units); $i < $n; ++$i) {
+                    if($rental_units[$i]['capacity'] == $nb_pers) {
+                        $rental_units = [$rental_units[$i]];
+                        $found = true;
                         break;
                     }
-                    if($min_id < 0) {
-                        $min_id = $i;
-                    }
-                    else if($rental_unit['capacity'] < $rental_units[$min_id]['capacity']) {
-                        $min_id = $i;
-                    }
                 }
-                if(!$available_capacity) {
-                    // handle special case : smallest rental unit has bigger capacity than nb_pers                    
-                    if($min_id >= 0 && $nb_pers < $rental_units[$min_id]['capacity']) {
-                        $rental_unit_assignement = 'unit';
-                        $available_capacity = $rental_units[$min_id]['capacity'];
-                        $rental_units = [$rental_units[$min_id]];                        
+                if(!$found) {
+                    // handle special case : smallest rental unit has bigger capacity than nb_pers
+                    if($nb_pers < $rental_units[$n-1]['capacity']) {
+                        $rental_units = [$rental_units[$n-1]];
                     }
                     else {
-                        // pass-2 - no exact match, try to find a close match or spread pers across units
-                        for($i = 0, $available_capacity = 0; $i < $n; ++$i) {
-                            $tmp_rental_units = array_slice($rental_units, $i);
-                            $sum = array_reduce($tmp_rental_units, function ($c, $a) { return $c + $a['capacity'];}, 0);
-                            if($sum < $nb_pers) {
-                                break;
+                        // pass-2 - no exact match, choose between min matching capacity and spreading pers across units
+                        $i = 0;
+                        while($rental_units[$i]['capacity'] > $nb_pers) {
+                            // we should reach at max $n-2
+                            ++$i;
+                        }
+                        $alternate_index = $i-1;
+                        $alternate = 0;
+                        if($alternate_index >= 0) {
+                            $rental_unit = $rental_units[$alternate_index];
+                            $alternate = $rental_unit['capacity'];
+                        }
+
+                        $collect = [];
+                        $list = array_slice($rental_units, $i);
+
+                        $combinations = self::_get_rental_units_combinations($list, $nb_pers, 0, 0, $collect);
+
+                        if(count($combinations)) {
+                            $min_index = -1;
+                            // $D = abs($alternate - $nb_pers);
+                            // favour a single accomodation
+                            $D = abs($alternate - $nb_pers) / 2;
+
+                            foreach($combinations as $index => $combination) {
+                                // $R = floor($nb_pers / count($combination));
+                                $R = count($combination);
+
+                                if($R <= $D) {
+                                    if($min_index >= 0) {
+                                        if(count($combinations[$min_index]) > count($combination)) {
+                                            $min_index = $index;
+                                        }
+                                    }
+                                    else {
+                                        $min_index = $index;
+                                    }
+                                }
                             }
-                            // if delta at previous index is lower than remaining list, prefer a single unit
-                            if($available_capacity >= $nb_pers && abs($nb_pers-$sum) <= abs($nb_pers-$available_capacity)) {
-                                // start using rental units at previous index
-                                --$i;
-                                break;
+                            // we found at least one combination
+                            if($min_index >= 0) {
+                                $rental_units = $combinations[$min_index];
                             }
-                            $available_capacity = $sum;
+                            else if($alternate_index >= 0) {
+                                $rental_units = [$rental_units[$alternate_index]];
+                            }
+                            else {
+                                $rental_units = [];
+                            }
+                        }
+                        else {
+                            $rental_units = [];
                         }
                     }
                 }
+
+                /*
+                    Assign to selected rental units
+                */
 
                 $remaining = $nb_pers;
 
-                if($available_capacity >= $nb_pers) {
-
-                    if($rental_unit_assignement == 'unit') {
-                        /*
-                            Assign to a specific rental unit
-                        */
-                        $assigned = min($rental_unit['capacity'], $nb_pers);
-                        $rental_unit = reset($rental_units);
-                        $rental_unit['assigned'] = $assigned;
-                        $assigned_rental_units[] = $rental_unit;
-                        $remaining -= $assigned;
-                    }
-                    else {
-                        /*
-                            Assign to selected rental units
-                        */
-                        // min serie for available capacity starts from max(0, i-1)
-                        for($j = max(0, $i-1); $j >= 0 && $j < $n; ++$j) {
-                            $rental_unit = $rental_units[$j];
-                            $assigned = min($rental_unit['capacity'], $remaining);
-
-                            $rental_unit['assigned'] = $assigned;
-                            $assigned_rental_units[] = $rental_unit;
-
-                            $remaining -= $assigned;
-                            if($remaining <= 0) break;
-                        }
-                    }
+                // min serie for available capacity starts from max(0, i-1)
+                for($j = 0, $n = count($rental_units) ;$j < $n; ++$j) {
+                    $rental_unit = $rental_units[$j];
+                    $assigned = min($rental_unit['capacity'], $remaining);
+                    $rental_unit['assigned'] = $assigned;
+                    $assigned_rental_units[] = $rental_unit;
+                    $remaining -= $assigned;
+                    if($remaining <= 0) break;
                 }
+
 
                 if($remaining > 0) {
                     // no availability !
@@ -523,9 +576,11 @@ class BookingLine extends \sale\booking\BookingLine {
                 'sale\price\PriceList',
                 [
                     ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
-                    ['is_active', '=', true]
+                    ['date_from', '<=', $line['booking_line_group_id.date_from']],
+                    ['date_to', '>=', $line['booking_line_group_id.date_from']],
+                    ['status', 'in', ['pending', 'published']]
                 ],
-                ['duration' => 'asc']
+                ['is_active' => 'desc']
             );
 
             $found = false;
@@ -535,7 +590,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     Search for a matching Price within the found Price List
                 */
                 foreach($price_lists_ids as $price_list_id) {
-                    // there should be exactly one matching price
+                    // there should be one or zero matching pricelist with status 'published', if none of the found pricelist
                     $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $line['product_id']] ]);
                     if($prices_ids > 0 && count($prices_ids)) {
                         /*
@@ -732,22 +787,25 @@ class BookingLine extends \sale\booking\BookingLine {
                     $rental_units = [];
                     $rental_units_ids = [];
                     if($rental_units_assignments > 0) {
-                        $rental_units_ids = array_map(function ($a) { return $a['rental_unit_id']; }, $rental_units_assignments);
-                        // read first level
-                        $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids']);
-                        if($units > 0) {
-                            foreach($units as $uid => $unit) {
-                                $rental_units_ids[] = $uid;
+                        $rental_units_ids = array_map(function ($a) { return $a['rental_unit_id']; }, array_values($rental_units_assignments));
 
-                                if($unit['parent_id'] > 0) {
-                                    $rental_units_ids[] = $unit['parent_id'];
-                                }
-                                if(count($unit['children_ids'])) {
-                                    $rental_units_ids = array_merge($rental_units_ids, $unit['children_ids']);
+                        // fetch 2 levels of rental units identifiers
+                        for($i = 0; $i < 2; ++$i) {                        
+                            $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids']);
+                            if($units > 0) {
+                                foreach($units as $uid => $unit) {
+                                    if($unit['parent_id'] > 0) {
+                                        $rental_units_ids[] = $unit['parent_id'];
+                                    }
+                                    if(count($unit['children_ids'])) {
+                                        foreach($unit['children_ids'] as $uid) {
+                                            $rental_units_ids[] = $uid;
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        // read second level
+                        }                        
+                        // read all involved rental units
                         $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent', 'is_accomodation']);
                     }
 

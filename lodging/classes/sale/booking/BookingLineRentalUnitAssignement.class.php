@@ -47,7 +47,7 @@ class BookingLineRentalUnitAssignement extends Model {
                 'description'       => 'Booking Line the assignment relates to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
-            ]
+            ]            
 
         ];
     }

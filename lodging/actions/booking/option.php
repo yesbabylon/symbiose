@@ -7,7 +7,6 @@
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
-use core\Task;
 use core\setting\Setting;
 
 list($params, $providers) = announce([
@@ -18,6 +17,12 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
+        ],
+        // this must remain synched with field definition Booking::cancellation_reason
+        'no_expiry' =>  [
+            'description'   => 'Rental units are blocked and the option will remain without time limit.',
+            'type'          => 'boolean',
+            'default'       => false
         ]
     ],
     'access' => [
@@ -48,7 +53,8 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 $booking = Booking::id($params['id'])
                   ->read([
                       'status',
-                      'booking_lines_ids'
+                      'booking_lines_ids',
+                      'is_price_tbc'
                    ])
                   ->first();
 
@@ -69,19 +75,13 @@ if(!count($booking['booking_lines_ids'])) {
     Check booking consistency
 */
 
-$json = run('get', 'lodging_booking_check', ['id' => $params['id']]);
-$data = json_decode($json, true);
-if(isset($data['errors'])) {
-    // raise an exception with returned error code
-    foreach($data['errors'] as $name => $message) {
-        throw new Exception($message, qn_error_code($name));
-    }
-}
-else if(is_array($data) && count($data)) {
-    // raise an exception with overbooking_detected)
+
+$data = eQual::run('do', 'lodging_booking_check-overbooking', ['id' => $params['id']]);
+
+if(is_array($data) && count($data)) {
+    // raise an exception with overbooking_detected (an alert should have been issued in the check controller)
     throw new Exception('overbooking_detected', QN_ERROR_CONFLICT_OBJECT);
 }
-
 
 /*
     Create the consumptions in order to see them in the planning (scheduled services) and to mark related rental units as booked.
@@ -94,22 +94,35 @@ BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LA
     Update booking status
 */
 
-Booking::id($params['id'])->update(['status' => 'option']);
+
 
 /*
     Setup a scheduled job to set back the booking to a quote according to delay set by Setting `option.validity`
 */
+if($params['no_expiry']) {
+    // set booking as never expiring
+    Booking::id($params['id'])->update(['is_noexpiry' => true]);        
+}
+else {
+    if($booking['is_price_tbc']) {
+        // do not schedule deprecation, and set booking as never expiring
+        Booking::id($params['id'])->update(['is_noexpiry' => true]);        
+    }
+    else {
+        // retrieve expiry delay setting
+        $limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
 
-$limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
+        // add a task to the CRON
+        $cron->schedule(
+            "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
+            time() + $limit * 86400,                                  // remind after {sale.booking.option.validity} days (default 10 days)
+            'lodging_booking_quote',
+            [ 'id' => $params['id'] ]
+        );
+    }
+}
 
-
-// add a task to the CRON
-$cron->schedule(
-    "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
-    time() + $limit * 86400,                                  // remind after 1 week (7 days)
-    'lodging_booking_quote',
-    '{"id": '.$params['id'].'}'
-); 
+Booking::id($params['id'])->update(['status' => 'option']);
 
 $context->httpResponse()
         ->status(204)
