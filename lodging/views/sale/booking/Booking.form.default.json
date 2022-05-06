@@ -108,7 +108,7 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/booking/object.id/quote",
-            "visible": ["status", "=", "quote"]
+            "visible": ["status", "in", ["quote", "option"]]
         },
         {
             "id": "item.booking.consumptions",
@@ -163,6 +163,24 @@
                                                 "widget": {
                                                     "readonly": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_noexpiry",
+                                                "width": "50%",
+                                                "visible": ["is_noexpiry", "=", true],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_price_tbc",
+                                                "width": "50%",
+                                                "visible": ["is_price_tbc", "=", true],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
@@ -172,12 +190,17 @@
                                             {
                                                 "type": "label",
                                                 "value": "",
-                                                "width": "50%"
+                                                "width": "75%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_from",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "75%"
                                             },
                                             {
                                                 "type": "field",
@@ -229,12 +252,6 @@
                                                 "type": "field",
                                                 "label": "Organisation of Payer",
                                                 "value": "has_payer_organisation",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Price to be confirmed",
-                                                "value": "is_price_tbc",
                                                 "width": "50%"
                                             },
                                             {

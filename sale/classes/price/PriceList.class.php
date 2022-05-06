@@ -43,7 +43,7 @@ class PriceList extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'pending',              // list is "under construction"
+                    'pending',              // list is "under construction" (to be confirmed)
                     'published',            // completed and ready to be used
                     'paused',               // (temporarily) on hold (not to be used)
                     'closed'                // can no longer be used          
@@ -141,7 +141,24 @@ class PriceList extends Model {
     }
 
     public static function onchangeStatus($om, $oids, $lang) {
+        $pricelists = $om->read(__CLASS__, $oids, ['status']);
         $om->write(__CLASS__, $oids, ['is_active' => null]);
+
+        if($pricelists > 0) {
+            foreach($pricelists as $pid => $pricelist) {
+                if($pricelist['status'] == 'published') {
+                    $providers = \eQual::inject(['cron']);
+                    $cron = $providers['cron'];
+                    // add a task to the CRON
+                    $cron->schedule(
+                        "booking.is_tbc.confirm",
+                        time() + 60,
+                        'lodging_pricelist_check-bookings',
+                        [ 'id' => $pid ]
+                    );
+                }
+            }
+        }
         // immediate re-compute
         $om->read(__CLASS__, $oids, ['is_active']);
     }

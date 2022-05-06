@@ -39,40 +39,30 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Booking",
-                                                "value": "booking_id",
+                                                "label": "Product",
+                                                "value": "product_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Booking Line",
-                                                "value": "booking_line_id",
+                                                "label": "Rental Unit",
+                                                "value": "rental_unit_id",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "date",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "schedule_from",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "schedule_to",
-                                                "width": "25%"
-                                            },
+                                            },                                            
                                             {
                                                 "type": "field",
                                                 "value": "qty",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "disclaimed",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -86,20 +76,24 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Product",
-                                                "value": "product_id",
+                                                "label": "Booking",
+                                                "value": "booking_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Rental Unit",
-                                                "value": "rental_unit_id",
-                                                "width": "50%"
+                                                "value": "date",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "disclaimed",
-                                                "width": "50%"
+                                                "value": "schedule_from",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "schedule_to",
+                                                "width": "3%"
                                             }
                                         ]
                                     }

@@ -869,6 +869,35 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "id": "communication.alerts",
+                        "label": "Alerts",
+                        "description": "",
+                        "icon": "chrome_reader_mode",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "communication.alert.messages",
+                                "type": "entry",
+                                "label": "All messages",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\alert\\Message",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "communication.alert.message_models",
+                                "type": "entry",
+                                "label": "Message models",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\alert\\MessageModel",
+                                    "view": "list.default"
+                                }
+                            }                            
+                        ]
                     }
                 ]
             },

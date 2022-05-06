@@ -11,7 +11,12 @@
             "description": "Import from a Bank Statements file.",
             "controller": "lodging_payments_import"
         }
-    ],     
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
     "layout": {
         "items": [
             {

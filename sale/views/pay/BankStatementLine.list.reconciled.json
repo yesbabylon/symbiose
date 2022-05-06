@@ -16,6 +16,11 @@
             "confirm": true
         }
     ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
     "layout": {
         "items": [
             {

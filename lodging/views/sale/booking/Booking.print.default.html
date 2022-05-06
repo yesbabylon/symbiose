@@ -40,6 +40,7 @@ div.inner {
     border: none;
 }
 
+
 div.inner p {
     margin: 0;
 }
@@ -164,11 +165,6 @@ hr {
             </td>
         </tr>
     </table>    
-    {% if is_price_tbc %}
-    <div class="important">
-        <b>Important: Certains prix repris dans cette réservation sont renseignés à titre indicatif et sont susceptibles d'évoluer.</b>
-    </div>
-    {% endif %}
 
 </div>
 
@@ -184,7 +180,6 @@ hr {
         {% endif %}
     </p>
 </div>
-
 
 <div class="inner">
     <div class="intro">
@@ -294,6 +289,14 @@ hr {
             </tr>
         </table>
     </div>
+
+    {% if is_price_tbc %}
+    <div class="important">
+        <p><b>Important: Ce document ne constitue pas une offre contractuelle, ni une garantie.</b></p>
+        <p>Le prix est renseigné à titre indicatif et est susceptible d'évoluer. Il s’agit du montant demandé pour un service équivalent à la même période, l’année la plus proche pour laquelle les tarifs ont été définis. Il pourrait donc faire l’objet d’une indexation liée à l’adaptation des prix de nos différents fournisseurs. Cette augmentation pourrait porter sur un maximum de 15% du montant total du séjour. A partir de 6 mois avant la date de début du séjour, le client peut s’attendre à recevoir un prix fixe.</p>
+    </div>
+    {% endif %}
+
 </div>
 
 

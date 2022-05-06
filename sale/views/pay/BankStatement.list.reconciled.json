@@ -11,7 +11,12 @@
             "description": "Export all reconciled statements for importing into external accounting software.",
             "controller": "lodging_payments_export"
         }
-    ],     
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
     "layout": {
         "items": [
             {

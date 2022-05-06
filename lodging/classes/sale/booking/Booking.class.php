@@ -505,4 +505,11 @@ class Booking extends \sale\booking\Booking {
         }
     }
 
+
+    public static function onclone($orm, $oids, $lang) {
+        // prevent cloning bookings
+        return ['status' => ['not_allowed' => 'Contract cannot be cloned.']];
+        // return parent::onuclone($orm, $oids, $lang);
+    }
+
 }

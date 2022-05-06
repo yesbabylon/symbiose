@@ -165,8 +165,15 @@ class Booking extends Model {
 
             'is_cancelled' => [
                 'type'              => 'boolean',
-                'description'       => "Flag to mark the booking as cancelled (impacts status).",
+                'description'       => "Flag marking the booking as cancelled (impacts status).",
                 'default'           => false
+            ],
+
+            'is_noexpiry' => [
+                'type'              => 'boolean',
+                'description'       => "Flag marking an option as never expiring.",
+                'default'           => false,
+                'visible'           => ['status', '=', 'option']
             ],
 
             'cancellation_reason' => [
@@ -451,11 +458,32 @@ class Booking extends Model {
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        if(count($values) == 1 && (
-                isset($values['status'])                // status can always be updated
-            ||  isset($values['composition_id'])        // composition can be assigned at any time
-            ) ) {
-            
+        // discard optional fields
+        $ignored = ['id', 'modified', 'state'];
+        foreach($ignored as $field) {
+            if(isset($values[$field])) {
+                unset($values[$field]);
+            }
+        }
+
+        $accepted = [
+            'status',               // status can always be updated
+            'composition_id',       // composition can be assigned at any time
+            'description',          // description can be updated at any time
+            'price', 'total',       // computed fields can be reset
+            'is_price_tbc'          // status of the price is updated by cron
+        ];
+        $is_update_accepted = true;
+
+        foreach($values as $field => $value) {
+            if(!in_array($field, $accepted)) {
+                $is_update_accepted = false;
+                break;
+            }
+        }
+
+        if($is_update_accepted) {
+            // noop
         }
         else {
             $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);

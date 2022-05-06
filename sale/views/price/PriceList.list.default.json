@@ -1,6 +1,6 @@
 {
     "name": "Price List",
-    "description": "This view is intended for displaying the list of prices.", 
+    "description": "This view is intended for displaying the list of prices.",
     "access": {
         "groups": ["sale.default.user"]
      },
@@ -10,7 +10,7 @@
                 "type": "field",
                 "value": "name",
                 "width": "20%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
@@ -21,13 +21,14 @@
             {
                 "type": "field",
                 "value": "status",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true                
             },
             {
                 "type": "field",
                 "value": "date_from",
                 "width": "20%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",
@@ -38,7 +39,7 @@
                 "type": "field",
                 "value": "duration",
                 "width": "20%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",

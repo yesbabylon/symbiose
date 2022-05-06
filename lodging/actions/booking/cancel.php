@@ -33,7 +33,6 @@ list($params, $providers) = announce([
             ],
             'required'       => true
         ]
-
     ],
     'access' => [
         'groups'            => ['booking.default.user'],

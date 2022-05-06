@@ -40,7 +40,7 @@
         },
         "qty": {
             "label": "Quantité",
-            "description": "Noombre de fois que la consommation est comptabilisée.",
+            "description": "Nombre de consommations comptabilisées.",
             "help": ""
         },
         "type": {
@@ -64,7 +64,7 @@
         },
         "disclaimed": {
             "label": "Absent",
-            "description": "La livraison est prévue par le client qui y a expressément renoncé.",
+            "description": "Le client a explicitement renoncé au service.",
             "help": ""
         },
 		"is_rental_unit": {

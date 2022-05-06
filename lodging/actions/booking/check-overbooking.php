@@ -23,10 +23,10 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth', 'report']
+    'providers'     => ['context', 'orm', 'auth', 'dispatch']
 ]);
 
-list($context, $orm, $auth, $report) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['report']];
+list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
 $booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_ids'])->first();
@@ -130,29 +130,37 @@ foreach($consumptions_map as $booking_line_group_id => $rental_units) {
     }
 }
 
-// #todo - handle OOO
-
 $colliding_bookings_ids = array_keys($colliding_bookings_map);
 
+/*
+    This controller is a check: an empty response means that no alert was raised
+*/
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 
 if(count($colliding_bookings_ids)) {
     $bookings = Booking::ids($colliding_bookings_ids)->read(['id', 'name'])->get(true);
-    /*
-        This controller is a check.
-        By convention we return a response allowing to retrieve objects in the list OR providing a message.
-    */
+
+    $links = [];
+
     foreach($bookings as $booking) {
+        $links[] = "[{$booking['name']}](/booking/#/booking/{$booking['id']})";
         $result[] = [
-            'type'          => 'object',                        // 'object' or 'message'
-        //  'message'       => 'warning message',
+            'type'          => 'object',
             'object_class'  => 'lodging\sale\booking\Booking',            
             'object_id'     => $booking['id'],
             'object_name'   => $booking['name']
         ];
     }
+
+    // by convention we dispatch an alert that relates to the controller itself.
+    $dispatch->dispatch('lodging.booking.overbooking', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-overbooking', ['id' => $params['id']], $links);
+
     $httpResponse->status(qn_error_http(QN_ERROR_CONFLICT_OBJECT));
+}
+else {
+    // symetrical removal of the alert (if any)
+    $dispatch->cancel('lodging.booking.overbooking', 'lodging\sale\booking\Booking', $params['id']);
 }
 
 $httpResponse->body($result)
