@@ -1,0 +1,69 @@
+{
+    "name": "Booking list",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "label": "reference",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "From",
+                "value": "date_from",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "To",
+                "value": "date_to",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Center",
+                "value": "center_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Nb Pers",
+                "value": "nb_pers",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Price",
+                "value": "price",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

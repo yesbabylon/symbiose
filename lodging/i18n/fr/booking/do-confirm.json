@@ -1,0 +1,17 @@
+{
+    "name": "Confirmation de réservation",
+    "description": "Les unités locatives seront bloquées, un contrat sera créé et un échéancier de paiements sera généré.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_booking": "Surbooking détecté",
+            "incompatible_status": "Le contrat ne peut être généré avec un prix non-confirmé."
+        }
+    }
+}
