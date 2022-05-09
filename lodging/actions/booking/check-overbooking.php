@@ -9,7 +9,7 @@ use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
 list($params, $providers) = announce([
-    'description'   => "Returns a list of bookings that collide with one or more consumptions of the given booking.",
+    'description'   => "Checks if there are any rental units of the given booking blocked by other bookings.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking the check against overbooking.',
@@ -26,6 +26,12 @@ list($params, $providers) = announce([
     'providers'     => ['context', 'orm', 'auth', 'dispatch']
 ]);
 
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\auth\AuthenticationManager   $auth
+ * @var \equal\dispatch\Dispatcher          $dispatch
+ */
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
@@ -145,12 +151,7 @@ if(count($colliding_bookings_ids)) {
 
     foreach($bookings as $booking) {
         $links[] = "[{$booking['name']}](/booking/#/booking/{$booking['id']})";
-        $result[] = [
-            'type'          => 'object',
-            'object_class'  => 'lodging\sale\booking\Booking',            
-            'object_id'     => $booking['id'],
-            'object_name'   => $booking['name']
-        ];
+        $result[] = $booking['id'];
     }
 
     // by convention we dispatch an alert that relates to the controller itself.

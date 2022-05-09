@@ -9,7 +9,7 @@
             "id": "action.quote",
             "label": "Revert to Quote",
             "description": "Rental units will no longer be reserved and will be available for other bookings.",
-            "controller": "lodging_booking_quote",
+            "controller": "lodging_booking_do-quote",
             "confirm": true,
             "visible": ["status", "in", ["option", "confirmed"]]
         },
@@ -17,7 +17,7 @@
             "id": "action.option",
             "label": "Set as Option",
             "description": "Rental units will be reserved but no funding will be claimed yet.",
-            "controller": "lodging_booking_option",
+            "controller": "lodging_booking_do-option",
             "confirm": true,
             "visible": ["status", "=", "quote"]
         },
@@ -25,7 +25,7 @@
             "id": "action.confirm",
             "label": "Confirm Booking",
             "description": "Rental units will be reserved and the invoicing plan will be set up.",
-            "controller": "lodging_booking_confirm",
+            "controller": "lodging_booking_do-confirm",
             "confirm": true,
             "visible": ["status", "=", "option"]
         },
@@ -33,7 +33,7 @@
             "id": "action.checkin",
             "label": "Check In",
             "description": "The host has arrived: the rental units will be marked as occupied.",
-            "controller": "lodging_booking_checkin",
+            "controller": "lodging_booking_do-checkin",
             "confirm": true,
             "visible": ["status", "in", ["confirmed", "validated"]]
         },
@@ -41,15 +41,15 @@
             "id": "action.checkout",
             "label": "Check Out",
             "description": "The host is leaving: the rental units will be marked for cleaning.",
-            "controller": "lodging_booking_checkout",
+            "controller": "lodging_booking_do-checkout",
             "confirm": true,
             "visible": ["status", "=", "checkedin"]
         },
         {
             "id": "action.invoice",
             "label": "Invoice",
-            "description": "The host has left and room has been reviewed: emit the invoice, if necessary.",
-            "controller": "lodging_booking_invoice",
+            "description": "The host has left and room has been reviewed: emit the final invoice.",
+            "controller": "lodging_booking_do-invoice",
             "confirm": true,
             "visible": ["status", "=", "checkedout"]
         },
@@ -57,7 +57,7 @@
             "id": "action.cancel",
             "label": "Cancel",
             "description": "The booking will be cancelled and rental units will be freed. Possible cancellation fee will be applied.",
-            "controller": "lodging_booking_cancel",
+            "controller": "lodging_booking_do-cancel",
             "params": {
                 "id": "object.id"
             },
@@ -190,17 +190,12 @@
                                             {
                                                 "type": "label",
                                                 "value": "",
-                                                "width": "75%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_from",
                                                 "width": "25%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "value": "",
-                                                "width": "75%"
                                             },
                                             {
                                                 "type": "field",

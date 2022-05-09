@@ -5,10 +5,8 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use lodging\identity\CenterOffice;
 use lodging\sale\booking\BankStatement;
-use lodging\sale\booking\BankStatementLine;
-use sale\customer\Customer;
+
 
 list($params, $providers) = announce([
     'description'   => "Export a zip archive containing all reconciled bank statements for importing in an external accounting software.",
@@ -28,7 +26,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 
-$statements = BankStatement::search(['status', '=', 'reconciled'])
+$statements = BankStatement::search([['status', '=', 'reconciled'], ['is_exported', '=', false]])
   ->read(['name', 'raw_data', 'status', 'statement_lines_ids' => ['account_iban', 'customer_id' => ['id', 'ref_account'] ]])
   ->get();
 
@@ -43,7 +41,6 @@ if($statements) {
 
   foreach($statements as $statement) {
     $coda = $statement['raw_data'];
-
     // adapt account numbers with customers ref_account
     foreach($statement['statement_lines_ids'] as $lid => $line) {
       if( $line['customer_id'] ) {    
@@ -57,7 +54,10 @@ if($statements) {
         }    
       }
     }
+    // add statement as CODA file to the archive
     $zip->addFromString($statement['name'].'.cod', $coda);
+    // mark statement as exported
+    BankStatement::id($sattement['id'])->update(['is_exported' => true]);
   }
   $zip->close();
   $data = file_get_contents($tmpfile);

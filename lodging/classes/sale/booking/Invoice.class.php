@@ -35,16 +35,27 @@ class Invoice extends \sale\booking\Invoice {
 
             'number' => [
                 'type'              => 'computed',
-                'function'          => 'getNumber',
+                'function'          => 'calcNumber',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
-            ]            
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'proforma', 
+                    'invoice'
+                ],
+                'default'           => 'proforma',
+                'onchange'          => 'onchangeStatus',
+            ]
+
             
         ];
     }
 
-    public static function getNumber($om, $oids, $lang) {
+    public static function calcNumber($om, $oids, $lang) {
         $result = [];
 
         $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
@@ -59,14 +70,12 @@ class Invoice extends \sale\booking\Invoice {
                 $result[$oid] = '';
 
                 $organisation_id = $invoice['organisation_id'];
-
                 $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
                 $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');
                 $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
 
                 if($sequence) {
                     Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
-
                     $result[$oid] = Setting::parse_format($format, [
                         'year'      => $year,
                         'office'    => $invoice['center_office_id.code'],
@@ -79,4 +88,10 @@ class Invoice extends \sale\booking\Invoice {
         return $result;
     }    
 
+
+    public static function onchangeStatus($om, $ids, $lang) {
+        $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
+        // immediate recompute
+        $om->read(__CLASS__, $ids, ['number'], $lang);
+    }
 }

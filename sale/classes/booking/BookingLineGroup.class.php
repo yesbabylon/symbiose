@@ -169,5 +169,30 @@ class BookingLineGroup extends Model {
         return $result;
     }
 
+
+/**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+
+        $res = $om->read(get_called_class(), $oids, [ 'date_from', 'date_to' ]);
+
+        if($res > 0) {
+            foreach($res as $oids => $odata) {
+                if($odata['date_from'] > $odata['date_to']) {
+                    return ['date_from' => ['invalid_daterange' => 'End date must be greater or equal to Start date.']];
+                }
+            }
+        }
+        
+        return parent::onupdate($om, $oids, $values, $lang);
+    }
    
 }

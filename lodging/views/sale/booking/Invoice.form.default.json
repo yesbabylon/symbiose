@@ -1,6 +1,16 @@
 {
     "name": "Invoice",
     "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Emit invoice",
+            "description": "A new invoice will be generated from the proforma version. Afterward, invoice will be read-only.",
+            "controller": "lodging_invoice_do-emit",
+            "confirm": true,
+            "visible": ["status", "=", "proforma"]
+        }
+    ],
     "routes": [
         {
             "id": "item.invoice.booking.file",
@@ -18,8 +28,9 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
-            "route": "/booking/object.booking_id/invoice/object.id"
-        }              
+            "route": "/booking/object.booking_id/invoice/object.id",
+            "visible": ["status", "=", "invoice"]
+        }
     ],    
     "layout": {
         "groups": [

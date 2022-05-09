@@ -41,7 +41,7 @@ class Invoice extends Model {
                     'invoice'
                 ],
                 'default'           => 'proforma',
-                'onchange'          => 'finance\accounting\Invoice::onchangeStatus',
+                'onchange'          => 'onchangeStatus',
             ],
 
             'type' => [

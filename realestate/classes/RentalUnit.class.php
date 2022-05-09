@@ -101,7 +101,8 @@ class RentalUnit extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'ready',               // unit is clean and ready for customers
+                    'ready',               // unit is available for customers
+                    'empty',               // unit is no longer occupied but might require action(s)
                     'busy_full',           // unit is fully occupied
                     'busy_part',           // unit is partially occupied
                     'ooo'                  // unit is out-of-order

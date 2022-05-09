@@ -69,7 +69,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             'is_extra' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the group relate to sales made off-contract?',
+                'description'       => 'Does the group relate to sales made off-contract? (ex. point of sale)',
                 'default'           => false
             ],
 
@@ -492,6 +492,92 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->write(__CLASS__, $oids, ['price' => null, 'total' => null ]);
     }
+
+
+
+    /**
+     * Check wether an object can be created, and optionally perform additional operations.
+     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be created.
+     */
+    public static function oncreate($om, $values, $lang) {
+        $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
+
+        if($bookings) {
+            $booking = reset($bookings);
+            
+            if(
+                in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                ||
+                ($booking['status'] != 'quote' && (!isset($values['is_extra']) ||!$values['is_extra']))
+            ) {
+                return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+            }
+        }
+
+        return parent::oncreate($om, $values, $lang);
+    }
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra'], $lang);
+
+        if($groups > 0) {
+            foreach($groups as $group) {
+                if(
+                    in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                    ||                    
+                    ($group['booking_id.status'] != 'quote' && !$group['is_extra'])
+                ) {
+                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                }
+            }
+        }
+
+        return parent::onupdate($om, $oids, $values, $lang);
+    }
+
+    /**
+     * Check wether an object can be deleted, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     * 
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @return boolean  Returns true if the object can be deleted, or false otherwise.
+     */
+    public static function ondelete($om, $oids) {
+        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra']);
+
+        if($groups > 0) {
+            foreach($groups as $group) {
+                if(
+                    in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                    ||
+                    ($group['booking_id.status'] != 'quote' && !$group['is_extra'])
+                ) {
+                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                }
+            }
+        }
+
+        return parent::ondelete($om, $oids);
+    }
+
+
 
     /**
      * Create Price adapters according to group settings.

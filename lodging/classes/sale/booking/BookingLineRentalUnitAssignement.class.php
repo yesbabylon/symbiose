@@ -17,7 +17,7 @@ class BookingLineRentalUnitAssignement extends Model {
         Assignements are created while selecting the services for a booking.
         Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.
     */
-    
+
     public static function getColumns() {
         return [
 
@@ -47,7 +47,21 @@ class BookingLineRentalUnitAssignement extends Model {
                 'description'       => 'Booking Line the assignment relates to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
-            ]            
+            ],
+
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
+                'description'       => 'Booking lines Group the assignment relates to.',
+                'required'          => true,
+                'ondelete'          => 'cascade'
+            ],
+
+            'is_accomodation' => [
+                'type'              => 'boolean',
+                'description'       => 'The related rental unit is an accomodation (having at least one bed).',
+                'default'           => true
+            ]
 
         ];
     }

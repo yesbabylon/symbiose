@@ -255,9 +255,9 @@ class Booking extends \sale\booking\Booking {
     public static function onchangeCustomerId($om, $oids, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, [
-            'customer_identity_id', 
-            'booking_lines_groups_ids', 
-            'customer_id.partner_identity_id', 
+            'customer_identity_id',
+            'booking_lines_groups_ids',
+            'customer_id.partner_identity_id',
             'customer_id.partner_identity_id.description',
             'contacts_ids.partner_identity_id'
         ], $lang);
@@ -508,8 +508,54 @@ class Booking extends \sale\booking\Booking {
 
     public static function onclone($orm, $oids, $lang) {
         // prevent cloning bookings
-        return ['status' => ['not_allowed' => 'Contract cannot be cloned.']];
-        // return parent::onuclone($orm, $oids, $lang);
+        return ['status' => ['not_allowed' => 'Booking cannot be cloned.']];
+        // return parent::onclone($orm, $oids, $lang);
+    }
+
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+
+        $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
+
+        if(isset($values['booking_lines_ids'])) {
+            // trying to add or remove booking lines
+            // lines cannot be assigned to more than one booking
+            $booking = reset($bookings);
+            if(!in_array($booking['status'], ['quote'])) {            
+                $lines = $om->read('lodging\sale\booking\BookingLine', $values['booking_lines_ids'], [ 'booking_line_group_id.is_extra']);
+                foreach($lines as $line) {
+                    if(!$line['booking_line_group_id.is_extra']) {
+                        return ['status' => ['non_editable' => 'Non-extra services cannot be changed for non-quote bookings.']];
+                    }
+                }
+            }
+        }
+
+        if(isset($values['booking_lines_groups_ids'])) {
+            // trying to add or remove booking line groups
+            // groups cannot be assigned to more than one booking
+            $booking = reset($bookings);
+            if(!in_array($booking['status'], ['quote'])) {            
+                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_lines_groups_ids'], [ 'is_extra']);            
+                foreach($groups as $group) {
+                    if(!$group['is_extra']) {
+                        return ['status' => ['non_editable' => 'Non-extra service groups cannot be changed for non-quote bookings.']];
+                    }
+                }
+            }
+        }
+
+        return parent::onupdate($om, $oids, $values, $lang);
     }
 
 }

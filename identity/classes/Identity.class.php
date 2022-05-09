@@ -128,6 +128,13 @@ class Identity extends Model {
                 'visible'           => [ ['type', '=', 'I'] ]
             ],
 
+            'nationality' => [
+                'type'              => 'string',
+                'usage'             => 'country/iso-3166:2',
+                'description'       => 'The country the person is citizen of.',
+                'default'           => 'BE'
+            ],
+
             /*
                 Relational fields specific to organisations: children organisations and parent company, if any
             */

@@ -135,6 +135,12 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
+            'is_invoiced' => [
+                'type'              => 'boolean',
+                'description'       => 'Is the line part of the original contract (or added afterward)?',
+                'default'           => false
+            ],
+
             'free_qty' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',

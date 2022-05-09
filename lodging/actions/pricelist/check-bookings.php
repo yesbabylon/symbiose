@@ -11,7 +11,7 @@ use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\BookingLineGroup;
 
 list($params, $providers) = announce([
-    'description'   => "Update status of bookings that were waiting for the pricelist to be published.",
+    'description'   => "Checks for bookings that were waiting for the pricelist to be published and update TBC status.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the pricelist whose status changed.',
