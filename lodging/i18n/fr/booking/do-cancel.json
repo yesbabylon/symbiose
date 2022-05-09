@@ -1,0 +1,29 @@
+{
+    "name": "Annulation",
+    "description": "Ceci annulera la réservation, quel que soit son statut courant. La balance sera ajustée si des frais d'annulation sont dus.",
+    "model": {
+        "id": {
+            "label": "Identifian",
+            "description": "Identifiant de la réservation à annuler.",
+            "help": ""
+        },
+        "reason": {
+            "label": "Motif d'annulation",
+            "description": "Raison pour laquelle la réservation est annulée.",
+            "help": "",
+            "selection": {
+                "other": "autre",
+                "overbooking": "Overbooking: plus d'unités locatives disponibles",
+                "duplicate": "Doublon: réservation effectuée plusieurs fois",
+                "internal_impediment": "Force majeure interne: incident empêchant la réservation",
+                "external_impediment": "Force majeure externe (accident, transport, pandémie, ...)",
+                "health_impediment": "Motif médical ou familial"
+            }
+        }
+    },
+    "error": {
+        "reason": {
+            "broken_constraint": "Valeur manquante ou non reconnue."
+        }
+    }
+}

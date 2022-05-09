@@ -1,0 +1,71 @@
+{
+    "name": "Main dashboard",
+    "layout": {
+        "groups": [
+			{
+                "label": "test",
+                "height": "100%",
+                "sections": [
+                    {                
+                        "rows": [
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.bookings",
+                                                "label": "Bookings",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "core\\alert\\MessageModel",
+                                                "view": "list.default"
+                                            },
+                                            {
+                                                "id": "item.bookings2",
+                                                "label": "Bookings",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "core\\alert\\MessageModel",
+                                                "view": "list.default"
+                                            }
+
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "height": "50%",
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "id": "item.bookings3",
+                                                "label": "Bookings",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "view": "chart.default"
+                                            },
+                                            {
+                                                "id": "item.bookings4",
+                                                "label": "Bookings",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "core\\User",
+                                                "view": "list.default"
+                                            }
+
+                                        ]
+                                    }
+                                ]
+                            }                            
+                        ]
+                    }
+                ]
+            }            
+        ]
+    }
+}

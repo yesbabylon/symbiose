@@ -1,0 +1,27 @@
+{
+    "name": "Checkin",
+    "description": "Le paiement de la réservation sera vérifié et les statuts de la réservation et des unités locatives seront mis à jour.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        },
+        "no_payment": {
+            "label": "Pas de vérification des paiements",
+            "description": "Faire le checkin même si des paiements sont dus.",
+            "help": ""
+        },
+        "no_composition": {
+            "label": "Ignorer la composition",
+            "description": "Faire le checkin même sans composition.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "due_amount": "Solde dû non nul.",
+            "incomplete_composition": "La composition est manquante ou incomplète."
+        }
+    }
+}

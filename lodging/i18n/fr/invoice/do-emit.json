@@ -1,0 +1,16 @@
+{
+    "name": "Emission de la facture",
+    "description": "Une nouvelle facture sera générée sur base de la version proforma. Après cette opération, la factue sera en lecture seule.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la facture proforma à émettre.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "overbooking_detected": "Surbooking détecté"
+        }
+    }
+}

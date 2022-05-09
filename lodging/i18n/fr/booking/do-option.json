@@ -1,0 +1,21 @@
+{
+    "name": "Prise d'option",
+    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, mais une expiration automatique de l'option sera planifiée.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        },
+        "no_expiry": {
+            "label": "Pas d'expiration",
+            "description": "Les unités locatives resteront bloquées sans limite de temps.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "overbooking_detected": "Surbooking détecté"
+        }
+    }
+}
