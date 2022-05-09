@@ -64,6 +64,12 @@ class BankStatement extends Model {
                 'store'             => true
             ],
 
+            'is_exported' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag for marking statement as exported (for import in external tool).',
+                'default'           => false
+            ],
+
             // #memo - CODA statements comes with IBAN or BBAN numbers for reference account    
             'bank_account_number' => [
                 'type'              => 'string',

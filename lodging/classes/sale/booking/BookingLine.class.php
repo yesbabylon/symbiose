@@ -261,47 +261,6 @@ class BookingLine extends \sale\booking\BookingLine {
         }
     }
 
-
-    public static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
-        $result = [];
-
-        // current sum matches target
-        if($sum == $target) {
-            return [$collect];
-        }
-
-        // try sub-combinations
-        for($i = $start, $n = count($list); $i < $n; ++$i) {
-
-            // check if the sum exceeds target
-            if( ($sum + $list[$i]['capacity']) > $target ) {
-                continue;
-            }
-
-            // check if it is repeated or not
-            if( ($i > $start) && ($list[$i]['capacity'] == $list[$i-1]['capacity']) ) {
-                continue;
-            }
-
-            // take the element into the combination
-            $collect[] = $list[$i];
-
-            // recursive call
-            $res = self::_get_rental_units_combinations($list, $target, $i + 1, $sum + $list[$i]['capacity'], $collect);
-
-            if(count($res)) {
-                foreach($res as $r) {
-                    $result[] = $r;
-                }
-            }
-
-            // Remove element from the combination
-            array_pop($collect);
-        }
-
-        return $result;
-    }
-
     /**
      * Update the quantity of products.
      *
@@ -326,6 +285,7 @@ class BookingLine extends \sale\booking\BookingLine {
         ], $lang);
 
         // drop lines that do not relate to accomodations
+        // #todo - we should rather deal with "is_rental_unit" (all rental units should be addressed)
         $lines = array_filter($lines, function($a) { return $a['is_accomodation']; });
 
         $booking_line_groups_ids = [];
@@ -361,7 +321,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 $assigned_rental_units = [];
 
                 if($rental_units_ids > 0 && count($rental_units_ids)) {
-                    $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']));
+                    $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity', 'is_accomodation']));
                 }
 
                 $found = false;
@@ -451,7 +411,6 @@ class BookingLine extends \sale\booking\BookingLine {
                     if($remaining <= 0) break;
                 }
 
-
                 if($remaining > 0) {
                     // no availability !
                     $assignement = [
@@ -466,10 +425,12 @@ class BookingLine extends \sale\booking\BookingLine {
                 else {
                     foreach($assigned_rental_units as $rental_unit) {
                         $assignement = [
-                            'booking_id'        => $line['booking_id'],
-                            'booking_line_id'   => $lid,
-                            'rental_unit_id'    => $rental_unit['id'],
-                            'qty'               => $rental_unit['assigned']
+                            'booking_id'            => $line['booking_id'],
+                            'booking_line_id'       => $lid,
+                            'booking_line_group_id' => $line['booking_line_group_id'],                            
+                            'rental_unit_id'        => $rental_unit['id'],
+                            'qty'                   => $rental_unit['assigned'],
+                            'is_accomodation'       => $rental_unit['is_accomodation']
                         ];
                         trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
                         $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
@@ -482,6 +443,102 @@ class BookingLine extends \sale\booking\BookingLine {
         $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
     }
 
+
+
+    /**
+     * Check wether an object can be created, and optionally perform additional operations.
+     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be created.
+     */
+    public static function oncreate($om, $values, $lang) {
+        $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
+        $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_line_group_id'], ['is_extra'], $lang);
+
+        if($bookings > 0 && $groups > 0) {
+            $booking = reset($bookings);
+            $group = reset($groups);
+            
+            if(
+                in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                ||
+                ($booking['status'] != 'quote' && !$group['is_extra'])
+            ) {
+                return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+            }
+        }
+
+        return parent::oncreate($om, $values, $lang);
+    }
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+
+        $allowed = ['is_contractual', 'is_invoiced'];
+        $non_allowed = 0;
+
+        foreach($values as $field => $value) {
+            if(!in_array($field, $allowed)) {
+                ++$non_allowed;
+            }
+        }
+
+        if($non_allowed > 0) {
+            $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);            
+            if($lines > 0) {
+                foreach($lines as $line) {
+                    if(
+                        in_array($line['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                        ||
+                        ($line['booking_id.status'] != 'quote' && !$line['booking_line_group_id.is_extra'])
+                    ) {
+                        return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                    }
+                }
+            }
+        }
+
+        return parent::onupdate($om, $oids, $values, $lang);
+    }
+
+    /**
+     * Check wether an object can be deleted, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     * 
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @return boolean  Returns true if the object can be deleted, or false otherwise.
+     */
+    public static function ondelete($om, $oids) {
+        $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra']);
+
+        if($lines > 0) {
+            foreach($lines as $line) {
+                if(
+                    in_array($line['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                    ||
+                    ($line['booking_id.status'] != 'quote' && !$line['booking_line_group_id.is_extra'])
+                ) {
+                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                }
+            }
+        }
+
+        return parent::ondelete($om, $oids);
+    }
 
     /**
      * Update the quantity according to parent group (pack_id, nb_pers, nb_nights) and variation array.
@@ -914,5 +971,44 @@ class BookingLine extends \sale\booking\BookingLine {
     }
 
 
+    public static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
+        $result = [];
+
+        // current sum matches target
+        if($sum == $target) {
+            return [$collect];
+        }
+
+        // try sub-combinations
+        for($i = $start, $n = count($list); $i < $n; ++$i) {
+
+            // check if the sum exceeds target
+            if( ($sum + $list[$i]['capacity']) > $target ) {
+                continue;
+            }
+
+            // check if it is repeated or not
+            if( ($i > $start) && ($list[$i]['capacity'] == $list[$i-1]['capacity']) ) {
+                continue;
+            }
+
+            // take the element into the combination
+            $collect[] = $list[$i];
+
+            // recursive call
+            $res = self::_get_rental_units_combinations($list, $target, $i + 1, $sum + $list[$i]['capacity'], $collect);
+
+            if(count($res)) {
+                foreach($res as $r) {
+                    $result[] = $r;
+                }
+            }
+
+            // Remove element from the combination
+            array_pop($collect);
+        }
+
+        return $result;
+    }
 
 }

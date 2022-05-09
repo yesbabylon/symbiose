@@ -5,10 +5,10 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use lodging\sale\booking\Booking;
+use finance\accounting\Invoice;
 
 list($params, $providers) = announce([
-    'description'   => "Sets booking as checked in.",
+    'description'   => "Sets booking as checked out.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the composition has to be generated.',
@@ -18,7 +18,8 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'groups'            => ['booking.default.user'],
+        'visibility'        => 'protected',
+        'groups'            => ['finance.default.user'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -28,16 +29,16 @@ list($params, $providers) = announce([
     'providers'     => ['context', 'orm', 'auth'] 
 ]);
 
-
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\auth\AuthenticationManager   $auth
+ */
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
-
-
-Booking::id($params['id'])->update(['status' => 'checkedin']);
-
+// emit the invoice : changing status will trigger an invoice number assignation
+Invoice::id($params['id'])->update(['status' => 'invoice']);
 
 $context->httpResponse()
-        // ->status(204)
-        ->status(200)
-        ->body([])
+        ->status(204)        
         ->send();

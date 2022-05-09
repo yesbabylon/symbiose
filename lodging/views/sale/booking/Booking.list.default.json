@@ -76,19 +76,6 @@
             },
             {
                 "type": "field",
-                "value": "created",
-                "label": "Created",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "modified",
-                "label": "Modified",
-                "width": "15%",
-                "sortable": true
-            },
-            {
-                "type": "field",
                 "label": "Nb Pers",
                 "value": "nb_pers",
                 "width": "15%",

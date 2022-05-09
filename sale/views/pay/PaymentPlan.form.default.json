@@ -27,6 +27,12 @@
                                                 "label": "Class Rate",
                                                 "value": "rate_class_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Booking Type",
+                                                "value": "booking_type",
+                                                "width": "50%"
                                             }
                                         ]
                                     }

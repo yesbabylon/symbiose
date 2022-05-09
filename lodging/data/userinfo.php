@@ -45,6 +45,12 @@ $user = User::ids($ids)
             ])
             ->adapt('txt')
             ->first();
+
+if(!$user) {
+    // #todo - unknown error
+}
+$user['groups'] = array_values(array_map(function ($a) {return $a['name'];}, $user['groups_ids']));
+
 // send back basic info of the User object
 $context->httpResponse()
         ->body($user)

@@ -32,6 +32,15 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                 'readonly'          => true
             ],
 
+            'payments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\Payment',
+                'foreign_field'     => 'statement_line_id',
+                'description'       => 'The list of payments this line relates to .',
+                'onchange'          => 'sale\pay\BankStatementLine::onchangePaymentsIds',
+                'ondetach'          => 'delete'
+            ]            
+
         ];
     }
 

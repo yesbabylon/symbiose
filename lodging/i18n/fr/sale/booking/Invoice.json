@@ -13,6 +13,12 @@
         "form.default": {
             "name": "Facture",
             "description": "",
+            "actions": {
+                "action.invoice": {
+                    "label": "Émettre la facture",
+                    "description": "Générer une facture sur base de la version proforma."
+                }
+            },
             "layout": {}
         },
         "list.default": {

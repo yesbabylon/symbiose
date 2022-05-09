@@ -16,7 +16,7 @@ class Funding extends \sale\pay\Funding {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Funding::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -59,17 +59,17 @@ class Funding extends \sale\pay\Funding {
     }
 
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'payment_deadline_id.name', 'due_amount'], $lang);
 
-        if($fundings > 0) {            
+        if($fundings > 0) {
             foreach($fundings as $oid => $funding) {
                 $result[$oid] = $funding['booking_id.name'].'    '.Setting::format_number_currency($funding['due_amount']).'    '.$funding['payment_deadline_id.name'];
-            }    
+            }
         }
         return $result;
-    }    
+    }
 
     public static function getPaymentReference($om, $oids, $lang) {
         $result = [];

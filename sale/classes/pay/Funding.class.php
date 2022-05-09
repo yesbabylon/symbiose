@@ -16,7 +16,7 @@ class Funding extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\pay\Funding::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -60,7 +60,7 @@ class Funding extends Model {
                 'type'              => 'many2one',                
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'description'       => "The deadline model used for creating the funding, if any.",
-                'onchange'          => "sale\pay\Funding::onchangePaymentDeadlineId"
+                'onchange'          => "onchangePaymentDeadlineId"
             ],
 
             'invoice_id' => [
@@ -79,7 +79,7 @@ class Funding extends Model {
     }
 
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $fundings = $om->read(get_called_class(), $oids, ['payment_deadline_id.name'], $lang);
 
@@ -111,7 +111,6 @@ class Funding extends Model {
 
     public static function onchangePaymentDeadlineId($orm, $oids, $lang) {
         $orm->write(get_called_class(), $oids, ['name' => null], $lang);
-        $orm->read(get_called_class(), $oids, ['name'], $lang);
     }
 
 

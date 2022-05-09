@@ -134,7 +134,8 @@ class Booking extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\CompositionItem',
                 'foreign_field'     => 'booking_id',
-                'description'       => "The items that refer to the composition."
+                'description'       => "The items that refer to the composition.",
+                'ondetach'          => 'delete'
             ],
 
             'type_id' => [
@@ -153,7 +154,7 @@ class Booking extends Model {
                     'validated',                // signed contract and first installment have been received
                     'checkedin',                // host is currently occupying the booked rental unit
                     'checkedout',               // host has left the booked rental unit
-                    'invoiceable',
+                    'invoiced',
                     'debit_balance',            // customer still has to pay something
                     'credit_balance',           // a reimbusrsement to customer is required
                     'balanced'                  // booking is over and balance is cleared
@@ -440,7 +441,7 @@ class Booking extends Model {
         if($res > 0) {
             foreach($res as $oids => $odata) {
                 if($odata['status'] != 'quote') {
-                    return false;
+                    return ['status' => ['non_editable' => 'Non-quote bookings cannot be deleted manually.']];
                 }
             }
         }
@@ -455,50 +456,29 @@ class Booking extends Model {
      * @param  array    $oids       List of objects identifiers.
      * @param  array    $values     Associative array holding the new values to be assigned.
      * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        // discard optional fields
-        $ignored = ['id', 'modified', 'state'];
-        foreach($ignored as $field) {
-            if(isset($values[$field])) {
-                unset($values[$field]);
-            }
-        }
+        $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
 
-        $accepted = [
-            'status',               // status can always be updated
-            'composition_id',       // composition can be assigned at any time
-            'description',          // description can be updated at any time
-            'price', 'total',       // computed fields can be reset
-            'is_price_tbc'          // status of the price is updated by cron
-        ];
-        $is_update_accepted = true;
-
-        foreach($values as $field => $value) {
-            if(!in_array($field, $accepted)) {
-                $is_update_accepted = false;
-                break;
-            }
-        }
-
-        if($is_update_accepted) {
-            // noop
-        }
-        else {
-            $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
-
-            if($res > 0) {
-                foreach($res as $oids => $odata) {
-                    if($odata['status'] != 'quote') {
-                        return ['status' => ['non_editable' => 'Booking can only be updated while its status is quote.']];
+        if($res > 0) {
+            foreach($res as $oids => $odata) {
+                if(in_array($odata['status'], ['invoiced','debit_balance','credit_balance','balanced'])) {
+                    $accepted_fields = [
+                        'status'
+                    ];
+                    foreach($values as $field => $value) {
+                        if(!in_array($field, $accepted_fields)) {
+                            return ['status' => ['non_editable' => 'Invoiced bookings edition is limited .']];
+                        }
                     }
-                    if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
-                        return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
-                    }
+                }
+                if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
+                    return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
                 }
             }
         }
+
         return parent::onupdate($om, $oids, $values, $lang);
     }
 
