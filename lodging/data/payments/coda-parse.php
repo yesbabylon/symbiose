@@ -37,6 +37,36 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
+// function for converting BBAN to IBAN
+$lodging_payments_import_getIbanFromBban = function ($bban) {    
+    $result = '';
+
+    $country_code = 'BE';
+
+    $code_alpha = $country_code;
+    $code_num = '';
+    
+    for($i = 0; $i < strlen($code_alpha); ++$i) {
+        $letter = substr($code_alpha, $i, 1);
+        $order = ord($letter) - ord('A');
+        $code_num .= '1'.$order;
+    }
+    // account number has IBAN format
+    if(substr($bban, 0, 2) == $country_code) {
+        $result = $bban;
+    }
+    // convert to IBAN
+    else {
+        $check_digits = substr($bban, -2);
+        $dummy = intval($check_digits.$check_digits.$code_num.'00');
+        $control = 98 - ($dummy % 97);
+        $result = sprintf("BE%s%s", $control, $bban);    
+    }
+    return $result;
+};
+
+
+
 $content = $params['data'];
 $size = strlen($content);
 
@@ -61,7 +91,7 @@ foreach ($statements as $statement) {
     $line['account']  = [
         "name"      => $account->getName(),
         "number"    => $account->getNumber(),
-        "iban"      => lodging_payments_import_getIbanFromBban($account->getNumber()),
+        "iban"      => $lodging_payments_import_getIbanFromBban($account->getNumber()),
         "bic"       => $account->getBic(),
         "country"   => $account->getCountryCode()
     ];
@@ -95,33 +125,3 @@ $context->httpResponse()
         ->send();
 
 
-if(!function_exists("lodging_payments_import_getIbanFromBban")) {
-    function lodging_payments_import_getIbanFromBban($bban) {    
-        $result = '';
-
-        $country_code = 'BE';
-
-        $code_alpha = $country_code;
-        $code_num = '';
-        
-        for($i = 0; $i < strlen($code_alpha); ++$i) {
-            $letter = substr($code_alpha, $i, 1);
-            $order = ord($letter) - ord('A');
-            $code_num .= '1'.$order;
-        }
-
-        // account number has IBAN format
-        if(substr($bban, 0, 2) == $country_code) {
-            $result = $bban;
-        }
-        // convert to IBAN
-        else {
-            $check_digits = substr($bban, -2);
-            $dummy = intval($check_digits.$check_digits.$code_num.'00');
-            $control = 98 - ($dummy % 97);
-            $result = sprintf("BE%s%s", $control, $bban);    
-        }
-
-        return $result;
-    }
-}
