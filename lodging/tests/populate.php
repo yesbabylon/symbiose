@@ -55,7 +55,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -101,7 +101,7 @@ $tests = [
 
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-               run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+               run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -147,7 +147,7 @@ $tests = [
 
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-               run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+               run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -193,7 +193,7 @@ $tests = [
 
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-           run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+           run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -237,7 +237,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-               run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+               run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -281,7 +281,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-               run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+               run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -325,7 +325,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-               run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+               run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -369,7 +369,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -413,7 +413,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -457,7 +457,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -501,7 +501,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -545,7 +545,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
@@ -589,7 +589,7 @@ $tests = [
             ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
-            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
+            run('do', 'lodging_booking_option', ['id' => $booking['id']]);
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {

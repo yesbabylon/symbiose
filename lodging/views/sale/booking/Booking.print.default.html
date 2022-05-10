@@ -19,6 +19,18 @@ body {
     width: 100%;
 }
 
+h2 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 21px;
+}
+
+h3 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
 div, table, table tr td {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -39,7 +51,6 @@ div.inner {
     box-sizing: border-box;
     border: none;
 }
-
 
 div.inner p {
     margin: 0;
@@ -71,6 +82,10 @@ div.inner .wrapper table tr:last-child td {
     border-bottom: solid 1px black;
 }
 
+div.inner .intro {
+    margin-top: 20px;
+}
+
 div.trailer {
     margin: 0;
     padding: 0;
@@ -82,14 +97,14 @@ div.trailer {
 div.header {
     top: 0;
     left: 0;
-    height: 280px;
+    height: 327px;
 }
 
 div.header table {
     width: 100%; 
     border-spacing: 0px; 
     border-collapse: separate; 
-    border: solid 1px rgb(204, 204, 204);    
+    border: solid 1px rgb(204, 204, 204);
     border-top-left-radius: 15px; 
     border-top-right-radius: 15px; 
 }
@@ -114,10 +129,15 @@ hr {
 <body>
 
 <div class="header">
-    <div style="position: absolute; height: 80px; width: 276px; z-index: -1;">
-        <img src="{{ header_img_url }}" width="276" height="80" border="0" />
+    <div style="position: absolute; height: 150px; width: 320px; z-index: -1;">
+        <img src="{{ header_img_url }}" width="320" height="92" border="0" />
+        <div style="margin-left: 8px;">
+            <h3>{{ company_name}}</h3>
+            {{ company_address }}<br />
+            Numéro d'entreprise: {{ company_reg_number }}
+        </div>
     </div>
-    <div style="position: absolute; top: 0px; right: 100px; height: 103px; font-size: 13px;">
+    <div style="position: absolute; top: 50px; right: 0px; width: 280px; height: 103px; font-size: 13px;">
         {{ customer_name }}<br />
         {{ contact_name }}<br />
         {{ customer_address1 }}<br />
@@ -128,8 +148,7 @@ hr {
     </div>
 
     <!-- spacer -->
-    <div style="position: relative; height: 103px; width: 100%;">
-        <div style="height: 40px; width: 100%"></div>
+    <div style="position: relative; height: 150px; width: 100%;">
         <div style="position: absolute; top: 84px; right: 0; height: 19px; width: 100%; text-align: right;">Le {{ date }}</div>
     </div>
 

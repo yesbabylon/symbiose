@@ -5,7 +5,7 @@
         {
             "id": "action.invoice",
             "label": "Emit invoice",
-            "description": "A new invoice will be generated from the proforma version. Afterward, invoice will be read-only.",
+            "description": "A new invoice will be generated from the proforma version. A number will be assigned to the invoice which will become read-only.",
             "controller": "lodging_invoice_do-emit",
             "confirm": true,
             "visible": ["status", "=", "proforma"]

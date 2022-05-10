@@ -61,7 +61,6 @@ if($booking['status'] != 'quote') {
     $cron->cancel("booking.option.deprecation.{$params['id']}");
 
     // #memo - generated contracts are kept for history (we never delete them)
-
     // mark contracts as expired    
     Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
 

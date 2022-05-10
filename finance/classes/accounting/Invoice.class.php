@@ -78,6 +78,14 @@ class Invoice extends Model {
                 'default'           => 'pending'
             ],
 
+            'payment_reference' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcPaymentReference',
+                'description'       => 'Message for identifying payments related to the invoice.',
+                'store'             => true
+            ],
+
             'date' => [
                 'type'              => 'datetime',
                 'description'       => 'Emission date of the invoice.',
@@ -113,14 +121,16 @@ class Invoice extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\InvoiceLine',
                 'foreign_field'     => 'invoice_id',
-                'description'       => 'Detailed lines of the invoice.'
+                'description'       => 'Detailed lines of the invoice.',
+                'ondetach'          => 'delete'
             ],
 
             'invoice_line_groups_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
-                'description'       => 'Groups of lines of the invoice.'
+                'description'       => 'Groups of lines of the invoice.',
+                'ondetach'          => 'delete'
             ],
 
             'payment_terms_id' => [
@@ -140,6 +150,19 @@ class Invoice extends Model {
 
         ];
     }
+
+
+    public static function calcPaymentReference($om, $oids, $lang) {
+        $result = [];
+        $invoices = $om->read(get_called_class(), $oids, ['number']);
+        foreach($invoices as $oid => $invoice) {
+            $booking_code = intval($invoice['number']);
+            // arbitrary value : 155 for final invoice
+            $code_ref = 155;
+            $result[$oid] = self::_get_payment_reference($code_ref, $booking_code);
+        }
+        return $result;
+    }    
 
     public static function getNumber($om, $oids, $lang) {
         $result = [];
@@ -253,5 +276,23 @@ class Invoice extends Model {
             }
         }
         return parent::onupdate($om, $oids, $values, $lang);
+    }
+
+
+    /**
+     * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
+     *
+     * Note:
+     *  format is aaa-bbbbbbb-XX
+     *  where Xaaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
+     *  as 10000000 % 97 = 76
+     *  we do (aaa * 76 + bbbbbbb) % 97
+     */
+    public static function _get_payment_reference($prefix, $suffix) {
+        $a = intval($prefix);
+        $b = intval($suffix);
+        $control = ((76*$a) + $b ) % 97;
+        $control = ($control == 0)?97:$control;
+        return sprintf("%3d%04d%03d%02d", $a, $b / 1000, $b % 1000, $control);
     }
 }

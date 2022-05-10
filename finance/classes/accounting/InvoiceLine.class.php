@@ -31,14 +31,16 @@ class InvoiceLine extends Model {
             'invoice_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
-                'description'       => 'Group the line relates to (in turn, groups relate to their invoice).'
+                'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
+                'ondelete'          => 'cascade'
             ],
 
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'Invoice the line is related to.',
-                'required'          => true
+                'required'          => true,
+                'ondelete'          => 'cascade'
             ],
 
             'product_id' => [

@@ -43,12 +43,12 @@
             "description": "The host is leaving: the rental units will be marked for cleaning.",
             "controller": "lodging_booking_do-checkout",
             "confirm": true,
-            "visible": ["status", "=", "checkedin"]
+            "visible": ["status", "in", ["checkedin", "invoiced"]]
         },
         {
             "id": "action.invoice",
             "label": "Invoice",
-            "description": "The host has left and room has been reviewed: emit the final invoice.",
+            "description": "All additional consumptions have been added. A proforma invoice will be generated.",
             "controller": "lodging_booking_do-invoice",
             "confirm": true,
             "visible": ["status", "=", "checkedout"]
@@ -62,7 +62,7 @@
                 "id": "object.id"
             },
             "confirm": true,
-            "visible": ["status", "<>", "balanced"]
+            "visible": ["status", "not in", ["checkedin", "checkedout", "invoiced", "debit_balance", "credit_balance", "balanced"]]
         }
     ],
     "routes": [
@@ -100,7 +100,7 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/booking/object.id/contract",
-            "visible": ["has_contract", "=", true]
+            "visible": [["has_contract", "=", true], ["status", "=", "confirmed"]]
         },
         {
             "id": "item.booking.quote",
