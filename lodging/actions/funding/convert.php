@@ -105,7 +105,7 @@ if($downpayment_sku) {
     $product = Product::search(['sku', '=', $downpayment_sku])->read(['id'])->first();
     if($product) {
         $downpayment_product_id = $product['id'];
-    }    
+    }
 }
 
 // find Price for product, based on current year
