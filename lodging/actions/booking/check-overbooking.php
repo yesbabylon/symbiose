@@ -41,42 +41,42 @@ if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-if(!count($booking['booking_lines_ids'])) {
-    throw new Exception("empty_booking", QN_ERROR_MISSING_PARAM);
-}
 
 /*
     Get in-memory consumptions resulting from the booking lines, in order to check booking consumptions against existing consumptions.
 */
 
-$consumptions = BookingLine::_getResultingConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
-
-// filter to keep only accomodations
-$consumptions = array_filter($consumptions, function($a) {
-    return $a['is_rental_unit'];
-});
-
-// sort ascending on date
-usort($consumptions, function($a, $b) {
-    return ($a['date'] < $b['date'])?-1:1;
-});
-
 // map of consumptions by rental_unit (ordered on date)
 $consumptions_map = [];
 
-foreach($consumptions as $consumption) {
-    $rental_unit_id = $consumption['rental_unit_id'];
-    $booking_line_group_id = $consumption['booking_line_group_id'];
+if(count($booking['booking_lines_ids'])) {
+    $consumptions = BookingLine::_getResultingConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
 
-    if($rental_unit_id <= 0) continue;
-    if(!isset($consumptions_map[$booking_line_group_id])) {
-        $consumptions_map[$booking_line_group_id] = [];
+    // filter to keep only accomodations
+    $consumptions = array_filter($consumptions, function($a) {
+        return $a['is_rental_unit'];
+    });
+
+    // sort ascending on date
+    usort($consumptions, function($a, $b) {
+        return ($a['date'] < $b['date'])?-1:1;
+    });
+
+
+    foreach($consumptions as $consumption) {
+        $rental_unit_id = $consumption['rental_unit_id'];
+        $booking_line_group_id = $consumption['booking_line_group_id'];
+
+        if($rental_unit_id <= 0) continue;
+        if(!isset($consumptions_map[$booking_line_group_id])) {
+            $consumptions_map[$booking_line_group_id] = [];
+        }
+        
+        if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
+            $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
+        }
+        $consumptions_map[$booking_line_group_id][$rental_unit_id][] = $consumption;
     }
-    
-    if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
-        $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
-    }
-    $consumptions_map[$booking_line_group_id][$rental_unit_id][] = $consumption;
 }
 
 /*

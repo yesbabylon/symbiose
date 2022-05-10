@@ -5,64 +5,23 @@
         "groups": ["booking.default.user"]
     },
     "layout": {
-        "items": [
+        "entity": "lodging\\sale\\booking\\Booking",
+        "group_by": "range",
+        "range_interval": "month",
+        "range_from": "date.year.first_day",
+        "range_to": "date.year.last_day",
+        "datasets": [
             {
-                "type": "field",
-                "value": "name",
-                "label": "reference",
-                "width": "10%",
-                "sortable": true
+                "operation": ["SUM", "object.total"],
+                "domain"   : ["type", "=", "general"]
             },
             {
-                "type": "field",
-                "label": "Customer",
-                "value": "customer_id",
-                "width": "20%"
+                "operation": ["SUM", "object.price"],
+                "domain"   : ["type", "=", "school_trip"]
             },
             {
-                "type": "field",
-                "label": "From",
-                "value": "date_from",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "label": "To",
-                "value": "date_to",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "status",
-                "width": "10%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Type",
-                "value": "type_id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "label": "Center",
-                "value": "center_id",
-                "width": "15%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Nb Pers",
-                "value": "nb_pers",
-                "width": "15%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "label": "Price",
-                "value": "price",
-                "width": "15%",
-                "sortable": true
+                "operation": ["SUM", "object.price"],
+                "domain"   : ["type", "=", "sport_camp"]
             }
         ]
     }

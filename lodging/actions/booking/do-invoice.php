@@ -5,12 +5,14 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use core\setting\Setting;
 use finance\accounting\InvoiceLine;
 use finance\accounting\InvoiceLineGroup;
 use lodging\sale\booking\Invoice;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLine;
-
+use lodging\sale\booking\Funding;
+use lodging\sale\catalog\Product;
 
 list($params, $providers) = announce([
     'description'   => "Invoice due balance related to a booking.",
@@ -23,20 +25,25 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)		
-        'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'protected',
+        'groups'            => ['booking.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
+
+
+// #memo - final invoice :
+// - is standalone (never relates to a funding)
+// - is always release after checkout
 
 
 // search for an invoice for this booking with status 'invoice' (there should be none)
@@ -196,18 +203,86 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 
     }
 
-
-
 }
+
+
+/*
+    Add lines relating to fundings, if any
+*/
+
+// find all fundings of given booking
+$fundings = Funding::search(['booking_id', '=', $params['id']])->read(['type', 'due_amount', 'is_paid', 'invoice_id'])->get();
+
+if($fundings) {
+
+    // retrieve downpayment product
+    $downpayment_product_id = 0;
+
+    $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku.'.$booking['center_office_id']['organisation_id']);
+    if($downpayment_sku) {
+        $product = Product::search(['sku', '=', $downpayment_sku])->read(['id'])->first();
+        if($product) {
+            $downpayment_product_id = $product['id'];
+        }
+    }
+
+    $i_lines_ids = [];
+    foreach($fundings as $fid => $funding) {
+        if($funding['type'] == 'installment') {
+            if(!$funding['is_paid']) {
+                // ignore non-(fully)paid fundings
+                continue;
+            }
+            $i_line = [
+                'invoice_id'                => $invoice['id'],
+                'product_id'                => $downpayment_product_id,
+                'vat_rate'                  => 0.0,
+                'unit_price'                => -($funding['due_amount']),
+                'qty'                       => 1
+            ];
+            $new_line = InvoiceLine::create($i_line)->first();
+            $i_lines_ids[] = $new_line['id'];
+        }
+        else if($funding['type'] == 'invoice') {
+            $funding_invoice = Invoice::id($funding['invoice_id'])->read(['id', 'name', 'invoice_lines_ids' => ['vat_rate', 'product_id', 'total']])->first();
+            
+            if($funding_invoice) {
+                // there should be only one line
+                foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
+                    $i_line = [
+                        'invoice_id'                => $invoice['id'],
+                        'name'                      => $funding_invoice['name'],
+                        'product_id'                => $line['product_id'],
+                        'vat_rate'                  => $line['vat_rate'],
+                        'unit_price'                => -($line['total']),
+                        'qty'                       => 1
+                    ];
+                    $new_line = InvoiceLine::create($i_line)->first();
+                    $i_lines_ids[] = $new_line['id'];
+                }
+            }
+        }
+    }
+
+    // traduction ? 
+
+    $group_label = 'Downpayments';
+
+    $invoice_line_group = InvoiceLineGroup::create([
+        'name'              => $group_label,
+        'invoice_id'        => $invoice['id'],
+        'invoice_lines_ids' => $i_lines_ids
+    ])->first();
+}
+
 
 
 // mark all booking lines as invoiced
 BookingLine::ids($booking_lines_ids)->update(['is_invoiced' => true]);
 
 // Update booking status
-Booking::id($params['id'])->update(['status' => 'balanced']);
+Booking::id($params['id'])->update(['status' => 'invoiced']);
 
-// #todo - handle 'debit_balance', 'credit_balance', 'balanced'
 
 $context->httpResponse()
         // ->status(204)

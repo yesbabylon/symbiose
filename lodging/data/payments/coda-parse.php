@@ -95,32 +95,33 @@ $context->httpResponse()
         ->send();
 
 
+if(!function_exists("lodging_payments_import_getIbanFromBban")) {
+    function lodging_payments_import_getIbanFromBban($bban) {    
+        $result = '';
 
-function lodging_payments_import_getIbanFromBban($bban) {    
-    $result = '';
+        $country_code = 'BE';
 
-    $country_code = 'BE';
+        $code_alpha = $country_code;
+        $code_num = '';
+        
+        for($i = 0; $i < strlen($code_alpha); ++$i) {
+            $letter = substr($code_alpha, $i, 1);
+            $order = ord($letter) - ord('A');
+            $code_num .= '1'.$order;
+        }
 
-    $code_alpha = $country_code;
-    $code_num = '';
-    
-    for($i = 0; $i < strlen($code_alpha); ++$i) {
-        $letter = substr($code_alpha, $i, 1);
-        $order = ord($letter) - ord('A');
-        $code_num .= '1'.$order;
+        // account number has IBAN format
+        if(substr($bban, 0, 2) == $country_code) {
+            $result = $bban;
+        }
+        // convert to IBAN
+        else {
+            $check_digits = substr($bban, -2);
+            $dummy = intval($check_digits.$check_digits.$code_num.'00');
+            $control = 98 - ($dummy % 97);
+            $result = sprintf("BE%s%s", $control, $bban);    
+        }
+
+        return $result;
     }
-
-    // account number has IBAN format
-    if(substr($bban, 0, 2) == $country_code) {
-        $result = $bban;
-    }
-    // convert to IBAN
-    else {
-        $check_digits = substr($bban, -2);
-        $dummy = intval($check_digits.$check_digits.$code_num.'00');
-        $control = 98 - ($dummy % 97);
-        $result = sprintf("BE%s%s", $control, $bban);    
-    }
-
-    return $result;
 }

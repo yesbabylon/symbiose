@@ -79,44 +79,39 @@ foreach ($worksheetData as $worksheet) {
     $worksheet = $spreadsheet->getActiveSheet();
     $data = $worksheet->toArray();
 
-    $header = array_shift($data);
+   for($i = 0; $i < 17; ++$i) {
+        array_shift($data);
+   }
 
-    foreach($header as $index => $column) {
-        if($column == 'Nom') {
-            $header[] = 'lastname';
-            unset($header[$index]);
-        }
-        else if($column == 'Prénom') {
-            $header[] = 'firstname';
-            unset($header[$index]);
-        }
-        else if($column == 'Genre') {
-            $header[] = 'gender';
-            unset($header[$index]);
-        }                                    
-        else if($column == 'Date de naissance') {
-            $header[] = 'date_of_birth';
-            unset($header[$index]);
-        }
-        else if($column == 'Adresse') {
-            $header[] = 'address';
-            unset($header[$index]);
-        }
-        else if($column == 'Email') {
-            $header[] = 'email';
-            unset($header[$index]);
-        }
-        else if($column == 'Téléphone') {
-            $header[] = 'phone';
-            unset($header[$index]);
-        }
-
-    }
+    $columns = [
+        0 => 'id',
+        1 => 'lastname',
+        2 => 'firstname',
+        3 => 'date_of_birth',
+        4 => 'gender',
+        5 => 'nationality',
+        6 => 'registration_number',
+        7 => 'address',
+        8 => 'address_zip',   
+        9 => 'address_city',
+        10 => 'phone',
+        11 => 'email',
+        12 => 'remainder'
+    ];
 
     foreach($data as $index => $raw) {
-    
-        $line = array_combine($header, $raw);
 
+        $line = array_combine($columns, $raw);
+
+        if(strlen($line['lastname']) == 0) {
+            continue;
+        }
+
+        unset($line['id']);
+        unset($line['remainder']);
+
+
+        $line['country'] = 'BE';
         // adapt dates
         if(isset($line['date_of_birth'])) {
             $date_parts = explode('/', $line['date_of_birth']);
@@ -125,6 +120,7 @@ foreach ($worksheetData as $worksheet) {
             }
         }
 
+        
         
         $objects[] = $line;
     }

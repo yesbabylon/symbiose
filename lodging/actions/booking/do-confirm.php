@@ -53,6 +53,7 @@ $booking = Booking::id($params['id'])
                         'date_from',
                         'date_to',
                         'price',                                  // total price VAT incl.
+                        'contracts_ids',
                         'center_id' => ['center_office_id'],
                         'customer_id' => ['id', 'rate_class_id'],
                         'booking_lines_groups_ids' => [
@@ -100,6 +101,11 @@ $cron->cancel("booking.option.deprecation.{$params['id']}");
 
 // remember all booking lines involved
 $booking_lines_ids = [];
+
+// #memo - generated contracts are kept for history (we never delete them)
+// mark existing contracts as expired    
+Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
+
 
 // create contract and contract lines
 $contract = Contract::create([
@@ -204,7 +210,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 // mark all booking lines as contractual
 BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 
-// Update booking status
+// update booking status
 Booking::id($params['id'])->update(['status' => 'confirmed']);
 
 // remove messages about readyness for this booking, if any

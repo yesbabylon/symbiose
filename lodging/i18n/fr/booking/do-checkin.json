@@ -1,6 +1,6 @@
 {
     "name": "Checkin",
-    "description": "Le paiement de la réservation sera vérifié et les statuts de la réservation et des unités locatives seront mis à jour.",
+    "description": "L'hôte est arrivé. Le paiement de la réservation sera vérifié et les statuts de la réservation et des unités locatives seront mis à jour.",
     "model": {
         "id": {
             "label": "Identifiant",

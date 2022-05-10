@@ -184,7 +184,8 @@ $fields = [
     'funding_id' => ['payment_reference', 'due_date'],
     'is_paid',
     'total',
-    'price'
+    'price',
+    'payment_reference'
 ];
 
 
@@ -446,12 +447,16 @@ if(isset($invoice['funding_id']['due_date'])) {
 }
 
 
-// generate a QR code
+// use funding reference, if any
+if(isset($invoice['funding_id']['payment_reference'])) {
+    $invoice['payment_reference'] = $invoice['funding_id']['payment_reference'];
+}
+
 try {
-    if(!isset($invoice['funding_id']['payment_reference'])) {
+    if(!isset($invoice['payment_reference'])) {
         throw new Exception('no payment ref');
     }
-    $values['payment_reference'] = DataFormatter::format($invoice['funding_id']['payment_reference'], 'scor');
+    $values['payment_reference'] = DataFormatter::format($invoice['payment_reference'], 'scor');
     $paymentData = Data::create()
         ->setServiceTag('BCD')
         ->setIdentification('SCT')

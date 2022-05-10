@@ -10,7 +10,7 @@
         },
         "use_office_details": {
             "label": "Coordonnées de l'Equipe de gestion?",
-            "description": "Ne pas utiliser les coordonnées de l'organisation.",
+            "description": "Préférer les coordonnées de l'organisation.",
             "help": "Lorsque cette option est sélectionnée, lors des communications avec les clients, ce sont les coordonnées de l'équipe de gestion qui seront utilisées, plutot que celles de l'organisation."
         },
         "code_alpha": {

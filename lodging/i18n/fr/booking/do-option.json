@@ -15,7 +15,8 @@
     },
     "error": {
         "errors": {
-            "overbooking_detected": "Surbooking détecté"
+            "overbooking_detected": "Surbooking détecté",
+            "empty_booking": "Réservation vide"
         }
     }
 }
