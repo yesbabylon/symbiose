@@ -66,16 +66,18 @@ if($booking['status'] != 'quote') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
-if(!count($booking['booking_lines_ids'])) {
-    throw new Exception("empty_booking", QN_ERROR_MISSING_PARAM);
-}
-
-
 /*
     Check booking consistency
 */
 
+// check list of services 
+$data = eQual::run('do', 'lodging_booking_check-empty', ['id' => $params['id']]);
 
+if(is_array($data) && count($data)) {
+    throw new Exception('empty_booking', QN_ERROR_INVALID_PARAM);
+}
+
+// check overbooking
 $data = eQual::run('do', 'lodging_booking_check-overbooking', ['id' => $params['id']]);
 
 if(is_array($data) && count($data)) {

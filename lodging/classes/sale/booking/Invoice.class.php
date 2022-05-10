@@ -8,7 +8,7 @@ namespace lodging\sale\booking;
 
 use core\setting\Setting;
 class Invoice extends \sale\booking\Invoice {
-    
+
     public static function getColumns() {
 
         return [
@@ -41,17 +41,25 @@ class Invoice extends \sale\booking\Invoice {
                 'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
             ],
 
+            'payment_reference' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcPaymentReference',
+                'description'       => 'Message for identifying payments related to the invoice.',
+                'store'             => true
+            ],
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'proforma', 
+                    'proforma',
                     'invoice'
                 ],
                 'default'           => 'proforma',
                 'onchange'          => 'onchangeStatus',
             ]
 
-            
+
         ];
     }
 
@@ -86,8 +94,20 @@ class Invoice extends \sale\booking\Invoice {
             }
         }
         return $result;
-    }    
+    }
 
+
+    public static function calcPaymentReference($om, $oids, $lang) {
+        $result = [];
+        $invoices = $om->read(get_called_class(), $oids, ['booking_id.name']);
+        foreach($invoices as $oid => $invoice) {
+            $booking_code = intval($invoice['booking_id.name']);
+            // arbitrary value : 155 for final invoice
+            $code_ref = 155;
+            $result[$oid] = self::_get_payment_reference($code_ref, $booking_code);
+        }
+        return $result;
+    }
 
     public static function onchangeStatus($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);

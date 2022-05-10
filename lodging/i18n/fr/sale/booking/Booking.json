@@ -72,7 +72,7 @@
                 },
                 "action.invoice": {
                     "label": "Facturer le solde",
-                    "description": "L'hôte a quitté l'hébergement et l'unité locative a été vérifiée; la facture de fin de séjour sera émise."
+                    "description": "L'hôte a quitté l'hébergement et l'unité locative a été vérifiée; la facture proforma de fin de séjour sera émise."
                 },
                 "action.cancel": {
                     "label": "Annuler",
