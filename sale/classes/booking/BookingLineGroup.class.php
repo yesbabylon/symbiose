@@ -194,5 +194,17 @@ class BookingLineGroup extends Model {
         
         return parent::onupdate($om, $oids, $values, $lang);
     }
-   
+
+    public static function ondelete($om, $oids) {
+        $groups = $om->read(get_called_class(), $oids, ['booking_id']);
+
+        if($groups) {
+            foreach($groups as $gid => $group) {
+                $om->write('sale\booking\Booking', $group['booking_id'], ['price' => null, 'total' => null]);
+            }
+        }
+
+        return parent::ondelete($om, $oids);
+    }
+
 }

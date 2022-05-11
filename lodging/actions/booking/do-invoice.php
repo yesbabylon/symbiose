@@ -22,7 +22,7 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
-        ],
+        ]
     ],
     'access' => [
         'visibility'        => 'protected',
@@ -66,7 +66,7 @@ $booking = Booking::id($params['id'])
                         'date_to',
                         'price',
                         'center_office_id' => ['id', 'organisation_id'],
-                        'customer_id' => ['id', 'rate_class_id'],
+                        'customer_id' => ['id', 'rate_class_id', 'lang_id' => ['code']],
                         'booking_lines_groups_ids' => [
                             'name',
                             'date_from',
@@ -205,6 +205,10 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 
 }
 
+$customer_lang = DEFAULT_LANG;
+if(isset($booking['customer_id']['lang_id']['code'])) {
+    $customer_lang = $booking['customer_id']['lang_id']['code'];
+}
 
 /*
     Add lines relating to fundings, if any
@@ -227,6 +231,8 @@ if($fundings) {
     }
 
     $i_lines_ids = [];
+    $invoice_label = Setting::get_value('sale', 'locale', 'terms.invoice', 'Invoice', 0, $customer_lang);
+
     foreach($fundings as $fid => $funding) {
         if($funding['type'] == 'installment') {
             if(!$funding['is_paid']) {
@@ -251,9 +257,9 @@ if($fundings) {
                 foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
                     $i_line = [
                         'invoice_id'                => $invoice['id'],
-                        'name'                      => $funding_invoice['name'],
+                        'name'                      => $invoice_label.' '.$funding_invoice['name'],
                         'product_id'                => $line['product_id'],
-                        'vat_rate'                  => $line['vat_rate'],
+                        'vat_rate'                  => 0.0,
                         'unit_price'                => -($line['total']),
                         'qty'                       => 1
                     ];
@@ -264,9 +270,8 @@ if($fundings) {
         }
     }
 
-    // traduction ? 
-
-    $group_label = 'Downpayments';
+    // get the group name according to requested language
+    $group_label = ucfirst(Setting::get_value('sale', 'locale', 'terms.downpayments', 'Downpayments', 0, $customer_lang));
 
     $invoice_line_group = InvoiceLineGroup::create([
         'name'              => $group_label,
