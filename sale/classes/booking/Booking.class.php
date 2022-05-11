@@ -435,7 +435,7 @@ class Booking extends Model {
         }
     }
 
-    public static function ondelete($om, $oids, $lang=DEFAULT_LANG) {
+    public static function candelete($om, $oids, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);
 
         if($res > 0) {
@@ -445,7 +445,7 @@ class Booking extends Model {
                 }
             }
         }
-        return parent::ondelete($om, $oids, $lang);
+        return parent::candelete($om, $oids, $lang);
     }
 
     /**
@@ -458,7 +458,7 @@ class Booking extends Model {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
 
         if($res > 0) {
@@ -479,7 +479,7 @@ class Booking extends Model {
             }
         }
 
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
 }

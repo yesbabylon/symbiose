@@ -177,7 +177,7 @@ class Order extends Model {
     }
 
 
-    public static function onupdate($om, $ids, $values, $lang) {
+    public static function canupdate($om, $ids, $values, $lang) {
         if(isset($values['session_id'])) {
             $res = $om->read('sale\pos\CashdeskSession', $values['session_id'], [ 'status' ]);
 
@@ -188,6 +188,6 @@ class Order extends Model {
                 }
             }
         }
-        return parent::onupdate($om, $ids, $values, $lang);
+        return parent::canupdate($om, $ids, $values, $lang);
     }
 }

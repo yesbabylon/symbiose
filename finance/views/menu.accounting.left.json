@@ -13,14 +13,24 @@
                 "type": "parent",
                 "children": [
                     {
-                        "id": "item.bank_statements.statements_ready",
+                        "id": "item.bank_statements.ready",
                         "type": "entry",
-                        "label": "Statements",
+                        "label": "Statements to export",
                         "description": "", 
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
                             "view": "list.reconciled",
                             "domain": [["status", "=", "reconciled"], ["is_exported", "=", false]]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.all",
+                        "type": "entry",
+                        "label": "All statements",
+                        "description": "", 
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default"
                         }
                     }
                 ]
@@ -35,7 +45,7 @@
                     {
                         "id": "item.bank_statements.statements_ready",
                         "type": "entry",
-                        "label": "Invoices",
+                        "label": "All invoices",
                         "description": "",
                         "route": "/invoices",
                         "context": {

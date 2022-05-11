@@ -265,7 +265,7 @@ class Invoice extends Model {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);
 
         if($res > 0) {
@@ -275,7 +275,7 @@ class Invoice extends Model {
                 }
             }
         }
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
 

@@ -75,46 +75,6 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "item.customers_types",
-                  "label": "Types",
-                  "description": "",
-                  "icon": "person_outline",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "item.all_customers_types",
-                      "type": "entry",
-                      "label": "All types",
-                      "description": "",
-                      "route": "/bookings",
-                      "context": {
-                        "entity": "sale\\customer\\CustomerType",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "id": "item.customers_natures",
-                  "label": "Natures",
-                  "description": "",
-                  "icon": "person_outline",
-                  "type": "parent",
-                  "children": [
-                    {
-                      "id": "item.all_customers_natures",
-                      "type": "entry",
-                      "label": "All natures",
-                      "description": "",
-                      "route": "/bookings",
-                      "context": {
-                        "entity": "sale\\customer\\CustomerNature",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
                   "id": "item.new_customer",
                   "type": "entry",
                   "label": "New customer",

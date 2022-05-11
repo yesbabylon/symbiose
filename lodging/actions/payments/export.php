@@ -56,7 +56,7 @@ if($statements) {
         // add statement as CODA file to the archive
         $zip->addFromString($statement['name'].'.cod', $coda);
         // mark statement as exported
-    BankStatement::id($sattement['id'])->update(['is_exported' => true]);
+        BankStatement::id($statement['id'])->update(['is_exported' => true]);
     }
     $zip->close();
     $data = file_get_contents($tmpfile);

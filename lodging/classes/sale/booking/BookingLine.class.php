@@ -455,7 +455,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be created.
      */
-    public static function oncreate($om, $values, $lang) {
+    public static function cancreate($om, $values, $lang) {
         $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
         $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_line_group_id'], ['is_extra'], $lang);
 
@@ -472,7 +472,7 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        return parent::oncreate($om, $values, $lang);
+        return parent::cancreate($om, $values, $lang);
     }
 
     /**
@@ -485,7 +485,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
         $allowed = ['is_contractual', 'is_invoiced'];
         $non_allowed = 0;
@@ -511,7 +511,7 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
     /**
@@ -522,7 +522,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * @param  array    $oids       List of objects identifiers.
      * @return boolean  Returns true if the object can be deleted, or false otherwise.
      */
-    public static function ondelete($om, $oids) {
+    public static function candelete($om, $oids) {
         $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra']);
 
         if($lines > 0) {
@@ -537,7 +537,7 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        return parent::ondelete($om, $oids);
+        return parent::candelete($om, $oids);
     }
 
     /**

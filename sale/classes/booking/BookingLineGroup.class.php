@@ -180,7 +180,7 @@ class BookingLineGroup extends Model {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
         $res = $om->read(get_called_class(), $oids, [ 'date_from', 'date_to' ]);
 
@@ -192,10 +192,10 @@ class BookingLineGroup extends Model {
             }
         }
         
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
-    public static function ondelete($om, $oids) {
+    public static function candelete($om, $oids) {
         $groups = $om->read(get_called_class(), $oids, ['booking_id']);
 
         if($groups) {
@@ -204,7 +204,7 @@ class BookingLineGroup extends Model {
             }
         }
 
-        return parent::ondelete($om, $oids);
+        return parent::candelete($om, $oids);
     }
 
 }
