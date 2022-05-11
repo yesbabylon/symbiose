@@ -6,50 +6,50 @@
     "layout": {
         "items": [
             {
-              "id": "item.bank_statements",
-              "label": "Statements",
-              "description": "",
-              "icon": "menu_book",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "item.bank_statements.lines_to_review",
-                  "type": "entry",
-                  "label": "Lines to review",
-                  "description": "", 
-                  "context": {
-                    "entity": "lodging\\sale\\booking\\BankStatementLine",
-                    "view": "list.default",
-                    "order": "date",
-                    "sort": "desc",
-                    "domain": ["status", "=", "pending"]
-                  }
-                },
-                {
-                  "id": "item.bank_statements.all_lines",
-                  "type": "entry",
-                  "label": "Reconciled lines",
-                  "description": "", 
-                  "context": {
-                    "entity": "lodging\\sale\\booking\\BankStatementLine",
-                    "view": "list.reconciled",
-                    "order": "date",
-                    "sort": "desc"
-                  }
-                },
-                {
-                  "id": "item.bank_statements.statements_ready",
-                  "type": "entry",
-                  "label": "Statements",
-                  "description": "", 
-                  "context": {
-                    "entity": "lodging\\sale\\booking\\BankStatement",
-                    "view": "list.reconciled",
-                    "domain":["status", "=", "reconciled"]
-                  }
-                }
-              ]
-            }               
+                "id": "item.bank_statements",
+                "label": "Statements",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.bank_statements.lines_to_review",
+                        "type": "entry",
+                        "label": "Lines to review",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc",
+                            "domain": ["status", "=", "pending"]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.all_lines",
+                        "type": "entry",
+                        "label": "Reconciled lines",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.reconciled",
+                            "order": "date",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.statements_ready",
+                        "type": "entry",
+                        "label": "Statements",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.reconciled",
+                            "domain": [["status", "=", "reconciled"], ["is_exported", "=", false]]
+                        }
+                    }
+                ]
+            }
         ]
     }
 }

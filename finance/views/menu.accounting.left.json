@@ -1,0 +1,50 @@
+{
+    "name": "Accounting menu",
+    "access": {
+      "groups": ["finance.default.user"]
+   },
+    "layout": {
+        "items": [
+            {
+                "id": "item.bank_statements",
+                "label": "Statements",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.bank_statements.statements_ready",
+                        "type": "entry",
+                        "label": "Statements",
+                        "description": "", 
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.reconciled",
+                            "domain": [["status", "=", "reconciled"], ["is_exported", "=", false]]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.bank_statements.statements_ready",
+                        "type": "entry",
+                        "label": "Invoices",
+                        "description": "",
+                        "route": "/invoices",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            }               
+        ]
+    }
+}
