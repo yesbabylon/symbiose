@@ -69,7 +69,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'description'       => 'Group the line relates to (in turn, groups relate to their booking).',
                 'required'          => true,             // must be set at creation
                 'onchange'          => 'lodging\sale\booking\BookingLine::onchangeBookingLineGroupId',
-                'ondelete'          => 'cascade'         // delete line when parent group is deleted
+                'ondelete'          => 'cascade'
             ],
 
             'booking_id' => [
@@ -77,7 +77,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_object'    => 'lodging\sale\booking\Booking',
                 'description'       => 'The booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true,
-                'ondelete'          => 'cascade'         // delete line when parent booking is deleted
+                'ondelete'          => 'cascade'
             ],
 
             'product_id' => [
