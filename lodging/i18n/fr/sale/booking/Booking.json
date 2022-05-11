@@ -72,7 +72,7 @@
                 },
                 "action.invoice": {
                     "label": "Facturer le solde",
-                    "description": "L'hôte a quitté l'hébergement et l'unité locative a été vérifiée; la facture proforma de fin de séjour sera émise."
+                    "description": "L'unité locative a été vérifiée et les services complémentaires ont été ajoutés. Une facture pro-forma sera créée. (Si une facture de solde proforma existe, elle sera réinitialisée.)"
                 },
                 "action.cancel": {
                     "label": "Annuler",

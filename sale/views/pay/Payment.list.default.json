@@ -10,22 +10,27 @@
                 "type": "field",
                 "label": "Partner",
                 "value": "partner_id",
-                "width": "10%"
+                "width": "25%"
             },
             {
                 "type": "field",
                 "value": "amount",
-                "width": "10%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "receipt_date",
-                "width": "50%"
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "payment_origin",
+                "width": "20%"
             },
             {
                 "type": "field",
                 "value": "payment_method",
-                "width": "50%"
+                "width": "20%"
             }
         ]
     }

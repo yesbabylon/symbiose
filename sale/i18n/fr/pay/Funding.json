@@ -22,6 +22,11 @@
             "description": "Montant prévu pour le financement.",
             "help": ""
         },
+        "paid_amount": {
+            "label": "Montant reçu",
+            "description": "Montant payé par le client.",
+            "help": ""
+        },
         "due_date": {
             "label": "Date d'échéance",
             "description": "Date limite avant laquelle le financement est attendu.",
@@ -34,7 +39,7 @@
         },
         "is_paid": {
             "label": "Payé",
-            "description": "Le paiement complet a-t-il été reçu?",
+            "description": "Le paiement intégralement reçu ?",
             "help": ""
         },
         "payment_deadline_id": {

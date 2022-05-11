@@ -263,7 +263,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
         'center_office_id'      => $booking['center_id']['center_office_id'],
         'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
         'is_paid'               => false,
-        'type'                  => $deadline['type'],
+        'type'                  => 'installment',
         'order'                 => $funding_order
     ];
 

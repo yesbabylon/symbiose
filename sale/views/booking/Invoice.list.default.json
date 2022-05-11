@@ -19,18 +19,23 @@
             },
             {
                 "type": "field",
-                "value": "status",
+                "value": "date",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "date",
+                "value": "status",
                 "width": "20%"
             },
             {
                 "type": "field",
                 "value": "is_paid",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "15%"
             }
         ]
     }

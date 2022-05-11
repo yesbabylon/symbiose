@@ -43,7 +43,7 @@
                 "type": "parent",
                 "children": [
                     {
-                        "id": "item.bank_statements.statements_ready",
+                        "id": "item.invoices.all",
                         "type": "entry",
                         "label": "All invoices",
                         "description": "",
@@ -54,7 +54,29 @@
                         }
                     }
                 ]
+            },
+            {
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.fundings.reimburse",
+                        "type": "entry",
+                        "label": "Fundings to reimburse",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Funding",
+                            "view": "list.default",
+                            "domain": ["due_amount", "<", 0]
+                        }
+                    }
+                ]
             }               
+
         ]
     }
 }

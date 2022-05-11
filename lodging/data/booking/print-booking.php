@@ -41,7 +41,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',
+        'visibility'        => 'protected',
         'groups'            => ['booking.default.user'],
     ],
     'response'      => [

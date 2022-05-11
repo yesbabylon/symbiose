@@ -4,7 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+use lodging\sale\booking\Funding;
 use lodging\sale\booking\Invoice;
+use lodging\sale\booking\Booking;
 
 list($params, $providers) = announce([
     'description'   => "Emit a new invoice based on a proforma.",
@@ -25,7 +27,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 /**
@@ -36,8 +38,42 @@ list($params, $providers) = announce([
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 // emit the invoice : changing status will trigger an invoice number assignation
-Invoice::id($params['id'])->update(['status' => 'invoice']);
+$invoice = Invoice::id($params['id'])->update(['status' => 'invoice'])->read(['booking_id', 'center_office_id', 'price', 'due_date'])->first();
+
+// remove any non-paid and non-invoice remaining funding
+Funding::search([ ['paid_amount', '=', 0], ['type', '=', 'installment'], ['booking_id', '=', $invoice['booking_id']] ])->delete(true);
+
+// request funding creation
+try {
+    $funding = [
+        'booking_id'            => $invoice['booking_id'],
+        'center_office_id'      => $invoice['center_office_id'],
+        'due_amount'            => $invoice['price'],
+        'is_paid'               => false,
+        'type'                  => 'invoice',
+        'order'                 => 10,
+        'issue_date'            => time(),
+        'due_date'              => $invoice['due_date']
+    ];
+
+    Funding::create($funding)->read(['name']);
+}
+catch(Exception $e) {
+    // ignore duplicates (not created)
+}
+
+// update booking status
+
+if($invoice['price'] < 0) {
+    Booking::id($invoice['booking_id'])->update(['status' => 'credit_balance']);
+}
+else if($invoice['price'] > 0) {
+    Booking::id($invoice['booking_id'])->update(['status' => 'debit_balance']);
+}
+else {
+    Booking::id($invoice['booking_id'])->update(['status' => 'balanced']);
+}
 
 $context->httpResponse()
-        ->status(204)        
+        ->status(204)
         ->send();

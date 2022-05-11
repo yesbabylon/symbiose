@@ -113,6 +113,36 @@
                 }
               ]
             },
+
+{
+              "id": "item.planning",
+              "label": "Planning",
+              "description": "",
+              "icon": "calendar_month",
+              "type": "parent",
+              "children": [                
+                {
+                  "id": "item.planning",
+                  "type": "entry",
+                  "label": "Planning",
+                  "description": "",
+                  "route": "/planning"
+                },
+                {
+                  "id": "item.consumptions",
+                  "type": "entry",
+                  "label": "Consumptions",
+                  "description": "",
+                  "route": "/bookings",
+                  "context": {
+                    "entity": "lodging\\sale\\booking\\Consumption",
+                    "view": "list.meals"
+                  }
+                }
+              ]
+            },
+
+
             {
                 "id": "item.dashboard_booking",
                 "type": "entry",

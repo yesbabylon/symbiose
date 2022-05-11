@@ -1,0 +1,16 @@
+{
+    "name": "Facturer",
+    "description": "L'unité locative a été vérifiée et les services complémentaires ont été ajoutés. Une facture pro-forma sera créée. (Si une facture de solde proforma existe, elle sera réinitialisée.)",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "due_amount": "Solde dû non nul."
+        }
+    }
+}

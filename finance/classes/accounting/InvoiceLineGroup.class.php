@@ -43,10 +43,24 @@ class InvoiceLineGroup extends Model {
                 'foreign_object'    => 'finance\accounting\InvoiceLine',
                 'foreign_field'     => 'invoice_line_group_id',
                 'description'       => 'Detailed lines of the group.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'onchange'          => 'onchangeInvoiceLinesIds'
             ]
 
         ];
     }
+
+
+    public static function onchangeInvoiceLinesIds($om, $oids, $lang) {
+        $groups = $om->read(__CLASS__, $oids, ['invoice_id']);
+        if($groups) {
+            $invoices_ids = [];
+            foreach($groups as $gid => $group) {
+                $invoices_ids[] = $group['invoice_id'];
+            }
+            $om->write('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
+        }        
+    }
+
 
 }
