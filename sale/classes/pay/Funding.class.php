@@ -20,7 +20,7 @@ class Funding extends Model {
                 'store'             => true
             ],
 
-            'payments_ids' => [ 
+            'payments_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Payment',
                 'foreign_field'     => 'funding_id'
@@ -48,16 +48,25 @@ class Funding extends Model {
                 'description'       => "Date at which the request for payment has to be issued."
             ],
 
+            'paid_amount' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => "Total amount that has been received (can be greater than due_amount).",
+                'function'          => 'calcPaidAmount',
+                'store'             => true
+            ],
+
             'is_paid' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'store'             => true,
                 'description'       => "Has the full payment been received?",
-                'function'          => 'getIsPaid'
+                'function'          => 'calcIsPaid',
+                'store'             => true,
             ],
 
             'payment_deadline_id' => [
-                'type'              => 'many2one',                
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'description'       => "The deadline model used for creating the funding, if any.",
                 'onchange'          => "onchangePaymentDeadlineId"
@@ -86,12 +95,25 @@ class Funding extends Model {
         if($fundings > 0) {
             foreach($fundings as $oid => $funding) {
                 $result[$oid] = $funding['payment_deadline_id.name'];
-            }    
+            }
         }
         return $result;
     }
 
-    public static function getIsPaid($om, $oids, $lang) {
+    public static function calcPaidAmount($om, $oids, $lang) {
+        $result = [];
+        $fundings = $om->read(get_called_class(), $oids, ['payments_ids.amount'], $lang);
+        if($fundings > 0) {
+            foreach($fundings as $fid => $funding) {
+                $result[$fid] = array_reduce($funding['payments_ids.amount'], function ($c, $funding) {
+                    return $c + $funding['amount'];
+                }, 0);
+            }
+        }
+        return $result;
+    }
+
+    public static function calcIsPaid($om, $oids, $lang) {
         $result = [];
         $fundings = $om->read(get_called_class(), $oids, ['due_amount', 'payments_ids.amount'], $lang);
         if($fundings > 0) {
@@ -106,7 +128,7 @@ class Funding extends Model {
                 }
             }
         }
-        return $result;        
+        return $result;
     }
 
     public static function onchangePaymentDeadlineId($orm, $oids, $lang) {

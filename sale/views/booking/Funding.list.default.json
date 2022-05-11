@@ -28,13 +28,18 @@
             },
             {
                 "type": "field",
+                "value": "due_date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
                 "value": "due_amount",
                 "width": "10%"
             },
             {
                 "type": "field",
-                "value": "due_date",
-                "width": "15%"
+                "value": "paid_amount",
+                "width": "10%"
             },
             {
                 "type": "field",

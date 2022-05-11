@@ -1,0 +1,46 @@
+{
+    "name": "Consumption",
+    "description": "List of scheduled 'meal' consumptions.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "group_by": ["date", {"field": "product_id", "operation": ["SUM", "object.qty"]}],
+    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_meal", "=", true], ["disclaimed", "=", false] ],
+    "limit": 100,
+    "order": ["date"],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Product",
+                "value": "product_id",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "booking_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_from",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_to",
+                "width": "10%"
+            }
+        ]
+    }
+}

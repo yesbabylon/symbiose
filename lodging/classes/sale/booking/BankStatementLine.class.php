@@ -57,12 +57,15 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
         if($lines > 0) {
             foreach($lines as $lid => $line) {
 
+                /* 
+                    1) try to reconcile with fundings
+                */
                 $fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['is_paid', '=', false], ['center_office_id', '=', $line['center_office_id']] ]);
 
                 if($fundings_ids > 0) {
                     $found_funding_id = null;
                     // candidates 1
-                    $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', ['payment_reference', '=', $line['structured_message'] ]);
+                    $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['is_paid', '=', false], ['payment_reference', '=', $line['structured_message'] ]]);
                     if($candidates_fundings_ids > 0 && count($candidates_fundings_ids) == 1) {
                         $found_funding_id = reset($candidates_fundings_ids);
                     }
@@ -84,6 +87,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                         $om->write(get_called_class(), $lid, ['status' => 'reconciled']);
                     }
                 }
+
             }
         }
     }

@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 use core\setting\Setting;
 use finance\accounting\InvoiceLine;
 use finance\accounting\InvoiceLineGroup;
@@ -18,7 +17,7 @@ list($params, $providers) = announce([
     'description'   => "Invoice due balance related to a booking.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the booking for which the composition has to be generated.',
+            'description'   => 'Identifier of the booking for which the invoice has to be generated.',
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
@@ -215,7 +214,7 @@ if(isset($booking['customer_id']['lang_id']['code'])) {
 */
 
 // find all fundings of given booking
-$fundings = Funding::search(['booking_id', '=', $params['id']])->read(['type', 'due_amount', 'is_paid', 'invoice_id'])->get();
+$fundings = Funding::search(['booking_id', '=', $params['id']])->read(['type', 'due_amount', 'paid_amount', 'invoice_id'])->get();
 
 if($fundings) {
 
@@ -235,15 +234,15 @@ if($fundings) {
 
     foreach($fundings as $fid => $funding) {
         if($funding['type'] == 'installment') {
-            if(!$funding['is_paid']) {
-                // ignore non-(fully)paid fundings
+            if($funding['paid_amount'] == 0) {
+                // ignore non-paid fundings
                 continue;
             }
             $i_line = [
                 'invoice_id'                => $invoice['id'],
                 'product_id'                => $downpayment_product_id,
                 'vat_rate'                  => 0.0,
-                'unit_price'                => -($funding['due_amount']),
+                'unit_price'                => -($funding['paid_amount']),
                 'qty'                       => 1
             ];
             $new_line = InvoiceLine::create($i_line)->first();

@@ -18,6 +18,11 @@
             },
             {
                 "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "status",
                 "width": "20%"
             },
@@ -28,8 +33,8 @@
             },
             {
                 "type": "field",
-                "value": "date",
-                "width": "20%"
+                "value": "total",
+                "width": "15%"
             }
         ]
     }

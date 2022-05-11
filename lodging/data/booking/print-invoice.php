@@ -49,7 +49,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',
+        'visibility'        => 'protected',
         'groups'            => ['booking.default.user'],
     ],
     'response'      => [
@@ -170,6 +170,8 @@ $fields = [
     ],
     'invoice_line_groups_ids' => [
         'name',
+        'total',
+        'price',
         'invoice_lines_ids' => [
             'product_id',
             'qty',
@@ -183,6 +185,7 @@ $fields = [
     ],
     'funding_id' => ['payment_reference', 'due_date'],
     'is_paid',
+    'due_date',
     'total',
     'price',
     'payment_reference'
@@ -290,6 +293,9 @@ if($booking['center_id']['use_office_details']) {
 /*
     retrieve templates
 */
+
+// #memo - keep invoices simple
+/*
 if($booking['center_id']['template_category_id']) {
 
     $template = Template::search([
@@ -299,7 +305,7 @@ if($booking['center_id']['template_category_id']) {
                         ])
                         ->read(['parts_ids' => ['name', 'value']])
                         ->first();
-    if($template && count($templace) > 0) {
+    if($template && count($template) > 0) {
         foreach($template['parts_ids'] as $part_id => $part) {
             if($part['name'] == 'header') {
                 $values['invoice_header_html'] = $part['value'].$values['center_signature'];
@@ -308,10 +314,9 @@ if($booking['center_id']['template_category_id']) {
                 $values['invoice_notice_html'] = $part['value'];
             }
         }
-
     }
-
 }
+*/
 
 /*
     feed lines
@@ -325,7 +330,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
     $line = [
         'name'          => $invoice_line_group['name'],
         'price'         => null,
-        'price'         => null,
+        'total'         => null,
         'unit_price'    => null,
         'vat_rate'      => null,
         'qty'           => null,
@@ -444,6 +449,9 @@ foreach($booking['contacts_ids'] as $contact) {
 // add payment terms
 if(isset($invoice['funding_id']['due_date'])) {
     $values['payment_deadline'] = date('d/m/Y', $invoice['funding_id']['due_date']);
+}
+else {
+    $values['payment_deadline'] = date('d/m/Y', $invoice['due_date']);
 }
 
 

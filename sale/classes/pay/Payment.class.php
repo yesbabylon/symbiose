@@ -120,23 +120,12 @@ class Payment extends Model {
                         }
                     }
 
-                    if($payment['amount'] > $payment['funding_id.due_amount']) {
-                        $diff = $payment['funding_id.due_amount'] - $payment['amount'];
-                        // create a new payment with negative amount
-                        $om->create('sale\pay\Payment', [
-                            'funding_id'        => $payment['funding_id'],
-                            'partner_id'        => $partner_id,
-                            'statement_line_id' => $payment['statement_line_id'],
-                            'amount'            => $diff
-                        ], $lang);
-                    }
-
-                    $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null]);
+                    $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null, 'paid_amount' => null]);
                     $fundings_ids[] = $payment['funding_id'];
                 }
             }
             // force immediate re-computing of the is_paid field
-            $om->read('sale\pay\Funding', array_unique($fundings_ids), ['is_paid']);
+            $om->read('sale\pay\Funding', array_unique($fundings_ids), ['is_paid', 'paid_amount']);
         }
     }
 
@@ -156,7 +145,8 @@ class Payment extends Model {
 
             foreach($payments as $pid => $payment) {
                 if($values['amount'] > $payment['statement_line_id.amount']) {
-                    return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
+                    // #memo - allow excessive amount : overpaid amounts generate negative fundings that will be discounted on the final invoice
+                    // return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
                 }
             }
         }

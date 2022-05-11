@@ -103,46 +103,6 @@ foreach($statements as $statement) {
     }
 }
 
-
-/*
-// #todo - try to resolve payments 
-
-
-si la statement_line dispose d'un structured_message 
-
-	rechercher parmi les booking_funding non (totalement) payés (is_paid = false)
-	avec payment_reference == structured_message 
-
-	=> statement_line_id, booking_funding_id
-
-
-(
-	si funding.due_amount == statement_line.amount
-
-	sinon
-		si funding.due_amount < statement_line.amount
-			créer deux payments (un devra être remboursé)
-
-		si funding.due_amount > statement_line.amount		
-			créer un payment (funding pas encore marqué comme payé)
-)
-
-sinon
-
-	rechercher parmi les booking_funding non (totalement) payés (is_paid = false)
-	pour un centre donné (center_id == center_id correspondant au code IBAN du statement de la statement_line)
-
-	pour chaque funding candidat, lire l'iban du partner (customer_id) associé
-	si customer_id.partner_identity_id.bank_account_iban == statement_line.account_iban
-
-	si funding.due_amount == statement_line.amount
-
-	=> statement_line_id, booking_funding_id
-
-	(sinon on n'est pas certain de la raison du paiement)
-
-*/
-
 $context->httpResponse()
         ->status(200)
         ->body($result)

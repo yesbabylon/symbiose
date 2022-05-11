@@ -1,6 +1,6 @@
 {
     "name": "Checkout",
-    "description": "L'hôte a quitté le logement. Le logement sera marqué comme vide et nécessitant un ménage complet. Des consommations complémentaires pourront être ajoutées. (Si une facture de solde proforma existe, elle sera réinitialisée.)",
+    "description": "L'hôte a quitté le logement. Le logement sera marqué comme vide et nécessitant un ménage complet. Des consommations complémentaires pourront être ajoutées.",
     "model": {
         "id": {
             "label": "Identifiant",

@@ -122,7 +122,8 @@ class Invoice extends Model {
                 'foreign_object'    => 'finance\accounting\InvoiceLine',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'onchange'          => 'onchangeInvoiceLinesIds'
             ],
 
             'invoice_line_groups_ids' => [
@@ -130,7 +131,8 @@ class Invoice extends Model {
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'onchange'          => 'onchangeInvoiceLineGroupsIds'
             ],
 
             'payment_terms_id' => [
@@ -254,6 +256,13 @@ class Invoice extends Model {
         $om->read(__CLASS__, $ids, ['number'], $lang);
     }
 
+    public static function onchangeInvoiceLinesIds($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
+    }
+
+    public static function onchangeInvoiceLineGroupsIds($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
+    }
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.

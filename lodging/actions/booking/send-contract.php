@@ -83,7 +83,7 @@ list($params, $providers) = announce([
 // initalise local vars with inputs
 list($context) = [ $providers['context'] ];
 
-$booking = Booking::id($params['booking_id'])->read(['center_id', 'has_contract', 'contracts_ids' => ['status']])->first();
+$booking = Booking::id($params['booking_id'])->read(['center_id', 'has_contract', 'contracts_ids'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
