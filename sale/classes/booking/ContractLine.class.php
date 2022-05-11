@@ -25,7 +25,7 @@ class ContractLine extends \sale\contract\ContractLine {
         ];
     }
 
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         return ['contract_id' => ['not_allowed' => 'Contract cannot be manually updated.']];
     }    
 

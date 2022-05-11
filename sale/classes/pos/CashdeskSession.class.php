@@ -65,7 +65,7 @@ class CashdeskSession extends Model {
      * Check for special constraint : only one session can be opened at a time on a given cashdesk.
      * Make sure there are no other pending sessions, otherwise, deny the update (which might be called on draft instance).
      */
-    public static function onupdate($om, $oids, $values, $lang) {
+    public static function canupdate($om, $oids, $values, $lang) {
         $sessions = $om->read(get_called_class(), $oids, ['status', 'cashdesk_id'], $lang);
 
         if($sessions > 0) {
@@ -79,7 +79,7 @@ class CashdeskSession extends Model {
                 }
             }
         }
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
     /**

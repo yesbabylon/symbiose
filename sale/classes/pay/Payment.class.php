@@ -150,7 +150,7 @@ class Payment extends Model {
      * @param  String   $lang       Language in which multilang fields are being updated.
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         if(isset($values['amount'])) {
             $payments = $om->read('sale\pay\Payment', $oids, ['statement_line_id.amount'], $lang);
 
@@ -160,9 +160,28 @@ class Payment extends Model {
                 }
             }
         }
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
 
+    /**
+     * Check wether an object can be deleted, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function ondelete($om, $oids) {
+        // set back related statement line status to 'pending'
+        $payments = $om->read(__CLASS__, $oids, ['statement_line_id', 'funding_id']);
+        if($payments) {
+            foreach($payments as $pid => $payment) {
+                $om->write('sale\pay\BankStatementLine', $payment['statement_line_id'], ['status' => 'pending']);
+                $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => false]);
+            }
+        }
+        return parent::ondelete($om, $oids);
+    }
 
 }

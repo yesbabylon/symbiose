@@ -274,16 +274,15 @@ class Booking extends \sale\booking\Booking {
                 }
                 if(!$booking['customer_identity_id']) {
                     $values['customer_identity_id'] = $booking['customer_id.partner_identity_id'];
+                    $booking['customer_identity_id'] = $booking['customer_id.partner_identity_id'];
                 }
                 if(count($values)) {
                     $om->write(__CLASS__, $bid, $values, $lang);
                 }
-
                 if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
                     // create a contact with the customer as 'booking' contact
                     $om->create('lodging\sale\booking\Contact', ['booking_id' => $bid, 'owner_identity_id' => $booking['customer_identity_id'], 'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
                 }
-
             }
             if(count($booking_line_groups_ids)) {
                 // BookingLineGroup::_updatePriceAdapters($om, array_unique($booking_line_groups_ids), $lang);
@@ -511,7 +510,7 @@ class Booking extends \sale\booking\Booking {
     }
 
 
-    public static function onclone($orm, $oids, $lang) {
+    public static function canclone($orm, $oids, $lang) {
         // prevent cloning bookings
         return ['status' => ['not_allowed' => 'Booking cannot be cloned.']];
         // return parent::onclone($orm, $oids, $lang);
@@ -528,7 +527,7 @@ class Booking extends \sale\booking\Booking {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function onupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
 
@@ -560,7 +559,7 @@ class Booking extends \sale\booking\Booking {
             }
         }
 
-        return parent::onupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
 }
