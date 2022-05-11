@@ -560,7 +560,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @return boolean  Returns true if the object can be deleted, or false otherwise.
      */
     public static function ondelete($om, $oids) {
-        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra']);
+        $groups = $om->read(get_called_class(), $oids, ['booking_id', 'booking_id.status', 'is_extra']);
 
         if($groups > 0) {
             foreach($groups as $group) {
