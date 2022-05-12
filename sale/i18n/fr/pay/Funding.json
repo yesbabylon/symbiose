@@ -23,7 +23,7 @@
             "help": ""
         },
         "paid_amount": {
-            "label": "Montant reçu",
+            "label": "Reçu",
             "description": "Montant payé par le client.",
             "help": ""
         },
