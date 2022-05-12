@@ -17,7 +17,7 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "item.all_booking",
+                  "id": "item.bookings.all",
                   "type": "entry",
                   "label": "All bookings",
                   "description": "",
@@ -30,7 +30,7 @@
                   }
                 },
                 {
-                  "id": "item.quotes",
+                  "id": "item.bookings.quotes",
                   "type": "entry",
                   "label": "Quotes",
                   "description": "",
@@ -42,7 +42,7 @@
                   }
                 },
                 {
-                  "id": "item.options",
+                  "id": "item.bookings.options",
                   "type": "entry",
                   "label": "Options",
                   "description": "",
@@ -54,7 +54,7 @@
                   }
                 },
                 {
-                  "id": "item.validated",
+                  "id": "item.bookings.validated",
                   "type": "entry",
                   "label": "Validated bookings",
                   "description": "",
@@ -75,7 +75,7 @@
               "type": "parent",
               "children": [
                 {
-                  "id": "item.new_customer",
+                  "id": "item.customers.new",
                   "type": "entry",
                   "label": "New customer",
                   "description": "",
@@ -89,19 +89,18 @@
                   }
                 },
                 {
-                  "id": "item.all_customers",
+                  "id": "item.customers.identities",
                   "type": "entry",
                   "label": "All customers",
                   "description": "",
                   "route": "/bookings",
                   "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "list.default",
-                    "domain": ["relationship", "=", "customer"]
+                    "entity": "lodging\\identity\\Identity",
+                    "view": "list.default"
                   }
                 },
                 {
-                  "id": "item.all_partners",
+                  "id": "item.customers.partners",
                   "type": "entry",
                   "label": "All partners",
                   "description": "",
@@ -113,8 +112,7 @@
                 }
               ]
             },
-
-{
+            {
               "id": "item.planning",
               "label": "Planning",
               "description": "",
@@ -140,19 +138,6 @@
                   }
                 }
               ]
-            },
-
-
-            {
-                "id": "item.dashboard_booking",
-                "type": "entry",
-                "label": "Dashboard",
-                "description": "",
-                "route": "/bookings",
-                "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "dashboard.default"
-                }
             }
         ]
     }
