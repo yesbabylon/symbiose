@@ -3,17 +3,19 @@
     "description": "A rental unit is a ressource that can be rented to a customer.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
+                        "id":"section.details",
+                        "label":"Details",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -27,14 +29,34 @@
                                                 "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%"                                                
+                                                "width": "50%"
                                             }
                                         ]
-                                    }                                   
+                                    }
                                 ]
                             }
                         ]
-                    }                   
+                    },
+                    {
+                        "id":"section.rental_units",
+                        "label":"Rental units",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "rental_units_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]
