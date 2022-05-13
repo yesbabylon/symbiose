@@ -13,7 +13,7 @@
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [
+                                        "items": [ 
                                             {
                                                 "id": "item.bookings",
                                                 "label": "Bookings",

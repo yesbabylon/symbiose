@@ -103,12 +103,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeDateTo'
             ],
 
-            'sojourn_type' => [
+            'sojourn_type_id' => [
                 'type'              => 'string',
-                'selection'         => ['GA', 'GG'],
-                'default'           => 'GG',
+                'default'           => 1,
                 'description'       => 'The kind of sojourn the group is about.',
-                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeSojournType'
+                'onchange'          => 'lodging\sale\booking\BookingLineGroup::onchangeSojournTypeId'
             ],
 
             'nb_pers' => [
@@ -462,8 +461,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     }
 
-    public static function onchangeSojournType($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournType", QN_REPORT_DEBUG);
+    public static function onchangeSojournTypeId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournTypeId", QN_REPORT_DEBUG);
         $om->call(__CLASS__, '_updatePriceAdapters', $oids, $lang);
 
         $om->write(__CLASS__, $oids, ['unit_price' => null, 'total' => null, 'price' => null]);
@@ -595,7 +594,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
-        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
+        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type_id', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
                                                     'booking_lines_ids',
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
@@ -609,15 +608,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             // the discount list category to use is the one defined for the center, unless it is ('GA' or 'GG') AND sojourn_type <> category.name
             $discount_category_id = $group['booking_id.center_id.discount_list_category_id'];
 
-            if(in_array($discount_category_id, [1 /*GA*/, 2 /*GG*/])) {
-                if($discount_category_id == 1 && $group['sojourn_type'] != 'GA') {
-                    // force GG
-                    $discount_category_id = 2;
-                }
-                else if($discount_category_id == 2 && $group['sojourn_type'] != 'GG') {
-                    // force GA
-                    $discount_category_id = 1;
-                }
+            if(in_array($discount_category_id, [1 /*GA*/, 2 /*GG*/]) && $discount_category_id != $group['sojourn_type_id']) {
+                $discount_category_id = $group['sojourn_type_id'];
             }
 
             $discount_lists_ids = $om->search('sale\discount\DiscountList', [
@@ -767,12 +759,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         if(
                             // for GG: apply discounts only on accomodations
                             (
-                                $group['sojourn_type'] == 'GG' && $line['is_accomodation']
+                                $group['sojourn_type_id'] == 2 /*'GG'*/ && $line['is_accomodation']
                             )
                             ||
                             // for GA: apply discounts on meals and accomodations
                             (
-                                $group['sojourn_type'] == 'GA'
+                                $group['sojourn_type_id'] == 1 /*'GA'*/
                                 &&
                                 (
                                     $line['is_accomodation'] || $line['is_meal']

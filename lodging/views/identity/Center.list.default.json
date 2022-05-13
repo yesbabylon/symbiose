@@ -26,6 +26,13 @@
             },
             {
                 "type": "field",
+                "label": "Sojourn Type",
+                "value": "sojourn_type_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "label": "Organization Name",
                 "value": "organisation_id",
                 "width": "25%",

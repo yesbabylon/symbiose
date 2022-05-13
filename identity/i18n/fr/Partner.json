@@ -1,7 +1,7 @@
 {
-    "name": "Partenaire",
-    "plural": "Partenaires",
-    "description": "Un Partenaire décrit une relation entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
+    "name": "Relation",
+    "plural": "Relations",
+    "description": "Les relations sont un lien entre deux Identités (contact, employé, client, fournisseur, payeur, autre).",
     "model": {
         "name": {
             "label": "Nom",
@@ -64,12 +64,12 @@
     },
     "view": {
         "form.default": {
-            "name": "Partenaire",
+            "name": "Relation",
             "description": "Formulaire de base pour afficher un partenaire",
             "layout": {}
         },
         "list.default": {
-            "name": "Partenaires",
+            "name": "Relations",
             "description": "Cette vue est destinée à afficher la liste de base des partenaires existants.",
             "layout": {}
         },

@@ -22,13 +22,9 @@
             },
             "help": ""
         },
-        "category": {
-            "label": "Type d'unité locative",
-            "description": "Renseigne si le logement comprend des repas ou est loué tel quel.",
-            "selection": {
-                "hostel": "GA",
-                "lodge": "GG"
-            },
+        "sojourn_type_id": {
+            "label": "Type de séjour",
+            "description": "Mode de location par défaut pour les séjours.",
             "help": ""
         },
         "rental_unit_category_id": {
@@ -122,7 +118,7 @@
         "type": {
             "missing_mandatory": "Champ obligatoire."
         },
-        "category": {
+        "sojourn_type_id": {
             "missing_mandatory": "Champ obligatoire."
         },
         "capacity": {
