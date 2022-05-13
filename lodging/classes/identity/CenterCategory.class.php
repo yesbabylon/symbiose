@@ -32,25 +32,23 @@ class CenterCategory extends Model {
                 'description'       => 'List of categories the center belgons to, if any.'
             ],
 
+            /*
+            // les catégories de centre sont juste une indication au niveau des centres, mais ne sont pas applicable sur les UL (des UL peuvent être GA ou GG)
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'foreign_field'     => 'center_category_id',
                 'description'       => 'List of rental units related to the category.'
             ],
+            */
 
-            'product_groups_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\catalog\Group',
-                'foreign_field'     => 'center_category_id'
-            ],
-
+            /*
             'accounting_rules_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\finance\accounting\AccountingRule',
                 'foreign_field'     => 'center_category_id'
             ]
-
+            */
         ];
     }
 }

@@ -459,7 +459,18 @@
                                         }
                                     }
                                 ]
-                            }
+                            },
+                            {
+                                "id": "catalog.sojourn_types",
+                                "label": "Sojourn types",
+                                "description": "",
+                                "icon": "home",
+                                "type": "entry",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\SojournType",
+                                    "view": "list.default"
+                                }
+                            }                            
                         ]
                     },
                     {

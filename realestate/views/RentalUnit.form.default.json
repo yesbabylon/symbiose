@@ -43,7 +43,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "category",
+                                                "value": "sojourn_type_id",
                                                 "width": "50%"
                                             },
                                             {
