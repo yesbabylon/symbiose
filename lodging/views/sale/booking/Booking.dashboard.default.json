@@ -19,16 +19,17 @@
                                                 "label": "Bookings",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\MessageModel",
-                                                "view": "list.default"
+                                                "entity": "core\\alert\\Message",
+                                                "view": "list.dashboard",
+                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
                                             },
                                             {
                                                 "id": "item.bookings2",
                                                 "label": "Bookings",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\MessageModel",
-                                                "view": "list.default"
+                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "view": "list.dashboard"
                                             }
 
                                         ]
@@ -54,8 +55,8 @@
                                                 "label": "Bookings",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\User",
-                                                "view": "list.default"
+                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "view": "chart.default"
                                             }
 
                                         ]
