@@ -18,13 +18,15 @@ class AccountingRule extends \finance\accounting\AccountingRule {
                 'description'       => "Old name of the accounting rule."
             ],
 
+            /*
+            // les règles comptables devraient être relatives aux organisations et pas au catégories de centre
             'center_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterCategory',
                 'description'       => "Center category targeted by the rule.",
                 'required'          => true
             ]
-
+            */
         ];
     }
 

@@ -20,6 +20,17 @@
               "icon": "person_outline",
               "type": "entry",
               "route": "/payments/import"
+            },
+            {
+              "id": "item.dashboard",
+              "type": "entry",
+              "label": "Dashboard",
+              "description": "",
+              "route": "/payments",
+              "context": {
+                "entity": "sale\\pay\\Payment", 
+                "view": "dashboard.default"
+              }
             }                      
         ]
     }

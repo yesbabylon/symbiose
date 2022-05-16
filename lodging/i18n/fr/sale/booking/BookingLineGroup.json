@@ -28,7 +28,7 @@
 			"description": "Heure de départ.",
 			"help": ""
 		},
-		"sojourn_type": {
+		"sojourn_type_id": {
 			"label": "Type de Séjour",
 			"description": "Le genre de séjour que le groupe est sur.",
 			"selection":{ "GA" : "GA", "GG": "GG"},

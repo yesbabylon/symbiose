@@ -1,6 +1,6 @@
 {
 	"name": "Catégorie d'unité locative",
-	"plural": "Catégories d'unité locative",
+	"plural": "Catégories d'unités locative",
 	"description": "Une unité locative est une ressource qui peut être louée à un client.",
 	"model": {
 		"name": {

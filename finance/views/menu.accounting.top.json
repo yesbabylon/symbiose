@@ -20,7 +20,18 @@
               "icon": "library_books",
               "type": "entry",
               "route": "/invoices"
-            }                      
+            },
+            {
+              "id": "item.dashboard",
+              "type": "entry",
+              "label": "Dashboard",
+              "description": "",
+              "route": "/",
+              "context": {
+                "entity": "finance\\accounting\\Invoice", 
+                "view": "dashboard.default"
+              }
+            }                       
         ]
     }
 }
