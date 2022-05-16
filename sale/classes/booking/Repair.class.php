@@ -28,7 +28,7 @@ class Repair extends Consumption {
 
             'type' => [
                 'type'              => 'string',
-                'description'       => 'The reason the unit is reserved.',
+                'description'       => "The reason the unit is unavailable (always 'out-of-order').",
                 'default'           => 'ooo',
                 'readonly'          => true
             ],
@@ -43,15 +43,8 @@ class Repair extends Consumption {
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the consumption is assigned to."
-            ],
-
-            'qty' => [
-                'type'              => 'integer',
-                'description'       => "How many times the consumption is booked for.",
-                'default'           => 1,
-                'readonly'          => true                
             ]
-
+ 
         ];
     }
 
