@@ -13,15 +13,12 @@ class Season extends \sale\season\Season {
 
         return [
 
-            /*
-            // les saisons s'appliquent par catégorie de saison : pas de raison d'avoir une catégorie de centre
             'center_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterCategory',
                 'description'       => "Center category targeted by season.",
                 'required'          => true
             ]
-            */
             
         ];
     }
