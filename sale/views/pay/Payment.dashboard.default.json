@@ -13,22 +13,22 @@
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
-                                                "label": "Bookings",
+                                                "id": "item.sale",
+                                                "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\Message",
-                                                "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "entity": "core\\alert\\MessageModel",
+                                                "view": "list.default",
+                                                "domain":  ["object_class", "=", "sale\\pay\\*"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Bookings",
+                                                "id": "item.sale2",
+                                                "label": "Extraits bancaires",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pay\\BankStatementLine",
                                                 "view": "list.dashboard"
                                             }
 
@@ -43,16 +43,16 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.sale3",
+                                                "label": "Financements",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pay\\Funding",
                                                 "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Bookings",
+                                                "id": "item.sale4",
+                                                "label": "Réservations",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",

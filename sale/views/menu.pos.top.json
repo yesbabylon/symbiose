@@ -20,7 +20,18 @@
               "icon": "person_outline",
               "type": "entry",
               "route": "/orders/"      
-            }                      
+            },
+            {
+              "id": "item.dashboard",
+              "type": "entry",
+              "label": "Dashboard",
+              "description": "",
+              "route": "/",
+              "context": {
+                "entity": "sale\\pos\\CashdeskSession", 
+                "view": "dashboard.default"
+              }
+            }                     
         ]
     }
 }

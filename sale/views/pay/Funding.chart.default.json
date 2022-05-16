@@ -1,0 +1,20 @@
+{
+    "name": "Sale list",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\pay\\Funding",
+        "group_by": "range",
+        "range_interval": "month",
+        "range_from": "date.year.first_day",
+        "range_to": "date.year.last_day",
+        "datasets": [
+            {
+                "operation": ["SUM", "due_amount"],
+                "domain"   : ["due_amount", "<", 0]
+            }
+        ]
+    }
+}

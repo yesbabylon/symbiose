@@ -44,8 +44,8 @@
             },
             {
                 "type": "field",
-                "value": "capacity",
-                "width": "10%",
+                "value": "sojourn_type_id",
+                "width": "15%",
                 "sortable": true
             },
             {
@@ -58,6 +58,12 @@
                 "type": "field",
                 "value": "center_id",
                 "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "capacity",
+                "width": "10%",
                 "sortable": true
             }
         ]

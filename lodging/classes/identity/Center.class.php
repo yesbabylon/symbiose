@@ -24,7 +24,7 @@ class Center extends \identity\Establishment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
                 'description'       => 'Management Group to which the center belongs.'
-            ],            
+            ],
 
             'code_alpha' => [
                 'type'              => 'string',
@@ -35,7 +35,7 @@ class Center extends \identity\Establishment {
                 'type'              => 'boolean',
                 'description'       => "Use the Center Group contact details in booking communications (instead of the ones of the center)?",
                 'default'           => false
-            ],            
+            ],
 
             /*
                 The manager is stored as part of the Center object.
@@ -131,7 +131,15 @@ class Center extends \identity\Establishment {
                 'foreign_object'    => 'lodging\sale\catalog\Group',
                 'foreign_field'     => 'center_id',
                 'description'       => "Group targeted by the center."
+            ],
+
+            'sojourn_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\SojournType',
+                'description'       => 'Default sojourn type of the center.',
+                'required'          => true
             ]
+
 
         ];
     }

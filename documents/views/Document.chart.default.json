@@ -1,0 +1,20 @@
+{
+    "name": "Documents list",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "access": {
+        "groups": ["documents.default.user"]
+    },
+    "layout": {
+        "entity": "documents\\Document",
+        "group_by": "range",
+        "range_interval": "year",
+        "range_from": "date.year.first_day",
+        "range_to": "date.year.last_day",
+        "datasets": [
+            {
+                "operation": ["SUM", "size"],
+                "domain"   : ["size", ">", 0]
+            }
+        ]
+    }
+}

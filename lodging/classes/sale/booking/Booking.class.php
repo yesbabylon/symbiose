@@ -139,6 +139,12 @@ class Booking extends \sale\booking\Booking {
                 'description'       => 'Approx. amount of persons involved in the booking.',
                 'function'          => 'getNbPers',
                 'store'             => true
+            ],
+
+            'sojourn_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\SojournType',
+                'description'       => 'Default sojourn type of the booking (set according to booking center).'
             ]
         ];
     }
@@ -320,7 +326,7 @@ class Booking extends \sale\booking\Booking {
 
         if(isset($event['date_from'])) {
             if(!isset($event['date_to'])) {
-                $result['date_to'] = $event['date_from']; 
+                $result['date_to'] = $event['date_from'];
             }
         }
         if(isset($event['customer_identity_id'])) {
@@ -535,7 +541,7 @@ class Booking extends \sale\booking\Booking {
             // trying to add or remove booking lines
             // lines cannot be assigned to more than one booking
             $booking = reset($bookings);
-            if(!in_array($booking['status'], ['quote'])) {            
+            if(!in_array($booking['status'], ['quote'])) {
                 $lines = $om->read('lodging\sale\booking\BookingLine', $values['booking_lines_ids'], [ 'booking_line_group_id.is_extra']);
                 foreach($lines as $line) {
                     if(!$line['booking_line_group_id.is_extra']) {
@@ -549,8 +555,8 @@ class Booking extends \sale\booking\Booking {
             // trying to add or remove booking line groups
             // groups cannot be assigned to more than one booking
             $booking = reset($bookings);
-            if(!in_array($booking['status'], ['quote'])) {            
-                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_lines_groups_ids'], [ 'is_extra']);            
+            if(!in_array($booking['status'], ['quote'])) {
+                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_lines_groups_ids'], [ 'is_extra']);
                 foreach($groups as $group) {
                     if(!$group['is_extra']) {
                         return ['status' => ['non_editable' => 'Non-extra service groups cannot be changed for non-quote bookings.']];

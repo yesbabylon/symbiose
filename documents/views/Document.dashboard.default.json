@@ -13,22 +13,22 @@
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
-                                                "label": "Bookings",
+                                                "id": "item.documents",
+                                                "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain": ["object_class", "=", "documents\\Document"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Bookings",
+                                                "id": "item.documents2",
+                                                "label": "Documents",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "list.dashboard"
                                             }
 
@@ -43,22 +43,21 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.documents3",
+                                                "label": "Mémoire",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Bookings",
+                                                "id": "item.documents4",
+                                                "label": "Documents",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "chart.default"
                                             }
-
                                         ]
                                     }
                                 ]

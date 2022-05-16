@@ -3,7 +3,7 @@
     "layout": {
         "groups": [
 			{
-                "label": "test",
+                "label": "Dashboard",
                 "height": "100%",
                 "sections": [
                     {                
@@ -13,22 +13,22 @@
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
-                                                "label": "Bookings",
+                                                "id": "item.pos",
+                                                "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain":  ["object_class", "=", "sale\\pos\\*"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Bookings",
+                                                "id": "item.pos2",
+                                                "label": "Sessions",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pos\\CashdeskSession",
                                                 "view": "list.dashboard"
                                             }
 
@@ -43,20 +43,20 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.pos3",
+                                                "label": "CA POS",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pos\\CashdeskSession",
                                                 "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Bookings",
+                                                "id": "item.pos4",
+                                                "label": "Payment methods",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.default"
+                                                "entity": "sale\\pos\\CashdeskSession",
+                                                "view": "chart.paymentMethod"
                                             }
 
                                         ]

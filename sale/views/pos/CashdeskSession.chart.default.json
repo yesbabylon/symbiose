@@ -1,0 +1,19 @@
+{
+    "name": "Booking list",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\pos\\CashdeskSession",
+        "group_by": "range",
+        "range_interval": "month",
+        "range_from": "date.year.first_day",
+        "range_to": "date.year.last_day",
+        "datasets": [
+            {
+                "operation": ["SUM", "object.amount"]
+            }
+        ]
+    }
+}
