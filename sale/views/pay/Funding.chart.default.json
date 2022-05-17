@@ -7,13 +7,14 @@
     "layout": {
         "entity": "sale\\pay\\Funding",
         "group_by": "range",
-        "range_interval": "month",
-        "range_from": "date.year.first_day",
-        "range_to": "date.year.last_day",
+        "range_interval": "year",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
         "datasets": [
             {
-                "operation": ["SUM", "due_amount"],
-                "domain"   : ["due_amount", "<", 0]
+                "label": "Total remboursements",
+                "operation": ["SUM", "object.due_amount"],
+                "domain": ["due_amount", "<", "object.paid_amount"]
             }
         ]
     }

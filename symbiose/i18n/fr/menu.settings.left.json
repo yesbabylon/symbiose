@@ -94,6 +94,7 @@
         "settings.all_settings.calendar.holidays": {"label": "Ephémérides", "help": ""},
         "settings.all_settings.settings": {"label": "Configuration", "help": ""},
         "settings.all_settings.settings.settings_values": {"label": "Valeurs des paramètres", "help": ""},
-        "settings.all_settings.settings.settings": {"label": "Tous les paramètres", "help": ""}
+        "settings.all_settings.settings.settings": {"label": "Tous les paramètres", "help": ""},
+        "settings.all_stats": {"label": "Toutes les stats", "help": ""}
     }
 }

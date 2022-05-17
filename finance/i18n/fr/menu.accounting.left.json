@@ -1,0 +1,12 @@
+{
+    "description": "",
+    "view": {
+      "item.bank_statements": {"label": "Documents", "help": ""},
+      "item.bank_statements.ready": {"label": "Extraits à exporter", "help": ""},
+      "item.bank_statements.all": {"label": "Tous les extraits", "help": ""},
+	  "item.invoices": {"label": "Factures", "help": ""},
+      "item.invoices.all": {"label": "Toutes les factures", "help": ""},
+      "item.invoices2": {"label": "Factures", "help": ""},
+      "item.fundings.reimburse": {"label": "Factures à rembourser", "help": ""}
+    }
+}

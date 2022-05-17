@@ -43,23 +43,21 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.finance3",
-                                                "label": "Factures",
+                                                "id": "item.fundings3",
+                                                "label": "Total remboursements",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Funding",
-                                                "view": "chart.default",
-                                                "domain": ["due_amount", "<", 0]
+                                                "entity":"sale\\pay\\Funding",
+                                                "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.finance4",
-                                                "label": "Chiffre d'affaire",
+                                                "id": "item.fundings4",
+                                                "label": "Total Financement",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Funding",
                                                 "view": "chart.ca"
                                             }
-
                                         ]
                                     }
                                 ]
