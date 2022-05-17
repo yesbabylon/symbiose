@@ -48,7 +48,7 @@
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.default"
+                                                "view": "chart.compositionItem"
                                             },
                                             {
                                                 "id": "item.bookings4",

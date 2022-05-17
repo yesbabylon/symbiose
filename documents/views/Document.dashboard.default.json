@@ -55,7 +55,7 @@
                                                 "label": "Documents",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "documents\\Document",
+                                                "entity": "lodging\\sale\\booking\\Booking",
                                                 "view": "chart.default"
                                             }
                                         ]

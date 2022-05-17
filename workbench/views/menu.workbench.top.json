@@ -1,0 +1,23 @@
+{
+    "name": "Workbench menu",
+    "layout": {
+        "items": [
+            {
+              "id": "item.model.edit",
+              "label": "Edit",
+              "description": "",
+              "icon": "menu_book",
+              "type": "entry",
+              "route": "/model/edit"
+            },
+            {
+              "id": "item.model.visualize",
+              "label": "Visualize",
+              "description": "",
+              "icon": "library_books",
+              "type": "entry",
+              "route": "/model/visualize"
+            }                      
+        ]
+    }
+}

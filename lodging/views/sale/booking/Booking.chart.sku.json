@@ -5,7 +5,7 @@
         "groups": ["booking.default.user"]
     },
     "layout": {
-        "entity": "lodging\\sale\\booking\\Booking",
+        "entity": "lodging\\sale\\booking\\BookingLine",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.first",
