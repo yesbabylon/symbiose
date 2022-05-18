@@ -20,7 +20,7 @@ class Document extends Model {
 
             'data' => [
                 'type'              => 'binary',
-                'onchange'          => 'documents\Document::onchangeData'
+                'onupdate'          => 'onupdateData'
             ],
 
             'type' => [
@@ -36,7 +36,7 @@ class Document extends Model {
             'readable_size' => [
                 'type'              => 'computed',
                 'description'       => 'Readable size',
-                'function'          => 'documents\Document::getReadableSize',
+                'function'          => 'calcReadableSize',
                 'result_type'       => 'string',
                 'store'             => true,
                 'readonly'          => true
@@ -52,7 +52,7 @@ class Document extends Model {
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'description'       => 'URL to visual edior of the module.',
-                'function'          => 'documents\Document::getLink',
+                'function'          => 'getLink',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -83,7 +83,7 @@ class Document extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'binary',
                 'usage'             => 'image/jpeg',
-                'function'          => 'documents\Document::getPreviewImage',
+                'function'          => 'calcPreviewImage',
                 'description'       => 'Thumbnail of the document.',
                 'store'             => true
             ]
@@ -91,7 +91,7 @@ class Document extends Model {
     }
 
 
-    function getReadableSize($om, $oids, $lang) {
+    function calcReadableSize($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['size']);
         $precision = 1;
         $suffixes = array('B', 'KB', 'MB', 'GB');
@@ -104,7 +104,7 @@ class Document extends Model {
         return $result;
     }
 
-    public static function onchangeData($om, $oids, $lang) {
+    public static function onupdateData($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['data']);
 
         foreach($res as $oid => $odata) {
@@ -356,7 +356,7 @@ class Document extends Model {
      * By convention, generated thumbnail is always a JPEG image.
      *
      */
-    public static function getPreviewImage($om, $oids) {
+    public static function calcPreviewImage($om, $oids) {
 
         $res = $om->read(__CLASS__, $oids, ['name', 'type', 'data']);
         $result = [];

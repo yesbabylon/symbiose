@@ -16,7 +16,7 @@ class Price extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\price\Price::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the price.'
@@ -26,18 +26,18 @@ class Price extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => "Tax excluded price.",
-                'onchange'          => 'sale\price\Price::onchangePrice',
+                'onupdate'          => 'onupdatePrice',
                 'required'          => true
             ],
 
             'price_vat' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'sale\price\Price::getPriceVat',
+                'function'          => 'calcPriceVat',
                 'usage'             => 'amount/money:4',
                 'description'       => "Tax included price. This field is used to allow encoding prices VAT incl.",
                 'store'             => true,
-                'onchange'          => 'sale\price\Price::onchangePriceVat'
+                'onupdate'          => 'onupdatePriceVat'
             ],
 
             'type' => [
@@ -58,13 +58,13 @@ class Price extends Model {
                 'description'       => "The Price List the price belongs to.",
                 'required'          => true,
                 'ondelete'          => 'cascade',
-                'onchange'          => 'sale\price\Price::onchangePriceListId'
+                'onupdate'          => 'onupdatePriceListId'
             ],
 
             'is_active' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'sale\price\Price::getIsActive',
+                'function'          => 'calcIsActive',
                 'store'             => true,
                 'description'       => "Is the price currently applicable?"
             ],
@@ -73,7 +73,7 @@ class Price extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountingRule',
                 'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to.",
-                'onchange'          => 'sale\price\Price::onchangeAccountingRuleId'
+                'onupdate'          => 'onupdateAccountingRuleId'
             ],
 
             'product_id' => [
@@ -81,14 +81,14 @@ class Price extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product (sku) the price applies to.",
                 'required'          => true,
-                'onchange'          => 'sale\price\Price::onchangeProductId'
+                'onupdate'          => 'onupdateProductId'
             ],
 
             'vat_rate' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
-                'function'          => 'sale\price\Price::getVatRate',
+                'function'          => 'calcVatRate',
                 'description'       => 'VAT rate applied on the price (from accounting rule).',
                 'store'             => true,
                 'readonly'          => true
@@ -97,7 +97,7 @@ class Price extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['product_id.sku', 'price_list_id.name']);
         if($res > 0 && count($res)) {
@@ -108,7 +108,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function getVatRate($om, $oids, $lang) {
+    public static function calcVatRate($om, $oids, $lang) {
         $result = [];
         $prices = $om->read(__CLASS__, $oids, ['accounting_rule_id.vat_rule_id.rate']);
 
@@ -120,7 +120,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function getPriceVat($om, $oids, $lang) {
+    public static function calcPriceVat($om, $oids, $lang) {
         $result = [];
         $prices = $om->read(__CLASS__, $oids, ['price', 'vat_rate']);
 
@@ -132,7 +132,7 @@ class Price extends Model {
         return $result;
     }
 
-    public static function getIsActive($om, $oids, $lang) {
+    public static function calcIsActive($om, $oids, $lang) {
         $result = [];
         $prices = $om->read(__CLASS__, $oids, ['price_list_id.is_active']);
 
@@ -144,22 +144,22 @@ class Price extends Model {
         return $result;
     }
 
-    public static function onchangeAccountingRuleId($om, $oids, $lang) {
+    public static function onupdateAccountingRuleId($om, $oids, $lang) {
         $res = $om->write(__CLASS__, $oids, ['vat_rate' => null, 'price_vat' => null]);
     }
 
-    public static function onchangePriceListId($om, $oids, $lang) {
+    public static function onupdatePriceListId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onchangeProductId($om, $oids, $lang) {
+    public static function onupdateProductId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     /**
      * Update price, based on VAT incl. price and applied VAT rate
      */
-    public static function onchangePriceVat($om, $oids, $lang) {
+    public static function onupdatePriceVat($om, $oids, $lang) {
         $prices = $om->read(__CLASS__, $oids, ['price_vat', 'vat_rate']);
 
         if($prices > 0 && count($prices)) {
@@ -169,7 +169,7 @@ class Price extends Model {
         }
     }
 
-    public static function onchangePrice($om, $oids, $lang) {
+    public static function onupdatePrice($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['price_vat' => null]);
     }
 

@@ -37,35 +37,35 @@ class Repairing extends \sale\booking\Repairing {
                 'rel_foreign_key'   => 'rental_unit_id',
                 'rel_local_key'     => 'repairing_id',
                 'description'       => 'List of rental units assigned to the scheduled repairing.',
-                'onchange'          => 'onchangeRentalUnitsIds'
+                'onupdate'          => 'onupdateRentalUnitsIds'
             ],
 
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "",
                 'default'           => time(),
-                'onchange'          => 'onchangeDateFrom'
+                'onupdate'          => 'onupdateDateFrom'
             ],
 
             'date_to' => [
                 'type'              => 'date',
                 'description'       => "",
                 'default'           => time(),
-                'onchange'          => 'onchangeDateTo'
+                'onupdate'          => 'onupdateDateTo'
             ]
 
         ];
     }
 
-    public static function onchangeRentalUnitsIds($om, $oids, $lang) {
+    public static function onupdateRentalUnitsIds($om, $oids, $lang) {
         $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
     }
 
-    public static function onchangeDateFrom($om, $oids, $lang) {
+    public static function onupdateDateFrom($om, $oids, $lang) {
         $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
     }
 
-    public static function onchangeDateTo($om, $oids, $lang) {
+    public static function onupdateDateTo($om, $oids, $lang) {
         $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
     }
 

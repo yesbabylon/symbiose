@@ -81,7 +81,7 @@ class Payment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
                 'description'       => 'The funding the payement relates to, if any.',
-                'onchange'          => 'sale\pay\Payment::onchangeFundingId'
+                'onupdate'          => 'onupdateFundingId'
             ],
 
             'invoice_id' => [
@@ -93,8 +93,8 @@ class Payment extends Model {
         ];
     }
 
-    public static function onchangeFundingId($om, $ids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\pay\Payment::onchangeFundingId", QN_REPORT_DEBUG);
+    public static function onupdateFundingId($om, $ids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
         $payments = $om->read(get_called_class(), $ids, ['funding_id', 'partner_id', 'funding_id.due_amount', 'amount', 'partner_id', 'statement_line_id']);
 

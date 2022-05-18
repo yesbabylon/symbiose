@@ -41,7 +41,7 @@ class OrderLine extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Tax-excluded unit price (with automated discounts applied).',
-                'onchange'          => '_resetPrice'
+                'onupdate'          => '_resetPrice'
             ],
 
             'vat_rate' => [
@@ -49,7 +49,7 @@ class OrderLine extends Model {
                 'usage'             => 'amount/percent',
                 'description'       => 'VAT rate that applies to this line.',
                 'default'           => 0.0,
-                'onchange'          => '_resetPrice'
+                'onupdate'          => '_resetPrice'
             ],
 
             'discount' => [
@@ -57,7 +57,7 @@ class OrderLine extends Model {
                 'usage'             => 'amount/percent',
                 'description'       => 'Discount rate to apply on the unit price.',
                 'default'           => 0.0,
-                'onchange'          => '_resetPrice'
+                'onupdate'          => '_resetPrice'
             ],
 
             'qty' => [
@@ -65,7 +65,7 @@ class OrderLine extends Model {
                 'usage'             => 'numeric/integer',
                 'description'       => 'Amount of units in this line.',
                 'default'           => 0.0,
-                'onchange'          => '_resetPrice'
+                'onupdate'          => '_resetPrice'
             ],
 
             'free_qty' => [
@@ -73,7 +73,7 @@ class OrderLine extends Model {
                 'usage'             => 'numeric/integer',
                 'description'       => 'Amount of freebies in this line.',
                 'default'           => 0.0,
-                'onchange'          => '_resetPrice'
+                'onupdate'          => '_resetPrice'
             ],
 
             'total' => [

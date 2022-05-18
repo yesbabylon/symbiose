@@ -25,7 +25,7 @@ class Payment extends \sale\booking\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Funding',
                 'description'       => 'The funding the payement relates to, if any.',
-                'onchange'          => 'onchangeFundingId'
+                'onupdate'          => 'sale\pay\Payment::onupdateFundingId'
             ]
 
         ];

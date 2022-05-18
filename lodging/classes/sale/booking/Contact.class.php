@@ -30,7 +30,7 @@ class Contact extends \sale\booking\Contact {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Identity',
                 'description'       => 'The targeted identity (the partner).',
-                'onchange'          => 'identity\Partner::onchangeIdentity',
+                'onupdate'          => 'identity\Partner::onchangeIdentity',
                 'required'          => true
             ],
 
@@ -52,7 +52,7 @@ class Contact extends \sale\booking\Contact {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Identity',
                 'description'       => 'The targeted identity (the partner).',
-                'onchange'          => 'identity\Partner::onchangeIdentity',
+                'onupdate'          => 'identity\Partner::onchangeIdentity',
                 'required'          => true
             ]
 

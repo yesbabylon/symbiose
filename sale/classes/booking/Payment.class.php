@@ -15,7 +15,7 @@ class Payment extends \sale\pay\Payment {
             'booking_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'function'          => 'sale\booking\Payment::getBookingId',
+                'function'          => 'calcBookingId',
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'The booking the payement relates to, if any (computed).',
                 'store'             => true
@@ -25,7 +25,7 @@ class Payment extends \sale\pay\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Funding',
                 'description'       => 'The funding the payement relates to, if any.',
-                'onchange'          => 'sale\pay\Payment::onchangeFundingId'
+                'onupdate'          => 'sale\pay\Payment::onupdateFundingId'
             ],
 
             'payment_method' => [
@@ -44,7 +44,7 @@ class Payment extends \sale\pay\Payment {
     }
 
 
-    public static function getBookingId($om, $oids, $lang) {
+    public static function calcBookingId($om, $oids, $lang) {
         $result = [];
         $items = $om->read(__CLASS__, $oids, ['funding_id.booking_id']);
 

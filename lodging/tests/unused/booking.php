@@ -36,7 +36,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 378
             ]);
@@ -78,7 +78,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 378
             ]);
@@ -119,7 +119,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 379
             ]);
@@ -160,7 +160,7 @@ $tests = [
                 'booking_id'    => $booking['id'],
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 379,
                 
@@ -205,7 +205,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
             ]);
@@ -250,7 +250,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
             ]);
@@ -294,7 +294,7 @@ $tests = [
                 'name'          => 'Séjour Wanne',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
             ]);
@@ -335,7 +335,7 @@ $tests = [
                 'name'          => 'Séjour villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1756,
             ]);
@@ -377,7 +377,7 @@ $tests = [
                 'name' => 'Séjour Louvain-la-Neuve',
                 'order' => 1,
                 'rate_class_id' => 4,
-                'sojourn_type' => 'GA',
+                'sojourn_type_id' => 1,
                 'has_pack' => true,
                 'pack_id' => 365,
             ]);
@@ -396,7 +396,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'date_from'     => strtotime('2021-09-07'),
                 'date_to'       => strtotime('2021-09-08'),
                 'has_pack'      => true,
@@ -420,7 +420,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1745,
             ]);
@@ -463,7 +463,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 364,
             ]);
@@ -503,7 +503,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'booking_id'    => $booking['id'], 
                 'pack_id' => 1764
@@ -523,7 +523,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1762,    
             ]);
@@ -541,7 +541,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 3,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1758,
                 'booking_id'    => $booking['id'],
@@ -584,7 +584,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA', 
+                'sojourn_type_id'  => 1, 
                 'has_pack'      => true,
                 'pack_id'       => 1367, 
             ]);
@@ -604,7 +604,7 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1762, 
             ]);
@@ -650,7 +650,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',   
+                'sojourn_type_id'  => 1,   
             ]);
 
             $groups->update([
@@ -736,7 +736,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
             ]);
 
             $groups2->update([
@@ -755,7 +755,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 3,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
             ]);
 
             $groups3->update([
@@ -811,7 +811,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'booking_id'    => $booking['id'], 
             ]);
 
@@ -866,7 +866,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1762,   
             ]);
@@ -887,7 +887,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 378, 
             ]);
@@ -930,7 +930,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 7,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 412,
             ]);
@@ -972,7 +972,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 413,
             ]);
@@ -1017,7 +1017,7 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 413,  
             ]);
@@ -1062,7 +1062,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 7,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1304,
             ]);
@@ -1107,7 +1107,7 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GA',
+                'sojourn_type_id'  => 1,
                 'has_pack'      => true,
                 'pack_id'       => 1484,  
             ]);
@@ -1152,7 +1152,7 @@ $tests = [
                 'name'              => 'Séjour Arbrefontaine - École',
                 'order'             => 1,
                 'rate_class_id'     => 7,
-                'sojourn_type'      => 'GG',
+                'sojourn_type_id'  => 2,
                 'has_pack'          => true,
                 'pack_id'           => 851,
             ]);
@@ -1194,7 +1194,7 @@ $tests = [
                 'name'          => 'Séjour Arbrefontaine - École',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type'  => 'GG',
+                'sojourn_type_id'  => 2,
                 'has_pack'      => true,
                 'pack_id'       => 852,
             ]);

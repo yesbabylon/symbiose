@@ -17,7 +17,7 @@ class PackLine extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\catalog\PackLine::getDisplayName',
+                'function'          => 'sale\catalog\PackLine::calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the pack line.'
@@ -35,7 +35,7 @@ class PackLine extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
                 'required'          => true,
-                'onchange'          => 'sale\catalog\PackLine::onchangeChildProductId'                
+                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'                
             ],
 
             'has_own_qty' => [
@@ -72,11 +72,11 @@ class PackLine extends Model {
         ];
     }
 
-    public static function onchangeChildProductId($om, $oids, $lang) {
+    public static function onupdateChildProductId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['child_product_id.name']);
         foreach($oids as $oid) {
@@ -85,7 +85,7 @@ class PackLine extends Model {
         return $result;
     }
 
-    public static function getCanSell($om, $oids, $lang) {
+    public static function calcCanSell($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['child_product_id.can_sell']);
         foreach($lines as $lid => $line) {

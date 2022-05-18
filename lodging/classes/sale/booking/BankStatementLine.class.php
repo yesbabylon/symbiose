@@ -22,7 +22,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
                 'description'       => 'Center office related to the satement (bassed on account number).',
-                'onchange'          => 'onchangeCenterOfficeId'
+                'onupdate'          => 'onupdateCenterOfficeId'
             ],
 
             'customer_id' => [
@@ -37,7 +37,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                 'foreign_object'    => 'lodging\sale\booking\Payment',
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
-                'onchange'          => 'sale\pay\BankStatementLine::onchangePaymentsIds',
+                'onupdate'          => 'sale\pay\BankStatementLine::onchangePaymentsIds',
                 'ondetach'          => 'delete'
             ]            
 
@@ -49,8 +49,8 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
      * Try to automatically reconcile a newly created statement line with a funding.
      * 
      */
-    public static function onchangeCenterOfficeId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BankStatementLine::onchangeCenterOfficeId", QN_REPORT_DEBUG);
+    public static function onupdateCenterOfficeId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BankStatementLine::onupdateCenterOfficeId", QN_REPORT_DEBUG);
 
         $lines = $om->read(get_called_class(), $oids, ['amount', 'center_office_id', 'structured_message']);
 

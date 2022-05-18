@@ -27,14 +27,14 @@ class User extends \identity\User {
                 'rel_table'         => 'lodging_identity_rel_center_office_user',
                 'rel_foreign_key'   => 'center_office_id',
                 'rel_local_key'     => 'user_id',
-                'onchange'          => 'lodging\identity\User::onchangeCenterOfficesIds'
+                'onupdate'          => 'onupdateCenterOfficesIds'
             ]
 
         ];
     }
 
 
-    public static function onchangeCenterOfficesIds($om, $oids, $lang) {
+    public static function onupdateCenterOfficesIds($om, $oids, $lang) {
 
         $users = $om->read(__CLASS__, $oids, ['centers_ids', 'center_offices_ids.centers_ids'], $lang);
         if($users > 0) {

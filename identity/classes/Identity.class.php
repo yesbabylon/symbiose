@@ -32,7 +32,7 @@ class Identity extends Model {
 
             'display_name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Identity::getDisplayName',
+                'function'          => 'calcDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the identity.',
@@ -46,7 +46,7 @@ class Identity extends Model {
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
-                'onchange'          => 'identity\Identity::onchangeTypeId',
+                'onupdate'          => 'onupdateTypeId',
                 'default'           => 1,                                    // default is 'I' individual
                 'description'       => 'Type of identity.'
             ],
@@ -54,11 +54,11 @@ class Identity extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                                        'I'  => 'Individual (natural person)',
-                                        'SE' => 'Self-employed',
-                                        'C'  => 'Company',
-                                        'NP' => 'Non-profit organisation',
-                                        'PA' => 'Public administration'
+                    'I'  => 'Individual (natural person)',
+                    'SE' => 'Self-employed',
+                    'C'  => 'Company',
+                    'NP' => 'Non-profit organisation',
+                    'PA' => 'Public administration'
                 ],
                 'default'           => 'I',
                 'description'       => 'Code of the type of identity.'
@@ -94,13 +94,13 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'onchange'          => 'identity\Identity::onchangeName'
+                'onupdate'          => 'onupdateName'
             ],
             'short_name' => [
                 'type'          => 'string',
                 'description'   => 'Usual name to be used as a memo for identifying the organisation (acronym or short name).',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'onchange'          => 'identity\Identity::onchangeName'
+                'onupdate'          => 'onupdateName'
             ],
             'has_vat' => [
                 'type'              => 'boolean',
@@ -289,14 +289,14 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
                 'visible'           => [ ['type', '=', 'I'] ],
-                'onchange'          => 'identity\Identity::onchangeName'
+                'onupdate'          => 'onupdateName'
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
                 'visible'           => [ ['type', '=', 'I'] ],
-                'onchange'          => 'identity\Identity::onchangeName'
+                'onupdate'          => 'onupdateName'
             ],
 
             'gender' => [
@@ -324,7 +324,7 @@ class Identity extends Model {
                 'foreign_object'    => 'core\Lang',
                 'description'       => "Preferred language of the identity.",
                 'default'           => 1,
-                'onchange'          => 'identity\Identity::onchangeLangId'
+                'onupdate'          => 'onupdateLangId'
             ],
 
             // field for retrieving all partners related to the identity
@@ -344,7 +344,7 @@ class Identity extends Model {
      * For organisations the display name is the legal name
      * For individuals, the display name is the concatenation of first and last names
      */
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcDisplayName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['type', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($res as $oid => $odata) {
@@ -354,7 +354,7 @@ class Identity extends Model {
         return $result;
     }
 
-    public static function onchangeName($om, $oids, $lang) {
+    public static function onupdateName($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
         $res = $om->read(__CLASS__, $oids, ['partners_ids']);
         $partners_ids = [];
@@ -365,7 +365,7 @@ class Identity extends Model {
     }
 
 
-    public static function onchangeTypeId($om, $oids, $lang) {
+    public static function onupdateTypeId($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['type_id.code']);
         if($res > 0) {
             foreach($res as $oid => $odata) {
@@ -381,7 +381,7 @@ class Identity extends Model {
     /**
      * When lang_id is updated, perform cascading trought the partners to update related lang_id
      */
-    public static function onchangeLangId($om, $oids, $lang) {
+    public static function onupdateLangId($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['partners_ids', 'lang_id']);
 
         if($res > 0 && count($res)) {
