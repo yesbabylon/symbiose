@@ -32,7 +32,7 @@ class Customer extends \identity\Partner {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
                 'description'       => 'Nature of the customer (map with rate classes).',
-                'onchange'          => 'sale\customer\Customer::onchangeCustomerNatureId'
+                'onupdate'          => 'sale\customer\Customer::onupdateCustomerNatureId'
             ],
 
             // if partner is a customer, it can be assigned a customer type
@@ -53,21 +53,21 @@ class Customer extends \identity\Partner {
             'count_booking_12' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'function'          => 'sale\customer\Customer::getCountBooking12',
+                'function'          => 'sale\customer\Customer::calcCountBooking12',
                 'description'       => 'Number of bookings made during last 12 months (one year).'
             ],
 
             'count_booking_24' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'function'          => 'sale\customer\Customer::getCountBooking24',
+                'function'          => 'sale\customer\Customer::calcCountBooking24',
                 'description'       => 'Number of bookings made during last 24 months (2 years).'
             ],
 
             'address' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\customer\Customer::getAddress',
+                'function'          => 'sale\customer\Customer::calcAddress',
                 'description'       => 'Main address from related Identity.',
                 'store'             => true
             ],
@@ -89,7 +89,7 @@ class Customer extends \identity\Partner {
         ];
     }
 
-    public static function onchangeCustomerNatureId($om, $oids, $lang) {
+    public static function onupdateCustomerNatureId($om, $oids, $lang) {
         $customers = $om->read(__CLASS__, $oids, ['customer_nature_id.rate_class_id', 'customer_nature_id.customer_type_id']);
         if($customers > 0 && count($customers)) {
             foreach($customers as $cid => $customer) {
@@ -106,7 +106,7 @@ class Customer extends \identity\Partner {
      * Computes the number of bookings made by the customer during the last two years.
      *
      */
-    public static function getAddress($om, $oids, $lang) {
+    public static function calcAddress($om, $oids, $lang) {
         $result = [];
 
         $customers = $om->read(__CLASS__, $oids, ['partner_identity_id.address_street', 'partner_identity_id.address_city'], $lang);
@@ -120,7 +120,7 @@ class Customer extends \identity\Partner {
      * Computes the number of bookings made by the customer during the last 12 months.
      *
      */
-    public static function getCountBooking12($om, $oids, $lang) {
+    public static function calcCountBooking12($om, $oids, $lang) {
         $result = [];
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-12, date('d', $time), date('Y', $time));
@@ -140,7 +140,7 @@ class Customer extends \identity\Partner {
      * Computes the number of bookings made by the customer during the last two years.
      *
      */
-    public static function getCountBooking24($om, $oids, $lang) {
+    public static function calcCountBooking24($om, $oids, $lang) {
         $result = [];
         $time = time();
         $from = mktime(0, 0, 0, date('m', $time)-24, date('d', $time), date('Y', $time));

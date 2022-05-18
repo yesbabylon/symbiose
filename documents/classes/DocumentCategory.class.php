@@ -17,7 +17,7 @@ class DocumentCategory extends Model {
                 'description'       => '',
                 'required'          => true,
                 'multilang'         => true,
-                'onchange'          => 'documents\DocumentCategory::onchangePath'
+                'onupdate'          => 'onupdatePath'
             ],
 
             'children_ids' => [
@@ -30,12 +30,12 @@ class DocumentCategory extends Model {
                 'type'              => 'many2one',
                 'description'       => 'Product Family which current family belongs to, if any.',
                 'foreign_object'    => 'documents\DocumentCategory',
-                'onchange'          => 'documents\DocumentCategory::onchangePath'
+                'onupdate'          => 'onupdatePath'
             ],
 
             'path' => [
                 'type'              => 'computed',
-                'function'          => 'documents\DocumentCategory::getPath',
+                'function'          => 'calcPath',
                 'result_type'       => 'string',
                 'description'       => 'Full path of the Document',
                 'store'             => true,
@@ -53,12 +53,12 @@ class DocumentCategory extends Model {
     }
 
 
-    public static function getPath($om, $oids, $lang) {
+    public static function calcPath($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['name', 'parent_id'], $lang);
         foreach($res as $oid => $odata) {
             if($odata['parent_id']) {
-                $paths = self::getPath($om, (array) $odata['parent_id'], $lang);
+                $paths = self::calcPath($om, (array) $odata['parent_id'], $lang);
                 $result[$oid] = $paths[$odata['parent_id']].'/'.$odata['name'];
             }
             else {
@@ -68,7 +68,7 @@ class DocumentCategory extends Model {
         return $result;
     }
 
-    public static function onchangePath($om, $oids, $lang){
+    public static function onupdatePath($om, $oids, $lang){
         $om->write(__CLASS__, $oids, ['path' => null], $lang);
         $res = $om->read(__CLASS__, $oids, ['children_ids']);
 

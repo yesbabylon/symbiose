@@ -25,9 +25,9 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'string',
                 'description'       => 'The way the product quantity has to be computed (per unit [default], per person, or per accomodation [resource]).',
                 'selection'         => [
-                                            'person',           // depends on the number of people
-                                            'accomodation',     // depends on the number of nights
-                                            'unit'              // only depends on quantity
+                    'person',           // depends on the number of people
+                    'accomodation',     // depends on the number of nights
+                    'unit'              // only depends on quantity
                                        ],
                 'default'           => 'unit'
             ],
@@ -100,7 +100,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => "Specific Rental Unit this Product related to, if any",
                 'visible'           => [ ['is_accomodation', '=', true], ['rental_unit_assignement', '=', 'unit'] ],
-                'onchange'          => 'lodging\sale\catalog\ProductModel::onchangeRentalUnitId'
+                'onupdate'          => 'onupdateRentalUnitId'
             ],
 
             'products_ids' => [
@@ -117,7 +117,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id',
-                'onchange'          => 'sale\catalog\ProductModel::onchangeGroupsIds'
+                'onupdate'          => 'sale\catalog\ProductModel::onchangeGroupsIds'
             ]
 
         ];
@@ -126,8 +126,8 @@ class ProductModel extends \sale\catalog\ProductModel {
     /**
      * Assigns the related rental unity capacity as own capacity.
      */
-    public static function onchangeRentalUnitId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onchangeRentalUnitId", QN_REPORT_DEBUG);
+    public static function onupdateRentalUnitId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onupdateRentalUnitId", QN_REPORT_DEBUG);
         
         $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity'], $lang);
 

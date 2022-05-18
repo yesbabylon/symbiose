@@ -54,7 +54,7 @@ class BookingPriceAdapter extends Model {
                 'description'       => 'Type of manual discount (fixed amount or percentage of the price).',
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 'percent',
-                'onchange'          => 'sale\booking\BookingPriceAdapter::onchangeValue'
+                'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
             ],
 
             'value' => [
@@ -62,7 +62,7 @@ class BookingPriceAdapter extends Model {
                 'description'       => "Value of the discount (monetary amount or percentage).",
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 0.0,
-                'onchange'          => 'sale\booking\BookingPriceAdapter::onchangeValue'
+                'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
             ],
 
             'discount_id' => [
@@ -83,14 +83,16 @@ class BookingPriceAdapter extends Model {
         ];
     }
 
-    public static function onchangeValue($om, $oids, $lang) {
+    public static function onupdateValue($om, $oids, $lang) {
         // reset computed price for related bookings and booking_line_groups
-        $discounts = $om->read(__CLASS__, $oids, ['booking_line_id', 'booking_line_group_id']);
+        $discounts = $om->read(__CLASS__, $oids, ['booking_id', 'booking_line_id', 'booking_line_group_id']);
 
         if($discounts > 0) {
+            $bookings_ids = array_map( function($a) { return $a['booking_id']; }, $discounts);
             $booking_lines_ids = array_map( function($a) { return $a['booking_line_id']; }, $discounts);
             $booking_line_groups_ids = array_map( function($a) { return $a['booking_line_group_id']; }, $discounts);
-            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['unit_price' => null, 'price' => null, 'total' => null]);
+            $om->write('sale\booking\Booking', $bookings_ids, ['price' => null, 'total' => null]);
+            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['discount' => null, 'unit_price' => null, 'price' => null, 'total' => null]);
             $om->write('sale\booking\BookingLineGroup', $booking_line_groups_ids, ['price' => null, 'total' => null]);
         }
     }

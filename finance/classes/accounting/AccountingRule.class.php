@@ -55,7 +55,7 @@ class AccountingRule extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\tax\VatRule',
                 'description'       => "VAT rule the line is related to.",
-                'onchange'          => 'finance\accounting\AccountingRule::onchangeVatRuleId'
+                'onupdate'          => 'onupdateVatRuleId'
             ],
 
             'prices_ids' => [
@@ -69,7 +69,7 @@ class AccountingRule extends Model {
     }
 
 
-    public static function onchangeVatRuleId($om, $oids, $lang) {
+    public static function onupdateVatRuleId($om, $oids, $lang) {
         $res = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {

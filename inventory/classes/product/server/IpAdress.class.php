@@ -15,13 +15,13 @@ class IpAdress extends Model {
         return [
             'IPV4' => [
                 'type'              => 'string',
-                'onchange'          => 'inventory\product\server\IpAdress::getIP',
+                'onupdate'          => 'inventory\product\server\IpAdress::getIP',
                 'description'       => 'IPV4 adress of the server (32 bits).'
             ],
 
             'IPV6' => [
                 'type'              => 'string',
-                'onchange'          => 'inventory\product\server\IpAdress::getIP',
+                'onupdate'          => 'inventory\product\server\IpAdress::getIP',
                 'description'       => 'IPV6 adress of the server (128 bits).'
             ],
             'name' => [

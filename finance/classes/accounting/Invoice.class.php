@@ -41,7 +41,7 @@ class Invoice extends Model {
                     'invoice'
                 ],
                 'default'           => 'proforma',
-                'onchange'          => 'onchangeStatus',
+                'onupdate'          => 'onupdateStatus',
             ],
 
             'type' => [
@@ -52,7 +52,7 @@ class Invoice extends Model {
 
             'number' => [
                 'type'              => 'computed',
-                'function'          => 'finance\accounting\Invoice::getNumber',
+                'function'          => 'calcNumber',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
@@ -102,7 +102,7 @@ class Invoice extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::getPrice',
+                'function'          => 'finance\accounting\Invoice::calcPrice',
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included invoiced amount (computed)."
@@ -111,7 +111,7 @@ class Invoice extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::getTotal',
+                'function'          => 'finance\accounting\Invoice::calcTotal',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the invoice (computed).',
                 'store'             => true
@@ -123,7 +123,7 @@ class Invoice extends Model {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
                 'ondetach'          => 'delete',
-                'onchange'          => 'onchangeInvoiceLinesIds'
+                'onupdate'          => 'onupdateInvoiceLinesIds'
             ],
 
             'invoice_line_groups_ids' => [
@@ -132,7 +132,7 @@ class Invoice extends Model {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
-                'onchange'          => 'onchangeInvoiceLineGroupsIds'
+                'onupdate'          => 'onupdateInvoiceLineGroupsIds'
             ],
 
             'payment_terms_id' => [
@@ -166,7 +166,7 @@ class Invoice extends Model {
         return $result;
     }    
 
-    public static function getNumber($om, $oids, $lang) {
+    public static function calcNumber($om, $oids, $lang) {
         $result = [];
 
         $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id'], $lang);
@@ -200,7 +200,7 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
 
         $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.price'], $lang);
@@ -213,7 +213,7 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
 
         $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.total'], $lang);
@@ -250,17 +250,17 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function onchangeStatus($om, $ids, $lang) {
+    public static function onupdateStatus($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
         // immediate recompute
         $om->read(__CLASS__, $ids, ['number'], $lang);
     }
 
-    public static function onchangeInvoiceLinesIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLinesIds($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
-    public static function onchangeInvoiceLineGroupsIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLineGroupsIds($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
@@ -286,7 +286,6 @@ class Invoice extends Model {
         }
         return parent::canupdate($om, $oids, $values, $lang);
     }
-
 
     /**
      * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.

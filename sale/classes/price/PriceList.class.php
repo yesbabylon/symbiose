@@ -16,7 +16,7 @@ class PriceList extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => "Short label to ease identification of the list.",
-                'onchange'          => 'onchangeName'
+                'onupdate'          => 'onupdateName'
             ],
 
             'date_from' => [
@@ -34,7 +34,7 @@ class PriceList extends Model {
             'duration' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'function'          => 'sale\price\PriceList::getDuration',
+                'function'          => 'calcDuration',
                 'store'             => true,
                 'description'       => "Pricelist validity duration, in days."
             ],
@@ -49,7 +49,7 @@ class PriceList extends Model {
                     'closed'                // can no longer be used          
                 ],
                 'description'       => 'Status of the list.',
-                'onchange'          => 'sale\price\PriceList::onchangeStatus',
+                'onupdate'          => 'onupdateStatus',
                 'default'           => 'pending'
             ],
 
@@ -57,7 +57,7 @@ class PriceList extends Model {
             'is_active' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'sale\price\PriceList::getIsActive',
+                'function'          => 'calcIsActive',
                 'description'       => "Is the pricelist currently applicable?",
                 'store'             => true,                
                 'readonly'          => true
@@ -67,7 +67,7 @@ class PriceList extends Model {
             'prices_count' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'function'          => 'sale\price\PriceList::getPricesCount',
+                'function'          => 'calcPricesCount',
                 // 'store'             => true,
                 'description'       => "Number of prices defined in list."
             ],
@@ -88,7 +88,7 @@ class PriceList extends Model {
         ];
     }
 
-    public static function getDuration($om, $oids, $lang) {
+    public static function calcDuration($om, $oids, $lang) {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
 
@@ -100,7 +100,7 @@ class PriceList extends Model {
         return $result;
     }
 
-    public static function getIsActive($om, $oids, $lang) {
+    public static function calcIsActive($om, $oids, $lang) {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to', 'status']);
 
@@ -115,7 +115,7 @@ class PriceList extends Model {
     }
 
 
-    public static function getPricesCount($om, $oids, $lang) {
+    public static function calcPricesCount($om, $oids, $lang) {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['prices_ids']);
 
@@ -130,7 +130,7 @@ class PriceList extends Model {
     /**
      * Invalidate related prices names.
      */
-    public static function onchangeName($om, $oids, $lang) {
+    public static function onupdateName($om, $oids, $lang) {
         $lists = $om->read(__CLASS__, $oids, ['prices_ids'], $lang);
 
         if($lists > 0) {
@@ -140,7 +140,7 @@ class PriceList extends Model {
         }
     }
 
-    public static function onchangeStatus($om, $oids, $lang) {
+    public static function onupdateStatus($om, $oids, $lang) {
         $pricelists = $om->read(__CLASS__, $oids, ['status']);
         $om->write(__CLASS__, $oids, ['is_active' => null]);
 

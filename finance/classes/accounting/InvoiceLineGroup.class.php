@@ -44,14 +44,14 @@ class InvoiceLineGroup extends Model {
                 'foreign_field'     => 'invoice_line_group_id',
                 'description'       => 'Detailed lines of the group.',
                 'ondetach'          => 'delete',
-                'onchange'          => 'onchangeInvoiceLinesIds'
+                'onupdate'          => 'onupdateInvoiceLinesIds'
             ]
 
         ];
     }
 
 
-    public static function onchangeInvoiceLinesIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLinesIds($om, $oids, $lang) {
         $groups = $om->read(__CLASS__, $oids, ['invoice_id']);
         if($groups) {
             $invoices_ids = [];

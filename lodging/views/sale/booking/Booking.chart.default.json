@@ -5,26 +5,18 @@
         "groups": ["booking.default.user"]
     },
     "layout": {
-        "entity": "lodging\\sale\\booking\\Booking",
+        "entity": "lodging\\sale\\booking\\Consumption",
+        "type": "bar",
+        "stacked": false,
         "group_by": "range",
         "range_interval": "month",
-        "range_from": "date.prev.year.first",
+        "range_from": "date.this.year.first",
         "range_to": "date.this.year.last",
         "datasets": [
             {
                 "label": "tout public",
-                "operation": ["SUM", "object.total"],
-                "domain"   : ["type", "=", "general"]
-            },
-            {
-                "label": "séjours scolaires",
-                "operation": ["SUM", "object.price"],
-                "domain"   : ["type", "=", "school_trip"]
-            },
-            {
-                "label": "stages",
-                "operation": ["SUM", "object.price"],
-                "domain"   : ["type", "=", "sport_camp"]
+                "operation": ["COUNT", "object.id"],
+                "domain"   : ["is_rental_unit", "=", true]
             }
         ]
     }

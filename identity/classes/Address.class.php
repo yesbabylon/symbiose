@@ -20,14 +20,14 @@ class Address extends Model {
 
     public static function getColumns() {
         return [
-            'name' => [
+            'display_name' => [
                 'type'             => 'alias',
-                'alias'            => 'display_name'
+                'alias'            => 'name'
             ],
 
-            'display_name' => [
+            'name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Address::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the address.'
@@ -35,7 +35,7 @@ class Address extends Model {
 
             'identity_name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\Address::getIdentityName',
+                'function'          => 'calcIdentityName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the related identity.'
@@ -45,7 +45,7 @@ class Address extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => 'The identity that the address relates to.',
-                'onchange'          => 'identity\Address::onchangeIdentityId'
+                'onupdate'          => 'onupdateIdentityId'
             ],
 
             'role' => [
@@ -60,45 +60,45 @@ class Address extends Model {
             'address_street' => [
                 'type'              => 'string',
                 'description'       => 'Street and number.',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
 
             'address_dispatch' => [
                 'type'              => 'string',
                 'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
 
             'address_city' => [
                 'type'              => 'string',
                 'description'       => 'City.',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
             
             'address_zip' => [
                 'type'              => 'string',
                 'description'       => 'Postal code.',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
 
             'address_state' => [
                 'type'              => 'string',
                 'description'       => 'State or region.',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
 
             'address_country' => [
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',
                 'description'       => 'Country.',
-                'onchange'          => 'identity\Address::onchangeAddress'
+                'onupdate'          => 'onupdateAddress'
             ],
 
 
         ];
     }
     
-    public static function getIdentityName($om, $oids, $lang) {
+    public static function calcIdentityName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['identity_id.name']);
         foreach($res as $oid => $odata) {
@@ -107,7 +107,7 @@ class Address extends Model {
         return $result;
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['address_street', 'address_city', 'address_zip', 'address_country' ]);
         foreach($res as $oid => $odata) {
@@ -116,11 +116,11 @@ class Address extends Model {
         return $result;
     }
 
-    public static function onchangeIdentityId($om, $oids, $lang) {
+    public static function onupdateIdentityId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, [ 'identity_name' => null ], $lang);
     }
 
-    public static function onchangeAddress($om, $oids, $lang) {
+    public static function onupdateAddress($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
     }    
 }

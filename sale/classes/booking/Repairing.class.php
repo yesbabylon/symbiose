@@ -27,7 +27,7 @@ class Repairing extends Model {
                 'usage'             => 'text/plain',
                 'description'       => "Reason of the repairing, for internal use.",
                 'default'           => '',
-                'onchange'          => 'onchangeDescription'
+                'onupdate'          => 'onupdateDescription'
             ],
 
             'repairs_ids' => [
@@ -51,14 +51,14 @@ class Repairing extends Model {
                 'type'              => 'date',
                 'description'       => "",
                 'default'           => time(),
-                'onchange'          => 'onchangeDateFrom'
+                'onupdate'          => 'onupdateDateFrom'
             ],
 
             'date_to' => [
                 'type'              => 'date',
                 'description'       => "",
                 'default'           => time(),
-                'onchange'          => 'onchangeDateTo'                
+                'onupdate'          => 'onupdateDateTo'                
             ]
 
         ];
@@ -75,16 +75,16 @@ class Repairing extends Model {
         return $result;
     }
 
-    public static function onchangeDescription($om, $oids, $lang) {
+    public static function onupdateDescription($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['name' => null]);
         $om->read(get_called_class(), $oids, ['name']);
     }
 
-    public static function onchangeDateFrom($om, $oids, $lang) {
+    public static function onupdateDateFrom($om, $oids, $lang) {
 
     }
 
-    public static function onchangeDateTo($om, $oids, $lang) {
+    public static function onupdateDateTo($om, $oids, $lang) {
 
     }
 

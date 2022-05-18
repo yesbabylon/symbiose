@@ -24,7 +24,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
                 'foreign_object'    => 'lodging\sale\pos\Cashdesk',
                 'description'       => 'Cash desk the log entry belongs to.',
                 'required'          => true,
-                'onchange'          => 'onchangeCashdeskId'
+                'onupdate'          => 'onupdateCashdeskId'
             ],
 
             'orders_ids' => [
@@ -44,7 +44,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
         ];
     }
 
-    public static function onchangeCashdeskId($om, $oids, $lang) {
+    public static function onupdateCashdeskId($om, $oids, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id.center_id'], $lang);
 
         if($sessions > 0) {
@@ -52,7 +52,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
                 $om->write(__CLASS__,  $sid, ['center_id' => $session['cashdesk_id.center_id']], $lang);
             }
         }
-        parent::onchangeCashdeskId($om, $oids, $lang);
+        parent::onupdateCashdeskId($om, $oids, $lang);
     }
 
 }

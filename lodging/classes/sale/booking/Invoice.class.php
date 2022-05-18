@@ -56,7 +56,7 @@ class Invoice extends \sale\booking\Invoice {
                     'invoice'
                 ],
                 'default'           => 'proforma',
-                'onchange'          => 'onchangeStatus',
+                'onupdate'          => 'onupdateStatus',
             ]
 
 
@@ -109,7 +109,7 @@ class Invoice extends \sale\booking\Invoice {
         return $result;
     }
 
-    public static function onchangeStatus($om, $ids, $lang) {
+    public static function onupdateStatus($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
         // immediate recompute
         $om->read(__CLASS__, $ids, ['number'], $lang);
