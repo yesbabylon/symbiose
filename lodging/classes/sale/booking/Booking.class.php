@@ -17,7 +17,7 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => "Code to serve as reference (should be unique).",
-                'function'          => 'getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -40,21 +40,21 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The customer whom the booking relates to (computed).",
-                'onchange'          => 'onchangeCustomerId'
+                'onupdate'          => 'onupdateCustomerId'
             ],
 
             'customer_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Identity',
                 'description'       => "The customer whom the booking relates to.",
-                'onchange'          => 'onchangeCustomerIdentityId'
+                'onupdate'          => 'onupdateCustomerIdentityId'
             ],
 
             'customer_nature_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
                 'description'       => 'Nature of the customer (synched with customer) for views convenience.',
-                'onchange'          => 'onchangeCustomerNatureId',
+                'onupdate'          => 'onupdateCustomerNatureId',
                 'required'          => true
             ],
 
@@ -63,7 +63,7 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => 'lodging\identity\Center',
                 'description'       => "The center to which the booking relates to.",
                 'required'          => true,
-                'onchange'          => 'lodging\sale\booking\Booking::onchangeCenterId'
+                'onupdate'          => 'lodging\sale\booking\Booking::onupdateCenterId'
             ],
 
             'center_office_id' => [
@@ -108,7 +108,9 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Grouped consumptions of the booking.'
+                'description'       => 'Grouped consumptions of the booking.',
+                'order'             => 'order',
+                'onupdate'          => 'onupdateBookingLinesGroupsIds'
             ],
 
             'rental_unit_assignments_ids' => [
@@ -137,7 +139,7 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Approx. amount of persons involved in the booking.',
-                'function'          => 'getNbPers',
+                'function'          => 'calcNbPers',
                 'store'             => true
             ],
 
@@ -149,7 +151,11 @@ class Booking extends \sale\booking\Booking {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
+        $om->call('sale\booking\Booking', '_resetPrices', $oids, $lang);
+    }
+
+    public static function calcName($om, $oids, $lang) {
         $result = [];
 
         $bookings = $om->read(__CLASS__, $oids, ['center_id.center_office_id.code'], $lang);
@@ -173,21 +179,7 @@ class Booking extends \sale\booking\Booking {
         return $result;
     }
 
-
-    public static function getCustomerNatureId($om, $oids, $lang) {
-        $result = [];
-
-        $bookings = $om->read(__CLASS__, $oids, ['customer_id.customer_nature_id'], $lang);
-
-        if($bookings > 0) {
-            foreach($bookings as $oid => $odata) {
-                $result[$oid] = $odata['customer_id.customer_nature_id'];
-            }
-        }
-        return $result;
-    }
-
-    public static function getNbPers($om, $oids, $lang) {
+    public static function calcNbPers($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids.nb_pers', 'booking_lines_groups_ids.is_autosale']);
 
@@ -208,7 +200,7 @@ class Booking extends \sale\booking\Booking {
     /**
      * Maintain sync with Customer
      */
-    public static function onchangeCustomerNatureId($om, $oids, $lang) {
+    public static function onupdateCustomerNatureId($om, $oids, $lang) {
         $bookings = $om->read(__CLASS__, $oids, ['customer_id', 'customer_nature_id'], $lang);
 
         if($bookings > 0) {
@@ -221,7 +213,7 @@ class Booking extends \sale\booking\Booking {
     /**
      * Maintain sync with Customer when assigning a new customer by selecting a customer_identity_id
      */
-    public static function onchangeCustomerIdentityId($om, $oids, $lang) {
+    public static function onupdateCustomerIdentityId($om, $oids, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
 
@@ -258,7 +250,7 @@ class Booking extends \sale\booking\Booking {
         }
     }
 
-    public static function onchangeCustomerId($om, $oids, $lang) {
+    public static function onupdateCustomerId($om, $oids, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, [
             'customer_identity_id',
@@ -298,7 +290,7 @@ class Booking extends \sale\booking\Booking {
         }
     }
 
-    public static function onchangeCenterId($om, $oids, $lang) {
+    public static function onupdateCenterId($om, $oids, $lang) {
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'center_id.center_office_id']);
 
         if($bookings > 0) {
