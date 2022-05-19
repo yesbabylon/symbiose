@@ -1,6 +1,6 @@
 {
-    "name": "Booking list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "name": "Persons List",
+    "description": "This view displays the total number of persons that came to a Kaleo Center",
     "access": {
         "groups": ["booking.default.user"]
     },
@@ -8,8 +8,8 @@
         "entity": "sale\\booking\\CompositionItem",
         "group_by": "range",
         "range_interval": "year",
-        "range_from": "date.this.year.first",
-        "range_to": "date.this.year.last",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
         "datasets": [
             {
                 "label": "Nombre de personnes",

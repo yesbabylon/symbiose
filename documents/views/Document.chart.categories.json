@@ -1,0 +1,18 @@
+{
+    "name": "Documents list",
+    "description": "This view displays the categories of documents.",
+    "access": {
+        "groups": ["documents.default.user"]
+    },
+    "layout": {
+        "entity": "documents\\Document",
+        "type": "pie",
+        "group_by": "field",
+        "field": "category_id",
+        "datasets": [
+            {
+                "operation": ["COUNT", "object.id"]
+            }
+        ]
+    }
+}

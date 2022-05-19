@@ -110,7 +110,9 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_field'     => 'booking_line_id',
                 'description'       => 'Price adapters holding the manual discounts applied on the line.',
                 'onchange'          => 'sale\booking\BookingLine::onchangePriceAdaptersIds'
-            ]
+            ],
+
+            'customer_nature'
 
         ];
     }
@@ -159,6 +161,8 @@ class BookingLine extends \sale\booking\BookingLine {
         }
         return $result;
     }
+
+    
 
     /**
      *

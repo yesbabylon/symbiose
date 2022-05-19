@@ -29,7 +29,8 @@
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "finance\\accounting\\Invoice",
-                                                "view": "list.dashboard"
+                                                "view": "list.dashboard",
+                                                "domain": ["status", "=", "reconciled"]
                                             }
 
                                         ]
@@ -44,15 +45,15 @@
                                         "items": [
                                             {
                                                 "id": "item.fundings3",
-                                                "label": "Total remboursements",
+                                                "label": "Remboursements",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity":"sale\\pay\\Funding",
-                                                "view": "chart.default"
+                                                "entity":"finance\\accounting\\Invoice",
+                                                "view": "chart.invoicedTotal"
                                             },
                                             {
                                                 "id": "item.fundings4",
-                                                "label": "Total Financement",
+                                                "label": "Financements",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Funding",

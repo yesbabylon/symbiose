@@ -1,24 +1,20 @@
 {
-    "name": "Total turnover of bookings",
-    "description": "This view displays the total turnover of the bookings.",
+    "name": "Total Checkins",
+    "description": "Checks how many checkins happen during the week we are in.",
     "access": {
         "groups": ["booking.default.user"]
     },
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
-        "stacked": true,
         "group_by": "range",
-        "range_interval": "month",
+        "range_interval": "week",
         "range_from": "date.this.year.last",
         "range_to": "date.this.year.first",
         "datasets": [
             {
                 "label": "CA réservations HTVA",
-                "operation": ["SUM", "object.total"]
-            },
-            {
-                "label": "CA réservations TVAC",
-                "operation": ["SUM", "object.price"]
+                "operation": ["COUNT", "object.id"],
+                "domain":[[["date_from", ">=", "date.this.week.first"], ["date_from", "<=", "date.this.week.last"]]]
             }
         ]
     }

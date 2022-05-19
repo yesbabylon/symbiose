@@ -35,18 +35,7 @@
                 "sort": "desc",
                 "domain": ["status", "=", "quote"]
               }
-            },
-            {
-              "id": "item.dashboard",
-              "type": "entry",
-              "label": "Dashboard",
-              "description": "",
-              "route": "/bookings",
-              "context": {
-                "entity": "lodging\\sale\\booking\\Booking", 
-                "view": "dashboard.default"
-              }
-            }                      
+            }                    
             
         ]
     }

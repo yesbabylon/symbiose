@@ -1,6 +1,6 @@
 {
     "name": "Funding list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "description": "This view displays the total of reimbursements that happened",
     "access": {
         "groups": ["finance.default.user"]
     },
@@ -13,8 +13,8 @@
         "datasets": [
             {
                 "label": "Remboursements dus",
-                "operation": ["SUM", "object.due_amount"],
-                "domain"   : ["due_amount", "<", 0]
+                "operation": ["COUNT", "object.due_amount"],
+                "domain"   : ["due_amount", ">", "object.paid_amount"]
             }
         ]
     }

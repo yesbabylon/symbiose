@@ -129,6 +129,20 @@
                     "view": "list.default"
                   }
                 }
+                ,
+                {
+                  "id": "item.planning",
+    
+                  "description": "",
+    
+                    "type": "entry",
+    
+                    "label": "Dashboard",
+                    "context": {
+                        "entity": "sale\\pay\\Payment",
+                        "view": "dashboard.default"
+                    }
+                }
               ]
             }           
         ]

@@ -1,6 +1,6 @@
 {
     "name": "Booking list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "description": "This view displays the list of bookings for a specific SKU.",
     "access": {
         "groups": ["booking.default.user"]
     },
