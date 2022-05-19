@@ -1,15 +1,15 @@
 {
-    "name": "Booking list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "name": "Cash Desk Session List",
+    "description": "This view displays the list of Cash Desk Sessions.",
     "access": {
         "groups": ["pos.default.user"]
     },
     "layout": {
         "entity": "sale\\pos\\CashdeskSession",
         "group_by": "range",
-        "range_interval": "year",
-        "range_from": "date.this.year.first",
-        "range_to": "date.this.year.last",
+        "range_interval": "month",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
         "datasets": [
             {
                 "label" : "CA Total POS",

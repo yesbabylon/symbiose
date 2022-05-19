@@ -1,0 +1,32 @@
+{
+    "name": "INS List",
+    "description": "This view displays the composition of bookings filtered by nationality",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\booking\\CompositionItem",
+        "type": "bar",
+        "group_by": "range",
+        "range_interval": "year",
+        "range_from": "date.this.year.first",
+        "range_to": "date.this.year.last",
+        "datasets": [
+            {
+                "label": "BE",
+                "operation": ["COUNT", "object.id"],
+                "domain"   : ["country", "=", "BE"]
+            },
+            {
+                "label": "NL",
+                "operation": ["COUNT", "object.id"],
+                "domain"   : ["country", "=", "NL"]
+            },
+            {
+                "label": "FR",
+                "operation": ["COUNT", "object.id"],
+                "domain"   : ["country", "=", "FR"]
+            }
+        ]
+    }
+}

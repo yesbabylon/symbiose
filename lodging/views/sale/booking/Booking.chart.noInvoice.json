@@ -1,6 +1,6 @@
 {
-    "name": "Booking list",
-    "description": "This view displays the list of bookings for a specific season.",
+    "name": "Invoiced Bookings.",
+    "description": "This view displays the list invoiced bookings.",
     "access": {
         "groups": ["booking.default.user"]
     },
@@ -12,12 +12,9 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA réservations",
-                "operation": ["SUM", "object.total"]
-            },
-            {
-                "label": "CA réservations",
-                "operation": ["SUM", "object.price"]
+                "label": "Réservations non facturées",
+                "operation": ["COUNT", "object.id"],
+                "domain": ["status", "=", "debit balance"]
             }
         ]
     }

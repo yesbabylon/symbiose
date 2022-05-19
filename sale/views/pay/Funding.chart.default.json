@@ -1,6 +1,6 @@
 {
     "name": "Sale list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "description": "This view displays the list of Fundings",
     "access": {
         "groups": ["sale.default.user"]
     },
@@ -13,7 +13,7 @@
         "datasets": [
             {
                 "label": "Total remboursements",
-                "operation": ["SUM", "object.due_amount"],
+                "operation": ["COUNT", "object.due_amount"],
                 "domain": ["due_amount", "<", "object.paid_amount"]
             }
         ]

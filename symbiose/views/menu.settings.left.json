@@ -1143,6 +1143,16 @@
                                 }
                             },
                             {
+                                "id": "settings.all_bookings.total_bookings",
+                                "type": "entry",
+                                "label": "Nombre de réservations",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.bookingCount"
+                                }
+                            },
+                            {
                                 "id": "settings.all_bookings.compositionItem",
                                 "type": "entry",
                                 "label": "Nombre de personnes",
@@ -1153,15 +1163,86 @@
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings",
+                                "id": "settings.all_bookings.total_bookings.accomodation",
                                 "type": "entry",
-                                "label": "Nombre de réservations",
+                                "label": "Nombre de nuitées",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.bookingCount"
+                                    "view": "chart.accomodation"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.INS",
+                                "type": "entry",
+                                "label": "INS",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.INS"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_meals",
+                                "type": "entry",
+                                "label": "CA repas",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.meal"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.noInvoice",
+                                "type": "entry",
+                                "label": "CA non facturé",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.noInvoice"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.sku",
+                                "type": "entry",
+                                "label": "SKU",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.sku"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.sojournType",
+                                "type": "entry",
+                                "label": "Type de séjour",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.sojournType"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.taxes",
+                                "type": "entry",
+                                "label": "Nombre de taxes de séjour",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\BookingLine",
+                                    "view": "chart.taxes"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.provisional",
+                                "type": "entry",
+                                "label": "CA prévisionnel",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.provisionalCA"
                                 }
                             }
+
                         ]
                     },
                     {
@@ -1208,16 +1289,6 @@
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Funding",
                                     "view": "chart.default"
-                                }
-                            },
-                            {
-                                "id": "settings.all_stats.ca_funding",
-                                "type": "entry",
-                                "label": "CA Total Financement",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\pay\\Funding",
-                                    "view": "chart.ca"
                                 }
                             }
                         ]

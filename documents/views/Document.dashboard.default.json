@@ -29,7 +29,8 @@
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "documents\\Document",
-                                                "view": "list.dashboard"
+                                                "view": "list.dashboard",
+                                                "domain": ["creator", "=", "user.id"]
                                             }
 
                                         ]
@@ -52,10 +53,10 @@
                                             },
                                             {
                                                 "id": "item.documents4",
-                                                "label": "Documents",
+                                                "label": "Categories",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "chart.default"
                                             }
                                         ]

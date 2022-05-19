@@ -75,6 +75,16 @@
                         }
                     }
                 ]
+            },
+            {
+              "id": "item.planning",
+              "description": "",
+                "type": "entry",
+                "label": "Dashboard",
+                "context": {
+                    "entity": "finance\\accounting\\Invoice",
+                    "view": "dashboard.default"
+                }
             }               
 
         ]
