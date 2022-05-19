@@ -174,7 +174,7 @@ $cron->schedule(
     "booking.quote.reminder.{$params['booking_id']}",
     time() + $limit * 86400,
     'lodging_booking_remind-quote',
-    [ 'id' => $params['booking_id'] ]
+    [ 'id' => $params['booking_id'], 'lang' => $params['lang'] ]
 );
 
 $context->httpResponse()

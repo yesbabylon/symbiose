@@ -39,7 +39,7 @@
             "help": ""
         },
         "is_pack": {
-            "label": "Pack ?",
+            "label": "Pack",
             "description": "S'agit-il d'un pack ?",
             "help": ""
         },

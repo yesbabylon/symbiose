@@ -28,7 +28,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                     'person',           // depends on the number of people
                     'accomodation',     // depends on the number of nights
                     'unit'              // only depends on quantity
-                                       ],
+                ],
                 'default'           => 'unit'
             ],
 
@@ -40,13 +40,22 @@ class ProductModel extends \sale\catalog\ProductModel {
                     'sport_camp',       // sport camp (special products)
                     'ota'               // booking made on an Online Travel Agency (through channel manager)
                 ],
-                'description'       => 'Type to which assign a bookin that has this pproduct.',
+                'description'       => 'Type to which assign a bookin that has this product.',
                 'default'           => 'general'
             ],
 
             'is_accomodation' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Model relates to a rental unit that is an accomodation.',
+                'function'          => 'calcIsAccomodation',
+                'store'             => true,
+                'visible'           => [ ['type', '=', 'service'], ['is_rental_unit', '=', true] ]                 
+            ],
+
+            'is_rental_unit' => [
                 'type'              => 'boolean',
-                'description'       => 'Is the product an accomodation?',
+                'description'       => 'Is the product a rental_unit?',
                 'default'           => false,
                 'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
             ],
@@ -55,7 +64,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'boolean',
                 'description'       => 'Is the product a meal? (meals might be part of the board / included services of the stay).',
                 'default'           => false,
-                'visible'           => [ ['type', '=', 'service'], ['is_accomodation', '=', false] ]
+                'visible'           => [ ['type', '=', 'service'], ['is_rental_unit', '=', false] ]
             ],
 
             'rental_unit_assignement' => [
@@ -63,7 +72,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'description'       => 'The way the product is assigned to a rental unit (a specific unit, a specific category, or based on capacity match).',
                 'selection'         => ['unit', 'category', 'capacity'],
                 'default'           => 'category',
-                'visible'           => [ ['is_accomodation', '=', true] ]
+                'visible'           => [ ['is_rental_unit', '=', true] ]
             ],
 
             'has_duration' => [
@@ -84,7 +93,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'integer',
                 'description'       => 'Capacity implied by the service (used for filtering rental units).',
                 'default'           => 1,
-                'visible'           => [ ['is_accomodation', '=', true] ]
+                'visible'           => [ ['is_rental_unit', '=', true] ]
             ],
 
             // a product either refers to a specific rental unit, or to a category of rental units (both allowing to find matching units for a given period and a capacity)
@@ -92,14 +101,14 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnitCategory',
                 'description'       => "Rental Unit Category this Product related to, if any.",
-                'visible'           => [ ['is_accomodation', '=', true], ['rental_unit_assignement', '=', 'category'] ]
+                'visible'           => [ ['is_rental_unit', '=', true], ['rental_unit_assignement', '=', 'category'] ]
             ],
 
             'rental_unit_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => "Specific Rental Unit this Product related to, if any",
-                'visible'           => [ ['is_accomodation', '=', true], ['rental_unit_assignement', '=', 'unit'] ],
+                'visible'           => [ ['is_rental_unit', '=', true], ['rental_unit_assignement', '=', 'unit'] ],
                 'onupdate'          => 'onupdateRentalUnitId'
             ],
 
@@ -121,6 +130,19 @@ class ProductModel extends \sale\catalog\ProductModel {
             ]
 
         ];
+    }
+
+    public static function calcIsAccomodation($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:calcIsAccomodation", QN_REPORT_DEBUG);
+
+        $result = [];
+        $models = $om->read(__CLASS__, $oids, ['rental_unit_id.is_accomodation']);
+        if($models > 0) {
+            foreach($models as $oid => $model) {
+                $result[$oid] = $model['rental_unit_id.is_accomodation'];
+            }
+        }
+        return $result;
     }
 
     /**
