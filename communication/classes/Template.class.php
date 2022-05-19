@@ -17,7 +17,7 @@ class Template extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => "Code of the template (allows duplicates).",
-                'function'          => 'communication\Template::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -26,7 +26,7 @@ class Template extends Model {
                 'type'              => 'string',
                 'description'       => "Code of the template (allows duplicates).",
                 'required'          => true,
-                'onchange'          => 'communication\Template::onchangeCode'
+                'onupdate'          => 'onupdateCode'
             ],
 
             'description' => [
@@ -39,7 +39,7 @@ class Template extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'communication\TemplateCategory',
                 'description'       => "The category the template belongs to.",
-                'onchange'          => 'communication\Template::onchangeCategoryId',
+                'onupdate'          => 'communication\Template::onupdateCategoryId',
                 'required'          => true
             ],
 
@@ -47,7 +47,7 @@ class Template extends Model {
                 'type'              => 'string',
                 'selection'         => [ 'quote', 'contract', 'invoice' ],
                 'description'       => 'The context in which the template is meant to be used.',
-                'onchange'          => 'communication\Template::onchangeType'
+                'onupdate'          => 'communication\Template::onupdateType'
             ],
 
             'parts_ids' => [
@@ -67,7 +67,7 @@ class Template extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
 
         $templates = $om->read(__CLASS__, $oids, ['code', 'type', 'category_id.name'], $lang);
@@ -78,17 +78,17 @@ class Template extends Model {
         return $result;
     }
 
-    public static function onchangeCode($orm, $oids, $lang) {
+    public static function onupdateCode($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['name' => null], $lang);
         $orm->read(__CLASS__, $oids, ['name'], $lang);
     }
 
-    public static function onchangeType($orm, $oids, $lang) {
+    public static function onupdateType($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['name' => null], $lang);
         $orm->read(__CLASS__, $oids, ['name'], $lang);
     }
 
-    public static function onchangeCategoryId($orm, $oids, $lang) {
+    public static function onupdateCategoryId($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['name' => null], $lang);
         $orm->read(__CLASS__, $oids, ['name'], $lang);
     }

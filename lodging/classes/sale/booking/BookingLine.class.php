@@ -23,7 +23,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product items for the line.',
-                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQty',
+                'onupdate'          => 'onupdateQty',
                 'default'           => 1.0
             ],
 
@@ -31,7 +31,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'description'       => 'Line relates to an accomodation (from product_model).',
-                'function'          => 'lodging\sale\booking\BookingLine::getIsAccomodation',
+                'function'          => 'getIsAccomodation',
                 'store'             => true
             ],
 
@@ -39,7 +39,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'description'       => 'Line relates to a meal (from product_model).',
-                'function'          => 'lodging\sale\booking\BookingLine::getIsMeal',
+                'function'          => 'getIsMeal',
                 'store'             => true
             ],
 
@@ -47,14 +47,14 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => 'Quantity accounting method (from product_model).',
-                'function'          => 'lodging\sale\booking\BookingLine::getQtyAccountingMethod',
+                'function'          => 'getQtyAccountingMethod',
                 'store'             => true
             ],
 
             'qty_vars' => [
                 'type'              => 'text',
                 'description'       => 'JSON array holding qty variation deltas (for \'by person\' products), if any.',
-                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeQtyVars'
+                'onupdate'          => 'onupdateQtyVars'
             ],
 
             'is_autosale' => [
@@ -68,7 +68,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
                 'description'       => 'Group the line relates to (in turn, groups relate to their booking).',
                 'required'          => true,             // must be set at creation
-                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeBookingLineGroupId',
+                'onupdate'          => 'onupdateBookingLineGroupId',
                 'ondelete'          => 'cascade'
             ],
 
@@ -84,7 +84,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
-                'onchange'          => 'lodging\sale\booking\BookingLine::onchangeProductId'
+                'onupdate'          => 'onupdateProductId'
             ],
 
             'consumptions_ids' => [
@@ -109,10 +109,8 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_object'    => 'lodging\sale\booking\BookingPriceAdapter',
                 'foreign_field'     => 'booking_line_id',
                 'description'       => 'Price adapters holding the manual discounts applied on the line.',
-                'onchange'          => 'sale\booking\BookingLine::onchangePriceAdaptersIds'
-            ],
-
-            'customer_nature'
+                'onupdate'          => 'sale\booking\BookingLine::onchangePriceAdaptersIds'
+            ]
 
         ];
     }
@@ -167,15 +165,10 @@ class BookingLine extends \sale\booking\BookingLine {
     /**
      *
      * New group assignement : should (only) be called upon creation
-     * Adapt quantity based on product type and parent group config
+     * 
      */
-    public static function onchangeBookingLineGroupId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeBookingLineGroupId", QN_REPORT_DEBUG);
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.has_pack', 'product_id.product_model_id.qty_accounting_method'], $lang);
-
-        foreach($lines as $lid => $line) {
-            //#todo - is this necessary ?
-        }
+    public static function onupdateBookingLineGroupId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateBookingLineGroupId", QN_REPORT_DEBUG);
 
     }
 
@@ -184,8 +177,8 @@ class BookingLine extends \sale\booking\BookingLine {
      *
      * This is called at booking line creation.
      */
-    public static function onchangeProductId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeProductId", QN_REPORT_DEBUG);
+    public static function onupdateProductId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateProductId", QN_REPORT_DEBUG);
 
         // reset computed fields related to product model
         $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_accomodation' => null, 'is_meal' => null]);
@@ -239,10 +232,13 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
+        // reset computed fields related to price
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
+
     }
 
-    public static function onchangeQtyVars($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeQtyVars", QN_REPORT_DEBUG);
+    public static function onupdateQtyVars($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQtyVars", QN_REPORT_DEBUG);
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.nb_pers','qty_vars']);
 
         if($lines > 0) {
@@ -263,6 +259,9 @@ class BookingLine extends \sale\booking\BookingLine {
                 }
             }
         }
+
+        // reset computed fields related to price
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
     }
 
     /**
@@ -270,8 +269,8 @@ class BookingLine extends \sale\booking\BookingLine {
      *
      * This handler is called at booking line creation and is in charge of updating the rental units assignments related to the line.
      */
-    public static function onchangeQty($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onchangeQty", QN_REPORT_DEBUG);
+    public static function onupdateQty($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQty", QN_REPORT_DEBUG);
 
         // try to auto-assign a rental_unit
 
@@ -292,6 +291,7 @@ class BookingLine extends \sale\booking\BookingLine {
         // #todo - we should rather deal with "is_rental_unit" (all rental units should be addressed)
         $lines = array_filter($lines, function($a) { return $a['is_accomodation']; });
 
+        $bookings_ids = [];
         $booking_line_groups_ids = [];
         // there is at least one accomodation
         if(count($lines)) {
@@ -306,6 +306,7 @@ class BookingLine extends \sale\booking\BookingLine {
             ], $lang);
 
             foreach($lines as $lid => $line) {
+                $bookings_ids[] = $line['booking_id'];
                 $booking_line_groups_ids[] = $line['booking_line_group_id'];
 
                 // remove all previous rental_unit assignements
@@ -443,8 +444,8 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        // reset total price
-        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
+        // reset computed fields related to price
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
     }
 
 
@@ -568,7 +569,7 @@ class BookingLine extends \sale\booking\BookingLine {
             foreach($lines as $lid => $line) {
                 if(!$line['has_own_qty']) {
                     if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                        $om->write('lodging\sale\booking\BookingLine', $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
+                        $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
                     }
                     else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
                         if(!$line['qty_vars']) {
@@ -597,13 +598,13 @@ class BookingLine extends \sale\booking\BookingLine {
                                     $qty_vars = array_slice($qty_vars, 0, $factor);
                                 }
                                 $om->write(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
-                                // will trigger onchangeQtyVar which will update  qty
+                                // will trigger onupdateQtyVar which will update  qty
                             }
                         }
                     }
                 }
                 else {
-                    // own quantity has been assigned in onchangeProductId
+                    // own quantity has been assigned in onupdateProductId
                 }
             }
         }

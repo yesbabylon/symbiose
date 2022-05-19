@@ -26,7 +26,7 @@ class SeasonPeriod extends Model {
                 'description'       => "Date (included) at which the season starts.",
                 'required'          => true,
                 'default'           => time(),
-                'onchange'          => 'onchangeDateFrom'
+                'onupdate'          => 'onupdateDateFrom'
             ],
 
             'date_to' => [
@@ -41,7 +41,7 @@ class SeasonPeriod extends Model {
                 'foreign_object'    => 'sale\season\Season',
                 'description'       => "The season the period belongs to.",
                 'required'          => true,
-                'onchange'          => 'sale\season\SeasonPeriod::onchangeSeason'
+                'onupdate'          => 'onupdateSeason'
             ],
 
             'season_type_id' => [
@@ -56,7 +56,7 @@ class SeasonPeriod extends Model {
                 'result_type'       => 'integer',
                 'usage'             => 'date/month',
                 'description'       => "The month during which the season starts.",
-                'function'          => 'getMonth',
+                'function'          => 'calcMonth',
                 'store'             => true
             ],
 
@@ -65,7 +65,7 @@ class SeasonPeriod extends Model {
                 'result_type'       => 'integer',
                 'usage'             => 'date/year',
                 'description'       => "The Year the season is part of.",
-                'function'          => 'sale\season\SeasonPeriod::getYear',
+                'function'          => 'calcYear',
                 'store'             => true
             ],
 
@@ -73,26 +73,26 @@ class SeasonPeriod extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => "The category the season relates to.",
-                'function'          => 'sale\season\SeasonPeriod::getSeasonCategoryId',
+                'function'          => 'calcSeasonCategoryId',
                 'store'             => true
             ]
 
         ];
     }
 
-    public static function onchangeDateFrom($om, $oids, $lang) {
+    public static function onupdateDateFrom($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['month' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['month']);
     }
 
-    public static function onchangeSeason($om, $oids, $lang) {
+    public static function onupdateSeason($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['year', 'season_category_id']);
     }
 
-    public static function getMonth($om, $oids, $lang) {
+    public static function calcMonth($om, $oids, $lang) {
         $result = [];
         $periods = $om->read(__CLASS__, $oids, ['date_from']);
         foreach($periods as $oid => $odata) {
@@ -101,7 +101,7 @@ class SeasonPeriod extends Model {
         return $result;
     }
 
-    public static function getYear($om, $oids, $lang) {
+    public static function calcYear($om, $oids, $lang) {
         $result = [];
         $periods = $om->read(__CLASS__, $oids, ['season_id.year']);
         foreach($periods as $oid => $odata) {
@@ -110,7 +110,7 @@ class SeasonPeriod extends Model {
         return $result;
     }
 
-    public static function getSeasonCategoryId($om, $oids, $lang) {
+    public static function calcSeasonCategoryId($om, $oids, $lang) {
         $result = [];
         $periods = $om->read(__CLASS__, $oids, ['season_id.season_category_id']);
         foreach($periods as $oid => $odata) {

@@ -21,7 +21,7 @@ class Product extends \sale\catalog\Product {
                 'foreign_object'    => 'lodging\sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
                 'required'          => true,
-                'onchange'          => 'sale\catalog\Product::onchangeProductModelId'
+                'onupdate'          => 'sale\catalog\Product::onupdateProductModelId'
             ],
 
             'pack_lines_ids' => [
@@ -36,7 +36,7 @@ class Product extends \sale\catalog\Product {
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
                 'required'          => true,
-                'onchange'          => 'lodging\sale\catalog\Product::onchangeLabel'
+                'onupdate'          => 'onupdateLabel'
             ],
 
             'sku' => [
@@ -44,17 +44,17 @@ class Product extends \sale\catalog\Product {
                 'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
                 'required'          => true,
                 'unique'            => true,
-                'onchange'          => 'lodging\sale\catalog\Product::onchangeSku'
+                'onupdate'          => 'onupdateSku'
             ]
 
         ];
     }
 
-    public static function onchangeLabel($om, $oids, $lang) {
+    public static function onupdateLabel($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onchangeSku($om, $oids, $lang) {
+    public static function onupdateSku($om, $oids, $lang) {
         $products = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($products > 0 && count($products)) {
             $prices_ids = [];

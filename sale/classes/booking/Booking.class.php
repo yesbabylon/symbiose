@@ -22,7 +22,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => "Code to serve as reference (might not be unique)",
-                'function'          => 'sale\booking\Booking::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -43,21 +43,21 @@ class Booking extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The customer whom the booking relates to (computed).",
-                'onchange'          => 'sale\booking\Booking::onchangeCustomerId'
+                'onupdate'          => 'onupdateCustomerId'
             ],
 
             'customer_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => "The Customer identity.",
-                'onchange'          => 'sale\booking\Booking::onchangeCustomerIdentityId'
+                'onupdate'          => 'onupdateCustomerIdentityId'
             ],
 
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
-                'function'          => 'sale\booking\Booking::getTotal',
+                'function'          => 'getTotal',
                 'description'       => 'Total tax-excluded price of the booking.',
                 'store'             => true
             ],
@@ -72,7 +72,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
-                'function'          => 'sale\booking\Booking::getPrice',
+                'function'          => 'getPrice',
                 'description'       => 'Final tax-included price of the booking.',
                 'store'             => true
             ],
@@ -114,7 +114,8 @@ class Booking extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Grouped lines of the booking.'
+                'description'       => 'Grouped lines of the booking.',
+                'onupdate'          => 'onupdateBookingLinesGroupsIds'                
             ],
 
             'consumptions_ids' => [
@@ -161,7 +162,7 @@ class Booking extends Model {
                 ],
                 'description'       => 'Status of the booking.',
                 'default'           => 'quote',
-                'onchange'          => 'onchangeStatus'
+                'onupdate'          => 'onupdateStatus'
             ],
 
             'is_cancelled' => [
@@ -206,7 +207,7 @@ class Booking extends Model {
             'date_from' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'function'          => 'sale\booking\Booking::getDateFrom',
+                'function'          => 'getDateFrom',
                 'store'             => true,
                 'default'           => time()
             ],
@@ -214,7 +215,7 @@ class Booking extends Model {
             'date_to' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'function'          => 'sale\booking\Booking::getDateTo',
+                'function'          => 'getDateTo',
                 'store'             => true,
                 'default'           => time()
             ],
@@ -259,7 +260,15 @@ class Booking extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
+        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
+    }
+
+    public static function _resetPrices($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
+    }
+
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['created', 'customer_identity_id', 'customer_identity_id.name'], $lang);
 
@@ -367,7 +376,7 @@ class Booking extends Model {
     }
 
 
-    public static function onchangeStatus($om, $oids, $lang) {
+    public static function onupdateStatus($om, $oids, $lang) {
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
@@ -378,8 +387,8 @@ class Booking extends Model {
         }
     }
 
-    public static function onchangeCustomerId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onchangeCustomerId", QN_REPORT_DEBUG);
+    public static function onupdateCustomerId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerId", QN_REPORT_DEBUG);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
 
         if($bookings > 0) {
@@ -396,8 +405,8 @@ class Booking extends Model {
         }
     }
 
-    public static function onchangeCustomerIdentityId($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onchangeCustomerIdentityId", QN_REPORT_DEBUG);
+    public static function onupdateCustomerIdentityId($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
         // reset name
         $om->write(__CLASS__, $oids, ['name' => null]);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);

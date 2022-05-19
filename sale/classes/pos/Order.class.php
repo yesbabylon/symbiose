@@ -16,7 +16,7 @@ class Order extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'description'       => 'Number of the order.'
             ],
@@ -24,7 +24,7 @@ class Order extends Model {
             'sequence' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
-                'function'          => 'getSequence',
+                'function'          => 'calcSequence',
                 'store'             => true,
                 'description'       => 'Sequence number (used for naming).'
             ],
@@ -51,7 +51,7 @@ class Order extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\CashdeskSession',
                 'description'       => 'The session the order belongs to.',
-                'onchange'          => 'onchangeSessionId',
+                'onupdate'          => 'onupdateSessionId',
                 'required'          => true
             ],
 
@@ -73,7 +73,7 @@ class Order extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money',                
                 'description'       => 'Total tax-excluded price for all lines (computed).',
-                'function'          => 'getTotal',
+                'function'          => 'calcTotal',
                 'store'             => true
             ],
 
@@ -82,7 +82,7 @@ class Order extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money',                
                 'description'       => 'Final tax-included price for all lines (computed).',
-                'function'          => 'getPrice',
+                'function'          => 'calcPrice',
                 'store'             => true
             ],
 
@@ -91,7 +91,7 @@ class Order extends Model {
                 'foreign_object'    => 'sale\pos\OrderLine',
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
-                'onchange'          => 'onchangeOrderLinesIds',
+                'onupdate'          => 'onupdateOrderLinesIds',
                 'description'       => 'The lines that relate to the order.'
             ],
 
@@ -106,15 +106,15 @@ class Order extends Model {
         ];
     }
 
-    public static function onchangeSessionId($om, $ids, $lang) {
+    public static function onupdateSessionId($om, $ids, $lang) {
         $om->write(get_called_class(), $ids, ['name' => null, 'sequence' => null], $lang);
     }
 
-    public static function onchangeOrderLinesIds($om, $ids, $lang) {
+    public static function onupdateOrderLinesIds($om, $ids, $lang) {
         $om->write(get_called_class(), $ids, ['price' => null, 'total' => null], $lang);
     }
 
-    public static function getDisplayName($om, $ids, $lang) {
+    public static function calcName($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(get_called_class(), $ids, ['sequence', 'session_id', 'session_id.cashdesk_id'], $lang);
         if($orders > 0) {
@@ -125,8 +125,8 @@ class Order extends Model {
         return $result;
     }
 
-    public static function getSequence($om, $ids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\pos\Order:getSequence", QN_REPORT_DEBUG);
+    public static function calcSequence($om, $ids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\pos\Order:calcSequence", QN_REPORT_DEBUG);
         $result = [];
         $orders = $om->read(get_called_class(), $ids, ['session_id'], $lang);
         if($orders > 0) {
@@ -142,7 +142,7 @@ class Order extends Model {
     }
 
 
-    public static function getTotal($om, $ids, $lang) {
+    public static function calcTotal($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_lines_ids.total']);
         if($orders > 0) {
@@ -159,7 +159,7 @@ class Order extends Model {
         return $result;
     }
 
-    public static function getPrice($om, $ids, $lang) {
+    public static function calcPrice($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_lines_ids.price']);
         if($orders > 0) {

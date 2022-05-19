@@ -20,7 +20,7 @@ class Product extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\catalog\Product::getFullName',
+                'function'          => 'getFullName',
                 'store'             => true,
                 'description'       => 'The full name of the product (label + sku).'
             ],
@@ -29,7 +29,7 @@ class Product extends Model {
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
                 'required'          => true,
-                'onchange'          => 'sale\catalog\Product::onchangeLabel'
+                'onupdate'          => 'onupdateLabel'
             ],
 
             'sku' => [
@@ -37,7 +37,7 @@ class Product extends Model {
                 'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
                 'required'          => true,
                 'unique'            => true,
-                'onchange'          => 'sale\catalog\Product::onchangeSku'
+                'onupdate'          => 'onupdateSku'
             ],
 
             'ean' => [
@@ -57,20 +57,20 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\ProductModel',
                 'description'       => "Product Model of this variant.",
                 'required'          => true,
-                'onchange'          => 'sale\catalog\Product::onchangeProductModelId'
+                'onupdate'          => 'onupdateProductModelId'
             ],
 
             'family_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current product belongs to.",
-                'default'           => 'sale\catalog\Product::defaultFamilyId'
+                'default'           => 'defaultFamilyId'
             ],
 
             'is_pack' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'sale\catalog\Product::getIsPack',
+                'function'          => 'getIsPack',
                 'description'       => 'Is the product a pack? (from model).',
                 'store'             => true,                
                 'readonly'          => true
@@ -79,7 +79,7 @@ class Product extends Model {
             'has_own_price' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'sale\catalog\Product::getHasOwnPrice',
+                'function'          => 'getHasOwnPrice',
                 'description'       => 'Product is a pack with its own price (from model).',
                 'visible'           => ['is_pack', '=', true],
                 'store'             => true,
@@ -204,11 +204,11 @@ class Product extends Model {
         return $result;
     }
 
-    public static function onchangeLabel($om, $oids, $lang) {
+    public static function onupdateLabel($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onchangeSku($om, $oids, $lang) {
+    public static function onupdateSku($om, $oids, $lang) {
         $products = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($products > 0 && count($products)) {
             $prices_ids = [];
@@ -220,7 +220,7 @@ class Product extends Model {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onchangeProductModelId($om, $oids, $lang) {
+    public static function onupdateProductModelId($om, $oids, $lang) {
         $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
         foreach($products as $pid => $product) {
             $om->write(get_called_class(), $pid, [

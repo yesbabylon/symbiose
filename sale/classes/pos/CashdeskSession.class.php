@@ -16,7 +16,7 @@ class CashdeskSession extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -86,7 +86,7 @@ class CashdeskSession extends Model {
      * Create an 'opening' operation in the operations log.
      * Cashdesk assignement cannot be changed, so this handler is called once, when the session has just be created.
      */
-    public static function onchangeCashdeskId($om, $oids, $lang) {
+    public static function onupdateCashdeskId($om, $oids, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id', 'amount', 'user_id'], $lang);
 
         if($sessions > 0) {
@@ -101,7 +101,7 @@ class CashdeskSession extends Model {
         }
     }
 
-    public static function getDisplayName($om, $ids, $lang) {
+    public static function calcName($om, $ids, $lang) {
         $result = [];
 
         $sessions = $om->read(get_called_class(), $ids, ['cashdesk_id.name', 'user_id.name'], $lang);

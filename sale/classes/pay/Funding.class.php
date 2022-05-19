@@ -69,7 +69,7 @@ class Funding extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'description'       => "The deadline model used for creating the funding, if any.",
-                'onchange'          => "onchangePaymentDeadlineId"
+                'onupdate'          => "onupdatePaymentDeadlineId"
             ],
 
             'invoice_id' => [
@@ -131,7 +131,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function onchangePaymentDeadlineId($orm, $oids, $lang) {
+    public static function onupdatePaymentDeadlineId($orm, $oids, $lang) {
         $orm->write(get_called_class(), $oids, ['name' => null], $lang);
     }
 

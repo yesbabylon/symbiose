@@ -22,7 +22,7 @@ class Partner extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'getDisplayName',
+                'function'          => 'calcDisplayName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the partner (related organisation name).'
@@ -39,7 +39,7 @@ class Partner extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => 'The targeted identity (the partner).',
-                'onchange'          => 'identity\Partner::onchangeIdentity',
+                'onupdate'          => 'onupdatePartnerIdentityId',
                 'required'          => true
             ],
 
@@ -73,7 +73,7 @@ class Partner extends Model {
 
             'email' => [
                 'type'              => 'computed',
-                'function'          => 'getEmail',
+                'function'          => 'calcEmail',
                 'result_type'       => 'string',
                 'usage'             => 'email',
                 'description'       => 'Email of the contact (from Identity).'
@@ -82,7 +82,7 @@ class Partner extends Model {
 
             'phone' => [
                 'type'              => 'computed',
-                'function'          => 'getPhone',
+                'function'          => 'calcPhone',
                 'result_type'       => 'string',
                 'usage'             => 'phone',
                 'description'       => 'Phone number of the contact (from Identity).'
@@ -91,7 +91,7 @@ class Partner extends Model {
 
             'title' => [
                 'type'              => 'computed',
-                'function'          => 'getTitle',
+                'function'          => 'calcTitle',
                 'result_type'       => 'string',
                 'description'       => 'Title of the contact (from Identity).'
                 // #memo - title origin remains the related identity
@@ -113,7 +113,7 @@ class Partner extends Model {
         ];
     }
 
-    public static function onchangeIdentity($om, $oids, $lang) {
+    public static function onupdatePartnerIdentityId($om, $oids, $lang) {
         $res = $om->read(get_called_class(), $oids, [ 'partner_identity_id.lang_id' ], $lang);
         if($res > 0 && count($res) ) {
             foreach($res as $oid => $odata) {
@@ -125,7 +125,7 @@ class Partner extends Model {
         $om->read(get_called_class(), $oids, [ 'name' ], $lang);
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcDisplayName($om, $oids, $lang) {
         $result = [];
         $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.name'], $lang);
         foreach($partners as $oid => $partner) {
@@ -136,7 +136,7 @@ class Partner extends Model {
         return $result;
     }
 
-    public static function getEmail($om, $oids, $lang) {
+    public static function calcEmail($om, $oids, $lang) {
         $result = [];
         $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.email'], $lang);
         foreach($partners as $oid => $partner) {
@@ -148,7 +148,7 @@ class Partner extends Model {
         return $result;
     }
 
-    public static function getPhone($om, $oids, $lang) {
+    public static function calcPhone($om, $oids, $lang) {
         $result = [];
         $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.phone'], $lang);
         foreach($partners as $oid => $partner) {
@@ -160,7 +160,7 @@ class Partner extends Model {
         return $result;
     }
 
-    public static function getTitle($om, $oids, $lang) {
+    public static function calcTitle($om, $oids, $lang) {
         $result = [];
         $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.title'], $lang);
         foreach($partners as $oid => $partner) {

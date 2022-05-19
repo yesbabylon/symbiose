@@ -17,7 +17,7 @@ class User extends \core\User {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'identity\User::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the user.'
@@ -28,7 +28,7 @@ class User extends \core\User {
                 'foreign_object'    => 'identity\Identity',
                 'domain'            => ['type', '=', 'I'],                
                 'description'       => 'The contact related to the user.',
-                'onchange'          => 'identity\User::onchangeIdentity'
+                'onupdate'          => 'onupdateIdentity'
             ],
 
             'setting_values_ids' => [
@@ -50,7 +50,7 @@ class User extends \core\User {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $users = $om->read(__CLASS__, $oids, ['login', 'identity_id.name']);
         foreach($users as $oid => $odata) {
@@ -65,7 +65,7 @@ class User extends \core\User {
     }
 
 
-    public static function onchangeIdentity($om, $oids, $lang) {
+    public static function onupdateIdentity($om, $oids, $lang) {
         // force re-compute the name
         $om->write(__CLASS__, $oids, ['name' =>  null], $lang);
     }    
