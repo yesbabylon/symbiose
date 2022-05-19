@@ -156,6 +156,26 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Pack Lines",
+                        "id": "section.ref_pack_lines",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ref_pack_lines_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

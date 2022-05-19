@@ -30,7 +30,7 @@ class AccountingRuleLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => "Code of the related account.",
-                'function'          => 'finance\accounting\AccountingRuleLine::getAccount',
+                'function'          => 'calcAccount',
                 'store'             => true
             ],
 
@@ -57,7 +57,7 @@ class AccountingRuleLine extends Model {
     }
 
 
-    public static function getAccount($om, $oids, $lang) {
+    public static function calcAccount($om, $oids, $lang) {
         $result = [];
 
         $res = $om->read(get_called_class(), $oids, ['account_id.code']);

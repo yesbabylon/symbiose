@@ -27,8 +27,9 @@
                                                 "label": "Bookings",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\MessageModel",
-                                                "view": "list.default"
+                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "view": "list.default",
+                                                "domain": [["date_from", ">=", "date.prev.year.first"], ["date_from", "<=", "date.prev.year.last"]]
                                             }
 
                                         ]

@@ -13,9 +13,17 @@ list($params, $providers) = announce([
         'charset'           => 'UTF-8',
         'accept-origin'     => '*'
     ],
+    'access' => [
+        'visibility'        => 'protected'
+    ],
     'providers'     => ['context', 'orm', 'auth']
 ]);
 
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\auth\AuthenticationManager   $auth
+ */
 list($context, $om, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 // retrieve current User identifier (HTTP headers lookup through Authentication Manager)
@@ -36,20 +44,22 @@ $user = User::ids($ids)
                 'id', 
                 'login', 
                 'name', 
-                'groups_ids' => ['name', 'display_name'],
                 'identity_id' => ['firstname', 'lastname'], 
                 'language', 
                 'organisation_id', 
                 'centers_ids',
-                'center_offices_ids'
+                'center_offices_ids',
+                'groups_ids' => ['name']                
             ])
             ->adapt('txt')
             ->first();
 
 if(!$user) {
-    // #todo - unknown error
+    throw new Exception('unexpected_error', QN_ERROR_INVALID_USER);
 }
+
 $user['groups'] = array_values(array_map(function ($a) {return $a['name'];}, $user['groups_ids']));
+unset($user['groups_ids']);
 
 // send back basic info of the User object
 $context->httpResponse()

@@ -95,16 +95,14 @@ $consumptions = Consumption::search([
                     ['booking_id','=', $params['id']], 
                     ['type', '=', 'book'],
                     ['date', '<=', $today], 
-                    ['is_rental_unit', '=', true]
+                    ['is_accomodation', '=', true]
                 ])
-                ->read(['rental_unit_id' => ['id', 'is_accomodation']])
+                ->read(['rental_unit_id'])
                 ->get();
 
 if($consumptions) {
     foreach($consumptions as $cid => $consumption) {
-        if($consumption['rental_unit_id']['is_accomodation']) {
-            lodging_booking_do_checkin_mark_busy($orm, $consumption['rental_unit_id']['id']);
-        }
+        lodging_booking_do_checkin_mark_busy($orm, $consumption['rental_unit_id']);
     }
 }
 

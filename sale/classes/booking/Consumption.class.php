@@ -21,7 +21,7 @@ class Consumption extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\booking\Consumption::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'readonly'          => true
@@ -73,13 +73,13 @@ class Consumption extends Model {
                 'type'              => 'time',
                 'description'       => 'Moment of the day at which the event stops, if applicable.',
                 'default'           => 24 * 3600,
-                'readonly'          => true                
+                'readonly'          => true
             ],
 
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'ooo',           // out-of-order (repair & maintenance)                    
+                    'ooo',           // out-of-order (repair & maintenance)
                     'book',          // consumption relates to a booking
                     'link',          // rental unit is a child of another booked unit or cannot be partially booked
                     'part'           // rental unit is the parent of another booked unit and can partially booked
@@ -121,6 +121,15 @@ class Consumption extends Model {
                 'default'           => false
             ],
 
+            'is_accomodation' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Does the consumption relate to an accomodation (from rental unit)?',
+                'function'          => 'calcIsAccomodation',
+                'visible'           => ['is_rental_unit', '=', true],
+                'store'             => true
+            ],
+
             'qty' => [
                 'type'              => 'integer',
                 'description'       => "How many times the consumption is booked for.",
@@ -131,14 +140,29 @@ class Consumption extends Model {
     }
 
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $consumptions = $om->read(get_called_class(), $oids, ['booking_id.customer_id.name', 'booking_id.description', 'product_id.name', 'date', 'schedule_from']);
-        foreach($consumptions as $oid => $odata) {
-            $datetime = $odata['date'] + $odata['schedule_from'];
-            $moment = date("d/m/Y H:i:s", $datetime);
-            $result[$oid] = substr("{$odata['booking_id.customer_id.name']} {$odata['product_id.name']} {$moment}", 0, 255);
+        if($consumptions) {
+            foreach($consumptions as $oid => $odata) {
+                $datetime = $odata['date'] + $odata['schedule_from'];
+                $moment = date("d/m/Y H:i:s", $datetime);
+                $result[$oid] = substr("{$odata['booking_id.customer_id.name']} {$odata['product_id.name']} {$moment}", 0, 255);
+            }
+
         }
         return $result;
+    }
+
+
+    public static function calcIsAccomodation($om, $oids, $lang) {
+        $result = [];
+        $consumptions = $om->read(get_called_class(), $oids, ['is_rental_unit', 'rental_unit_id.is_accomodation']);
+        if($consumptions) {
+            foreach($consumptions as $cid => $consumption) {
+                $result[$cid] = $consumption['rental_unit_id.is_accomodation'];
+            }
+        }
+        return $result;        
     }
 }

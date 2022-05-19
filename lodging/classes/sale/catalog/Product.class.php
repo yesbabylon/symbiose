@@ -32,6 +32,13 @@ class Product extends \sale\catalog\Product {
                 'ondetach'          => 'delete'
             ],
 
+            'ref_pack_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\catalog\PackLine',
+                'foreign_field'     => 'child_product_id',
+                'description'       => "Pack lines that related to the product."
+            ],
+
             'label' => [
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',

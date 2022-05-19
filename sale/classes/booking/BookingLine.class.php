@@ -233,12 +233,10 @@ class BookingLine extends Model {
     public static function _resetPrices($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'discount' => null, 'free_qty' => null]);        
         // update parent objects
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_line_group_id'], $lang);        
-        if($groups > 0) {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, array_values($groups));
-            $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($groups));
-            $om->write('sale\booking\Booking', $bookings_ids, ['price' => null, 'total' => null]);
-            $om->write('sale\booking\BookingLineGroup', $booking_line_groups_ids, ['price' => null, 'total' => null]);
+        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);        
+        if($lines > 0) {            
+            $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
+            $om->call('sale\booking\BookingLineGroup', '_resetPrices', $booking_line_groups_ids, $lang);
         }
     }
 

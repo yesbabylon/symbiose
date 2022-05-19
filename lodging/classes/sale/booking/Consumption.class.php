@@ -201,8 +201,6 @@ class Consumption extends \sale\booking\Consumption {
         }
 
         if($product_model['is_accomodation']) {
-            // #todo - this actually means that the product relates to a rental unit (that might not be an accomodation)
-            //  - we should check if the rental unit is an acoomodation
             // checkout is the day following the last night
             $date_to += 24*3600;
         }
@@ -224,7 +222,12 @@ class Consumption extends \sale\booking\Consumption {
             $rental_units_ids = [$product_model['rental_unit_id']];
         }
         else {
-            $domain = [ ['center_id', '=', $center_id], ['is_accomodation', '=', true] ];
+            $domain = [ ['center_id', '=', $center_id] ];
+
+            if($product_model['is_accomodation']) {
+                $domain[] = ['is_accomodation', '=', true];
+            }
+
             if($rental_unit_assignement == 'category') {
                 $rental_unit_category_id = $product_model['rental_unit_category_id'];
 
