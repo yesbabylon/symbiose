@@ -17,7 +17,7 @@ class OrderPayment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
                 'description'       => 'The order the line relates to.',
-                'onchange'          => 'onchangeOrderId'
+                'onupdate'          => 'onupdateOrderId'
             ],
 
             'status' => [
@@ -35,7 +35,7 @@ class OrderPayment extends Model {
                 'foreign_object'    => 'sale\pos\OrderLine',
                 'foreign_field'     => 'order_payment_id',
                 'description'       => 'The order lines selected for the payement.',
-                'onchange'          => 'onchangeOrderLinesIds'
+                'onupdate'          => 'onupdateOrderLinesIds'
             ],
 
             'order_payment_parts_ids' => [
@@ -43,7 +43,7 @@ class OrderPayment extends Model {
                 'foreign_object'    => 'sale\pos\OrderPaymentPart',
                 'foreign_field'     => 'order_payment_id',
                 'description'       => 'The parts that relate to the payement.',
-                'onchange'          => 'onchangeOrderPaymentPartsIds'
+                'onupdate'          => 'onupdateOrderPaymentPartsIds'
             ],
 
             'total_paid' => [
@@ -51,7 +51,7 @@ class OrderPayment extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Total paid amount from payment parts.',
-                'function'          => 'getTotalPaid'
+                'function'          => 'calcTotalPaid'
             ],
 
             'total_due' => [
@@ -59,7 +59,7 @@ class OrderPayment extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Total due amount (tax incl.) from selected lines.',
-                'function'          => 'getTotalDue'
+                'function'          => 'calcTotalDue'
             ]
 
         ];
@@ -70,7 +70,7 @@ class OrderPayment extends Model {
      * This handled is mostly called upon creation and assignation to an order.
      * 
      */
-    public static function onchangeOrderId($om, $ids, $lang) {
+    public static function onupdateOrderId($om, $ids, $lang) {
         $payments = $om->read(get_called_class(), $ids, ['order_id'], $lang);
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
@@ -83,7 +83,7 @@ class OrderPayment extends Model {
         }
     }
 
-    public static function getTotalPaid($om, $ids, $lang) {
+    public static function calcTotalPaid($om, $ids, $lang) {
         $result = [];
         $payments = $om->read(__CLASS__, $ids, ['order_payment_parts_ids.amount'], $lang);
         if($payments > 0) {
@@ -98,7 +98,7 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function getTotalDue($om, $ids, $lang) {
+    public static function calcTotalDue($om, $ids, $lang) {
         $result = [];
         $payments = $om->read(__CLASS__, $ids, ['order_lines_ids.price'], $lang);
         if($payments > 0) {
@@ -113,11 +113,11 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function onchangeOrderPaymentPartsIds($om, $ids, $lang) {
+    public static function onupdateOrderPaymentPartsIds($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['total_paid' => null], $lang);
     }
 
-    public static function onchangeOrderLinesIds($om, $ids, $lang) {
+    public static function onupdateOrderLinesIds($om, $ids, $lang) {
         $om->write(__CLASS__, $ids, ['total_due' => null], $lang);
     }
 

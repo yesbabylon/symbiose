@@ -28,7 +28,7 @@ class Holiday extends Model {
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Date/first day of the holiday.",
-                'onchange'          => 'calendar\Holiday::onchangeDateFrom'
+                'onupdate'          => 'onupdateDateFrom'
             ],
 
             'is_single_day' => [
@@ -49,7 +49,7 @@ class Holiday extends Model {
                 'result_type'       => 'integer',
                 'usage'             => 'date:year',
                 'description'       => 'Year of the holiday.',
-                'function'          => 'getYear',
+                'function'          => 'calcYear',
                 'store'             => true
             ],
 
@@ -58,7 +58,7 @@ class Holiday extends Model {
                 'foreign_object'    => 'calendar\HolidayYear',
                 'description'       => "The Year the holiday belongs to.",
                 'required'          => true,
-                'onchange'          => 'onchangeHolidayYearId'
+                'onupdate'          => 'onupdateHolidayYearId'
             ],
 
             'type' => [
@@ -72,7 +72,7 @@ class Holiday extends Model {
         ];
     }
 
-    public static function getYear($orm, $oids, $lang) {
+    public static function calcYear($orm, $oids, $lang) {
         $result = [];
         $res = $orm->read(__CLASS__, $oids, ['holiday_year_id.year'], $lang);
         foreach($res as $oid => $odata) {
@@ -81,11 +81,11 @@ class Holiday extends Model {
         return $result;
     }
 
-    public static function onchangeHolidayYearId($orm, $oids, $lang) {
+    public static function onupdateHolidayYearId($orm, $oids, $lang) {
         $orm->write(__CLASS__, $oids, ['year' => null]);
     }
 
-    public static function onchangeDateFrom($orm, $oids, $lang) {
+    public static function onupdateDateFrom($orm, $oids, $lang) {
         $res = $orm->read(__CLASS__, $oids, ['date_from', 'is_single_day'], $lang);
 
         if($res > 0 && count($res)) {

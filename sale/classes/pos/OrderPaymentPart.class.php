@@ -21,27 +21,27 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\OrderPayment',
                 'description'       => 'The order payment the part relates to.',
-                'onchange'          => 'onchangeOrderPaymentId'
+                'onupdate'          => 'onupdateOrderPaymentId'
             ],
 
             'amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount paid (whatever the origin).',
-                'onchange'          => 'onchangeAmount'
+                'onupdate'          => 'onupdateAmount'
             ],
 
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
                 'description'       => 'The order the part relates to (based on payment).',
-                'onchange'          => 'onchangeOrderId'
+                'onupdate'          => 'onupdateOrderId'
             ]
 
         ];
     }
 
-    public static function onchangeAmount($om, $ids, $lang) {
+    public static function onupdateAmount($om, $ids, $lang) {
         $parts = $om->read(get_called_class(), $ids, ['order_payment_id'], $lang);
         if($parts > 0) {
             $order_payments_ids = array_reduce($parts, function($c, $o) { return array_merge($c, [$o['order_payment_id']]); }, []);
@@ -49,7 +49,7 @@ class OrderPaymentPart extends \sale\booking\Payment {
         }
     }
 
-    public static function onchangeOrderPaymentId($om, $ids, $lang) {
+    public static function onupdateOrderPaymentId($om, $ids, $lang) {
         $parts = $om->read(get_called_class(), $ids, ['order_payment_id.order_id'], $lang);
         if($parts > 0) {
             foreach($parts as $pid => $part) {

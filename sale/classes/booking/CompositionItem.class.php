@@ -17,7 +17,7 @@ class CompositionItem extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\CompositionItem::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'description'       => 'The display name of the person (concatenation of first and last names).'
             ],
@@ -85,7 +85,7 @@ class CompositionItem extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Composition',
                 'description'       => "The composition the item refers to.",
-                'onchange'          => 'onchangeCompositionId',
+                'onupdate'          => 'onupdateCompositionId',
                 'ondelete'          => 'cascade',        // delete item when parent composition is deleted
                 'required'          => true
             ],
@@ -100,7 +100,7 @@ class CompositionItem extends Model {
             'rental_units_ids' => [
                 'type'              => 'computed',
                 'result_type'       => 'one2many',
-                'function'          => 'sale\booking\CompositionItem::getRentalUnitsIds',
+                'function'          => 'calcRentalUnitsIds',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental units attached to the current booking."
             ]
@@ -109,7 +109,7 @@ class CompositionItem extends Model {
         ];
     }
 
-    public static function onchangeCompositionId($om, $oids, $lang) {
+    public static function onupdateCompositionId($om, $oids, $lang) {
         $items = $om->read(get_called_class(), $oids, ['composition_id.booking_id'], $lang);
 
         foreach($items as $oid => $odata) {
@@ -117,7 +117,7 @@ class CompositionItem extends Model {
         }
     }
 
-    public static function getRentalUnitsIds($om, $oids, $lang) {
+    public static function calcRentalUnitsIds($om, $oids, $lang) {
         $result = [];
         $items = $om->read(__CLASS__, $oids, ['composition_id.booking_id']);
 
@@ -136,7 +136,7 @@ class CompositionItem extends Model {
         return $result;
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(__CLASS__, $oids, ['firstname', 'lastname']);
         foreach($res as $oid => $odata) {

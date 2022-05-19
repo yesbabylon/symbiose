@@ -70,7 +70,8 @@ class BookingLineGroup extends Model {
                 'foreign_object'    => 'sale\booking\BookingLine',
                 'foreign_field'     => 'booking_line_group_id',
                 'description'       => 'Booking lines that belong to the group.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'onupdate'          => 'onupdateBookingLinesIds'
             ],
 
             'consumptions_ids' => [
@@ -108,14 +109,29 @@ class BookingLineGroup extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money:2',                
+                'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price for all lines (computed).',
                 'function'          => 'sale\booking\BookingLineGroup::getPrice',
                 'store'             => true
             ]
 
         ];
-    } 
+    }
+
+
+    public static function onupdateBookingLinesIds($om, $oids, $lang) {
+        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
+    }
+
+    public static function _resetPrices($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
+        // update parent booking
+        $groups = $om->read(__CLASS__, $oids, ['booking_id'], $lang);
+        if($groups > 0) {
+            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, array_values($groups));
+            $om->write('sale\booking\Booking', $bookings_ids, ['total' => null, 'price' => null]);
+        }
+    }
 
     public static function getNbNights($om, $oids, $lang) {
         $result = [];
@@ -129,7 +145,7 @@ class BookingLineGroup extends Model {
 
     /**
      * Get total tax-excluded price of the group, with discount applied.
-     * 
+     *
      */
     public static function getTotal($om, $oids, $lang) {
         $result = [];
@@ -153,7 +169,7 @@ class BookingLineGroup extends Model {
 
     /**
      * Get final tax-included price of the group.
-     * 
+     *
      */
     public static function getPrice($om, $oids, $lang) {
         $result = [];
@@ -191,7 +207,7 @@ class BookingLineGroup extends Model {
                 }
             }
         }
-        
+
         return parent::canupdate($om, $oids, $values, $lang);
     }
 

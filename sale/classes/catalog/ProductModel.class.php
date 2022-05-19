@@ -31,7 +31,7 @@ class ProductModel extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current product belongs to.",
-                'onchange'          => 'sale\catalog\ProductModel::onchangeFamilyId',
+                'onupdate'          => 'onupdateFamilyId',
                 'required'          => true
             ],
 
@@ -61,7 +61,7 @@ class ProductModel extends Model {
                 'type'              => 'boolean',
                 'description'       => "Can this product be sold?",
                 'default'           => true,
-                'onchange'          => 'sale\catalog\ProductModel::onchangeCanSell'
+                'onupdate'          => 'onupdateCanSell'
             ],
 
             'cost' => [
@@ -74,7 +74,7 @@ class ProductModel extends Model {
                 'type'              => 'boolean',
                 'description'       => "Is the product a bundle of other products?",
                 'default'           => false,
-                'onchange'          => 'sale\catalog\ProductModel::onchangeIsPack'
+                'onupdate'          => 'onupdateIsPack'
             ],
 
             'has_own_price' => [
@@ -82,7 +82,7 @@ class ProductModel extends Model {
                 'description'       => 'Has the pack its own price, or do we use each sub-product price?',
                 'default'           => false,
                 'visible'           => ['is_pack', '=', true],
-                'onchange'          => 'sale\catalog\ProductModel::onchangeHasOwnPrice'
+                'onupdate'          => 'onupdateHasOwnPrice'
             ],
 
             'type' => [
@@ -151,7 +151,7 @@ class ProductModel extends Model {
                 'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id',
-                'onchange'          => 'sale\catalog\ProductModel::onchangeGroupsIds'
+                'onupdate'          => 'onupdateGroupsIds'
             ],
 
             'categories_ids' => [
@@ -177,7 +177,7 @@ class ProductModel extends Model {
      *
      * Update related products is_pack
      */
-    public static function onchangeIsPack($om, $oids, $lang) {
+    public static function onupdateIsPack($om, $oids, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'is_pack']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['is_pack' => $model['is_pack']]);
@@ -185,7 +185,7 @@ class ProductModel extends Model {
     }
 
 
-    public static function onchangeHasOwnPrice($om, $oids, $lang) {
+    public static function onupdateHasOwnPrice($om, $oids, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'has_own_price']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['has_own_price' => $model['has_own_price']]);
@@ -197,21 +197,21 @@ class ProductModel extends Model {
      *
      * Update related products can_sell
      */
-    public static function onchangeCanSell($om, $oids, $lang) {
+    public static function onupdateCanSell($om, $oids, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'can_sell']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['can_sell' => $model['can_sell']]);
         }
     }
 
-    public static function onchangeFamilyId($om, $oids, $lang) {
+    public static function onupdateFamilyId($om, $oids, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'family_id']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['family_id' => $model['family_id']]);
         }
     }
 
-    public static function onchangeGroupsIds($om, $oids, $lang) {
+    public static function onupdateGroupsIds($om, $oids, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'groups_ids']);
         foreach($models as $mid => $model) {
             $products = $om->read('sale\catalog\Product', $model['products_ids'], ['groups_ids']);

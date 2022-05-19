@@ -8,10 +8,10 @@ use sale\pos\Order;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Send an instant email with given details with a booking quote as attachment.",
+    'description'	=>	"Provide a fully loaded tree for a given order.",
     'params' 		=>	[
         'id' => [
-            'description'   => 'Identifier of the booking related to the sending of the email.',
+            'description'   => 'Identifier of the order for which the tree is requested.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -26,7 +26,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',
+        'visibility'        => 'protected',
         'groups'            => ['pos.default.user'],
     ],
     'response' => [

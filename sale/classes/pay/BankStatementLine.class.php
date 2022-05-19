@@ -24,7 +24,7 @@ class BankStatementLine extends Model {
                 'foreign_object'    => 'sale\pay\Payment',
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
-                'onchange'          => 'sale\pay\BankStatementLine::onchangePaymentsIds',
+                'onupdate'          => 'onupdatePaymentsIds',
                 'ondetach'          => 'delete'
             ],
 
@@ -84,7 +84,7 @@ class BankStatementLine extends Model {
                 'description'       => 'Status of the line.',
                 'default'           => 'pending',
                 'readonly'          => true,
-                'onchange'          => 'sale\pay\BankStatementLine::onchangeStatus',
+                'onupdate'          => 'onupdateStatus',
             ]
 
         ];
@@ -95,7 +95,7 @@ class BankStatementLine extends Model {
      * Line is reconciled if its amount matches the sum of its payments.
      *
      */
-    public static function onchangePaymentsIds($om, $oids, $lang) {
+    public static function onupdatePaymentsIds($om, $oids, $lang) {
         $lines = $om->read(__CLASS__, $oids, ['amount', 'payments_ids.amount']);
 
         if($lines > 0) {
@@ -114,15 +114,10 @@ class BankStatementLine extends Model {
         }
     }
 
-    public static function onchangeStatus($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\pay\BankStatementLine::onchangeStatus", QN_REPORT_DEBUG);
+    public static function onupdateStatus($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling sale\pay\BankStatementLine::onupdateStatus", QN_REPORT_DEBUG);
 
         $lines = $om->read(get_called_class(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
-
-        ob_start();
-        print_r($lines);
-        $msg = ob_get_clean();
-        trigger_error("QN_DEBUG_ORM::$msg", QN_REPORT_DEBUG);
 
         if($lines > 0) {
             $bank_statements_ids = [];

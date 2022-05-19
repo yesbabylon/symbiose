@@ -73,13 +73,13 @@ class DiscountList extends Model {
         ];
     }
 
-    public static function onchangeDiscountClassId($om, $oids, $lang) {
+    public static function onupdateDiscountClassId($om, $oids, $lang) {
         $om->write(__CLASS__, $oids, ['rate_class_id' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['rate_class_id']);
     }    
 
-    public static function getRateClassId($om, $oids, $lang) {
+    public static function calcRateClassId($om, $oids, $lang) {
         $result = [];
         $lists = $om->read(__CLASS__, $oids, ['discount_class_id.rate_class_id']);
         foreach($lists as $oid => $list) {

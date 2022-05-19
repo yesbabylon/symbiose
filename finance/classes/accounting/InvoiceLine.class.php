@@ -24,7 +24,7 @@ class InvoiceLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => 'Final tax-included price of the line (computed).',
-                'function'          => 'finance\accounting\InvoiceLine::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -55,7 +55,7 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the line.',
-                'function'          => 'finance\accounting\InvoiceLine::getUnitPrice',
+                'function'          => 'finance\accounting\InvoiceLine::calcUnitPrice',
                 'store'             => true
             ],
 
@@ -63,7 +63,7 @@ class InvoiceLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangePriceId'
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
             ],
 
             'vat_rate' => [
@@ -71,31 +71,31 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'function'          => 'finance\accounting\InvoiceLine::getVatRate',                
+                'function'          => 'finance\accounting\InvoiceLine::calcVatRate',                
                 'store'             => true,
                 'default'           => 0.0,
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangeVatRate'
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateVatRate'
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 0,
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangeQty'                
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateQty'                
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
                 'default'           => 0,
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangeFreeQty'                
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateFreeQty'                
             ],
 
             'discount' => [
                 'type'              => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0,
-                'onchange'          => 'finance\accounting\InvoiceLine::onchangeDiscount'                
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateDiscount'                
             ],
 
             'description' => [
@@ -108,7 +108,7 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the line (computed).',
-                'function'          => 'finance\accounting\InvoiceLine::getTotal',
+                'function'          => 'finance\accounting\InvoiceLine::calcTotal',
                 'store'             => true
             ],
 
@@ -117,14 +117,14 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price of the line (computed).',
-                'function'          => 'finance\accounting\InvoiceLine::getPrice',
+                'function'          => 'finance\accounting\InvoiceLine::calcPrice',
                 'store'             => true
             ],
 
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(get_called_class(), $oids, ['product_id.name'], $lang);
         if($lines > 0) {
@@ -135,7 +135,7 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    public static function getUnitPrice($om, $oids, $lang) {
+    public static function calcUnitPrice($om, $oids, $lang) {
         $result = [];
 
         $lines = $om->read(__CLASS__, $oids, ['price_id.price']);
@@ -148,7 +148,7 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    public static function getVatRate($om, $oids, $lang) {
+    public static function calcVatRate($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         if($lines > 0) {
@@ -166,7 +166,7 @@ class InvoiceLine extends Model {
      * Get total tax-excluded price of the line.
      * 
      */
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
 
         $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
@@ -188,7 +188,7 @@ class InvoiceLine extends Model {
      * Get final tax-included price of the line.
      * 
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
 
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
@@ -202,7 +202,7 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    public static function onchangePriceId($om, $oids, $lang) {
+    public static function onupdatePriceId($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -213,7 +213,7 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onchangeVatRate($om, $oids, $lang) {
+    public static function onupdateVatRate($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null]);
         // reset parent invoice total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -224,11 +224,11 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onchangeQty($om, $oids, $lang) {
+    public static function onupdateQty($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
     }
 
-    public static function onchangeFreeQty($om, $oids, $lang) {
+    public static function onupdateFreeQty($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -239,7 +239,7 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onchangeDiscount($om, $oids, $lang) {
+    public static function onupdateDiscount($om, $oids, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
