@@ -1,0 +1,22 @@
+{
+    "name": "Prise d'option",
+    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, mais une expiration automatique de l'option sera planifiée.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de la réservation ciblée.",
+            "help": ""
+        },
+        "free_rental_units": {
+            "label": "Libérer les unités locatives",
+            "description": "Les logements et unités locatives seront libérés immédiatement.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+            "unknown_booking": "Réservation inconnue",
+            "empty_booking": "Réservation vide"
+        }
+    }
+}

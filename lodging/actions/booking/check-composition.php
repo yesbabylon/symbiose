@@ -59,8 +59,6 @@ if($assignments) {
     }
 }
 
-
-
 $nb_pers = 0;
 if(count($booking_line_groups_ids)) {
     $groups = BookingLineGroup::ids(array_keys($booking_line_groups_ids))->read(['nb_pers'])->get();
@@ -75,6 +73,7 @@ if(count($booking_line_groups_ids)) {
 /*
     This controller is a check: an empty response means that no alert was raised
 */
+
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 

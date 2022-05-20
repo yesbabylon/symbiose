@@ -46,7 +46,7 @@ class BookingLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
-                'onupdate'          => 'onupdateProductId'                
+                'onupdate'          => 'onupdateProductId'
             ],
 
             'price_id' => [
@@ -210,7 +210,7 @@ class BookingLine extends Model {
 
     public static function onupdateUnitPrice($om, $oids, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, $lang);        
+        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
     }
 
     public static function onupdateVatRate($om, $oids, $lang) {
@@ -231,10 +231,10 @@ class BookingLine extends Model {
 
     // reset computed fields related to price
     public static function _resetPrices($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'discount' => null, 'free_qty' => null]);        
+        $om->write(__CLASS__, $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'discount' => null, 'free_qty' => null]);
         // update parent objects
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);        
-        if($lines > 0) {            
+        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
+        if($lines > 0) {
             $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
             $om->call('sale\booking\BookingLineGroup', '_resetPrices', $booking_line_groups_ids, $lang);
         }

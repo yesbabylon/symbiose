@@ -106,7 +106,8 @@ class Consumption extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the consumption is assigned to.",
-                'readonly'          => true
+                'readonly'          => true,
+                'onupdate'          => 'onupdateRentalUnitId'
             ],
 
             'disclaimed' => [
@@ -149,11 +150,9 @@ class Consumption extends Model {
                 $moment = date("d/m/Y H:i:s", $datetime);
                 $result[$oid] = substr("{$odata['booking_id.customer_id.name']} {$odata['product_id.name']} {$moment}", 0, 255);
             }
-
         }
         return $result;
     }
-
 
     public static function calcIsAccomodation($om, $oids, $lang) {
         $result = [];
@@ -163,6 +162,21 @@ class Consumption extends Model {
                 $result[$cid] = $consumption['rental_unit_id.is_accomodation'];
             }
         }
-        return $result;        
+        return $result;
+    }
+
+    public static function onupdateRentalUnitId($om, $oids, $lang) {
+        $consumptions = $om->read(__CLASS__, $oids, ['rental_unit_id'], $lang);
+        if($consumptions > 0) {
+            $updated_consumptions_ids = [];
+            foreach($consumptions as $cid => $consumption) {
+                if($consumption['rental_unit_id']) {
+                    $updated_consumptions_ids[] = $cid;
+                    $om->write(__CLASS__, $oids, ['is_accomodation' => null, 'is_rental_unit' => true]);
+                }
+            }
+            // force immediate recomputing
+            $om->read(__CLASS__, $updated_consumptions_ids, ['is_accomodation'], $lang);
+        }
     }
 }
