@@ -771,6 +771,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'has_duration',
             'duration',
             'is_rental_unit',
+            'is_accomodation',
             'is_meal'
         ]);
 
@@ -811,16 +812,21 @@ class BookingLine extends \sale\booking\BookingLine {
                     $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
                     $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
-                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_rental_unit'];
+                    $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
+                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_rental_unit'];                    
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
                     // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
                     $nb_products = $nb_nights;
                     $nb_times = $nb_pers;
+                    $rental_units_assignments = [];
 
                     if($is_rental_unit) {
-                        // #todo - we should check if the rental unit is an acoomodation
-                        ++$nb_products; // checkout is done the day following the last night
+
+                        // for accomodations, checkout is done the day following the last night
+                        if($is_accomodation) {                            
+                            ++$nb_products; 
+                        }                        
 
                         /*
                             retrieve assigned rental units

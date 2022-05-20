@@ -52,9 +52,19 @@ class Consumption extends \sale\booking\Consumption {
                 'description'       => "The Product this Attribute belongs to.",
                 'required'          => true,
                 'readonly'          => true
+            ],
+
+            'rental_unit_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\realestate\RentalUnit',
+                'description'       => "The rental unit the consumption is assigned to.",
+                'readonly'          => true,
+                'onupdate'          => 'sale\booking\Consumption::onupdateRentalUnitId'
             ]
+
         ];
-    }
+    }    
+
 
     /**
      * @param \equal\orm\ObjectManager $om
