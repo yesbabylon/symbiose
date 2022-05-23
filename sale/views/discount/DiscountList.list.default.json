@@ -13,6 +13,11 @@
             },
             {
                 "type": "field",
+                "value": "discount_list_category_id",
+                "width": "20%"
+            },            
+            {
+                "type": "field",
                 "value": "valid_from",
                 "width": "20%"
             },
