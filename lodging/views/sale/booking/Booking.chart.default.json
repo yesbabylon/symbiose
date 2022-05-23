@@ -14,11 +14,13 @@
         "datasets": [
             {
                 "label": "CA réservations HTVA",
-                "operation": ["SUM", "object.total"]
+                "operation": ["SUM", "object.total"],
+                "domain": ["creator", "=", "user.id"]
             },
             {
                 "label": "CA réservations TVAC",
-                "operation": ["SUM", "object.price"]
+                "operation": ["SUM", "object.price"],
+                "domain": ["creator", "=", "user.id"]
             }
         ]
     }
