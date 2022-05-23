@@ -698,11 +698,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
 
                 // guaranteed rate (rate_min) is always granted
-                $rate_to_apply += $discount_list['rate_min'];
-                $discounts_to_apply[0] = [
-                    'type'      => 'percent',
-                    'value'     => $discount_list['rate_min']
-                ];
+                if($discount_list['rate_min'] > 0) {
+                    $rate_to_apply += $discount_list['rate_min'];
+                    $discounts_to_apply[0] = [
+                        'type'      => 'percent',
+                        'value'     => $discount_list['rate_min']
+                    ];
+                }
 
                 // if max rate (rate_max) has been reached, use max instead
                 if($rate_to_apply > $discount_list['rate_max'] ) {
@@ -884,12 +886,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLineGroup:_updatePriceId", QN_REPORT_DEBUG);
 
         $groups = $om->read(__CLASS__, $oids, [
+            'has_pack',
             'date_from',
             'pack_id',
             'booking_id.center_id.price_list_category_id'
         ]);
 
         foreach($groups as $gid => $group) {
+            if(!$group['has_pack']) {
+                continue;
+            }
             /*
                 Find the Price List that matches the criteria from the booking with the shortest duration
             */

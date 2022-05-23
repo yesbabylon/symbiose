@@ -141,7 +141,7 @@
 			"help": ""
         },
         "reference_partner_id": {
-            "label": "Partenaire de référence",
+            "label": "Personne de référence",
             "description": "Contact (personne physique) pouvant représenter légalement l'organisation.",
 			"help": ""
         },

@@ -31,19 +31,24 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public', // 'public' (default) or 'private' (can be invoked by CLI only)		
-        'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'protected',
+        'groups'            => ['booking.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron'] 
+    'providers'     => ['context', 'orm', 'cron', 'dispatch'] 
 ]);
 
-
-list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\cron\Scheduler               $cron
+ * @var \equal\dispatch\Dispatcher          $dispatch
+ */
+list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch']];
 
 
 /*
@@ -100,10 +105,12 @@ Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 
 BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
 
-
 /*
-    Setup a scheduled job to set back the booking to a quote according to delay set by Setting `option.validity`
+    Update alerts & cron jobs
 */
+
+$dispatch->cancel('lodging.booking.quote.blocking', 'lodging\sale\booking\Booking', $params['id']);
+
 if($params['no_expiry'] || $booking['is_price_tbc']) {
     // set booking as never expiring
     Booking::id($params['id'])->update(['is_noexpiry' => true]);        
@@ -112,7 +119,7 @@ else {
     // retrieve expiry delay setting
     $limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
 
-    // add a task to the CRON
+    // setup a scheduled job to set back the booking to a quote according to delay set by Setting `option.validity`
     $cron->schedule(
         "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
         time() + $limit * 86400,                                  // remind after {sale.booking.option.validity} days (default 10 days)
@@ -120,7 +127,6 @@ else {
         [ 'id' => $params['id'], 'free_rental_units' => $params['free_rental_units'] ]
     );
 }
-
 
 /*
     Update booking status
