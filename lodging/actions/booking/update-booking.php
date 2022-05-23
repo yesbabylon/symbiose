@@ -8,7 +8,7 @@ use lodging\sale\booking\Booking;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Update the status of a booking when it is an option and has reach expiry. This script is meant to be scheduled by `do-option` controller.",
+    'description'	=>	"Update a booking when its status is `option` and has reached expiry. This script is meant to be scheduled by `do-option` controller.",
     'params' 		=>	[
         'id' =>  [
             'description'   => 'Identifier of the targeted booking.',
@@ -50,14 +50,18 @@ if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+if($booking['status'] != 'option') {
+    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+}
+
 
 if($booking['is_noexpiry']) {
     // do nothing (remain as option) - we shouldn't have reached this code!
 }
 else {
-    try {
+//    try {
         // revert to quote
-        eQual::run('get', 'lodging_booking_do-quote', [
+        eQual::run('do', 'lodging_booking_do-quote', [
             'id'                    => $params['id'],
             'free_rental_units'     => $params['free_rental_units']
         ]);
@@ -69,10 +73,12 @@ else {
             // check quote for blocked rental units (might raise alert lodging.booking.quote.blocking)
             eQual::run('do', 'lodging_booking_check-quote', ['id' => $params['id']]);            
         }
+/*        
     }
     catch(Exception $e) {
         // ignore errors
     }
+*/    
 }
 
 $context->httpResponse()
