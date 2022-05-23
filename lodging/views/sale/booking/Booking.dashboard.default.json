@@ -16,7 +16,7 @@
                                         "items": [ 
                                             {
                                                 "id": "item.bookings",
-                                                "label": "Bookings",
+                                                "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
@@ -25,7 +25,7 @@
                                             },
                                             {
                                                 "id": "item.bookings2",
-                                                "label": "Bookings",
+                                                "label": "Réservations",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",
@@ -53,7 +53,7 @@
                                             },
                                             {
                                                 "id": "item.bookings4",
-                                                "label": "Bookings",
+                                                "label": "Nombre de checkin ce mois-ci",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",
