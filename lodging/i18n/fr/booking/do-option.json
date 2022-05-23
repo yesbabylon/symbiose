@@ -9,12 +9,12 @@
         },
         "no_expiry": {
             "label": "Pas d'expiration",
-            "description": "L'option restera active sans limite de temps.",
+            "description": "Si oui, la réservation restera en option sans limite de temps.",
             "help": ""
         },
         "free_rental_units": {
-            "label": "Libérer les unités locatives",
-            "description": "A l'expiration, libérer automatiquement les unités locatives.",
+            "label": "Libération auto des unités locatives",
+            "description": "Si oui, à l'expiration, les unités locatives seront libérées.",
             "help": ""
         }
     },

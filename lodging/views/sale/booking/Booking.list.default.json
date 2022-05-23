@@ -18,6 +18,7 @@
             "visible": ["status", "=", "quote"]
         }
     ],
+    "controller": "lodging_booking_collect",
     "header": {
         "actions": {
             "ACTION.CREATE" : [
@@ -26,6 +27,9 @@
                     "description": "overload form to use for booking creation"
                 }
             ]
+        },
+        "layout": {
+
         }
     },
     "layout": {

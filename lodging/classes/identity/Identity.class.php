@@ -17,6 +17,14 @@ class Identity extends \identity\Identity {
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['partner_identity_id', '<>', 'object.id'],
                 'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
+            ],
+
+            'lang_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'core\Lang',
+                'description'       => "Preferred language of the identity.",
+                'default'           => 2,
+                'onupdate'          => 'identity\Identity::onupdateLangId'
             ]
 
         ];

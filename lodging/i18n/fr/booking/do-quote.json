@@ -1,6 +1,6 @@
 {
-    "name": "Prise d'option",
-    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, mais une expiration automatique de l'option sera planifiée.",
+    "name": "Repasser en devis",
+    "description": "Le statut de la réservation sera remis à 'devis' et les services pourront être modifiés. Sauf demande explicite, les unités locatives resteront bloquées.",
     "model": {
         "id": {
             "label": "Identifiant",
@@ -9,14 +9,13 @@
         },
         "free_rental_units": {
             "label": "Libérer les unités locatives",
-            "description": "Les logements et unités locatives seront libérés immédiatement.",
+            "description": "Si oui, les logements et unités locatives seront libérés immédiatement.",
             "help": ""
         }
     },
     "error": {
         "errors": {
-            "unknown_booking": "Réservation inconnue",
-            "empty_booking": "Réservation vide"
+            "unknown_booking": "Réservation inconnue"
         }
     }
 }

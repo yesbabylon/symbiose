@@ -1,17 +1,53 @@
 {
-	"description": "",
-	"view": {
-		"item.bookings": {"label": "Réservations", "help": ""},
-		"item.bookings.new": {"label": "Nouvelle réservation", "help": ""},
-		"item.bookings.all": {"label": "Toutes les réservations", "help": ""},
-		"item.bookings.quotes": {"label": "Devis", "help": ""},
-		"item.bookings.options": {"label": "Options", "help": ""},
-		"item.bookings.validated": {"label": "Réservations validées", "help": ""},
-		"item.customers": {"label": "Clients", "help": ""},
-		"item.customers.new": {"label": "Nouveau Client", "help": ""},
-		"item.customers.all": {"label": "Tous les clients", "help": ""},
-		"item.customers.identities": {"label": "Toutes les identités", "help": ""},
-		"item.customers.partners": {"label": "Tous les partenaires", "help": ""},
-        "item.consumptions": {"label": "Consommations", "help": ""}
-	}
+    "description": "",
+    "view": {
+        "item.bookings": {
+            "label": "Réservations",
+            "help": ""
+        },
+        "item.bookings.new": {
+            "label": "Nouvelle réservation",
+            "help": ""
+        },
+        "item.bookings.all": {
+            "label": "Toutes les réservations",
+            "help": ""
+        },
+        "item.bookings.quotes": {
+            "label": "Devis",
+            "help": ""
+        },
+        "item.bookings.options": {
+            "label": "Options",
+            "help": ""
+        },
+        "item.bookings.validated": {
+            "label": "Réservations validées",
+            "help": ""
+        },
+        "item.customers": {
+            "label": "Clients",
+            "help": ""
+        },
+        "item.customers.identity.new": {
+            "label": "Nouvelle identité",
+            "help": ""
+        },
+        "item.customers.all": {
+            "label": "Tous les clients",
+            "help": ""
+        },
+        "item.customers.identities": {
+            "label": "Toutes les identités",
+            "help": ""
+        },
+        "item.customers.partners": {
+            "label": "Toutes les relations",
+            "help": ""
+        },
+        "item.consumptions": {
+            "label": "Consommations",
+            "help": ""
+        }
+    }
 }
