@@ -27,11 +27,19 @@ class BookingLine extends \sale\booking\BookingLine {
                 'default'           => 1.0
             ],
 
+            'is_rental_unit' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Line relates to a renta(b)l(e) unit (from product_model).',
+                'function'          => 'calcIsRentalUnit',
+                'store'             => true
+            ],
+
             'is_accomodation' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Line relates to an accomodation (from product_model).',
-                'function'          => 'getIsAccomodation',
+                'description'       => 'Line relates to an accomodation(from product_model).',
+                'function'          => 'calcIsAccomodation',
                 'store'             => true
             ],
 
@@ -39,7 +47,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'description'       => 'Line relates to a meal (from product_model).',
-                'function'          => 'getIsMeal',
+                'function'          => 'calcIsMeal',
                 'store'             => true
             ],
 
@@ -47,7 +55,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'description'       => 'Quantity accounting method (from product_model).',
-                'function'          => 'getQtyAccountingMethod',
+                'function'          => 'calcQtyAccountingMethod',
                 'store'             => true
             ],
 
@@ -101,7 +109,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_field'     => 'booking_line_id',
                 'description'       => "The rental units the line is assigned to.",
                 'ondetach'          => 'delete',
-                'visible'           => ['is_accomodation', '=', true]
+                'visible'           => ['is_rental_unit', '=', true]
             ],
 
             'price_adapters_ids' => [
@@ -115,8 +123,8 @@ class BookingLine extends \sale\booking\BookingLine {
         ];
     }
 
-    public static function getIsAccomodation($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:getIsAccomodation", QN_REPORT_DEBUG);
+    public static function calcIsAccomodation($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:calcIsAccomodation", QN_REPORT_DEBUG);
 
         $result = [];
         $lines = $om->read(__CLASS__, $oids, [
@@ -130,8 +138,23 @@ class BookingLine extends \sale\booking\BookingLine {
         return $result;
     }
 
-    public static function getIsMeal($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:getIsMeal", QN_REPORT_DEBUG);
+    public static function calcIsRentalUnit($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:calcIsRentalUnit", QN_REPORT_DEBUG);
+
+        $result = [];
+        $lines = $om->read(__CLASS__, $oids, [
+            'product_id.product_model_id.is_rental_unit'
+        ]);
+        if($lines > 0 && count($lines)) {
+            foreach($lines as $oid => $odata) {
+                $result[$oid] = $odata['product_id.product_model_id.is_rental_unit'];
+            }
+        }
+        return $result;
+    }
+
+    public static function calcIsMeal($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:calcIsMeal", QN_REPORT_DEBUG);
 
         $result = [];
         $lines = $om->read(__CLASS__, $oids, [
@@ -145,8 +168,8 @@ class BookingLine extends \sale\booking\BookingLine {
         return $result;
     }
 
-    public static function getQtyAccountingMethod($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:getQtyAccountingMethod", QN_REPORT_DEBUG);
+    public static function calcQtyAccountingMethod($om, $oids, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:calcQtyAccountingMethod", QN_REPORT_DEBUG);
 
         $result = [];
         $lines = $om->read(__CLASS__, $oids, [
@@ -181,7 +204,7 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateProductId", QN_REPORT_DEBUG);
 
         // reset computed fields related to product model
-        $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_accomodation' => null, 'is_meal' => null]);
+        $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
         $om->call(__CLASS__, '_updatePriceId', $oids, $lang);
@@ -283,17 +306,16 @@ class BookingLine extends \sale\booking\BookingLine {
             'product_id',
             'product_id.product_model_id',
             'qty_accounting_method',
-            'is_accomodation',
+            'is_rental_unit',
             'rental_unit_assignments_ids'
         ], $lang);
 
-        // drop lines that do not relate to accomodations
-        // #todo - we should rather deal with "is_rental_unit" (all rental units should be addressed)
-        $lines = array_filter($lines, function($a) { return $a['is_accomodation']; });
+        // drop lines that do not relate to rental units
+        $lines = array_filter($lines, function($a) { return $a['is_rental_unit']; });
 
         $bookings_ids = [];
         $booking_line_groups_ids = [];
-        // there is at least one accomodation
+
         if(count($lines)) {
 
             // read all related product models at once
@@ -559,7 +581,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
             'product_id.product_model_id.qty_accounting_method',
-            'product_id.product_model_id.is_accomodation',
+            'product_id.product_model_id.is_rental_unit',
             'product_id.product_model_id.is_meal',
             'product_id.product_model_id.has_duration',
             'product_id.product_model_id.duration'
@@ -577,7 +599,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             if($line['product_id.product_model_id.has_duration']) {
                                 $factor = $line['product_id.product_model_id.duration'];
                             }
-                            else if($line['product_id.product_model_id.is_accomodation'] || $line['product_id.product_model_id.is_meal'] ) {
+                            else if($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
                                 $factor = max(1, $line['booking_line_group_id.nb_nights']);
                             }
                             $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_pers'] * $factor]);
@@ -750,6 +772,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'qty_accounting_method',
             'has_duration',
             'duration',
+            'is_rental_unit',
             'is_accomodation',
             'is_meal'
         ]);
@@ -791,17 +814,21 @@ class BookingLine extends \sale\booking\BookingLine {
                     $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
                     $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
-                    // is_accomodation is used as "is it attached to a rental_unit (accomodation or other)"
-                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
+                    $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
+                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_rental_unit'];                    
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
                     // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
                     $nb_products = $nb_nights;
                     $nb_times = $nb_pers;
+                    $rental_units_assignments = [];
 
                     if($is_rental_unit) {
-                        // #todo - we should check if the rental unit is an acoomodation
-                        ++$nb_products; // checkout is done the day following the last night
+
+                        // for accomodations, checkout is done the day following the last night
+                        if($is_accomodation) {                            
+                            ++$nb_products; 
+                        }                        
 
                         /*
                             retrieve assigned rental units
@@ -868,7 +895,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             }
                         }                        
                         // read all involved rental units
-                        $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent', 'is_accomodation']);
+                        $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
                     }
 
 

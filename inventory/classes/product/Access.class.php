@@ -31,8 +31,8 @@ class Access extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['http', 'https', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
-                'onupdate'          => 'inventory\product\Access::getUrl',
-                'onupdate'          => 'inventory\product\Access::getType',
+                'onupdate'          => 'getUrl',
+                'onupdate'          => 'getType',
                 'description'       => 'Type of the access',
                 'required'          => true
             ],
@@ -40,7 +40,7 @@ class Access extends Model {
             'url' => [
                 'type'              => 'computed',
                 'description'       => 'URL to access the product element.',
-                'function'          => 'inventory\product\Access::getUrl',
+                'function'          => 'getUrl',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'store'             => true,
@@ -49,14 +49,14 @@ class Access extends Model {
 
             'host' => [
                 'type'              => 'string',
-                'onupdate'          => 'inventory\product\Access::getUrl',
+                'onupdate'          => 'getUrl',
                 'description'       => "IP address or hostname¨of the server",
                 'required'          => true
             ],
 
             'port' => [
                 'type'              => 'string',
-                'onupdate'          => 'inventory\product\Access::getUrl',
+                'onupdate'          => 'getUrl',
                 'description'       => "port to connect to (default based on protocol)"
             ],
 

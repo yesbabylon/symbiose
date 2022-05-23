@@ -61,6 +61,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'visible'           => ['has_pack', '=', true]
             ],
 
+            'is_sojourn' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group relate to accomodations?',                
+                'default'           => false
+            ],
+
             'is_autosale' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the group relate to autosale products?',
@@ -231,7 +237,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $disc_value = 0.0;
                 $disc_percent = 0.0;
 
-                if($price_adapters_ids > 0 && count($price_adapters_ids)) {
+                if($price_adapters_ids > 0) {
                     $adapters = $om->read('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
 
                     if($adapters > 0) {
@@ -404,19 +410,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->call(__CLASS__, '_updateAutosaleProducts', $oids, $lang);
 
         // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'booking_lines_ids']);
-        $bookings_ids = [];
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'booking_lines_ids']);
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
-                $bookings_ids[] = $group['booking_id'];
                 // notify booking lines that price_id has to be updated
                 $om->call('lodging\sale\booking\BookingLine', '_updatePriceId', $group['booking_lines_ids'], $lang);
                 // recompute bookinglines quantities
                 $om->call('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], $lang);
+                if($group['is_sojourn']) {
+                    // force parent booking to recompute date_from                    
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
+                }
             }
         }
-        // force parent booking to recompute date_from
-        $om->write('lodging\sale\booking\Booking', $bookings_ids, ['date_from' => null]);
         $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, $lang);
     }
 
@@ -428,17 +434,17 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->call(__CLASS__, '_updateAutosaleProducts', $oids, $lang);
 
         // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
-        $bookings_ids = [];
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
         if($groups > 0) {
             foreach($groups as $group) {
-                $bookings_ids[] = $group['booking_id'];
                 // re-compute bookinglines quantities
                 $om->call('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], $lang);
+                if($group['is_sojourn']) {
+                    // force parent booking to recompute date_from                    
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
+                }
             }
         }
-        // force parent booking to recompute date_to
-        $om->write('lodging\sale\booking\Booking', $bookings_ids, ['date_to' => null]);
         $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, $lang);        
     }
 
@@ -607,7 +613,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 ['valid_until', '>=', $group['date_from']]
             ]);
 
-            $discount_lists = $om->read('sale\discount\DiscountList', $discount_lists_ids, ['id', 'discounts_ids', 'rate_min']);
+            $discount_lists = $om->read('sale\discount\DiscountList', $discount_lists_ids, ['id', 'discounts_ids', 'rate_min', 'rate_max']);
             $discount_list_id = 0;
             $discount_list = null;
             if($discount_lists > 0 && count($discount_lists)) {
@@ -625,8 +631,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             if($discount_list_id) {
                 $operands = [];
                 $operands['count_booking_24'] = $group['booking_id.customer_id.count_booking_24'];
-                $operands['duration'] = ($group['date_to']-$group['date_from'])/(60*60*24);     // duration in nights
-                $operands['nb_pers'] = $group['nb_pers'];                                       // number of participants
+                $operands['duration'] = $group['nb_nights'];     // duration in nights
+                $operands['nb_pers'] = $group['nb_pers'];        // number of participants
 
                 $date = $group['date_from'];
                 /*
@@ -683,7 +689,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         if(!$valid) break;
                     }
                     if($valid) {
-                        trigger_error("QN_DEBUG_ORM:: all conditions fullfilled", QN_REPORT_DEBUG);
+                        trigger_error("QN_DEBUG_ORM:: all conditions fullfilled, applying {$discount['value']} {$discount['type']}", QN_REPORT_DEBUG);
                         $discounts_to_apply[$discount_id] = $discount;
                         if($discount['type'] == 'percent') {
                             $rate_to_apply += $discount['value'];
@@ -691,24 +697,30 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     }
                 }
 
-                // if guaranteed rate (rate_min) has not been reached, add a discount with rate_min
-                if($rate_to_apply < $discount_list['rate_min'] ) {
+                // guaranteed rate (rate_min) is always granted
+                $rate_to_apply += $discount_list['rate_min'];
+                $discounts_to_apply[0] = [
+                    'type'      => 'percent',
+                    'value'     => $discount_list['rate_min']
+                ];
+
+                // if max rate (rate_max) has been reached, use max instead
+                if($rate_to_apply > $discount_list['rate_max'] ) {
                     // remove all 'percent' discounts
                     foreach($discounts_to_apply as $discount_id => $discount) {
                         if($discount['type'] == 'percent') {
                             unset($discounts_to_apply[$discount_id]);
                         }
                     }
-                    // add a custom discount with minimal rate
+                    // add a custom discount with maximal rate
                     $discounts_to_apply[0] = [
                         'type'      => 'percent',
-                        'value'     => $discount_list['rate_min']
+                        'value'     => $discount_list['rate_max']
                     ];
                 }
 
                 // apply all applicable discounts
                 foreach($discounts_to_apply as $discount_id => $discount) {
-
                     /*
                         create price adapter for group only, according to discount and group settings
                         (needed in case group targets a pack with own price)
@@ -910,7 +922,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
             if(!$found) {
                 $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
-                $date = date('Y-m-d', $group['booking_line_group_id.date_from']);
+                $date = date('Y-m-d', $group['date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for group at date {$date}", QN_REPORT_ERROR);
             }
         }

@@ -28,6 +28,11 @@
 			"description": "Heure de départ.",
 			"help": ""
 		},
+        "is_sojourn": {
+            "label": "Séjour",
+            "description": "Le groupe de sercices est un séjour.",
+            "help": ""
+        },
 		"sojourn_type_id": {
 			"label": "Type de Séjour",
 			"description": "Le genre de séjour que le groupe est sur.",

@@ -1,6 +1,6 @@
 {
     "name": "Prise d'option",
-    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, mais une expiration automatique de l'option sera planifiée.",
+    "description": "Le statut de la réservation sera mis à 'option' et les consommations seront ajoutées au planning. \nAucun paiement ne sera demandé, et une expiration automatique de l'option sera planifiée.",
     "model": {
         "id": {
             "label": "Identifiant",
@@ -9,7 +9,12 @@
         },
         "no_expiry": {
             "label": "Pas d'expiration",
-            "description": "Les unités locatives resteront bloquées sans limite de temps.",
+            "description": "L'option restera active sans limite de temps.",
+            "help": ""
+        },
+        "free_rental_units": {
+            "label": "Libérer les unités locatives",
+            "description": "A l'expiration, libérer automatiquement les unités locatives.",
             "help": ""
         }
     },

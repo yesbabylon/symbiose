@@ -15,7 +15,7 @@ class BankStatement extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\pay\BankStatement::getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -55,7 +55,7 @@ class BankStatement extends Model {
             'status' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\pay\BankStatement::getStatus',
+                'function'          => 'calcStatus',
                 'selection'         => [
                     'pending',                // hasn't been fully processed yet
                     'reconciled',             // has been fully processed (all lines either ignored or reconciled) 
@@ -85,7 +85,7 @@ class BankStatement extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'usage'             => 'uri/urn.iban',
-                'function'          => 'sale\pay\BankStatement::getBankAccountIban',
+                'function'          => 'calcBankAccountIban',
                 'description'       => 'IBAN representation of the account number.',
                 'store'             => true
             ]
@@ -93,7 +93,7 @@ class BankStatement extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $statements = $om->read(get_called_class(), $oids, ['bank_account_number', 'date', 'old_balance', 'new_balance']);
         foreach($statements as $oid => $statement) {
@@ -102,7 +102,7 @@ class BankStatement extends Model {
         return $result;
     }
 
-    public static function getBankAccountIban($om, $oids, $lang) {
+    public static function calcBankAccountIban($om, $oids, $lang) {
         $result = [];
         $statements = $om->read(get_called_class(), $oids, ['bank_account_number', 'bank_account_bic']);
 
@@ -112,7 +112,7 @@ class BankStatement extends Model {
         return $result;
     }
 
-    public static function getStatus($om, $oids, $lang) {
+    public static function calcStatus($om, $oids, $lang) {
         $result = [];
         $statements = $om->read(get_called_class(), $oids, ['statement_lines_ids.status']);
 
