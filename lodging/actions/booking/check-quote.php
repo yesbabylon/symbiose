@@ -31,7 +31,7 @@ list($params, $providers) = announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name'])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'status'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -43,9 +43,9 @@ if(!$booking) {
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 
-$consumptions = Consumption::search([['booking_id', '=', $params['id']], ['is_rental_unit']])->read([])->get();
+$consumptions = Consumption::search([['booking_id', '=', $params['id']], ['is_rental_unit', '=', true]])->get();
 
-if(count($consumptions)) {
+if($booking['status'] == 'quote' && count($consumptions)) {
     $result[] = $booking['id'];
 
     // by convention we dispatch an alert that relates to the controller itself.

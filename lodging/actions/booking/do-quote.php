@@ -4,9 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
+use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Consumption;
 
 use core\Task;
