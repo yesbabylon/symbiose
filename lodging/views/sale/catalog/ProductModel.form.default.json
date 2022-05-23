@@ -118,7 +118,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "is_accomodation",
+                                                "value": "is_rental_unit",
                                                 "width": "100%"
                                             },
                                             {
@@ -149,6 +149,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "is_meal",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_accomodation",
                                                 "width": "100%"
                                             }
                                         ]

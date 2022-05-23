@@ -183,7 +183,12 @@
         },
         "is_accomodation": {
             "label": "Est un logement",
-            "description": "Le produit est-il un logement ou une unité locative ?",
+            "description": "Le produit est-il un logement ?",
+            "help": ""
+        },
+        "is_rental_unit": {
+            "label": "Unité Locative",
+            "description": "Le produit doit être associé à une ou plusieurs unités locatives",
             "help": ""
         },
         "rental_unit_category_id": {

@@ -9,7 +9,7 @@ use lodging\realestate\RentalUnit;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Update the status of rental units based on their current occupation (meant to be run on a daily basis).",
+    'description'	=>	"Update the status of accomodation rental-units based on their current occupation. This script is meant to be run on a daily basis.",
     'params' 		=>	[
     ],
     'access' => [

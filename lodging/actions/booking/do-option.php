@@ -6,6 +6,7 @@
 */
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
+use lodging\sale\booking\Consumption;
 
 use core\setting\Setting;
 
@@ -18,9 +19,13 @@ list($params, $providers) = announce([
             'min'           => 1,
             'required'      => true
         ],
-        // this must remain synched with field definition Booking::cancellation_reason
         'no_expiry' =>  [
-            'description'   => 'Rental units are blocked and the option will remain without time limit.',
+            'description'   => 'The option will remain active without time limit.',
+            'type'          => 'boolean',
+            'default'       => false
+        ],
+        'free_rental_units' =>  [
+            'description'   => 'At expiration of the option, automatically release reserved rental units, if any.',
             'type'          => 'boolean',
             'default'       => false
         ]
@@ -87,7 +92,11 @@ if(is_array($data) && count($data)) {
 
 /*
     Create the consumptions in order to see them in the planning (scheduled services) and to mark related rental units as booked.
+    If consumptions already exist, they're removed before hand.
 */
+
+// remove consumptions, if any (link & part)
+Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 
 BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
 
@@ -95,27 +104,21 @@ BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LA
 /*
     Setup a scheduled job to set back the booking to a quote according to delay set by Setting `option.validity`
 */
-if($params['no_expiry']) {
+if($params['no_expiry'] || $booking['is_price_tbc']) {
     // set booking as never expiring
     Booking::id($params['id'])->update(['is_noexpiry' => true]);        
 }
 else {
-    if($booking['is_price_tbc']) {
-        // do not schedule deprecation, and set booking as never expiring
-        Booking::id($params['id'])->update(['is_noexpiry' => true]);        
-    }
-    else {
-        // retrieve expiry delay setting
-        $limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
+    // retrieve expiry delay setting
+    $limit = Setting::get_value('sale', 'booking', 'option.validity', 10);
 
-        // add a task to the CRON
-        $cron->schedule(
-            "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
-            time() + $limit * 86400,                                  // remind after {sale.booking.option.validity} days (default 10 days)
-            'lodging_booking_do-quote',
-            [ 'id' => $params['id'] ]
-        );
-    }
+    // add a task to the CRON
+    $cron->schedule(
+        "booking.option.deprecation.{$params['id']}",             // assign a reproducible unique name
+        time() + $limit * 86400,                                  // remind after {sale.booking.option.validity} days (default 10 days)
+        'lodging_booking_update-booking',
+        [ 'id' => $params['id'], 'free_rental_units' => $params['free_rental_units'] ]
+    );
 }
 
 

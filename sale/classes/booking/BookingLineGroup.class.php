@@ -124,7 +124,7 @@ class BookingLineGroup extends Model {
     }
 
     public static function _resetPrices($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
+        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
         // update parent booking
         $groups = $om->read(__CLASS__, $oids, ['booking_id'], $lang);
         if($groups > 0) {

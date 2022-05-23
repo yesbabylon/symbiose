@@ -14,7 +14,7 @@ class BankStatement extends \sale\booking\BankStatement {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'getDisplayName',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -34,7 +34,7 @@ class BankStatement extends \sale\booking\BankStatement {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $statements = $om->read(get_called_class(), $oids, ['center_office_id.name', 'date', 'old_balance', 'new_balance']);
         foreach($statements as $oid => $statement) {

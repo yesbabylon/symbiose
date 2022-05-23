@@ -24,7 +24,8 @@ class Discount extends Model {
 
             'value' => [
                 'type'              => 'float',
-                'usage'             => 'amount/percent',
+                // #memo - can be either percent, value or qty
+                /*'usage'             => 'amount/percent',*/
                 'description'       => "Discount value.",
                 'default'           => 0.0
             ],

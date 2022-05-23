@@ -54,8 +54,7 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
                 'description'       => 'Nature of the customer (synched with customer) for views convenience.',
-                'onupdate'          => 'onupdateCustomerNatureId',
-                'required'          => true
+                'onupdate'          => 'onupdateCustomerNatureId'
             ],
 
             'center_id' => [
@@ -147,8 +146,73 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'Default sojourn type of the booking (set according to booking center).'
-            ]
+            ],
+
+            'date_from' => [
+                'type'              => 'computed',
+                'result_type'       => 'date',
+                'function'          => 'calcDateFrom',
+                'store'             => true,
+                'default'           => time()
+            ],
+
+            'date_to' => [
+                'type'              => 'computed',
+                'result_type'       => 'date',
+                'function'          => 'calcDateTo',
+                'store'             => true,
+                'default'           => time()
+            ]            
         ];
+    }
+
+
+    /** 
+     * Compute date_from, taking in consideration only groups related to accomodations.
+     */
+    public static function calcDateFrom($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+
+        foreach($bookings as $bid => $booking) {
+            $min_date = PHP_INT_MAX;
+            // find min date amongst matching groups
+            $booking_line_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_sojourn', 'date_from']);
+            if($booking_line_groups > 0 ) {
+                foreach($booking_line_groups as $gid => $group) {
+                    if($group['is_sojourn']  && $group['date_from'] < $min_date) {
+                        $min_date = $group['date_from'];
+                    }
+                }
+                $result[$bid] = $min_date;
+            }
+        }
+
+        return $result;
+    }
+
+    /** 
+     * Compute date_to, taking in consideration only groups related to accomodations.
+     */
+    public static function calcDateTo($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+
+        foreach($bookings as $bid => $booking) {
+            $max_date = 0;
+            // find max date amongst matching groups
+            $booking_line_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_sojourn', 'date_to']);
+            if($booking_line_groups > 0 ) {
+                foreach($booking_line_groups as $gid => $group) {
+                    if($group['is_sojourn'] && $group['date_to'] > $max_date) {
+                        $max_date = $group['date_to'];
+                    }
+                }
+                $result[$bid] = $max_date;
+            }
+        }
+
+        return $result;
     }
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
@@ -528,6 +592,17 @@ class Booking extends \sale\booking\Booking {
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
+
+        if(isset($values['customer_id']) && !isset($values['customer_nature_id'])) {
+            // if we received a customer id, its customer_nature_id must be set
+            $customers = $om->read('sale\customer\Customer', $values['customer_id'], [ 'customer_nature_id']);
+            if($customers) {
+                $customer = reset($customers);
+                if(!is_null($customer['customer_nature_id'])) {
+                    return ['customer_nature_id' => ['missing_mandatory' => 'Unknown nature for this customer.']];
+                }
+            }
+        }
 
         if(isset($values['booking_lines_ids'])) {
             // trying to add or remove booking lines

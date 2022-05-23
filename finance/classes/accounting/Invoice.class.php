@@ -206,9 +206,10 @@ class Invoice extends Model {
         $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.price'], $lang);
 
         foreach($invoices as $oid => $invoice) {
-            $result[$oid] = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
+            $price = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
                 return $c + $a['price'];
             }, 0.0);
+            $result[$oid] = round($price, 2);
         }
         return $result;
     }
@@ -219,9 +220,10 @@ class Invoice extends Model {
         $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.total'], $lang);
 
         foreach($invoices as $oid => $invoice) {
-            $result[$oid] = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
+            $total = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
                 return $c + $a['total'];
             }, 0.0);
+            $result[$oid] = round($total, 4);
         }
         return $result;
     }

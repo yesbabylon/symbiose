@@ -71,6 +71,9 @@ if(isset($data['errors'])) {
     }
 }
 
+// release rental units (remove consumptions, if any) 
+Consumption::search(['booking_id', '=', $params['id']])->delete(true);
+
 // mark the booking as cancelled
 Booking::id($params['id'])->update(['is_cancelled' => true, 'cancellation_reason' => $params['reason']]);
 

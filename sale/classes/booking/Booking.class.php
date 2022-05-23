@@ -57,7 +57,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
-                'function'          => 'getTotal',
+                'function'          => 'calcTotal',
                 'description'       => 'Total tax-excluded price of the booking.',
                 'store'             => true
             ],
@@ -72,7 +72,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
-                'function'          => 'getPrice',
+                'function'          => 'calcPrice',
                 'description'       => 'Final tax-included price of the booking.',
                 'store'             => true
             ],
@@ -199,7 +199,7 @@ class Booking extends Model {
                     'due',                       // some due payment have not been received yet
                     'paid'                       // all expected payments have been received
                 ],
-                'function'          => 'getPaymentStatus',
+                'function'          => 'calcPaymentStatus',
                 'store'             => true
             ],
 
@@ -207,7 +207,7 @@ class Booking extends Model {
             'date_from' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'function'          => 'getDateFrom',
+                'function'          => 'calcDateFrom',
                 'store'             => true,
                 'default'           => time()
             ],
@@ -215,7 +215,7 @@ class Booking extends Model {
             'date_to' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'function'          => 'getDateTo',
+                'function'          => 'calcDateTo',
                 'store'             => true,
                 'default'           => time()
             ],
@@ -224,7 +224,7 @@ class Booking extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Approx. amount of persons involved in the booking.',
-                'function'          => 'getNbPers',
+                'function'          => 'calcNbPers',
                 'store'             => true
             ],
 
@@ -260,13 +260,6 @@ class Booking extends Model {
         ];
     }
 
-    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
-        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
-    }
-
-    public static function _resetPrices($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
-    }
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
@@ -284,7 +277,7 @@ class Booking extends Model {
         return $result;
     }
 
-    public static function getDateFrom($om, $oids, $lang) {
+    public static function calcDateFrom($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
 
@@ -304,7 +297,7 @@ class Booking extends Model {
         return $result;
     }
 
-    public static function getDateTo($om, $oids, $lang) {
+    public static function calcDateTo($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
 
@@ -326,7 +319,7 @@ class Booking extends Model {
         return $result;
     }
 
-    public static function getNbPers($om, $oids, $lang) {
+    public static function calcNbPers($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids.nb_pers']);
 
@@ -343,38 +336,48 @@ class Booking extends Model {
     /**
      * Payment status tells if a given booking is in order regarding the expected payment up to now.
      */
-    public static function getPaymentStatus($om, $oids, $lang) {
+    public static function calcPaymentStatus($om, $oids, $lang) {
         // #todo
         $result = [];
         return $result;
     }
 
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids.price']);
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
-                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.price'], function ($c, $group) {
+                $price = array_reduce($booking['booking_lines_groups_ids.price'], function ($c, $group) {
                     return $c + $group['price'];
                 }, 0.0);
+                $result[$bid] = round($price, 2);
             }
         }
         return $result;
     }
 
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
         $bookings = $om->read(get_called_class(), $oids, ['booking_lines_groups_ids.total']);
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
-                $result[$bid] = array_reduce($booking['booking_lines_groups_ids.total'], function ($c, $a) {
+                $total = array_reduce($booking['booking_lines_groups_ids.total'], function ($c, $a) {
                     return $c + $a['total'];
                 }, 0.0);
+                $result[$bid] = round($total, 4);
             }
         }
         return $result;
     }
 
+    // #todo - this should be part of the onupdate() hook
+    public static function _resetPrices($om, $oids, $lang) {
+        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
+    }
+
+    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
+        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
+    }
 
     public static function onupdateStatus($om, $oids, $lang) {
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);

@@ -12,13 +12,18 @@ use lodging\sale\booking\Consumption;
 use core\Task;
 
 list($params, $providers) = announce([
-    'description'   => "Revert a booking to 'quote' status: booking is visible but no rental units are reserved.",
+    'description'   => "Revert a booking to 'quote' status. By default, rental units will remain reserved for 24h.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the targeted booking.',
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
+        ],
+        'free_rental_units' =>  [
+            'description'   => 'Flag for marking reserved rental units to be release immediately, if any.',
+            'type'          => 'boolean',
+            'default'       => false
         ]
     ],
     'access' => [
@@ -51,8 +56,9 @@ if(!$booking) {
 
 if($booking['status'] != 'quote') {
 
-    // set booking status to quote
-    Booking::id($params['id'])->update(['status' => 'quote']);
+    /*
+        Update alerts & cron jobs
+    */
 
     // remove messages about readyness for this booking, if any
     $dispatch->cancel('lodging.booking.ready', 'lodging\sale\booking\Booking', $params['id']);
@@ -60,11 +66,12 @@ if($booking['status'] != 'quote') {
     // remove existing CRON tasks for reverting the booking to quote
     $cron->cancel("booking.option.deprecation.{$params['id']}");
 
-    // #memo - generated contracts are kept for history (we never delete them)
-    // mark contracts as expired    
-    Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
+    /*
+        Update booking
+    */
 
-    // Update booking
+    // set booking status to quote
+    Booking::id($params['id'])->update(['status' => 'quote']);
 
     $fundings_ids_to_remove = [];
     foreach($booking['fundings_ids'] as $fid => $funding) {
@@ -76,9 +83,13 @@ if($booking['status'] != 'quote') {
             $fundings_ids_to_remove[] = "-$fid";
         }
     }
-    // remove consumptions + link & part
-    $consumptions_ids_to_remove = Consumption::search(['booking_id', '=', $params['id']])->delete(true);
-
+    // mark contracts as expired        
+    // #memo - generated contracts are kept for history (we never delete them)
+    Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
+    // remove consumptions if requested (link & part)
+    if($params['free_rental_units']) {        
+        Consumption::search(['booking_id', '=', $params['id']])->delete(true);
+    }
     // mark lines as not 'invoiced' (waiting for payment)
     BookingLine::ids($booking['booking_lines_ids'])->update(['is_contractual' => false]);
     // mark booking as non-having contract, remove non-paid fundings and remove existing consumptions
@@ -86,6 +97,5 @@ if($booking['status'] != 'quote') {
 }
 
 $context->httpResponse()
-        ->status(200)
-        ->body([])
+        ->status(204)
         ->send();
