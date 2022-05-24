@@ -132,7 +132,31 @@
                                 ]
                             }
                         ]
-                    }                    
+                    },
+                    {
+                        "label": "Repairs",
+                        "id": "section.repairs",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "repairs_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "order": "date",
+                                                    "sort": "desc"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                                    
                 ]
             }
         ]

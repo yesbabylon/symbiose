@@ -1,0 +1,60 @@
+{
+    "name": "Blocage",
+    "plural": "Blocages",
+    "description": "Les blocages sont des épisodes de réparations et maintenance impactant une ou plusieurs untiés locatives d'une Centre.",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Nom de l'épisode.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Note supplémentaire sur le motif du blocage.",
+            "help": ""
+        },
+        "repairs_ids": {
+            "label": "Jours",
+            "description": "Les jours de blocage de l'épisode.",
+            "help": ""
+        },
+        "rental_units_ids": {
+            "label": "Unitésé locatives",
+            "description": "Unités impactées par l'épisode.",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Début",
+            "description": "Moment de la journée auquel la prestation est planifiée.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Fin",
+            "description": "Dernier jour de la période.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Blocage",
+            "description": "",
+            "layout": {
+                "section.details": {
+                    "label": "Détails"
+                },
+                "section.repairs_ids": {
+                    "label": "Jours"
+                },
+                "section.rental_units_ids": {
+                    "label": "Unités locatives"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Blocages",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
