@@ -1,0 +1,33 @@
+{
+    "name": "Repair",
+    "plural": "Repairs",
+    "description": "A repair is a blocking of a rental unit at a given date, for maintenance and/or repair.",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Nom de la personne.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "La raison pour laquelle le service est réservé.",
+            "selection": {
+                "ooo": "hors service"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

@@ -31,7 +31,7 @@ class Partner extends Model {
             'owner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The organisation which the targeted identity is a partner of.',
+                'description'       => 'The identity organisation which the targeted identity is a partner of.',
                 'default'           => 1
             ],
 

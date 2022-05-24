@@ -10,7 +10,10 @@ use equal\html\HTMLToText;
 
 class Repairing extends Model {
 
-
+    public static function getDescription() {
+        return "Repairings are episodes of repairs and maintenance impacting one or more rental units of a given Center.";
+    }
+    
     public static function getColumns() {
         return [
 
