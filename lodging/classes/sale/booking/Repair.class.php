@@ -29,8 +29,11 @@ class Repair extends Consumption {
             'type' => [
                 'type'              => 'string',
                 'description'       => 'The reason the unit is reserved.',
-                'default'           => 'ooo',
-                'readonly'          => true
+                'selection'         => [
+                    'ooo'                              // out-of-order (repair & maintenance)
+                ],
+                'readonly'          => true,               
+                'default'           => 'ooo'
             ],
 
             'is_rental_unit' => [

@@ -88,6 +88,11 @@
             },
             "description": "",
             "help": ""
+        },
+        "repairs_ids": {
+            "label": "Blocages",
+            "description": "",
+            "help": ""
         }
     },
     "view": {
