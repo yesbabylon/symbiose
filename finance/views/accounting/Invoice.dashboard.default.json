@@ -45,7 +45,7 @@
                                         "items": [
                                             {
                                                 "id": "item.fundings3",
-                                                "label": "Remboursements",
+                                                "label": "Total Facturé",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity":"finance\\accounting\\Invoice",
@@ -53,11 +53,11 @@
                                             },
                                             {
                                                 "id": "item.fundings4",
-                                                "label": "Financements",
+                                                "label": "Notes de crédit",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Funding",
-                                                "view": "chart.ca"
+                                                "entity": "finance\\accounting\\Invoice",
+                                                "view": "chart.creditNote"
                                             }
                                         ]
                                     }

@@ -5,7 +5,7 @@
         "groups": ["pos.default.user"]
     },
     "layout": {
-        "entity": "sale\\pos\\CashdeskSession",
+        "entity": "lodging\\sale\\pos\\CashdeskSession",
         "group_by": "range",
         "range_interval": "month",
         "range_from": "date.this.year.last",
@@ -13,7 +13,8 @@
         "datasets": [
             {
                 "label" : "CA Total POS",
-                "operation": ["SUM", "object.amount"]
+                "operation": ["SUM", "object.amount"],
+                "domain": ["center_id", "in", "user.center_ids"]
             }
         ]
     }

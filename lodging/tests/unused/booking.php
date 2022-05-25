@@ -18,7 +18,7 @@ $providers = eQual::inject(['context', 'orm', 'auth', 'access']);
 
 $tests = [
     //0xxx : calls related to QN methods
-    '0101' => array(
+    '0101 Lewyllie' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -59,7 +59,7 @@ $tests = [
         }
     ),
 
-    '0102' => array(
+    '0102 Familie Veltjen' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -102,7 +102,7 @@ $tests = [
         }
     ),
 
-    '0103' => [
+    '0103 Jackie Buysse' => [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -142,7 +142,7 @@ $tests = [
         }
     ],
 
-    '0104' => array(
+    '0104 Michele Malbrecq' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -186,7 +186,7 @@ $tests = [
         }
     ),
 
-    '0105' => array(
+    '0105 Mireille Wauters' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -230,7 +230,7 @@ $tests = [
         }
     ),
 
-    '0106' => array(
+    '0106 Mathieu Braekeveld' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -273,7 +273,7 @@ $tests = [
         }
     ),
 
-    '0107' => array(
+    '0107 Verena Müllender' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -316,7 +316,7 @@ $tests = [
         }
     ),
 
-    '0108' => array(
+    '0108 Olivier Signet' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -353,10 +353,10 @@ $tests = [
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
-            return $price == 432.90999999999997;
+            return $price == 432.93;
         }
     ),
-    '0109' => array(
+    '0109 Michèle Rochus' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -439,11 +439,11 @@ $tests = [
              return (double)(number_format($booking['price'],2));
         },
         'assert'                => function ($price) {
-            return $price == 292.80;
+            return $price == 292.82;
         }
     ),
 
-    '0110' => array(
+    '0110 Nina Jantke' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -486,7 +486,7 @@ $tests = [
         }
     ),
 
-    '0111' => array(
+    '0111 Marina Niessen' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -560,12 +560,12 @@ $tests = [
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
-            return $price == 2446.00;
+            return $price == 2446.68;
         }
     ),
 
 
-    '0112' => array(
+    '0112 Sara Huylebroeck' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -622,12 +622,12 @@ $tests = [
             return ($booking['price']) ;
         },
         'assert'            =>  function ($price) {
-            return $price == 609.78;
+            return $price == 609.90;
         }
     ),
 
 
-    '0113' => array(
+    '0113 Cindy Moreels' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -642,7 +642,6 @@ $tests = [
             ])->first();
 
         
-
             // nb_pers devient null après créatoin du pack
 
             $groups = BookingLineGroup::create([
@@ -658,78 +657,85 @@ $tests = [
                 'date_to'       => strtotime('2022-11-19'),
             ]);
 
-            $groups->update([
-                'nb_pers'       => 434
-            ]);
-
-            $groups = $groups->first();
 
             $bookingLine1 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 341,
                 'qty'                   => 433,
                 'order'                 => 1
-            ])->first();
+            ]);
 
             $bookingLine2 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 347,
                 'qty'                   => 432,
                 'order'                 => 2
-            ])->first();
+            ]);
 
             $bookingLine3 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 335,
                 'qty'                   => 434,
                 'order'                 => 3
-            ])->first();
+            ]);
 
             $bookingLine4 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 351,
                 'qty'                   => 432,
                 'order'                 => 4
-            ])->first();
+            ]);
 
             $bookingLine5 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 850,
                 'qty'                   => 432,
                 'order'                 => 5
-            ])->first();
+            ]);
 
-            $bookingLine6 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 353,
                 'qty'                   => 1,
                 'order'                 => 6
-            ])->first();
+            ]);
 
             $bookingLine7 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups['id'],
+                'booking_line_group_id' => $groups->first()['id'],
                 'product_id'            => 1153,
                 'qty'                   => 46,
                 'order'                 => 7
-            ])->first();
+            ]);
 
-           
-            $om = &ObjectManager::getInstance();
-            $om->write('lodging\sale\booking\BookingLineGroup', $groups['id'], ['nb_pers' => 108]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine1['id'], ['qty' => 432]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine2['id'], ['qty' => 433]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine3['id'], ['qty' => 434]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine4['id'], ['qty' => 432]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine5['id'], ['qty' => 432]);
-            $om->write('lodging\sale\booking\BookingLine', $bookingLine7['id'], ['qty' => 46]);
+            $groups->update([
+                'nb_pers'       => 108
+            ]);
 
+            $bookingLine1->update([
+                'nb_pers'       => 432
+            ]);
+            $bookingLine2->update([
+                'nb_pers'       => 433
+            ]);
+            $bookingLine3->update([
+                'nb_pers'       => 434
+            ]);
+            $bookingLine4->update([
+                'nb_pers'       => 432
+            ]);
+            $bookingLine5->update([
+                'nb_pers'       => 432
+            ]);
+            $bookingLine7->update([
+                'nb_pers'       => 46
+            ]);
 
             $groups2 = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
@@ -768,7 +774,7 @@ $tests = [
             ]);
 
             $groups3 = $groups3->first();
-            $bookingLine8 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $groups2['id'],
                 'product_id'            => 353,
@@ -776,7 +782,7 @@ $tests = [
                 'order'                 => 1
             ])->first();
 
-            $bookingLine9 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $groups3['id'],
                 'product_id'            => 1153,
@@ -784,17 +790,15 @@ $tests = [
                 'order'                 => 1
             ])->first();
 
-            $om->write('lodging\sale\booking\BookingLineGroup', $groups2['id'], ['nb_pers' => 2]);
-            $om->write('lodging\sale\booking\BookingLineGroup', $groups3['id'], ['nb_pers' => 46]);
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
-            return ($price == 14973.539999999999);
+            return ($price == 13317.84);
         }
     ),
 
-    '0114' => array(
+    '0114 Pélerins de St-Gregor Von Aachen' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -824,42 +828,43 @@ $tests = [
                 'nb_pers'       => 3
             ]);
 
-            $groups1 = $groups1->first();
 
-            $bookingLine1 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1['id'],
+                'booking_line_group_id' => $groups1->first()['id'],
                 'product_id'            => 352,
                 'qty'                   => 11,
                 'order'                 => 1
             ])->first();
 
-            $bookingLine2 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1['id'],
+                'booking_line_group_id' => $groups1->first()['id'],
                 'product_id'            => 353,
                 'qty'                   => 22,
                 'order'                 => 2
             ])->first();
 
-            $bookingLine3 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1['id'],
+                'booking_line_group_id' => $groups1->first()['id'],
                 'product_id'            => 354,
                 'qty'                   => 12,
                 'order'                 => 3
             ])->first();
 
-            $bookingLine4 = BookingLine::create([
+            BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1['id'],
+                'booking_line_group_id' => $groups1->first()['id'],
                 'product_id'            => 2102,
                 'qty'                   => 1,
                 'order'                 => 4
             ])->first();
 
-            $om = &ObjectManager::getInstance();
-            $om->write('lodging\sale\booking\BookingLineGroup', $groups1['id'], ['nb_pers' => 44]);
+            $groups1->update([
+                'nb_pers'       => 41
+            ]);
+           
 
             $groups2 = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
@@ -907,11 +912,11 @@ $tests = [
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
-            return ($price == 2612.87);
+            return ($price == 2861.23);
         }
     ),
 
-    '0115' => array(
+    '0115 Ecole de Pietrebais' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -949,11 +954,11 @@ $tests = [
         },
         'assert'            =>  function ($price) {
 
-            return ($price == 996.80);
+            return ($price == 801.32);
         }
     ),
 
-    '0116' => array(
+    '0116 Ecole le Bon Départ' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -993,12 +998,12 @@ $tests = [
         },
         'assert'            =>  function ($price) {
 
-            return ($price == 1237.80);
+            return ($price == 1092.80);
         }
     ),
 
 
-    '0117' => array(
+    '0117 Collège Notre Dame de Bonsecours' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -1038,12 +1043,12 @@ $tests = [
         },
         'assert'            =>  function ($price) {
 
-            return ($price == 790.16);
+            return ($price == 701.96);
         }
     ),
 
 
-    '0118' => array(
+    '0118 Ecole Saint Jean' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -1083,12 +1088,12 @@ $tests = [
         },
         'assert'            =>  function ($price) {
 
-            return ($price == 1013.53);
+            return ($price == 962.19);
         }
     ),
 
 
-    '0119' => array(
+    '0119 Ecole Communale de Chôdes' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -1128,11 +1133,11 @@ $tests = [
         },
         'assert'            =>  function ($price) {
 
-            return ($price == 1192.8899999999999);
+            return ($price == 1141.56);
         }
     ),
 
-    '0120' => array(
+    '0120 Ecole Communale de Muno' => array(
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
@@ -1170,11 +1175,11 @@ $tests = [
              return $booking['price'];
         },
         'assert'            =>  function ($price) {
-            return ($price == 1425.8);
+            return ($price == 1379.00);
         }
     ),
 
-    '0121' => array(
+    '0121 Heilig Graf Instituut' => array(
         'description'  =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'       =>  array('double'),
         'test'         =>  function () {
@@ -1212,7 +1217,7 @@ $tests = [
              return $booking['price'];
         },
         'assert'                 =>  function ($price) {
-            return ($price == 1218.5);
+            return ($price == 1179.50);
         }
     )
 ];

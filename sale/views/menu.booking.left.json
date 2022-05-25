@@ -135,14 +135,10 @@
                     }
                 ]
             },
-
             {
                 "id": "item.planning",
-
                 "description": "",
-
                 "type": "entry",
-
                 "label": "Dashboard",
                 "route": "/bookings",
                 "context": {

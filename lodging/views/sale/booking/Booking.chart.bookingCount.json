@@ -1,6 +1,6 @@
 {
-    "name": "Total turnover of bookings",
-    "description": "This view displays the total turnover of the bookings.",
+    "name": "Total bookings",
+    "description": "This view displays the total of bookings.",
     "access": {
         "groups": ["booking.default.user"]
     },

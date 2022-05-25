@@ -5,16 +5,16 @@
         "groups": ["sale.default.user"]
     },
     "layout": {
-        "entity": "sale\\pay\\Funding",
+        "entity": "lodging\\sale\\booking\\Funding",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.last",
         "range_to": "date.this.year.first",
         "datasets": [
             {
-                "label": "Total remboursements",
+                "label": "Total paiements",
                 "operation": ["COUNT", "object.due_amount"],
-                "domain": ["due_amount", "<", "object.paid_amount"]
+                "domain": [[["created", ">=", "date.this.month.first"], ["center_office_id", "in", "user.center_offices_ids"]], [["created", "<=", "date.this.month.last"], ["center_office_id", "in", "user.center_offices_ids"]]]
             }
         ]
     }

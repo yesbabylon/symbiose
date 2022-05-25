@@ -56,7 +56,7 @@
                                                 "label": "Categories",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "documents\\Document",
+                                                "entity": "documents\\DocumentCategory",
                                                 "view": "chart.default"
                                             }
                                         ]
