@@ -100,7 +100,10 @@
                 },
                 "details.identification": {
                     "label": "Identification"
-                }                
+                },
+                "section.repairings_ids": {
+                    "label": "Répar. & Maintenance"
+                }
             }
         },
         "list.default": {

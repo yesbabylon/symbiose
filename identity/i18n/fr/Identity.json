@@ -6,12 +6,12 @@
         "name": {
             "label": "Nom",
             "description": "Identité de l'utilisateur.",
-			"help": ""
+            "help": ""
         },
         "display_name": {
             "label": "Nom d'affichage",
             "description": "Nom d'affichage de l'identité.",
-			"help": ""
+            "help": ""
         },
         "type": {
             "label": "Type",
@@ -23,142 +23,142 @@
                 "NP": "Association à but non lucratif",
                 "PA": "Administration publique"
             },
-			"help": ""
+            "help": ""
         },
         "legal_name": {
             "label": "Nom légal",
             "description": "Nom complet de l'Identité.",
-			"help": ""
+            "help": ""
         },
         "short_name": {
             "label": "Nom usuel",
             "description": "Nom usuel à utiliser comme mémo pour identifier l'organisation (acronyme ou nom abrégé).",
-			"help": ""
+            "help": ""
         },
         "description": {
             "label": "Description",
             "description": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques.",
-			"help": ""
+            "help": ""
         },
         "has_vat": {
             "label": "Assujetti à la TVA",
             "description": "Cette organisation a-t-elle un numéro de TVA ?",
-			"help": ""
+            "help": ""
         },
         "vat_number": {
             "label": "Numéro de TVA",
             "description": "Numéro d'identification à la TVA.",
-			"help": ""
+            "help": ""
         },
         "registration_number": {
             "label": "Numéro de registre",
             "description": "Numéro d'enregistrement de l'organisation (numéro d'entreprise).",
-			"help": ""
+            "help": ""
         },
         "citizen_identification": {
             "label": "Numéro de registre national",
             "description": "Numéro de registre national (facultatif).",
-			"help": ""
+            "help": ""
         },
         "children_ids": {
             "label": "Filiales",
             "description": "Les organisations appartenant à l'entreprise, le cas échéant.",
-			"help": ""
+            "help": ""
         },
         "parent_id": {
             "label": "Organisation mère",
             "description": "Société mère dont l'organisation est une filiale, le cas échéant.",
-			"help": ""
+            "help": ""
         },
         "employees_ids": {
             "label": "Employés",
             "description": "Liste des employés de l'organisation.",
-			"help": ""
+            "help": ""
         },
         "customers_ids": {
             "label": "Clients",
             "description": "Liste des clients de l'organisation.",
-			"help": ""
+            "help": ""
         },
         "providers_ids": {
             "label": "Fournisseurs",
             "description": "Liste des prestataires de l'organisation, le cas échéant.",
-			"help": ""
+            "help": ""
         },
         "contacts_ids": {
             "label": "Contacts",
             "description": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant.",
-			"help": ""
+            "help": ""
         },
         "address_street": {
             "label": "Rue",
             "description": "Rue et numéro.",
-			"help": ""
+            "help": ""
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
             "description": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...).",
-			"help": ""
+            "help": ""
         },
         "address_city": {
             "label": "Ville",
             "description": "Ville.",
-			"help": ""
+            "help": ""
         },
         "address_zip": {
             "label": "Code Postal",
             "description": "Code Postal.",
-			"help": ""
+            "help": ""
         },
         "address_state": {
             "label": "État",
             "description": "État ou région.",
-			"help": ""
+            "help": ""
         },
         "address_country": {
             "label": "Pays",
             "description": "Pays.",
-			"help": ""
+            "help": ""
         },
         "email": {
             "label": "Email",
             "description": "Adresse e-mail principale.",
-			"help": ""
+            "help": ""
         },
         "phone": {
             "label": "Numéro de téléphone",
             "description": "Numéro de téléphone.",
-			"help": ""
+            "help": ""
         },
         "website": {
             "label": "Site Web officiel",
             "description": "URL du site Web officiel de l'organisation, le cas échéant.",
-			"help": ""
+            "help": ""
         },
         "addresses_ids": {
             "label": "Adresses",
             "description": "Liste des adresses liées à l'identité.",
-			"help": ""
+            "help": ""
         },
         "reference_partner_id": {
             "label": "Personne de référence",
             "description": "Contact (personne physique) pouvant représenter légalement l'organisation.",
-			"help": ""
+            "help": ""
         },
         "user_id": {
             "label": "Utilisateur",
             "description": "Utilisateur associé à cette identité.",
-			"help": ""
+            "help": ""
         },
         "firstname": {
             "label": "Prénom",
             "description": "Nom complet du contact (doit être une personne, pas un rôle).",
-			"help": ""
+            "help": ""
         },
         "lastname": {
             "label": "Nom",
             "description": "Nom.",
-			"help": ""
+            "help": ""
         },
         "gender": {
             "label": "Genre",
@@ -168,7 +168,7 @@
                 "F": "Féminin",
                 "X": "Non-binaire"
             },
-			"help": ""
+            "help": ""
         },
         "title": {
             "label": "Titre",
@@ -180,17 +180,27 @@
                 "Mr": "Monsieur",
                 "Pr": "Professeur"
             },
-			"help": ""
+            "help": ""
         },
         "date_of_birth": {
             "label": "Date de naissance",
             "description": "Date de naissance de la personne.",
-			"help": ""
+            "help": ""
         },
         "lang": {
             "label": "Langue",
             "description": "Langue parlée préférée.",
-			"help": ""
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "IBAN",
+            "description": "Compte bancaire.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "BIC",
+            "description": "Identifiant BIC lié au compte.",
+            "help": ""
         }
     },
     "view": {
