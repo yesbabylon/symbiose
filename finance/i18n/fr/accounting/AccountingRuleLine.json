@@ -1,6 +1,6 @@
 {
-    "name": "Line de règle comptable",
-    "plural": "Line des règles comptable",
+    "name": "Ligne de règle comptable",
+    "plural": "Ligne des règles comptable",
     "description": "Les règles comptables ont une ou plusieurs lignes les associant à un compte et une règle TVA.",
     "model": {
         "name":{
