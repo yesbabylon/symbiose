@@ -1,6 +1,6 @@
 {
-    "name": "Booking list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "name": "Nights Amount",
+    "description": "This view displays the amount of Nights spent",
     "access": {
         "groups": ["booking.default.user"]
     },

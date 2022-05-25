@@ -1,11 +1,11 @@
 {
-    "name": "Funding list",
+    "name": "Remboursements facturés",
     "description": "This view displays the list of bookings: the most recent on top.",
     "access": {
         "groups": ["finance.default.user"]
     },
     "layout": {
-        "entity": "sale\\pay\\Funding",
+        "entity": "finance\\accounting\\Invoice",
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.prev.year.last",
@@ -13,7 +13,8 @@
         "datasets": [
             {
                 "label": "Total Financements",
-                "operation": ["SUM", "object.due_amount"]
+                "operation": ["SUM", "object.due_amount"],
+                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
             }
         ]
     }

@@ -29,7 +29,8 @@
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "sale\\pos\\CashdeskSession",
-                                                "view": "list.dashboard"
+                                                "view": "list.dashboard",
+                                                "domain": ["status", "=", "pending"]
                                             }
 
                                         ]

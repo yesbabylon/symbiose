@@ -13,7 +13,7 @@
         "datasets": [
             {
                 "label" : "Taille total documents",
-                "operation": ["SUM", "object.size"],
+                "operation": ["/", "object.size", 1000],
                 "domain"   : ["size", ">", 0]
             }
         ]

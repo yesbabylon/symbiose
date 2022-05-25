@@ -1,5 +1,5 @@
 {
-    "name": "Funding list",
+    "name": "Notes de crédit facturées",
     "description": "This view displays the list of bookings: the most recent on top.",
     "access": {
         "groups": ["finance.default.user"]
@@ -13,8 +13,8 @@
         "datasets": [
             {
                 "label": "Total Financements",
-                "operation": ["COUNT", "object.id"],
-                "domain": [[["created", ">=", "date.this.month.first"], ["created", "<=", "date.this.month.last"]]]
+                "operation": ["SUM", "object.due_amount"],
+                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
             }
         ]
     }
