@@ -7,13 +7,19 @@
     "layout": {
         "entity": "finance\\accounting\\Invoice",
         "group_by": "range",
+        "stacked": true,
         "range_interval": "year",
         "range_from": "date.prev.year.last",
         "range_to": "date.prev.year.first",
         "datasets": [
             {
-                "label": "Total Financements",
-                "operation": ["COUNT", "object.id"],
+                "label": "Total Facturé TVAC",
+                "operation": ["SUM", "object.total"],
+                "domain": [[["created", ">=", "date.this.month.first"], ["created", "<=", "date.this.month.last"]]]
+            },
+            {
+                "label": "Total Facturé HTVA",
+                "operation": ["SUM", "object.price"],
                 "domain": [[["created", ">=", "date.this.month.first"], ["created", "<=", "date.this.month.last"]]]
             }
         ]

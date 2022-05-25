@@ -14,7 +14,7 @@
             {
                 "label" : "CA Total POS",
                 "operation": ["SUM", "object.amount"],
-                "domain": ["center_id", "in", "user.center_ids"]
+                "domain": ["center_id", "in", "user.centers_ids"]
             }
         ]
     }
