@@ -20,7 +20,7 @@
               "icon": "person_outline",
               "type": "entry",
               "route": "/orders/"      
-            }                      
+            }                   
         ]
     }
 }

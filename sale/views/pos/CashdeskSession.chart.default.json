@@ -1,0 +1,21 @@
+{
+    "name": "Cash Desk Session List",
+    "description": "This view displays the list of Cash Desk Sessions.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "entity": "lodging\\sale\\pos\\CashdeskSession",
+        "group_by": "range",
+        "range_interval": "month",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
+        "datasets": [
+            {
+                "label" : "CA Total POS",
+                "operation": ["SUM", "object.amount"],
+                "domain": ["center_id", "in", "user.centers_ids"]
+            }
+        ]
+    }
+}

@@ -183,6 +183,8 @@ class BookingLine extends \sale\booking\BookingLine {
         return $result;
     }
 
+    
+
     /**
      *
      * New group assignement : should (only) be called upon creation

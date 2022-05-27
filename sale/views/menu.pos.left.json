@@ -67,10 +67,25 @@
                       "entity": "sale\\pos\\OrderPayment",
                       "view": "list.default"
                     }
-                }  
+                }
+                
 
-              ]
-            }               
+              ]  
+            },
+            {
+              "id": "item.planning",
+
+              "description": "",
+
+                "type": "entry",
+
+                "label": "Dashboard",
+                
+                "context": {
+                    "entity": "sale\\pos\\CashdeskSession",
+                    "view": "dashboard.default"
+                }
+            }                 
         ]
     }
 }

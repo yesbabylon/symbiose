@@ -1,0 +1,8 @@
+{
+    "description": "",
+    "view": {
+        "item.home": {"label": "Accueil", "help": ""},
+        "item.invoices": {"label": "Factures", "help": ""}	,
+        "item.dashboard": {"label": "Dashboard", "help": ""}
+    }
+}

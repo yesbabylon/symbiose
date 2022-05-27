@@ -1,0 +1,207 @@
+{
+    "name": "Accounting menu",
+    "access": {
+      "groups": ["finance.default.user"]
+   },
+    "layout": {
+        "items": [
+            {
+                "id": "settings.all_stats",
+                "label": "Stats",
+                "description": "",
+                "icon": "settings",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "settings.all_stats.documents",
+                        "icon": "settings",
+                        "type": "parent",
+                        "label": "Documents values",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "settings.all_documents.size_documents",
+                                "type": "entry",
+                                "label": "Taille des documents",
+                                "description": "",
+                                "context": {
+                                    "entity": "documents\\Document",
+                                    "view": "chart.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.all_stats.bookings",
+                        "icon": "settings",
+                        "type": "parent",
+                        "label": "Bookings values",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "settings.all_bookings",
+                                "type": "entry",
+                                "label": "CA Réservations",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.default"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings",
+                                "type": "entry",
+                                "label": "Nombre de réservations",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.bookingCount"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.compositionItem",
+                                "type": "entry",
+                                "label": "Nombre de personnes",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.compositionItem"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.accomodation",
+                                "type": "entry",
+                                "label": "Nombre de nuitées",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.accomodation"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.INS",
+                                "type": "entry",
+                                "label": "INS",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.INS"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_meals",
+                                "type": "entry",
+                                "label": "CA repas",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.meal"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.noInvoice",
+                                "type": "entry",
+                                "label": "CA non facturé",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.noInvoice"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.sku",
+                                "type": "entry",
+                                "label": "SKU",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.sku"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.sojournType",
+                                "type": "entry",
+                                "label": "Type de séjour",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.sojournType"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.taxes",
+                                "type": "entry",
+                                "label": "Nombre de taxes de séjour",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\BookingLine",
+                                    "view": "chart.taxes"
+                                }
+                            },
+                            {
+                                "id": "settings.all_bookings.total_bookings.provisional",
+                                "type": "entry",
+                                "label": "CA prévisionnel",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Booking",
+                                    "view": "chart.provisionalCA"
+                                }
+                            }
+
+                        ]
+                    },
+                    {
+                        "id": "settings.all_stats.sale",
+                        "icon": "settings",
+                        "type": "parent",
+                        "label": "Sales values",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "settings.all_stats.sales",
+                                "type": "entry",
+                                "label": "CA pos",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\pos\\CashdeskSession",
+                                    "view": "chart.default"
+                                }
+                            },
+                            {
+                                "id": "settings.all_stats.payment_methods",
+                                "type": "entry",
+                                "label": "Total paiement par carte bancaire",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\pos\\CashdeskSession",
+                                    "view": "chart.paymentMethod"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.all_stats.finance",
+                        "icon": "settings",
+                        "type": "parent",
+                        "label": "Finance values",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "settings.all_stats.finance_funding",
+                                "type": "entry",
+                                "label": "Total Remboursements",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\sale\\booking\\Funding",
+                                    "view": "chart.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }             
+
+        ]
+    }
+}

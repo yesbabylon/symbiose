@@ -9,26 +9,26 @@
                     {                
                         "rows": [
                             {
-                                "height": "50%", 
+                                "height": "50%",
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
+                                                "id": "item.documents",
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain": ["object_class", "=", "documents\\Document"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Réservations",
+                                                "id": "item.documents2",
+                                                "label": "Documents",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "list.dashboard",
                                                 "domain": ["creator", "=", "user.id"]
                                             }
@@ -44,22 +44,21 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.documents3",
+                                                "label": "Mémoire",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "documents\\Document",
                                                 "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Nombre de checkin ce mois-ci",
+                                                "id": "item.documents4",
+                                                "label": "Categories",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.checkin"
+                                                "entity": "documents\\DocumentCategory",
+                                                "view": "chart.default"
                                             }
-
                                         ]
                                     }
                                 ]

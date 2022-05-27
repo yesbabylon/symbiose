@@ -35,7 +35,7 @@
                 "sort": "desc",
                 "domain": ["status", "=", "quote"]
               }
-            }                      
+            }                    
             
         ]
     }

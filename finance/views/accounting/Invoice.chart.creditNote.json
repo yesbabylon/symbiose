@@ -1,0 +1,27 @@
+{
+    "name": "Notes de crédit facturées",
+    "description": "This view displays the list of bookings: the most recent on top.",
+    "access": {
+        "groups": ["finance.default.user"]
+    },
+    "layout": {
+        "entity": "finance\\accounting\\Invoice",
+        "group_by": "range",
+        "range_interval": "year",
+        "stacked": true,
+        "range_from": "date.prev.year.last",
+        "range_to": "date.prev.year.first",
+        "datasets": [
+            {
+                "label": "Total Notes de crédit TVAC",
+                "operation": ["SUM", "object.total"],
+                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+            },
+            {
+                "label": "Total Notes de crédit HTVA",
+                "operation": ["SUM", "object.price"],
+                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+            }
+        ]
+    }
+}

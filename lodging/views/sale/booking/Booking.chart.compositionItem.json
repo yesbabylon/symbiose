@@ -1,0 +1,20 @@
+{
+    "name": "Persons List",
+    "description": "This view displays the total number of persons that came to a Kaleo Center",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\booking\\CompositionItem",
+        "group_by": "range",
+        "range_interval": "year",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
+        "datasets": [
+            {
+                "label": "Nombre de personnes",
+                "operation": ["COUNT", "object.id"]
+            }
+        ]
+    }
+}

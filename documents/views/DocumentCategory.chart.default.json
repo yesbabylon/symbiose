@@ -1,0 +1,18 @@
+{
+    "name": "Documents Categories list",
+    "description": "This view displays the list of bookings categories: the most recent on top.",
+    "access": {
+        "groups": ["documents.default.user"]
+    },
+    "layout": {
+        "entity": "documents\\DocumentCategory",
+        "type": "pie",
+        "group_by": "field",
+        "field": "name",
+        "datasets": [
+            {
+                "operation": ["COUNT", "object.id"]
+            }
+        ]
+    }
+}
