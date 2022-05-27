@@ -3,34 +3,34 @@
     "layout": {
         "groups": [
 			{
-                "label": "test",
+                "label": "Dashboard",
                 "height": "100%",
                 "sections": [
                     {                
                         "rows": [
                             {
-                                "height": "50%", 
+                                "height": "50%",
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
+                                                "id": "item.pos",
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain":  ["object_class", "=", "sale\\pos\\*"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Réservations",
+                                                "id": "item.pos2",
+                                                "label": "Sessions",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pos\\CashdeskSession",
                                                 "view": "list.dashboard",
-                                                "domain": ["creator", "=", "user.id"]
+                                                "domain": ["status", "=", "pending"]
                                             }
 
                                         ]
@@ -44,20 +44,20 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.pos3",
+                                                "label": "CA POS",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pos\\CashdeskSession",
                                                 "view": "chart.default"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Nombre de checkin ce mois-ci",
+                                                "id": "item.pos4",
+                                                "label": "Payment methods",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.checkin"
+                                                "entity": "sale\\pos\\CashdeskSession",
+                                                "view": "chart.paymentMethod"
                                             }
 
                                         ]

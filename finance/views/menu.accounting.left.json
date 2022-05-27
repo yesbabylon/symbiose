@@ -56,7 +56,7 @@
                 ]
             },
             {
-                "id": "item.invoices",
+                "id": "item.invoices2",
                 "label": "Invoices",
                 "description": "",
                 "icon": "menu_book",
@@ -75,6 +75,16 @@
                         }
                     }
                 ]
+            },
+            {
+              "id": "item.planning",
+              "description": "",
+                "type": "entry",
+                "label": "Dashboard",
+                "context": {
+                    "entity": "finance\\accounting\\Invoice",
+                    "view": "dashboard.default"
+                }
             }               
 
         ]

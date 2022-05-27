@@ -1,22 +1,26 @@
 {
-    "name": "Booking list",
-    "description": "This view displays the list of bookings: the most recent on top.",
+    "name": "Total turnover of bookings",
+    "description": "This view displays the total turnover of the bookings.",
     "access": {
         "groups": ["booking.default.user"]
     },
     "layout": {
-        "entity": "lodging\\sale\\booking\\Consumption",
-        "type": "bar",
-        "stacked": false,
+        "entity": "lodging\\sale\\booking\\Booking",
+        "stacked": true,
         "group_by": "range",
         "range_interval": "month",
-        "range_from": "date.prev.year.first",
-        "range_to": "date.prev.year.last",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
         "datasets": [
             {
-                "label": "tout public",
-                "operation": ["COUNT", "object.id"],
-                "domain"   : ["is_rental_unit", "=", true]
+                "label": "CA réservations HTVA",
+                "operation": ["SUM", "object.total"],
+                "domain": ["creator", "=", "user.id"]
+            },
+            {
+                "label": "CA réservations TVAC",
+                "operation": ["SUM", "object.price"],
+                "domain": ["creator", "=", "user.id"]
             }
         ]
     }

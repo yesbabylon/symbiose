@@ -1,0 +1,18 @@
+{
+    "name": "Payment Method",
+    "description": "This view displays the list of payment methods: the most recent on top.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\pay\\Payment",
+        "type": "pie",
+        "group_by": "field",
+        "field": "payment_method",
+        "datasets": [
+            {
+                "operation": ["COUNT", "object.id"]
+            }
+        ]
+    }
+}

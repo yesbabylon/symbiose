@@ -1,0 +1,20 @@
+{
+    "name": "Order Lines",
+    "description": "This view displays the quantity of Order Lines: the most recent on top.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "layout": {
+        "entity": "sale\\pos\\OrderLine",
+        "group_by": "range",
+        "range_interval": "year",
+        "range_from": "date.this.year.first",
+        "range_to": "date.this.year.last",
+        "datasets": [
+            {
+                "label" : "Count order lines",
+                "operation": ["SUM", "object.qty"]
+            }
+        ]
+    }
+}

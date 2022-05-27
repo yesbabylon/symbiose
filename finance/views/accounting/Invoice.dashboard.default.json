@@ -9,28 +9,28 @@
                     {                
                         "rows": [
                             {
-                                "height": "50%", 
+                                "height": "50%",
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
+                                                "id": "item.finance",
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain":  ["object_class", "=", "finance\\*"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Réservations",
+                                                "id": "item.finance2",
+                                                "label": "Invoice",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "finance\\accounting\\Invoice",
                                                 "view": "list.dashboard",
-                                                "domain": ["creator", "=", "user.id"]
+                                                "domain": ["status", "=", "reconciled"]
                                             }
 
                                         ]
@@ -44,22 +44,21 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.fundings3",
+                                                "label": "Total Facturé",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.default"
+                                                "entity":"finance\\accounting\\Invoice",
+                                                "view": "chart.invoicedTotal"
                                             },
                                             {
-                                                "id": "item.bookings4",
-                                                "label": "Nombre de checkin ce mois-ci",
+                                                "id": "item.fundings4",
+                                                "label": "Notes de crédit",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.checkin"
+                                                "entity": "finance\\accounting\\Invoice",
+                                                "view": "chart.creditNote"
                                             }
-
                                         ]
                                     }
                                 ]

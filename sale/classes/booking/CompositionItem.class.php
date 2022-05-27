@@ -70,7 +70,7 @@ class CompositionItem extends Model {
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',
                 'description'       => "Nationality of the contact.",
-                'default'           => 'BE'
+                // 'default'           => 'BE'
             ],
 
             'rental_unit_id' => [

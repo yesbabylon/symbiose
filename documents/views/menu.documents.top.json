@@ -17,7 +17,7 @@
               "icon": "import_export",
               "type": "entry",
               "route": "/import"
-            }                      
+            }                    
         ]
     }
 }

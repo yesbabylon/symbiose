@@ -1,6 +1,6 @@
 {
-	"name": "Line de facture",
-	"plural": "Line de factures",
+	"name": "Ligne de facture",
+	"plural": "Ligne de factures",
 	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
 		"invoice_line_group_id": {

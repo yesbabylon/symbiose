@@ -9,28 +9,28 @@
                     {                
                         "rows": [
                             {
-                                "height": "50%", 
+                                "height": "50%",
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
-                                                "id": "item.bookings",
+                                                "id": "item.sale",
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\Message",
-                                                "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "entity": "core\\alert\\MessageModel",
+                                                "view": "list.default",
+                                                "domain":  ["object_class", "=", "sale\\pay\\*"]
                                             },
                                             {
-                                                "id": "item.bookings2",
-                                                "label": "Réservations",
+                                                "id": "item.sale2",
+                                                "label": "Extraits bancaires",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
+                                                "entity": "sale\\pay\\BankStatementLine",
                                                 "view": "list.dashboard",
-                                                "domain": ["creator", "=", "user.id"]
+                                                "domain": ["status", "=", "pending"]
                                             }
 
                                         ]
@@ -44,20 +44,20 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "item.bookings3",
-                                                "label": "Bookings",
+                                                "id": "item.sale3",
+                                                "label": "Financements",
+                                                "description": "",
+                                                "width": "50%",
+                                                "entity": "sale\\pay\\Funding",
+                                                "view": "chart.default"
+                                            },
+                                            {
+                                                "id": "item.sale4",
+                                                "label": "Réservations",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",
                                                 "view": "chart.default"
-                                            },
-                                            {
-                                                "id": "item.bookings4",
-                                                "label": "Nombre de checkin ce mois-ci",
-                                                "description": "",
-                                                "width": "50%",
-                                                "entity": "lodging\\sale\\booking\\Booking",
-                                                "view": "chart.checkin"
                                             }
 
                                         ]

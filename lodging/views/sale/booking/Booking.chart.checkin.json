@@ -1,0 +1,21 @@
+{
+    "name": "Total Checkins",
+    "description": "Checks how many checkins happen during the week/month we are in.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "entity": "lodging\\sale\\booking\\Booking",
+        "group_by": "range",
+        "range_interval": "month",
+        "range_from": "date.this.year.last",
+        "range_to": "date.this.year.first",
+        "datasets": [
+            {
+                "label": "CA réservations HTVA",
+                "operation": ["COUNT", "object.id"],
+                "domain":[[["date_from", ">=", "date.this.month.first"], ["date_from", "<=", "date.this.month.last"]]]
+            }
+        ]
+    }
+}
