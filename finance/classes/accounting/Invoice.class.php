@@ -252,17 +252,17 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function onupdateStatus($om, $ids, $lang) {
+    public static function onupdateStatus($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
         // immediate recompute
         $om->read(__CLASS__, $ids, ['number'], $lang);
     }
 
-    public static function onupdateInvoiceLinesIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLinesIds($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
-    public static function onupdateInvoiceLineGroupsIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLineGroupsIds($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
@@ -298,7 +298,7 @@ class Invoice extends Model {
      *  as 10000000 % 97 = 76
      *  we do (aaa * 76 + bbbbbbb) % 97
      */
-    public static function _get_payment_reference($prefix, $suffix) {
+    protected static function _get_payment_reference($prefix, $suffix) {
         $a = intval($prefix);
         $b = intval($suffix);
         $control = ((76*$a) + $b ) % 97;

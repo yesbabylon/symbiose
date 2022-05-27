@@ -68,7 +68,7 @@ class DocumentCategory extends Model {
         return $result;
     }
 
-    public static function onupdatePath($om, $oids, $lang){
+    public static function onupdatePath($om, $oids, $values, $lang){
         $om->write(__CLASS__, $oids, ['path' => null], $lang);
         $res = $om->read(__CLASS__, $oids, ['children_ids']);
 

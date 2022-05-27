@@ -89,7 +89,7 @@ class Customer extends \identity\Partner {
         ];
     }
 
-    public static function onupdateCustomerNatureId($om, $oids, $lang) {
+    public static function onupdateCustomerNatureId($om, $oids, $values, $lang) {
         $customers = $om->read(__CLASS__, $oids, ['customer_nature_id.rate_class_id', 'customer_nature_id.customer_type_id']);
         if($customers > 0 && count($customers)) {
             foreach($customers as $cid => $customer) {

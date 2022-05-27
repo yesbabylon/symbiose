@@ -165,7 +165,7 @@ class Consumption extends Model {
         return $result;
     }
 
-    public static function onupdateRentalUnitId($om, $oids, $lang) {
+    public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
         $consumptions = $om->read(__CLASS__, $oids, ['rental_unit_id'], $lang);
         if($consumptions > 0) {
             $updated_consumptions_ids = [];

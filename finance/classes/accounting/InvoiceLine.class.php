@@ -202,7 +202,7 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    public static function onupdatePriceId($om, $oids, $lang) {
+    public static function onupdatePriceId($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -213,7 +213,7 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onupdateVatRate($om, $oids, $lang) {
+    public static function onupdateVatRate($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null]);
         // reset parent invoice total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -224,11 +224,11 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onupdateQty($om, $oids, $lang) {
+    public static function onupdateQty($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
     }
 
-    public static function onupdateFreeQty($om, $oids, $lang) {
+    public static function onupdateFreeQty($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
@@ -239,7 +239,7 @@ class InvoiceLine extends Model {
         }
     }
 
-    public static function onupdateDiscount($om, $oids, $lang) {
+    public static function onupdateDiscount($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
         // reset parent invoice price and total
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);

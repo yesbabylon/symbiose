@@ -65,6 +65,8 @@ $booking = Booking::id($params['id'])
                             'pack_id' => ['id', 'display_name'],
                             'vat_rate',
                             'unit_price',
+                            'fare_benefit',
+                            'rate_class_id',
                             'qty',
                             'nb_nights',
                             'nb_pers',
@@ -135,7 +137,9 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         $contract_line_group = ContractLineGroup::create([
             'name'              => $group_label,
             'is_pack'           => true,
-            'contract_id'       => $contract['id']
+            'contract_id'       => $contract['id'],
+            'fare_benefit'      => $group['fare_benefit'],
+            'rate_class_id'     => $group['rate_class_id']
         ])->first();
 
         // create a line based on the group
@@ -155,7 +159,9 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         $contract_line_group = ContractLineGroup::create([
             'name'              => $group_label,
             'is_pack'           => false,
-            'contract_id'       => $contract['id']
+            'contract_id'       => $contract['id'],
+            'fare_benefit'      => $group['fare_benefit'],
+            'rate_class_id'     => $group['rate_class_id']
         ])->first();
     }
 

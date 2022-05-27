@@ -65,7 +65,7 @@ class User extends \core\User {
     }
 
 
-    public static function onupdateIdentity($om, $oids, $lang) {
+    public static function onupdateIdentity($om, $oids, $values, $lang) {
         // force re-compute the name
         $om->write(__CLASS__, $oids, ['name' =>  null], $lang);
     }    

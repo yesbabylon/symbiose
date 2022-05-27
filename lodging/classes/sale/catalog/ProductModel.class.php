@@ -148,7 +148,7 @@ class ProductModel extends \sale\catalog\ProductModel {
     /**
      * Assigns the related rental unity capacity as own capacity.
      */
-    public static function onupdateRentalUnitId($om, $oids, $lang) {
+    public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onupdateRentalUnitId", QN_REPORT_DEBUG);
         
         $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity'], $lang);

@@ -102,8 +102,8 @@ if(is_array($data) && count($data)) {
 
 // remove consumptions, if any (link & part)
 Consumption::search(['booking_id', '=', $params['id']])->delete(true);
-
-BookingLine::_createConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
+// re-create consumptions
+$orm->call('lodging\sale\booking\BookingLine', '_createConsumptions', $booking['booking_lines_ids']);
 
 /*
     Update alerts & cron jobs

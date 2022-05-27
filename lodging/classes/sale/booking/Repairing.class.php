@@ -57,19 +57,19 @@ class Repairing extends \sale\booking\Repairing {
         ];
     }
 
-    public static function onupdateRentalUnitsIds($om, $oids, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
+    public static function onupdateRentalUnitsIds($om, $oids, $values, $lang) {
+        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
-    public static function onupdateDateFrom($om, $oids, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
+    public static function onupdateDateFrom($om, $oids, $values, $lang) {
+        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
-    public static function onupdateDateTo($om, $oids, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, $lang);
+    public static function onupdateDateTo($om, $oids, $values, $lang) {
+        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
-    public static function _updateRepairs($om, $oids, $lang) {
+    public static function _updateRepairs($om, $oids, $values, $lang) {
         // generate consumptions
         $repairings = $om->read(__CLASS__, $oids, ['repairs_ids', 'center_id', 'date_from', 'date_to', 'rental_units_ids'], $lang);
         if($repairings > 0) {
@@ -85,13 +85,13 @@ class Repairing extends \sale\booking\Repairing {
                 for($i = 0; $i < $nb_days; ++$i) {
                     $c_date = mktime(0, 0, 0, $month, $day+$i, $year);
                     foreach($odata['rental_units_ids'] as $rental_unit_id) {
-                        $values = [
+                        $fields = [
                             'repairing_id'          => $oid,
                             'center_id'             => $odata['center_id'],
                             'date'                  => $c_date,
                             'rental_unit_id'        => $rental_unit_id
                         ];
-                        $om->create('lodging\sale\booking\Repair', $values, $lang);
+                        $om->create('lodging\sale\booking\Repair', $fields, $lang);
                     }
                 }
             }

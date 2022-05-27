@@ -106,11 +106,11 @@ class Order extends Model {
         ];
     }
 
-    public static function onupdateSessionId($om, $ids, $lang) {
+    public static function onupdateSessionId($om, $ids, $values, $lang) {
         $om->write(get_called_class(), $ids, ['name' => null, 'sequence' => null], $lang);
     }
 
-    public static function onupdateOrderLinesIds($om, $ids, $lang) {
+    public static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
         $om->write(get_called_class(), $ids, ['price' => null, 'total' => null], $lang);
     }
 

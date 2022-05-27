@@ -20,14 +20,6 @@
             "controller": "lodging_contract_signed",
             "confirm": true,
             "visible": ["status", "=", "sent"]
-        },
-        {
-            "id": "action.cancelled",
-            "label": "Mark as cancelled",
-            "description": "Contract will be marked as cancelled. All booked ressources will be freed, and cancellation fees will be issued if applicable.",
-            "controller": "lodging_contract_cancelled",
-            "confirm": true,
-            "visible": ["status", "<>", "cancelled"]
         }
     ],
     "routes": [
@@ -36,7 +28,7 @@
             "label": "Envoi du contrat",
             "description": "",
             "icon": "drive_file_rename_outline",
-            "route": "/booking/object.booking_id/contract",
+            "route": "/booking/object.booking_id/contract/object.id",
             "visible": ["status", "in", ["pending", "sent"]]
         }              
     ],    

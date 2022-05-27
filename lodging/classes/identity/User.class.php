@@ -34,7 +34,7 @@ class User extends \identity\User {
     }
 
 
-    public static function onupdateCenterOfficesIds($om, $oids, $lang) {
+    public static function onupdateCenterOfficesIds($om, $oids, $values, $lang) {
 
         $users = $om->read(__CLASS__, $oids, ['centers_ids', 'center_offices_ids.centers_ids'], $lang);
         if($users > 0) {

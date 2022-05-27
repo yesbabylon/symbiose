@@ -204,11 +204,11 @@ class Product extends Model {
         return $result;
     }
 
-    public static function onupdateLabel($om, $oids, $lang) {
+    public static function onupdateLabel($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onupdateSku($om, $oids, $lang) {
+    public static function onupdateSku($om, $oids, $values, $lang) {
         $products = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($products > 0 && count($products)) {
             $prices_ids = [];
@@ -220,7 +220,7 @@ class Product extends Model {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onupdateProductModelId($om, $oids, $lang) {
+    public static function onupdateProductModelId($om, $oids, $values, $lang) {
         $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
         foreach($products as $pid => $product) {
             $om->write(get_called_class(), $pid, [

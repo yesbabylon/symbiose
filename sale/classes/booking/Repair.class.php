@@ -51,4 +51,27 @@ class Repair extends Consumption {
         ];
     }
 
+
+    /**
+     * Check wether an object can be deleted, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     * 
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @return boolean  Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $oids) {
+        $lines = $om->read(get_called_class(), $oids, ['date']);
+
+        if($lines > 0) {
+            foreach($lines as $line) {
+                if($line['date'] <= time()) {
+                    return ['date' => ['non_removeable' => 'Passed repairs must be kept for history.']];
+                }
+            }
+        }
+
+        return parent::candelete($om, $oids);
+    }    
+
 }

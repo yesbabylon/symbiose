@@ -102,7 +102,7 @@ class BookingLineGroup extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price for all lines (computed).',
-                'function'          => 'sale\booking\BookingLineGroup::getTotal',
+                'function'          => 'calcTotal',
                 'store'             => true
             ],
 
@@ -111,7 +111,16 @@ class BookingLineGroup extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price for all lines (computed).',
-                'function'          => 'sale\booking\BookingLineGroup::getPrice',
+                'function'          => 'calcPrice',
+                'store'             => true
+            ],
+
+            'fare_benefit' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Total amount of the fare banefit VAT incl.',
+                'function'          => 'calcFareBenefit',
                 'store'             => true
             ]
 
@@ -119,17 +128,24 @@ class BookingLineGroup extends Model {
     }
 
 
-    public static function onupdateBookingLinesIds($om, $oids, $lang) {
-        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
+    public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
+        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
-    public static function _resetPrices($om, $oids, $lang) {
-        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
-        // update parent booking
-        $groups = $om->read(__CLASS__, $oids, ['booking_id'], $lang);
+    /**
+     * In case prices of a group are impacted, we need to resett parent booking and children lines as well.
+     */
+    public static function _resetPrices($om, $oids, $values, $lang) {
+        // reset computed fields related to price
+        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null, 'fare_benefit' => null]);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids'], $lang);
         if($groups > 0) {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, array_values($groups));
-            $om->write('sale\booking\Booking', $bookings_ids, ['total' => null, 'price' => null]);
+            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $groups);
+            $booking_lines_ids = array_reduce($groups, function($c, $a) { return array_merge($c, $a['booking_lines_ids']); }, []);
+            // reset fields in parent bookings
+            $om->call('sale\booking\Booking', '_resetPrices', $bookings_ids, [], $lang);
+            // reset fields in children lines
+            $om->call('sale\booking\BookingLine', '_resetPrices', $booking_lines_ids, [], $lang);
         }
     }
 
@@ -147,7 +163,7 @@ class BookingLineGroup extends Model {
      * Get total tax-excluded price of the group, with discount applied.
      *
      */
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
 
         $groups = $om->read(get_called_class(), $oids, ['booking_id', 'booking_lines_ids.total']);
@@ -171,7 +187,7 @@ class BookingLineGroup extends Model {
      * Get final tax-included price of the group.
      *
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
 
         $groups = $om->read(get_called_class(), $oids, ['booking_lines_ids.price']);
@@ -185,8 +201,26 @@ class BookingLineGroup extends Model {
         return $result;
     }
 
+    /**
+     * Retrieve sum of fare benefits granted on booking lines.
+     *
+     */
+    public static function calcFareBenefit($om, $oids, $lang) {
+        $result = [];
 
-/**
+        $groups = $om->read(get_called_class(), $oids, ['booking_lines_ids.fare_benefit']);
+
+        foreach($groups as $oid => $group) {
+            $result[$oid] = array_reduce($group['booking_lines_ids.fare_benefit'], function ($c, $a) {
+                return $c + $a['fare_benefit'];
+            }, 0.0);
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
      *

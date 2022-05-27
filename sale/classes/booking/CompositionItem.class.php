@@ -109,7 +109,7 @@ class CompositionItem extends Model {
         ];
     }
 
-    public static function onupdateCompositionId($om, $oids, $lang) {
+    public static function onupdateCompositionId($om, $oids, $values, $lang) {
         $items = $om->read(get_called_class(), $oids, ['composition_id.booking_id'], $lang);
 
         foreach($items as $oid => $odata) {

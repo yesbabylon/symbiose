@@ -188,7 +188,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * New group assignement : should (only) be called upon creation
      * 
      */
-    public static function onupdateBookingLineGroupId($om, $oids, $lang) {
+    public static function onupdateBookingLineGroupId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateBookingLineGroupId", QN_REPORT_DEBUG);
 
     }
@@ -198,14 +198,14 @@ class BookingLine extends \sale\booking\BookingLine {
      *
      * This is called at booking line creation.
      */
-    public static function onupdateProductId($om, $oids, $lang) {
+    public static function onupdateProductId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateProductId", QN_REPORT_DEBUG);
 
         // reset computed fields related to product model
         $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
-        $om->call(__CLASS__, '_updatePriceId', $oids, $lang);
+        $om->call(__CLASS__, '_updatePriceId', $oids, [], $lang);
 
         // we might change the product_id but not the quantity : we cannot know if qty is changed during the same operation
         // #memo - in ORM, a check is performed on the onchange methods to prevent handling same event multiple times
@@ -254,11 +254,11 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
 
     }
 
-    public static function onupdateQtyVars($om, $oids, $lang) {
+    public static function onupdateQtyVars($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQtyVars", QN_REPORT_DEBUG);
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.nb_pers','qty_vars']);
 
@@ -276,13 +276,13 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->write(__CLASS__, $lid, ['qty' => $qty]);
                 }
                 else {
-                    $om->call(__CLASS__, '_updateQty', $oids, $lang);
+                    $om->call(__CLASS__, '_updateQty', $oids, [], $lang);
                 }
             }
         }
 
         // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
     }
 
     /**
@@ -290,7 +290,7 @@ class BookingLine extends \sale\booking\BookingLine {
      *
      * This handler is called at booking line creation and is in charge of updating the rental units assignments related to the line.
      */
-    public static function onupdateQty($om, $oids, $lang) {
+    public static function onupdateQty($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQty", QN_REPORT_DEBUG);
 
         // try to auto-assign a rental_unit
@@ -465,7 +465,7 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, $lang);
+        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
     }
 
 
@@ -478,7 +478,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * @param  object   $om         ObjectManager instance.
      * @param  array    $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
      * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be created.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be created.
      */
     public static function cancreate($om, $values, $lang) {
         $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
@@ -545,7 +545,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * 
      * @param  object   $om         ObjectManager instance.
      * @param  array    $oids       List of objects identifiers.
-     * @return boolean  Returns true if the object can be deleted, or false otherwise.
+     * @return boolean  Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
      */
     public static function candelete($om, $oids) {
         $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra']);
@@ -570,7 +570,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * This method is triggered on fields update from BookingLineGroup.
      *
      */
-    public static function _updateQty($om, $oids, $lang) {
+    public static function _updateQty($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updateQty", QN_REPORT_DEBUG);
 
         $lines = $om->read(__CLASS__, $oids, [
@@ -640,7 +640,7 @@ class BookingLine extends \sale\booking\BookingLine {
      *
      * @param \equal\orm\ObjectManager $om
      */
-    public static function _updatePriceId($om, $oids, $lang) {
+    public static function _updatePriceId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updatePriceId", QN_REPORT_DEBUG);
 
         $lines = $om->read(get_called_class(), $oids, [
@@ -707,13 +707,13 @@ class BookingLine extends \sale\booking\BookingLine {
      * #memo - consumptions are used in the planning.
      *
      */
-    public static function _createConsumptions($om, $oids, $lang) {
+    public static function _createConsumptions($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
 
         /*
             get in-memory list of consumptions for all lines
         */
-        $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, $lang);
+        $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, [], $lang);
 
         /*
             create consumptions objects
@@ -745,7 +745,7 @@ class BookingLine extends \sale\booking\BookingLine {
      * Process targeted BookingLines to create an in-memory list of consumptions objects.
      *
      */
-    public static function _getResultingConsumptions($om, $oids, $lang) {
+    public static function _getResultingConsumptions($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_getResultingConsumptions", QN_REPORT_DEBUG);
 
         // resulting consumptions objects
@@ -1001,7 +1001,7 @@ class BookingLine extends \sale\booking\BookingLine {
     }
 
 
-    public static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
+    protected static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
         $result = [];
 
         // current sum matches target

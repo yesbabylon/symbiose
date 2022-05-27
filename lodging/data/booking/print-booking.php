@@ -16,7 +16,7 @@ use communication\Template;
 use equal\data\DataFormatter;
 
 list($params, $providers) = announce([
-    'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
+    'description'   => "Render a booking quote given its ID as a PDF document.",
     'params'        => [
         'id' => [
             'description'   => 'Identitifier of the booking to print.',
@@ -150,6 +150,8 @@ $fields = [
         'vat_rate',
         'total',
         'price',
+        'fare_benefit',
+        'rate_class_id' => ['id', 'name', 'description'],
         'date_from',
         'date_to',
         'nb_pers',
@@ -236,7 +238,9 @@ $values = [
     'company_bic'           => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_bic'], 'bic'),
 
     'lines'                 => [],
-    'tax_lines'             => []
+    'tax_lines'             => [],
+
+    'benefit_lines'         => []
 ];
 
 
@@ -450,9 +454,30 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
     }
 }
 
-
-
 $values['lines'] = $lines;
+
+
+/*
+    compute fare benefit detail
+*/
+$values['benefit_lines'] = [];
+
+foreach($booking['booking_lines_groups_ids'] as $group) {
+    if($group['fare_benefit'] == 0) {
+        continue;
+    }
+    $index = $group['rate_class_id']['description'];
+    if(!isset($values['benefit_lines'][$index])) {
+        $values['benefit_lines'][$index] = [
+            'name'  => $index,
+            'value' => $group['fare_benefit']
+        ];
+    }
+    else {
+        $values['benefit_lines'][$index]['value'] += $group['fare_benefit'];
+    }
+}
+
 
 
 /*

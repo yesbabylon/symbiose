@@ -81,11 +81,11 @@ class Holiday extends Model {
         return $result;
     }
 
-    public static function onupdateHolidayYearId($orm, $oids, $lang) {
+    public static function onupdateHolidayYearId($orm, $oids, $values, $lang) {
         $orm->write(__CLASS__, $oids, ['year' => null]);
     }
 
-    public static function onupdateDateFrom($orm, $oids, $lang) {
+    public static function onupdateDateFrom($orm, $oids, $values, $lang) {
         $res = $orm->read(__CLASS__, $oids, ['date_from', 'is_single_day'], $lang);
 
         if($res > 0 && count($res)) {

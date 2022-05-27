@@ -51,7 +51,7 @@ class InvoiceLineGroup extends Model {
     }
 
 
-    public static function onupdateInvoiceLinesIds($om, $oids, $lang) {
+    public static function onupdateInvoiceLinesIds($om, $oids, $values, $lang) {
         $groups = $om->read(__CLASS__, $oids, ['invoice_id']);
         if($groups) {
             $invoices_ids = [];

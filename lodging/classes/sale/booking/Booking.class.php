@@ -180,7 +180,7 @@ class Booking extends \sale\booking\Booking {
             $booking_line_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_sojourn', 'date_from']);
             if($booking_line_groups > 0 ) {
                 foreach($booking_line_groups as $gid => $group) {
-                    if($group['is_sojourn']  && $group['date_from'] < $min_date) {
+                    if($group['is_sojourn'] && $group['date_from'] < $min_date) {
                         $min_date = $group['date_from'];
                     }
                 }
@@ -215,8 +215,8 @@ class Booking extends \sale\booking\Booking {
         return $result;
     }
 
-    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
-        $om->call('sale\booking\Booking', '_resetPrices', $oids, $lang);
+    public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
+        $om->call('sale\booking\Booking', '_resetPrices', $oids, [], $lang);
     }
 
     public static function calcName($om, $oids, $lang) {
@@ -264,7 +264,7 @@ class Booking extends \sale\booking\Booking {
     /**
      * Maintain sync with Customer
      */
-    public static function onupdateCustomerNatureId($om, $oids, $lang) {
+    public static function onupdateCustomerNatureId($om, $oids, $values, $lang) {
         $bookings = $om->read(__CLASS__, $oids, ['customer_id', 'customer_nature_id'], $lang);
 
         if($bookings > 0) {
@@ -277,7 +277,7 @@ class Booking extends \sale\booking\Booking {
     /**
      * Maintain sync with Customer when assigning a new customer by selecting a customer_identity_id
      */
-    public static function onupdateCustomerIdentityId($om, $oids, $lang) {
+    public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
 
@@ -314,7 +314,7 @@ class Booking extends \sale\booking\Booking {
         }
     }
 
-    public static function onupdateCustomerId($om, $oids, $lang) {
+    public static function onupdateCustomerId($om, $oids, $values, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, [
             'customer_identity_id',
@@ -347,21 +347,20 @@ class Booking extends \sale\booking\Booking {
                 }
             }
             if(count($booking_line_groups_ids)) {
-                // BookingLineGroup::_updatePriceAdapters($om, array_unique($booking_line_groups_ids), $lang);
-                $om->call('lodging\sale\booking\BookingLineGroup', '_updatePriceAdapters', array_unique($booking_line_groups_ids), $lang);
+                $om->call('lodging\sale\booking\BookingLineGroup', '_updatePriceAdapters', array_unique($booking_line_groups_ids), [], $lang);
             }
-            $om->call(__CLASS__, '_updateAutosaleProducts', $oids, $lang);
+            $om->call(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         }
     }
 
-    public static function onupdateCenterId($om, $oids, $lang) {
+    public static function onupdateCenterId($om, $oids, $values, $lang) {
         $bookings = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'center_id.center_office_id']);
 
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 $booking_lines_ids = $booking['booking_lines_ids'];
                 if($booking_lines_ids > 0 && count($booking_lines_ids)) {
-                    $om->call('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, $lang);
+                    $om->call('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, [], $lang);
                 }
                 $om->write(__CLASS__, $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
             }
@@ -414,7 +413,7 @@ class Booking extends \sale\booking\Booking {
      * customer, date_from, date_to, center_id
      *
      */
-    public static function _updateAutosaleProducts($om, $oids, $lang) {
+    public static function _updateAutosaleProducts($om, $oids, $values, $lang) {
 
         /*
             remove groups related to autosales that already exist
@@ -572,10 +571,9 @@ class Booking extends \sale\booking\Booking {
     }
 
 
-    public static function canclone($orm, $oids, $lang) {
+    public static function canclone($orm, $oids) {
         // prevent cloning bookings
         return ['status' => ['not_allowed' => 'Booking cannot be cloned.']];
-        // return parent::onclone($orm, $oids, $lang);
     }
 
 
@@ -589,7 +587,7 @@ class Booking extends \sale\booking\Booking {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang) {
 
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
 

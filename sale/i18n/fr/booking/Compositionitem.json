@@ -62,6 +62,11 @@
             "label": "Unité locative",
             "description": "L'unité locative à laquelle la personne est assignée.",
             "help": ""
+        },
+        "booking_id": {
+            "label": "Réservation",
+            "description": "La réservation à laquelle se raporte la ligne.",
+            "help": ""
         }
     },
     "view": {

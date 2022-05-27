@@ -130,7 +130,7 @@ class PriceList extends Model {
     /**
      * Invalidate related prices names.
      */
-    public static function onupdateName($om, $oids, $lang) {
+    public static function onupdateName($om, $oids, $values, $lang) {
         $lists = $om->read(__CLASS__, $oids, ['prices_ids'], $lang);
 
         if($lists > 0) {
@@ -140,7 +140,7 @@ class PriceList extends Model {
         }
     }
 
-    public static function onupdateStatus($om, $oids, $lang) {
+    public static function onupdateStatus($om, $oids, $values, $lang) {
         $pricelists = $om->read(__CLASS__, $oids, ['status']);
         $om->write(__CLASS__, $oids, ['is_active' => null]);
 

@@ -86,7 +86,7 @@ class CashdeskSession extends Model {
      * Create an 'opening' operation in the operations log.
      * Cashdesk assignement cannot be changed, so this handler is called once, when the session has just be created.
      */
-    public static function onupdateCashdeskId($om, $oids, $lang) {
+    public static function onupdateCashdeskId($om, $oids, $values, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id', 'amount', 'user_id'], $lang);
 
         if($sessions > 0) {

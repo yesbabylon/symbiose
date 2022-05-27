@@ -57,11 +57,11 @@ class Product extends \sale\catalog\Product {
         ];
     }
 
-    public static function onupdateLabel($om, $oids, $lang) {
+    public static function onupdateLabel($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['name' => null], $lang);
     }
 
-    public static function onupdateSku($om, $oids, $lang) {
+    public static function onupdateSku($om, $oids, $values, $lang) {
         $products = $om->read(__CLASS__, $oids, ['prices_ids']);
         if($products > 0 && count($products)) {
             $prices_ids = [];

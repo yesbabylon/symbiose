@@ -177,7 +177,7 @@ class ProductModel extends Model {
      *
      * Update related products is_pack
      */
-    public static function onupdateIsPack($om, $oids, $lang) {
+    public static function onupdateIsPack($om, $oids, $values, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'is_pack']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['is_pack' => $model['is_pack']]);
@@ -185,7 +185,7 @@ class ProductModel extends Model {
     }
 
 
-    public static function onupdateHasOwnPrice($om, $oids, $lang) {
+    public static function onupdateHasOwnPrice($om, $oids, $values, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'has_own_price']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['has_own_price' => $model['has_own_price']]);
@@ -197,21 +197,21 @@ class ProductModel extends Model {
      *
      * Update related products can_sell
      */
-    public static function onupdateCanSell($om, $oids, $lang) {
+    public static function onupdateCanSell($om, $oids, $values, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'can_sell']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['can_sell' => $model['can_sell']]);
         }
     }
 
-    public static function onupdateFamilyId($om, $oids, $lang) {
+    public static function onupdateFamilyId($om, $oids, $values, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'family_id']);
         foreach($models as $mid => $model) {
             $om->write('sale\catalog\Product', $model['products_ids'], ['family_id' => $model['family_id']]);
         }
     }
 
-    public static function onupdateGroupsIds($om, $oids, $lang) {
+    public static function onupdateGroupsIds($om, $oids, $values, $lang) {
         $models = $om->read(get_called_class(), $oids, ['products_ids', 'groups_ids']);
         foreach($models as $mid => $model) {
             $products = $om->read('sale\catalog\Product', $model['products_ids'], ['groups_ids']);

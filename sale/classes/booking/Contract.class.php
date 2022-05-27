@@ -49,7 +49,7 @@ class Contract extends \sale\contract\Contract {
     }
 
 
-  /**
+    /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
      *

@@ -116,11 +116,11 @@ class Address extends Model {
         return $result;
     }
 
-    public static function onupdateIdentityId($om, $oids, $lang) {
+    public static function onupdateIdentityId($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'identity_name' => null ], $lang);
     }
 
-    public static function onupdateAddress($om, $oids, $lang) {
+    public static function onupdateAddress($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
     }    
 }

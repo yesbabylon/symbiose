@@ -113,7 +113,7 @@ class Partner extends Model {
         ];
     }
 
-    public static function onupdatePartnerIdentityId($om, $oids, $lang) {
+    public static function onupdatePartnerIdentityId($om, $oids, $values, $lang) {
         $res = $om->read(get_called_class(), $oids, [ 'partner_identity_id.lang_id' ], $lang);
         if($res > 0 && count($res) ) {
             foreach($res as $oid => $odata) {
