@@ -24,7 +24,7 @@ use equal\data\DataFormatter;
 
 
 list($params, $providers) = announce([
-    'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
+    'description'   => "Render an invoice its ID as a PDF document.",
     'params'        => [
         'id' => [
             'description'   => 'Identitifier of the invoice to print.',

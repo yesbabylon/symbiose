@@ -104,7 +104,7 @@ class Document extends Model {
         return $result;
     }
 
-    public static function onupdateData($om, $oids, $lang) {
+    public static function onupdateData($om, $oids, $values, $lang) {
         $res = $om->read(__CLASS__, $oids, ['data']);
 
         foreach($res as $oid => $odata) {

@@ -67,6 +67,8 @@ class Consumption extends \sale\booking\Consumption {
 
 
     /**
+     * 
+     * #memo - used in controllers
      * @param \equal\orm\ObjectManager $om
      */
     public static function _getExistingConsumptions($om, $centers_ids, $date_from, $date_to) {
@@ -175,6 +177,9 @@ class Consumption extends \sale\booking\Consumption {
 
 
     /**
+     * 
+     * #memo - used in controllers 
+     * 
      * @param \equal\orm\ObjectManager $om  Instance of Object Manager service.
      * @param int $center_id    Identifier of the center for which to perform the lookup.
      * @param int $product_id   Identifier of the product for which we are looking for rental units.

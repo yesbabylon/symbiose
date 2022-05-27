@@ -44,7 +44,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
         ];
     }
 
-    public static function onupdateCashdeskId($om, $oids, $lang) {
+    public static function onupdateCashdeskId($om, $oids, $values, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id.center_id'], $lang);
 
         if($sessions > 0) {
@@ -52,7 +52,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
                 $om->write(__CLASS__,  $sid, ['center_id' => $session['cashdesk_id.center_id']], $lang);
             }
         }
-        parent::onupdateCashdeskId($om, $oids, $lang);
+        parent::onupdateCashdeskId($om, $oids, $values, $lang);
     }
 
 }

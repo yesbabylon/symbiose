@@ -80,13 +80,13 @@ class SeasonPeriod extends Model {
         ];
     }
 
-    public static function onupdateDateFrom($om, $oids, $lang) {
+    public static function onupdateDateFrom($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['month' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['month']);
     }
 
-    public static function onupdateSeason($om, $oids, $lang) {
+    public static function onupdateSeason($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['year', 'season_category_id']);

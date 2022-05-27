@@ -49,7 +49,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
      * Try to automatically reconcile a newly created statement line with a funding.
      * 
      */
-    public static function onupdateCenterOfficeId($om, $oids, $lang) {
+    public static function onupdateCenterOfficeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BankStatementLine::onupdateCenterOfficeId", QN_REPORT_DEBUG);
 
         $lines = $om->read(get_called_class(), $oids, ['amount', 'center_office_id', 'structured_message']);

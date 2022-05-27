@@ -50,7 +50,7 @@ if(!$booking) {
 $consumptions_map = [];
 
 if(count($booking['booking_lines_ids'])) {
-    $consumptions = BookingLine::_getResultingConsumptions($orm, $booking['booking_lines_ids'], DEFAULT_LANG);
+    $consumptions = $orm->call('lodging\sale\booking\BookingLine', '_getResultingConsumptions', $booking['booking_lines_ids']);
 
     // filter to keep only accomodations
     $consumptions = array_filter($consumptions, function($a) {

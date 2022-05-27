@@ -72,7 +72,7 @@ class PackLine extends Model {
         ];
     }
 
-    public static function onupdateChildProductId($om, $oids, $lang) {
+    public static function onupdateChildProductId($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 

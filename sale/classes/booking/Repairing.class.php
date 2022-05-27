@@ -13,7 +13,7 @@ class Repairing extends Model {
     public static function getDescription() {
         return "Repairings are episodes of repairs and maintenance impacting one or more rental units of a given Center.";
     }
-    
+
     public static function getColumns() {
         return [
 
@@ -78,16 +78,16 @@ class Repairing extends Model {
         return $result;
     }
 
-    public static function onupdateDescription($om, $oids, $lang) {
+    public static function onupdateDescription($om, $oids, $values, $lang) {
         $om->write(get_called_class(), $oids, ['name' => null]);
         $om->read(get_called_class(), $oids, ['name']);
     }
 
-    public static function onupdateDateFrom($om, $oids, $lang) {
+    public static function onupdateDateFrom($om, $oids, $values, $lang) {
 
     }
 
-    public static function onupdateDateTo($om, $oids, $lang) {
+    public static function onupdateDateTo($om, $oids, $values, $lang) {
 
     }
 

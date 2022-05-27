@@ -70,7 +70,7 @@ class OrderPayment extends Model {
      * This handled is mostly called upon creation and assignation to an order.
      * 
      */
-    public static function onupdateOrderId($om, $ids, $lang) {
+    public static function onupdateOrderId($om, $ids, $values, $lang) {
         $payments = $om->read(get_called_class(), $ids, ['order_id'], $lang);
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
@@ -113,11 +113,11 @@ class OrderPayment extends Model {
         return $result;
     }
 
-    public static function onupdateOrderPaymentPartsIds($om, $ids, $lang) {
+    public static function onupdateOrderPaymentPartsIds($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['total_paid' => null], $lang);
     }
 
-    public static function onupdateOrderLinesIds($om, $ids, $lang) {
+    public static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['total_due' => null], $lang);
     }
 

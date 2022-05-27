@@ -355,7 +355,7 @@ class Identity extends Model {
         return $result;
     }
 
-    public static function onupdateName($om, $oids, $lang) {
+    public static function onupdateName($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
         $res = $om->read(__CLASS__, $oids, ['partners_ids']);
         $partners_ids = [];
@@ -366,7 +366,7 @@ class Identity extends Model {
     }
 
 
-    public static function onupdateTypeId($om, $oids, $lang) {
+    public static function onupdateTypeId($om, $oids, $values, $lang) {
         $res = $om->read(__CLASS__, $oids, ['type_id.code']);
         if($res > 0) {
             foreach($res as $oid => $odata) {
@@ -382,7 +382,7 @@ class Identity extends Model {
     /**
      * When lang_id is updated, perform cascading trought the partners to update related lang_id
      */
-    public static function onupdateLangId($om, $oids, $lang) {
+    public static function onupdateLangId($om, $oids, $values, $lang) {
         $res = $om->read(__CLASS__, $oids, ['partners_ids', 'lang_id']);
 
         if($res > 0 && count($res)) {
@@ -392,7 +392,7 @@ class Identity extends Model {
         }
     }
 
-    public static function _computeDisplayName($fields, $lang) {
+    protected static function _computeDisplayName($fields, $lang) {
         $parts = [];
         if( isset($fields['type'])  ) {
             if( $fields['type'] == 'I'  ) {

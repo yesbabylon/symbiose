@@ -40,17 +40,17 @@ $tree = [
         'id', 'name', 'sojourn_type_id', 'product_groups_ids'
     ],
     'booking_lines_groups_ids' => [
-        'id', 'name', 'order', 'has_pack', 'total', 'price', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'is_sojourn',
+        'id', 'name', 'order', 'has_pack', 'total', 'price', 'fare_benefit', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'is_sojourn',
         'sojourn_type_id',
-        'pack_id' => ['id', 'name'], 
-        'rate_class_id' => ['id', 'name', 'description'],        
+        'pack_id' => ['id', 'name'],
+        'rate_class_id' => ['id', 'name', 'description'],
         'accomodations_ids' => [
-            'id', 'booking_line_group_id', 
+            'id', 'booking_line_group_id',
             'product_id' => [
                 'id', 'name'
-            ], 
+            ],
             'rental_unit_assignments_ids' => [
-                'id', 'qty', 
+                'id', 'qty',
                 'rental_unit_id' => [
                     'id', 'name', 'capacity'
                 ]
@@ -58,19 +58,19 @@ $tree = [
         ],
         'booking_lines_ids' => [
             'id',
-            'name', 'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal', 'free_qty', 'discount', 
-            'price_id', 
+            'name', 'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
+            'price_id',
             'product_id' => [
                 'name', 'sku', 'product_model_id' => ['has_duration', 'duration']
             ],
             'auto_discounts_ids' => [
-                'id', 'type', 'value', 
-                'discount_id' => ['name'], 
-                'discount_list_id' => ['name', 'rate_min', 'rate_max'] 
+                'id', 'type', 'value',
+                'discount_id' => ['name'],
+                'discount_list_id' => ['name', 'rate_min', 'rate_max']
             ],
             'manual_discounts_ids' => [
-                'id', 'type', 'value', 
-                'discount_id' => ['name'] 
+                'id', 'type', 'value',
+                'discount_id' => ['name']
             ]
         ]
     ]

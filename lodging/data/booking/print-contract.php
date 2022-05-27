@@ -25,7 +25,7 @@ use equal\data\DataFormatter;
 
 
 list($params, $providers) = announce([
-    'description'   => "Returns a view populated with a collection of objects and outputs it as a PDF document.",
+    'description'   => "Render a contract given its ID as a PDF document.",
     'params'        => [
         'id' => [
             'description'   => 'Identitifier of the contract to print.',
@@ -167,6 +167,8 @@ $fields = [
         'name',
         'is_pack',
         'description',
+        'fare_benefit',
+        'rate_class_id' => ['id', 'name', 'description'],
         'contract_line_id' => [
             'name',
             'qty',
@@ -276,7 +278,9 @@ $values = [
     'fundings'              => [],
 
     'lines'                 => [],
-    'tax_lines'             => []
+    'tax_lines'             => [],
+
+    'benfit_lines'          => []    
 ];
 
 
@@ -417,8 +421,29 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
     }
 }
 
-
 $values['lines'] = $lines;
+
+
+/*
+    compute fare benefit detail
+*/
+$values['benefit_lines'] = [];
+
+foreach($contract['contract_line_groups_ids'] as $group) {
+    if($group['fare_benefit'] == 0) {
+        continue;
+    }
+    $index = $group['rate_class_id']['description'];
+    if(!isset($values['benefit_lines'][$index])) {
+        $values['benefit_lines'][$index] = [
+            'name'  => $index,
+            'value' => $group['fare_benefit']
+        ];
+    }
+    else {
+        $values['benefit_lines'][$index]['value'] += $group['fare_benefit'];
+    }
+}
 
 
 /*

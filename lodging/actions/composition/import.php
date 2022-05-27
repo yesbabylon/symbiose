@@ -79,9 +79,9 @@ foreach ($worksheetData as $worksheet) {
     $worksheet = $spreadsheet->getActiveSheet();
     $data = $worksheet->toArray();
 
-   for($i = 0; $i < 17; ++$i) {
-        array_shift($data);
-   }
+    for($i = 0; $i < 17; ++$i) {
+        array_shift($data) ;
+    }
 
     $columns = [
         0 => 'id',
@@ -110,8 +110,9 @@ foreach ($worksheetData as $worksheet) {
         unset($line['id']);
         unset($line['remainder']);
 
-
+        // force country (no column)
         $line['country'] = 'BE';
+
         // adapt dates
         if(isset($line['date_of_birth'])) {
             $date_parts = explode('/', $line['date_of_birth']);
@@ -120,8 +121,6 @@ foreach ($worksheetData as $worksheet) {
             }
         }
 
-        
-        
         $objects[] = $line;
     }
 }

@@ -306,7 +306,30 @@ hr {
             </tr>
         </table>
     </div>
+
+    {% if benefit_lines | length > 0  %}
+    <div class="important">
+        <p><b>Votre avantage:</b></p>
+        <table style="border: solid 1px black; width: 100%;">
+            <tr>
+                <td style="width: 80%;"><b>Categorie tarifaire</b></td>
+                <td style="text-align: center;"><b>Avantage</b></td>
+                <td style="text-align: center;"><b>/ Total</b></td>
+            </tr>
+            {% for benefit_line in benefit_lines %}
+            <tr>
+                <td>{{ benefit_line.name }}</td>
+                <td style="text-align: center;">{{ benefit_line.value | format_currency('EUR') }}</td>
+                <td style="text-align: center;">{{ (100*benefit_line.value/price) | round }} %</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>Veuillez noter que cet avantage est proportionnel aux spécificités de cette réservation, qu'il n'est donc pas fixe et pourra évoluer en cas de modification de votre réservation ou lors de réservations ultérieures.</p>
+    </div>
+    {% endif %}
+
 </div>
+
 
 <div style="margin-top: 50px; page-break-inside: avoid;">
     <div style="margin: 0px 0px 20px 0px;"><b><u>Echéancier des paiements:</u></b></div>

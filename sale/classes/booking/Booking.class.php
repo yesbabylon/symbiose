@@ -371,15 +371,15 @@ class Booking extends Model {
     }
 
     // #todo - this should be part of the onupdate() hook
-    public static function _resetPrices($om, $oids, $lang) {
+    public static function _resetPrices($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
     }
 
-    public static function onupdateBookingLinesGroupsIds($om, $oids, $lang) {
-        $om->call(__CLASS__, '_resetPrices', $oids, $lang);
+    public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
+        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
-    public static function onupdateStatus($om, $oids, $lang) {
+    public static function onupdateStatus($om, $oids, $values, $lang) {
         $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
@@ -390,7 +390,7 @@ class Booking extends Model {
         }
     }
 
-    public static function onupdateCustomerId($om, $oids, $lang) {
+    public static function onupdateCustomerId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerId", QN_REPORT_DEBUG);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
 
@@ -408,7 +408,7 @@ class Booking extends Model {
         }
     }
 
-    public static function onupdateCustomerIdentityId($om, $oids, $lang) {
+    public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
         // reset name
         $om->write(__CLASS__, $oids, ['name' => null]);
@@ -470,7 +470,7 @@ class Booking extends Model {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang) {
         $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
 
         if($res > 0) {

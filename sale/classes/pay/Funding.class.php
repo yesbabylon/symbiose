@@ -131,7 +131,7 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function onupdatePaymentDeadlineId($orm, $oids, $lang) {
+    public static function onupdatePaymentDeadlineId($orm, $oids, $values, $lang) {
         $orm->write(get_called_class(), $oids, ['name' => null], $lang);
     }
 

@@ -93,7 +93,7 @@ class Payment extends Model {
         ];
     }
 
-    public static function onupdateFundingId($om, $ids, $lang) {
+    public static function onupdateFundingId($om, $ids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
         $payments = $om->read(get_called_class(), $ids, ['funding_id', 'partner_id', 'funding_id.due_amount', 'amount', 'partner_id', 'statement_line_id']);
