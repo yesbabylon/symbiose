@@ -56,6 +56,9 @@ $tree = [
                 ]
             ]
         ],
+        'meal_preferences_ids' => [
+            'type', 'pref', 'qty'
+        ],
         'booking_lines_ids' => [
             'id',
             'name', 'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',

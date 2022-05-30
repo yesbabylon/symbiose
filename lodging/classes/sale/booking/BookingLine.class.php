@@ -183,12 +183,10 @@ class BookingLine extends \sale\booking\BookingLine {
         return $result;
     }
 
-    
-
     /**
      *
      * New group assignement : should (only) be called upon creation
-     * 
+     *
      */
     public static function onupdateBookingLineGroupId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateBookingLineGroupId", QN_REPORT_DEBUG);
@@ -207,7 +205,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
-        $om->call(__CLASS__, '_updatePriceId', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceId', $oids, [], $lang);
 
         // we might change the product_id but not the quantity : we cannot know if qty is changed during the same operation
         // #memo - in ORM, a check is performed on the onchange methods to prevent handling same event multiple times
@@ -256,12 +254,16 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
 
     }
 
     public static function onupdateQtyVars($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQtyVars", QN_REPORT_DEBUG);
+
+        // reset computed fields related to price
+        $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
+
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.nb_pers','qty_vars']);
 
         if($lines > 0) {
@@ -278,13 +280,10 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->write(__CLASS__, $lid, ['qty' => $qty]);
                 }
                 else {
-                    $om->call(__CLASS__, '_updateQty', $oids, [], $lang);
+                    $om->callonce(__CLASS__, '_updateQty', $oids, [], $lang);
                 }
             }
         }
-
-        // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
     }
 
     /**
@@ -454,7 +453,7 @@ class BookingLine extends \sale\booking\BookingLine {
                         $assignement = [
                             'booking_id'            => $line['booking_id'],
                             'booking_line_id'       => $lid,
-                            'booking_line_group_id' => $line['booking_line_group_id'],                            
+                            'booking_line_group_id' => $line['booking_line_group_id'],
                             'rental_unit_id'        => $rental_unit['id'],
                             'qty'                   => $rental_unit['assigned'],
                             'is_accomodation'       => $rental_unit['is_accomodation']
@@ -467,7 +466,7 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         // reset computed fields related to price
-        $om->call('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
     }
 
 
@@ -489,7 +488,7 @@ class BookingLine extends \sale\booking\BookingLine {
         if($bookings > 0 && $groups > 0) {
             $booking = reset($bookings);
             $group = reset($groups);
-            
+
             if(
                 in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
                 ||
@@ -524,7 +523,7 @@ class BookingLine extends \sale\booking\BookingLine {
         }
 
         if($non_allowed > 0) {
-            $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);            
+            $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);
             if($lines > 0) {
                 foreach($lines as $line) {
                     if(
@@ -544,7 +543,7 @@ class BookingLine extends \sale\booking\BookingLine {
     /**
      * Check wether an object can be deleted, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
-     * 
+     *
      * @param  object   $om         ObjectManager instance.
      * @param  array    $oids       List of objects identifiers.
      * @return boolean  Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
@@ -815,7 +814,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
                     $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
                     $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
-                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_rental_unit'];                    
+                    $is_rental_unit = $product_models[$line['product_id.product_model_id']]['is_rental_unit'];
                     $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
                     // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
@@ -826,9 +825,9 @@ class BookingLine extends \sale\booking\BookingLine {
                     if($is_rental_unit) {
 
                         // for accomodations, checkout is done the day following the last night
-                        if($is_accomodation) {                            
-                            ++$nb_products; 
-                        }                        
+                        if($is_accomodation) {
+                            ++$nb_products;
+                        }
 
                         /*
                             retrieve assigned rental units
@@ -836,8 +835,9 @@ class BookingLine extends \sale\booking\BookingLine {
                         */
 
                         $assignments_ids = $om->search('lodging\sale\booking\BookingLineRentalUnitAssignement', ['booking_line_id', '=', $lid]);
-                        $rental_units_assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id','qty']);
-
+                        if($assignments_ids > 0) {
+                            $rental_units_assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id','qty']);
+                        }
                     }
                     else if($has_duration) {
                         $nb_products = $product_models[$line['product_id.product_model_id']]['duration'];
@@ -859,11 +859,14 @@ class BookingLine extends \sale\booking\BookingLine {
                         if($qty_vars) {
                             $i = 0;
                             foreach($qty_vars as $variation) {
+                                if($nb_products < $i+1) {
+                                    break;
+                                }
                                 $days_nb_times[$i] = $nb_times + $variation;
                                 ++$i;
                             }
                             // handle last day for acccomodations
-                            if($is_rental_unit) {
+                            if($is_rental_unit && $nb_products > $i) {
                                 // #todo - we should check if related rental_unit is an accomodation
                                 $days_nb_times[$i] = $nb_times + $variation;
                             }
@@ -879,7 +882,7 @@ class BookingLine extends \sale\booking\BookingLine {
                         $rental_units_ids = array_map(function ($a) { return $a['rental_unit_id']; }, array_values($rental_units_assignments));
 
                         // fetch 2 levels of rental units identifiers
-                        for($i = 0; $i < 2; ++$i) {                        
+                        for($i = 0; $i < 2; ++$i) {
                             $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids']);
                             if($units > 0) {
                                 foreach($units as $uid => $unit) {
@@ -893,11 +896,10 @@ class BookingLine extends \sale\booking\BookingLine {
                                     }
                                 }
                             }
-                        }                        
+                        }
                         // read all involved rental units
                         $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
                     }
-
 
                     // $nb_products represent each day of the stay
                     for($i = 0; $i < $nb_products; ++$i) {
@@ -941,7 +943,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
                                     // 1) recurse through children : all child units aer blocked as 'link'
                                     $children_ids = [];
-                                    $children_stack = $rental_units[$rental_unit_id]['children_ids'];
+                                    $children_stack = (isset($rental_units[$rental_unit_id]) && isset($rental_units[$rental_unit_id]['children_ids']))?$rental_units[$rental_unit_id]['children_ids']:[];
                                     while(count($children_stack)) {
                                         $unit_id = array_pop($children_stack);
                                         $children_ids[] = $unit_id;
@@ -959,6 +961,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                     // 2) loop through parents : if a parent has 'can_partial_rent', it is partially blocked as 'part', otherwise fully blocked as 'link'
                                     $parents_ids = [];
                                     $unit_id = $rental_unit_id;
+
                                     while( isset($rental_units[$unit_id]) ) {
                                         $parent_id = $rental_units[$unit_id]['parent_id'];
                                         if($parent_id > 0) {

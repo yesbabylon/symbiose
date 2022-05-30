@@ -376,7 +376,7 @@ class Booking extends Model {
     }
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {

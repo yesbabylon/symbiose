@@ -7,27 +7,6 @@
     "order": "created",
     "sort": "desc",
     "domain": ["center_office_id", "in", "user.center_offices_ids"],
-    "exports": [
-        {
-            "id": "export.print.contract",
-            "label": "Print contract",
-            "icon": "print",
-            "description": "Print contract related to the booking.",
-            "controller": "model_export-print",
-            "view": "print.default",
-            "visible": ["status", "=", "quote"]
-        }
-    ],
-    "header": {
-        "actions": {
-            "ACTION.CREATE" : [
-                {
-                    "view": "form.create",
-                    "description": "overload form to use for booking creation"
-                }
-            ]
-        }
-    },
     "layout": {
         "items": [
             {

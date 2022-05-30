@@ -134,17 +134,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "id": "item.planning",
-                "description": "",
-                "type": "entry",
-                "label": "Dashboard",
-                "route": "/bookings",
-                "context": {
-                    "entity": "lodging\\sale\\booking\\Booking",
-                    "view": "dashboard.default"
-                }
             }
         ]
     }

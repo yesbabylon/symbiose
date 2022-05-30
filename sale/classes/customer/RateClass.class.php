@@ -8,6 +8,15 @@ namespace sale\customer;
 use equal\orm\Model;
 
 class RateClass extends Model {
+
+    public static function getName() {
+        return "Fare Class";
+    }
+
+    public static function getDescription() {
+        return "Fare classes are assigned to customers and allow to assign prices adapters on products booked by those.";
+    }
+
     public static function getColumns() {
         /**
          */
@@ -21,7 +30,8 @@ class RateClass extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the rate class."
+                'description'       => "Short description of the rate class.",
+                'multilang'         => true
             ]
         ];
     }

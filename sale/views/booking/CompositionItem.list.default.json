@@ -5,6 +5,7 @@
         "groups": ["booking.default.user"]
     },
     "group_by": ["rental_unit_id"],
+    "limit": "100",
     "operations": {
         "total": {
             "rental_unit_id": {

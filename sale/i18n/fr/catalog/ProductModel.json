@@ -79,7 +79,7 @@
             "label": "Mode de planification",
             "description": "Liste des types d'horaire.",
             "selection": {
-                "time": "temps",
+                "time": "heure",
                 "timerange": "intervalle de temps"
             },
             "help": ""

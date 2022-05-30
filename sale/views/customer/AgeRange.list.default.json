@@ -1,0 +1,36 @@
+{
+    "name": "Customer Nature List",
+    "description": "Currently defined age ranges.",
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "15%"
+            }, 
+            {
+                "type": "field",            
+                "value": "description",
+                "width": "45%"
+            },
+            {
+                "type": "field",            
+                "value": "age_from",
+                "width": "25%"
+            },
+            {
+                "type": "field",            
+                "value": "age_to",
+                "width": "25%"
+            },
+            {
+                "type": "field",            
+                "value": "is_active",
+                "width": "15%"
+            }
+        ]
+    }
+}

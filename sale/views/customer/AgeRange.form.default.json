@@ -1,8 +1,8 @@
 {
-    "name": "Contracts",
-    "description": "Contracts are formal agreement regarding the delivery of products or services concluded between two parties.",
+    "name": "Age Range",
+    "description": "",
     "access": {
-        "groups": ["booking.default.user"]
+        "groups": ["sale.default.user", "booking.default.user"]
     },
     "layout": {
         "groups": [
@@ -13,7 +13,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -25,28 +25,23 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "status",
+                                                "value": "is_active",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "age_from",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "age_to",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"                                                
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "date",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "valid_until",
-                                                "width": "50%"
                                             }
                                         ]
                                     }

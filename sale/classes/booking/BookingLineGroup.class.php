@@ -97,6 +97,14 @@ class BookingLineGroup extends Model {
                 'ondelete'          => 'cascade'        // delete group when parent booking is deleted
             ],
 
+            'meal_preferences_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\booking\MealPreference',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => 'Meal preferences relating to the group.',
+                'ondetach'          => 'delete'
+            ],
+
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -129,7 +137,7 @@ class BookingLineGroup extends Model {
 
 
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     /**
@@ -143,9 +151,9 @@ class BookingLineGroup extends Model {
             $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $groups);
             $booking_lines_ids = array_reduce($groups, function($c, $a) { return array_merge($c, $a['booking_lines_ids']); }, []);
             // reset fields in parent bookings
-            $om->call('sale\booking\Booking', '_resetPrices', $bookings_ids, [], $lang);
+            $om->callonce('sale\booking\Booking', '_resetPrices', $bookings_ids, [], $lang);
             // reset fields in children lines
-            $om->call('sale\booking\BookingLine', '_resetPrices', $booking_lines_ids, [], $lang);
+            $om->callonce('sale\booking\BookingLine', '_resetPrices', $booking_lines_ids, [], $lang);
         }
     }
 

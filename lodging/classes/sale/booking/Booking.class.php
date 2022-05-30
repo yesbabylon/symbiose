@@ -28,7 +28,8 @@ class Booking extends \sale\booking\Booking {
                     'general',          // general public
                     'school_trip',      // school class
                     'sport_camp',       // sport camp (special products)
-                    'ota'               // booking made on an Online Travel Agency (through channel manager)
+                    'ota',              // booking made on an Online Travel Agency (through channel manager)
+                    'to'                // Tour-Operator
                 ],
                 'description'       => 'Type for distinguishing the payment plans and prices.',
                 // type is set and changed programmatically only
@@ -216,7 +217,7 @@ class Booking extends \sale\booking\Booking {
     }
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
-        $om->call('sale\booking\Booking', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\Booking', '_resetPrices', $oids, [], $lang);
     }
 
     public static function calcName($om, $oids, $lang) {
@@ -347,9 +348,9 @@ class Booking extends \sale\booking\Booking {
                 }
             }
             if(count($booking_line_groups_ids)) {
-                $om->call('lodging\sale\booking\BookingLineGroup', '_updatePriceAdapters', array_unique($booking_line_groups_ids), [], $lang);
+                $om->callonce('lodging\sale\booking\BookingLineGroup', '_updatePriceAdapters', array_unique($booking_line_groups_ids), [], $lang);
             }
-            $om->call(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+            $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         }
     }
 
@@ -360,7 +361,7 @@ class Booking extends \sale\booking\Booking {
             foreach($bookings as $bid => $booking) {
                 $booking_lines_ids = $booking['booking_lines_ids'];
                 if($booking_lines_ids > 0 && count($booking_lines_ids)) {
-                    $om->call('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, [], $lang);
+                    $om->callonce('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, [], $lang);
                 }
                 $om->write(__CLASS__, $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
             }
