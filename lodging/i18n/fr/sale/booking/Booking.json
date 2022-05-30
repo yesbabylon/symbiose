@@ -15,7 +15,8 @@
                 "general": "tout public",
                 "school_trip": "séjour scolaire",
                 "sport_camp": "stage",
-                "ota": "OTA"
+                "ota": "OTA",
+                "to": "Tour Opérateur"
             },
             "help": ""
         },
