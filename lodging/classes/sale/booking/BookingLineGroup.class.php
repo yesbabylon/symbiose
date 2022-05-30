@@ -342,13 +342,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdateIsLocked($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeIsLocked", QN_REPORT_DEBUG);
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->call(__CLASS__, '_updatePriceId', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceId', $oids, [], $lang);
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
     }
 
     /**
@@ -361,9 +361,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdatePackId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangePackId", QN_REPORT_DEBUG);
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
         // generate booking lines
-        $om->call(__CLASS__, '_updatePackId', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePackId', $oids, [], $lang);
         // update groups, if necessary
         $groups = $om->read(__CLASS__, $oids, [
             'booking_id',
@@ -406,20 +406,20 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdateDateFrom($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeDateFrom", QN_REPORT_DEBUG);
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
-        $om->call(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->call(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'booking_lines_ids']);
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
                 // notify booking lines that price_id has to be updated
-                $om->call('lodging\sale\booking\BookingLine', '_updatePriceId', $group['booking_lines_ids'], [], $lang);
+                $om->callonce('lodging\sale\booking\BookingLine', '_updatePriceId', $group['booking_lines_ids'], [], $lang);
                 // recompute bookinglines quantities
-                $om->call('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
+                $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn']) {
                     // force parent booking to recompute date_from
                     $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
@@ -431,18 +431,18 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdateDateTo($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeDateTo", QN_REPORT_DEBUG);
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
         $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
-        $om->call(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->call(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
         if($groups > 0) {
             foreach($groups as $group) {
                 // re-compute bookinglines quantities
-                $om->call('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
+                $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn']) {
                     // force parent booking to recompute date_from
                     $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
@@ -452,28 +452,29 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdateRateClassId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->call(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateSojournTypeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournTypeId", QN_REPORT_DEBUG);
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->call(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateNbPers($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
         // invalidate prices
-        $om->call('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
-        $om->call(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->call(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
         // update bookinglines
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids']);
@@ -485,7 +486,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $bookings_ids[] = $group['booking_id'];
             }
             // re-compute bookinglines quantities
-            $om->call('lodging\sale\booking\BookingLine', '_updateQty', $booking_lines_ids, [], $lang);
+            $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $booking_lines_ids, [], $lang);
         }
         // reset parent bookings nb_pers
         $om->write('sale\booking\Booking', $bookings_ids, ['nb_pers' => null]);
@@ -1099,4 +1100,36 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
         }
     }
+
+
+
+    public static function _updateMealPreferences($om, $oids, $values, $lang) {
+
+        $groups = $om->read(__CLASS__, $oids, [
+                                                    'is_sojourn',
+                                                    'nb_pers',
+                                                    'meal_preferences_ids'
+                                                ], $lang);
+
+        if($groups > 0) {
+            foreach($groups as $gid => $group) {
+                if($group['is_sojourn']) {
+                    if(count($group['meal_preferences_ids']) == 0)  {
+                        // create a meal preference
+                        $pref = [
+                            'booking_line_group_id'     => $gid,
+                            'qty'                       => $group['nb_pers'],
+                            'type'                      => '2_courses',
+                            'pref'                      => 'regular'
+                        ];
+                        $om->create('sale\booking\MealPreference', $pref, $lang);
+                    }
+                    else if(count($group['meal_preferences_ids']) == 1)  {
+                        $om->write('sale\booking\MealPreference', $group['meal_preferences_ids'], ['qty' => $group['nb_pers']], $lang);
+                    }
+                }
+            }
+        }
+    }
+
 }

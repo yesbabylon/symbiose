@@ -123,57 +123,49 @@
                         "type": "parent",
                         "children": [
                             {
-                                "id": "sales.customers.types",
-                                "label": "Types",
+                                "id": "sales.customers.properties",
+                                "label": "Properties",
                                 "description": "",
                                 "icon": "person_outline",
                                 "type": "parent",
                                 "children": [
                                     {
-                                        "id": "sales.customers.types.all",
+                                        "id": "sales.customers.properties.types",
                                         "type": "entry",
-                                        "label": "All types",
+                                        "label": "Customer types",
                                         "description": "",
                                         "context": {
                                             "entity": "sale\\customer\\CustomerType",
                                             "view": "list.default"
                                         }
-                                    }
-                                ]
-                            },
-                            {
-                                "id": "sales.customers.natures",
-                                "label": "Natures",
-                                "description": "",
-                                "icon": "person_outline",
-                                "type": "parent",
-                                "children": [
+                                    },
                                     {
-                                        "id": "sales.customers.natures.all",
+                                        "id": "sales.customers.properties.natures",
                                         "type": "entry",
-                                        "label": "All natures",
+                                        "label": "Customer natures",
                                         "description": "",
                                         "context": {
                                             "entity": "sale\\customer\\CustomerNature",
                                             "view": "list.default"
                                         }
-                                    }
-                                ]
-                            },
-                            {
-                                "id": "sales.customers.rate_classes",
-                                "label": "Natures",
-                                "description": "",
-                                "icon": "price_check",
-                                "type": "parent",
-                                "children": [
+                                    },
                                     {
-                                        "id": "sales.customers.rate_classes.all",
+                                        "id": "sales.customers.properties.rate_classes",
                                         "type": "entry",
-                                        "label": "All Classes",
+                                        "label": "Fare Classes",
                                         "description": "",
                                         "context": {
                                             "entity": "sale\\customer\\RateClass",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
+                                        "id": "sales.customers.properties.age_ranges",
+                                        "type": "entry",
+                                        "label": "Age ranges",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\customer\\AgeRange",
                                             "view": "list.default"
                                         }
                                     }

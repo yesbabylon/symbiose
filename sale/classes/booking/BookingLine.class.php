@@ -210,32 +210,32 @@ class BookingLine extends Model {
 
     public static function onupdateProductId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdateQty($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
     public static function onupdatePriceAdaptersIds($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->call(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
 
 
@@ -246,7 +246,7 @@ class BookingLine extends Model {
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
         if($lines > 0) {
             $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
-            $om->call('sale\booking\BookingLineGroup', '_resetPrices', $booking_line_groups_ids, [], $lang);
+            $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $booking_line_groups_ids, [], $lang);
         }
     }
 

@@ -58,15 +58,15 @@ class Repairing extends \sale\booking\Repairing {
     }
 
     public static function onupdateRentalUnitsIds($om, $oids, $values, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
     public static function onupdateDateFrom($om, $oids, $values, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
     public static function onupdateDateTo($om, $oids, $values, $lang) {
-        $om->call(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
     }
 
     public static function _updateRepairs($om, $oids, $values, $lang) {
@@ -97,6 +97,5 @@ class Repairing extends \sale\booking\Repairing {
             }
         }
     }
-
 
 }

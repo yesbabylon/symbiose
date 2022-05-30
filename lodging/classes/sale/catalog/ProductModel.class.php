@@ -38,7 +38,8 @@ class ProductModel extends \sale\catalog\ProductModel {
                     'general',          // general public
                     'school_trip',      // school class
                     'sport_camp',       // sport camp (special products)
-                    'ota'               // booking made on an Online Travel Agency (through channel manager)
+                    'ota',              // booking made on an Online Travel Agency (through channel manager)
+                    'to'                // Tour-Operator
                 ],
                 'description'       => 'Type to which assign a bookin that has this product.',
                 'default'           => 'general'

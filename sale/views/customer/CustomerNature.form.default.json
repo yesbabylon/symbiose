@@ -1,5 +1,5 @@
 {
-    "name": "Customer Natures",
+    "name": "Customer Nature",
     "description": "",
     "access": {
         "groups": ["sale.default.user", "booking.default.user"]

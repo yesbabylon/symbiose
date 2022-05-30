@@ -6,15 +6,14 @@
     },
     "routes": [
         {
-            "id": "item.booking.file",
+            "id": "item.consumption.booking.file",
             "label": "Fiche de réservation",
             "description": "",
             "icon": "library_books",
             "route": "/booking/object.booking_id",
             "context": {
                 "entity": "lodging\\sale\\booking\\Booking",
-                "view": "form.default",
-                "domain": ["id", "=", "object.booking_id"]
+                "view": "form.default"
             }
         }        
     ],    

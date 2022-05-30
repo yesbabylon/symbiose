@@ -14,7 +14,7 @@ use lodging\sale\booking\Funding;
 use lodging\sale\catalog\Product;
 
 list($params, $providers) = announce([
-    'description'   => "Invoice due balance related to a booking.",
+    'description'   => "Generate final invoice with remaining due balance related to a booking.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the invoice has to be generated.',

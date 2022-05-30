@@ -6,6 +6,7 @@
     },
     "group_by": ["date"],
     "limit": 100,
+    "filters": false,
     "layout": {
         "items": [
             {

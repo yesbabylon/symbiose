@@ -2,99 +2,377 @@
     "name": "Menu Paramètres",
     "description": "",
     "view": {
-        "security": {"label": "Sécurité", "help": ""},
-        "permissions": {"label": "Permissions", "help": ""},
-        "users": {"label": "Utilisateurs", "help": ""},
-        "groups": {"label": "Groupes", "help": ""},
-        "sales": {"label": "Ventes", "help": ""},
-        "bookings": {"label": "Réservations", "help": ""},
-        "new_booking": {"label": "Nouvelle réservation", "help": ""},
-        "all_bookings": {"label": "Toutes les réservations", "help": ""},
-        "quotes": {"label": "Devis", "help": ""},
-        "options": {"label": "Options", "help": ""},
-        "validated_bookings": {"label": "Réservations validées", "help": ""},
-        "sales.customers": {"label": "Clients", "help": ""},
-        "sales.customers.types": {"label": "Types", "help": ""},
-        "sales.customers.types.all": {"label": "Tous les types", "help": ""},
-        "sales.customers.natures": {"label": "Natures", "help": ""},
-        "sales.customers.natures.all": {"label": "Toutes les natures", "help": ""},
-        "sales.customers.rate_classes": {"label": "Catégories tarifaires", "help": ""},
-        "sales.customers.rate_classes.all": {"label": "Toutes les catégories", "help": ""},
-        "sales.customers.new_customer": {"label": "Nouveau Client", "help": ""},
-        "sales.customers.all": {"label": "Tous les clients", "help": ""},
-        "all_partners": {"label": "Tous les partenaires", "help": ""},
-        "catalog": {"label": "Catalogue", "help": ""},
-        "products": {"label": "Produits", "help": ""},
-        "products_current_products": {"label": "Produits en cours", "help": ""},
-        "products_products": {"label": "Tous les Produits", "help": ""},
-        "products_product_models": {"label": "Tous les Modèles", "help": ""},
-        "products_current_models": {"label": "Modèles en cours", "help": ""},
-        "products_product_categories": {"label": "Catégories", "help": ""},
-        "products_product_families": {"label": "Familles", "help": ""},
-        "products_product_groups": {"label": "Groupes", "help": ""},
-        "prices": {"label": "Prix", "help": ""},
-        "prices_pricelists_active": {"label": "Listes actives", "help": ""},
-        "prices_pricelists_all": {"label": "Toutes les Listes", "help": ""},
-        "prices_prices_all": {"label": "Tous les Prix", "help": ""},
-        "prices_pricelists_categories": {"label": "Catégories de listes", "help": ""},
-        "discounts": {"label": "Remises", "help": ""},
-        "discounts.discounts": {"label": "Remises", "help": ""},
-        "discounts.lists": {"label": "Listes de remises", "help": ""},
-        "discounts.lists.categories": {"label": "Catégories de remises", "help": ""},
-        "autosale": {"label": "Produits auto", "help": ""},
-        "autosales_lists": {"label": "Listes", "help": ""},
-        "autosales_categories": {"label": "Catégories", "help": ""},
-        "seasons": {"label": "Saisons", "help": ""},
-        "seasons_type": {"label": "Types", "help": ""},
-        "seasons_category": {"label": "Categories", "help": ""},
-        "seasons_season": {"label": "Saisons", "help": ""},
-        "accounting": {"label": "Comptabilité", "help": ""},
-        "documents": {"label": "Documents", "help": ""},
-        "documents_documents": {"label": "Documents", "help": ""},
-        "accounting.invoices": {"label": "Factures", "help": ""},
-        "accounting.payments": {"label": "Paiements", "help": ""},
-        "accounting.settings": {"label": "Paramètres", "help": ""},
-        "accounting.settings.vat_rules": {"label": "Règles de TVA", "help": ""},
-        "accounting.settings.accounting_rules": {"label": "Règles Comptables", "help": ""},
-        "accounting.settings.account_chart": {"label": "Plan comptable", "help": ""},
-        "accounting.payments.statements": {"label": "Extraits bancaires", "help": ""},
-        "accounting.payments.statements.all": {"label": "Tous les extraits", "help": ""},
-        "accounting.payments.settings.plans": {"label": "Plans de paiement", "help": ""},
-        "accounting.payments.settings.deadlines": {"label": "Échéances types", "help": ""},
-        "accounting.payments.settings.terms": {"label": "Conditions de paiement", "help": ""},
-        "communication": {"label": "Communication", "help": ""},
-        "communication.templates": {"label": "Templates", "help": ""},
-        "communication.templates.templates": {"label": "Tous les modèles", "help": ""},
-        "communication.templates.categories": {"label": "Catégories", "help": ""},
-        "communication.templates.parts": {"label": "Eléments de modèle", "help": ""},
-        "communication.templates.attachments": {"label": "Pièces jointes", "help": ""},
-        "organisation": {"label": "Organisation", "help": ""},
-        "organisation.organisations": {"label": "Organisations", "help": ""},
-        "organisation.centers": {"label": "Centres", "help": ""},
-        "organisation.centers.centers": {"label": "Liste des centres", "help": ""},
-        "organisation.centers.categories": {"label": "Catégories de centres", "help": ""},
-        "organisation.centers.rental_units": {"label": "Unités locatives", "help": ""},
-        "organisation.centers.rental_units_categories": {"label": "Catégories d'unités", "help": ""},
-        "settings": {"label": "Configuration", "help": ""},
-        "settings.settings": {"label": "Config applicative", "help": ""},
-        "settings.settings.available_settings": {"label": "Liste des paramètres", "help": ""},
-        "settings.settings.available_settings.all":{"label": "Tous les paramètres", "help": ""},
-        "settings.settings.available_settingsValues.all":{"label": "Toutes les valeurs", "help": ""},
-        "settings.settings.available_settings.general": {"label": "Paramètres Généraux", "help": ""},
-        "settings.settings.available_settings.sale": {"label": "Vente", "help": ""},
-        "settings.settings.available_settings.finance": {"label": "Finance", "help": ""},
-        "settings.settings.settings_values": {"label": "Valeurs des paramètres", "help": ""},
-        "settings.all_settings": {"label": "Tous les paramèttres", "help": ""},
-        "settings.all_settings.identities": {"label": "Identités", "help": ""},
-        "settings.all_settings.identities.identities": {"label": "Identités", "help": ""},
-        "settings.all_settings.identities.partners": {"label": "Partenaires", "help": ""},
-        "settings.all_settings.identities.addresses": {"label": "Addresses", "help": ""},
-        "settings.all_settings.identities.establishments": {"label": "Etablissements", "help": ""},
-        "settings.all_settings.calendar": {"label": "Calendrier", "help": ""},
-        "settings.all_settings.calendar.holidays": {"label": "Ephémérides", "help": ""},
-        "settings.all_settings.settings": {"label": "Configuration", "help": ""},
-        "settings.all_settings.settings.settings_values": {"label": "Valeurs des paramètres", "help": ""},
-        "settings.all_settings.settings.settings": {"label": "Tous les paramètres", "help": ""},
-        "settings.all_stats": {"label": "Toutes les stats", "help": ""}
+        "security": {
+            "label": "Sécurité",
+            "help": ""
+        },
+        "permissions": {
+            "label": "Permissions",
+            "help": ""
+        },
+        "users": {
+            "label": "Utilisateurs",
+            "help": ""
+        },
+        "groups": {
+            "label": "Groupes",
+            "help": ""
+        },
+        "sales": {
+            "label": "Ventes",
+            "help": ""
+        },
+        "bookings": {
+            "label": "Réservations",
+            "help": ""
+        },
+        "new_booking": {
+            "label": "Nouvelle réservation",
+            "help": ""
+        },
+        "all_bookings": {
+            "label": "Toutes les réservations",
+            "help": ""
+        },
+        "quotes": {
+            "label": "Devis",
+            "help": ""
+        },
+        "options": {
+            "label": "Options",
+            "help": ""
+        },
+        "validated_bookings": {
+            "label": "Réservations validées",
+            "help": ""
+        },
+        "sales.customers": {
+            "label": "Clients",
+            "help": ""
+        },
+        "sales.customers.properties": {
+            "label": "Propriétés",
+            "help": ""
+        },
+        "sales.customers.properties.types": {
+            "label": "Types",
+            "help": ""
+        },
+        "sales.customers.properties.natures": {
+            "label": "Natures",
+            "help": ""
+        },
+        "sales.customers.properties.rate_classes": {
+            "label": "Catégories tarifaires",
+            "help": ""
+        },
+        "sales.customers.properties.age_ranges": {
+            "label": "Tranches d'âge",
+            "help": ""
+        },
+        "sales.customers.new_customer": {
+            "label": "Nouveau Client",
+            "help": ""
+        },
+        "sales.customers.all": {
+            "label": "Tous les clients",
+            "help": ""
+        },
+        "all_partners": {
+            "label": "Tous les partenaires",
+            "help": ""
+        },
+        "catalog": {
+            "label": "Catalogue",
+            "help": ""
+        },
+        "products": {
+            "label": "Produits",
+            "help": ""
+        },
+        "products_current_products": {
+            "label": "Produits en cours",
+            "help": ""
+        },
+        "products_products": {
+            "label": "Tous les Produits",
+            "help": ""
+        },
+        "products_product_models": {
+            "label": "Tous les Modèles",
+            "help": ""
+        },
+        "products_current_models": {
+            "label": "Modèles en cours",
+            "help": ""
+        },
+        "products_product_categories": {
+            "label": "Catégories",
+            "help": ""
+        },
+        "products_product_families": {
+            "label": "Familles",
+            "help": ""
+        },
+        "products_product_groups": {
+            "label": "Groupes",
+            "help": ""
+        },
+        "prices": {
+            "label": "Prix",
+            "help": ""
+        },
+        "prices_pricelists_active": {
+            "label": "Listes actives",
+            "help": ""
+        },
+        "prices_pricelists_all": {
+            "label": "Toutes les Listes",
+            "help": ""
+        },
+        "prices_prices_all": {
+            "label": "Tous les Prix",
+            "help": ""
+        },
+        "prices_pricelists_categories": {
+            "label": "Catégories de listes",
+            "help": ""
+        },
+        "discounts": {
+            "label": "Remises",
+            "help": ""
+        },
+        "discounts.discounts": {
+            "label": "Remises",
+            "help": ""
+        },
+        "discounts.lists": {
+            "label": "Listes de remises",
+            "help": ""
+        },
+        "discounts.lists.categories": {
+            "label": "Catégories de remises",
+            "help": ""
+        },
+        "autosale": {
+            "label": "Produits auto",
+            "help": ""
+        },
+        "autosales_lists": {
+            "label": "Listes",
+            "help": ""
+        },
+        "autosales_categories": {
+            "label": "Catégories",
+            "help": ""
+        },
+        "seasons": {
+            "label": "Saisons",
+            "help": ""
+        },
+        "seasons_type": {
+            "label": "Types",
+            "help": ""
+        },
+        "seasons_category": {
+            "label": "Categories",
+            "help": ""
+        },
+        "seasons_season": {
+            "label": "Saisons",
+            "help": ""
+        },
+        "accounting": {
+            "label": "Comptabilité",
+            "help": ""
+        },
+        "documents": {
+            "label": "Documents",
+            "help": ""
+        },
+        "documents_documents": {
+            "label": "Documents",
+            "help": ""
+        },
+        "accounting.invoices": {
+            "label": "Factures",
+            "help": ""
+        },
+        "accounting.payments": {
+            "label": "Paiements",
+            "help": ""
+        },
+        "accounting.settings": {
+            "label": "Paramètres",
+            "help": ""
+        },
+        "accounting.settings.vat_rules": {
+            "label": "Règles de TVA",
+            "help": ""
+        },
+        "accounting.settings.accounting_rules": {
+            "label": "Règles Comptables",
+            "help": ""
+        },
+        "accounting.settings.account_chart": {
+            "label": "Plan comptable",
+            "help": ""
+        },
+        "accounting.payments.statements": {
+            "label": "Extraits bancaires",
+            "help": ""
+        },
+        "accounting.payments.statements.all": {
+            "label": "Tous les extraits",
+            "help": ""
+        },
+        "accounting.payments.settings.plans": {
+            "label": "Plans de paiement",
+            "help": ""
+        },
+        "accounting.payments.settings.deadlines": {
+            "label": "Échéances types",
+            "help": ""
+        },
+        "accounting.payments.settings.terms": {
+            "label": "Conditions de paiement",
+            "help": ""
+        },
+        "communication": {
+            "label": "Communication",
+            "help": ""
+        },
+        "communication.templates": {
+            "label": "Templates",
+            "help": ""
+        },
+        "communication.templates.templates": {
+            "label": "Tous les modèles",
+            "help": ""
+        },
+        "communication.templates.categories": {
+            "label": "Catégories",
+            "help": ""
+        },
+        "communication.templates.parts": {
+            "label": "Eléments de modèle",
+            "help": ""
+        },
+        "communication.templates.attachments": {
+            "label": "Pièces jointes",
+            "help": ""
+        },
+        "organisation": {
+            "label": "Organisation",
+            "help": ""
+        },
+        "organisation.organisations": {
+            "label": "Organisations",
+            "help": ""
+        },
+        "organisation.centers": {
+            "label": "Centres",
+            "help": ""
+        },
+        "organisation.centers.centers": {
+            "label": "Liste des centres",
+            "help": ""
+        },
+        "organisation.centers.categories": {
+            "label": "Catégories de centres",
+            "help": ""
+        },
+        "organisation.centers.rental_units": {
+            "label": "Unités locatives",
+            "help": ""
+        },
+        "organisation.centers.rental_units_categories": {
+            "label": "Catégories d'unités",
+            "help": ""
+        },
+        "settings": {
+            "label": "Configuration",
+            "help": ""
+        },
+        "settings.settings": {
+            "label": "Config applicative",
+            "help": ""
+        },
+        "settings.settings.available_settings": {
+            "label": "Liste des paramètres",
+            "help": ""
+        },
+        "settings.settings.available_settings.all": {
+            "label": "Tous les paramètres",
+            "help": ""
+        },
+        "settings.settings.available_settingsValues.all": {
+            "label": "Toutes les valeurs",
+            "help": ""
+        },
+        "settings.settings.available_settings.general": {
+            "label": "Paramètres Généraux",
+            "help": ""
+        },
+        "settings.settings.available_settings.sale": {
+            "label": "Vente",
+            "help": ""
+        },
+        "settings.settings.available_settings.finance": {
+            "label": "Finance",
+            "help": ""
+        },
+        "settings.settings.settings_values": {
+            "label": "Valeurs des paramètres",
+            "help": ""
+        },
+        "settings.all_settings": {
+            "label": "Tous les paramèttres",
+            "help": ""
+        },
+        "settings.all_settings.identities": {
+            "label": "Identités",
+            "help": ""
+        },
+        "settings.all_settings.identities.identities": {
+            "label": "Identités",
+            "help": ""
+        },
+        "settings.all_settings.identities.partners": {
+            "label": "Partenaires",
+            "help": ""
+        },
+        "settings.all_settings.identities.addresses": {
+            "label": "Addresses",
+            "help": ""
+        },
+        "settings.all_settings.identities.establishments": {
+            "label": "Etablissements",
+            "help": ""
+        },
+        "settings.all_settings.calendar": {
+            "label": "Calendrier",
+            "help": ""
+        },
+        "settings.all_settings.calendar.holidays": {
+            "label": "Ephémérides",
+            "help": ""
+        },
+        "settings.all_settings.settings": {
+            "label": "Configuration",
+            "help": ""
+        },
+        "settings.all_settings.settings.settings_values": {
+            "label": "Valeurs des paramètres",
+            "help": ""
+        },
+        "settings.all_settings.settings.settings": {
+            "label": "Tous les paramètres",
+            "help": ""
+        },
+        "settings.all_stats": {
+            "label": "Toutes les stats",
+            "help": ""
+        }
     }
 }

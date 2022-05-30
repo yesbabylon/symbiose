@@ -1,0 +1,45 @@
+{
+    "name": "Tranche d'âge",
+    "plural": "Tranches d'âges",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de la tranche d'âge.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Brève description de la tranche d'âge.",
+            "help": ""
+        },
+        "age_from": {
+            "label": "À partir de",
+            "description": "Age pour la borne inférieure (incluse).",
+            "help": ""
+        },
+        "age_to": {
+            "label": "Jusqu'à",
+            "description": "Age pour la borne supérieure (non-incluse).",
+            "help": ""
+        },
+        "is_active": {
+            "label": "Active",
+            "description": "Cette tranche d'âge peut-elle être utilisée?",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Tranche d'âge",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Tranches d'âges",
+            "description": "Liste des tranches d'âges définies.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
