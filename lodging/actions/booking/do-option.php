@@ -80,20 +80,37 @@ if($booking['status'] != 'quote') {
     Check booking consistency
 */
 
+$errors = [];
+
+// check age ranges assignments
+$data = eQual::run('do', 'lodging_booking_check-ages-assignment', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'invalid_booking';
+}
+
+// check rental units assignments
+$data = eQual::run('do', 'lodging_booking_check-units-assignments', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'invalid_booking';
+}
+
 // check list of services 
 $data = eQual::run('do', 'lodging_booking_check-empty', ['id' => $params['id']]);
-
 if(is_array($data) && count($data)) {
-    throw new Exception('empty_booking', QN_ERROR_INVALID_PARAM);
+    $errors[] = 'empty_booking';
 }
 
 // check overbooking
 $data = eQual::run('do', 'lodging_booking_check-overbooking', ['id' => $params['id']]);
-
 if(is_array($data) && count($data)) {
-    // raise an exception with overbooking_detected (an alert should have been issued in the check controller)
-    throw new Exception('overbooking_detected', QN_ERROR_CONFLICT_OBJECT);
+    $errors[] = 'overbooking_detected';
 }
+
+// raise an exception with first error (alerts should have been issued in the check controllers)
+foreach($errors as $error) {
+    throw new Exception($error, QN_ERROR_INVALID_PARAM);
+}
+
 
 /*
     Create the consumptions in order to see them in the planning (scheduled services) and to mark related rental units as booked.

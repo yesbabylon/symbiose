@@ -6,6 +6,7 @@
 */
 use lodging\sale\booking\Consumption;
 use lodging\realestate\RentalUnit;
+use equal\orm\Domain;
 
 list($params, $providers) = announce([
     'description'   => "Retrieve the list of available rental units for a given center, during a specific timerange.",
@@ -30,12 +31,11 @@ list($params, $providers) = announce([
             'type'          => 'date',
             'required'      => true
         ],
-        'query' =>  [
+        'domain' =>  [
             'description'   => 'Filter to apply on rental units names.',
-            'type'          => 'string',
-            'default'       => ''
+            'type'          => 'array',
+            'default'       => []
         ]
-
     ],
     'access' => [
         'groups'            => ['booking.default.user']
@@ -60,17 +60,14 @@ $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $params['center_
 $rental_units = RentalUnit::ids($rental_units_ids)->read(['id', 'name', 'capacity'])->adapt('txt')->get(true);
 
 $result = [];
-$query = strtolower($params['query']);
 
-if(strlen($query) <= 0) {
-    $result = $rental_units;
-}
-else {
-    // filter results    
-    foreach($rental_units as $index => $rental_unit) {
-        if(strpos(strtolower($rental_unit['name']), $query) !== false) {
-            $result[] = $rental_unit;
-        }
+$domain = new Domain($params['domain']);
+
+// filter results    
+foreach($rental_units as $index => $rental_unit) {
+    if($domain->evaluate($rental_unit)) {
+        $rental_unit['name'] .= " ({$rental_unit['capacity']})";
+        $result[] = $rental_unit;
     }
 }
 
