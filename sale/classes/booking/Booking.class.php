@@ -9,6 +9,9 @@ use equal\orm\Model;
 
 class Booking extends Model {
 
+    public static function getLink() {
+        return "/booking/object.id";
+    }
 
     public static function getColumns() {
         return [

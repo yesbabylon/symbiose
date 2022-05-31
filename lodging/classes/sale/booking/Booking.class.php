@@ -597,7 +597,7 @@ class Booking extends \sale\booking\Booking {
             $customers = $om->read('sale\customer\Customer', $values['customer_id'], [ 'customer_nature_id']);
             if($customers) {
                 $customer = reset($customers);
-                if(!is_null($customer['customer_nature_id'])) {
+                if(is_null($customer['customer_nature_id'])) {
                     return ['customer_nature_id' => ['missing_mandatory' => 'Unknown nature for this customer.']];
                 }
             }
