@@ -8,13 +8,13 @@
         "entity": "lodging\\sale\\booking\\Booking",
         "group_by": "range",
         "range_interval": "month",
-        "range_from": "date.this.year.last",
-        "range_to": "date.this.year.first",
+        "range_from": "date.this.year.first",
+        "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA réservations HTVA",
+                "label": "Checkin",
                 "operation": ["COUNT", "object.id"],
-                "domain":[[["date_from", ">=", "date.this.month.first"], ["date_from", "<=", "date.this.month.last"]]]
+                "domain": ["status", "=", "checkin"]
             }
         ]
     }
