@@ -43,6 +43,30 @@ class BookingLineGroup extends Model {
                 'default'           => time()
             ],
 
+            'time_from' => [
+                'type'              => 'time',
+                'description'       => "Checkin time on the day of arrival.",
+                'default'           => 14 * 3600
+            ],
+
+            'time_to' => [
+                'type'              => 'time',
+                'description'       => "Checkout time on the day of departure.",
+                'default'           => 10 * 3600
+            ],
+
+            'is_sojourn' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group spans over several nights and relate to accomodations?',
+                'default'           => false
+            ],
+
+            'is_event' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group relate to an event occuring on a single day?',
+                'default'           => false
+            ],
+
             'nb_nights' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',

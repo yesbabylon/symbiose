@@ -61,12 +61,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'visible'           => ['has_pack', '=', true]
             ],
 
-            'is_sojourn' => [
-                'type'              => 'boolean',
-                'description'       => 'Does the group relate to accomodations?',
-                'default'           => false
-            ],
-
             'is_autosale' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the group relate to autosale products?',
@@ -164,6 +158,22 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'description'       => 'Booking lines relating to accomodations.',
                 'ondetach'          => 'delete',
                 'domain'            => ['is_accomodation', '=', true]
+            ],
+
+            'rental_unit_assignments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\BookingLineRentalUnitAssignement',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => "The rental units lines of the group are assigned to (from lines)."
+            ],
+
+            'age_range_assignments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\BookingLineGroupAgeRangeAssignment',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => 'Age range assignments defined for the group.',
+                'ondelete'          => 'cascade',
+                'ondetach'          => 'delete'
             ],
 
             'total' => [
