@@ -7,14 +7,14 @@
 namespace lodging\sale\booking;
 use equal\orm\Model;
 
-class BookingLineGroupAgeRangeAssignement extends Model {
+class BookingLineGroupAgeRangeAssignment extends Model {
 
     public static function getName() {
-        return "Age Range Assignement";
+        return "Age Range Assignment";
     }
 
     /*
-        Assignements are created while selecting the hosts details/composition for a booking group.
+        Assignments are created while selecting the hosts details/composition for a booking group.
         Each group is assigned to one or more age ranges.
     */
 
