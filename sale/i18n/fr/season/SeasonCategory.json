@@ -22,7 +22,7 @@
 		},
 		"list.default": {
 			"name": "Catégories de Saison",
-			"description": "Cette vue est destinée à afficher la liste des catégories de saison.",
+			"description": "Liste des catégories de saison.",
 			"layout": {}
 		}
 	},

@@ -72,7 +72,7 @@
         },
         "list.default": {
             "name": "Lignes de Relevé Bancaire",
-            "description": "Cette vue est destinée à afficher la liste des ligne de relevé bancaire.",
+            "description": "Liste des ligne de relevé bancaire.",
             "layout": {
             },
             "actions": {

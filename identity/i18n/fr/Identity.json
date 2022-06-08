@@ -227,7 +227,7 @@
         },
         "list.default": {
             "name": "Liste d'Identité",
-            "description": "Cette vue est destinée à afficher la liste de base des identités existantes.",
+            "description": "Liste de base des identités existantes.",
             "layout": {}
         }
     },

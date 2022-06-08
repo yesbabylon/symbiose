@@ -22,7 +22,7 @@
 		},
 		"list.default": {
 			"name": "Catégories d'unité locative",
-			"description": "Cette vue est destinée à afficher la liste des logements locatifs.",
+			"description": "Liste des logements locatifs.",
 			"layout": {}
 		}
 	},

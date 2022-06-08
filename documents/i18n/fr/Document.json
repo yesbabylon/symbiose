@@ -69,7 +69,7 @@
         },
         "list.default": {
             "name": "Liste des Documents",
-            "description": "Cette vue est destinée à afficher la liste des documents.",
+            "description": "Liste des documents.",
             "layout": {}
             }
     }

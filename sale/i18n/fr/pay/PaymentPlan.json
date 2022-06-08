@@ -12,6 +12,11 @@
             "label": "Classe tarifaire",
             "description": "La classe tarifaire applicable au plan de paiement.",
             "help": ""
+        },
+        "booking_type_id": {
+            "label": "Type de réservation",
+            "description": "La classe tarifaire applicable au plan de paiement.",
+            "help": ""
         }
     },
     "view": {
@@ -29,7 +34,7 @@
         },
         "list.default": {
             "name": "Plans de Paiement",
-            "description": "Cette vue est destinée à afficher la liste des plans de Paiement.",
+            "description": "Liste des plans de Paiement.",
             "layout": {}
         }
     },

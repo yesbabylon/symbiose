@@ -35,7 +35,7 @@
 		},
 		"list.default": {
 			"name": "Unités locatives",
-			"description": "Cette vue est destinée à afficher la liste des unités locatives.",
+			"description": "Liste des unités locatives.",
 			"layout": {}
 		}
 	},

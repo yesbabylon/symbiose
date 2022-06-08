@@ -37,7 +37,7 @@
 		},
 		"list.default": {
 			"name": "Conditions",
-			"description": "Cette vue est destinée à afficher la liste des conditions.",
+			"description": "Liste des conditions.",
 			"layout": {}
 		}
 	},

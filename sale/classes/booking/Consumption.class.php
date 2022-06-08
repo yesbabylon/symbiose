@@ -29,6 +29,7 @@ class Consumption extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/html',
                 'description'       => 'Additional note about the consumption, if any.'
             ],
 
@@ -135,6 +136,19 @@ class Consumption extends Model {
                 'type'              => 'integer',
                 'description'       => "How many times the consumption is booked for.",
                 'required'          => true
+            ],
+
+            'cleanup_type' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'selection'         => [
+                    'none',                    
+                    'daily',
+                    'full'
+                ],
+                'function'          => 'calcCleanupType',
+                'store'             => true,
+                'visbile'           => ['is_accomodation', '=', true]
             ]
 
         ];
@@ -160,6 +174,29 @@ class Consumption extends Model {
         if($consumptions) {
             foreach($consumptions as $cid => $consumption) {
                 $result[$cid] = $consumption['rental_unit_id.is_accomodation'];
+            }
+        }
+        return $result;
+    }
+
+    public static function calcCleanupType($om, $oids, $lang) {
+        $result = [];
+        $consumptions = $om->read(get_called_class(), $oids, ['is_accomodation', 'date', 'booking_line_group_id.date_from', 'booking_line_group_id.date_to']);
+
+        foreach($consumptions as $cid => $consumption) {
+            if(!$consumption['is_accomodation']) {
+                    continue;
+            }
+            if($consumption['booking_line_group_id.date_from'] == $consumption['date']) {    
+                // no cleanup the day of arrival
+                $result[$cid] = 'none';
+                continue;
+            }
+            if($consumption['booking_line_group_id.date_to'] == $consumption['date']) {
+                $result[$cid] = 'full';
+            }
+            else {
+                $result[$cid] = 'daily';
             }
         }
         return $result;

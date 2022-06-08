@@ -42,7 +42,7 @@
         },
         "list.default": {
             "name": "Liste des Services",
-            "description": "Cette vue est destinée à afficher la liste des Services.",
+            "description": "Liste des Services.",
             "layout": {}
             }
     }

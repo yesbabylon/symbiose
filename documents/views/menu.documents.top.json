@@ -3,20 +3,24 @@
     "layout": {
         "items": [
             {
-              "id": "item.home",
-              "label": "Home",
-              "description": "",
-              "icon": "menu_book",
-              "type": "entry",
-              "route": "/"
+                "id": "item.home",
+                "label": "Home",
+                "description": "",
+                "icon": "menu_book",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "documents\\Document",
+                    "view": "dashboard.default"
+                }
             },
             {
-              "id": "item.documents_imports",
-              "label": "Imports",
-              "description": "",
-              "icon": "import_export",
-              "type": "entry",
-              "route": "/import"
+                "id": "item.documents_imports",
+                "label": "Imports",
+                "description": "",
+                "icon": "import_export",
+                "type": "entry",
+                "route": "/import"
             }                    
         ]
     }

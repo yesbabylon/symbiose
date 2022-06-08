@@ -12,7 +12,7 @@
         },
         "list.default": {
             "name": "Produits",
-            "description": "Cette vue est destinée à afficher la liste des produits.",
+            "description": "Liste des produits.",
             "layout": {}
         }
     },

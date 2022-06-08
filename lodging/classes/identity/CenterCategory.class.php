@@ -33,7 +33,7 @@ class CenterCategory extends Model {
             ],
 
             /*
-            // les catégories de centre sont juste une indication au niveau des centres, mais ne sont pas applicable sur les UL (des UL peuvent être GA ou GG)
+            // #memo - center categories are just an indication for centers, but do no apply on RU (RU can be GA or GG)
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',

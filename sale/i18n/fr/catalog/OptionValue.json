@@ -27,7 +27,7 @@
 		},
 		"list.default": {
 			"name": "Valeurs d'option",
-			"description": "Cette vue est destinée à afficher la liste des valeurs d'option.",
+			"description": "Liste des valeurs d'option.",
 			"layout": {}
 		}
 	},

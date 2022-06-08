@@ -58,7 +58,7 @@
         },
         "list.default": {
             "name": "Dates Limite de Paiement",
-            "description": "Cette vue est destinée à afficher la liste des Dates limite de paiement.",
+            "description": "Liste des Dates limite de paiement.",
             "layout": {}
         }
     },

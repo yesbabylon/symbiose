@@ -40,7 +40,7 @@
 		},
 		"list.default": {
 			"name": "Sessions de Caisse",
-			"description": "Cette vue est destinée à afficher la liste des journaux de Caisse.",
+			"description": "Liste des journaux de Caisse.",
 			"layout": {}
 		}
 	},

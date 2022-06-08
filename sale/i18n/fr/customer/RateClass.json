@@ -22,7 +22,7 @@
 		},
 		"list.default": {
 			"name": "Liste de catégories tarifaire",
-			"description": "Cette vue est destinée à afficher la liste des catégories tarifaire.",
+			"description": "Liste des catégories tarifaire.",
 			"layout": {}
 		}
 	},

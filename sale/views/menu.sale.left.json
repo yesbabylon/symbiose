@@ -1,11 +1,10 @@
 {
     "name": "Sale menu",
     "access": {
-      "groups": ["sale.default.user"]
-   },
+        "groups": ["sale.default.user"]
+    },
     "layout": {
-        "items": [
-            {
+        "items": [{
                 "id": "item.bank_statements",
                 "label": "Statements",
                 "description": "",
@@ -17,6 +16,7 @@
                         "type": "entry",
                         "label": "Lines to review",
                         "description": "",
+                        "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatementLine",
                             "view": "list.default",
@@ -30,6 +30,7 @@
                         "type": "entry",
                         "label": "Reconciled lines",
                         "description": "",
+                        "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatementLine",
                             "view": "list.reconciled",
@@ -42,106 +43,105 @@
                         "type": "entry",
                         "label": "Statements",
                         "description": "",
+                        "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
                             "view": "list.reconciled",
-                            "domain": [["status", "=", "reconciled"], ["is_exported", "=", false]]
+                            "domain": [
+                                ["status", "=", "reconciled"],
+                                ["is_exported", "=", false]
+                            ]
                         }
                     }
                 ]
             },
             {
-              "id": "item.customers",
-              "label": "Customers",
-              "description": "",
-              "icon": "person",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "item.customers_types",
-                  "label": "Types",
-                  "description": "",
-                  "icon": "person_outline",
-                  "type": "parent",
-                  "children": [
+                "id": "item.customers",
+                "label": "Customers",
+                "description": "",
+                "icon": "person",
+                "type": "parent",
+                "children": [
                     {
-                      "id": "item.all_customers_types",
-                      "type": "entry",
-                      "label": "All types",
-                      "description": "",
-                      "context": {
-                        "entity": "sale\\customer\\CustomerType",
-                        "view": "list.default"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "id": "item.customers_natures",
-                  "label": "Natures",
-                  "description": "",
-                  "icon": "person_outline",
-                  "type": "parent",
-                  "children": [
+                        "id": "item.customers_types",
+                        "label": "Types",
+                        "description": "",
+                        "icon": "person_outline",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "item.all_customers_types",
+                                "type": "entry",
+                                "label": "All types",
+                                "description": "",
+                                "route": "/",
+                                "context": {
+                                    "entity": "sale\\customer\\CustomerType",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
                     {
-                      "id": "item.all_customers_natures",
-                      "type": "entry",
-                      "label": "All natures",
-                      "description": "",
-                      "context": {
-                        "entity": "sale\\customer\\CustomerNature",
-                        "view": "list.default"
-                      }
+                        "id": "item.customers_natures",
+                        "label": "Natures",
+                        "description": "",
+                        "icon": "person_outline",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "item.all_customers_natures",
+                                "type": "entry",
+                                "label": "All natures",
+                                "description": "",
+                                "route": "/",
+                                "context": {
+                                    "entity": "sale\\customer\\CustomerNature",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.new_customer",
+                        "type": "entry",
+                        "label": "New customer",
+                        "description": "",
+                        "icon": "add",
+                        "route": "/",                        
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "form.create",
+                            "purpose": "create",
+                            "domain": ["relationship", "=", "customer"]
+                        }
+                    },
+                    {
+                        "id": "item.all_customers",
+                        "type": "entry",
+                        "label": "All customers",
+                        "description": "",
+                        "route": "/",                        
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.default",
+                            "domain": ["relationship", "=", "customer"]
+                        }
+                    },
+                    {
+                        "id": "item.all_partners",
+                        "type": "entry",
+                        "label": "All partners",
+                        "description": "",
+                        "route": "/",                        
+                        "context": {
+                            "entity": "identity\\Partner",
+                            "view": "list.default"
+                        }
                     }
-                  ]
-                },
-                {
-                  "id": "item.new_customer",
-                  "type": "entry",
-                  "label": "New customer",
-                  "description": "",
-                  "icon": "add",
-                  "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "form.create",
-                    "purpose": "create",
-                    "domain": ["relationship", "=", "customer"]
-                  }
-                },
-                {
-                  "id": "item.all_customers",
-                  "type": "entry",
-                  "label": "All customers",
-                  "description": "",
-                  "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "list.default",
-                    "domain": ["relationship", "=", "customer"]
-                  }
-                },
-                {
-                  "id": "item.all_partners",
-                  "type": "entry",
-                  "label": "All partners",
-                  "description": "",
-                  "context": {
-                    "entity": "identity\\Partner",
-                    "view": "list.default"
-                  }
-                }
-                
-              ]
-            },
-            {
-              "id": "item.planning",
-              "description": "",
-              "type": "entry",
-              "label": "Dashboard",
-              "context": {
-                  "entity": "sale\\pay\\Payment",
-                  "view": "dashboard.default"
-                }
-            }         
+
+                ]
+            }
         ]
     }
 }

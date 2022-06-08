@@ -22,7 +22,7 @@
 		},
 		"list.default": {
 			"name": "Utilisateurs",
-			"description": "Cette vue est destinée à afficher la liste de base des utilisateurs existants.",
+			"description": "Liste de base des utilisateurs existants.",
 			"layout": {}
 		}
 	},

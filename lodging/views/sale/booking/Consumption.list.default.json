@@ -20,12 +20,16 @@
                 "value": "qty",
                 "width": "10%"
             },
-
             {
                 "type": "field",
                 "value": "date",
                 "width": "0%",
                 "visible": false
+            },
+            {
+                "type": "field",
+                "value": "moment",
+                "width": "10%"
             },
             {
                 "type": "field",

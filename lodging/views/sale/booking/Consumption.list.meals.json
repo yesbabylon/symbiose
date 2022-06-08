@@ -1,20 +1,35 @@
 {
-    "name": "Consumption",
-    "description": "List of scheduled 'meal' consumptions.",
+    "name": "Meals planning",
+    "description": "List of scheduled meal (consumptions).",
     "access": {
         "groups": ["booking.default.user"]
     },
-    "group_by": ["date", {"field": "product_id", "operation": ["SUM", "object.qty"]}],
+    "group_by": ["date", {"field": "time_slot_id", "operation": ["SUM", "object.qty"]}],
     "domain": [ ["center_id", "in", "user.centers_ids"], ["is_meal", "=", true], ["disclaimed", "=", false] ],
     "limit": 100,
     "order": ["date"],
+    "controller": "lodging_consumption_collect",
     "layout": {
         "items": [
             {
                 "type": "field",
-                "label": "Product",
-                "value": "product_id",
-                "width": "30%"
+                "value": "date",
+                "width": "0%"
+            },
+            {
+                "type": "field",
+                "value": "time_slot_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_from",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_to",
+                "width": "10%"
             },
             {
                 "type": "field",
@@ -28,18 +43,13 @@
             },
             {
                 "type": "field",
-                "value": "date",
-                "width": "15%"
+                "value": "customer_id",
+                "width": "20%"
             },
             {
                 "type": "field",
-                "value": "schedule_from",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "schedule_to",
-                "width": "10%"
+                "value": "description",
+                "width": "40%"
             }
         ]
     }

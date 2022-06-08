@@ -11,6 +11,10 @@ use Exception;
 
 class Document extends Model {
 
+    public static function getLink() {
+        return "/documents/#/document/object.id";
+    }
+
     public static function getColumns() {
         return [
             'name' => [
@@ -52,7 +56,7 @@ class Document extends Model {
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'description'       => 'URL to visual edior of the module.',
-                'function'          => 'getLink',
+                'function'          => 'calcLink',
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -104,6 +108,18 @@ class Document extends Model {
         return $result;
     }
 
+    public static function calcLink($om, $oids) {
+        $res = $om->read(__CLASS__, $oids, ['hash']);
+
+        $result = [];
+        foreach($res as $oid=>$ohash) {
+            $content = $ohash['hash'];
+            $result[$oid] = '/document/'.$content;
+        }
+        
+        return $result;
+    }
+
     public static function onupdateData($om, $oids, $values, $lang) {
         $res = $om->read(__CLASS__, $oids, ['data']);
 
@@ -124,18 +140,6 @@ class Document extends Model {
         }
         // reset preview image
         $om->write(__CLASS__, $oids, ['preview_image' => null]);
-    }
-
-    public static function getLink($om, $oids) {
-        $res = $om->read(__CLASS__, $oids, ['hash']);
-
-        $result = [];
-        foreach($res as $oid=>$ohash) {
-            $content = $ohash['hash'];
-            $result[$oid] = '/document/'.$content;
-        }
-        
-        return $result;
     }
 
     /**

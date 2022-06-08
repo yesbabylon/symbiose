@@ -1,6 +1,6 @@
 {
     "name": "Emission de la facture",
-    "description": "Une nouvelle facture sera générée sur base de la version proforma. Après cette opération, la factue sera en lecture seule.",
+    "description": "Une nouvelle facture sera générée sur base de la version proforma. Après cette opération, la factue sera en lecture seule et la réservation ne pourra plus être modifiée.",
     "model": {
         "id": {
             "label": "Identifiant",

@@ -103,16 +103,8 @@ $attachment = eQual::run('get', 'lodging_booking_print-invoice', [
     'mode'      => $params['mode']
 ]);
 
-// #todo - store these terms in i18n
-$main_attachment_name = 'invoice';
-switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'facture';
-        break;
-    case 'nl': $main_attachment_name = 'factuur';
-        break;
-    case 'en': $main_attachment_name = 'invoice';
-        break;
-}
+// get 'invoice' term transaltion
+$main_attachment_name = Setting::get_value('sale', 'locale', 'terms.invoice', 'invoice', 0, $params['lang']);
 
 // generate signature
 $signature = '';

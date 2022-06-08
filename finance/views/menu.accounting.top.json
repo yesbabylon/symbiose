@@ -6,20 +6,31 @@
     "layout": {
         "items": [
             {
-              "id": "item.home",
-              "label": "Home",
-              "description": "",
-              "icon": "menu_book",
-              "type": "entry",
-              "route": "/"
+                "id": "item.home",
+                "label": "Home",
+                "description": "",
+                "icon": "menu_book",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "lodging\\sale\\booking\\Invoice",
+                    "view": "dashboard.default"
+                }
             },
             {
-              "id": "item.invoices",
-              "label": "Invoices",
-              "description": "",
-              "icon": "library_books",
-              "type": "entry",
-              "route": "/invoices"
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "",
+                "icon": "library_books",
+                "type": "entry",
+                "route": "/invoices",
+                "context": {
+                    "entity": "lodging\\sale\\booking\\Invoice",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "desc",
+                    "domain": ["status", "=", "quote"]
+                }
             }                          
         ]
     }

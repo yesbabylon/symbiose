@@ -78,7 +78,7 @@
         },
         "list.default": {
             "name": "Liste des accès",
-            "description": "Cette vue est destinée à afficher la liste des accès.",
+            "description": "Liste des accès.",
             "layout": {}
             }
     }

@@ -21,8 +21,12 @@
             "label": "Options",
             "help": ""
         },
-        "item.bookings.validated": {
-            "label": "Réservations validées",
+        "item.bookings.confirmed": {
+            "label": "Réservations confirmées",
+            "help": ""
+        },
+        "item.bookings.in_progress": {
+            "label": "Réservations en cours",
             "help": ""
         },
         "item.customers": {
@@ -45,8 +49,20 @@
             "label": "Toutes les relations",
             "help": ""
         },
-        "item.consumptions": {
-            "label": "Consommations",
+        "item.planning.planning": {
+            "label": "Planning",
+            "help": ""
+        },
+        "item.planning.meals": {
+            "label": "Repas",
+            "help": ""
+        },
+        "item.planning.cleanups": {
+            "label": "Nettoyages",
+            "help": ""
+        },
+        "item.planning.occupancies": {
+            "label": "Occupations",
             "help": ""
         }
     }

@@ -17,7 +17,7 @@
 		},
 		"list.default": {
 			"name": "Liste des Propriétés",
-			"description": "Cette vue est destinée à afficher la liste des propriétés.",
+			"description": "Liste des propriétés.",
 			"layout": {}
 		}
 	},

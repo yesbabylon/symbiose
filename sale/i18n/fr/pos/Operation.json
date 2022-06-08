@@ -54,7 +54,7 @@
         },
         "list.default": {
             "name": "Operations",
-            "description": "Cette vue est destinée à afficher la liste des operations.",
+            "description": "Liste des operations.",
             "layout": {}
         }
     },

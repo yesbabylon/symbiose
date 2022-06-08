@@ -3,56 +3,49 @@
     "layout": {
         "items": [
             {
-              "id": "item.documents",
-              "label": "Documents",
-              "description": "",
-              "icon": "attachment",
-              "type": "parent",
-              "children": [
-                {
-                  "id": "item.all_documents",
-                  "type": "entry",
-                  "label": "All documents",
-                  "description": "", 
-                  "context": {
-                    "entity": "documents\\Document",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "desc"
-                  }
-                },
-                {
-                  "id": "item.all_categories",
-                  "type": "entry",
-                  "label": "All categories",
-                  "description": "", 
-                  "context": {
-                    "entity": "documents\\DocumentCategory",
-                    "view": "list.default"
-                  }
-                },
-                {
-                  "id": "item.all_tags",
-                  "type": "entry",
-                  "label": "All tags",
-                  "description": "", 
-                  "context": {
-                    "entity": "documents\\DocumentTag",
-                    "view": "list.default"
-                  }
-                }
-              ]
-            },
-            {
-              "id": "item.planning",
-              "description": "",
-                "type": "entry",
-                "label": "Dashboard",
-                "context": {
-                    "entity": "documents\\Document",
-                    "view": "dashboard.default"
-                }
-            }               
+                "id": "item.documents",
+                "label": "Documents",
+                "description": "",
+                "icon": "attachment",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.all_documents",
+                        "type": "entry",
+                        "label": "All documents",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "documents\\Document",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.all_categories",
+                        "type": "entry",
+                        "label": "All categories",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "documents\\DocumentCategory",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.all_tags",
+                        "type": "entry",
+                        "label": "All tags",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "documents\\DocumentTag",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            }
         ]
     }
 }

@@ -37,7 +37,7 @@
         },
         "list.default": {
             "name": "Liste de Nature client",
-            "description": "Cette vue est destinée à afficher la liste des natures de clients.",
+            "description": "Liste des natures de clients.",
             "layout": {}
         }
     },

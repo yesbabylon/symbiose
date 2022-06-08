@@ -48,7 +48,7 @@
         },
         "list.default": {
             "name": "Liste des Contrats",
-            "description": "Cette vue est destinée à afficher la liste des contrats.",
+            "description": "Liste des contrats.",
             "layout": {}
         }
     },

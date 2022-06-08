@@ -24,7 +24,7 @@
 		},
 		"list.default": {
 			"name": "Suivis de réservation",
-			"description": "Cette vue est destinée à afficher la liste des suivis de réservation.",
+			"description": "Liste des suivis de réservation.",
 			"layout": {}
 		}
 	},

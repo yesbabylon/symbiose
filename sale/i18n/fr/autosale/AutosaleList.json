@@ -44,7 +44,7 @@
 		},
 		"list.default": {
 			"name": "Listes de catégorie de vente automatique",
-			"description": "Cette vue est destinée à afficher la liste des ventes automatiques.",
+			"description": "Liste des ventes automatiques.",
 			"layout": {}
 		}
 	},

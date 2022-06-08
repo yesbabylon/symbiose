@@ -37,7 +37,7 @@
         },
         "list.default": {
             "name": "Contacts",
-            "description": "Cette vue est destinée à afficher la liste des contacts.",
+            "description": "Liste des contacts.",
             "layout": {}
         }
     },

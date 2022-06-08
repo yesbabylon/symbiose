@@ -53,7 +53,7 @@
         },
         "list.default": {
             "name": "Liste des serveurs",
-            "description": "Cette vue est destinée à afficher la liste des serveurs.",
+            "description": "Liste des serveurs.",
             "layout": {}
             }
     }

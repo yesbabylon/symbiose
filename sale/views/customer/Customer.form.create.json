@@ -2,6 +2,9 @@
     "name": "Customer",
     "description": "Basic form for displaying a customer (Partner)",
     "domain": ["relationship", "=", "customer"],
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+    },
     "layout": {
         "groups": [
             {

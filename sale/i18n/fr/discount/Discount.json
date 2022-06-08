@@ -52,7 +52,7 @@
         },
         "list.default": {
             "name": "Remises",
-            "description": "Cette vue est destinée à afficher la liste des remises.",
+            "description": "Liste des remises.",
             "layout": {}
         }
     },

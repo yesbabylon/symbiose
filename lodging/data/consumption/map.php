@@ -8,7 +8,7 @@ use lodging\sale\booking\Consumption;
 
 
 list($params, $providers) = announce([
-    'description'   => "Retrieve the consumptions attached to rental units of specified centers and return an associative object mapping rental units with date indexes and related consumptions.",
+    'description'   => "Retrieve the consumptions attached to rental units of specified centers and return an associative array mapping rental units and ate indexes with related consumptions (this controller is used for the planning).",
     'params'        => [
         'centers_ids' =>  [
             'description'   => 'Identifiers of the centers for which the consumptions are requested.',

@@ -8,13 +8,16 @@ use lodging\sale\booking\Booking;
 use lodging\sale\booking\Consumption;
 
 list($params, $providers) = announce([
-    'description'   => "Checks if a quote is blocking one or more rental unit(s) .",
+    'description'   => "Checks if a quote is blocking one or more rental unit(s).",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking the check against unit blocking.',
             'type'          => 'integer',
             'required'      => true
         ]
+    ],
+    'access' => [
+        'visibility'        => 'protected'
     ],
     'response'      => [
         'content-type'  => 'application/json',

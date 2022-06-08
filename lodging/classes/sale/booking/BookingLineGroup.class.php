@@ -67,12 +67,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'default'           => false
             ],
 
-            'is_extra' => [
-                'type'              => 'boolean',
-                'description'       => 'Does the group relate to sales made off-contract? (ex. point of sale)',
-                'default'           => false
-            ],
-
             'is_locked' => [
                 'type'              => 'boolean',
                 'description'       => 'Are modifications disabled for the group?',
@@ -103,11 +97,27 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'onupdate'          => 'onupdateDateTo'
             ],
 
+            'time_from' => [
+                'type'              => 'time',
+                'description'       => "Checkin time on the day of arrival.",
+                'default'           => 14 * 3600,
+                'onupdate'          => 'onupdateTimeFrom'
+            ],
+
+            'time_to' => [
+                'type'              => 'time',
+                'description'       => "Checkout time on the day of departure.",
+                'default'           => 10 * 3600,
+                'onupdate'          => 'onupdateTimeTo'
+            ],
+
             'sojourn_type_id' => [
-                'type'              => 'string',
-                'default'           => 1,
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'The kind of sojourn the group is about.',
-                'onupdate'          => 'onupdateSojournTypeId'
+                'default'           => 1,       // 'GA'
+                'onupdate'          => 'onupdateSojournTypeId',
+                'visible'           => ['is_sojourn', '=', true]
             ],
 
             'nb_pers' => [
@@ -193,6 +203,23 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             ]
 
         ];
+    }
+
+    /**
+     * Create the default age_range assignment for the new booking group.
+     */
+    public static function oncreate($om, $oids, $values, $lang) {
+
+        foreach($oids as $oid) {
+            // add first age_range assignment 
+            $assignment = [
+                'age_range_id'          => 1,                       // adults
+                'booking_line_group_id' => $oid,
+                'booking_id'            => $values['booking_id'],
+                'qty'                   => $values['nb_pers']
+            ];
+            $om->create('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $assignment, $lang);
+        }        
     }
 
     public static function calcVatRate($om, $oids, $lang) {
@@ -432,7 +459,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null, 'time_from' => null]);
                 }
             }
         }
@@ -448,14 +475,44 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
         if($groups > 0) {
             foreach($groups as $group) {
                 // re-compute bookinglines quantities
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
-                if($group['is_sojourn']) {
+                if($group['is_sojourn'] || $group['is_event']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null, 'time_to' => null]);
+                }
+            }
+        }
+    }
+
+    public static function onupdateTimeFrom($om, $oids, $values, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
+
+        // update parent booking
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event']);
+        if($groups > 0) {
+            foreach($groups as $group) {
+                if($group['is_sojourn'] || $group['is_event']) {
+                    // force parent booking to recompute time_from
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null]);
+                }
+            }
+        }
+    }
+
+    public static function onupdateTimeTo($om, $oids, $values, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
+
+        // update parent booking
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event']);
+        if($groups > 0) {
+            foreach($groups as $group) {
+                if($group['is_sojourn'] || $group['is_event']) {
+                    // force parent booking to recompute time_to
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_to' => null]);
                 }
             }
         }

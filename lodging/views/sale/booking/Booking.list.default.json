@@ -3,21 +3,10 @@
     "description": "This view displays the list of bookings: the most recent on top.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "order": "created",
     "sort": "desc",
     "domain": ["center_office_id", "in", "user.center_offices_ids"],
-    "exports": [
-        {
-            "id": "export.print.contract",
-            "label": "Print contract",
-            "icon": "print",
-            "description": "Print contract related to the booking.",
-            "controller": "model_export-print",
-            "view": "print.default",
-            "visible": ["status", "=", "quote"]
-        }
-    ],
     "controller": "lodging_booking_collect",
     "header": {
         "actions": {
@@ -45,19 +34,22 @@
                 "type": "field",
                 "label": "From",
                 "value": "date_from",
-                "width": "15%"
+                "width": "15%",
+                "readonly": true
             },
             {
                 "type": "field",
                 "label": "To",
                 "value": "date_to",
-                "width": "15%"
+                "width": "15%",
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "status",
                 "width": "10%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
@@ -69,7 +61,8 @@
                 "type": "field",
                 "label": "Type",
                 "value": "type_id",
-                "width": "10%"
+                "width": "10%",
+                "readonly": true
             },
             {
                 "type": "field",
@@ -83,14 +76,16 @@
                 "label": "Nb Pers",
                 "value": "nb_pers",
                 "width": "15%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
                 "label": "Price",
                 "value": "price",
                 "width": "15%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true                
             }
         ]
     }

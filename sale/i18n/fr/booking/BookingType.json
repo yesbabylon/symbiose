@@ -22,7 +22,7 @@
 		},
 		"list.default": {
 			"name": "Types de réservation",
-			"description": "Cette vue est destinée à afficher la liste des types de réservation.",
+			"description": "Liste des types de réservation.",
 			"layout": {}
 		}
 	},

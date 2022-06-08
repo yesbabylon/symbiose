@@ -36,7 +36,7 @@
         },
         "list.default": {
             "name": "Lignes d'operation",
-            "description": "Cette vue est destinée à afficher la liste des lignes d'operation.",
+            "description": "Liste des lignes d'operation.",
             "layout": {}
         }
     },
