@@ -12,9 +12,9 @@ use core\Group;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\BookingLineGroup;
+use lodging\sale\booking\BookingLineGroupAgeRangeAssignment;
 
 $providers = eQual::inject(['context', 'orm', 'auth', 'access']);
-
 
 $tests = [
     //0xxx : calls related to QN methods
@@ -36,9 +36,20 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 378
+                'pack_id'       => 378,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -72,15 +83,25 @@ $tests = [
                 'customer_id' => 112
             ])->first();
 
-
             $groups = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Louvain-la-neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 378
+                'pack_id'       => 378,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -106,6 +127,7 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
+
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-10'),
@@ -119,9 +141,20 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 379
+                'pack_id'       => 379,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -147,7 +180,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-10'),
@@ -160,10 +192,20 @@ $tests = [
                 'booking_id'    => $booking['id'],
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 379,
-                
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -177,11 +219,8 @@ $tests = [
 
         $booking = Booking::id($booking['id'])->read(['price'])->first();
            return ($booking['price']);
-
-
         },
         'assert'            =>  function ($price) {
-
             return $price == 600.80;
         }
     ),
@@ -190,7 +229,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
@@ -205,9 +243,20 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -221,11 +270,8 @@ $tests = [
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return ($booking['price']);
-
-
         },
         'assert'            =>  function ($price) {
-
             return $price == 55;
         }
     ),
@@ -243,16 +289,25 @@ $tests = [
                 'customer_id' => 162,
             ])->first();
 
-
-
             $groups = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -268,7 +323,6 @@ $tests = [
             return ($booking['price']);
         },
         'assert'            =>  function ($price) {
-
             return $price == 72.30;
         }
     ),
@@ -278,7 +332,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-08'),
@@ -287,16 +340,25 @@ $tests = [
                 'customer_id' => 155,
             ])->first();
 
-
-
             $groups = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Wanne',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 365,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -307,7 +369,7 @@ $tests = [
             $groups->update([
                 'nb_pers'       => 2
             ]);
-            
+
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return ($booking['price']);
         },
@@ -320,7 +382,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-04-08'),
@@ -335,9 +396,20 @@ $tests = [
                 'name'          => 'Séjour villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 1756,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -361,7 +433,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'  => strtotime('2021-09-06'),
                 'date_to'    => strtotime('2021-09-08'),
@@ -371,7 +442,6 @@ $tests = [
                 'customer_id' => 186,
             ])->first();
 
-
             $groups1 = BookingLineGroup::create([
                 'booking_id' => $booking['id'],
                 'name' => 'Séjour Louvain-la-Neuve',
@@ -380,8 +450,18 @@ $tests = [
                 'sojourn_type_id' => 1,
                 'has_pack' => true,
                 'pack_id' => 365,
+                'is_sojourn'    => true
             ]);
 
+            $group1 = $groups1->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group1['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
+            ]);
 
             $groups1->update([
                 'date_from' => strtotime('2021-09-06'),
@@ -393,16 +473,24 @@ $tests = [
             ]);
 
             $groups2  =  BookingLineGroup::create([
+                'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
-                'date_from'     => strtotime('2021-09-07'),
-                'date_to'       => strtotime('2021-09-08'),
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 1756,
-                'booking_id'    => $booking['id'],
-                'nb_pers'       => 3
+                'is_sojourn'    => true
+            ]);
+
+            $group2 = $groups2->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group2['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups2->update([
@@ -413,18 +501,27 @@ $tests = [
             $groups2->update([
                 'nb_pers'       => 3
             ]);
-
 
             $groups3  =  BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 1745,
+                'is_sojourn'    => true
             ]);
 
+            $group3 = $groups3->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group3['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
+            ]);
 
             $groups3->update([
                 'date_from'     => strtotime('2021-09-06'),
@@ -448,7 +545,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-04-10'),
                 'date_to'     => strtotime('2021-04-11'),
@@ -463,9 +559,20 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 364,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -503,10 +610,21 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'booking_id'    => $booking['id'], 
-                'pack_id' => 1764
+                'booking_id'    => $booking['id'],
+                'pack_id' => 1764,
+                'is_sojourn'    => true
+            ]);
+
+            $group1 = $groups1->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group1['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups1->update([
@@ -523,9 +641,20 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 1762,    
+                'pack_id'       => 1762,
+                'is_sojourn'    => true
+            ]);
+
+            $group2 = $groups2->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group2['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups2->update([
@@ -541,10 +670,21 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 3,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 1758,
                 'booking_id'    => $booking['id'],
+                'is_sojourn'    => true
+            ]);
+
+            $group3 = $groups3->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group3['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups3->update([
@@ -570,7 +710,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-08'),
@@ -584,9 +723,20 @@ $tests = [
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1, 
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 1367, 
+                'pack_id'       => 1367,
+                'is_sojourn'    => true
+            ]);
+
+            $group1 = $groups1->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group1['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups1->update([
@@ -598,15 +748,25 @@ $tests = [
                 'nb_pers'       => 4
             ]);
 
-
             $groups2 = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Louvain-la-Neuve',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 1762, 
+                'pack_id'       => 1762,
+                'is_sojourn'    => true
+            ]);
+
+            $group2 = $groups2->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group2['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups2->update([
@@ -632,7 +792,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2022-11-15'),
                 'date_to'     => strtotime('2022-11-19'),
@@ -641,7 +800,7 @@ $tests = [
                 'customer_id' => 99,
             ])->first();
 
-        
+
             // nb_pers devient null après créatoin du pack
 
             $groups = BookingLineGroup::create([
@@ -649,7 +808,18 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,   
+                'sojourn_type_id'=> 1,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -658,9 +828,11 @@ $tests = [
             ]);
 
 
+            $group = $groups->first();
+
             $bookingLine1 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 341,
                 'qty'                   => 433,
                 'order'                 => 1
@@ -668,7 +840,7 @@ $tests = [
 
             $bookingLine2 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 347,
                 'qty'                   => 432,
                 'order'                 => 2
@@ -676,7 +848,7 @@ $tests = [
 
             $bookingLine3 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 335,
                 'qty'                   => 434,
                 'order'                 => 3
@@ -684,7 +856,7 @@ $tests = [
 
             $bookingLine4 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 351,
                 'qty'                   => 432,
                 'order'                 => 4
@@ -692,7 +864,7 @@ $tests = [
 
             $bookingLine5 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 850,
                 'qty'                   => 432,
                 'order'                 => 5
@@ -700,7 +872,7 @@ $tests = [
 
             BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 353,
                 'qty'                   => 1,
                 'order'                 => 6
@@ -708,7 +880,7 @@ $tests = [
 
             $bookingLine7 = BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups->first()['id'],
+                'booking_line_group_id' => $group['id'],
                 'product_id'            => 1153,
                 'qty'                   => 46,
                 'order'                 => 7
@@ -742,7 +914,18 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
+                'is_sojourn'    => true
+            ]);
+
+            $group2 = $groups2->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group2['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups2->update([
@@ -761,7 +944,18 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 3,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
+                'is_sojourn'    => true
+            ]);
+
+            $group3 = $groups3->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group3['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups3->update([
@@ -815,8 +1009,9 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
-                'booking_id'    => $booking['id'], 
+                'sojourn_type_id'=> 1,
+                'booking_id'    => $booking['id'],
+                'is_sojourn'    => true
             ]);
 
             $groups1->update([
@@ -828,10 +1023,19 @@ $tests = [
                 'nb_pers'       => 3
             ]);
 
+            $group1 = $groups1->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group1['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
+            ]);
 
             BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1->first()['id'],
+                'booking_line_group_id' => $group1['id'],
                 'product_id'            => 352,
                 'qty'                   => 11,
                 'order'                 => 1
@@ -839,7 +1043,7 @@ $tests = [
 
             BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1->first()['id'],
+                'booking_line_group_id' => $group1['id'],
                 'product_id'            => 353,
                 'qty'                   => 22,
                 'order'                 => 2
@@ -847,7 +1051,7 @@ $tests = [
 
             BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1->first()['id'],
+                'booking_line_group_id' => $group1['id'],
                 'product_id'            => 354,
                 'qty'                   => 12,
                 'order'                 => 3
@@ -855,7 +1059,7 @@ $tests = [
 
             BookingLine::create([
                 'booking_id'            => $booking['id'],
-                'booking_line_group_id' => $groups1->first()['id'],
+                'booking_line_group_id' => $group1['id'],
                 'product_id'            => 2102,
                 'qty'                   => 1,
                 'order'                 => 4
@@ -864,16 +1068,16 @@ $tests = [
             $groups1->update([
                 'nb_pers'       => 41
             ]);
-           
 
             $groups2 = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 1762,   
+                'pack_id'       => 1762,
+                'is_sojourn'    => true
             ]);
 
             $groups2->update([
@@ -885,16 +1089,25 @@ $tests = [
                 'nb_pers'       => 12
             ]);
 
-            $groups2 = $groups2->first();
+            $group2 = $groups2->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group2['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
+            ]);
 
             $groups3 = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 2,
                 'rate_class_id' => 4,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 378, 
+                'pack_id'       => 378,
+                'is_sojourn'    => true
             ]);
 
             $groups3->update([
@@ -906,7 +1119,15 @@ $tests = [
                 'nb_pers'       => 18
             ]);
 
-            $groups3 = $groups3->first();
+            $group3 = $groups3->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group3['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
+            ]);
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return ($booking['price']);
@@ -921,7 +1142,6 @@ $tests = [
         'return'            =>  array('double'),
         'test'              =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-10'),
@@ -931,13 +1151,24 @@ $tests = [
             ])->first();
 
             $groups = BookingLineGroup::create([
-                'booking_id'    => $booking['id'], 
+                'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 7,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 412,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -953,7 +1184,6 @@ $tests = [
             return $booking['price'];
         },
         'assert'            =>  function ($price) {
-
             return ($price == 801.32);
         }
     ),
@@ -962,7 +1192,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
@@ -977,9 +1206,20 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 413,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -993,11 +1233,8 @@ $tests = [
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return $booking['price'];
-
-
         },
         'assert'            =>  function ($price) {
-
             return ($price == 1092.80);
         }
     ),
@@ -1007,7 +1244,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
@@ -1022,9 +1258,20 @@ $tests = [
                 'name'          => 'Séjour Rochefort',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 413,  
+                'pack_id'       => 413,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -1038,11 +1285,8 @@ $tests = [
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return $booking['price'];
-
-
         },
         'assert'            =>  function ($price) {
-
             return ($price == 701.96);
         }
     ),
@@ -1052,7 +1296,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-04-08'),
@@ -1067,9 +1310,20 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 7,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
                 'pack_id'       => 1304,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -1083,11 +1337,8 @@ $tests = [
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return $booking['price'];
-
-
         },
         'assert'            =>  function ($price) {
-
             return ($price == 962.19);
         }
     ),
@@ -1097,7 +1348,6 @@ $tests = [
         'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
         'return'            =>  array('double'),
         'test'              =>  function () {
-
 
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-04-09'),
@@ -1112,9 +1362,20 @@ $tests = [
                 'name'          => 'Séjour Villers-Sainte-Gertrude',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 1,
+                'sojourn_type_id'=> 1,
                 'has_pack'      => true,
-                'pack_id'       => 1484,  
+                'pack_id'       => 1484,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -1128,11 +1389,8 @@ $tests = [
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             return $booking['price'];
-
-
         },
         'assert'            =>  function ($price) {
-
             return ($price == 1141.56);
         }
     ),
@@ -1143,7 +1401,6 @@ $tests = [
         'test'              =>  function () {
 
             //seules les nuitées gratuites quand on est en GG ?
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-11'),
@@ -1157,9 +1414,20 @@ $tests = [
                 'name'              => 'Séjour Arbrefontaine - École',
                 'order'             => 1,
                 'rate_class_id'     => 7,
-                'sojourn_type_id'  => 2,
+                'sojourn_type_id'   => 2,
                 'has_pack'          => true,
                 'pack_id'           => 851,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
@@ -1184,7 +1452,6 @@ $tests = [
         'return'       =>  array('double'),
         'test'         =>  function () {
 
-
             $booking = Booking::create([
                 'date_from'   => strtotime('2021-11-07'),
                 'date_to'     => strtotime('2021-11-10'),
@@ -1193,15 +1460,25 @@ $tests = [
                 'customer_id' => 204,
             ])->first();
 
-    
             $groups = BookingLineGroup::create([
                 'booking_id'    => $booking['id'],
                 'name'          => 'Séjour Arbrefontaine - École',
                 'order'         => 1,
                 'rate_class_id' => 5,
-                'sojourn_type_id'  => 2,
+                'sojourn_type_id'=> 2,
                 'has_pack'      => true,
                 'pack_id'       => 852,
+                'is_sojourn'    => true
+            ]);
+
+            $group = $groups->first();
+
+            BookingLineGroupAgeRangeAssignment::create([
+                'booking_id'            => $booking['id'],
+                'booking_line_group_id' => $group['id'],
+                'age_range_id'          => 1,
+                'qty'                   => 3,
+                'is_active'             => true
             ]);
 
             $groups->update([
