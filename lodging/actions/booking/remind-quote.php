@@ -105,7 +105,7 @@ $message = new Swift_Message();
 $message->setTo($params['recipient_email'])
         ->setSubject($title)
         ->setContentType("text/html")
-        ->setBody($body)
+        ->setBody(str_replace(['<br>', '<p></p>'], '', $body))
         ->setFrom([$params['sender_email'] => EMAIL_SMTP_ACCOUNT_DISPLAYNAME]);
 
 $mailer = new Swift_Mailer($transport);

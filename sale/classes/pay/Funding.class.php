@@ -64,7 +64,12 @@ class Funding extends Model {
                 'function'          => 'calcIsPaid',
                 'store'             => true,
             ],
-
+            'is_balance_invoice' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'visible'           => ['type', '=', 'invoice']
+            ],
+            
             'payment_deadline_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
@@ -134,6 +139,5 @@ class Funding extends Model {
     public static function onupdatePaymentDeadlineId($orm, $oids, $values, $lang) {
         $orm->write(get_called_class(), $oids, ['name' => null], $lang);
     }
-
 
 }

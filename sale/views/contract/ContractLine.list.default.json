@@ -3,7 +3,15 @@
     "description": "This view is intended for displaying the list of contract lines.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "operations": {
+        "total": {
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "layout": {
         "items": [
             {

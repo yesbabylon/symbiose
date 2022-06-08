@@ -144,7 +144,7 @@ $message = new Swift_Message();
 $message->setTo($params['recipient_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
-        ->setBody($params['message'])
+        ->setBody(str_replace(['<br>', '<p></p>'], '', $params['message']))
         ->setFrom([$params['sender_email'] => EMAIL_SMTP_ACCOUNT_DISPLAYNAME]);
 
 foreach($attachments as $attachment) {

@@ -54,6 +54,7 @@ class PaymentDeadline extends Model {
             'is_balance_invoice' => [
                 'type'              => 'boolean',
                 'default'           => false,
+                'description'       => "Mark invoice as the final balance invoice (no installment).",
                 'visible'           => ['type', '=', 'invoice']
             ],
 

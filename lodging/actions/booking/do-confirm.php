@@ -49,7 +49,7 @@ $booking = Booking::id($params['id'])
                   ->read([
                         'status',
                         'is_price_tbc',
-                        'type',
+                        'type_id',
                         'date_from',
                         'date_to',
                         'price',                                  // total price VAT incl.
@@ -90,7 +90,7 @@ if($booking['status'] != 'option') {
 }
 
 if($booking['is_price_tbc']) {
-    throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
+    throw new Exception("unconfirmed_price", QN_ERROR_INVALID_PARAM);
 }
 
 // remove any existing CRON tasks for reverting the booking to quote
@@ -248,7 +248,7 @@ if($booking['customer_id']['rate_class_id']) {
 
 
 // retrieve existing payment plans
-$payment_plans = PaymentPlan::search([])->read(['rate_class_id', 'booking_type', 'payment_deadlines_ids' => ['delay_from_event','delay_from_event_offset','delay_count','type','amount_share']])->get();
+$payment_plans = PaymentPlan::search([])->read(['rate_class_id', 'booking_type_id', 'payment_deadlines_ids' => ['delay_from_event','delay_from_event_offset','delay_count','type','is_balance_invoice','amount_share']])->get();
 
 if(!$payment_plans) {
     throw new Exception("missing_payment_plan", QN_ERROR_INVALID_CONFIG);
@@ -258,12 +258,12 @@ $payment_plan = -1;
 // payment plan assignment is based on booking type and customer's rate class
 foreach($payment_plans as $pid => $plan) {
     // double match: keep plan and stop
-    if($payment_plan['rate_class_id'] == $rate_class_id && $payment_plan['booking_type'] == $booking['type'] ) {        
+    if($plan['rate_class_id'] == $rate_class_id && $plan['booking_type_id'] == $booking['type_id'] ) {        
         $payment_plan = $plan;
         break;
     }
     // either rate_class or booking_type, keep plan (will be discarded if better match is found)
-    if($payment_plan['rate_class_id'] == $rate_class_id || $payment_plan['booking_type'] == $booking['type'] ) {    
+    if($plan['rate_class_id'] == $rate_class_id || $plan['booking_type_id'] == $booking['type_id'] ) {    
         if($payment_plan < 0) {
             $payment_plan = $plan;
         }
@@ -276,6 +276,14 @@ if($payment_plan < 0) {
 
 $funding_order = 0;
 foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
+
+    // special case: immediate creation of balance invoice
+    if($deadline['type'] == 'invoice' && $deadline['is_balance_invoice']) {
+        // create balance invoice and do not create funding (raise Exception on failure)
+        eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
+        break;
+    }
+
     $funding = [
         'payment_deadline_id'   => $deadline_id,
         'booking_id'            => $params['id'],
@@ -303,7 +311,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
 
     // request funding creation
     try {
-        Funding::create($funding)->read(['name']);
+        Funding::create($funding)->read(['name'])->get();
     }
     catch(Exception $e) {
         // ignore duplicates (not created)
