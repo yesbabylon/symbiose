@@ -5,6 +5,7 @@
         "groups": ["booking.default.user"]
     },
     "group_by": ["date"],
+    "domain": ["type", "=", "book"],
     "limit": 100,
     "filters": false,
     "layout": {

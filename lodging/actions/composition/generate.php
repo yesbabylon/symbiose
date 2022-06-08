@@ -24,8 +24,8 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',                // 'public' (default) or 'private' (can be invoked by CLI only)
-        'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'protected',
+        'groups'            => ['booking.default.user']
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -44,6 +44,7 @@ $user_id = $auth->userId();
 // read groups and nb_pers from the targeted booking object, and subsequent lines (make sure user has access to it)
 $booking = Booking::id($params['booking_id'])
                   ->read([
+                        'customer_identity_id' => ['type', 'firstname', 'lastname', 'gender', 'date_of_birth', 'email', 'phone', 'address_street', 'address_city', 'address_country'],
                         'booking_lines_groups_ids' => [
                             'nb_pers',
                             'booking_lines_ids' => [
@@ -120,6 +121,7 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
 
     // to be used is data was received
     $item_index = 0;
+    $is_first = true;
 
     foreach($rental_units as $index => $unit) {
         // to each UL, assign ceil(nb_pers*cap/cap_total)
@@ -147,6 +149,20 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
                 ++$item_index;
             }
 
+            if($is_first) {
+                // if customer is an individual, use its details for first entry
+                if($booking['customer_identity_id']['type'] == 'I') {
+                    $item['firstname'] = $booking['customer_identity_id']['firstname'];
+                    $item['lastname'] = $booking['customer_identity_id']['lastname'];
+                    $item['gender'] = $booking['customer_identity_id']['gender'];
+                    $item['date_of_birth'] = $booking['customer_identity_id']['date_of_birth'];
+                    $item['email'] = $booking['customer_identity_id']['email'];
+                    $item['phone'] = $booking['customer_identity_id']['phone'];
+                    $item['address'] = $booking['customer_identity_id']['address_street'].' '.$booking['customer_identity_id']['address_city'];
+                    $item['country'] = $booking['customer_identity_id']['address_country'];
+                }                
+                $is_first = false;
+            }
             CompositionItem::create($item);
         }
         if($remainder <= 0) break;

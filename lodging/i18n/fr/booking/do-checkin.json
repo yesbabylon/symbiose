@@ -20,6 +20,7 @@
     },
     "error": {
         "errors": {
+            "unsigned_contract": "Contrat non signé",
             "due_amount": "Solde dû non nul.",
             "incomplete_composition": "La composition est manquante ou incomplète."
         }

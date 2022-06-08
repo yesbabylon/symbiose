@@ -18,6 +18,11 @@
             },
             {
                 "type": "field",
+                "value": "is_balance_invoice",
+                "width": "15%"
+            },            
+            {
+                "type": "field",
                 "value": "delay_count",
                 "width": "20%"
             },

@@ -65,7 +65,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "value": "type_id",
                                                 "width": "100%"
                                             }
                                         ]
