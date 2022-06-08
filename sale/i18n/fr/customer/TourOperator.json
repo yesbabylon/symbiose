@@ -1,0 +1,37 @@
+{
+    "name": "Tour Opérateur",
+    "plural": "Tour Opérateurs",
+    "description": "",
+    "model": {
+        "to_code": {
+            "label": "Code",
+            "description": "Code unique du Tour-Opérateur.",
+            "help": ""
+        },
+        "to_commission_rate": {
+            "label": "Commission",
+            "description": "Taux des commissions.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Tour Opérateur",
+            "description": "Formulaire de base pour afficher un client (Partenaire).",
+            "layout": {
+                "section.customer_details": {
+                    "label": "Détails"
+                },
+                "section.customer_bookings": {
+                    "label": "Historique des Réservations"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Tour Opérateurs",
+            "description": "Liste des Tour Opérateurs.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

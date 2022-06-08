@@ -1,0 +1,140 @@
+{
+    "name": "Tour Operator",
+    "description": "Tour operator form (Partner)",
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "to_code",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "to_commission_rate",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }                           
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [            
+                    {
+                        "id": "section.customer_details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Identity of Customer",
+                                                "value": "partner_identity_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Owner Identity",
+                                                "value": "owner_identity_id",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "relationship",
+                                                "width": "50%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "partner_position",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Partner Organisation",
+                                                "value": "partner_organisation_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Customer Nature",
+                                                "value": "customer_nature_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_external_ref",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "ref_account",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.customer_bookings",
+                        "label": "Bookings",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "bookings_ids",
+                                                "width": "100%"
+                                            }                                            
+                                        ]
+                                    }
+                                ]
+                            }                            
+                        ]
+                    }                                        
+                ]
+            }
+        ]
+    }
+}

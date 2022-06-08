@@ -1,0 +1,26 @@
+{
+    "name": "Recherche avancé de consommations",
+    "description": "Contrôleur proposant des champs avec des relations indirectes.",
+    "model": {
+        "center_id": {
+            "label": "Centre",
+            "description": "Consommations liée à un centre.",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Du",
+            "description": "Date de début de l'intervalle.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Date de fin de l'intervalle.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {
+
+        }
+    }
+}
