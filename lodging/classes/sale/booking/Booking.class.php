@@ -22,21 +22,6 @@ class Booking extends \sale\booking\Booking {
                 'readonly'          => true
             ],
 
-            'type' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'general',          // general public
-                    'school_trip',      // school class
-                    'sport_camp',       // sport camp (special products)
-                    'ota',              // booking made on an Online Travel Agency (through channel manager)
-                    'to'                // Tour-Operator
-                ],
-                'description'       => 'Type for distinguishing the payment plans and prices.',
-                // type is set and changed programmatically only
-                'readonly'          => true,
-                'default'           => 'general'
-            ],
-
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -110,6 +95,7 @@ class Booking extends \sale\booking\Booking {
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Grouped consumptions of the booking.',
                 'order'             => 'order',
+                'ondetach'          => 'delete',
                 'onupdate'          => 'onupdateBookingLinesGroupsIds'
             ],
 
@@ -147,74 +133,10 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'Default sojourn type of the booking (set according to booking center).'
-            ],
+            ]
 
-            'date_from' => [
-                'type'              => 'computed',
-                'result_type'       => 'date',
-                'function'          => 'calcDateFrom',
-                'store'             => true,
-                'default'           => time()
-            ],
-
-            'date_to' => [
-                'type'              => 'computed',
-                'result_type'       => 'date',
-                'function'          => 'calcDateTo',
-                'store'             => true,
-                'default'           => time()
-            ]            
         ];
-    }
-
-
-    /** 
-     * Compute date_from, taking in consideration only groups related to accomodations.
-     */
-    public static function calcDateFrom($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-
-        foreach($bookings as $bid => $booking) {
-            $min_date = PHP_INT_MAX;
-            // find min date amongst matching groups
-            $booking_line_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_sojourn', 'date_from']);
-            if($booking_line_groups > 0 ) {
-                foreach($booking_line_groups as $gid => $group) {
-                    if($group['is_sojourn'] && $group['date_from'] < $min_date) {
-                        $min_date = $group['date_from'];
-                    }
-                }
-                $result[$bid] = $min_date;
-            }
-        }
-
-        return $result;
-    }
-
-    /** 
-     * Compute date_to, taking in consideration only groups related to accomodations.
-     */
-    public static function calcDateTo($om, $oids, $lang) {
-        $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
-
-        foreach($bookings as $bid => $booking) {
-            $max_date = 0;
-            // find max date amongst matching groups
-            $booking_line_groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['is_sojourn', 'date_to']);
-            if($booking_line_groups > 0 ) {
-                foreach($booking_line_groups as $gid => $group) {
-                    if($group['is_sojourn'] && $group['date_to'] > $max_date) {
-                        $max_date = $group['date_to'];
-                    }
-                }
-                $result[$bid] = $max_date;
-            }
-        }
-
-        return $result;
-    }
+    } 
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
         $om->callonce('sale\booking\Booking', '_resetPrices', $oids, [], $lang);
@@ -381,7 +303,7 @@ class Booking extends \sale\booking\Booking {
         $result = [];
 
         if(isset($event['date_from'])) {
-            if(!isset($event['date_to'])) {
+            if($values['date_to'] < $event['date_from']) {
                 $result['date_to'] = $event['date_from'];
             }
         }
@@ -622,7 +544,8 @@ class Booking extends \sale\booking\Booking {
             // groups cannot be assigned to more than one booking
             $booking = reset($bookings);
             if(!in_array($booking['status'], ['quote'])) {
-                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_lines_groups_ids'], [ 'is_extra']);
+                $booking_lines_groups_ids = array_map( function($id) { return abs($id); }, $values['booking_lines_groups_ids']);
+                $groups = $om->read('lodging\sale\booking\BookingLineGroup', $booking_lines_groups_ids, [ 'is_extra']);
                 foreach($groups as $group) {
                     if(!$group['is_extra']) {
                         return ['status' => ['non_editable' => 'Non-extra service groups cannot be changed for non-quote bookings.']];

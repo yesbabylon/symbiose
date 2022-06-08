@@ -89,7 +89,7 @@
         },
         "list.default": {
             "name": "Lignes de réservation",
-            "description": "Cette vue est destinée à afficher la liste des lignes de réservation.",
+            "description": "Liste des lignes de réservation.",
             "layout": {}
         }
     },

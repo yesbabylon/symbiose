@@ -27,7 +27,7 @@
         },
         "list.default": {
             "name": "Groupes",
-            "description": "Cette vue est destinée à afficher la liste des groupes de produits.",
+            "description": "Liste des groupes de produits.",
             "layout": {}
         }
     },

@@ -52,6 +52,11 @@
             "label": "Adresse",
             "description": "Adresse principale du Client'.",
             "help": ""
+        },
+        "ref_account": {
+            "label": "Compte de référence",
+            "description": "IBAN arbitraire associé au client.",
+            "help": ""
         }
     },
     "view": {
@@ -69,7 +74,7 @@
         },
         "list.default": {
             "name": "Clients",
-            "description": "Cette vue est destinée à afficher la liste de base des clients existants.",
+            "description": "Liste de base des clients existants.",
             "layout": {}
         }
     },

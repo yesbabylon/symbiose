@@ -71,10 +71,10 @@
                 "option": "option",
                 "confirmed": "confirmée",
                 "validated": "validée",
-                "checkedin": "séjour en cours",
-                "checkedout": "séjour achevé",
-                "invoiced": "facturée",                
-                "debit_balance": "solde dû",
+                "checkedin": "en cours",
+                "checkedout": "terminée",
+                "invoiced": "facturée",
+                "debit_balance": "solde débiteur",
                 "credit_balance": "solde créditeur",
                 "balanced": "clôturée"
             },
@@ -98,6 +98,16 @@
         "date_to": {
             "label": "Au",
             "description": "Dernier jour du séjour.",
+            "help": ""
+        },
+        "time_from": {
+            "label": "Checkin",
+            "description": "Heure d'arrivée.",
+            "help": ""
+        },
+        "time_to": {
+            "label": "Checkout",
+            "description": "Heure de départ.",
             "help": ""
         },
         "has_payer_organisation": {
@@ -140,8 +150,8 @@
             }
         },
         "list.default": {
-            "name": "Liste de Réservation",
-            "description": "Cette vue est destinée à afficher la liste des réservations.",
+            "name": "Réservations",
+            "description": "Liste des réservations.",
             "layout": {}
         }
     },
@@ -150,9 +160,6 @@
             "missing_mandatory": "Champ obligatoire."
         },
         "center_id": {
-            "missing_mandatory": "Champ obligatoire."
-        },
-        "type_id": {
             "missing_mandatory": "Champ obligatoire."
         },
         "status": {

@@ -32,17 +32,11 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'default'           => 'unit'
             ],
 
-            'booking_type' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'general',          // general public
-                    'school_trip',      // school class
-                    'sport_camp',       // sport camp (special products)
-                    'ota',              // booking made on an Online Travel Agency (through channel manager)
-                    'to'                // Tour-Operator
-                ],
-                'description'       => 'Type to which assign a bookin that has this product.',
-                'default'           => 'general'
+            'booking_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingType',
+                'description'       => "The kind of booking it is about.",
+                'default'           => 1                // default to 'general public'
             ],
 
             'is_accomodation' => [

@@ -67,11 +67,17 @@ class BookingLineGroup extends Model {
                 'default'           => false
             ],
 
+            'is_extra' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group relate to sales made off-contract? (ex. point of sale)',
+                'default'           => false
+            ],
+
             'nb_nights' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Amount of nights of the sojourn.',
-                'function'          => 'sale\booking\BookingLineGroup::getNbNights',
+                'function'          => 'sale\booking\BookingLineGroup::calcNbNights',
                 'store'             => true
             ],
 
@@ -170,18 +176,22 @@ class BookingLineGroup extends Model {
     public static function _resetPrices($om, $oids, $values, $lang) {
         // reset computed fields related to price
         $om->write(__CLASS__, $oids, ['total' => null, 'price' => null, 'fare_benefit' => null]);
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids'], $lang);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids', 'is_extra'], $lang);
         if($groups > 0) {
             $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $groups);
-            $booking_lines_ids = array_reduce($groups, function($c, $a) { return array_merge($c, $a['booking_lines_ids']); }, []);
             // reset fields in parent bookings
             $om->callonce('sale\booking\Booking', '_resetPrices', $bookings_ids, [], $lang);
             // reset fields in children lines
-            $om->callonce('sale\booking\BookingLine', '_resetPrices', $booking_lines_ids, [], $lang);
+            foreach($groups as $gid => $group) {
+                // do not reset lines for extra-consumptions groups
+                if(!$group['is_extra']) {
+                    $om->callonce('sale\booking\BookingLine', '_resetPrices', $group['booking_lines_ids'], [], $lang);
+                }
+            }
         }
     }
 
-    public static function getNbNights($om, $oids, $lang) {
+    public static function calcNbNights($om, $oids, $lang) {
         $result = [];
         $groups = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
         foreach($groups as $gid => $group) {

@@ -53,9 +53,9 @@
                         }
                     },
                     {
-                        "id": "item.bookings.validated",
+                        "id": "item.bookings.confirmed",
                         "type": "entry",
-                        "label": "Validated bookings",
+                        "label": "Confirmed bookings",
                         "description": "",
                         "route": "/bookings",
                         "context": {
@@ -63,7 +63,19 @@
                             "view": "list.default",
                             "domain": ["status", "=", "confirmed"]
                         }
-                    }
+                    },
+                    {
+                        "id": "item.bookings.in_progress",
+                        "type": "entry",
+                        "label": "Bookings in progress",
+                        "description": "",
+                        "route": "/bookings",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Booking",
+                            "view": "list.default",
+                            "domain": ["status", "=", "checkedin"]
+                        }
+                    }                    
                 ]
             },
             {
@@ -116,21 +128,43 @@
                 "icon": "calendar_month",
                 "type": "parent",
                 "children": [{
-                        "id": "item.planning",
+                        "id": "item.planning.planning",
                         "type": "entry",
                         "label": "Planning",
                         "description": "",
                         "route": "/planning"
                     },
                     {
-                        "id": "item.consumptions",
+                        "id": "item.planning.meals",
                         "type": "entry",
                         "label": "Consumptions",
                         "description": "",
-                        "route": "/bookings",
+                        "route": "/consumptions",
                         "context": {
                             "entity": "lodging\\sale\\booking\\Consumption",
                             "view": "list.meals"
+                        }
+                    },
+                    {
+                        "id": "item.planning.cleanups",
+                        "type": "entry",
+                        "label": "Cleanups",
+                        "description": "",
+                        "route": "/consumptions",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "view": "list.cleanups"
+                        }
+                    },
+                    {
+                        "id": "item.planning.occupancies",
+                        "type": "entry",
+                        "label": "Occupancies",
+                        "description": "",
+                        "route": "/consumptions",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "view": "list.occupancies"
                         }
                     }
                 ]

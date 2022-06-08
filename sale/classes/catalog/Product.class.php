@@ -8,19 +8,21 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class Product extends Model {
-    public static function getColumns() {
-        /**
-         * A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.
-         * Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).
-         * A SKU code identifies a product with all its specific characteristics.
-         */
 
+    public static function getDescription() {
+        return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.\n
+         Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).\n
+         A SKU code identifies a product with all its specific characteristics.\n
+        ";
+    }
+
+    public static function getColumns() {
         return [
 
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'getFullName',
+                'function'          => 'calcName',
                 'store'             => true,
                 'description'       => 'The full name of the product (label + sku).'
             ],
@@ -63,14 +65,13 @@ class Product extends Model {
             'family_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
-                'description'       => "Product Family which current product belongs to.",
-                'default'           => 'defaultFamilyId'
+                'description'       => "Product Family which current product belongs to."
             ],
 
             'is_pack' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'getIsPack',
+                'function'          => 'calcIsPack',
                 'description'       => 'Is the product a pack? (from model).',
                 'store'             => true,                
                 'readonly'          => true
@@ -79,7 +80,7 @@ class Product extends Model {
             'has_own_price' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'function'          => 'getHasOwnPrice',
+                'function'          => 'calcHasOwnPrice',
                 'description'       => 'Product is a pack with its own price (from model).',
                 'visible'           => ['is_pack', '=', true],
                 'store'             => true,
@@ -155,7 +156,7 @@ class Product extends Model {
      * Computes the display_name of the product as a concatenation of Label and SKU.
      *
      */
-    public static function getFullName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(get_called_class(), $oids, ['label', 'sku'], $lang);
         foreach($res as $oid => $odata) {
@@ -166,17 +167,7 @@ class Product extends Model {
         return $result;
     }
 
-    public static function defaultFamilyId($om, $values=[]) {
-        if(isset($values['product_model_id'])) {
-            $models = $om->read('sale\catalog\ProductModel', $values['product_model_id'], ['family_id']);
-            if($models > 0 && count($models)) {
-                return $models[$values['product_model_id']]['family_id'];
-            }
-        }
-        return null;
-    }
-
-    public static function getIsPack($om, $oids, $lang) {
+    public static function calcIsPack($om, $oids, $lang) {
         $result = [];
 
         $res = $om->read(get_called_class(), $oids, ['product_model_id.is_pack']);
@@ -190,7 +181,7 @@ class Product extends Model {
         return $result;
     }
 
-    public static function getHasOwnPrice($om, $oids, $lang) {
+    public static function calcHasOwnPrice($om, $oids, $lang) {
         $result = [];
 
         $res = $om->read(get_called_class(), $oids, ['product_model_id.has_own_price']);

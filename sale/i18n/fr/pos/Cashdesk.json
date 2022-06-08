@@ -17,7 +17,7 @@
 		},
 		"list.default": {
 			"name": "Caisses",
-			"description": "Cette vue est destinée à afficher la liste des caisses.",
+			"description": "Liste des caisses.",
 			"layout": {}
 		}
 	},

@@ -22,28 +22,20 @@
             "label": "Ventes",
             "help": ""
         },
-        "bookings": {
+        "sales.booking": {
             "label": "Réservations",
             "help": ""
         },
-        "new_booking": {
-            "label": "Nouvelle réservation",
-            "help": ""
-        },
-        "all_bookings": {
+        "sales.booking.all_bookings": {
             "label": "Toutes les réservations",
             "help": ""
         },
-        "quotes": {
-            "label": "Devis",
+        "sales.booking.booking_types": {
+            "label": "Types de réservations",
             "help": ""
         },
-        "options": {
-            "label": "Options",
-            "help": ""
-        },
-        "validated_bookings": {
-            "label": "Réservations validées",
+        "sales.tour_operators": {
+            "label": "Tour Opérateurs",
             "help": ""
         },
         "sales.customers": {
@@ -82,108 +74,180 @@
             "label": "Tous les partenaires",
             "help": ""
         },
-        "catalog": {
+        "sales.catalog": {
             "label": "Catalogue",
             "help": ""
         },
-        "products": {
+        "sales.catalog.products": {
             "label": "Produits",
             "help": ""
         },
-        "products_current_products": {
+        "sales.catalog.products.current_products": {
             "label": "Produits en cours",
             "help": ""
         },
-        "products_products": {
+        "sales.catalog.products.products": {
             "label": "Tous les Produits",
             "help": ""
         },
-        "products_product_models": {
+        "sales.catalog.products.product_models": {
             "label": "Tous les Modèles",
             "help": ""
         },
-        "products_current_models": {
+        "sales.catalog.products.current_models": {
             "label": "Modèles en cours",
             "help": ""
         },
-        "products_product_categories": {
+        "sales.catalog.products.product_categories": {
             "label": "Catégories",
             "help": ""
         },
-        "products_product_families": {
+        "sales.catalog.products.product_families": {
             "label": "Familles",
             "help": ""
         },
-        "products_product_groups": {
+        "sales.catalog.products.product_groups": {
             "label": "Groupes",
             "help": ""
         },
-        "prices": {
+        "sales.catalog.prices": {
             "label": "Prix",
             "help": ""
         },
-        "prices_pricelists_active": {
+        "sales.catalog.prices.pricelists_active": {
             "label": "Listes actives",
             "help": ""
         },
-        "prices_pricelists_all": {
+        "sales.catalog.prices.pricelists_all": {
             "label": "Toutes les Listes",
             "help": ""
         },
-        "prices_prices_all": {
+        "sales.catalog.prices.prices_all": {
             "label": "Tous les Prix",
             "help": ""
         },
-        "prices_pricelists_categories": {
+        "sales.catalog.prices.pricelists_categories": {
             "label": "Catégories de listes",
             "help": ""
         },
-        "discounts": {
+        "sales.catalog.discounts": {
             "label": "Remises",
             "help": ""
         },
-        "discounts.discounts": {
+        "sales.catalog.discounts.discounts": {
             "label": "Remises",
             "help": ""
         },
-        "discounts.lists": {
+        "sales.catalog.discounts.lists": {
             "label": "Listes de remises",
             "help": ""
         },
-        "discounts.lists.categories": {
+        "sales.catalog.discounts.lists_categories": {
             "label": "Catégories de remises",
             "help": ""
         },
-        "autosale": {
+        "sales.catalog.autosales": {
             "label": "Produits auto",
             "help": ""
         },
-        "autosales_lists": {
+        "sales.catalog.autosales.lists": {
             "label": "Listes",
             "help": ""
         },
-        "autosales_categories": {
+        "sales.catalog.autosales.categories": {
             "label": "Catégories",
             "help": ""
         },
-        "seasons": {
+        "sales.catalog.seasons": {
             "label": "Saisons",
             "help": ""
         },
-        "seasons_type": {
+        "sales.catalog.seasons.type": {
             "label": "Types",
             "help": ""
         },
-        "seasons_category": {
+        "sales.catalog.seasons.category": {
             "label": "Categories",
             "help": ""
         },
-        "seasons_season": {
+        "sales.catalog.seasons.seasons": {
             "label": "Saisons",
             "help": ""
         },
-        "accounting": {
-            "label": "Comptabilité",
+        "sales.catalog.sojourns_planning": {
+            "label": "Séjours & Planning",
+            "help": ""
+        },
+        "sales.catalog.sojourns_planning.sojourn_types": {
+            "label": "Types de séjours",
+            "help": ""
+        },
+        "sales.catalog.sojourns_planning.time_slots": {
+            "label": "Tranches horaires",
+            "help": ""
+        },
+        "sales.settings": {
+            "label": "Paramètres",
+            "help": ""
+        },
+        "sales.settings.discounts": {
+            "label": "Réductions",
+            "help": ""
+        },
+        "sales.settings.discounts.discounts": {
+            "label": "Toutes les réductions",
+            "help": ""
+        },
+        "sales.settings.discounts.discounts_lists": {
+            "label": "Listes de réductions",
+            "help": ""
+        },
+        "sales.settings.discounts.discounts_lists.categories": {
+            "label": "Catégories de listes",
+            "help": ""
+        },
+        "sales.settings.autosales": {
+            "label": "Produits automatiques",
+            "help": ""
+        },
+        "sales.settings.autosales.autosales_lists": {
+            "label": "Listes de prod. auto",
+            "help": ""
+        },
+        "sales.settings.autosales.autosales_categories": {
+            "label": "Cétgories de prod. auto",
+            "help": ""
+        },
+        "sales.settings.seasons": {
+            "label": "Saisons",
+            "help": ""
+        },
+        "sales.settings.seasons.seasons_type": {
+            "label": "Types de saisons",
+            "help": ""
+        },
+        "sales.settings.seasons.seasons_category": {
+            "label": "Catégories",
+            "help": ""
+        },
+        "sales.settings.seasons.seasons": {
+            "label": "Toutes les Saisons",
+            "help": ""
+        },
+        "sales.settings.payments_plans": {
+            "label": "Plans de paiement",
+            "help": ""
+        },
+        "sales.settings.payments_deadlines": {
+            "label": "Echéances",
+            "help": ""
+        },
+        "sales.settings.payments_terms": {
+            "label": "Conditions de paiement",
+            "help": ""
+        },
+        "finance": {
+            "label": "Finances",
             "help": ""
         },
         "documents": {
@@ -194,47 +258,51 @@
             "label": "Documents",
             "help": ""
         },
-        "accounting.invoices": {
+        "finance.invoices": {
             "label": "Factures",
             "help": ""
         },
-        "accounting.payments": {
+        "finance.invoices.all": {
+            "label": "Toutes les factures",
+            "help": ""
+        },
+        "finance.payments": {
             "label": "Paiements",
             "help": ""
         },
-        "accounting.settings": {
-            "label": "Paramètres",
+        "finance.accounting": {
+            "label": "Compta",
             "help": ""
         },
-        "accounting.settings.vat_rules": {
+        "finance.accounting.vat_rules": {
             "label": "Règles de TVA",
             "help": ""
         },
-        "accounting.settings.accounting_rules": {
+        "finance.accounting.accounting_rules": {
             "label": "Règles Comptables",
             "help": ""
         },
-        "accounting.settings.account_chart": {
+        "finance.accounting.account_chart": {
             "label": "Plan comptable",
             "help": ""
         },
-        "accounting.payments.statements": {
+        "finance.payments.statements": {
             "label": "Extraits bancaires",
             "help": ""
         },
-        "accounting.payments.statements.all": {
+        "finance.payments.statements.all": {
             "label": "Tous les extraits",
             "help": ""
         },
-        "accounting.payments.settings.plans": {
+        "finance.payments.settings.plans": {
             "label": "Plans de paiement",
             "help": ""
         },
-        "accounting.payments.settings.deadlines": {
+        "finance.payments.settings.deadlines": {
             "label": "Échéances types",
             "help": ""
         },
-        "accounting.payments.settings.terms": {
+        "finance.payments.settings.terms": {
             "label": "Conditions de paiement",
             "help": ""
         },
@@ -294,10 +362,6 @@
             "label": "Configuration",
             "help": ""
         },
-        "settings.settings": {
-            "label": "Config applicative",
-            "help": ""
-        },
         "settings.settings.available_settings": {
             "label": "Liste des paramètres",
             "help": ""
@@ -311,7 +375,7 @@
             "help": ""
         },
         "settings.settings.available_settings.general": {
-            "label": "Paramètres Généraux",
+            "label": "Global",
             "help": ""
         },
         "settings.settings.available_settings.sale": {
@@ -322,56 +386,48 @@
             "label": "Finance",
             "help": ""
         },
+        "identities": {
+            "label": "Identités",
+            "help": ""
+        },
+        "identities.identities": {
+            "label": "Identités",
+            "help": ""
+        },
+        "identities.partners": {
+            "label": "Relations",
+            "help": ""
+        },
+        "identities.addresses": {
+            "label": "Addresses",
+            "help": ""
+        },
+        "identities.establishments": {
+            "label": "Etablissements",
+            "help": ""
+        },
+        "settings.calendar": {
+            "label": "Calendrier",
+            "help": ""
+        },
+        "settings.calendar.holidays": {
+            "label": "Ephémérides",
+            "help": ""
+        },
+        "settings.settings": {
+            "label": "Paramètres",
+            "help": ""
+        },
         "settings.settings.settings_values": {
             "label": "Valeurs des paramètres",
             "help": ""
         },
-        "settings.all_settings": {
-            "label": "Tous les paramèttres",
-            "help": ""
-        },
-        "settings.all_settings.identities": {
-            "label": "Identités",
-            "help": ""
-        },
-        "settings.all_settings.identities.identities": {
-            "label": "Identités",
-            "help": ""
-        },
-        "settings.all_settings.identities.partners": {
-            "label": "Partenaires",
-            "help": ""
-        },
-        "settings.all_settings.identities.addresses": {
-            "label": "Addresses",
-            "help": ""
-        },
-        "settings.all_settings.identities.establishments": {
-            "label": "Etablissements",
-            "help": ""
-        },
-        "settings.all_settings.calendar": {
-            "label": "Calendrier",
-            "help": ""
-        },
-        "settings.all_settings.calendar.holidays": {
-            "label": "Ephémérides",
-            "help": ""
-        },
-        "settings.all_settings.settings": {
-            "label": "Configuration",
-            "help": ""
-        },
-        "settings.all_settings.settings.settings_values": {
-            "label": "Valeurs des paramètres",
-            "help": ""
-        },
-        "settings.all_settings.settings.settings": {
+        "settings.settings.settings": {
             "label": "Tous les paramètres",
             "help": ""
         },
-        "settings.all_stats": {
-            "label": "Toutes les stats",
+        "settings.stats": {
+            "label": "Statistiques",
             "help": ""
         }
     }

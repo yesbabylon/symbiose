@@ -77,7 +77,7 @@
         },
         "list.default": {
             "name": "Éléments de composition",
-            "description": "Cette vue est destinée à afficher la liste des éléments de composition.",
+            "description": "Liste des éléments de composition.",
             "layout": {}
         }
     },

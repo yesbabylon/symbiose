@@ -1,7 +1,13 @@
 {
-	"description": "",
-	"view": {
-		"item.home": {"label": "Accueil", "help": ""},
-		"item.payments": {"label": "Import des extraits", "help": ""}		
-	}
+    "description": "",
+    "view": {
+        "item.home": {
+            "label": "Accueil",
+            "help": ""
+        },
+        "item.payments": {
+            "label": "Import des extraits",
+            "help": ""
+        }
+    }
 }

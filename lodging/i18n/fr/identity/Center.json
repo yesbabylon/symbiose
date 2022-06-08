@@ -108,7 +108,7 @@
         },
         "list.default": {
             "name": "Centres",
-            "description": "Cette vue est destinée à afficher la liste des centres.",
+            "description": "Liste des centres.",
             "layout": {}
         }
     },

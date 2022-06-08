@@ -24,8 +24,8 @@ class AgeRange extends Model {
             'name' => [
                 'type'              => 'string',
                 'required'          => true,
-                'unique'            => true,
-                'description'       => 'Name of age range.'
+                'description'       => 'Name of age range.',
+                'multilang'         => true
             ],
 
             'description' => [
@@ -74,6 +74,12 @@ class AgeRange extends Model {
                     }
                 ]
             ]
+        ];
+    }
+
+    public function getUnique() {
+        return [
+            ['age_from', 'age_to']
         ];
     }
 }

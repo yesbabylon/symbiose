@@ -26,7 +26,6 @@ class Identity extends \identity\Identity {
                 'default'           => 2,
                 'onupdate'          => 'identity\Identity::onupdateLangId'
             ]
-
         ];
     }
 

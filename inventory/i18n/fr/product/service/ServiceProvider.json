@@ -39,7 +39,7 @@
         },
         "list.default": {
             "name": "Liste des fournisseurs",
-            "description": "Cette vue est destinée à afficher la liste des fournisseurs.",
+            "description": "Liste des fournisseurs.",
             "layout": {}
             }
     }

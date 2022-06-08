@@ -30,14 +30,26 @@
         },
         "schedule_from": {
             "label": "Début",
-            "description": "Moment de la journée auquel la prestation est planifiée.",
+            "description": "Heure à laquelle la prestation est planifiée.",
             "help": ""
         },
         "schedule_to": {
             "label": "Fin",
-            "description": "Moment de la journée auquel la prestation est terminée.",
+            "description": "Heure à laquelle la prestation est terminée.",
             "help": ""
         },
+        "moment": {
+            "label": "Moment",
+            "description": "Moement de la journée.",
+            "selection": {
+                "": "",
+                "morning": "matin",
+                "lunchtime": "midi",
+                "afternoon": "après-midi",
+                "evening": "soir"
+            },
+            "help": ""
+        },        
         "qty": {
             "label": "Quantité",
             "description": "Nombre de consommations comptabilisées.",
@@ -76,8 +88,22 @@
 			"label": "Repas",
 			"description": "Le service est un repas.",
 			"help": ""
-		}
-
+		},
+		"is_accomodation": {
+			"label": "Logement",
+			"description": "Le service est un logement.",
+			"help": ""
+		},
+        "cleanup_type": {
+            "label": "Nettoyage",
+            "description": "Le type de nettoyage a réaliser.",
+            "selection": {
+                "none": "aucun",
+                "daily": "quotidien",
+                "full": "complet"
+            },
+            "help": ""
+        }
     },
     "view": {
         "form.default": {
@@ -87,7 +113,7 @@
         },
         "list.default": {
             "name": "Consommation",
-            "description": "Cette vue est destinée à afficher la liste des consommations.",
+            "description": "Liste des consommations.",
             "layout": {}
         }
     },

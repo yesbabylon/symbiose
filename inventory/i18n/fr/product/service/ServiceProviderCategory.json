@@ -29,7 +29,7 @@
         },
         "list.default": {
             "name": "Liste des catégories",
-            "description": "Cette vue est destinée à afficher la liste des catégories de fournisseurs.",
+            "description": "Liste des catégories de fournisseurs.",
             "layout": {}
             }
     }

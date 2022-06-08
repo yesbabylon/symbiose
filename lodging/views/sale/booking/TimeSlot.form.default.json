@@ -1,0 +1,66 @@
+{
+    "name": "Time slot",
+    "description": "Time slots are used for planning purpose in order to slice a day into several moments.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget":  {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"                                               
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "50%",
+                                                "value": ""
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "schedule_from",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "schedule_to",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
+                ]
+            }
+        ]
+    }
+}

@@ -83,7 +83,7 @@
         },
         "list.default": {
             "name": "Unités d'établissement",
-            "description": "Cette vue est destinée à afficher la liste de base des établissements existants.",
+            "description": "Liste de base des établissements existants.",
             "layout": {}
         }
     },

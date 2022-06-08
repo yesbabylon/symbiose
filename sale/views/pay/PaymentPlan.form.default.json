@@ -26,12 +26,15 @@
                                                 "type": "field",
                                                 "label": "Class Rate",
                                                 "value": "rate_class_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "limit": 10
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Booking Type",
-                                                "value": "booking_type",
+                                                "value": "booking_type_id",
                                                 "width": "50%"
                                             }
                                         ]

@@ -70,7 +70,7 @@
         },
         "list.default": {
             "name": "Relations",
-            "description": "Cette vue est destinée à afficher la liste de base des partenaires existants.",
+            "description": "Liste de base des partenaires existants.",
             "layout": {}
         },
         "form.customer": {
@@ -80,7 +80,7 @@
         },
         "list.customer": {
             "name": "Clients",
-            "description": "Cette vue est destinée à afficher la liste de base des clients existants.",
+            "description": "Liste de base des clients existants.",
             "layout": {}
         },
         "list.contact": {

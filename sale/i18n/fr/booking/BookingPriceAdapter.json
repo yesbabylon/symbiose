@@ -46,7 +46,7 @@
 		},
 		"list.default": {
 			"name": "Adaptateurs de prix de ligne de réservation",
-			"description": "Cette vue est destinée à afficher la liste des adaptateurs de prix des lignes de réservation.",
+			"description": "Liste des adaptateurs de prix des lignes de réservation.",
 			"layout": {}
 		}
 	},

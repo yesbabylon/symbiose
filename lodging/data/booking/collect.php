@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2021
-    Licensed under GNU LGPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use equal\orm\Domain;
 use lodging\sale\booking\BankStatementLine;
@@ -15,53 +15,12 @@ list($params, $providers) = announce([
     'description'   => 'Advanced search for Bookings: returns a collection of Booking according to extra paramaters.',
     'extends'       => 'core_model_collect',
     'params'        => [
-
-        // inherited params
         'entity' =>  [
             'description'   => 'Full name (including namespace) of the class to look into (e.g. \'core\\User\').',
             'type'          => 'string',
-            'required'      => true
+            'default'       => 'lodging\sale\booking\Booking'
         ],
-        'fields' =>  [
-            'description'   => 'Requested fields. If not specified, only \'id\' and \'name\' fields are returned.',
-            'type'          => 'array',
-            'default'       => ['id', 'name']
-        ],
-        'lang' =>  [
-            'description'   => 'Language in which multilang field have to be returned (2 letters ISO 639-1).',
-            'type'          => 'string',
-            'default'       => DEFAULT_LANG
-        ],
-        'domain' => [
-            'description'   => 'Criterias that results have to match (serie of conjunctions)',
-            'type'          => 'array',
-            'default'       => []
-        ],
-        'order' => [
-            'description'   => 'Column to use for sorting results.',
-            'type'          => 'string',
-            'default'       => 'id'
-        ],
-        'sort' => [
-            'description'   => 'The direction  (i.e. \'asc\' or \'desc\').',
-            'type'          => 'string',
-            'default'       => 'asc'
-        ],
-        'start' => [
-            'description'   => 'The row from which results have to start.',
-            'type'          => 'integer',
-            'default'       => 0
-        ],
-        'limit' => [
-            'description'   => 'The maximum number of results.',
-            'type'          => 'integer',
-            'min'           => 1,
-            'max'           => 500,
-            'default'       => 25
-        ],
-
-
-
+        
         'bank_account_iban' => [
             'type'          => 'string',
             'usage'         => 'uri/urn:iban',                
@@ -100,7 +59,6 @@ list($params, $providers) = announce([
  * @var \equal\orm\ObjectManager $orm
  */
 list($context, $orm) = [ $providers['context'], $providers['orm'] ];
-
 
 
 /*

@@ -18,9 +18,6 @@ class RateClass extends Model {
     }
 
     public static function getColumns() {
-        /**
-         */
-
         return [
             'name' => [
                 'type'              => 'string',

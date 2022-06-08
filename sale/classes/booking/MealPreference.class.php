@@ -29,6 +29,13 @@ class MealPreference extends Model {
                 'required'          => true
             ],
 
+            // #todo - there should be one line for each age_range defined in the group
+            'age_range_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\AgeRange',
+                'description'       => 'Age range assigned to the preference.'
+            ],
+
             'type' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -62,7 +69,8 @@ class MealPreference extends Model {
 
     public function getUnique() {
         return [
-            ['booking_line_group_id', 'type', 'pref']
+              // #todo - to adapt once the structure will be final
+        // ['booking_line_group_id', 'type', 'pref']
         ];
     }
 

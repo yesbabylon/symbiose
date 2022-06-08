@@ -21,7 +21,8 @@
     "error": {
         "errors": {
             "overbooking_detected": "Surbooking détecté",
-            "empty_booking": "Réservation vide"
+            "empty_booking": "Réservation vide",
+            "invalid_booking": "Résevation invalide"
         }
     }
 }

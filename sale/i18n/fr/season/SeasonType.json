@@ -22,7 +22,7 @@
         },
         "list.default": {
             "name": "Types de Saison",
-            "description": "Cette vue est destinée à afficher la liste des types de saison.",
+            "description": "Liste des types de saison.",
             "layout": {}
         }
     },

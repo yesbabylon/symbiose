@@ -4,15 +4,19 @@
       "groups": ["sale.default.user"]
    },
     "layout": {
-        "items": [
+        "items": [        
             {
-              "id": "item.home",
-              "label": "Home",
-              "description": "",
-              "icon": "menu_book",
-              "type": "entry",
-              "route": "/"
-            },
+                "id": "item.home",
+                "label": "Home",
+                "description": "",
+                "icon": "menu_book",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "sale\\pay\\Payment",
+                    "view": "dashboard.default"
+                }
+            },            
             {
               "id": "item.payments",
               "label": "Import bank statements",

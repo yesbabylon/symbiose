@@ -63,7 +63,7 @@
         },
         "list.default": {
             "name": "Liste de Prix",
-            "description": "Cette vue est destinée à afficher la liste des prix.",
+            "description": "Liste des prix.",
             "layout": {}
         }
     },

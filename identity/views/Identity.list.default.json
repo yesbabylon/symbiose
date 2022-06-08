@@ -6,12 +6,12 @@
             {
                 "type": "field",            
                 "value": "name",
-                "width": "5%"
+                "width": "25%"
             },
             {
                 "type": "field",            
                 "value": "type",
-                "width": "10%"
+                "width": "15%"
             },    
             {
                 "type": "field",            
@@ -26,7 +26,7 @@
             {
                 "type": "field",            
                 "value": "email",
-                "width": "15%"
+                "width": "20%"
             } 
         ]
     }

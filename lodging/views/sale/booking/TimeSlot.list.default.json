@@ -1,0 +1,36 @@
+{
+    "name": "Time slots",
+    "description": "List of time slots.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_from",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "schedule_to",
+                "width": "20%"
+            }
+        ]
+    }
+}

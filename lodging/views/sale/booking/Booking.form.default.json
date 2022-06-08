@@ -158,7 +158,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "value": "type_id",
                                                 "width": "33%",
                                                 "widget": {
                                                     "readonly": true
@@ -195,12 +195,39 @@
                                             {
                                                 "type": "field",
                                                 "value": "date_from",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date_to",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "time_from",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "time_to",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }

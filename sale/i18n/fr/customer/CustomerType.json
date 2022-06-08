@@ -27,7 +27,7 @@
 		},
 		"list.default": {
 			"name": "Liste de Types de client",
-			"description": "Cette vue est destinée à afficher la liste des types de client.",
+			"description": "Liste des types de client.",
 			"layout": {}
 		}
 	},

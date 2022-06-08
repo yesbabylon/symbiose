@@ -42,7 +42,7 @@
         },
         "list.default": {
             "name": "Période de la saison",
-            "description": "Cette vue est destinée à afficher la liste des périodes de la saison.",
+            "description": "Liste des périodes de la saison.",
             "layout": {}
         }
     },

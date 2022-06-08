@@ -27,7 +27,7 @@
 		},
 		"list.default": {
 			"name": "Compositions",
-			"description": "Cette vue est destinée à afficher la liste des compositions.",
+			"description": "Liste des compositions.",
 			"layout": {}
 		}
 	},

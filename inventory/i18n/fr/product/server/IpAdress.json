@@ -41,7 +41,7 @@
         },
         "list.default": {
             "name": "Liste des adresses Ips",
-            "description": "Cette vue est destinée à afficher la liste des adresses Ips.",
+            "description": "Liste des adresses Ips.",
             "layout": {}
             }
     }

@@ -249,11 +249,13 @@ foreach($payment_plans as $pid => $plan) {
     if($payment_plan < 0) {
         $payment_plan = $plan;
     }
+    // double match: keep plan and stop
+    if($payment_plan['rate_class_id'] == $rate_class_id && $payment_plan['booking_type'] == $booking['type'] ) {        
+        break;
+    }
+    // either rate_class or booking_type, keep plan (will be discarded if better match is found)
     if($payment_plan['rate_class_id'] == $rate_class_id || $payment_plan['booking_type'] == $booking['type'] ) {    
         $payment_plan = $plan;
-        if($payment_plan['rate_class_id'] == $rate_class_id && $payment_plan['booking_type'] == $booking['type'] ) {        
-            break;
-        }
     }
 }
 

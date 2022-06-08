@@ -27,7 +27,7 @@
 		},
 		"list.default": {
 			"name": "Options",
-			"description": "Cette vue est destinée à afficher la liste des option.",
+			"description": "Liste des option.",
 			"layout": {}
 		}
 	},

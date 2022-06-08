@@ -57,7 +57,7 @@
         },
         "list.default": {
             "name": "Lignes de contrat",
-            "description": "Cette vue est destinée à afficher la liste des lignes de contrat.",
+            "description": "Liste des lignes de contrat.",
             "layout": {}
         }
     },

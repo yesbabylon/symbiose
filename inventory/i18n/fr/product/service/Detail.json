@@ -39,7 +39,7 @@
         },
         "list.default": {
             "name": "Liste des détails",
-            "description": "Cette vue est destinée à afficher la liste des détails.",
+            "description": "Liste des détails.",
             "layout": {}
             }
     }

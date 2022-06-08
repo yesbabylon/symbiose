@@ -117,7 +117,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'foreign_object'    => 'lodging\sale\booking\BookingPriceAdapter',
                 'foreign_field'     => 'booking_line_id',
                 'description'       => 'Price adapters holding the manual discounts applied on the line.',
-                'onupdate'          => 'sale\booking\BookingLine::onchangePriceAdaptersIds'
+                'onupdate'          => 'sale\booking\BookingLine::onupdatePriceAdaptersIds'
             ]
 
         ];
@@ -190,7 +190,6 @@ class BookingLine extends \sale\booking\BookingLine {
      */
     public static function onupdateBookingLineGroupId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateBookingLineGroupId", QN_REPORT_DEBUG);
-
     }
 
     /**
@@ -212,7 +211,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
         // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)
         $lines = $om->read(__CLASS__, $oids, [
-            'product_id.product_model_id.booking_type',
+            'product_id.product_model_id.booking_type_id',
             'booking_id',
             'qty',
             'has_own_qty',
@@ -225,8 +224,8 @@ class BookingLine extends \sale\booking\BookingLine {
 
         foreach($lines as $lid => $line) {
             // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
-            if(isset($line['product_id.product_model_id.booking_type']) && $line['product_id.product_model_id.booking_type'] != 'general') {
-                $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type' => $line['product_id.product_model_id.booking_type']]);
+            if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 'general') {
+                $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
             }
             $qty = $line['qty'];
             if(!$line['has_own_qty']) {
@@ -601,7 +600,10 @@ class BookingLine extends \sale\booking\BookingLine {
                             else if($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
                                 $factor = max(1, $line['booking_line_group_id.nb_nights']);
                             }
-                            $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_pers'] * $factor]);
+
+                            $qty = $line['booking_line_group_id.nb_pers'] * $factor;
+                            $qty_vars = array_fill(0, $factor, 0);
+                            $om->write(__CLASS__, $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
                         }
                         else {
                             $qty_vars = json_decode($line['qty_vars']);
@@ -755,7 +757,9 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(__CLASS__, $oids, [
             'product_id', 'qty', 'qty_vars',
             'booking_id', 'booking_id.center_id',
-            'booking_line_group_id', 'booking_line_group_id.nb_pers', 'booking_line_group_id.nb_nights', 'booking_line_group_id.date_from',
+            'booking_line_group_id',
+            'booking_line_group_id.nb_pers', 'booking_line_group_id.nb_nights', 'booking_line_group_id.date_from', 'booking_line_group_id.time_from', 'booking_line_group_id.time_to',
+            'booking_line_group_id.age_range_assignments_ids', 'booking_line_group_id.meal_preferences_ids',
             'consumptions_ids',
             'product_id.product_model_id'
         ], $lang);
@@ -777,6 +781,7 @@ class BookingLine extends \sale\booking\BookingLine {
         ]);
 
         if($lines > 0 && count($lines)) {
+            $is_first = true;
             foreach($lines as $lid => $line) {
                 /*
                     Reset consumptions (updating consumptions_ids will trigger ondetach event)
@@ -907,6 +912,14 @@ class BookingLine extends \sale\booking\BookingLine {
                         $c_schedule_from = $schedule_from;
                         $c_schedule_to = $schedule_to;
 
+                        // first consumption has to match the checkin time of the sojourn (from group)
+                        if($is_first) {
+                            $is_first = false;
+                            $diff = $c_schedule_to - $schedule_from;
+                            $c_schedule_from = $line['booking_line_group_id.time_from'];
+                            $c_schedule_to = $c_schedule_from + $diff;
+                        }
+
                         // create as many consumptions as the number of rental units assigned to the line
                         if($is_rental_unit) {
                             // if day is not the arrival day
@@ -915,7 +928,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             }
 
                             if($i == $nb_nights) {                  // last day
-                                $c_schedule_to = $schedule_to;
+                                $c_schedule_to = $line['booking_line_group_id.time_to'];
                             }
                             else {
                                 $c_schedule_to = 24 * 3600;         // midnight next day
@@ -979,7 +992,7 @@ class BookingLine extends \sale\booking\BookingLine {
                         }
                         // create a single consumption with the quantity set accordingly (may vary from one day to another)
                         else {
-                            $consumptions[] = [
+                            $consumption = [
                                 'booking_id'            => $line['booking_id'],
                                 'center_id'             => $line['booking_id.center_id'],
                                 'booking_line_group_id' => $line['booking_line_group_id'],
@@ -993,6 +1006,24 @@ class BookingLine extends \sale\booking\BookingLine {
                                 'qty'                   => $days_nb_times[$i],
                                 'type'                  => 'book'
                             ];
+                            // si repas : mettre dans la description, la ventilation en tranches d'âges et en préférences alimentaires
+                            if($is_meal) {
+                                $description = '';
+                                $age_range_assignments = $om->read('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $line['booking_line_group_id.age_range_assignments_ids'], ['age_range_id.name','qty'], $lang);
+                                $meal_preferences = $om->read('sale\booking\MealPreference', $line['booking_line_group_id.meal_preferences_ids'], ['type','pref', 'qty'], $lang);
+                                foreach($age_range_assignments as $oid => $assignment) {
+                                    $description .= "<p>{$assignment['age_range_id.name']} : {$assignment['qty']}</p>";
+                                }
+                                foreach($meal_preferences as $oid => $preference) {
+                                    // #todo : use translation file
+                                    $type = ($preference['type'] == '3_courses')?'3 services':'2 services';
+                                    $pref = ($preference['pref'] == 'veggie')?'végétarien':(($preference['pref'] == 'allergen_free')?'sans allergène':'normal');
+
+                                    $description .= "<p>{$type} / {$pref} : {$preference['qty']}</p>";
+                                }                                
+                                $consumption['description'] = $description;
+                            }
+                            $consumptions[] = $consumption;
                         }
                     }
 

@@ -28,7 +28,7 @@
         },
         "list.default": {
             "name": "Liste des Étiquettes",
-            "description": "Cette vue est destinée à afficher la liste des étiquettes.",
+            "description": "Liste des étiquettes.",
             "layout": {}
             }
         }

@@ -66,7 +66,6 @@ $domain = new Domain($params['domain']);
 // filter results    
 foreach($rental_units as $index => $rental_unit) {
     if($domain->evaluate($rental_unit)) {
-        $rental_unit['name'] .= " ({$rental_unit['capacity']})";
         $result[] = $rental_unit;
     }
 }

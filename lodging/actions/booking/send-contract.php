@@ -104,16 +104,8 @@ $attachment = eQual::run('get', 'lodging_booking_print-contract', [
     'mode'      => $params['mode']
 ]);
 
-// #todo - store these terms in i18n
-$main_attachment_name = 'contract';
-switch(substr($params['lang'], 0, 2)) {
-    case 'fr': $main_attachment_name = 'contrat';
-        break;
-    case 'nl': $main_attachment_name = 'contract';
-        break;
-    case 'en': $main_attachment_name = 'contract';
-        break;
-}
+// get 'contract' term transaltion
+$main_attachment_name = Setting::get_value('sale', 'locale', 'terms.contract', 'contract', 0, $params['lang']);
 
 // generate signature
 $signature = '';

@@ -25,23 +25,19 @@ class PaymentPlan extends Model {
                 'description'       => "The rate class that applies to the payment plan."
             ],
 
-            'booking_type' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'general',          // general public
-                    'school_trip',      // school class
-                    'sport_camp',       // sport camp (special products)
-                    'ota'               // booking made on an Online Travel Agency (through channel manager)
-                ],
-                'description'       => 'Filter for selecting the plan according to booking type.',
-                'default'           => 'general'
+            'booking_type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\BookingType',
+                'description'       => "Filter for selecting the plan according to booking type.",
+                'default'           => 1                // default to 'general public'
             ],
 
             'payment_deadlines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'foreign_field'     => 'payment_plan_id',
-                'description'       => 'List of deadlines related to the plan, if any.'
+                'description'       => 'List of deadlines related to the plan, if any.',
+                'ondetach'          => 'delete'
             ]
 
         ];

@@ -41,7 +41,7 @@
         },
         "list.default": {
             "name": "Liste des Modèles",
-            "description": "Cette vue est destinée à afficher la liste des modèles.",
+            "description": "Liste des modèles.",
             "layout": {}
         }
     },

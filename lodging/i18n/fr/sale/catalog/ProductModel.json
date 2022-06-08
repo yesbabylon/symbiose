@@ -140,16 +140,9 @@
             },
             "help": ""
         },
-        "booking_type": {
+        "booking_type_id": {
             "label": "Type de réservation",
             "description": "Type à assigner aux réservations avec ce produit.",
-            "selection": {
-                "general": "tout public",
-                "school_trip": "séjour scolaire",
-                "sport_camp": "stage",
-                "ota": "OTA",
-                "to": "Tour Opérateur"
-            },
             "help": ""
         },
         "rental_unit_assignement": {
@@ -233,7 +226,7 @@
         },
         "list.default": {
             "name": "Modèle de produit",
-            "description": "Cette vue est destinée à afficher la liste des modèles de produits.",
+            "description": "Liste des modèles de produits.",
             "layout": {}
         }
     },

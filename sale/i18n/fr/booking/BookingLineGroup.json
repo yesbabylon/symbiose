@@ -57,7 +57,7 @@
         },
         "list.default": {
             "name": "Groupes de lignes de réservation",
-            "description": "Cette vue est destinée à afficher la liste des groupes de lignes de réservation.",
+            "description": "Liste des groupes de lignes de réservation.",
             "layout": {}
         }
     },

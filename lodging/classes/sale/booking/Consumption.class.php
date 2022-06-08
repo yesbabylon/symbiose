@@ -27,7 +27,8 @@ class Consumption extends \sale\booking\Consumption {
                 'foreign_object'    => 'lodging\sale\booking\Booking',
                 'description'       => 'The booking the comsumption relates to.',
                 'ondelete'          => 'cascade',        // delete consumption when parent booking is deleted
-                'readonly'          => true
+                'readonly'          => true,
+                'onupdate'          => 'onupdateBookingId'
             ],
 
             'booking_line_id' => [
@@ -60,14 +61,109 @@ class Consumption extends \sale\booking\Consumption {
                 'description'       => "The rental unit the consumption is assigned to.",
                 'readonly'          => true,
                 'onupdate'          => 'sale\booking\Consumption::onupdateRentalUnitId'
-            ]
+            ],
+
+            'customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => "The customer whom the consumption relates to (computed).",
+            ],
+
+            'time_slot_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\TimeSlot',
+                'description'       => 'Indicator of the moment of the day when the consumption occurs (from schedule).',
+            ],
+
+            'schedule_from' => [
+                'type'              => 'time',
+                'description'       => 'Moment of the day at which the events starts.',
+                'default'           => 0,
+                'onupdate'          => 'onupdateScheduleFrom'
+            ],
+
+            'schedule_to' => [
+                'type'              => 'time',
+                'description'       => 'Moment of the day at which the event stops, if applicable.',
+                'default'           => 24 * 3600,
+                'onupdate'          => 'onupdateScheduleTo'
+            ],
 
         ];
-    }    
-
+    }
 
     /**
+     * Hook invoked before object update for performing object-specific additional operations.
+     * Current values of the object can still be read for comparing with new values.
      * 
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  array                      $oids       List of objects identifiers.
+     * @param  array                      $values     Associative array holding the new values that have been assigned.
+     * @param  string                     $lang       Language in which multilang fields are being updated.
+     * @return void
+     */
+    public static function onupdate($om, $oids, $values, $lang) {
+        if(isset($values['qty'])) {
+            $consumptions = $om->read(__CLASS__, $oids, ['qty', 'booking_id', 'booking_line_id.product_id', 'booking_line_id.unit_price', 'booking_line_id.vat_rate', 'booking_line_id.qty_accounting_method'], $lang);
+            foreach($consumptions as $cid => $consumption) {
+                if($consumption['qty'] < $values['qty'] && in_array($consumption['booking_line_id.qty_accounting_method'], ['person', 'unit'])) {
+                    $diff = $values['qty'] - $consumption['qty'];
+                    // in is_extra group, add a new line with same product as targeted booking_line
+                    $groups_ids = $om->search('lodging\sale\booking\BookingLineGroup', [['booking_id', '=', $consumption['booking_id']], ['is_extra', '=', true]]);
+                    if($groups_ids > 0 && count($groups_ids)) {
+                        $group_id = reset(($groups_ids));
+                    }
+                    else {
+                        // create extra group
+                        $group_id = $om->create('lodging\sale\booking\BookingLineGroup', ['name' => 'Suppléments', 'booking_id' => $consumption['booking_id'], 'is_extra' => true]);
+                    }
+                    // create a new bookingLine
+                    $line_id = $om->create('lodging\sale\booking\BookingLine', ['booking_id' => $consumption['booking_id'], 'booking_line_group_id' => $group_id, 'product_id' => $consumption['booking_line_id.product_id']], $lang);
+                    // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
+                    $om->write('lodging\sale\booking\BookingLine', $line_id, ['qty' => $diff, 'unit_price' => $consumption['booking_line_id.unit_price'], 'vat_rate' => $consumption['booking_line_id.vat_rate']], $lang);
+                }
+            }
+        }
+    }
+
+    public static function onupdateBookingId($om, $oids, $values, $lang) {
+        $consumptions = $om->read(__CLASS__, $oids, ['booking_id.customer_id'], $lang);
+        if($consumptions) {
+            foreach($consumptions as $cid => $consumption) {
+                $om->write(__CLASS__, $cid, [ 'customer_id' => $consumption['booking_id.customer_id'] ], $lang);
+            }
+        }
+    }
+
+    /**
+     * Adapt time_slot_id according to new moment.
+     */
+    public static function onupdateScheduleFrom($om, $oids, $values, $lang) {
+        $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
+    }
+
+    public static function onupdateScheduleTo($om, $oids, $values, $lang) {
+        $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
+    }
+
+    public static function _updateTimeSlotId($om, $oids, $values, $lang) {
+        $consumptions = $om->read(__CLASS__, $oids, ['is_meal', 'is_accomodation', 'schedule_from', 'schedule_to']);
+        if($consumptions > 0) {
+            $moments_ids = $om->search('lodging\sale\booking\TimeSlot', [], ['order' => 'asc']);
+            $moments = $om->read('lodging\sale\booking\TimeSlot', $moments_ids, ['schedule_from', 'schedule_to']);
+            foreach($consumptions as $cid => $consumption) {
+                // retrieve timeslot according to schedule_from
+                foreach($moments as $mid => $moment) {
+                    if($consumption['schedule_from'] >= $moment['schedule_from'] && $consumption['schedule_to'] < $moment['schedule_to']) {
+                        $om->write(__CLASS__, $cid, ['time_slot_id' => $mid]);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
      * #memo - used in controllers
      * @param \equal\orm\ObjectManager $om
      */
@@ -177,9 +273,9 @@ class Consumption extends \sale\booking\Consumption {
 
 
     /**
-     * 
-     * #memo - used in controllers 
-     * 
+     *
+     * #memo - used in controllers
+     *
      * @param \equal\orm\ObjectManager $om  Instance of Object Manager service.
      * @param int $center_id    Identifier of the center for which to perform the lookup.
      * @param int $product_id   Identifier of the product for which we are looking for rental units.
@@ -292,7 +388,6 @@ class Consumption extends \sale\booking\Consumption {
             }
         }
 
-        return $rental_units_ids;
         return array_diff($rental_units_ids, $booked_rental_units_ids);
     }
 }

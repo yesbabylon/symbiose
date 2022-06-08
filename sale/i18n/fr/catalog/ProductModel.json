@@ -157,7 +157,7 @@
         },
         "list.default": {
             "name": "Modèles du produit",
-            "description": "Cette vue est destinée à afficher la liste des modèle du produit.",
+            "description": "Liste des modèle du produit.",
             "layout": {}
         }
     },

@@ -10,7 +10,7 @@ use equal\orm\Model;
 class Booking extends Model {
 
     public static function getLink() {
-        return "/booking/object.id";
+        return "/booking/#/booking/object.id";
     }
 
     public static function getColumns() {
@@ -118,7 +118,8 @@ class Booking extends Model {
                 'foreign_object'    => 'sale\booking\BookingLineGroup',
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Grouped lines of the booking.',
-                'onupdate'          => 'onupdateBookingLinesGroupsIds'                
+                'ondetach'          => 'delete',
+                'onupdate'          => 'onupdateBookingLinesGroupsIds'
             ],
 
             'consumptions_ids' => [
@@ -223,6 +224,21 @@ class Booking extends Model {
                 'default'           => time()
             ],
 
+            // time fields are based on dates from booking line groups
+            'time_from' => [
+                'type'              => 'computed',
+                'result_type'       => 'time',
+                'function'          => 'calcTimeFrom',
+                'store'             => true
+            ],
+
+            'time_to' => [
+                'type'              => 'computed',
+                'result_type'       => 'time',
+                'function'          => 'calcTimeTo',
+                'store'             => true
+            ],
+
             'nb_pers' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
@@ -286,10 +302,10 @@ class Booking extends Model {
 
         foreach($bookings as $bid => $booking) {
             $min_date = PHP_INT_MAX;
-            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_from']);
+            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_from', 'is_sojourn', 'is_event']);
             if($booking_line_groups > 0 && count($booking_line_groups)) {
                 foreach($booking_line_groups as $gid => $group) {
-                    if($group['date_from'] < $min_date) {
+                    if( ($group['is_sojourn']  || $group['is_event'] ) && $group['date_from'] < $min_date) {
                         $min_date = $group['date_from'];
                     }
                 }
@@ -307,14 +323,60 @@ class Booking extends Model {
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 $max_date = 0;
-                $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to']);
+                $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to', 'is_sojourn', 'is_event']);
                 if($booking_line_groups > 0 && count($booking_line_groups)) {
                     foreach($booking_line_groups as $gid => $group) {
-                        if($group['date_to'] > $max_date) {
+                        if( ($group['is_sojourn']  || $group['is_event'] ) && $group['date_to'] > $max_date) {
                             $max_date = $group['date_to'];
                         }
                     }
                     $result[$bid] = $max_date;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcTimeFrom($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+
+        foreach($bookings as $bid => $booking) {
+            $min_date = PHP_INT_MAX;
+            $time_from = 0;
+            $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_from', 'time_from', 'is_sojourn', 'is_event']);
+            if($booking_line_groups > 0 && count($booking_line_groups)) {
+                foreach($booking_line_groups as $gid => $group) {
+                    if(($group['is_sojourn']  || $group['is_event'] ) && $group['date_from'] < $min_date) {
+                        $min_date = $group['date_from'];
+                        $time_from = $group['time_from'];
+                    }
+                }
+                $result[$bid] = $time_from;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function calcTimeTo($om, $oids, $lang) {
+        $result = [];
+        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids']);
+
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $max_date = 0;
+                $time_to = 0;
+                $booking_line_groups = $om->read('sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['date_to', 'time_to', 'is_sojourn', 'is_event']);
+                if($booking_line_groups > 0 && count($booking_line_groups)) {
+                    foreach($booking_line_groups as $gid => $group) {
+                        if(($group['is_sojourn']  || $group['is_event'] ) && $group['date_to'] > $max_date) {
+                            $max_date = $group['date_to'];
+                            $time_to = $group['time_to'];
+                        }
+                    }
+                    $result[$bid] = $time_to;
                 }
             }
         }
