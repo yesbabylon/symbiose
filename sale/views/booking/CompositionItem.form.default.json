@@ -17,21 +17,19 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
+                                                "value": "firstname",
+                                                "width": "50%",
                                                 "widget": {
                                                     "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "firstname",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "lastname",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
                                             },
                                             {
                                                 "type": "field",

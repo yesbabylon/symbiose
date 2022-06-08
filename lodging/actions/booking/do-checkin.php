@@ -58,31 +58,42 @@ if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+
 /*
-    Check booking for due payments
+    Check booking consistency
 */
 
+$errors = [];
+
+// check age ranges assignments
+$data = eQual::run('do', 'lodging_booking_check-contract', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'unsigned_contract';
+}
+
+// check booking for due payments
 if(!$params['no_payment']) {
     $data = eQual::run('do', 'lodging_booking_check-payments', ['id' => $params['id']]);
 
     if(is_array($data) && count($data)) {
         // raise an exception with remaining due amount detected (an alert should have been issued in the check controller)
-        throw new Exception('due_amount', QN_ERROR_NOT_ALLOWED);
+        $errors[] = 'due_amount';
     }
 }
 
-
-/*
-    Check booking for composition
-*/
-
+// check booking for composition
 if(!$params['no_composition']) {
     $data = eQual::run('do', 'lodging_booking_check-composition', ['id' => $params['id']]);
 
     if(is_array($data) && count($data)) {
         // raise an exception with incomplete composition detected (an alert should have been issued in the check controller)
-        throw new Exception('incomplete_composition', QN_ERROR_NOT_ALLOWED);
+        $errors[] = 'incomplete_composition';
     }
+}
+
+// raise an exception with first error (alerts should have been issued in the check controllers)
+foreach($errors as $error) {
+    throw new Exception($error, QN_ERROR_INVALID_PARAM);
 }
 
 

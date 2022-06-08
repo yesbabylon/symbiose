@@ -32,7 +32,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "amount_share",
+                                                "value": "is_balance_invoice",
                                                 "width": "50%"
                                             },
                                             {
@@ -47,6 +47,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "amount_share",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "delay_count",
                                                 "width": "25%"
                                             }
@@ -54,7 +59,12 @@
                                     },
                                     {
                                         "width": "50%",
-                                        "items": [                                            
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Payment Plan",
@@ -62,7 +72,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]

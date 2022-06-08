@@ -224,6 +224,17 @@ $dispatch->cancel('lodging.booking.ready', 'lodging\sale\booking\Booking', $para
 
 
 /*
+    Pre-fill composition with customer details as first line (ease for single booking)
+*/
+try {
+    eQual::run('do', 'lodging_composition_generate', ['booking_id' => $params['id']]);
+}
+catch(Exception $e) {
+    // ignore errors at this stage
+}
+
+
+/*
     Genarate the payment plan (expected fundings of the booking)
 */
 
@@ -246,16 +257,16 @@ if(!$payment_plans) {
 $payment_plan = -1;
 // payment plan assignment is based on booking type and customer's rate class
 foreach($payment_plans as $pid => $plan) {
-    if($payment_plan < 0) {
-        $payment_plan = $plan;
-    }
     // double match: keep plan and stop
     if($payment_plan['rate_class_id'] == $rate_class_id && $payment_plan['booking_type'] == $booking['type'] ) {        
+        $payment_plan = $plan;
         break;
     }
     // either rate_class or booking_type, keep plan (will be discarded if better match is found)
     if($payment_plan['rate_class_id'] == $rate_class_id || $payment_plan['booking_type'] == $booking['type'] ) {    
-        $payment_plan = $plan;
+        if($payment_plan < 0) {
+            $payment_plan = $plan;
+        }
     }
 }
 

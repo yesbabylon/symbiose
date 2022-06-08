@@ -61,6 +61,7 @@ class Identity extends Model {
                     'PA' => 'Public administration'
                 ],
                 'default'           => 'I',
+                'readonly'          => true,                                // has to be changed through type_id
                 'description'       => 'Code of the type of identity.'
             ],
 

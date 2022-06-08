@@ -19,6 +19,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function getColumns() {
         return [
+            'is_sojourn' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the group spans over several nights and relate to accomodations?',
+                'default'           => false,
+                'onupdate'          => 'onupdateIsSojourn'
+            ],
+
             'has_pack' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the group relates to a pack?',
@@ -206,20 +213,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     /**
-     * Create the default age_range assignment for the new booking group.
+     * 
      */
     public static function oncreate($om, $oids, $values, $lang) {
 
-        foreach($oids as $oid) {
-            // add first age_range assignment 
-            $assignment = [
-                'age_range_id'          => 1,                       // adults
-                'booking_line_group_id' => $oid,
-                'booking_id'            => $values['booking_id'],
-                'qty'                   => $values['nb_pers']
-            ];
-            $om->create('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $assignment, $lang);
-        }        
     }
 
     public static function calcVatRate($om, $oids, $lang) {
@@ -362,6 +359,29 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         return $result;
     }
 
+    /**
+     * @param \equal\orm\ObjectManager  $om
+     */
+    public static function onupdateIsSojourn($om, $oids, $values, $lang) {
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_pers', 'is_sojourn', 'age_range_assignments_ids'], $lang);
+        if($groups > 0) {
+            foreach($groups as $gid => $group) {
+                // remove any previously set assignments
+                $om->remove('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $group['age_range_assignments_ids'], true);
+
+                if($group['is_sojourn']) {
+                    // create default age_range assignment 
+                    $assignment = [
+                        'age_range_id'          => 1,                       // adults
+                        'booking_line_group_id' => $gid,
+                        'booking_id'            => $group['booking_id'],
+                        'qty'                   => $group['nb_pers']
+                    ];
+                    $om->create('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $assignment, $lang);
+                }
+            }
+        }
+    }
 
     public static function onupdateHasPack($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeHasPack", QN_REPORT_DEBUG);
@@ -543,12 +563,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
-        // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids']);
+
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
         $bookings_ids = [];
         if($groups > 0) {
             $booking_lines_ids = [];
             foreach($groups as $group) {
+                if($group['is_sojourn'] && count($group['age_range_assignments_ids'])) {
+                    $age_range_assignment_id = reset($group['age_range_assignments_ids']);
+                    $om->write('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $age_range_assignment_id, ['qty' => $group['nb_pers']]);
+                }
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
                 $bookings_ids[] = $group['booking_id'];
             }

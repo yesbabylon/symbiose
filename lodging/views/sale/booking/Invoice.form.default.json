@@ -28,8 +28,7 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
-            "route": "/booking/object.booking_id/invoice/object.id",
-            "visible": ["status", "=", "invoice"]
+            "route": "/booking/object.booking_id/invoice/object.id"
         }
     ],    
     "layout": {

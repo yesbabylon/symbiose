@@ -51,6 +51,12 @@ class PaymentDeadline extends Model {
                 'description'       => "Deadlines are installment except for last one, the final invoice."
             ],
 
+            'is_balance_invoice' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'visible'           => ['type', '=', 'invoice']
+            ],
+
             'amount_share' => [
                 'type'              => 'float',
                 'usage'             => 'amount/percent',

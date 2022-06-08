@@ -25,6 +25,11 @@
             },
             "help": ""
         },
+        "type_id": {
+            "label": "Type",
+            "description": "",
+            "help": ""
+        },
         "legal_name": {
             "label": "Nom légal",
             "description": "Nom complet de l'Identité.",
