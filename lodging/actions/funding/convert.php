@@ -13,10 +13,10 @@ use sale\price\Price;
 use core\setting\Setting;
 
 list($params, $providers) = announce([
-    'description'   => "Convert given funding into an invoice.",
+    'description'   => "Convert given funding to an invoice.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the funding that has to be converted.',
+            'description'   => 'Identifier of the funding to be converted.',
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
@@ -108,9 +108,12 @@ if($downpayment_sku) {
     }
 }
 
-// find Price for product, based on current year
+/* 
+    Find Price for product, based on current year
+*/
 $vat_rate = 0.0;
 
+// find suitable price list
 $pricelist_category_id = $funding['booking_id']['center_id']['price_list_category_id'];
 $price_lists_ids = $orm->search('sale\price\PriceList', [
         ['price_list_category_id', '=', $pricelist_category_id],
