@@ -12,8 +12,9 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA réservations HTVA",
-                "operation": ["COUNT", "object.id"]
+                "label": "Checkin",
+                "operation": ["COUNT", "object.id"],
+                "domain": ["status", "=", "checkin"]
             }
         ]
     }

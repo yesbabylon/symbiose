@@ -16,7 +16,6 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'required'      => true
         ],
-
     ],
     'response'      => [
         'content-type'  => 'application/json',
