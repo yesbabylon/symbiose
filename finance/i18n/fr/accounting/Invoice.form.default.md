@@ -1,10 +1,14 @@
-# Invoice
+# Fiche d'édition d'une facture
 
-## Numéro de facture
+La fiche d'édition permet d'éditer certaines informations d'une facture.
+
+### Informations générales
+
+### Numéro de facture
 
 Le numéro de facture est calculé grâce à la règle comptable associé à la facture, ainsi que l'organisation à laquelle la facture est attachée, ainsi que l'année à laquelle elle est émise.
 
-## Statut
+### Statut
 
 Il existe deux statuts différents pour une facture, soit le statut: facture, lorsque celle-ci est définitive, mais également le statut: proforma.
 
