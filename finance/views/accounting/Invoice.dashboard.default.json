@@ -25,7 +25,7 @@
                                             },
                                             {
                                                 "id": "item.finance2",
-                                                "label": "Invoice",
+                                                "label": "Facture",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "finance\\accounting\\Invoice",
@@ -45,7 +45,7 @@
                                         "items": [
                                             {
                                                 "id": "item.fundings3",
-                                                "label": "Total Facturé",
+                                                "label": "Total facturé",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity":"finance\\accounting\\Invoice",
@@ -53,7 +53,7 @@
                                             },
                                             {
                                                 "id": "item.fundings4",
-                                                "label": "Notes de crédit",
+                                                "label": "Total notes de crédit",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "finance\\accounting\\Invoice",

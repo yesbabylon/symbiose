@@ -60,5 +60,4 @@ class Contact extends \identity\Partner {
     }
 
 
-
 }

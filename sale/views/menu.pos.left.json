@@ -74,14 +74,10 @@
             },
             {
               "id": "item.planning",
-
               "description": "",
-
-                "type": "entry",
-
-                "label": "Dashboard",
-                
-                "context": {
+              "type": "entry",
+              "label": "Dashboard",
+              "context": {
                     "entity": "sale\\pos\\CashdeskSession",
                     "view": "dashboard.default"
                 }

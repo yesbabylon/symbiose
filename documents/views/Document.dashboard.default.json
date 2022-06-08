@@ -53,7 +53,7 @@
                                             },
                                             {
                                                 "id": "item.documents4",
-                                                "label": "Categories",
+                                                "label": "Catégories de documents",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "documents\\DocumentCategory",
