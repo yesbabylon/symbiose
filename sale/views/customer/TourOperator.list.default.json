@@ -1,0 +1,56 @@
+{
+    "name": "Tour Operators",
+    "description": "List of Tour Operators.",
+    "domain": ["is_tour_operator", "=", true],
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "to_code",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Address",
+                "value": "address",
+                "width": "35%"
+            },
+            {
+                "type": "field",
+                "value": "email",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "phone",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "to_commission_rate",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Rate class",
+                "value": "rate_class_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Lang",
+                "value": "lang_id",
+                "width": "10%"
+            }
+        ]
+    }
+}

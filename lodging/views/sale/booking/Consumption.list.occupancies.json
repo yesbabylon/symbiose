@@ -1,0 +1,50 @@
+{
+    "name": "Occupancies planning",
+    "description": "List of forecasted occupancies (consumptions).",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "group_by": [{"field": "date", "operation": ["SUM", "object.qty"]}],
+    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_accomodation", "=", true] ],
+    "operations": {
+        "total": {
+            "qty": {
+                "operation": "SUM",
+                "usage": "numeric/integer",
+                "suffix": " nuitées"
+            }
+        }
+    },
+    "limit": 100,
+    "order": ["date"],
+    "controller": "lodging_consumption_collect",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "rental_unit_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "booking_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "width": "10%"
+            }
+        ]
+    }
+}
