@@ -38,6 +38,11 @@
             },
             {
                 "type": "field",
+                "value": "amount_share",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "due_amount",
                 "width": "10%"
             },

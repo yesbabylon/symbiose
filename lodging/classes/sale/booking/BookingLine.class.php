@@ -967,6 +967,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                         }
                                     }
                                     $consumption['type'] = 'link';
+                                    $children_ids = array_unique($children_ids);
                                     foreach($children_ids as $child_id) {
                                         $consumption['rental_unit_id'] = $child_id;
                                         $consumptions[] = $consumption;
@@ -982,6 +983,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                         }
                                         $unit_id = $parent_id;
                                     }
+                                    $parents_ids = array_unique($parents_ids);
                                     foreach($parents_ids as $parent_id) {
                                         $consumption['type'] = ($rental_units[$parent_id]['can_partial_rent'])?'part':'link';
                                         $consumption['rental_unit_id'] = $parent_id;

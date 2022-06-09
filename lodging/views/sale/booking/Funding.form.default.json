@@ -29,7 +29,8 @@
             "label": "Créer une facture",
             "description": "",
             "icon": "file_copy",
-            "route": "/booking/object.booking_id/funding/object.id/invoice"
+            "route": "/booking/object.booking_id/funding/object.id/invoice",
+            "visible": ["type", "=", "installment"]
         }
     ],    
     "layout": {

@@ -277,7 +277,7 @@ if($payment_plan < 0) {
 $funding_order = 0;
 foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
 
-    // special case: immediate creation of balance invoice
+    // special case: immediate creation of balance invoice with no funding
     if($deadline['type'] == 'invoice' && $deadline['is_balance_invoice']) {
         // create balance invoice and do not create funding (raise Exception on failure)
         eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
@@ -289,6 +289,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
         'booking_id'            => $params['id'],
         'center_office_id'      => $booking['center_id']['center_office_id'],
         'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
+        'amount_share'          => $deadline['amount_share'],
         'is_paid'               => false,
         'type'                  => 'installment',
         'order'                 => $funding_order

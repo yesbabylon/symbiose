@@ -82,8 +82,8 @@ class Consumption extends Model {
                 'selection'         => [
                     'ooo',           // out-of-order (repair & maintenance)
                     'book',          // consumption relates to a booking
-                    'link',          // rental unit is a child of another booked unit or cannot be partially booked
-                    'part'           // rental unit is the parent of another booked unit and can partially booked
+                    'link',          // rental unit is a child of another booked unit or cannot be partially booked (i.e. parent unit)
+                    'part'           // rental unit is the parent of another booked unit and can partially booked (non-blocking: only for info on the planning)
                 ],
                 'description'       => 'The reason the unit is reserved.',
                 'default'           => 'book',

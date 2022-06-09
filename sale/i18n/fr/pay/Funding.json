@@ -27,6 +27,11 @@
             "description": "Montant payé par le client.",
             "help": ""
         },
+        "amount_share": {
+            "label": "Part",
+            "description": "Part du financement sur le prix total.",
+            "help": ""
+        },
         "due_date": {
             "label": "Date d'échéance",
             "description": "Date limite avant laquelle le financement est attendu.",

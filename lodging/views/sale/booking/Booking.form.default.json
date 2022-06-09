@@ -22,6 +22,14 @@
             "visible": ["status", "=", "quote"]
         },
         {
+            "id": "action.option-confirm",
+            "label": "Confirm Booking",
+            "description": "Rental units will be reserved and the invoicing plan will be set up.",
+            "controller": "lodging_booking_do-option-confirm",
+            "confirm": true,
+            "visible": ["status", "=", "quote"]
+        },
+        {
             "id": "action.confirm",
             "label": "Confirm Booking",
             "description": "Rental units will be reserved and the invoicing plan will be set up.",
