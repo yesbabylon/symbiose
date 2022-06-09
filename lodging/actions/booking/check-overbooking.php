@@ -70,7 +70,7 @@ if(count($booking['booking_lines_ids'])) {
         if(!isset($consumptions_map[$booking_line_group_id])) {
             $consumptions_map[$booking_line_group_id] = [];
         }
-        
+
         if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
             $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
         }
@@ -97,10 +97,11 @@ foreach($consumptions_map as $booking_line_group_id => $rental_units) {
         $date_to = $last['date'];
 
         // look for other consumptionS (not in booking_line_group_id) assigned to the same rental_unit with date >= date_from AND date <= date_to
-        $colliding_ids = Consumption::search([ 
-            ['booking_line_group_id', '<>', $booking_line_group_id], 
-            ['rental_unit_id', '=', $rental_unit_id], 
-            ['date', '>=', $date_from], 
+        $colliding_ids = Consumption::search([
+            ['booking_line_group_id', '<>', $booking_line_group_id],
+            ['rental_unit_id', '=', $rental_unit_id],
+            ['type', '<>', 'part'],
+            ['date', '>=', $date_from],
             ['date', '<=', $date_to]
         ])->ids();
 

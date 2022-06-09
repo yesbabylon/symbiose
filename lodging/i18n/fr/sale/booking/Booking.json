@@ -47,6 +47,10 @@
                     "label": "Placer une option",
                     "description": "Les unités locatives seront réservées pendant une courte période. Aucun paiement ne sera demandé."
                 },
+                "action.option-confirm": {
+                    "label": "Confirmer",
+                    "description": "Les unités locatives seront réservées, un contrat sera créé et une facture proforma sera éditée."
+                },                
                 "action.confirm": {
                     "label": "Confirmer",
                     "description": "Les unités locatives seront réservées, un contrat sera créé et un échéancier de paiement sera généré."

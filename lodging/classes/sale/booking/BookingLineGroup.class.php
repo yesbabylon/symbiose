@@ -213,7 +213,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     /**
-     * 
+     *
      */
     public static function oncreate($om, $oids, $values, $lang) {
 
@@ -370,7 +370,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->remove('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $group['age_range_assignments_ids'], true);
 
                 if($group['is_sojourn']) {
-                    // create default age_range assignment 
+                    // create default age_range assignment
                     $assignment = [
                         'age_range_id'          => 1,                       // adults
                         'booking_line_group_id' => $gid,
@@ -479,7 +479,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null, 'time_from' => null]);
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
                 }
             }
         }
@@ -502,7 +502,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn'] || $group['is_event']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null, 'time_to' => null]);
+                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
                 }
             }
         }
@@ -512,7 +512,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
 
         // update parent booking
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
         if($groups > 0) {
             foreach($groups as $group) {
                 if($group['is_sojourn'] || $group['is_event']) {
@@ -527,7 +527,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
 
         // update parent booking
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
         if($groups > 0) {
             foreach($groups as $group) {
                 if($group['is_sojourn'] || $group['is_event']) {
@@ -540,6 +540,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
+        foreach($groups as $gid => $group) {
+            if($group['is_sojourn'] || $group['is_event']) {
+                // force parent booking to recompute time_from
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null, 'time_to' => null]);
+            }
+        }
     }
 
     public static function onupdateRateClassId($om, $oids, $values, $lang) {
@@ -569,7 +576,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         if($groups > 0) {
             $booking_lines_ids = [];
             foreach($groups as $group) {
-                if($group['is_sojourn'] && count($group['age_range_assignments_ids'])) {
+                if($group['is_sojourn'] && count($group['age_range_assignments_ids']) == 1) {
                     $age_range_assignment_id = reset($group['age_range_assignments_ids']);
                     $om->write('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $age_range_assignment_id, ['qty' => $group['nb_pers']]);
                 }

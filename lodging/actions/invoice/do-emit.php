@@ -51,6 +51,7 @@ try {
         'due_amount'            => $invoice['price'],
         'is_paid'               => false,
         'type'                  => 'invoice',
+        'amount_share'          => 1.0,
         'order'                 => 10,
         'issue_date'            => time(),
         'due_date'              => $invoice['due_date']
@@ -64,14 +65,25 @@ catch(Exception $e) {
 
 // update booking status
 
-if($invoice['price'] < 0) {
-    Booking::id($invoice['booking_id'])->update(['status' => 'credit_balance']);
+// read booking object
+$booking = Booking::id($invoice['booking_id'])
+                  ->read(['id', 'name', 'status'])
+                  ->first();
+                  
+if(!$booking) {
+    throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
-else if($invoice['price'] > 0) {
-    Booking::id($invoice['booking_id'])->update(['status' => 'debit_balance']);
-}
-else {
-    Booking::id($invoice['booking_id'])->update(['status' => 'balanced']);
+
+if($booking['status'] == 'invoiced') {
+    if($invoice['price'] < 0) {
+        Booking::id($invoice['booking_id'])->update(['status' => 'credit_balance']);
+    }
+    else if($invoice['price'] > 0) {
+        Booking::id($invoice['booking_id'])->update(['status' => 'debit_balance']);
+    }
+    else {
+        Booking::id($invoice['booking_id'])->update(['status' => 'balanced']);
+    }
 }
 
 $context->httpResponse()

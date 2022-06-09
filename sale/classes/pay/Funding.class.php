@@ -28,7 +28,10 @@ class Funding extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['installment','invoice'],
+                'selection'         => [
+                    'installment',
+                    'invoice'
+                ],
                 'description'       => "Deadlines are installment except for last one: final invoice."
             ],
 
@@ -64,12 +67,13 @@ class Funding extends Model {
                 'function'          => 'calcIsPaid',
                 'store'             => true,
             ],
-            'is_balance_invoice' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'visible'           => ['type', '=', 'invoice']
+
+            'amount_share' => [
+                'type'              => 'float',
+                'usage'             => 'amount/percent',
+                'description'       => "Share of the payment over the total due amount."
             ],
-            
+
             'payment_deadline_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
