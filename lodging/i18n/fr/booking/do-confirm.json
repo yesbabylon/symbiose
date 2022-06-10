@@ -12,7 +12,7 @@
         "errors": {
             "unknown_booking": "Surbooking détecté",
             "incompatible_status": "Action impossible pour ce statut de réservation.",
-            "unconfirmed_price": "Le contrat ne peut être généré avec un prix non-confirmé."            
+            "unconfirmed_price": "Le contrat ne peut être généré avec un prix non-confirmé."
         }
     }
 }

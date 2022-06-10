@@ -567,7 +567,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      * Update the quantity according to parent group (pack_id, nb_pers, nb_nights) and variation array.
-     * This method is triggered on fields update from BookingLineGroup.
+     * This method is triggered on fields update from BookingLineGroup or onupdateQtyVars from BookingLine.
      *
      */
     public static function _updateQty($om, $oids, $values, $lang) {
@@ -714,16 +714,31 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
 
         /*
-            get in-memory list of consumptions for all lines
+            Reset consumptions (updating consumptions_ids will trigger ondetach event)
         */
+
+        $lines = $om->read(__CLASS__, $oids, ['consumptions_ids'], $lang);
+    
+        foreach($lines as $lid => $line) {
+            $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
+        }
+
+
+
+        /* 
+            Get in-memory list of consumptions for all lines.
+        */
+        
         $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, [], $lang);
 
+
         /*
-            create consumptions objects
+            Create consumptions objects.
         */
 
         // map of consumptions ids for each booking_line_id
         $lines_consumptions_ids = [];
+        $consumptions_ids = [];
         foreach($consumptions as $consumption) {
 
             $cid = $om->create('lodging\sale\booking\Consumption', $consumption, $lang);
@@ -733,13 +748,16 @@ class BookingLine extends \sale\booking\BookingLine {
                     $lines_consumptions_ids[$booking_line_id] = [];
                 }
                 $lines_consumptions_ids[$booking_line_id][] = $cid;
+                $consumptions_ids[] = $cid;
             }
         }
 
         foreach($lines_consumptions_ids as $lid => $consumptions_ids) {
-            $om->write(__CLASS__, $lid, ['consumptions_ids' => $consumptions_ids ]);
+            // $om->write(__CLASS__, $lid, ['consumptions_ids' => $consumptions_ids ]);
         }
 
+        // force immediate computing of computed fields
+        $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['id', 'name', 'is_accomodation', 'cleanup_type']);
     }
 
 
@@ -783,10 +801,6 @@ class BookingLine extends \sale\booking\BookingLine {
         if($lines > 0 && count($lines)) {
             $is_first = true;
             foreach($lines as $lid => $line) {
-                /*
-                    Reset consumptions (updating consumptions_ids will trigger ondetach event)
-                */
-                $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
 
                 if($line['qty'] <= 0) continue;
 
@@ -888,7 +902,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
                         // fetch 2 levels of rental units identifiers
                         for($i = 0; $i < 2; ++$i) {
-                            $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids']);
+                            $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
                             if($units > 0) {
                                 foreach($units as $uid => $unit) {
                                     if($unit['parent_id'] > 0) {
@@ -966,12 +980,13 @@ class BookingLine extends \sale\booking\BookingLine {
                                             }
                                         }
                                     }
-                                    $consumption['type'] = 'link';
-                                    $children_ids = array_unique($children_ids);
+                                    
                                     foreach($children_ids as $child_id) {
+                                        $consumption['type'] = 'link';
                                         $consumption['rental_unit_id'] = $child_id;
                                         $consumptions[] = $consumption;
                                     }
+
                                     // 2) loop through parents : if a parent has 'can_partial_rent', it is partially blocked as 'part', otherwise fully blocked as 'link'
                                     $parents_ids = [];
                                     $unit_id = $rental_unit_id;
@@ -983,7 +998,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                         }
                                         $unit_id = $parent_id;
                                     }
-                                    $parents_ids = array_unique($parents_ids);
+
                                     foreach($parents_ids as $parent_id) {
                                         $consumption['type'] = ($rental_units[$parent_id]['can_partial_rent'])?'part':'link';
                                         $consumption['rental_unit_id'] = $parent_id;
@@ -1014,14 +1029,14 @@ class BookingLine extends \sale\booking\BookingLine {
                                 $age_range_assignments = $om->read('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $line['booking_line_group_id.age_range_assignments_ids'], ['age_range_id.name','qty'], $lang);
                                 $meal_preferences = $om->read('sale\booking\MealPreference', $line['booking_line_group_id.meal_preferences_ids'], ['type','pref', 'qty'], $lang);
                                 foreach($age_range_assignments as $oid => $assignment) {
-                                    $description .= "<p>{$assignment['age_range_id.name']} : {$assignment['qty']}</p>";
+                                    $description .= "<p>{$assignment['age_range_id.name']} : {$assignment['qty']} ; </p>";
                                 }
                                 foreach($meal_preferences as $oid => $preference) {
                                     // #todo : use translation file
                                     $type = ($preference['type'] == '3_courses')?'3 services':'2 services';
                                     $pref = ($preference['pref'] == 'veggie')?'végétarien':(($preference['pref'] == 'allergen_free')?'sans allergène':'normal');
 
-                                    $description .= "<p>{$type} / {$pref} : {$preference['qty']}</p>";
+                                    $description .= "<p>{$type} / {$pref} : {$preference['qty']} ; </p>";
                                 }                                
                                 $consumption['description'] = $description;
                             }

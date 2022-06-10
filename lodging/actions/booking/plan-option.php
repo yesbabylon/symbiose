@@ -81,7 +81,7 @@ list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm
 
 // retrieve rental unit and related center
 $rental_unit = RentalUnit::id($params['rental_unit_id'])
-                  ->read(['id', 'name', 'capacity', 'center_id' => ['id', 'name', 'sojourn_type_id']])
+                  ->read(['id', 'name', 'capacity', 'center_id' => ['id', 'name', 'sojourn_type_id', 'product_groups_ids']])
                   ->first();
                   
 if(!$rental_unit) {
@@ -105,7 +105,18 @@ if($customer) {
 $product_models_ids = ProductModel::search([ ['can_sell', '=', true], ['is_rental_unit', '=', true], ['rental_unit_id', '=', $params['rental_unit_id']] ])->ids();
 
 if(!count($product_models_ids)) {
-    throw new Exception("no_product_match", QN_ERROR_UNKNOWN_OBJECT);
+    // no direct product found : look for an active product for given center relating to is_accomodation
+    if($rental_unit['center_id']['product_groups_ids']) {
+        $domain = [
+            ["groups_ids", "contains", $rental_unit['center_id']['product_groups_ids'][0]],
+            ['can_sell', '=', true], 
+            ['is_accomodation', '=', true]
+        ];
+        $product_models_ids = ProductModel::search($domain)->ids();                
+    }
+    if(!count($product_models_ids)) {
+        throw new Exception("no_product_match", QN_ERROR_UNKNOWN_OBJECT);
+    }
 }
 
 $products_ids = Product::search([ ['can_sell', '=', true], ['product_model_id', 'in', $product_models_ids] ])->ids();

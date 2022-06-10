@@ -54,7 +54,8 @@ foreach($result as $rental_unit_id => $dates) {
 $consumptions = Consumption::ids($consumptions_ids)
                 ->read([
                     'date','schedule_from','schedule_to', 'is_rental_unit', 'qty', 'type',
-                    'booking_id' => ['id', 'name', 'status', 'payment_status', 'customer_id' => ['id', 'name']],
+                    'customer_id' => ['id', 'name'],
+                    'booking_id' => ['id', 'name', 'status', 'description', 'payment_status'],
                     'rental_unit_id' => ['id', 'name']
                 ])
                 ->adapt('txt')
