@@ -124,12 +124,10 @@ class Consumption extends Model {
             ],
 
             'is_accomodation' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
+                'type'              => 'boolean',
                 'description'       => 'Does the consumption relate to an accomodation (from rental unit)?',
-                'function'          => 'calcIsAccomodation',
                 'visible'           => ['is_rental_unit', '=', true],
-                'store'             => true
+                'default'           => false
             ],
 
             'qty' => [
@@ -139,16 +137,14 @@ class Consumption extends Model {
             ],
 
             'cleanup_type' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
+                'type'              => 'string',
                 'selection'         => [
                     'none',                    
                     'daily',
                     'full'
                 ],
-                'function'          => 'calcCleanupType',
-                'store'             => true,
-                'visbile'           => ['is_accomodation', '=', true]
+                'visbile'           => ['is_accomodation', '=', true],
+                'default'           => 'none'
             ]
 
         ];
@@ -168,52 +164,29 @@ class Consumption extends Model {
         return $result;
     }
 
-    public static function calcIsAccomodation($om, $oids, $lang) {
-        $result = [];
-        $consumptions = $om->read(get_called_class(), $oids, ['is_rental_unit', 'rental_unit_id.is_accomodation']);
-        if($consumptions) {
-            foreach($consumptions as $cid => $consumption) {
-                $result[$cid] = $consumption['rental_unit_id.is_accomodation'];
-            }
-        }
-        return $result;
-    }
-
-    public static function calcCleanupType($om, $oids, $lang) {
-        $result = [];
-        $consumptions = $om->read(get_called_class(), $oids, ['is_accomodation', 'date', 'booking_line_group_id.date_from', 'booking_line_group_id.date_to']);
-
-        foreach($consumptions as $cid => $consumption) {
-            if(!$consumption['is_accomodation']) {
-                    continue;
-            }
-            if($consumption['booking_line_group_id.date_from'] == $consumption['date']) {    
-                // no cleanup the day of arrival
-                $result[$cid] = 'none';
-                continue;
-            }
-            if($consumption['booking_line_group_id.date_to'] == $consumption['date']) {
-                $result[$cid] = 'full';
-            }
-            else {
-                $result[$cid] = 'daily';
-            }
-        }
-        return $result;
-    }
 
     public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
-        $consumptions = $om->read(__CLASS__, $oids, ['rental_unit_id'], $lang);
+        $consumptions = $om->read(__CLASS__, $oids, ['rental_unit_id', 'rental_unit_id.is_accomodation', 'date', 'booking_line_group_id.date_from', 'booking_line_group_id.date_to'], $lang);
+
         if($consumptions > 0) {
-            $updated_consumptions_ids = [];
             foreach($consumptions as $cid => $consumption) {
                 if($consumption['rental_unit_id']) {
-                    $updated_consumptions_ids[] = $cid;
-                    $om->write(__CLASS__, $oids, ['is_accomodation' => null, 'is_rental_unit' => true]);
+                    $cleanup_type = 'none';
+                    if($consumption['rental_unit_id.is_accomodation']) {
+                        $cleanup_type = 'daily';
+                        if($consumption['booking_line_group_id.date_from'] == $consumption['date']) {    
+                            // no cleanup the day of arrival
+                            $cleanup_type = 'none';
+                            continue;
+                        }
+                        if($consumption['booking_line_group_id.date_to'] == $consumption['date']) {
+                            // full cleanup on checkout day
+                            $cleanup_type = 'full';
+                        }
+                    }
+                    $om->write(__CLASS__, $oids, ['is_rental_unit' => true, 'is_accomodation' => $consumption['rental_unit_id.is_accomodation'], 'cleanup_type' => $cleanup_type]);
                 }
             }
-            // force immediate recomputing
-            $om->read(__CLASS__, $updated_consumptions_ids, ['is_accomodation'], $lang);
         }
     }
 }

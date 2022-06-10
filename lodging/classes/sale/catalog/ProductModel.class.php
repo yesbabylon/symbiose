@@ -40,11 +40,8 @@ class ProductModel extends \sale\catalog\ProductModel {
             ],
 
             'is_accomodation' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
+                'type'              => 'boolean',
                 'description'       => 'Model relates to a rental unit that is an accomodation.',
-                'function'          => 'calcIsAccomodation',
-                'store'             => true,
                 'visible'           => [ ['type', '=', 'service'], ['is_rental_unit', '=', true] ]                 
             ],
 
@@ -127,29 +124,16 @@ class ProductModel extends \sale\catalog\ProductModel {
         ];
     }
 
-    public static function calcIsAccomodation($om, $oids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:calcIsAccomodation", QN_REPORT_DEBUG);
-
-        $result = [];
-        $models = $om->read(__CLASS__, $oids, ['rental_unit_id.is_accomodation']);
-        if($models > 0) {
-            foreach($models as $oid => $model) {
-                $result[$oid] = $model['rental_unit_id.is_accomodation'];
-            }
-        }
-        return $result;
-    }
-
     /**
      * Assigns the related rental unity capacity as own capacity.
      */
     public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onupdateRentalUnitId", QN_REPORT_DEBUG);
         
-        $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity'], $lang);
+        $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity', 'rental_unit_id.is_accomodation'], $lang);
 
         foreach($models as $mid => $model) {
-            $om->write(get_called_class(), $mid, ['capacity' => $model['rental_unit_id.capacity']]);
+            $om->write(get_called_class(), $mid, ['capacity' => $model['rental_unit_id.capacity'], 'is_accomodation' => $model['rental_unit_id.is_accomodation']]);
         }
     }
 }
