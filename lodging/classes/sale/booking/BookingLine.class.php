@@ -224,7 +224,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
         foreach($lines as $lid => $line) {
             // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
-            if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 'general') {
+            if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 1) {
                 $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
             }
             $qty = $line['qty'];

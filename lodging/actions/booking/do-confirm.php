@@ -89,9 +89,6 @@ if($booking['status'] != 'option') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
-if($booking['is_price_tbc']) {
-    throw new Exception("unconfirmed_price", QN_ERROR_INVALID_PARAM);
-}
 
 // remove any existing CRON tasks for reverting the booking to quote
 $cron->cancel("booking.option.deprecation.{$params['id']}");
@@ -101,120 +98,126 @@ $cron->cancel("booking.option.deprecation.{$params['id']}");
     Generate the contract
 */
 
-// remember all booking lines involved
-$booking_lines_ids = [];
 
-// #memo - generated contracts are kept for history (we never delete them)
-// mark existing contracts as expired    
-Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
+// #memo we allow setting a booking to 'confirmed' even if is has is_price_tbc set to true
+// BUT contracts will not be generated for these
+if(!$booking['is_price_tbc']) {
+    // remember all booking lines involved
+    $booking_lines_ids = [];
+
+    // #memo - generated contracts are kept for history (we never delete them)
+    // mark existing contracts as expired    
+    Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
 
 
-// create contract and contract lines
-$contract = Contract::create([
-        'date'          => time(),
-        'booking_id'    => $params['id'],
-        'status'        => 'pending',
-        'valid_until'   => time() + (30 * 86400),
-        'customer_id'   => $booking['customer_id']['id']
-    ])
-    ->first();
+    // create contract and contract lines
+    $contract = Contract::create([
+            'date'          => time(),
+            'booking_id'    => $params['id'],
+            'status'        => 'pending',
+            'valid_until'   => time() + (30 * 86400),
+            'customer_id'   => $booking['customer_id']['id']
+        ])
+        ->first();
 
-foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
-    $group_label = $group['name'].' : ';
+    foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
+        $group_label = $group['name'].' : ';
 
-    if($group['date_from'] == $group['date_to']) {
-        $group_label .= date('d/m/y', $group['date_from']);
-    }
-    else {
-        $group_label .= date('d/m/y', $group['date_from']).' - '.date('d/m/y', $group['date_to']);
-    }
-
-    $group_label .= ' - '.$group['nb_pers'].' p.';
-
-    if($group['has_pack'] && $group['is_locked'] ) {
-        // create a contract group based on the booking group
-
-        $contract_line_group = ContractLineGroup::create([
-            'name'              => $group_label,
-            'is_pack'           => true,
-            'contract_id'       => $contract['id'],
-            'fare_benefit'      => $group['fare_benefit'],
-            'rate_class_id'     => $group['rate_class_id']
-        ])->first();
-
-        // create a line based on the group
-        $c_line = [
-            'contract_id'               => $contract['id'],
-            'contract_line_group_id'    => $contract_line_group['id'],
-            'product_id'                => $group['pack_id']['id'],
-            'vat_rate'                  => $group['vat_rate'],
-            'unit_price'                => $group['unit_price'],
-            'qty'                       => $group['qty']
-        ];
-
-        $contract_line = ContractLine::create($c_line)->first();
-        ContractLineGroup::ids($contract_line_group['id'])->update([ 'contract_line_id' => $contract_line['id'] ]);
-    }
-    else {
-        $contract_line_group = ContractLineGroup::create([
-            'name'              => $group_label,
-            'is_pack'           => false,
-            'contract_id'       => $contract['id'],
-            'fare_benefit'      => $group['fare_benefit'],
-            'rate_class_id'     => $group['rate_class_id']
-        ])->first();
-    }
-
-    // create as many lines as the group booking_lines
-    foreach($group['booking_lines_ids'] as $lid => $line) {
-        $booking_lines_ids[] = $lid;
-
-        $c_line = [
-            'contract_id'               => $contract['id'],
-            'contract_line_group_id'    => $contract_line_group['id'],
-            'product_id'                => $line['product_id'],
-            'vat_rate'                  => $line['vat_rate'],
-            'unit_price'                => $line['unit_price'],
-            'qty'                       => $line['qty']
-        ];
-
-        $disc_value = 0;
-        $disc_percent = 0;
-        $free_qty = 0;
-        foreach($line['price_adapters_ids'] as $aid => $adata) {
-            if($adata['is_manual_discount']) {
-                if($adata['type'] == 'amount') {
-                    $disc_value += $adata['value'];
-                }
-                else if($adata['type'] == 'percent') {
-                    $disc_percent += $adata['value'];
-                }
-                else if($adata['type'] == 'freebie') {
-                    $free_qty += $adata['value'];
-                }
-            }
-            // auto granted freebies are displayed as manual discounts
-            else {
-                if($adata['type'] == 'freebie') {
-                    $free_qty += $adata['value'];
-                }
-            }
+        if($group['date_from'] == $group['date_to']) {
+            $group_label .= date('d/m/y', $group['date_from']);
         }
-        // convert discount value to a percentage
-        $disc_value = $disc_value / (1 + $line['vat_rate']);
-        $price = $line['unit_price'] * $line['qty'];
-        $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
-        $disc_percent += (1-$disc_value_perc);
+        else {
+            $group_label .= date('d/m/y', $group['date_from']).' - '.date('d/m/y', $group['date_to']);
+        }
 
-        $c_line['free_qty'] = $free_qty;
-        $c_line['discount'] = $disc_percent;
-        ContractLine::create($c_line);
+        $group_label .= ' - '.$group['nb_pers'].' p.';
+
+        if($group['has_pack'] && $group['is_locked'] ) {
+            // create a contract group based on the booking group
+
+            $contract_line_group = ContractLineGroup::create([
+                'name'              => $group_label,
+                'is_pack'           => true,
+                'contract_id'       => $contract['id'],
+                'fare_benefit'      => $group['fare_benefit'],
+                'rate_class_id'     => $group['rate_class_id']
+            ])->first();
+
+            // create a line based on the group
+            $c_line = [
+                'contract_id'               => $contract['id'],
+                'contract_line_group_id'    => $contract_line_group['id'],
+                'product_id'                => $group['pack_id']['id'],
+                'vat_rate'                  => $group['vat_rate'],
+                'unit_price'                => $group['unit_price'],
+                'qty'                       => $group['qty']
+            ];
+
+            $contract_line = ContractLine::create($c_line)->first();
+            ContractLineGroup::ids($contract_line_group['id'])->update([ 'contract_line_id' => $contract_line['id'] ]);
+        }
+        else {
+            $contract_line_group = ContractLineGroup::create([
+                'name'              => $group_label,
+                'is_pack'           => false,
+                'contract_id'       => $contract['id'],
+                'fare_benefit'      => $group['fare_benefit'],
+                'rate_class_id'     => $group['rate_class_id']
+            ])->first();
+        }
+
+        // create as many lines as the group booking_lines
+        foreach($group['booking_lines_ids'] as $lid => $line) {
+            $booking_lines_ids[] = $lid;
+
+            $c_line = [
+                'contract_id'               => $contract['id'],
+                'contract_line_group_id'    => $contract_line_group['id'],
+                'product_id'                => $line['product_id'],
+                'vat_rate'                  => $line['vat_rate'],
+                'unit_price'                => $line['unit_price'],
+                'qty'                       => $line['qty']
+            ];
+
+            $disc_value = 0;
+            $disc_percent = 0;
+            $free_qty = 0;
+            foreach($line['price_adapters_ids'] as $aid => $adata) {
+                if($adata['is_manual_discount']) {
+                    if($adata['type'] == 'amount') {
+                        $disc_value += $adata['value'];
+                    }
+                    else if($adata['type'] == 'percent') {
+                        $disc_percent += $adata['value'];
+                    }
+                    else if($adata['type'] == 'freebie') {
+                        $free_qty += $adata['value'];
+                    }
+                }
+                // auto granted freebies are displayed as manual discounts
+                else {
+                    if($adata['type'] == 'freebie') {
+                        $free_qty += $adata['value'];
+                    }
+                }
+            }
+            // convert discount value to a percentage
+            $disc_value = $disc_value / (1 + $line['vat_rate']);
+            $price = $line['unit_price'] * $line['qty'];
+            $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
+            $disc_percent += (1-$disc_value_perc);
+
+            $c_line['free_qty'] = $free_qty;
+            $c_line['discount'] = $disc_percent;
+            ContractLine::create($c_line);
+        }
+
     }
 
+    // mark all booking lines as contractual
+    BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 }
 
-// mark all booking lines as contractual
-BookingLine::ids($booking_lines_ids)->update(['is_contractual' => true]);
 
 // update booking status
 Booking::id($params['id'])->update(['status' => 'confirmed']);
@@ -235,7 +238,8 @@ catch(Exception $e) {
 
 
 /*
-    Genarate the payment plan (expected fundings of the booking)
+    Genarate the payment plan 
+    (expected fundings of the booking)
 */
 
 // set rate class default to 'general public'
@@ -322,7 +326,6 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
 }
 
 $context->httpResponse()
-        // ->status(204)
         ->status(200)
         ->body([])
         ->send();
