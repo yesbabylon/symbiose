@@ -104,16 +104,25 @@ foreach($errors as $error) {
 $today = time();
 $consumptions = Consumption::search([
                     ['booking_id','=', $params['id']], 
-                    ['type', '=', 'book'],
-                    ['date', '<=', $today], 
-                    ['is_accomodation', '=', true]
+                    // mark only accomodations... 
+                    ['is_accomodation', '=', true],
+                    // ...impacted by current date
+                    ['date', '<=', $today]
                 ])
                 ->read(['rental_unit_id'])
                 ->get();
 
 if($consumptions) {
     foreach($consumptions as $cid => $consumption) {
-        lodging_booking_do_checkin_mark_busy($orm, $consumption['rental_unit_id']);
+        if($consumption['type'] == 'book') {
+            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
+        }
+        else if($consumption['type'] == 'link') {
+            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
+        }
+        else if($consumption['type'] == 'part') {
+            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_part']);
+        }
     }
 }
 
@@ -128,44 +137,3 @@ Booking::id($params['id'])->update(['status' => 'checkedin']);
 $context->httpResponse()
         ->status(204)
         ->send();
-
-
-/**
- * Recursively sets all involved rental units to their related occupation status (busy_full or busy_part).
- * 
- */
-function lodging_booking_do_checkin_mark_busy($orm, $rental_unit_id, $is_parent = false, $is_child = false) {
-    if($is_parent) {
-        $rental_unit = RentalUnit::id($rental_unit_id)->read(['can_partial_rent', 'parent_id'])->first();
-        if($rental_unit['can_partial_rent']) {
-            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_part']);
-        }
-        else {
-            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
-        }
-        if($rental_unit['parent_id']) {
-            lodging_booking_do_checkin_mark_busy($orm, $rental_unit['parent_id'], true);
-        }
-    }
-    else if($is_child) {
-        $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);        
-        $rental_unit = RentalUnit::id($rental_unit_id)->read(['children_ids'])->first();
-        if($rental_unit['children_ids'] && count($rental_unit['children_ids'])) {
-            foreach($rental_unit['children_ids'] as $child_id) {
-                lodging_booking_do_checkin_mark_busy($orm, $child_id, false, true);
-            }
-        }
-    }
-    else {
-        $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
-        $rental_unit = RentalUnit::id($rental_unit_id)->read(['parent_id', 'children_ids'])->first();
-        if($rental_unit['children_ids'] && count($rental_unit['children_ids'])) {
-            foreach($rental_unit['children_ids'] as $child_id) {
-                lodging_booking_do_checkin_mark_busy($orm, $child_id, false, true);
-            }
-        }
-        if($rental_unit['parent_id']) {
-            lodging_booking_do_checkin_mark_busy($orm, $rental_unit['parent_id'], true);
-        }
-    }
-}

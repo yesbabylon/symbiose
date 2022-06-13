@@ -71,6 +71,14 @@ class RentalUnit extends Model {
                 'default'           => false
             ],
 
+            'has_parent' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'calcHasParent',
+                'description'       => 'Flag to mark the unit as having sub-units.',
+                'store'             => true
+            ],
+
             'can_rent' => [
                 'type'              => 'boolean',
                 'description'       => 'Flag to mark the unit as (temporarily) unavailable for renting.',
@@ -163,6 +171,15 @@ class RentalUnit extends Model {
             ]
 
         ];
+    }
+
+    public static function calcHasParent($om, $oids, $lang) {
+        $result = [];
+        $units = $om->read(__CLASS__, $oids, ['parent_id'], $lang);
+        foreach($units as $uid => $unit) {
+            $result[$uid] = (bool) (!is_null($unit['parent_id']) && $unit['parent_id'] > 0);
+        }
+        return $result;
     }
 
     public static function getConstraints() {

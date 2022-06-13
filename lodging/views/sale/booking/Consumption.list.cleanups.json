@@ -5,7 +5,7 @@
         "groups": ["booking.default.user"]
     },
     "group_by": ["date"],
-    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_accomodation", "=", true], ["cleanup_type", "<>", "none"] ],
+    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_accomodation", "=", true], ["cleanup_type", "<>", "none"], ["type", "=", "book"] ],
     "operations": {
         "total": {
             "rental_unit_id": {

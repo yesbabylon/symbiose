@@ -502,7 +502,8 @@ $html = $twigTemplate->render($values);
 $options = new DompdfOptions();
 $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
-
+// if external fonts are involved, tell dompdf to store them in /bin
+$options->setFontDir(QN_BASEDIR.'/bin');
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->loadHtml((string) $html, 'UTF-8');
 $dompdf->render();

@@ -5,7 +5,7 @@
         "groups": ["booking.default.user"]
     },
     "group_by": [{"field": "date", "operation": ["SUM", "object.qty"]}],
-    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_accomodation", "=", true] ],
+    "domain": [ ["center_id", "in", "user.centers_ids"], ["is_accomodation", "=", true], ["type", "=", "book"] ],
     "operations": {
         "total": {
             "qty": {

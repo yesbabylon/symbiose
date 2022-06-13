@@ -85,7 +85,7 @@ class Consumption extends Model {
                     'link',          // rental unit is a child of another booked unit or cannot be partially booked (i.e. parent unit)
                     'part'           // rental unit is the parent of another booked unit and can partially booked (non-blocking: only for info on the planning)
                 ],
-                'description'       => 'The reason the unit is reserved.',
+                'description'       => 'The reason the unit is reserved (mostly applies to accomodations).',
                 'default'           => 'book',
                 'readonly'          => true
             ],
@@ -166,7 +166,7 @@ class Consumption extends Model {
 
 
     public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
-        $consumptions = $om->read(__CLASS__, $oids, ['rental_unit_id', 'rental_unit_id.is_accomodation', 'date', 'booking_line_group_id.date_from', 'booking_line_group_id.date_to'], $lang);
+        $consumptions = $om->read(get_called_class(), $oids, ['rental_unit_id', 'rental_unit_id.is_accomodation', 'date', 'booking_line_group_id.date_from', 'booking_line_group_id.date_to'], $lang);
 
         if($consumptions > 0) {
             foreach($consumptions as $cid => $consumption) {
