@@ -438,7 +438,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         foreach($groups as $gid => $group) {
             // if model of chosen product has a non-generic booking type, update the booking of the group accordingly
             if(isset($group['pack_id.product_model_id.booking_type_id']) && $group['pack_id.product_model_id.booking_type_id'] != 1) {
-                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type' => $group['pack_id.product_model_id.booking_type']]);
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => $group['pack_id.product_model_id.booking_type_id']]);
             }
 
             $updated_fields = ['vat_rate' => null];
