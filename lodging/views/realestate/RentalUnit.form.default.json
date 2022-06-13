@@ -116,6 +116,7 @@
                     {
                         "label": "Children",
                         "id": "section.children_section",
+                        "visible": ["has_children", "=", true],
                         "rows": [
                             {
                                 "columns": [
@@ -147,6 +148,7 @@
                                                 "value": "repairs_ids",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "domain": ["type", "=", "ooo"],
                                                     "order": "date",
                                                     "sort": "desc"
                                                 }

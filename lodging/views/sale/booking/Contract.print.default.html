@@ -64,7 +64,7 @@ div.inner .wrapper {
 }
 
 div.inner .wrapper table {
-    page-break-inside: auto; 
+    page-break-inside: auto;
     border: solid 1px black;
 }
 
@@ -101,12 +101,12 @@ div.header {
 }
 
 div.header table {
-    width: 100%; 
-    border-spacing: 0px; 
-    border-collapse: separate; 
-    border: solid 1px rgb(204, 204, 204);    
-    border-top-left-radius: 15px; 
-    border-top-right-radius: 15px; 
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: separate;
+    border: solid 1px rgb(204, 204, 204);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 div.footer {
@@ -184,7 +184,7 @@ hr {
             </td>
         </tr>
     </table>
-    
+
 </div>
 
 <div class="footer">
@@ -230,7 +230,7 @@ hr {
                     Prix HT
                 </th>
             </tr>
-            </thead>            
+            </thead>
             <!-- for each line -->
             {% for line in lines %}
                 <tr valign="top">
@@ -241,7 +241,7 @@ hr {
                             {{ line.name }}
                         {% endif %}
                     </td>
-                    <td width="8%" style="text-align: center;">                        
+                    <td width="8%" style="text-align: center;">
                         {{ line.qty }}
                     </td>
                     <td width="8%" style="text-align: center;">
@@ -260,7 +260,7 @@ hr {
                     <td width="8%" style="text-align: right;">
                         {% if line.vat_rate is not null %}
                             {{ line.vat_rate | format_number(style='percent') }}
-                        {% endif %}                            
+                        {% endif %}
                     </td>
                     <td width="13%" style="text-align: right;">
                         {% if line.total is not null %}
@@ -330,7 +330,7 @@ hr {
 
 </div>
 
-
+{% if fundings | length > 0  %}
 <div style="margin-top: 50px; page-break-inside: avoid;">
     <div style="margin: 0px 0px 20px 0px;"><b><u>Echéancier des paiements:</u></b></div>
     <table width="100%" cellpadding="4" cellspacing="0" style="border: solid 1px black; border-collapse: collapse; page-break-inside: avoid;">
@@ -370,14 +370,50 @@ hr {
         {% endfor %}
     </table>
 </div>
+{% endif %}
 
-<div class="notice">
-    {{ contract_notice_html | raw }}
+{% if consumptions_map | length > 0  %}
+<div style="position: relative; margin-top: 30px; page-break-inside: avoid;">
+    <div class="consumptions">
+        <b>Détail des consommations:</b>
+    </div>
+
+    <table style="border: solid 1px black; border-collapse: collapse; width: 100%;" border="1">
+        <tr>
+            <td style="width: 40%;"><b>Jour</b></td>
+            <td style="text-align: center; width: 15%"><b>Petits déjeuners</b></td>
+            <td style="text-align: center; width: 15%"><b>Repas midi</b></td>
+            <td style="text-align: center; width: 15%"><b>Repas soir</b></td>
+            <td style="text-align: center; width: 15%"><b>Nuitées</b></td>
+        </tr>
+        {% for date_index,map in consumptions_map %}
+        {% if date_index != 'total' %}
+        <tr>
+            <td>{{ date_index }}</td>
+            <td style="text-align: center;">{{ map[1] | default("0") }}</td><!-- meals in the morning -->
+            <td style="text-align: center;">{{ map[2] | default("0") }}</td><!-- meals at lunchtime -->
+            <td style="text-align: center;">{{ map[4] | default("0")}}</td><!-- meals in the evening -->
+            <td style="text-align: center;">{{ map['night'] | default("0")}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        <tr>
+            <td><b>TOTAL</b></td>
+            <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total'][1] | default("0") }}</td>
+            <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total'][2] | default("0") }}</td>
+            <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total'][4] | default("0")}}</td>
+            <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total']['night'] | default("0")}}</td>
+        </tr>        
+    </table>
+
 </div>
+{% endif %}
+
+<div class="notice">{{ contract_notice_html | raw }}</div>
 
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
-        Le premier paiement de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b> 
+        Le montant de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b>
     </div>
     <div style="padding-top: 20px; padding-left: 15px; font-size: 15px;">
         <b>COMMUNICATION : {{ installment_reference }}</b><br />
@@ -386,10 +422,10 @@ hr {
         <br />
         {{ company_name}}<br />
         {{ company_address }}<br />
-    </div>    
+    </div>
     <div style="position: absolute; right: 10px; top: 15px;">
         <img src="{{ installment_qr_url }}" width= "150" height="150" />
-    </div>    
+    </div>
 </div>
 
 <div style="margin-top: 50px;">
@@ -409,12 +445,12 @@ hr {
                         <li>Le règlement d'ordre intérieur</li>
                     </ul>
                 </div>
-        
+
             </td>
             <td style="width: 40%;">
                 <div>Date et Signature</div>
                 <div style="border: solid 1px black; width: 100%; height: 80px;"></div>
-        
+
             </td>
         </tr>
     </table>

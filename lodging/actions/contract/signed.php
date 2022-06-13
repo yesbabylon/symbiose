@@ -45,9 +45,12 @@ if($contract['valid_until'] < time()) {
     throw new Exception("outdated_contract", QN_ERROR_NOT_ALLOWED);
 }
 
+/*
+// #memo - we allow marking a contract directly as signed, even if not previously sent
 if($contract['status'] != 'sent') {
     throw new Exception("invalid_status", QN_ERROR_NOT_ALLOWED);
 }
+*/
 
 // Update booking status
 Contract::id($params['id'])->update(['status' => 'signed']);

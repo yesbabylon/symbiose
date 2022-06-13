@@ -65,6 +65,18 @@
                 "value": "capacity",
                 "width": "10%",
                 "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "has_parent",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "has_children",
+                "width": "10%",
+                "sortable": true
             }
         ]
     }

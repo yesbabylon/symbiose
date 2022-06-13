@@ -13,7 +13,7 @@ class Contract extends \sale\contract\Contract {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\booking\Contract::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the contract.'
@@ -37,7 +37,7 @@ class Contract extends \sale\contract\Contract {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         
         $res = $om->read(get_called_class(), $oids, ['booking_id', 'customer_id.name', 'booking_id.name']);

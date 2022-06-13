@@ -141,7 +141,70 @@
                     }
 
                 ]
-            }
+            },
+
+            {
+                "id": "item.fundings",
+                "label": "Fundings",
+                "description": "",
+                "icon": "person",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.fundings.waiting",
+                        "type": "entry",
+                        "label": "Waiting for payment",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Funding",
+                            "view": "list.default",
+                            "domain": ["is_paid", "=", false]
+                        }
+                    },
+                    {
+                        "id": "item.fundings.overdue",
+                        "type": "entry",
+                        "label": "Overdue fundings",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Funding",
+                            "view": "list.default",
+                            "domain": [ ["due_date", "<=", "date.this.day"],  ["is_paid", "=", false] ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "",
+                "icon": "person",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.invoices.all",
+                        "type": "entry",
+                        "label": "All invoices",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "view": "list.default",
+                            "domain": ["status", "=", "invoice"]
+                        }
+                    },
+                    {
+                        "id": "item.invoices.overdue",
+                        "type": "entry",
+                        "label": "Overdue invoices",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "view": "list.default",
+                            "domain": [ ["due_date", "<=", "date.this.day"],  ["is_paid", "=", false] ]
+                        }
+                    }
+                ]
+            }            
         ]
     }
 }

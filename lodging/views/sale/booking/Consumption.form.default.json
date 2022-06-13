@@ -1,6 +1,6 @@
 {
     "name": "Consumption",
-    "description": "A Consumption is a service delivery that can be scheduled and is related to a booking.",  
+    "description": "A Consumption is a service delivery that can be scheduled and is related to a booking.",
     "access": {
         "groups": ["booking.default.user"]
     },
@@ -15,8 +15,8 @@
                 "entity": "lodging\\sale\\booking\\Booking",
                 "view": "form.default"
             }
-        }        
-    ],    
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -44,18 +44,25 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Rental Unit",
-                                                "value": "rental_unit_id",
+                                                "value": "disclaimed",
                                                 "width": "50%"
-                                            },                                            
-                                            {
-                                                "type": "field",
-                                                "value": "qty",
-                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "disclaimed",
+                                                "label": "Rental Unit ?",
+                                                "value": "is_rental_unit",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Rental Unit",
+                                                "value": "rental_unit_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Accomodation ?",
+                                                "value": "is_accomodation",
                                                 "width": "50%"
                                             },
                                             {
@@ -92,7 +99,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "schedule_to",
-                                                "width": "3%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "25%"
                                             }
                                         ]
                                     }

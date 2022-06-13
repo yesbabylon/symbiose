@@ -147,7 +147,7 @@ class Consumption extends \sale\booking\Consumption {
     }
 
     public static function _updateTimeSlotId($om, $oids, $values, $lang) {
-        $consumptions = $om->read(__CLASS__, $oids, ['is_meal', 'is_accomodation', 'schedule_from', 'schedule_to']);
+        $consumptions = $om->read(__CLASS__, $oids, ['schedule_from', 'schedule_to']);
         if($consumptions > 0) {
             $moments_ids = $om->search('lodging\sale\booking\TimeSlot', [], ['order' => 'asc']);
             $moments = $om->read('lodging\sale\booking\TimeSlot', $moments_ids, ['schedule_from', 'schedule_to']);

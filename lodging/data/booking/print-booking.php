@@ -6,17 +6,20 @@
 */
 use Dompdf\Dompdf;
 use Dompdf\Options as DompdfOptions;
+
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
 use Twig\Extension\ExtensionInterface;
 
-use lodging\sale\booking\Booking;
-use communication\Template;
 use equal\data\DataFormatter;
 
+use lodging\sale\booking\Booking;
+use communication\Template;
+
+
 list($params, $providers) = announce([
-    'description'   => "Render a booking quote given its ID as a PDF document.",
+    'description'   => "Render a booking quote as a PDF document, given its id.",
     'params'        => [
         'id' => [
             'description'   => 'Identitifier of the booking to print.',
@@ -240,7 +243,7 @@ $values = [
     'lines'                 => [],
     'tax_lines'             => [],
 
-    'benefit_lines'         => []
+    'benefit_lines'         => []    
 ];
 
 
@@ -494,7 +497,7 @@ foreach($lines as $line) {
 }
 
 
-
+// retrieve contact details
 foreach($booking['contacts_ids'] as $contact) {
     if(strlen($contact_name) == 0 || $contact['type'] == 'booking') {
         // overwrite data of customer with contact info
@@ -503,6 +506,7 @@ foreach($booking['contacts_ids'] as $contact) {
         $values['contact_email'] = $contact['partner_identity_id']['email'];
     }
 }
+
 
 /*
     Inject all values into the template

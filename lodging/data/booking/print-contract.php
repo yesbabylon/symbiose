@@ -17,6 +17,7 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
 
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
+use lodging\sale\booking\Consumption;
 use sale\booking\Funding;
 use communication\Template;
 use communication\TemplatePart;
@@ -93,11 +94,7 @@ $twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
 $fields = [
     'created',
     'booking_id' => [
-        'name',
-        'modified',
-        'date_from',
-        'date_to',
-        'price',
+        'id', 'name', 'modified', 'date_from', 'date_to', 'price',
         'customer_id' => [
             'partner_identity_id' => [
                 'id',
@@ -279,6 +276,8 @@ $values = [
 
     'lines'                 => [],
     'tax_lines'             => [],
+    
+    'consumptions_map'      => [],
 
     'benfit_lines'          => []    
 ];
@@ -533,6 +532,51 @@ try {
 catch(Exception $exception) {
     // unknown error
 }
+
+
+
+/*
+    Generate consumptions map
+*/
+
+$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])->read(['id', 'date', 'qty', 'is_meal', 'rental_unit_id', 'is_accomodation', 'time_slot_id'])->get();
+$days_names = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+$consumptions_map = [];
+foreach($consumptions as $cid => $consumption) {
+
+
+    $date = date('d/m/Y', $consumption['date']).' ('.$days_names[date('w', $consumption['date'])].')';
+    if(!isset($consumptions_map[$date])) {
+        $consumptions_map[$date] = [];
+    }
+    if(!isset($consumptions_map['total'])) {
+        $consumptions_map['total'] = [];
+    }
+
+    if($consumption['is_meal']) {
+        if(!isset($consumptions_map[$date][$consumption['time_slot_id']])) {
+            $consumptions_map[$date][$consumption['time_slot_id']] = 0;
+        }
+        if(!isset($consumptions_map['total'][$consumption['time_slot_id']])) {
+            $consumptions_map['total'][$consumption['time_slot_id']] = 0;
+        }
+        $consumptions_map[$date][$consumption['time_slot_id']] += $consumption['qty'];
+        $consumptions_map['total'][$consumption['time_slot_id']] += $consumption['qty'];        
+    }
+    else if($consumption['is_accomodation']) {
+        if(!isset($consumptions_map[$date]['night'])) {
+            $consumptions_map[$date]['night'] = 0;
+        }        
+        if(!isset($consumptions_map['total']['night'])) {
+            $consumptions_map['total']['night'] = 0;
+        }        
+        $consumptions_map[$date]['night'] += $consumption['qty'];
+        $consumptions_map['total']['night'] += $consumption['qty'];
+    }
+}
+
+$values['consumptions_map'] = $consumptions_map;
+
 
 /*
     Inject all values into the template

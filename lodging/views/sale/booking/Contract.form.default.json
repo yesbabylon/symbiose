@@ -19,7 +19,7 @@
             "description": "Contract will be marked as signed. Booking will be validated as soon as the payment is received.",
             "controller": "lodging_contract_signed",
             "confirm": true,
-            "visible": ["status", "=", "sent"]
+            "visible": ["status", "in", ["pending", "sent"]]
         }
     ],
     "routes": [

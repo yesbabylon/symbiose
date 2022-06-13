@@ -723,14 +723,11 @@ class BookingLine extends \sale\booking\BookingLine {
             $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
         }
 
-
-
         /* 
             Get in-memory list of consumptions for all lines.
         */
         
         $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, [], $lang);
-
 
         /*
             Create consumptions objects.
@@ -740,7 +737,6 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines_consumptions_ids = [];
         $consumptions_ids = [];
         foreach($consumptions as $consumption) {
-
             $cid = $om->create('lodging\sale\booking\Consumption', $consumption, $lang);
             if($cid > 0) {
                 $booking_line_id = $consumption['booking_line_id'];
@@ -752,12 +748,6 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        foreach($lines_consumptions_ids as $lid => $consumptions_ids) {
-            // $om->write(__CLASS__, $lid, ['consumptions_ids' => $consumptions_ids ]);
-        }
-
-        // force immediate computing of computed fields
-        $om->read('lodging\sale\booking\Consumption', $consumptions_ids, ['id', 'name', 'is_accomodation', 'cleanup_type']);
     }
 
 
@@ -961,6 +951,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                         'schedule_to'           => $c_schedule_to,
                                         'product_id'            => $line['product_id'],
                                         'is_rental_unit'        => true,
+                                        'is_accomodation'       => $is_accomodation,
                                         'is_meal'               => $is_meal,
                                         'rental_unit_id'        => $rental_unit_id,
                                         'qty'                   => $assignment['qty'],
@@ -1019,6 +1010,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                 'schedule_to'           => $c_schedule_to,
                                 'product_id'            => $line['product_id'],
                                 'is_rental_unit'        => false,
+                                'is_accomodation'       => false,
                                 'is_meal'               => $is_meal,
                                 'qty'                   => $days_nb_times[$i],
                                 'type'                  => 'book'

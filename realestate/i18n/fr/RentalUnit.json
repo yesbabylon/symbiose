@@ -28,7 +28,7 @@
             "help": ""
         },
         "rental_unit_category_id": {
-            "label": "Catégorie d'unité locative",
+            "label": "Catégorie",
             "description": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives.",
             "help": ""
         },
@@ -44,6 +44,11 @@
         },        
         "has_children": {
             "label": "Sous-unités",
+            "description": "Drapeau indiquant que l'unité a des sous-unités.",
+            "help": ""
+        },
+        "has_parent": {
+            "label": "Parent",
             "description": "Drapeau indiquant que l'unité a des sous-unités.",
             "help": ""
         },

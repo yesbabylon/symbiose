@@ -5,7 +5,6 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use equal\orm\Domain;
-use lodging\sale\booking\Consumption;
 
 list($params, $providers) = announce([
     'description'   => 'Advanced search for Consumptions: returns a collection of Consumptions according to extra paramaters.',
@@ -13,7 +12,7 @@ list($params, $providers) = announce([
     'params'        => [
         // inherited params
         'entity' =>  [
-            'description'       => 'Full name (including namespace) of the class to look into (e.g. \'core\\User\').',
+            'description'       => 'Full name (including namespace) of the class to look into.',
             'type'              => 'string',
             'default'           => 'lodging\sale\booking\Consumption'
         ],

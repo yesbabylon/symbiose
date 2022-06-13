@@ -35,7 +35,6 @@ list($params, $providers) = announce([
             'default'       => ''
         ]
 
-
     ],
     'access' => [
         'visibility'        => 'protected',
@@ -60,9 +59,12 @@ list($context, $dispatch) = [$providers['context'], $providers['dispatch']];
     Check consistency of parameters  
 */
 
+// if a consumption already exists for the given dates : abort
+// #todo
+
 // retrieve rental unit and related center
 $rental_unit = RentalUnit::id($params['rental_unit_id'])
-                  ->read(['id', 'name', 'capacity', 'center_id'])
+                  ->read(['id', 'name', 'capacity', 'center_id', 'has_parent', 'has_children', 'parent_id', 'children_ids'])
                   ->first();
                   
 if(!$rental_unit) {
@@ -73,12 +75,23 @@ if(!$rental_unit) {
     Create a repairing group for given period and add rental unit to it
 */
 
-Repairing::create(['center_id' => $rental_unit['center_id'], 'description' => $params['description']])
-         ->update([
-            'rental_units_ids'  => [ $params['rental_unit_id'] ],
-            'date_from'         => $params['date_from'],
-            'date_to'           => $params['date_to']
-         ]);
+$collection = Repairing::create(['center_id' => $rental_unit['center_id'], 'description' => $params['description']])
+                        ->update([
+                            'rental_units_ids'  => [ $params['rental_unit_id'] ],
+                            'date_from'         => $params['date_from'],
+                            'date_to'           => $params['date_to']
+                        ]);
+
+// mark parent unit as partially occupied
+if($rental_unit['has_parent']) {
+    // #todo
+}
+
+// mark all children as 'ooo' as well
+if($rental_unit['has_children']) {
+    $collection->update(['rental_units_ids' => $rental_unit['children_ids']]);
+}
+
 
 $context->httpResponse()
         ->status(204)

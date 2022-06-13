@@ -80,7 +80,7 @@
             "help": ""
         },
 		"is_rental_unit": {
-			"label": "Logement",
+			"label": "Unité locative",
 			"description": "Le service correspond à une unité locative.",
 			"help": ""
 		},

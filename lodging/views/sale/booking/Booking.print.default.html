@@ -336,6 +336,28 @@ hr {
     </div>
     {% endif %}
 
+    {% if consumptions_map | length > 0  %}
+    <div>
+        <table style="border: solid 1px black; width: 100%;">
+            <tr>
+                <td style="width: 80%;"><b>Jour</b></td>
+                <td style="text-align: center;"><b>Petits déjeuners</b></td>
+                <td style="text-align: center;"><b>Repas midi</b></td>
+                <td style="text-align: center;"><b>Repas soir</b></td>
+                <td style="text-align: right;"><b>Nuitées</b></td>                                
+            </tr>
+            {% for date_index,map in consumptions_map %}
+            <tr>
+                <td>{{ date_index }}</td>
+                {% for part,qty in map %}
+                <td>{{ qty }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    {% endif %}
 </div>
 
 
