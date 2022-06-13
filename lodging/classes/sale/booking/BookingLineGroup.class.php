@@ -432,7 +432,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'pack_id.product_model_id.has_duration',
             'pack_id.product_model_id.duration',
             'pack_id.product_model_id.capacity',
-            'pack_id.product_model_id.booking_type'
+            'pack_id.product_model_id.booking_type_id'
         ]);
 
         foreach($groups as $gid => $group) {
