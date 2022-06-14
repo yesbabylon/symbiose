@@ -46,7 +46,7 @@
             "help": ""
         },
         "has_vat": {
-            "label": "Assujetti à la TVA",
+            "label": "Assujetti TVA",
             "description": "Cette organisation a-t-elle un numéro de TVA ?",
             "help": ""
         },
@@ -56,8 +56,8 @@
             "help": ""
         },
         "registration_number": {
-            "label": "Numéro de registre",
-            "description": "Numéro d'enregistrement de l'organisation (numéro d'entreprise).",
+            "label": "Numéro d'entreprise",
+            "description": "Numéro d'enregistrement commercial (numéro d'entreprise).",
             "help": ""
         },
         "citizen_identification": {
@@ -192,11 +192,11 @@
             "description": "Date de naissance de la personne.",
             "help": ""
         },
-        "lang": {
+        "lang_id": {
             "label": "Langue",
             "description": "Langue parlée préférée.",
             "help": ""
-        },
+        },        
         "bank_account_iban": {
             "label": "IBAN",
             "description": "Compte bancaire.",

@@ -32,23 +32,27 @@ class Funding extends Model {
                     'installment',
                     'invoice'
                 ],
+                'default'           => 'installment',
                 'description'       => "Deadlines are installment except for last one: final invoice."
             ],
 
             'due_amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Amount expected for the funding (computed based on VAT incl. price).'
+                'description'       => 'Amount expected for the funding (computed based on VAT incl. price).',
+                'required'          => true
             ],
 
             'due_date' => [
                 'type'              => 'date',
-                'description'       => "Deadline before which the funding is expected."
+                'description'       => "Deadline before which the funding is expected.",
+                'default'           => time()
             ],
 
             'issue_date' => [
                 'type'              => 'date',
-                'description'       => "Date at which the request for payment has to be issued."
+                'description'       => "Date at which the request for payment has to be issued.",
+                "default"           => time()
             ],
 
             'paid_amount' => [
@@ -132,7 +136,7 @@ class Funding extends Model {
                     return $c + $a['amount'];
                 }, 0.0);
 
-                if($sum >= $funding['due_amount']) {
+                if($sum >= $funding['due_amount'] && $funding['due_amount'] > 0) {
                     $result[$fid] = true;
                 }
             }

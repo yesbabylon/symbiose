@@ -50,9 +50,6 @@ if($invoice) {
     throw new Exception("invoice_already_exists", QN_ERROR_NOT_ALLOWED);
 }
 
-// if a 'proforma' invoice exists, delete it
-Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])->delete(true);
-
 // read booking object
 $booking = Booking::id($params['id'])
                   ->read([
@@ -93,6 +90,27 @@ if(!$booking) {
 if(!in_array($booking['status'], ['confirmed', 'checkedout'])) {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
+
+/*
+    Check consistency
+*/
+
+$errors = [];
+
+// check customer details completeness
+$data = eQual::run('do', 'lodging_booking_check-customer', ['id' => $booking['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'uncomplete_customer';
+}
+
+// raise an exception with first error (alerts should have been issued in the check controllers)
+foreach($errors as $error) {
+    throw new Exception($error, QN_ERROR_INVALID_PARAM);
+}
+
+
+// if a 'proforma' invoice exists, delete it
+Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])->delete(true);
 
 
 /*
@@ -275,6 +293,8 @@ if($fundings) {
     ])->first();
 }
 
+// mark the booking as invoiced, whatever its status
+Booking::id($params['id'])->update(['is_invoiced' => true]);
 
 $context->httpResponse()
         ->status(204)

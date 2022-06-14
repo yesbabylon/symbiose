@@ -52,6 +52,10 @@ if($booking['status'] != 'checkedout') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
+/*
+    Generate invoice
+*/
+
 // generate balance invoice (proforma) (raise exception on failure)
 eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
 

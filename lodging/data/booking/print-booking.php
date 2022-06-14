@@ -499,7 +499,7 @@ foreach($lines as $line) {
 
 // retrieve contact details
 foreach($booking['contacts_ids'] as $contact) {
-    if(strlen($contact_name) == 0 || $contact['type'] == 'booking') {
+    if(strlen($values['contact_name']) == 0 || $contact['type'] == 'booking') {
         // overwrite data of customer with contact info
         $values['contact_name'] = str_replace(["Dr", "Ms", "Mrs", "Mr","Pr"], ["Dr","Melle", "Mme","Mr","Pr"], $contact['partner_identity_id']['title']).' '.$contact['partner_identity_id']['name'];
         $values['contact_phone'] = $contact['partner_identity_id']['phone'];

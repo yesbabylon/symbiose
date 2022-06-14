@@ -67,7 +67,7 @@ class Customer extends \identity\Partner {
             'address' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\customer\Customer::calcAddress',
+                'function'          => 'calcAddress',
                 'description'       => 'Main address from related Identity.',
                 'store'             => true
             ],

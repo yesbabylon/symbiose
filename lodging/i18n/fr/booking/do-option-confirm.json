@@ -14,7 +14,8 @@
             "empty_booking": "Réservation vide",
             "invalid_booking": "Résevation invalide",
             "incompatible_status": "Action impossible pour ce statut de réservation.",
-            "unconfirmed_price": "Le contrat ne peut être généré avec un prix non-confirmé."
+            "unconfirmed_price": "Le contrat ne peut être généré avec un prix non-confirmé.",
+            "uncomplete_customer": "Les coordonnées du client sont incomplètes."
         }
     }
 }

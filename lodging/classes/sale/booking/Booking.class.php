@@ -133,6 +133,12 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'Default sojourn type of the booking (set according to booking center).'
+            ],
+
+            "is_invoiced" => [
+                "type"              => "boolean",
+                "description"       => "Flag for handling special case where invoice is emitted at confirmation.",
+                "default"           => false
             ]
 
         ];

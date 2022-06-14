@@ -44,7 +44,7 @@ class Funding extends \sale\pay\Funding {
             'payment_reference' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'sale\booking\Funding::getPaymentReference',
+                'function'          => 'calcPaymentReference',
                 'description'       => 'Message for identifying the purpose of the transaction.',
                 'store'             => true
             ],
@@ -71,9 +71,9 @@ class Funding extends \sale\pay\Funding {
         return $result;
     }
 
-    public static function getPaymentReference($om, $oids, $lang) {
+    public static function calcPaymentReference($om, $oids, $lang) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'type', 'order', 'payment_deadline_id.code']);
+        $fundings = $om->read(get_called_class(), $oids, ['booking_id.name', 'type', 'order', 'payment_deadline_id.code'], $lang);
         foreach($fundings as $oid => $funding) {
             $booking_code = intval($funding['booking_id.name']);
             if($funding['payment_deadline_id.code']) {
@@ -110,7 +110,7 @@ class Funding extends \sale\pay\Funding {
 
     public function getUnique() {
         return [
-            ['payment_deadline_id', 'booking_id']
+            ['booking_id', 'due_date']
         ];
     }
 

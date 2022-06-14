@@ -377,6 +377,7 @@ class Identity extends Model {
                 }
                 $om->write(__CLASS__, $oid, $values, $lang);
             }
+            $om->read(__CLASS__, $oids, ['display_name'], $lang);
         }
     }
 
@@ -391,6 +392,30 @@ class Identity extends Model {
                 $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);                
             }
         }
+    }
+
+
+    /**
+     * Signature for single object change from views.
+     *
+     * @param  Object   $om        Object Manager instance.
+     * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
+     * @param  Array    $values    Copy of the current (partial) state of the object (fields depend on the view).
+     * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
+     * @return Array    Associative array mapping fields with their resulting values.
+     */
+    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+        $result = [];
+
+        if(isset($event['type_id'])) {
+            $types = $om->read('identity\IdentityType', $event['type_id'], ['code']);
+            if($types > 0) {
+                $type = reset($types);
+                $result['type'] = $type['code'];
+            }
+        }
+        
+        return $result;
     }
 
     protected static function _computeDisplayName($fields, $lang) {

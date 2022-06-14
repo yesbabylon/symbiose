@@ -12,8 +12,7 @@
                     "view": "form.default"
                 },
                 {
-                    "id": "SAVE_AND_VIEW" ,
-                    "view": "form.default"
+                    "id": "SAVE_AND_VIEW"
                 }
             ]
         }
