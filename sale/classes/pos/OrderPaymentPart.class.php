@@ -8,10 +8,12 @@ namespace sale\pos;
 
 class OrderPaymentPart extends \sale\booking\Payment {
 
+    /*
     public function getTable() {
         // force table name to use distinct tables and ID columns
         return 'sale_pos_orderpaymentpart';
     }
+    */
 
     public static function getColumns() {
 
@@ -36,6 +38,12 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'foreign_object'    => 'sale\pos\Order',
                 'description'       => 'The order the part relates to (based on payment).',
                 'onupdate'          => 'onupdateOrderId'
+            ],
+
+            'payment_origin' => [
+                'type'              => 'string',
+                'description'       => "Origin of the received money.",
+                'default'           => 'cashdesk'
             ]
 
         ];

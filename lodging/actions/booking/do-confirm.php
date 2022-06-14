@@ -90,6 +90,25 @@ if($booking['status'] != 'option') {
 }
 
 
+/*
+    Check consistency
+*/
+
+$errors = [];
+
+// check customer details completeness
+$data = eQual::run('do', 'lodging_booking_check-customer', ['id' => $booking['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'uncomplete_customer';
+}
+
+// raise an exception with first error (alerts should have been issued in the check controllers)
+foreach($errors as $error) {
+    throw new Exception($error, QN_ERROR_INVALID_PARAM);
+}
+
+
+
 // remove any existing CRON tasks for reverting the booking to quote
 $cron->cancel("booking.option.deprecation.{$params['id']}");
 
@@ -259,6 +278,7 @@ if(!$payment_plans) {
 }
 
 $payment_plan = -1;
+$fulfilled_criteria_count = 0;
 // payment plan assignment is based on booking type and customer's rate class
 foreach($payment_plans as $pid => $plan) {
     // double match: keep plan and stop
@@ -266,10 +286,23 @@ foreach($payment_plans as $pid => $plan) {
         $payment_plan = $plan;
         break;
     }
-    // either rate_class or booking_type, keep plan (will be discarded if better match is found)
-    if($plan['rate_class_id'] == $rate_class_id || $plan['booking_type_id'] == $booking['type_id'] ) {
-        if($payment_plan < 0) {
+    // match for either rate class, booking type or sojourn type
+    if($plan['rate_class_id'] == $rate_class_id || $plan['booking_type_id'] == $booking['type_id'] || $plan['sojourn_type_id'] == $booking['center_id']['sojourn_type_id']) {
+        $match_criteria_count = 0;
+
+        if($plan['rate_class_id'] == $rate_class_id) {
+            ++$match_criteria_count;
+        }
+        if($plan['booking_type_id'] == $booking['type_id']) {
+            ++$match_criteria_count;
+        }
+        if($plan['sojourn_type_id'] == $booking['center_id']['sojourn_type_id']) {
+            ++$match_criteria_count;
+        }
+
+        if($payment_plan < 0 || $match_criteria_count > $fulfilled_criteria_count) {
             $payment_plan = $plan;
+            $fulfilled_criteria_count = $match_criteria_count;
         }
     }
 }
@@ -283,7 +316,7 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
 
     // special case: immediate creation of balance invoice with no funding
     if($deadline['type'] == 'invoice' && $deadline['is_balance_invoice']) {
-        // create balance invoice and do not create funding (raise Exception on failure)
+        // create proforma balance invoice and do not create funding (raise Exception on failure)
         eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
         break;
     }
@@ -312,10 +345,18 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
             break;
     }
     $funding['issue_date'] = $date + $deadline['delay_from_event_offset'];
-    $funding['due_date'] = min($booking['date_from'], $date + $deadline['delay_from_event_offset'] + ($deadline['delay_count'] * 86400));
+    $funding['due_date'] = $funding['issue_date'] + ($deadline['delay_count'] * 86400);
 
+    // remaining days to checkin is less than planned delay
+    if($funding['due_date'] >= $booking['date_from']) {
+        // create proforma balance invoice and do not create funding (raise Exception on failure)
+        eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
+        break;
+
+    }
     // request funding creation
     try {
+
         Funding::create($funding)->read(['name'])->get();
     }
     catch(Exception $e) {

@@ -67,6 +67,11 @@
                                                 "type": "field",
                                                 "value": "type_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "visible": false
                                             }
                                         ]
                                     }
@@ -85,51 +90,51 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
+                                        "width": "25%",
                                         "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "registration_number",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "citizen_identification",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Language",
                                                 "value": "lang_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_vat",
-                                                "width": "50%",
-                                                "label": "Subject to VAT",
-                                                "help": "Do the company have a VAT number?"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "vat_number",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "title",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "gender",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "has_vat",
+                                                "width": "100%",
+                                                "label": "Subject to VAT",
+                                                "help": "Do the company have a VAT number?"
+                                            },                                            
+                                            {
+                                                "type": "field",
+                                                "value": "registration_number",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "citizen_identification",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_number",
+                                                "width": "100%"
+                                            },                                            
+                                            {
+                                                "type": "field",
                                                 "value": "date_of_birth",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
@@ -139,12 +144,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "bank_account_bic",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "33%",
+                                        "width": "25%",
                                         "align": "left",
                                         "items": [
                                             {
@@ -165,7 +170,7 @@
                                         ]
                                     },
                                     {
-                                        "width": "33%",
+                                        "width": "50%",
                                         "align": "left",
                                         "items": [
                                             {
@@ -175,53 +180,6 @@
                                                 "width": "100%",
                                                 "domain": ["owner_identity_id", "=", "object.id"]                                                
                                             },
-                                            {
-                                                "type": "field",
-                                                "value": "user_id",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Settings",
-                        "id": "section.settings",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "signature",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "50%"
-                                            }                                            
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },                    
-                    {
-                        "label": "Main address",
-                        "id": "section.identity_main_address",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "align": "left",
-                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "address_street",
@@ -251,13 +209,54 @@
                                                 "type": "field",
                                                 "value": "address_country",
                                                 "width": "50%"
-                                            }
+                                            }                                            
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
-                    },                    
+                    },
+                    {
+                        "label": "Settings",
+                        "id": "section.settings",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "user_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "signature",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            }                                            
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },                                      
                     {
                         "label": "Other addresses",
                         "id": "section.identity_addresses",

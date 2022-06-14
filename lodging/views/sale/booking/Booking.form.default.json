@@ -4,6 +4,18 @@
     "access": {
         "groups": ["booking.default.user"]
     },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_CONTINUE"
+                },
+                {
+                    "id": "SAVE_AND_CLOSE"
+                }
+            ]
+        }
+    },
     "actions": [
         {
             "id": "action.quote",
@@ -11,7 +23,7 @@
             "description": "Rental units will no longer be reserved and will be available for other bookings.",
             "controller": "lodging_booking_do-quote",
             "confirm": true,
-            "visible": ["status", "in", ["option", "confirmed"]]
+            "visible": [ ["status", "in", ["option", "confirmed"]], ["is_invoiced", "=", false] ]
         },
         {
             "id": "action.option",
@@ -254,30 +266,35 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Center",
                                                 "value": "center_id",
-                                                "width": "100%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_identity_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "center_office_id",
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "visible": false
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_identity_id",
-                                                "width": "100%"
-                                            }
+                                                "value": "is_invoiced",
+                                                "visible": false
+                                            }                                            
                                         ]
                                     }
 
@@ -398,7 +415,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "fundings_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": [ {
+                                                                "view": "form.create",
+                                                                "domain": [ ["center_office_id", "=", "object.center_office_id"], ["booking_id", "=", "object.booking_id"] ]
+                                                            } ]
+                                                        }    
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
