@@ -710,7 +710,7 @@
                                 "label": "Payment plans",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\pay\\PaymentPlan",
+                                    "entity": "lodging\\sale\\booking\\PaymentPlan",
                                     "view": "list.default"
                                 }
                             },
