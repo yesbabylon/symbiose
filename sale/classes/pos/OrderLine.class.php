@@ -37,6 +37,19 @@ class OrderLine extends Model {
                 'description'       => 'The product (SKU) the line relates to.'
             ],
 
+            'has_funding' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the line as relating to a funding.',
+                'default'           => false
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\pay\Funding',
+                'description'       => 'The funding the line relates to, if any.',
+                'visible'           => ['has_funding', '=', true]
+            ],
+
             'unit_price' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',

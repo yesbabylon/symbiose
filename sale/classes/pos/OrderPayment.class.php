@@ -30,6 +30,23 @@ class OrderPayment extends Model {
                 'default'           => 'pending'
             ],
 
+            'has_funding' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the line as relating to a funding.',
+                'default'           => false
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\pay\Funding',
+                'description'       => 'The funding the line relates to, if any.',
+                'visible'           => ['has_funding', '=', true]
+            ],
+
+            /*
+                #memo - if the payment is attached to a funding, it can only have one line
+            */
+
             'order_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pos\OrderLine',

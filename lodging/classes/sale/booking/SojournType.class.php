@@ -10,7 +10,7 @@ use equal\orm\Model;
 class SojournType extends Model {
 
     public static function getName() {
-        return 'Center category';
+        return 'Sojourn Type';
     }
 
     public static function getColumns() {

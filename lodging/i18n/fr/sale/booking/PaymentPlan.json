@@ -1,0 +1,14 @@
+{
+    "name": "Plan de Paiement",
+    "plural": "Plans de Paiement",
+    "description": "",
+    "model": {
+        "sojourn_type_id": {
+            "label": "Type de séjour",
+            "description": "Le type de déjour applicable au plan de paiement.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

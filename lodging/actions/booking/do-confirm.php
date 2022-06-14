@@ -6,7 +6,7 @@
 */
 
 use lodging\sale\booking\Booking;
-use sale\pay\PaymentPlan;
+use lodging\sale\booking\PaymentPlan;
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Contract;
 use lodging\sale\booking\ContractLine;
@@ -54,7 +54,7 @@ $booking = Booking::id($params['id'])
                         'date_to',
                         'price',                                  // total price VAT incl.
                         'contracts_ids',
-                        'center_id' => ['center_office_id'],
+                        'center_id' => ['center_office_id', 'sojourn_type_id'],
                         'customer_id' => ['id', 'rate_class_id'],
                         'booking_lines_groups_ids' => [
                             'name',
@@ -106,7 +106,7 @@ if(!$booking['is_price_tbc']) {
     $booking_lines_ids = [];
 
     // #memo - generated contracts are kept for history (we never delete them)
-    // mark existing contracts as expired    
+    // mark existing contracts as expired
     Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
 
 
@@ -238,7 +238,7 @@ catch(Exception $e) {
 
 
 /*
-    Genarate the payment plan 
+    Genarate the payment plan
     (expected fundings of the booking)
 */
 
@@ -262,12 +262,12 @@ $payment_plan = -1;
 // payment plan assignment is based on booking type and customer's rate class
 foreach($payment_plans as $pid => $plan) {
     // double match: keep plan and stop
-    if($plan['rate_class_id'] == $rate_class_id && $plan['booking_type_id'] == $booking['type_id'] ) {        
+    if($plan['rate_class_id'] == $rate_class_id && $plan['booking_type_id'] == $booking['type_id'] && $plan['sojourn_type_id'] == $booking['center_id']['sojourn_type_id']) {
         $payment_plan = $plan;
         break;
     }
     // either rate_class or booking_type, keep plan (will be discarded if better match is found)
-    if($plan['rate_class_id'] == $rate_class_id || $plan['booking_type_id'] == $booking['type_id'] ) {    
+    if($plan['rate_class_id'] == $rate_class_id || $plan['booking_type_id'] == $booking['type_id'] ) {
         if($payment_plan < 0) {
             $payment_plan = $plan;
         }
