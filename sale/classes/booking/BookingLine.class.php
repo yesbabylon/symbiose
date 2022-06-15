@@ -27,6 +27,12 @@ class BookingLine extends Model {
                 'store'             => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Complementary description of the line. If set, replaces the product name.',
+                'default'           => ''
+            ],
+
             'booking_line_group_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\BookingLineGroup',

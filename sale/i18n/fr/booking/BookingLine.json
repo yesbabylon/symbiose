@@ -3,6 +3,11 @@
     "plural": "Lignes de réservation",
     "description": "Les lignes de réservation décrivent les produits et les quantités qui font partie d'une réservation.",
     "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description complémentaire de la ligne. Si défini, remplace le nom du produit.",
+            "help": ""
+        },
         "booking_line_group_id": {
             "label": "Groupe",
             "description": "Groupe duquel la ligne fait partie.",
