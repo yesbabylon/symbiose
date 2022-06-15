@@ -1,0 +1,45 @@
+{
+    "name": "Contact",
+    "plural": "Contacts",
+    "description": "Une équipe de gestion de centres peut disposer de plusieurs adresses emails.",
+    "model": {
+        "email": {
+            "label": "Email",
+            "description": "Adressse email de contact.",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "Type de contact (rôle).",
+            "selection": {
+                "booking": "réservation",
+                "contract": "contrat",
+                "invoice": "facture"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Centre",
+            "description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
+            "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
+                "section.centers_ids": {
+                    "label": "Centres"
+                },
+                "section.contacts_ids": {
+                    "label": "Contacts"
+                }                
+            }
+        },
+        "list.default": {
+            "name": "Contacts",
+            "description": "Liste des contacts pour équipe de gestion.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

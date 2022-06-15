@@ -1,16 +1,16 @@
 {
     "name": "Center Group",
-    "description": "A center group groups centers that are managed by the same person or team.",
+    "description": "A center Office groups centers that are managed by a same team.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
                         "label": "General Info",
-                        "id": "section.center_category",
+                        "id": "section.general",
                         "rows": [
                             {
                                 "columns": [
@@ -110,7 +110,34 @@
                                 ]
                             }
                         ]
-                    }                
+                    },
+                    {
+                        "label": "Contacts",
+                        "id": "section.contacts_ids",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contacts_ids",
+                                                "width": "100%",
+                                                "header": {
+                                                    "actions": {
+                                                        "ACTION.CREATE": [ {
+                                                            "domain": [ ["center_office_id", "=", "object.center_office_id"] ]
+                                                        } ]
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]

@@ -338,6 +338,10 @@
             "label": "Organisations",
             "help": ""
         },
+        "organisation.center_offices": {
+            "label": "Équipes de gestion",
+            "help": ""
+        },        
         "organisation.centers": {
             "label": "Centres",
             "help": ""
