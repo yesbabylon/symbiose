@@ -294,7 +294,7 @@
                                                 "type": "field",
                                                 "value": "is_invoiced",
                                                 "visible": false
-                                            }                                            
+                                            }
                                         ]
                                     }
 
@@ -423,7 +423,7 @@
                                                                 "view": "form.create",
                                                                 "domain": [ ["center_office_id", "=", "object.center_office_id"], ["booking_id", "=", "object.booking_id"] ]
                                                             } ]
-                                                        }    
+                                                        }
                                                     }
                                                 }
                                             }

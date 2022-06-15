@@ -1,0 +1,23 @@
+{
+    "name": "Center Office Contacts",
+    "description": "List of center Office contacts.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Name",
+                "value": "name",
+                "width": "35%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "30%"
+            }
+        ]
+    }
+}

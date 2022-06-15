@@ -1,7 +1,7 @@
 {
-    "name": "Gestion de centres",
-    "plural": "Gestions de centres",
-    "description": "Une gestion de centres regroupe plusieurs centres qui ont une gestion administative en commmun.",
+    "name": "Équipe de gestion",
+    "plural": "Équipes de gestion",
+    "description": "Une équipe de gestion de centres regroupe plusieurs centres qui ont une gestion administative en commmun.",
     "model": {
         "group_code": {
             "label": "Code de groupe",
@@ -79,9 +79,15 @@
             "name": "Centre",
             "description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
             "layout": {
+                "section.general": {
+                    "label": "Général"
+                },
                 "section.centers_ids": {
                     "label": "Centres"
-                }
+                },
+                "section.contacts_ids": {
+                    "label": "Contacts"
+                }                
             }
         },
         "list.default": {

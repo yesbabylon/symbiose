@@ -1,6 +1,6 @@
 {
-    "name": "Center Group",
-    "description": "Fefault view for displaying center groups.",
+    "name": "Center Offices",
+    "description": "List of center offices.",
     "access": {
         "groups": ["booking.default.user"]
      },

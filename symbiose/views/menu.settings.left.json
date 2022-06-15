@@ -72,6 +72,16 @@
                                 }
                             },
                             {
+                                "id": "organisation.center_offices",
+                                "type": "entry",
+                                "label": "Center Offices",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\identity\\CenterOffice",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
                                 "id": "organisation.centers",
                                 "label": "Centers",
                                 "description": "",

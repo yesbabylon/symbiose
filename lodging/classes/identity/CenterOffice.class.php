@@ -9,11 +9,11 @@ namespace lodging\identity;
 class CenterOffice extends \identity\Establishment {
 
     public static function getName() {
-        return 'Center management office';
+        return 'Center management Office';
     }
 
     public static function getDescription() {
-        return 'Allow support for management of centers by distinct offices.';
+        return 'Allow support for management of Centers by distinct Offices.';
     }
 
     public function getTable() {
@@ -40,7 +40,14 @@ class CenterOffice extends \identity\Establishment {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\identity\Center',
                 'foreign_field'     => 'center_office_id',
-                'description'       => 'List of centers attached to the group.'
+                'description'       => 'List of centers attached to the office.'
+            ],
+
+            'contacts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\identity\CenterOfficeContact',
+                'foreign_field'     => 'center_office_id',
+                'description'       => 'List of contactsattached to the office.'
             ],
 
             'users_ids' => [
