@@ -3,10 +3,10 @@
     "access": {
         "groups": ["setting.default.user"]
     },
-    "layout": {        
+    "layout": {
         "items": [
             {
-            
+
                 "id": "base",
                 "label": "Base",
                 "description": "",
@@ -180,7 +180,7 @@
                                 }
                             }
                         ]
-                    }                                      
+                    }
                 ]
             },
 
@@ -1076,126 +1076,138 @@
                                 "description": "",
                                 "context": {
                                     "entity": "documents\\Document",
-                                    "view": "chart.default"
+                                    "view": "chart.default",
+                                    "mode": "grid"
                                 }
                             }
                         ]
                     },
                     {
-                        "id": "stats.bookings",
+                        "id": "stats.booking",
                         "icon": "settings",
                         "type": "parent",
                         "label": "Bookings values",
                         "description": "",
                         "children": [
                             {
-                                "id": "settings.all_bookings",
+                                "id": "stats.booking.bookings",
                                 "type": "entry",
                                 "label": "CA Réservations",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.default"
+                                    "view": "chart.default",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings",
+                                "id": "stats.booking.total_bookings",
                                 "type": "entry",
                                 "label": "Nombre de réservations",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.bookingCount"
+                                    "view": "chart.bookingCount",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.compositionItem",
+                                "id": "stats.booking.compositionItem",
                                 "type": "entry",
                                 "label": "Nombre de personnes",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.compositionItem"
+                                    "view": "chart.compositionItem",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.accomodation",
+                                "id": "stats.booking.total_bookings.accomodation",
                                 "type": "entry",
                                 "label": "Nombre de nuitées",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.accomodation"
+                                    "view": "chart.accomodation",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.INS",
+                                "id": "stats.booking.total_bookings.INS",
                                 "type": "entry",
                                 "label": "INS",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.INS"
+                                    "view": "chart.INS",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_meals",
+                                "id": "stats.booking.total_meals",
                                 "type": "entry",
                                 "label": "CA repas",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.meal"
+                                    "view": "chart.meal",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.noInvoice",
+                                "id": "stats.booking.total_bookings.noInvoice",
                                 "type": "entry",
                                 "label": "CA non facturé",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.noInvoice"
+                                    "view": "chart.noInvoice",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.sku",
+                                "id": "stats.booking.total_bookings.sku",
                                 "type": "entry",
                                 "label": "SKU",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.sku"
+                                    "view": "chart.sku",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.sojournType",
+                                "id": "stats.booking.total_bookings.sojournType",
                                 "type": "entry",
                                 "label": "Type de séjour",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.sojournType"
+                                    "view": "chart.sojournType",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.taxes",
+                                "id": "stats.booking.total_bookings.taxes",
                                 "type": "entry",
                                 "label": "Nombre de taxes de séjour",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\BookingLine",
-                                    "view": "chart.taxes"
+                                    "view": "chart.taxes",
+                                    "mode": "grid"
                                 }
                             },
                             {
-                                "id": "settings.all_bookings.total_bookings.provisional",
+                                "id": "stats.booking.total_bookings.provisional",
                                 "type": "entry",
                                 "label": "CA prévisionnel",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.provisionalCA"
+                                    "view": "chart.provisionalCA",
+                                    "mode": "grid"
                                 }
                             }
 
@@ -1215,7 +1227,8 @@
                                 "description": "",
                                 "context": {
                                     "entity": "sale\\pos\\CashdeskSession",
-                                    "view": "chart.default"
+                                    "view": "chart.default",
+                                    "mode": "grid"
                                 }
                             },
                             {
@@ -1225,7 +1238,8 @@
                                 "description": "",
                                 "context": {
                                     "entity": "sale\\pos\\CashdeskSession",
-                                    "view": "chart.paymentMethod"
+                                    "view": "chart.paymentMethod",
+                                    "mode": "grid"
                                 }
                             }
                         ]
@@ -1244,7 +1258,8 @@
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Funding",
-                                    "view": "chart.default"
+                                    "view": "chart.default",
+                                    "mode": "grid"
                                 }
                             }
                         ]

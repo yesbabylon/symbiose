@@ -4,6 +4,7 @@
     "access": {
         "groups": ["booking.default.user"]
     },
+    "controller": "core_model_chart",
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
         "stacked": true,

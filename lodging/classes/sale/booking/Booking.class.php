@@ -40,7 +40,8 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',
                 'description'       => 'Nature of the customer (synched with customer) for views convenience.',
-                'onupdate'          => 'onupdateCustomerNatureId'
+                'onupdate'          => 'onupdateCustomerNatureId',
+                'required'          => true
             ],
 
             'center_id' => [
@@ -194,11 +195,11 @@ class Booking extends \sale\booking\Booking {
      * Maintain sync with Customer
      */
     public static function onupdateCustomerNatureId($om, $oids, $values, $lang) {
-        $bookings = $om->read(__CLASS__, $oids, ['customer_id', 'customer_nature_id'], $lang);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_id', 'customer_nature_id', 'customer_nature_id.rate_class_id'], $lang);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $odata) {
-                $om->write('sale\customer\Customer', $odata['customer_id'], ['customer_nature_id' => $odata['customer_nature_id']]);
+                $om->write('sale\customer\Customer', $odata['customer_id'], ['customer_nature_id' => $odata['customer_nature_id'], 'rate_class_id' => $odata['customer_nature_id.rate_class_id']]);
             }
         }
     }
@@ -208,7 +209,7 @@ class Booking extends \sale\booking\Booking {
      */
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $booking) {
@@ -231,7 +232,9 @@ class Booking extends \sale\booking\Booking {
                             $identity = reset($identities);
                             $partner_id = $om->create('sale\customer\Customer', [
                                 'partner_identity_id'   => $booking['customer_identity_id'],
-                                'customer_type_id'      => $identity['type_id']
+                                'customer_type_id'      => $identity['type_id'],
+                                'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
+                                'customer_nature_id'    => $booking['customer_nature_id']
                             ]);
                         }
                     }
