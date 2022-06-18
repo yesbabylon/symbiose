@@ -16,12 +16,12 @@
             {
                 "label": "CA réservations HTVA",
                 "operation": ["SUM", "object.total"],
-                "domain": [[["creator", "=", "user.id"], ["status", "<>", "quote"]]]
+                "domain": ["status", "<>", "quote"]
             },
             {
                 "label": "CA réservations TVAC",
                 "operation": ["SUM", "object.price"],
-                "domain": [[["creator", "=", "user.id"], ["status", "<>", "quote"]]]
+                "domain": ["status", "<>", "quote"]
             }
         ]
     }

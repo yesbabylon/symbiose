@@ -318,7 +318,7 @@ hr {
     {{ invoice_notice_html | raw }}
 </div>
 
-{% if (price > 0.0) %}
+{% if (price > 0.0) and (status != 'proforma') %}
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
         Solde de <b>{{ price | format_currency('EUR') }}</b> à payer avant le <b>{{payment_deadline}}</b>

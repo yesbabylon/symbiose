@@ -46,7 +46,7 @@
         },
         "list.default": {
             "name": "Liste des catégories",
-            "description": "Cette vue est destinée à afficher la liste des catégories.",
+            "description": "Liste des catégories.",
             "layout": {}
             }
         }

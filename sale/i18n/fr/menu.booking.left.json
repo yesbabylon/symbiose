@@ -53,6 +53,10 @@
             "label": "Planning",
             "help": ""
         },
+        "item.planning.arrivals": {
+            "label": "Arrivées (checkin)",
+            "help": ""
+        },
         "item.planning.meals": {
             "label": "Repas",
             "help": ""
