@@ -184,6 +184,7 @@ $fields = [
         ]
     ],
     'funding_id' => ['payment_reference', 'due_date'],
+    'status',    
     'is_paid',
     'due_date',
     'total',
@@ -239,6 +240,7 @@ $values = [
     'date'                  => date('d/m/Y', $invoice['created']),
     'code'                  => $invoice['name'],
     'is_paid'               => $invoice['is_paid'],
+    'status'                => $invoice['status'],    
     'booking_code'          => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],

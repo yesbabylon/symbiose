@@ -25,7 +25,7 @@ class Booking extends \sale\booking\Booking {
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => "The customer whom the booking relates to (computed).",
+                'description'       => "The customer whom the booking relates to (from selected identity).",
                 'onupdate'          => 'onupdateCustomerId'
             ],
 
@@ -33,7 +33,8 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Identity',
                 'description'       => "The customer whom the booking relates to.",
-                'onupdate'          => 'onupdateCustomerIdentityId'
+                'onupdate'          => 'onupdateCustomerIdentityId',
+                'required'          => true
             ],
 
             'customer_nature_id' => [
@@ -63,7 +64,8 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => 'lodging\sale\booking\Contact',
                 'foreign_field'     => 'booking_id',
                 'description'       => 'List of contacts related to the booking, if any.',
-                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id']
+                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id'],
+                'ondetach'          => 'delete'
             ],
 
             'contracts_ids' => [
@@ -143,7 +145,7 @@ class Booking extends \sale\booking\Booking {
             ]
 
         ];
-    } 
+    }
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
         $om->callonce('sale\booking\Booking', '_resetPrices', $oids, [], $lang);
@@ -206,82 +208,87 @@ class Booking extends \sale\booking\Booking {
 
     /**
      * Maintain sync with Customer when assigning a new customer by selecting a customer_identity_id
+     * Customer is always selected by picking up an identity (there should be only one 'customer' partner for a given identity for current organisation).
      */
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
+        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $booking) {
-                if(!$booking['customer_id']) {
-                    $partner_id = null;
-
-                    // find the partner that related to this identity, if any
-                    $partners_ids = $om->search('sale\customer\Customer', [
-                        ['relationship', '=', 'customer'],
-                        ['owner_identity_id', '=', 1],
-                        ['partner_identity_id', '=', $booking['customer_identity_id']]
-                    ]);
-                    if(count($partners_ids)) {
-                        $partner_id = reset($partners_ids);
+                $partner_id = null;
+                // find the partner that relates to this identity, if any
+                $partners_ids = $om->search('sale\customer\Customer', [
+                    ['relationship', '=', 'customer'],
+                    ['owner_identity_id', '=', 1],
+                    ['partner_identity_id', '=', $booking['customer_identity_id']]
+                ]);
+                if(count($partners_ids)) {
+                    $partner_id = reset($partners_ids);
+                }
+                else {
+                    // create a new customer for the selected identity
+                    $identities = $om->read('lodging\identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                    if($identities > 0) {
+                        $identity = reset($identities);
+                        $partner_id = $om->create('sale\customer\Customer', [
+                            'partner_identity_id'   => $booking['customer_identity_id'],
+                            'customer_type_id'      => $identity['type_id'],
+                            'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
+                            'customer_nature_id'    => $booking['customer_nature_id']
+                        ]);
                     }
-                    else {
-                        // read Identity [type_id]
-                        $identities = $om->read('lodging\identity\Identity', $booking['customer_identity_id'], ['type_id']);
-                        if($identities > 0) {
-                            $identity = reset($identities);
-                            $partner_id = $om->create('sale\customer\Customer', [
-                                'partner_identity_id'   => $booking['customer_identity_id'],
-                                'customer_type_id'      => $identity['type_id'],
-                                'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
-                                'customer_nature_id'    => $booking['customer_nature_id']
-                            ]);
-                        }
-                    }
-                    if($partner_id) {
-                        $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
-                    }
+                }
+                if($partner_id) {
+                    $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
                 }
             }
         }
     }
 
+    /**
+     * Handler for updating values relating the customer.
+     * Customer and Identity are synced : only the identity can be changes through views, customer always derives from the selected identity.
+     * This handler is always triggered by the onupdateCustomerIdentityId method.
+     *
+     * @param  \equal\orm\ObjectManager     $om        Object Manager instance.
+     * @param  Array                        $oids      List of objects identifiers.
+     * @param  Array                        $values    Associative array mapping fields names with new values tha thave been assigned.
+     * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
+     */
     public static function onupdateCustomerId($om, $oids, $values, $lang) {
 
         $bookings = $om->read(__CLASS__, $oids, [
             'customer_identity_id',
             'booking_lines_groups_ids',
+            'customer_id.rate_class_id',
             'customer_id.partner_identity_id',
             'customer_id.partner_identity_id.description',
-            'contacts_ids.partner_identity_id'
+            'contacts_ids'
         ], $lang);
 
         if($bookings > 0) {
-            $booking_line_groups_ids = [];
+
             foreach($bookings as $bid => $booking) {
-                if($booking['booking_lines_groups_ids']) {
-                    $booking_line_groups_ids = array_merge($booking_line_groups_ids, $booking['booking_line_groups_ids']);
-                }
                 $values = [];
-                if($booking['customer_id.partner_identity_id.description']) {
-                    $values['description'] = $booking['customer_id.partner_identity_id.description'];
+                // remove all contacts
+                if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
+                    $om->write(__CLASS__, $bid, ['contacts_ids' => array_map( function($a) { return -$a; }, $booking['contacts_ids'] )], $lang);
+                }                
+                // #todo - if customer is a legal person, import all its contacts
+                $contact_id = $om->create('lodging\sale\booking\Contact', [
+                    'booking_id' => $bid,
+                    'owner_identity_id' => $booking['customer_identity_id'],
+                    'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
+                if($contact_id > 0) {
+                    // update booking
+                    $om->write(__CLASS__, $bid, ['contacts_ids' => [$contact_id]], $lang);
                 }
-                if(!$booking['customer_identity_id']) {
-                    $values['customer_identity_id'] = $booking['customer_id.partner_identity_id'];
-                    $booking['customer_identity_id'] = $booking['customer_id.partner_identity_id'];
-                }
-                if(count($values)) {
-                    $om->write(__CLASS__, $bid, $values, $lang);
-                }
-                if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
-                    // create a contact with the customer as 'booking' contact
-                    $om->create('lodging\sale\booking\Contact', ['booking_id' => $bid, 'owner_identity_id' => $booking['customer_identity_id'], 'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
+                // update bookingline group rate_class_id   (triggers _resetPrices and _updatePriceAdapters)
+                if($booking['booking_lines_groups_ids'] && count($booking['booking_lines_groups_ids'])) {
+                    $om->write('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
                 }
             }
-            if(count($booking_line_groups_ids)) {
-                $om->callonce('lodging\sale\booking\BookingLineGroup', '_updatePriceAdapters', array_unique($booking_line_groups_ids), [], $lang);
-            }
-            $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         }
     }
 
@@ -302,10 +309,10 @@ class Booking extends \sale\booking\Booking {
     /**
      * Signature for single object change from views.
      *
-     * @param  Object   $om        Object Manager instance.
-     * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
-     * @param  Array    $values    Copy of the current (partial) state of the object (fields depend on the view).
-     * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
+     * @param  \equal\orm\ObjectManager     $om        Object Manager instance.
+     * @param  Array                        $event     Associative array holding changed fields as keys, and their related new values.
+     * @param  Array                        $values    Copy of the current (partial) state of the object (fields depend on the view).
+     * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
     public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
@@ -316,9 +323,9 @@ class Booking extends \sale\booking\Booking {
                 $result['date_to'] = $event['date_from'];
             }
         }
+        // try to retrieve nature from an identity
         if(isset($event['customer_identity_id'])) {
-
-            // find the partner that related to this identity, if any
+            // search for a partner that relates to this identity, if any
             $partners_ids = $om->search('sale\customer\Customer', [
                 ['relationship', '=', 'customer'],
                 ['owner_identity_id', '=', 1],
@@ -346,10 +353,10 @@ class Booking extends \sale\booking\Booking {
      *
      */
     public static function _updateAutosaleProducts($om, $oids, $values, $lang) {
-
         /*
             remove groups related to autosales that already exist
         */
+
         $bookings = $om->read(__CLASS__, $oids, [
                                                     'id',
                                                     'customer_id.rate_class_id',

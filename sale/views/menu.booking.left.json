@@ -135,6 +135,18 @@
                         "route": "/planning"
                     },
                     {
+                        "id": "item.planning.arrivals",
+                        "type": "entry",
+                        "label": "Arrivals",
+                        "description": "",
+                        "route": "/consumptions",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Consumption",
+                            "view": "list.occupancies",
+                            "domain": ["schedule_from", "<>", "00:00:00"]
+                        }
+                    },
+                    {
                         "id": "item.planning.meals",
                         "type": "entry",
                         "label": "Consumptions",

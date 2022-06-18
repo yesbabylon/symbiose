@@ -107,6 +107,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Fare class",
+                                                "value": "rate_class_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "customer_external_ref",
                                                 "width": "50%"
                                             },
