@@ -17,7 +17,7 @@ class RentalUnit extends \realestate\RentalUnit {
         return [
 
             /*
-            // les catégories de centre sont juste une indication au niveau des centres, mais ne sont pas applicable sur les UL (des UL peuvent être GA ou GG)
+            // center categories are just a hint at the center level, but are not applicable on rental units (rental units can be either GA or GG)
             'center_category_id' => [
                 'type'              => 'many2one',
                 'description'       => "Center category which current unit belongs to, if any.",
@@ -35,7 +35,8 @@ class RentalUnit extends \realestate\RentalUnit {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'Default sojourn type of the rental unit.',
-                'required'          => true
+                'default'           => 1,
+                'visible'           => ['is_accomodation', '=', true]
             ]            
 
         ];

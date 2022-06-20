@@ -4,6 +4,7 @@
     "access": {
         "groups": ["documents.default.user"]
     },
+    "controller": "core_model_chart",
     "layout": {
         "entity": "documents\\Document",
         "type": "pie",

@@ -4,6 +4,7 @@
     "access": {
         "groups": ["finance.default.user"]
     },
+    "controller": "core_model_chart",    
     "layout": {
         "entity": "lodging\\sale\\booking\\Funding",
         "group_by": "range",

@@ -4,6 +4,7 @@
     "access": {
         "groups": ["finance.default.user"]
     },
+        "controller": "core_model_chart",
     "layout": {
         "entity": "finance\\accounting\\Invoice",
         "group_by": "range",
