@@ -28,8 +28,7 @@
             "label": "Envoi du contrat",
             "description": "",
             "icon": "drive_file_rename_outline",
-            "route": "/booking/object.booking_id/contract/object.id",
-            "visible": ["status", "in", ["pending", "sent"]]
+            "route": "/booking/object.booking_id/contract/object.id"
         }              
     ],    
     "layout": {

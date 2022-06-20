@@ -289,6 +289,8 @@ class Booking extends \sale\booking\Booking {
                     $om->write('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
                 }
             }
+
+            $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         }
     }
 
@@ -347,7 +349,7 @@ class Booking extends \sale\booking\Booking {
     }
 
     /**
-     * Generate one or more groups for products saled automatically.
+     * Generate one or more groups for products sold automatically.
      * We generate services groups related to autosales when the  is updated
      * customer, date_from, date_to, center_id
      *

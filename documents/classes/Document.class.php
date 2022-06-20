@@ -90,7 +90,15 @@ class Document extends Model {
                 'function'          => 'calcPreviewImage',
                 'description'       => 'Thumbnail of the document.',
                 'store'             => true
+            ],
+
+            'template_attachments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'communication\TemplateAttachment',
+                'foreign_field'     => 'document_id',
+                'description'       => "The links between document and templates."
             ]
+
         ];
     }
 

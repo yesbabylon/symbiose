@@ -551,6 +551,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onupdateRateClassId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'rate_class_id.name'], $lang);
+        // #todo - add support for assigning an optional booking_type_id to each rate_class
+        foreach($groups as $gid => $group) {
+            // if model of chosen product has a non-generic booking type, update the booking of the group accordingly
+            if($group['rate_class_id.name'] == 'T5' || $group['rate_class_id.name'] == 'T7') {
+                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => 4]);
+            }
+        }
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
     }
