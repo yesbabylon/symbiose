@@ -33,7 +33,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch']
+    'providers'     => ['context', 'orm', 'cron', 'dispatch', 'report']
 ]);
 
 /**
@@ -42,7 +42,7 @@ list($params, $providers) = announce([
  * @var \equal\cron\Scheduler               $cron
  * @var \equal\dispatch\Dispatcher          $dispatch
  */
-list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch']];
+list($context, $orm, $cron, $dispatch, $reporter) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch'], $providers['report']];
 
 // read booking object
 $booking = Booking::id($params['id'])
@@ -271,7 +271,7 @@ if($booking['customer_id']['rate_class_id']) {
 
 
 // retrieve existing payment plans
-$payment_plans = PaymentPlan::search([])->read(['rate_class_id', 'booking_type_id', 'payment_deadlines_ids' => ['delay_from_event','delay_from_event_offset','delay_count','type','is_balance_invoice','amount_share']])->get();
+$payment_plans = PaymentPlan::search([])->read(['name', 'rate_class_id', 'booking_type_id', 'sojourn_type_id', 'payment_deadlines_ids' => ['delay_from_event','delay_from_event_offset','delay_count','type','is_balance_invoice','amount_share']])->get();
 
 if(!$payment_plans) {
     throw new Exception("missing_payment_plan", QN_ERROR_INVALID_CONFIG);
@@ -301,6 +301,7 @@ foreach($payment_plans as $pid => $plan) {
         }
 
         if($payment_plan < 0 || $match_criteria_count > $fulfilled_criteria_count) {
+            $reporter->debug("Match for plan: {$plan['name']}: class {$plan['rate_class_id']}, booking {$plan['booking_type_id']}, sojourn {$plan['sojourn_type_id']}");
             $payment_plan = $plan;
             $fulfilled_criteria_count = $match_criteria_count;
         }
@@ -310,6 +311,9 @@ foreach($payment_plans as $pid => $plan) {
 if($payment_plan < 0) {
     throw new Exception("cannot_read_object", QN_ERROR_UNKNOWN_OBJECT);
 }
+
+$reporter->debug("Selected payment plan: {$payment_plan['name']}");
+
 
 $funding_order = 0;
 foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
@@ -344,19 +348,23 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
             $date = $booking['date_to'];
             break;
     }
-    $funding['issue_date'] = $date + $deadline['delay_from_event_offset'];
+    $funding['issue_date'] = $date + ($deadline['delay_from_event_offset'] * 86400);
     $funding['due_date'] = $funding['issue_date'] + ($deadline['delay_count'] * 86400);
 
-    // remaining days to checkin is less than planned delay
-    if($funding['due_date'] >= $booking['date_from']) {
-        // create proforma balance invoice and do not create funding (raise Exception on failure)
-        eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
+    // special case: remaining days to checkin is less than planned delay
+    if($funding['due_date'] > $booking['date_from']) {
+        $reporter->debug("Delay too short: due {$funding['due_date']}, from {$booking['date_from']}");
+        // create a single funding with 100% of due amount
+        $funding['due_date'] = $booking['date_from'];
+        $funding['due_amount'] = $booking['price'];
+        $funding['amount_share'] = 1;
+        $funding['payment_deadline_id'] = null;
+        Funding::create($funding)->read(['name'])->get();
         break;
-
     }
+
     // request funding creation
     try {
-
         Funding::create($funding)->read(['name'])->get();
     }
     catch(Exception $e) {

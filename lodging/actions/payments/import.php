@@ -74,7 +74,7 @@ foreach($statements as $statement) {
         $bank_statement = BankStatement::create($fields)->adapt('txt')->first();
 
         $result[] = $bank_statement;
-    
+
         foreach($statement['transactions'] as $transaction) {
 
             try {
@@ -84,19 +84,19 @@ foreach($statements as $statement) {
                     'amount'                => $transaction['amount'],
                     'account_holder'        => $transaction['account']['name'],
                     // should be an IBAN (though could theorically not be)
-                    'account_iban'          => $transaction['account']['number'],   
+                    'account_iban'          => $transaction['account']['number'],
                     'message'               => $transaction['message'],
                     'structured_message'    => $transaction['structured_message'],
-                    'center_office_id'      => $center_office['id']                    
+                    'center_office_id'      => $center_office['id']
                 ];
                 BankStatementLine::create($fields);
             }
             catch(Exception $e) {
                 // ignore duplicates (not created)
                 // we cannot stop the process : as there might be several statements
-            }    
-    
-        }        
+            }
+
+        }
     }
     catch(Exception $e) {
         throw new Exception('already_imported', QN_ERROR_CONFLICT_OBJECT);

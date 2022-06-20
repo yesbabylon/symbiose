@@ -52,7 +52,12 @@
             "label": "Aperçu",
             "description": "Vignette d'aperçu du document.",
             "help": ""
-        }
+        },
+        "template_attachments_ids":{
+            "label": "Pièces jointes",
+            "description": "Pièces jointes utilisant le document.",
+            "help": ""
+        }        
     },
     "view": {
         "form.default": {
@@ -64,8 +69,11 @@
                 },
                 "section.document_tag":{
                     "label": "Étiquettes"
+                },
+                "section.template_attachments":{
+                    "label": "Pièces jointes"
                 }
-        }
+            }
         },
         "list.default": {
             "name": "Liste des Documents",
