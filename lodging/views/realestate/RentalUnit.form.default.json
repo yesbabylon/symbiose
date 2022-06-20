@@ -58,6 +58,12 @@
                                                 "label": "Accomodation",
                                                 "value": "is_accomodation",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Sojourn Type",
+                                                "value": "sojourn_type_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
