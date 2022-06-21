@@ -4,6 +4,7 @@
     "access": {
         "groups": ["booking.default.user"]
     },
+    "controller": "core_model_chart",
     "layout": {
         "entity": "sale\\booking\\CompositionItem",
         "group_by": "range",

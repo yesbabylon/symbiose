@@ -439,10 +439,11 @@ class BookingLine extends \sale\booking\BookingLine {
                 if($remaining > 0) {
                     // no availability !
                     $assignement = [
-                        'booking_id'        => $line['booking_id'],
-                        'booking_line_id'   => $lid,
-                        'rental_unit_id'    => 0,
-                        'qty'               => $nb_pers
+                        'booking_id'            => $line['booking_id'],
+                        'booking_line_id'       => $lid,
+                        'booking_line_group_id' => $line['booking_line_group_id'],
+                        'rental_unit_id'        => 0,
+                        'qty'                   => $nb_pers
                     ];
                     trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
                     $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);

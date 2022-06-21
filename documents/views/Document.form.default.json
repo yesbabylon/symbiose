@@ -4,7 +4,7 @@
     "layout": {
         "groups": [
             {
-                "sections": [                    
+                "sections": [
                     {
                         "label":"Document details",
                         "id": "section.document_info",
@@ -21,7 +21,7 @@
                                                 "width": "100%",
                                                 "widget":{
                                                     "heading": true
-                                                }                                               
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -63,35 +63,56 @@
                                             {
                                                 "type": "field",
                                                  "value": "public",
-                                                 "width": "10%"   
+                                                 "width": "10%"
                                             }
                                         ]
-                                    }                                           
+                                    }
                                 ]
-                            }       
+                            }
                         ]
                     },
-                        {
-                            "label":"Tags",
-                            "id": "section.document_tag",
-                            "rows": [
-                                {
-                                    "columns": [
-                                        {
-                                            "width": "100%",
-                                            "align": "left",
-                                            "items": [
-                                                {
-                                                    "type": "field",
-                                                    "value": "tags_ids",
-                                                    "width": "100%"
-                                                }
-                                            ]
-                                        }                                  
-                                    ]
-                                }
-                            ]
-                        }
+                    {
+                        "label":"Tags",
+                        "id": "section.document_tag",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "tags_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label":"Attachments",
+                        "id": "section.template_attachments",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "template_attachments_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             }
         ]

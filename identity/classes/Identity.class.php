@@ -73,7 +73,7 @@ class Identity extends Model {
 
             'bank_account_iban' => [
                 'type'          => 'string',
-                'usage'         => 'uri/urn:iban',                
+                'usage'         => 'uri/urn:iban',
                 'description'   => "Number of the bank account of the Identity, if any."
             ],
 
@@ -348,7 +348,7 @@ class Identity extends Model {
      */
     public static function calcDisplayName($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['type', 'firstname', 'lastname', 'legal_name', 'short_name']);
+        $res = $om->read(__CLASS__, $oids, ['type_id', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($res as $oid => $odata) {
             $display_name = self::_computeDisplayName($odata, $lang);
             $result[$oid] = $display_name;
@@ -363,21 +363,32 @@ class Identity extends Model {
         foreach($res as $oid => $odata) {
             $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
         }
+        // force re-computing of related partners names
         $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
+        $om->read('identity\Partner', $partners_ids, ['name'], $lang);        
     }
 
 
     public static function onupdateTypeId($om, $oids, $values, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['type_id.code']);
+        $res = $om->read(__CLASS__, $oids, ['type_id', 'type_id.code', 'partners_ids']);
         if($res > 0) {
+            $partners_ids = [];
             foreach($res as $oid => $odata) {
-                $values = [ 'type' => $odata['type_id.code'] ];
-                if($odata['type_id.code'] == 'I' ) {
-                    $values['display_name'] = null;
+                $values = [ 'type' => $odata['type_id.code'], 'display_name' => null];
+                if($odata['type_id'] == 1 ) {
+                    $values['legal_name'] = '';
                 }
+                else {
+                    $values['firstname'] = '';
+                    $values['lastname'] = '';
+                }
+                $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
                 $om->write(__CLASS__, $oid, $values, $lang);
-            }
+            }            
             $om->read(__CLASS__, $oids, ['display_name'], $lang);
+            // force re-computing of related partners names
+            $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);            
+            $om->read('identity\Partner', $partners_ids, ['name'], $lang);
         }
     }
 
@@ -389,7 +400,7 @@ class Identity extends Model {
 
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
-                $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);                
+                $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
             }
         }
     }
@@ -414,14 +425,14 @@ class Identity extends Model {
                 $result['type'] = $type['code'];
             }
         }
-        
+
         return $result;
     }
 
     protected static function _computeDisplayName($fields, $lang) {
         $parts = [];
-        if( isset($fields['type'])  ) {
-            if( $fields['type'] == 'I'  ) {
+        if( isset($fields['type_id'])  ) {
+            if( $fields['type_id'] == 1  ) {
                 if( isset($fields['firstname']) && strlen($fields['firstname']) ) {
                     $parts[] = $fields['firstname'];
                 }
@@ -442,65 +453,113 @@ class Identity extends Model {
         return implode(' ', $parts);
     }
 
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        if(isset($values['type_id'])) {
+            $identities = $om->read(get_called_class(), $oids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
+            foreach($identities as $oid => $identity) {
+                if($values['type_id'] == 1) {
+                    $firstname = '';
+                    $lastname = '';
+                    if(isset($values['firstname'])) {
+                        $firstname = $values['firstname'];
+                    }
+                    else {
+                        $firstname = $identity['firstname'];
+                    }
+                    if(isset($values['lastname'])) {
+                        $lastname = $values['lastname'];
+                    }
+                    else {
+                        $lastname = $identity['lastname'];
+                    }
+
+                    if(!strlen($firstname) ) {
+                        return ['firstname' => ['missing' => 'Firstname cannot be empty for natural person.']];
+                    }
+                    if(!strlen($lastname) ) {
+                        return ['lastname' => ['missing' => 'Lastname cannot be empty for natural person.']];
+                    }
+                }
+                else {
+                    $legal_name = '';
+                    if(isset($values['legal_name'])) {
+                        $legal_name = $values['legal_name'];
+                    }
+                    else {
+                        $legal_name = $identity['legal_name'];
+                    }
+                    if(!strlen($legal_name)) {
+                        return ['legal_name' => ['missing' => 'Legal name cannot be empty for legal person.']];
+                    }
+                }
+            }            
+        }
+        return parent::canupdate($om, $oids, $values, $lang);
+    }
 
     public static function getConstraints() {
-        return [
+        return [            
             'legal_name' =>  [
-                'missing' => [
-                    'message'       => 'legal name is mandatory for organisations.',
-                    'function'      => function ($legal_name, $values) {
-                        $res = false;
-                        if( strlen($legal_name) > 0 ) {
-                            $res = true;
-                        }
-                        else {
-                            if( isset($values['type']) && $values['type'] == 'I' ) {
-                                $res = true;
-                            }
-                        }
-                        return $res;
-                    }
-                ],
                 'too_short' => [
                     'message'       => 'Legal name must be minimum 2 chars long.',
                     'function'      => function ($legal_name, $values) {
-                        return !( isset($values['type']) && $values['type'] != 'I' && strlen($legal_name) < 2);
+                        return !( strlen($legal_name) < 2 && isset($values['type_id']) && $values['type_id'] != 1 );
+                    }
+                ],
+                'invalid_chars' => [
+                    'message'       => 'Legal name must contain only naming glyphs.',
+                    'function'      => function ($legal_name, $values) {
+                        if( isset($values['type_id']) && $values['type_id'] == 1 ) {
+                            return true;
+                        }
+                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $legal_name));
                     }
                 ]
             ],
             'firstname' =>  [
-                'missing' => [
-                    'message'       => 'Firstname is mandatory for individuals.',
-                    'function'      => function ($firstname, $values) {
-                        $res = false;
-                        if( strlen($firstname) > 0 ) {
-                            $res = true;
-                        }
-                        else {
-                            if( isset($values['type']) && $values['type'] != 'I' ) {
-                                $res = true;
-                            }
-                        }
-                        return $res;
-                    }
-                ],
                 'too_short' => [
                     'message'       => 'Firstname must be 2 chars long at minimum.',
                     'function'      => function ($firstname, $values) {
-                        return !( isset($values['type']) && $values['type'] == 'I' && strlen($firstname) < 2);
+                        return !( strlen($firstname) < 2 && isset($values['type_id']) && $values['type_id'] == 1 );
                     }
                 ],
                 'invalid_chars' => [
                     'message'       => 'Firstname must contain only naming glyphs.',
                     'function'      => function ($firstname, $values) {
-                        if( isset($values['type']) && $values['type'] != 'I' ) {
+                        if( isset($values['type_id']) && $values['type_id'] != 1 ) {
                             return true;
                         }
                         return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $firstname));
                     }
                 ]
+            ],
+            'lastname' =>  [
+                'too_short' => [
+                    'message'       => 'Lastname must be 2 chars long at minimum.',
+                    'function'      => function ($lastname, $values) {
+                        return !( strlen($lastname) < 2 && isset($values['type_id']) && $values['type_id'] == 1 );
+                    }
+                ],
+                'invalid_chars' => [
+                    'message'       => 'Lastname must contain only naming glyphs.',
+                    'function'      => function ($lastname, $values) {
+                        if( isset($values['type_id']) && $values['type_id'] != 1 ) {
+                            return true;
+                        }
+                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $lastname));
+                    }
+                ]
             ]
-
         ];
     }
 }

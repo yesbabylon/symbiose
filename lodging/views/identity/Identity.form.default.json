@@ -1,6 +1,9 @@
 {
     "name": "Identity",
     "description": "An identity is any kind of person: moral (organisation) or physical (individual).",
+    "access": {
+        "groups": ["sale.default.user", "booking.default.user"]
+    },
     "routes": [
         {
             "id": "item.identity.booking.file",
@@ -66,7 +69,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "type_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "ACTION.CREATE": false  
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",
@@ -97,7 +105,12 @@
                                                 "type": "field",
                                                 "label": "Language",
                                                 "value": "lang_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "ACTION.CREATE": false  
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",

@@ -4,30 +4,32 @@
     "access": {
         "groups": ["booking.default.user"]
     },
+    "controller": "core_model_chart",
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
+        "stacked": false,
         "group_by": "range",
         "range_interval": "year",
         "range_from": "date.this.year.first",
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA Prévisionnel",
+                "label": "Ancien administrateur CBTJ/Kaleo",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 1]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Administration publique",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 2]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Administrateur",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 3]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "ATL (Accueil Temps Libre, Ecole de devoirs)",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 4]
             },
@@ -77,7 +79,7 @@
                 "domain": ["customer_nature_id", "=", 13]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Club Sprotif/Fédération",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 14]
             },
@@ -92,12 +94,12 @@
                 "domain": ["customer_nature_id", "=", 16]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Eglise - groupe religieux",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 17]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole maternelle",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 18]
             },
@@ -107,17 +109,17 @@
                 "domain": ["customer_nature_id", "=", 19]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole primaire",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 20]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole secondaire",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 21]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Famille",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 22]
             },

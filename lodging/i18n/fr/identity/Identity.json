@@ -1,0 +1,48 @@
+{
+    "name": "Identité",
+    "plural": "Identités",
+    "description": "Une Identité est soit une personne morale soit une personne physique : les organisations sont des personnes morales et les utilisateurs, les contacts et les employés sont des personnes physiques.",
+    "model": {
+        "contacts_ids": {
+            "label": "Contacts",
+            "description": "Contacts liés à l'identité.",
+            "help": ""
+        },
+        "lang_id": {
+            "label": "Langue",
+            "description": "Langue parlée.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Identité",
+            "description": "Formulaire de base pour l'affichage du groupe.",
+            "layout": {
+                "section.identity_info": {
+                    "label": "Infos générales"
+                },
+                "section.settings": {
+                    "label": "Paramètres"
+                },
+                "section.identity_main_address": {
+                    "label": "Adresse principale"
+                },
+                "section.identity_addresses": {
+                    "label": "Autres adresses"
+                },
+                "section.identity_description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste d'Identité",
+            "description": "Liste de base des identités existantes.",
+            "layout": {}
+        }
+    },
+    "error": {
+
+    }
+}
