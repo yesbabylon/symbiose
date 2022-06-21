@@ -25,7 +25,9 @@ class Customer extends \identity\Partner {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => 'Rate class that applies to the customer.',
-                'visible'           => ['relationship', '=', 'customer']
+                'visible'           => ['relationship', '=', 'customer'],
+                'default'           => 1,
+                'readonly'          => true
             ],
 
             'customer_nature_id' => [

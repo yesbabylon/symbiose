@@ -19,7 +19,7 @@
             "help": ""
         },
         "rental_unit_id": {
-            "label": "Unité de location",
+            "label": "Unité locative",
             "description": "Unité locative affectée à la ligne de réservation.",
             "help": ""
         }

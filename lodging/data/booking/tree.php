@@ -65,7 +65,8 @@ $tree = [
         ],
         'booking_lines_ids' => [
             'id',
-            'name', 'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
+            'name', 'description',
+            'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
             'price_id',
             'product_id' => [
                 'name', 'sku', 'product_model_id' => ['has_duration', 'duration']

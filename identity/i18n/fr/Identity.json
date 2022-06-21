@@ -37,7 +37,7 @@
         },
         "short_name": {
             "label": "Nom usuel",
-            "description": "Nom usuel à utiliser comme mémo pour identifier l'organisation (acronyme ou nom abrégé).",
+            "description": "Nom usuel utilisé en interne pour identifier l'organisation (acronyme ou nom abrégé).",
             "help": ""
         },
         "description": {
@@ -236,5 +236,21 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "firstname": {
+            "missing": "Le prénom est obligatoire pour une personne physique.",
+            "invalid_chars": "Caractères invalides.",
+            "too_short": "Prénom trop court (min 2 car.)."
+        },
+        "lastname": {
+            "missing": "Le nom est obligatoire pour une personne physique.",
+            "invalid_chars": "Caractères invalides.",
+            "too_short": "Nom trop court (min 2 car.)."
+        },
+        "legal_name": {
+            "missing": "Le nom est obligatoire pour une personne morale.",
+            "invalid_chars": "Caractères invalides.",
+            "too_short": "Nom trop court (min 2 car.)."
+        }   
+    }
 }

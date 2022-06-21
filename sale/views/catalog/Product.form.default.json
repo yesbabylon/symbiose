@@ -48,17 +48,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "is_pack",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "can_sell",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_own_price",
                                                 "width": "50%"
                                             }
                                         ]

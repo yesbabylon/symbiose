@@ -4,6 +4,7 @@
     "access": {
         "groups": ["finance.default.user"]
     },
+    "controller": "core_model_chart",
     "layout": {
         "entity": "finance\\accounting\\Invoice",
         "group_by": "range",
@@ -15,12 +16,12 @@
             {
                 "label": "Total Notes de crédit TVAC",
                 "operation": ["SUM", "object.total"],
-                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+                "domaine": [[["type", "=", "credit_note"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
             },
             {
                 "label": "Total Notes de crédit HTVA",
                 "operation": ["SUM", "object.price"],
-                "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+                "domaine": [[["type", "=", "credit_note"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
             }
         ]
     }

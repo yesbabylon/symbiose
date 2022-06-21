@@ -92,7 +92,7 @@ class BookingLineGroup extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The rate class that applies to the group.",
-                'required'          => true
+                'default'           => 1
             ],
 
             'booking_lines_ids' => [

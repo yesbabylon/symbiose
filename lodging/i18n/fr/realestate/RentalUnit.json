@@ -12,6 +12,11 @@
             "label": "Centre",
             "description": "Le centre auquel appartient le logement.",
             "help": ""
+        },
+        "sojourn_type_id": {
+            "label": "Type de séjour",
+            "description": "Type de séjour par défaut auquel se rapporte le logement.",
+            "help": ""
         }
     },
     "view": {
