@@ -23,7 +23,7 @@ class BankStatementLine extends \sale\pay\BankStatementLine {
                 'foreign_object'    => 'sale\booking\Payment',
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
-                'onupdate'          => 'sale\pay\BankStatementLine::onchangePaymentsIds',
+                'onupdate'          => 'sale\pay\BankStatementLine::onupdatePaymentsIds',
                 'ondetach'          => 'delete'
             ]
 

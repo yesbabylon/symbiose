@@ -24,10 +24,6 @@
             "label": "Lignes de commande",
             "description": "Les lignes de commande sélectionnées pour le paiement."
         },
-        "order_payment_ids": {
-            "label": "Paiement",
-            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement."
-        },
         "total": {
             "label": "Total HT",
             "description": "Somme des totaux HT des lignes de commande.",

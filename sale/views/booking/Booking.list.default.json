@@ -32,12 +32,6 @@
             },
             {
                 "type": "field",
-                "label": "Center",
-                "value": "center_id",
-                "width": "15%"
-            },
-            {
-                "type": "field",
                 "label": "Type",
                 "value": "type_id",
                 "width": "15%"

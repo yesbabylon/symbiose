@@ -29,12 +29,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Center",
-                                                "value": "center_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "date_from",
                                                 "width": "50%"
                                             },

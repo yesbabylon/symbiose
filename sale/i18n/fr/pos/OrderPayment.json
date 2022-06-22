@@ -10,22 +10,26 @@
         },
         "order_id": {
             "label": "Commande",
-            "description": "The order the line relates to."
+            "description": "The order the line relates to.",
+            "help": ""
         },
         "status": {
             "label": "Statut",
             "selection": {
                 "pending": "en cours",
                 "paid": "payé"
-            }
+            },
+            "help": ""
         },
         "order_lines_ids": {
             "label": "Lignes de commande",
-            "description": "Les lignes de commande sélectionnées pour le paiement."
+            "description": "Les lignes de commande sélectionnées pour le paiement.",
+            "help": ""
         },
         "order_payment_parts_ids": {
             "label": "Lignes de paiement",
-            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement."
+            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement.",
+            "help": ""
         },
         "total_due": {
             "label": "Total dû",

@@ -37,13 +37,13 @@ class AgeRange extends Model {
             'age_from' => [
                 'type'              => 'integer',
                 'description'       => "Age for the lower bound (included).",
-                'requred'           => true
+                'required'           => true
             ],
 
             'age_to' => [
                 'type'              => 'integer',
                 'description'       => "Age for the upper bound (excluded).",
-                'requred'           => true
+                'required'           => true
             ],
 
             'is_active' => [

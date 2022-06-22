@@ -63,6 +63,7 @@
                                                 "type": "field",
                                                 "label": "Owner Identity",
                                                 "value": "owner_identity_id",
+                                                "width": "50%",
                                                 "visible": false
                                             },
                                             {

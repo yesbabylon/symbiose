@@ -32,11 +32,6 @@
             "label": "Montant de l'opération",
             "description": "Variation dans la caisse (montant positif ou négatif).",
             "help": ""
-        },
-        "payments_ids": {
-            "label": "Paiements",
-            "description": "Les paiements qui font partie de l'opération.",
-            "help": ""
         }
     },
     "view": {
