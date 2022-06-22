@@ -27,6 +27,7 @@
             {
                 "type": "field",
                 "value": "order_id",
+                "width": "20%",
                 "visible": false
             },
             {

@@ -19,12 +19,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "amount",
                                                 "width": "50%"
                                             },

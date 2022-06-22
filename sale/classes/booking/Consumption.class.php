@@ -143,7 +143,7 @@ class Consumption extends Model {
                     'daily',
                     'full'
                 ],
-                'visbile'           => ['is_accomodation', '=', true],
+                'visible'           => ['is_accomodation', '=', true],
                 'default'           => 'none'
             ]
 
