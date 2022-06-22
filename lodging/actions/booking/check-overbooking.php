@@ -144,7 +144,14 @@ $colliding_bookings_ids = array_keys($colliding_bookings_map);
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 
-if(count($colliding_bookings_ids)) {
+$is_colliding_bookings = (bool) count($colliding_bookings_ids);
+
+// ignore self-collision
+if(count($colliding_bookings_ids) == 1 && $colliding_bookings_ids[0] == $params['id']) {
+    $is_colliding_bookings = false;
+}
+
+if($is_colliding_bookings) {
     $bookings = Booking::ids($colliding_bookings_ids)->read(['id', 'name'])->get(true);
 
     $links = [];

@@ -94,7 +94,7 @@ class OrderLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money',
                 'description'       => 'Total tax-excluded price of the line (computed).',
-                'function'          => 'getTotal',
+                'function'          => 'calcTotal',
                 'store'             => true
             ],
 
@@ -103,14 +103,14 @@ class OrderLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money',                
                 'description'       => 'Final tax-included price of the line (computed).',
-                'function'          => 'getPrice',
+                'function'          => 'calcPrice',
                 'store'             => true
             ]
 
         ];
     }
 
-    public static function getTotal($om, $ids, $lang) {
+    public static function calcTotal($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'free_qty', 'discount']);
         if($lines > 0) {
@@ -121,7 +121,7 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function getPrice($om, $ids, $lang) {
+    public static function calcPrice($om, $ids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $ids, ['total', 'vat_rate']);
         if($lines > 0) {
@@ -132,10 +132,10 @@ class OrderLine extends Model {
         return $result;
     }
 
-    public static function _resetPrice($om, $ids, $lang) {
+    public static function _resetPrice($om, $ids, $values, $lang) {
         $lines = $om->read(get_called_class(), $ids, ['order_id'], $lang);
         if($lines > 0) {
-            $orders_ids = array_reduce($lines, function ($c, $o) { return array_merge($c, [$o['order_id']]); }, [] );
+            $orders_ids = array_map(function ($a) {return $a['order_id'];}, $lines);
             $om->write('sale\pos\Order', $orders_ids, ['total' => null, 'price' => null], $lang);
         }
         $om->write(get_called_class(), $ids, ['total' => null, 'price' => null], $lang);
