@@ -23,7 +23,7 @@
             "description": "Rental units will no longer be reserved and will be available for other bookings.",
             "controller": "lodging_booking_do-quote",
             "confirm": true,
-            "visible": [ ["status", "in", ["option", "confirmed"]], ["is_invoiced", "=", false] ]
+            "visible": ["status", "in", ["option", "confirmed", "validated"]]
         },
         {
             "id": "action.option",

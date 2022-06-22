@@ -44,7 +44,7 @@ if(!$document['public']) {
     $auth->su($user_id);
 }
 
-$document =  $collection->read(['name', 'data', 'type', 'size'])->first();
+$document = $collection->read(['name', 'data', 'type', 'size'])->first();
 
 $context->httpResponse()
         ->header('Content-Type', $document['type'])
