@@ -86,6 +86,14 @@ class Order extends Model {
                 'store'             => true
             ],
 
+            'total_paid' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Total paid amount from payments.',
+                'function'          => 'calcTotalPaid'
+            ],
+
             'order_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pos\OrderLine',
@@ -141,7 +149,6 @@ class Order extends Model {
         return $result;
     }
 
-
     public static function calcTotal($om, $ids, $lang) {
         $result = [];
         $orders = $om->read(__CLASS__, $ids, ['order_lines_ids.total']);
@@ -176,6 +183,22 @@ class Order extends Model {
         return $result;
     }
 
+    public static function calcTotalPaid($om, $ids, $lang) {
+        $result = [];
+        $orders = $om->read(__CLASS__, $ids, ['order_payments_ids.total_paid']);
+        if($orders > 0) {
+            foreach($orders as $oid => $order) {
+                $result[$oid] = 0.0;
+                if($order['order_payments_ids.total_paid'] > 0) {
+                    foreach($order['order_payments_ids.total_paid'] as $pid => $payment) {
+                        $result[$oid] += $payment['total_paid'];
+                    }
+                    $result[$oid] = round($result[$oid], 2);
+                }
+            }
+        }
+        return $result;        
+    }
 
     public static function canupdate($om, $ids, $values, $lang) {
         if(isset($values['session_id'])) {
