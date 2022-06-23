@@ -49,7 +49,7 @@ class Order extends Model {
 
             'session_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pos\CashdeskSession',
+                'foreign_object'    => \sale\pos\CashdeskSession::getType(),
                 'description'       => 'The session the order belongs to.',
                 'onupdate'          => 'onupdateSessionId',
                 'required'          => true

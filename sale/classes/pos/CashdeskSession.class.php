@@ -36,7 +36,7 @@ class CashdeskSession extends Model {
 
             'cashdesk_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pos\Cashdesk',
+                'foreign_object'    => \sale\pos\Cashdesk::getType(),
                 'description'       => 'Cash desk the log entry belongs to.',
                 'required'          => true
             ],

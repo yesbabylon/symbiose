@@ -21,7 +21,8 @@ class OrderLine extends Model {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
-                'description'       => 'The operation the payment relates to.'
+                'description'       => 'The operation the payment relates to.',
+                'onupdate'          => 'onupdateOrderId'
             ],
 
             'order_payment_id' => [
@@ -33,7 +34,7 @@ class OrderLine extends Model {
 
             'product_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\catalog\Product',
+                'foreign_object'    => \sale\catalog\Product::getType(),
                 'description'       => 'The product (SKU) the line relates to.'
             ],
 
@@ -101,13 +102,59 @@ class OrderLine extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',                
+                'usage'             => 'amount/money',
                 'description'       => 'Final tax-included price of the line (computed).',
                 'function'          => 'calcPrice',
                 'store'             => true
             ]
 
         ];
+    }
+
+    public static function onupdateOrderId($om, $oids, $values, $lang) {
+        $lines = $om->read(self::getType(), $oids, ['product_id']);
+
+        foreach($lines as $lid => $line) {
+            /*
+                Find the Price List that matches the criteria from the booking with the shortest duration
+            */
+            $price_lists_ids = $om->search(
+                'sale\price\PriceList',
+                [
+                    ['date_from', '<=', time()],
+                    ['date_to', '>=', time()],
+                    ['status', 'in', ['published']],
+                    ['is_active', '=', true]
+                ]
+            );
+
+            $found = false;
+
+            if($price_lists_ids > 0 && count($price_lists_ids)) {
+                /*
+                    Search for a matching Price within the found Price List
+                */
+                foreach($price_lists_ids as $price_list_id) {
+                    // there should be one or zero matching pricelist with status 'published', if none of the found pricelist
+                    $prices_ids = $om->search(\sale\price\Price::getType(), [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $line['product_id']] ]);
+                    if($prices_ids > 0 && count($prices_ids)) {
+                        /*
+                            Assign found Price to current line
+                        */
+                        $prices = $om->read(\sale\price\Price::getType(), $prices_ids, ['price', 'vat_rate']);
+                        $price = reset($prices);
+                        // set unit_price and vat_rate from found price
+                        $om->write(self::getType(), $lid, ['unit_price' => $price['price'], 'vat_rate' => $price['vat_rate']]);
+                        $found = true;
+                        break;
+                    }
+                }
+            }
+            if(!$found) {
+                $date = date('Y-m-d', time());
+                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_ERROR);
+            }
+        }
     }
 
     public static function calcTotal($om, $ids, $lang) {
@@ -132,6 +179,10 @@ class OrderLine extends Model {
         return $result;
     }
 
+    /**
+     * Recompute the vat_incl and vat_excl prices of the line.
+     * This method is used as onupdate handler for all fields impacting the price.
+     */
     public static function _resetPrice($om, $ids, $values, $lang) {
         $lines = $om->read(get_called_class(), $ids, ['order_id'], $lang);
         if($lines > 0) {
