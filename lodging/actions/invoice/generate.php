@@ -275,7 +275,7 @@ if($fundings) {
                         'name'                      => $invoice_label.' '.$funding_invoice['name'],
                         // product should be the downpayment product
                         'product_id'                => $line['product_id'],
-                        // vat_rate depends on the organisation ()
+                        // vat_rate depends on the organisation : VAT is due with arbitrary amount (default VAT rate applied)
                         'vat_rate'                  => 0.0,
                         'unit_price'                => $line['total'],
                         'qty'                       => -1
