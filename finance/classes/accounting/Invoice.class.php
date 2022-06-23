@@ -41,7 +41,7 @@ class Invoice extends Model {
                     'invoice'
                 ],
                 'default'           => 'proforma',
-                'onupdate'          => 'onupdateStatus',
+                'onupdate'          => 'onupdateStatus'
             ],
 
             'type' => [
@@ -135,6 +135,14 @@ class Invoice extends Model {
                 'onupdate'          => 'onupdateInvoiceLineGroupsIds'
             ],
 
+            'accounting_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => \finance\accounting\InvoiceAccountingEntry::getType(),
+                'foreign_field'     => 'invoice_id',
+                'description'       => 'Accounting entries relating to the lines of the invoice.',
+                'ondetach'          => 'delete'
+            ],
+
             'payment_terms_id' => [
                 'type'              => 'many2one',                
                 'foreign_object'    => 'sale\pay\PaymentTerms',
@@ -159,7 +167,7 @@ class Invoice extends Model {
         $invoices = $om->read(get_called_class(), $oids, ['number']);
         foreach($invoices as $oid => $invoice) {
             $booking_code = intval($invoice['number']);
-            // arbitrary value : 155 for final invoice
+            // arbitrary value : 155 for balance (final) invoice
             $code_ref = 155;
             $result[$oid] = self::_get_payment_reference($code_ref, $booking_code);
         }
@@ -254,7 +262,7 @@ class Invoice extends Model {
 
     public static function onupdateStatus($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
-        // immediate recompute
+        // immediate recompute (should assigne an invoice number)
         $om->read(__CLASS__, $ids, ['number'], $lang);
     }
 
@@ -270,11 +278,11 @@ class Invoice extends Model {
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
      *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
-     * @param  array    $values     Associative array holding the new values to be assigned.
-     * @param  string   $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  array                      $oids       List of objects identifiers.
+     * @param  array                      $values     Associative array holding the new values to be assigned.
+     * @param  string                     $lang       Language in which multilang fields are being updated.
+     * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);
@@ -287,6 +295,26 @@ class Invoice extends Model {
             }
         }
         return parent::canupdate($om, $oids, $values, $lang);
+    }
+
+    /**
+     * Check wether the invoice can be deleted.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $oids) {
+        $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+
+        if($res > 0) {
+            foreach($res as $oids => $odata) {
+                if($odata['status'] != 'proforma') {
+                    return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                }
+            }
+        }
+        return parent::candelete($om, $oids);
     }
 
     /**

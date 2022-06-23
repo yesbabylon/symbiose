@@ -30,7 +30,24 @@ class Order extends \sale\pos\Order {
                 'foreign_object'    => 'lodging\sale\booking\Invoice',
                 'description'       => 'The invoice that relates to the order, if any.',
                 'visible'           => ['has_invoice', '=', true]
-            ]
+            ],
+
+            'session_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => CashdeskSession::getType(),
+                'description'       => 'The session the order belongs to.',
+                'onupdate'          => 'onupdateSessionId',
+                'required'          => true
+            ],
+
+            'order_lines_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => OrderLine::getType(),
+                'foreign_field'     => 'order_id',
+                'ondetach'          => 'delete',
+                'onupdate'          => 'onupdateOrderLinesIds',
+                'description'       => 'The lines that relate to the order.'
+            ],
 
         ];
     }

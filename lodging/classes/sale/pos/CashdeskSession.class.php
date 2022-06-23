@@ -21,7 +21,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
 
             'cashdesk_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\pos\Cashdesk',
+                'foreign_object'    => \lodging\sale\pos\Cashdesk::getType(),
                 'description'       => 'Cash desk the log entry belongs to.',
                 'required'          => true,
                 'onupdate'          => 'onupdateCashdeskId'

@@ -16,8 +16,15 @@ class Cashdesk extends Model {
                 'type'              => 'string',
                 'description'       => "Short mnemo to identify the cashdesk.",
                 'required'          => true
-            ]
+            ],
 
+            'establishment_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \identity\Establishment::getType(),
+                'description'       => "The center the desk relates to.",
+                'required'          => true,
+                'ondelete'          => 'cascade'         // delete cashdesk when parent Center is deleted
+            ]
         ];
     }
 

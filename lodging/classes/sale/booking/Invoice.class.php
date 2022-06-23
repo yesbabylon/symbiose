@@ -109,9 +109,15 @@ class Invoice extends \sale\booking\Invoice {
         return $result;
     }
 
+    /**
+     * This is mandatory since the way number is generated differs from the parent class method.
+     */
     public static function onupdateStatus($om, $ids, $values, $lang) {
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
         // immediate recompute
         $om->read(__CLASS__, $ids, ['number'], $lang);
+
+        // #todo 
+        //             'accounting_entries_ids' => [
     }
 }
