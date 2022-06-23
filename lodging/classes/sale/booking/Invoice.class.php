@@ -7,6 +7,7 @@
 namespace lodging\sale\booking;
 
 use core\setting\Setting;
+
 class Invoice extends \sale\booking\Invoice {
 
     public static function getColumns() {
@@ -110,14 +111,68 @@ class Invoice extends \sale\booking\Invoice {
     }
 
     /**
+     * Handler for status change (which implies status has changed from 'proforma' to 'invoice').
      * This is mandatory since the way number is generated differs from the parent class method.
+     * 
+     * @param \equal\orm\ObjectManager  $om Instance of the objects manager.
      */
     public static function onupdateStatus($om, $ids, $values, $lang) {
+        /*
+            Generate an invoice number
+        */
         $om->write(__CLASS__, $ids, ['number' => null, 'date' => time()], $lang);
-        // immediate recompute
+        // immediate recompute invoice number
         $om->read(__CLASS__, $ids, ['number'], $lang);
 
-        // #todo 
-        //             'accounting_entries_ids' => [
+        /*
+            Generate the accounting entries
+        */
+        $invoices = $om->read(self::getType(), $ids, ['organisation_id', 'invoice_lines_ids'], $lang);
+        if($invoices > 0) {
+            foreach($invoices as $oid => $invoice) {
+                // retrieve downpayment product
+                $downpayment_product_id = 0;
+
+                $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku.'.$invoice['organisation_id']);
+                if($downpayment_sku) {
+                    $products_ids = $om->search(\lodging\sale\catalog\Product::getType(), ['sku', '=', $downpayment_sku]);
+                    if($products_ids) {
+                        $downpayment_product_id = reset($products_ids);
+                    }
+                }
+
+
+
+
+                $accounting_entries = [];
+                // fetch invoice lines
+                $lines = $om->read(\finance\accounting\InvoiceLine::getType(), $invoice['invoice_lines_ids'], ['product_id', 'total', 'price'], $lang);
+                if($lines > 0) {
+                    $vat_sum = 0.0;
+                    $prices_sum = 0.0;
+                    $downpayments_sum = 0.0;
+                    foreach($lines as $lid => $line) {
+                        // line refers to a downpayment
+                        if($line['product_id'] == $downpayment_product_id) {
+                            // sum up downpayments (VAT price)
+                            $downpayments_sum += $line['price'];
+                        }
+                        // line is a regular product line
+                        else {
+                            // sum up VAT amounts
+                            $vat_sum += $line['price'] - $line['total'];
+                            // sum up sale prices vente (VTA price)
+                            $prices_sum += $line['price'];
+
+                        }
+                        // créer une ligne de crédit avec le nom du produit, sur le compte de vente 70xxxxx (prix HTVA)                        
+                        
+                    }
+                     // creer une ligne de crédit sur le compte 451 : taxes TVA à payer (somme des TVA) 
+                     // une ligne de débit sur le compte 40000 : créances commerciales (sommes des prix de vente TVAC - somme des acomptes)
+                }
+            }
+        }
+
     }
 }

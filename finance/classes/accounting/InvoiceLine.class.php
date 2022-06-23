@@ -119,7 +119,7 @@ class InvoiceLine extends Model {
                 'description'       => 'Final tax-included price of the line (computed).',
                 'function'          => 'finance\accounting\InvoiceLine::calcPrice',
                 'store'             => true
-            ],
+            ]
 
         ];
     }
