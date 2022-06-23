@@ -256,8 +256,10 @@ if($fundings) {
                 'invoice_id'                => $invoice['id'],
                 'product_id'                => $downpayment_product_id,
                 'vat_rate'                  => 0.0,
-                'unit_price'                => -($funding['paid_amount']),
-                'qty'                       => 1
+                // by convention, price is always positive value (so that price, credit and debit remain positive at all time)                
+                'unit_price'                => $funding['paid_amount'],
+                // and quantity is set as negative value when something is deducted 
+                'qty'                       => -1
             ];
             $new_line = InvoiceLine::create($i_line)->first();
             $i_lines_ids[] = $new_line['id'];
@@ -271,10 +273,12 @@ if($fundings) {
                     $i_line = [
                         'invoice_id'                => $invoice['id'],
                         'name'                      => $invoice_label.' '.$funding_invoice['name'],
+                        // product should be the downpayment product
                         'product_id'                => $line['product_id'],
+                        // vat_rate depends on the organisation ()
                         'vat_rate'                  => 0.0,
-                        'unit_price'                => -($line['total']),
-                        'qty'                       => 1
+                        'unit_price'                => $line['total'],
+                        'qty'                       => -1
                     ];
                     $new_line = InvoiceLine::create($i_line)->first();
                     $i_lines_ids[] = $new_line['id'];
