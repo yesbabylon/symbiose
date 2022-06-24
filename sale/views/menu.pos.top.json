@@ -24,14 +24,6 @@
                 "icon": "person_outline",
                 "type": "entry",
                 "route": "/orders/"
-            },
-            {
-                "id": "item.sessions_new",
-                "label": "new session",
-                "description": "",
-                "icon": "person_outline",
-                "type": "entry",
-                "route": "/sessions/new"
             }
         ]
     }

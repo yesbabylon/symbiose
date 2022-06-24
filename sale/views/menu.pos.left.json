@@ -22,7 +22,7 @@
                         "view": "list.default",
                         "order": "created",
                         "sort": "desc",
-                        "domain": [ ["status", "=", "pending"], ["center_id", "in", "user.centers_ids"] ]
+                        "domain": [ ["status", "=", "pending"] ]
                     }
                 },
                 {
