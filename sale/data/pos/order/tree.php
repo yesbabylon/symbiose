@@ -53,6 +53,10 @@ switch($params['variant']) {
             'has_funding',
             'total',
             'price',
+            'customer_id'=>[
+                'name'
+            ],
+            'total_paid',
             'order_lines_ids' => [
                 'id',
                 'order_id',
@@ -78,7 +82,9 @@ switch($params['variant']) {
             'total',
             'price',
             'total_paid',
-            'customer_id',
+            'customer_id'=>[
+                'name'
+            ],
             'order_payments_ids' => [
                 'id',
                 'order_id',
@@ -105,7 +111,20 @@ switch($params['variant']) {
                     'booking_id',
                     'voucher_ref'
                 ]
-            ]
+                ],
+                'order_lines_ids' => [
+                    'id',
+                    'order_id',
+                    'order_payment_id',
+                    'name',
+                    'unit_price',
+                    'vat_rate',
+                    'qty',
+                    'discount',
+                    'free_qty',
+                    'total',
+                    'price'
+                ],
         ];
         break;
 }
