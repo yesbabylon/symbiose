@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of invoices.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "items": [
             {
@@ -34,7 +34,7 @@
             },
             {
                 "type": "field",
-                "value": "total",
+                "value": "price",
                 "width": "15%"
             }
         ]

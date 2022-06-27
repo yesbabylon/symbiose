@@ -5,16 +5,15 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use core\setting\Setting;
-use finance\accounting\InvoiceLine;
-use finance\accounting\InvoiceLineGroup;
 use lodging\sale\booking\Invoice;
+use lodging\sale\booking\InvoiceLine;
+use lodging\sale\booking\InvoiceLineGroup;
 use lodging\sale\booking\Booking;
-use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Funding;
 use lodging\sale\catalog\Product;
 
 list($params, $providers) = announce([
-    'description'   => "Generate the final invoice of a booking with remaining due balance.",
+    'description'   => "Generate the proforma final invoice of a booking with remaining due balance.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the invoice has to be generated.',
@@ -67,6 +66,7 @@ $booking = Booking::id($params['id'])
                             'has_pack',
                             'is_locked',
                             'pack_id' => ['id', 'display_name'],
+                            'price_id',
                             'vat_rate',
                             'unit_price',
                             'qty',
@@ -74,6 +74,7 @@ $booking = Booking::id($params['id'])
                             'nb_pers',
                             'booking_lines_ids' => [
                                 'product_id',
+                                'price_id',
                                 'unit_price',
                                 'vat_rate',
                                 'qty',
@@ -109,7 +110,7 @@ foreach($errors as $error) {
 }
 
 
-// if a 'proforma' invoice exists, delete it
+// if a 'proforma' balance invoice exists, delete it
 Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])->delete(true);
 
 
@@ -117,7 +118,7 @@ Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])
     Generate the invoice
 */
 
-// #todo - setting for suitable payment terms
+// #todo - setting for selecting the suitable payment terms
 
 // remember all booking lines involved
 $booking_lines_ids = [];
@@ -160,12 +161,13 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
             'invoice_id'                => $invoice['id'],
             'invoice_line_group_id'     => $invoice_line_group['id'],
             'product_id'                => $group['pack_id']['id'],
+            'price_id'                  => $group['price_id'],
             'vat_rate'                  => $group['vat_rate'],
             'unit_price'                => $group['unit_price'],
             'qty'                       => $group['qty']
         ];
 
-        $contract_line = InvoiceLine::create($i_line)->first();
+        InvoiceLine::create($i_line)->first();
     }
     else {
         // create as many lines as the group booking_lines
@@ -176,6 +178,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                 'invoice_id'                => $invoice['id'],
                 'invoice_line_group_id'     => $invoice_line_group['id'],
                 'product_id'                => $line['product_id'],
+                'price_id'                  => $line['price_id'],
                 'vat_rate'                  => $line['vat_rate'],
                 'unit_price'                => $line['unit_price'],
                 'qty'                       => $line['qty']
@@ -184,6 +187,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
             $disc_value = 0;
             $disc_percent = 0;
             $free_qty = 0;
+            // use adapters to set discount and free quantity
             foreach($line['price_adapters_ids'] as $aid => $adata) {
                 if($adata['is_manual_discount']) {
                     if($adata['type'] == 'amount') {
@@ -245,6 +249,7 @@ if($fundings) {
 
     $i_lines_ids = [];
     $invoice_label = Setting::get_value('sale', 'locale', 'terms.invoice', 'Invoice', 0, $customer_lang);
+    $installment_label = Setting::get_value('sale', 'locale', 'terms.installment', 'Downpayment', 0, $customer_lang);
 
     foreach($fundings as $fid => $funding) {
         if($funding['type'] == 'installment') {
@@ -253,32 +258,37 @@ if($fundings) {
                 continue;
             }
             $i_line = [
+                'description'               => ucfirst($installment_label).' '.date('Y-m'),
                 'invoice_id'                => $invoice['id'],
                 'product_id'                => $downpayment_product_id,
                 'vat_rate'                  => 0.0,
-                // by convention, price is always positive value (so that price, credit and debit remain positive at all time)                
+                // by convention, price is always positive value (so that price, credit and debit remain positive at all time)
                 'unit_price'                => $funding['paid_amount'],
-                // and quantity is set as negative value when something is deducted 
+                // and quantity is set as negative value when something is deducted
                 'qty'                       => -1
+                // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule                
             ];
             $new_line = InvoiceLine::create($i_line)->first();
             $i_lines_ids[] = $new_line['id'];
         }
         else if($funding['type'] == 'invoice') {
             $funding_invoice = Invoice::id($funding['invoice_id'])->read(['id', 'name', 'invoice_lines_ids' => ['vat_rate', 'product_id', 'total']])->first();
-            
+
             if($funding_invoice) {
                 // there should be only one line
                 foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
                     $i_line = [
                         'invoice_id'                => $invoice['id'],
-                        'name'                      => $invoice_label.' '.$funding_invoice['name'],
+                        'name'                      => $installment_label.' '.$funding_invoice['name'],
                         // product should be the downpayment product
                         'product_id'                => $line['product_id'],
                         // vat_rate depends on the organisation : VAT is due with arbitrary amount (default VAT rate applied)
-                        'vat_rate'                  => 0.0,
+                        'vat_rate'                  => $line['vat_rate'],
+                        // by convention, price is always positive value (so that price, credit and debit remain positive at all time)
                         'unit_price'                => $line['total'],
+                        // and quantity is set as negative value when something is deducted
                         'qty'                       => -1
+                        // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
                     ];
                     $new_line = InvoiceLine::create($i_line)->first();
                     $i_lines_ids[] = $new_line['id'];
@@ -287,14 +297,14 @@ if($fundings) {
         }
     }
 
-    // get the group name according to requested language
+    // get the group name according to requested lang
     $group_label = ucfirst(Setting::get_value('sale', 'locale', 'terms.downpayments', 'Downpayments', 0, $customer_lang));
 
-    $invoice_line_group = InvoiceLineGroup::create([
+    InvoiceLineGroup::create([
         'name'              => $group_label,
         'invoice_id'        => $invoice['id'],
         'invoice_lines_ids' => $i_lines_ids
-    ])->first();
+    ]);
 }
 
 // mark the booking as invoiced, whatever its status

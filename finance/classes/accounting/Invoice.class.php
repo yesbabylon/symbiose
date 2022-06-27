@@ -26,7 +26,7 @@ class Invoice extends Model {
                 'alias'             => "number"
             ],
 
-           /* the (owner) organisation the invoice relates to (multi-company support) */
+           // the (owner) organisation the invoice relates to (multi-company support)
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -37,8 +37,9 @@ class Invoice extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'proforma', 
-                    'invoice'
+                    'proforma',             // draft invoice (no number yet)
+                    'invoice',              // final invoice (with unique number and accounting entries)
+                    'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
                 'default'           => 'proforma',
                 'onupdate'          => 'onupdateStatus'
@@ -46,7 +47,10 @@ class Invoice extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['invoice', 'credit_note'],
+                'selection'         => [
+                    'invoice', 
+                    'credit_note'
+                ],
                 'default'           => 'invoice'
             ],
 
@@ -63,6 +67,13 @@ class Invoice extends Model {
                 'description'       => "Flag to mark the invoice as fully paid.",
                 'visible'           => ['status', '=', 'invoice'],
                 'default'           => false
+            ],
+
+            'reversed_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => self::getType(),
+                'description'       => "Credit note that was created for cancelling the invoice.",
+                'visible'           => ['is_reversed', '=', true]
             ],
 
             'payment_status' => [
@@ -289,8 +300,11 @@ class Invoice extends Model {
 
         if($res > 0) {
             foreach($res as $oids => $odata) {
-                if($odata['status'] != 'proforma') {
-                    return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                // status can only be changed from 'proforma' to 'invoice' and invoice to 'cancelled'
+                if($odata['status'] == 'invoice') {
+                    if(!isset($values['status']) || $values['status'] != 'cancelled') {
+                        return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                    }
                 }
             }
         }

@@ -35,7 +35,8 @@ class AccountChartLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => "Short description of the account."
+                'description'       => "Short description of the account.",
+                'multilang'         => true
             ],
 
             /* parent chart of accounts */

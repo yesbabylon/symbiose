@@ -19,12 +19,20 @@
                     "description": "Générer une facture sur base de la version proforma."
                 }
             },
-            "layout": {}
+            "layout": {
+                "sections.invoice.lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice.entries": {
+                    "label": "Écritures comptables"
+                }
+            }
         },
         "list.default": {
             "name": "Factures",
             "description": "Liste des factures.",
-            "layout": {}
+            "layout": {
+            }
         }
     },
     "error": {}

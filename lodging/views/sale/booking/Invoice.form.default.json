@@ -9,6 +9,14 @@
             "controller": "lodging_invoice_do-emit",
             "confirm": true,
             "visible": ["status", "=", "proforma"]
+        },
+        {
+            "id": "action.reverse",
+            "label": "Reverse",
+            "description": "A new credit note will be generated from the invoice. The invoice will be cancelled and reversing accounting entries will be created.",
+            "controller": "lodging_invoice_do-reverse",
+            "confirm": true,
+            "visible": [["status", "=", "invoice"], ["type", "=", "invoice"]]
         }
     ],
     "routes": [
@@ -30,7 +38,7 @@
             "icon": "print",
             "route": "/booking/object.booking_id/invoice/object.id"
         }
-    ],    
+    ],
     "layout": {
         "groups": [
             {
@@ -116,7 +124,17 @@
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "sections.invoice.lines",
+                        "label": "Invoice Lines",
+                        "rows": [
                             {
                                 "columns": [
                                     {
@@ -130,7 +148,36 @@
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false        
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "sections.invoice.entries",
+                        "label": "Accounting entries",
+                        "visible": ["status", "=", "invoice"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }
