@@ -1,0 +1,42 @@
+{
+    "name": "Paiement",
+    "plural": "Paiements",
+    "description": "",
+    "model": {
+        "payment_method": {
+            "label": "Mode de paiement",
+            "description": "Le mode de paiement utilisé.",
+            "selection": {
+                "voucher": "Chèque cadeau (voucher)",
+                "cash": "Espèces",
+                "bank_card": "Carte bancaire",
+                "booking": "Réservation"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Paiement",
+            "description": "",
+            "layout": {
+                "section.payment_section": {
+                    "label": "Détails"
+                },
+                "section.fundings_section": {
+                    "label": "Financements"
+                }
+            }            
+        },
+        "list.default": {
+            "name": "Paiements",
+            "description": "Liste des paiements.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "amount": {
+            "excessive_amount": "Le montant du paiement ne peut pas être supérieur à celui de la ligne d'extrait."
+        }
+    }
+}

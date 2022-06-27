@@ -28,7 +28,7 @@ class Contract extends \sale\booking\Contract {
 
             'contract_line_groups_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\ContractLineGroup',
+                'foreign_object'    => ContractLineGroup::getType(),
                 'foreign_field'     => 'contract_id',
                 'description'       => 'Contract lines that belong to the contract.',
                 'ondetach'          => 'delete'

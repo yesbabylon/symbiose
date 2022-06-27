@@ -18,7 +18,7 @@ class ContractLine extends Model {
         return [
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'sale\contract\ContractLine::getDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the line.'
@@ -95,7 +95,7 @@ class ContractLine extends Model {
         ];
     }
 
-    public static function getDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(get_called_class(), $oids, ['product_id.label']);
         foreach($res as $oid => $odata) {

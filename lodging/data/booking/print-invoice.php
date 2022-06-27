@@ -39,8 +39,8 @@ list($params, $providers) = announce([
         'mode' =>  [
             'description'   => 'Mode in which document has to be rendered: simple (default) or detailed.',
             'type'          => 'string',
-            'selection'     => ['simple', 'detailed'],
-            'default'       => 'simple'
+            'selection'     => ['simple', 'grouped', 'detailed'],
+            'default'       => 'grouped'
         ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
@@ -184,7 +184,8 @@ $fields = [
         ]
     ],
     'funding_id' => ['payment_reference', 'due_date'],
-    'status',    
+    'status',
+    'type',
     'is_paid',
     'due_date',
     'total',
@@ -240,7 +241,8 @@ $values = [
     'date'                  => date('d/m/Y', $invoice['created']),
     'code'                  => $invoice['name'],
     'is_paid'               => $invoice['is_paid'],
-    'status'                => $invoice['status'],    
+    'status'                => $invoice['status'],
+    'type'                  => $invoice['type'],
     'booking_code'          => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
     'center'                => $booking['center_id']['name'],
     'center_address1'       => $booking['center_id']['address_street'],

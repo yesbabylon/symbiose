@@ -3,9 +3,24 @@
     "plural": "Factures",
     "description": "",
     "model": {
+        "status": {
+            "label": "Statut",
+            "description": "La situation à un moment donné au cours d'un processus.",
+            "selection": {
+                "proforma": "pro forma",
+                "invoice": "facture",
+                "cancelled": "annulée"
+            },
+            "help": ""
+        },
         "center_office_id": {
             "label": "Equipe de gestion",
             "description": "Le centre de gestion à l'origine de la facture.",
+            "help": ""
+        },
+        "reversed_invoice_id": {
+            "label": "Note de crédit",
+            "description": "La note de crédit associée à la facture.",
             "help": ""
         }
     },
@@ -17,6 +32,10 @@
                 "action.invoice": {
                     "label": "Émettre la facture",
                     "description": "Générer une facture sur base de la version proforma."
+                },
+                "action.reverse": {
+                    "label": "Note de crédit",
+                    "description": "Annuler la facture par une note de crédit."
                 }
             },
             "layout": {

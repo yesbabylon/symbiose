@@ -56,12 +56,20 @@ class Invoice extends \sale\booking\Invoice {
                 'description'       => 'Message for identifying payments related to the invoice.',
                 'store'             => true
             ],
+            
+            'reversed_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => self::getType(),
+                'description'       => "Credit note that was created for cancelling the invoice.",
+                'visible'           => ['status', '=', 'cancelled']
+            ],
 
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'proforma',
-                    'invoice'
+                    'proforma',             // draft invoice (no number yet)
+                    'invoice',              // final invoice (with unique number and accounting entries)
+                    'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
                 'default'           => 'proforma'
             ]
@@ -154,9 +162,9 @@ class Invoice extends \sale\booking\Invoice {
                     if($lines > 0) {
                         $debit_vat_sum = 0.0;
                         $credit_vat_sum = 0.0;
-                        $prices_sum = 0.0;                        
+                        $prices_sum = 0.0;
                         $downpayments_sum = 0.0;
-                        
+
                         foreach($lines as $lid => $line) {
                             $vat_amount = abs($line['price']) - abs($line['total']);
                             // line refers to a downpayment
@@ -166,13 +174,15 @@ class Invoice extends \sale\booking\Invoice {
                                 $downpayments_sum += abs($line['price']);
                                 // if some VTA is due, deduct the sum accordingly
                                 $debit_vat_sum += $vat_amount;
-                                // créer une ligne de débit avec le nom du produit, sur le compte de vente 70xxxxx (id=895) (prix HTVA)
+                                // create a debit line with the product, on sale account 70xxxxx (id=895) (VAT excl.)
+                                $debit = abs($line['total']);
+                                $credit = 0.0;
                                 $accounting_entries[] = [
                                     'name'          => $line['name'],
                                     'invoice_id'    => $oid,
                                     'account_id'    => 895,
-                                    'debit'         => abs($line['total']),
-                                    'credit'        => 0.0
+                                    'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                    'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                                 ];
                             }
                             // line is a regular product line
@@ -196,12 +206,14 @@ class Invoice extends \sale\booking\Invoice {
                                 foreach($rule_lines as $rid => $rline) {
                                     if(isset($rline['account_id']) && isset($rline['share'])) {
                                         // create a credit line with product name, on the account related by the product (VAT excl. price)
+                                        $debit = 0.0;
+                                        $credit = round($line['total'] * $rline['share'], 2);
                                         $accounting_entries[] = [
                                             'name'          => $line['name'],
                                             'invoice_id'    => $oid,
                                             'account_id'    => $rline['account_id'],
-                                            'debit'         => 0.0,
-                                            'credit'        => round($line['total'] * $rline['share'], 2)
+                                            'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                            'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                                         ];
                                     }
                                 }
