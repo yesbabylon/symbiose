@@ -59,7 +59,7 @@ if(!$order) {
 }
 
 // booking already cancelled
-if($order['paid']) {
+if($order['status'] == 'paid') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
@@ -82,20 +82,21 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
         */
 
         // fetch the "extra" group id , (create if does not exist yet)
-        $groups_ids = BookingLineGroup::search([['booking_id', '=', $booking_id], ['is_extra', '=', true]]);
+        $groups_ids = BookingLineGroup::search([['booking_id', '=', $booking_id], ['is_extra', '=', true]])->ids();
         if($groups_ids > 0 && count($groups_ids)) {
             $group_id = reset(($groups_ids));
         }
         else {
             // create extra group
-            $group_id = BookingLineGroup::create(['name' => 'Suppléments', 'booking_id' => $booking_id, 'is_extra' => true]);
+            $new_group = BookingLineGroup::create(['name' => 'Suppléments', 'booking_id' => $booking_id, 'is_extra' => true])->first();
+            $group_id = $new_group['id'];
         }
 
         // create booking lines according to order lines
         foreach($payment['order_lines_ids'] as $lid => $line) {
-            $line_id = BookingLine::create(['booking_id' => $booking_id, 'booking_line_group_id' => $group_id, 'product_id' => $line['product_id']]);
+            $new_line = BookingLine::create(['booking_id' => $booking_id, 'booking_line_group_id' => $group_id, 'product_id' => $line['product_id']])->first();
             // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
-            BookingLine::id($line_id)->update(['qty' => $line['qty'], 'unit_price' => $line['unit_price'], 'vat_rate' => $line['vat_rate']]);
+            BookingLine::id($new_line['id'])->update(['qty' => $line['qty']])->update(['unit_price' => $line['unit_price'], 'vat_rate' => $line['vat_rate']]);
         }
     }
 }
@@ -104,6 +105,5 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
 Order::id($params['id'])->update(['status' => 'paid']);
 
 $context->httpResponse()
-        ->status(200)
-        ->body([])
+        ->status(204)
         ->send();
