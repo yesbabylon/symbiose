@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of fundings.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "items": [
             {

@@ -7,7 +7,7 @@
 use identity\Partner;
 use lodging\sale\booking\Funding;
 use lodging\sale\booking\Invoice;
-use finance\accounting\InvoiceLine;
+use lodging\sale\booking\InvoiceLine;
 use lodging\sale\catalog\Product;
 use sale\price\Price;
 use core\setting\Setting;
@@ -82,7 +82,6 @@ $center_office_id = $funding['booking_id']['center_id']['center_office_id'];
 $invoice = Invoice::create([
     'organisation_id'   => $organisation_id,
     'center_office_id'  => $center_office_id,
-    'status'            => 'invoice',
     'booking_id'        => $funding['booking_id']['id'],
     'partner_id'        => $params['partner_id'],
     'funding_id'        => $params['id'],
@@ -91,11 +90,6 @@ $invoice = Invoice::create([
 
 
 // #todo - create scheduled tasks for setting payment_status
-
-// #todo - handle journal entries
-// default credit account
-// default downpayment account (debit)
-
 
 // retrieve downpayment product
 $downpayment_product_id = 0;
@@ -109,7 +103,7 @@ if($downpayment_sku) {
 }
 
 /* 
-    Find Price for product, based on current year
+    Find vat rule, based on Price for product for current year
 */
 $vat_rate = 0.0;
 
@@ -135,22 +129,26 @@ foreach($price_lists_ids as $price_list_id) {
     }
 }
 
+// #memo - funding already includes the VAT, if any (funding due_amount cannot be changed)
+$unit_price = $funding['due_amount'];
+
+if($vat_rate > 0) {
+    // deduct VAT from due amount
+    $unit_price = round($unit_price / (1+$vat_rate), 4);
+}
+
 // create invoice line related to the downpayment
 InvoiceLine::create([
     'invoice_id' => $invoice['id'],
     'product_id' => $downpayment_product_id,
-    'unit_price' => $funding['due_amount'],
+    'unit_price' => $unit_price,
     'qty'        => 1,
     'vat_rate'   => $vat_rate
 ]);
 
-
 // convert funding to 'invoice' type
 $funding = Funding::id($params['id'])->update(['type' => 'invoice', 'invoice_id' => $invoice['id']]);
 
-
 $context->httpResponse()
-        // ->status(204)
-        ->status(200)
-        ->body([])
+        ->status(204)        
         ->send();
