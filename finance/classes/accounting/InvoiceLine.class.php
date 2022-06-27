@@ -23,9 +23,14 @@ class InvoiceLine extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'Final tax-included price of the line (computed).',
+                'description'       => 'Default label of the line, based on product (computed).',
                 'function'          => 'calcName',
                 'store'             => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Short description for arbitrary line (independant from product).'
             ],
 
             'invoice_line_group_id' => [
@@ -61,7 +66,7 @@ class InvoiceLine extends Model {
 
             'price_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\price\Price',
+                'foreign_object'    => \sale\price\Price::getType(),
                 'description'       => 'The price the line relates to (assigned at line creation).',
                 'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
             ],
@@ -71,36 +76,31 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'function'          => 'finance\accounting\InvoiceLine::calcVatRate',                
+                'function'          => 'calcVatRate',
                 'store'             => true,
                 'default'           => 0.0,
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateVatRate'
+                'onupdate'          => 'onupdateVatRate'
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 0,
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateQty'                
+                'onupdate'          => 'onupdateQty'
             ],
 
             'free_qty' => [
                 'type'              => 'integer',
                 'description'       => 'Free quantity.',
                 'default'           => 0,
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateFreeQty'                
+                'onupdate'          => 'onupdateFreeQty'
             ],
 
             'discount' => [
                 'type'              => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0,
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdateDiscount'                
-            ],
-
-            'description' => [
-                'type'              => 'string',
-                'description'       => 'Short description for arbitrary line (no product).'
+                'onupdate'          => 'onupdateDiscount'
             ],
 
             'total' => [
@@ -108,7 +108,7 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the line (computed).',
-                'function'          => 'finance\accounting\InvoiceLine::calcTotal',
+                'function'          => 'calcTotal',
                 'store'             => true
             ],
 
@@ -117,7 +117,7 @@ class InvoiceLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price of the line (computed).',
-                'function'          => 'finance\accounting\InvoiceLine::calcPrice',
+                'function'          => 'calcPrice',
                 'store'             => true
             ]
 
@@ -164,7 +164,7 @@ class InvoiceLine extends Model {
 
     /**
      * Get total tax-excluded price of the line.
-     * 
+     *
      */
     public static function calcTotal($om, $oids, $lang) {
         $result = [];
@@ -186,7 +186,7 @@ class InvoiceLine extends Model {
 
     /**
      * Get final tax-included price of the line.
-     * 
+     *
      */
     public static function calcPrice($om, $oids, $lang) {
         $result = [];

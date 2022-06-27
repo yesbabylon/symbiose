@@ -1064,6 +1064,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                                                     'date_to',
                                                     'booking_id',
                                                     'booking_id.center_id.autosale_list_category_id',
+                                                    'booking_id.customer_id.count_booking_12',
                                                     'booking_lines_ids'
                                                 ], $lang);
 
@@ -1118,6 +1119,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $operands = [];
 
                 // for now, we only support member cards for customer that haven't booked a service for more thant 12 months
+
+                $operands['count_booking_12'] = $group['booking_id.customer_id.count_booking_12'];
                 $operands['nb_pers'] = $group['nb_pers'];
                 $operands['nb_nights'] = $group['nb_nights'];
 
