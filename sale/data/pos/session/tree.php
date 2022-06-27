@@ -60,6 +60,10 @@ switch($params['variant']) {
                 'has_funding',
                 'total',
                 'price',
+                'customer_id'=>[
+                    'name'
+                ],
+                'total_paid',
                 'order_lines_ids' => [
                     'id',
                     'order_id',
