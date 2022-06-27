@@ -41,8 +41,8 @@ list($params, $providers) = announce([
         'mode' =>  [
             'description'   => 'Mode in which document has to be rendered: simple or detailed.',
             'type'          => 'string',
-            'selection'     => ['simple', 'detailed'],
-            'default'       => 'detailed'
+            'selection'     => ['simple', 'grouped', 'detailed'],
+            'default'       => 'grouped'
         ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
@@ -165,6 +165,8 @@ $fields = [
         'is_pack',
         'description',
         'fare_benefit',
+        'total',
+        'price',
         'rate_class_id' => ['id', 'name', 'description'],
         'contract_line_id' => [
             'name',
@@ -222,6 +224,7 @@ if(file_exists($img_path)) {
     $img_url = "data:image/png;base64, ".base64_encode($img);
 }
 
+$member_name = lodging_booking_print_contract_formatMember($booking);
 
 $values = [
     'header_img_url'        => $img_url,
@@ -235,7 +238,7 @@ $values = [
     'customer_address2'     => $booking['customer_id']['partner_identity_id']['address_zip'].' '.$booking['customer_id']['partner_identity_id']['address_city'],
     'customer_has_vat'      => (int) $booking['customer_id']['partner_identity_id']['has_vat'],
     'customer_vat'          => $booking['customer_id']['partner_identity_id']['vat_number'],
-    'member'                => lodging_booking_print_contract_formatMember($booking),
+    'member'                => substr($member_name, 0, 33).((strlen($member_name) > 33)?'...':''),
     'date'                  => date('d/m/Y', $contract['created']),
     'code'                  => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
     'center'                => $booking['center_id']['name'],
@@ -276,10 +279,10 @@ $values = [
 
     'lines'                 => [],
     'tax_lines'             => [],
-    
+
     'consumptions_map'      => [],
 
-    'benfit_lines'          => []    
+    'benfit_lines'          => []
 ];
 
 
@@ -292,7 +295,7 @@ if($booking['center_id']['use_office_details']) {
     $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
     $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
     $values['center_email'] = $office['email'];
-    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];    
+    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];
 }
 
 
@@ -329,11 +332,15 @@ $lines = [];
 
 // all lines are in groups
 foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
+    // generate group label
+    $group_label = (strlen($contract_line_group['name']))?$contract_line_group['name']:'';
 
     if($contract_line_group['is_pack']) {
-        // group is a bundle with own price and VAT: add a single line with details
+        // group is a product pack (bundle) with own price: add a single line with details
+        $group_is_pack = true;
+
         $line = [
-            'name'          => $contract_line_group['name'],
+            'name'          => $group_label['name'],
             'price'         => $contract_line_group['contract_line_id']['price'],
             'total'         => $contract_line_group['contract_line_id']['total'],
             'unit_price'    => $contract_line_group['contract_line_id']['unit_price'],
@@ -341,50 +348,106 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
             'qty'           => $contract_line_group['contract_line_id']['qty'],
             'free_qty'      => $contract_line_group['contract_line_id']['free_qty'],
             'discount'      => $contract_line_group['contract_line_id']['discount'],
-            'is_group'      => false
+            'is_group'      => false,
+            'is_pack'       => true
         ];
         $lines[] = $line;
+
+        if($params['mode'] == 'detailed') {
+            foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
+                $line = [
+                    'name'          => $contract_line['name'],
+                    'qty'           => $contract_line['qty'],
+                    'price'         => null,
+                    'total'         => null,
+                    'unit_price'    => null,
+                    'vat_rate'      => null,
+                    'discount'      => null,
+                    'free_qty'      => null,
+                    'is_group'      => false,
+                    'is_pack'       => false
+                ];
+                $lines[] = $line;
+            }
+        }
     }
     else {
-        // group is a pack with no own price: add a line with no price
-        $line = [
-            'name'          => $contract_line_group['name'],
-            'price'         => null,
-            'total'         => null,
-            'unit_price'    => null,
-            'vat_rate'      => null,
-            'qty'           => null,
-            'free_qty'      => null,
-            'discount'      => null,
-            'is_group'      => true
-        ];
+        // group is a pack with no own price
+        $group_is_pack = false;
+
+        if($params['mode'] == 'grouped') {
+            $line = [
+                'name'          => $group_label,
+                'price'         => $contract_line_group['price'],
+                'total'         => $contract_line_group['total'],
+                'unit_price'    => $contract_line_group['total'],
+                'vat_rate'      => (floatval($contract_line_group['price'])/floatval($contract_line_group['total']) - 1.0),
+                'qty'           => 1,
+                'free_qty'      => 0,
+                'discount'      => 0,
+                'is_group'      => true,
+                'is_pack'       => false
+            ];
+
+        }
+        else {
+            $line = [
+                'name'          => $group_label,
+                'price'         => null,
+                'total'         => null,
+                'unit_price'    => null,
+                'vat_rate'      => null,
+                'qty'           => null,
+                'free_qty'      => null,
+                'discount'      => null,
+                'is_group'      => true
+            ];
+        }
         $lines[] = $line;
 
         $group_lines = [];
 
         foreach($contract_line_group['contract_lines_ids'] as $contract_line) {
 
-            $line = [
-                'name'          => $contract_line['name'],
-                'price'         => $contract_line['price'],
-                'total'         => $contract_line['total'],
-                'unit_price'    => $contract_line['unit_price'],
-                'vat_rate'      => $contract_line['vat_rate'],
-                'qty'           => $contract_line['qty'],
-                'discount'      => $contract_line['discount'],
-                'free_qty'      => $contract_line['free_qty'],
-                'is_group'      => false
-            ];
+            if($params['mode'] == 'grouped') {
+                $line = [
+                    'name'          => $contract_line['name'],
+                    'price'         => null,
+                    'total'         => null,
+                    'unit_price'    => null,
+                    'vat_rate'      => null,
+                    'qty'           => $contract_line['qty'],
+                    'discount'      => null,
+                    'free_qty'      => null,
+                    'is_group'      => false,
+                    'is_pack'       => false
+                ];
+            }
+            else {
+                $line = [
+                    'name'          => $contract_line['name'],
+                    'price'         => $contract_line['price'],
+                    'total'         => $contract_line['total'],
+                    'unit_price'    => $contract_line['unit_price'],
+                    'vat_rate'      => $contract_line['vat_rate'],
+                    'qty'           => $contract_line['qty'],
+                    'discount'      => $contract_line['discount'],
+                    'free_qty'      => $contract_line['free_qty'],
+                    'is_group'      => false,
+                    'is_pack'       => false
+                ];
+
+            }
 
             $group_lines[] = $line;
         }
 
-        if($params['mode'] == 'detailed') {
+        if($params['mode'] == 'detailed' || $params['mode'] == 'grouped') {
             foreach($group_lines as $line) {
                 $lines[] = $line;
             }
         }
-        // group lines by VAT rate        
+        // mode is 'simple' : group lines by VAT rate
         else {
             $group_tax_lines = [];
             foreach($group_lines as $line) {
@@ -407,7 +470,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
             else {
                 foreach($group_tax_lines as $vat_rate => $total) {
                     $line = [
-                        'name'      => 'Services avec TVA '.($vat_rate*100).'%',                        
+                        'name'      => 'Services avec TVA '.($vat_rate*100).'%',
                         'qty'       => 1,
                         'vat_rate'  => $vat_rate,
                         'total'     => $total,
@@ -561,15 +624,15 @@ foreach($consumptions as $cid => $consumption) {
             $consumptions_map['total'][$consumption['time_slot_id']] = 0;
         }
         $consumptions_map[$date][$consumption['time_slot_id']] += $consumption['qty'];
-        $consumptions_map['total'][$consumption['time_slot_id']] += $consumption['qty'];        
+        $consumptions_map['total'][$consumption['time_slot_id']] += $consumption['qty'];
     }
     else if($consumption['is_accomodation']) {
         if(!isset($consumptions_map[$date]['night'])) {
             $consumptions_map[$date]['night'] = 0;
-        }        
+        }
         if(!isset($consumptions_map['total']['night'])) {
             $consumptions_map['total']['night'] = 0;
-        }        
+        }
         $consumptions_map[$date]['night'] += $consumption['qty'];
         $consumptions_map['total']['night'] += $consumption['qty'];
     }

@@ -3,7 +3,13 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Facture de réservation</title>
+<title>
+{% if type == 'invoice'  %}
+    Facture de réservation
+{% else %}
+    Note de crédit
+{% endif %}
+</title>
 <style type="text/css">
 @page {
   margin: 1cm;
@@ -163,7 +169,13 @@ hr {
             </td>
             <td style="width: 30%; padding: 5px; ">
                 <div>
-                    <h2>Facture</h2>
+                    <h2>
+                    {% if type == 'invoice' %}
+                        Facture
+                    {% else %}
+                        Note de crédit
+                    {% endif %}
+                    </h2>
                 </div>
                 <div style="margin-bottom: 5px; margin-top: 5px; text-transform: uppercase; font-size: 13px;">
                     N°: <strong>{{ code }}</strong>
@@ -177,7 +189,11 @@ hr {
                     {% if is_paid  %}
                         payé
                     {% else %}
-                        à payer
+                        {% if type == 'invoice' %}
+                            à payer
+                        {% else %}
+                            à rembourser
+                        {% endif %}                        
                     {% endif %}
                     </strong>
                 </div>
@@ -318,7 +334,7 @@ hr {
     {{ invoice_notice_html | raw }}
 </div>
 
-{% if (price > 0.0) and (status != 'proforma') %}
+{% if (price > 0.0) and (status != 'proforma') and (type != 'credit_note') %}
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
         Solde de <b>{{ price | format_currency('EUR') }}</b> à payer avant le <b>{{payment_deadline}}</b>

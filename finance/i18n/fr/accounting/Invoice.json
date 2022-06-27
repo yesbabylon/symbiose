@@ -17,6 +17,15 @@
             },
             "help": ""
         },
+        "type": {
+            "label": "Type",
+            "description": "Type de document comptable.",
+            "selection": {
+                "invoice": "facture",
+                "credit_note": "note de crédit"
+            },
+            "help": ""
+        },
         "number": {
             "label": "Numéro de la facture",
             "description": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation).",
@@ -40,6 +49,31 @@
         "organisation_id": {
             "label": "Organisation émettrice",
             "description": "Organisation à l'origine de la facture.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix",
+            "description": "Montant TVAC de la facture.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total",
+            "description": "Total HTVA de la facture.",
+            "help": ""
+        },
+        "due_date": {
+            "label": "Échéance",
+            "description": "Date limité avant laquelle le montant est dû.",
+            "help": ""
+        },
+        "invoice_lines_ids": {
+            "label": "Lignes de facture",
+            "description": "Lignes de vente de la facture.",
+            "help": ""
+        },
+        "accounting_entries_ids": {
+            "label": "Écritures comptables",
+            "description": "Lignes d'écruture comptables de la facture.",
             "help": ""
         }
     },

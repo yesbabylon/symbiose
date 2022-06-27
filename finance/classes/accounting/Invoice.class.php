@@ -73,7 +73,7 @@ class Invoice extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => self::getType(),
                 'description'       => "Credit note that was created for cancelling the invoice.",
-                'visible'           => ['is_reversed', '=', true]
+                'visible'           => ['status', '=', 'cancelled']
             ],
 
             'payment_status' => [

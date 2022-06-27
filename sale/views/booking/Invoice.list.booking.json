@@ -1,0 +1,55 @@
+{
+    "name": "Invoices",
+    "description": "This view is intended for displaying the list of invoices.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "operations": {
+        "total": {
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%"
+            }
+        ]
+    }
+}

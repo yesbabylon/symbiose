@@ -74,17 +74,31 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "33%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "type",
+                                                "width": "25%"
+                                            },
+
+                                            {
+                                                "type": "field",
                                                 "value": "due_date",
-                                                "width": "33%"
+                                                "width": "25%",
+                                                "visible": ["status", "<>", "cancelled"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_paid",
-                                                "width": "33%"
+                                                "width": "25%",
+                                                "visible": ["status", "<>", "cancelled"]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reversed_invoice_id",
+                                                "width": "33%",
+                                                "visible": ["status", "=", "cancelled"]
                                             }
                                         ]
                                     },
@@ -162,7 +176,7 @@
                     {
                         "id": "sections.invoice.entries",
                         "label": "Accounting entries",
-                        "visible": ["status", "=", "invoice"],
+                        "visible": ["status", "<>", "proforma"],
                         "rows": [
                             {
                                 "columns": [

@@ -243,7 +243,7 @@ $values = [
     'lines'                 => [],
     'tax_lines'             => [],
 
-    'benefit_lines'         => []    
+    'benefit_lines'         => []
 ];
 
 
@@ -306,9 +306,8 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
     $group_label .= ' - '.$booking_line_group['nb_pers'].' p.';
 
-
     if($booking_line_group['has_pack'] && $booking_line_group['is_locked']) {
-        // group is a product pack with own price
+        // group is a product pack (bundle) with own price
         $group_is_pack = true;
 
         $line = [
@@ -330,7 +329,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
             foreach($booking_line_group['booking_lines_ids'] as $booking_line) {
                 $line = [
                     'name'          => $booking_line['name'],
-                    'qty'           => $booking_line['qty'],                    
+                    'qty'           => $booking_line['qty'],
                     'price'         => null,
                     'total'         => null,
                     'unit_price'    => null,
@@ -340,13 +339,13 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                     'is_group'      => false,
                     'is_pack'       => false
                 ];
-                $lines[] = $line;                
+                $lines[] = $line;
             }
-        }        
+        }
     }
     else {
 
-        // group is a pack with no price
+        // group is a pack with no own price
         $group_is_pack = false;
 
         if($params['mode'] == 'grouped') {
@@ -361,7 +360,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                 'discount'      => 0,
                 'is_group'      => true,
                 'is_pack'       => false
-            ];    
+            ];
         }
         else {
             $line = [
@@ -375,8 +374,8 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                 'discount'      => null,
                 'is_group'      => true,
                 'is_pack'       => false
-            ];    
-        }        
+            ];
+        }
         $lines[] = $line;
 
 
@@ -396,7 +395,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                     'free_qty'      => null,
                     'is_group'      => false,
                     'is_pack'       => false
-                ];    
+                ];
             }
             else {
                 $line = [
@@ -410,7 +409,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                     'free_qty'      => $booking_line['free_qty'],
                     'is_group'      => false,
                     'is_pack'       => false
-                ];    
+                ];
             }
 
             $group_lines[] = $line;
@@ -420,7 +419,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                 $lines[] = $line;
             }
         }
-        // mode is 'simple' : group lines by VAT rate        
+        // mode is 'simple' : group lines by VAT rate
         else {
             $group_tax_lines = [];
             foreach($group_lines as $line) {
@@ -453,7 +452,6 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
                 }
             }
         }
-
     }
 }
 

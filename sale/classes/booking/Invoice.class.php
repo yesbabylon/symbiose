@@ -8,14 +8,6 @@ namespace sale\booking;
 
 class Invoice extends \finance\accounting\Invoice {
     
-    public static function getName() {
-        return "Invoice";
-    }
-
-    public static function getDescription() {
-        return "An invoice is a legal document that relates to a booking, and is part of the accounting system.";
-    }
-
     public static function getColumns() {
 
         return [
@@ -44,7 +36,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied (from booking line).',
                 'default'           => 0.0
-            ],
+            ]
 
         ];
     }
