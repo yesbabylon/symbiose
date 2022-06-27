@@ -4,14 +4,8 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use core\setting\Setting;
-use finance\accounting\InvoiceLine;
-use finance\accounting\InvoiceLineGroup;
-use lodging\sale\booking\Invoice;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLine;
-use lodging\sale\booking\Funding;
-use lodging\sale\catalog\Product;
 
 list($params, $providers) = announce([
     'description'   => "Generate final invoice with remaining due balance related to a booking.",
@@ -52,6 +46,14 @@ if($booking['status'] != 'checkedout') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
+
+/* 
+    Remove any non-paid and non-invoice remaining funding
+*/
+
+Funding::search([ ['paid_amount', '=', 0], ['type', '=', 'installment'], ['booking_id', '=', $invoice['booking_id']] ])->delete(true);
+
+
 /*
     Generate invoice
 */
@@ -60,7 +62,8 @@ if($booking['status'] != 'checkedout') {
 eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
 
 // mark all booking lines as invoiced
-BookingLine::ids($booking_lines_ids)->update(['is_invoiced' => true]);
+// #memo - there is no point in doing this now since we can go backward for adding more extra products if necessary
+// BookingLine::ids($booking['booking_lines_ids'])->update(['is_invoiced' => true]);
 
 // update booking status
 Booking::id($params['id'])->update(['status' => 'invoiced']);

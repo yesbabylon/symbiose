@@ -170,11 +170,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "33%",
-                                                "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
-                                                }
+                                                "visible": false
                                             },
                                             {
                                                 "type": "field",
@@ -417,6 +413,7 @@
                                                 "value": "fundings_ids",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "view": "list.booking",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": [ {
@@ -446,7 +443,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoices_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.booking"
+                                                }
                                             }
                                         ]
                                     }

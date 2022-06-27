@@ -35,7 +35,7 @@
 	},
 	"view": {
 		"form.default": {
-			"name": "Règles de Tva",
+			"name": "Règle comptable",
 			"description": "Vue par défaut des règles comptables avec tous les champs",
 			"layout": {
 				"section.accounting_rules_section": {
@@ -47,7 +47,7 @@
 			}
 		},
 		"list.default": {
-			"name": "Liste des Règles de Tva",
+			"name": "Liste des règles comptables",
 			"description": "Cette vue est destinée à afficher les règles comptables.",
 			"layout": {}
 		}

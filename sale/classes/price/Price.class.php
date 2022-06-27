@@ -71,7 +71,7 @@ class Price extends Model {
 
             'accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule',
+                'foreign_object'    => \finance\accounting\AccountingRule::getType(),
                 'description'       => "Selling accounting rule. If set, overrides the rule of the product this price is assigned to.",
                 'onupdate'          => 'onupdateAccountingRuleId'
             ],
