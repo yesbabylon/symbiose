@@ -35,7 +35,7 @@
                     "view": "list.reconciled",
                     "order": "created",
                     "sort": "desc",
-                    "domain": [ ["status", "=", "closed"], ["center_id", "in", "user.centers_ids"] ]
+                    "domain": [ ["status", "=", "closed"] ]
                   }
                 },
                 {
@@ -45,7 +45,8 @@
                   "description": "", 
                   "context": {
                     "entity": "lodging\\sale\\pos\\Order",
-                    "view": "list.default"
+                    "view": "list.default",
+                    "domain": [[["status", "=", "pending"]]]
                   }
                 },
                 {

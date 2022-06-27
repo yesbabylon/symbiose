@@ -50,7 +50,6 @@ switch($params['variant']) {
             'created',
             'status',
             'has_invoice',
-            'has_funding',
             'total',
             'price',
             'customer_id'=>[
@@ -67,7 +66,9 @@ switch($params['variant']) {
                 'discount',
                 'free_qty',
                 'total',
-                'price'
+                'price',
+                'has_funding',
+                'funding_id',
             ]
         ];
         break;
@@ -123,7 +124,9 @@ switch($params['variant']) {
                     'discount',
                     'free_qty',
                     'total',
-                    'price'
+                    'price',
+                    'has_funding',
+                    'funding_id'
                 ],
         ];
         break;
