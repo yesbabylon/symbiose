@@ -111,7 +111,7 @@ class Booking extends \sale\booking\Booking {
 
             'fundings_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\Funding',
+                'foreign_object'    => Funding::getType(),
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Fundings that relate to the booking.',
                 'ondetach'          => 'delete'

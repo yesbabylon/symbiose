@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use lodging\sale\booking\Booking;
+use lodging\sale\booking\Funding;
 use lodging\sale\booking\BookingLine;
 
 list($params, $providers) = announce([
