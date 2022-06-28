@@ -3,7 +3,7 @@
     "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {

@@ -96,7 +96,9 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
         foreach($payment['order_lines_ids'] as $lid => $line) {
             $new_line = BookingLine::create(['booking_id' => $booking_id, 'booking_line_group_id' => $group_id, 'product_id' => $line['product_id']])->first();
             // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
-            BookingLine::id($new_line['id'])->update(['qty' => $line['qty']])->update(['unit_price' => $line['unit_price'], 'vat_rate' => $line['vat_rate']]);
+            BookingLine::id($new_line['id'])
+                        ->update(['qty' => $line['qty']])
+                        ->update(['unit_price' => $line['unit_price'], 'vat_rate' => $line['vat_rate']]);
         }
     }
 }
