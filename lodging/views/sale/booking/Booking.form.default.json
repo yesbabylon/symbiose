@@ -444,9 +444,8 @@
                                                 "type": "field",
                                                 "value": "invoices_ids",
                                                 "width": "100%",                                                
-                                                "widget": {
-                                                    "view": "list.default",
-                                                    "newview": "list.booking",
+                                                "widget": {                                                    
+                                                    "view": "list.booking",
                                                     "domain": ["type", "=", "invoice"]
                                                 }
                                             }

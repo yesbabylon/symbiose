@@ -28,7 +28,7 @@ class InvoiceAccountingEntry extends Model {
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\Invoice',
-                'description'       => 'Invoice the line is related to.',
+                'description'       => 'Invoice that the line relates to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
             ],

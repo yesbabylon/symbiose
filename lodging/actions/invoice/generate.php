@@ -254,7 +254,8 @@ if($fundings) {
     foreach($fundings as $fid => $funding) {
         if($funding['type'] == 'installment') {
             if($funding['paid_amount'] == 0) {
-                // ignore non-invoice non-paid fundings
+                // remove non-invoice non-paid fundings
+                Funding::id($fid)->delete(true);
                 continue;
             }
             $i_line = [

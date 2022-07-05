@@ -340,7 +340,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
         $group_is_pack = true;
 
         $line = [
-            'name'          => $group_label['name'],
+            'name'          => $group_label,
             'price'         => $contract_line_group['contract_line_id']['price'],
             'total'         => $contract_line_group['contract_line_id']['total'],
             'unit_price'    => $contract_line_group['contract_line_id']['unit_price'],

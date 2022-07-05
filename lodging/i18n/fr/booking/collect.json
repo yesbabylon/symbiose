@@ -12,6 +12,16 @@
             "description": "Réservations liées à un client ou contact.",
             "help": ""
         },
+        "date_from": {
+            "label": "Du",
+            "description": "Première date de l'intervalle.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Dernière date de l'intervalle.",
+            "help": ""
+        },
         "center_id": {
             "label": "Centre",
             "description": "Réservations liée à un centre.",
