@@ -1,0 +1,53 @@
+{
+    "name": "Contract Line",
+    "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     }, 
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Contrat",
+                                                "value": "contract_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "contract_line_group_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                                       
+                ]
+            }
+        ]
+    }
+}

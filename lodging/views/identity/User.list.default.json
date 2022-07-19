@@ -1,0 +1,31 @@
+{
+    "name": "Users",
+    "description": "This view is intended for displaying basic listing of existing Users.",
+    "access": {
+        "groups": ["*"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "login",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "validated",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "language",
+                "width": "10%"
+            }
+        ]
+    }
+}

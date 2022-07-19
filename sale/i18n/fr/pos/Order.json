@@ -13,16 +13,21 @@
             "selection": {
                 "pending": "en cours",
                 "payment": "paiement",
-                "paid": "payé"
-            }
+                "paid": "payé",
+                "help": ""
+            },
+			"description": "",
+            "help": ""
         },
         "session_id": {
             "label": "Session",
-            "description": "La session de caisse à laquelle appartient la commande."
+            "description": "La session de caisse à laquelle appartient la commande.",
+            "help": ""
         },
         "order_lines_ids": {
             "label": "Lignes de commande",
-            "description": "Les lignes de commande sélectionnées pour le paiement."
+            "description": "Les lignes de commande sélectionnées pour le paiement.",
+            "help": ""
         },
         "total": {
             "label": "Total HT",

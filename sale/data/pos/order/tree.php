@@ -53,7 +53,10 @@ switch($params['variant']) {
             'total',
             'price',
             'customer_id'=>[
-                'name'
+                'name',
+                'partner_identity_id'=>[
+                    'vat_number'
+                ]
             ],
             'total_paid',
             'order_lines_ids' => [
@@ -84,13 +87,20 @@ switch($params['variant']) {
             'price',
             'total_paid',
             'customer_id'=>[
-                'name'
+                'name',
+                'partner_identity_id'=>[
+                    'vat_number',
+                    'address_city',
+                    'address_zip',
+                    'address_street'
+                ]
             ],
             'order_payments_ids' => [
                 'id',
                 'order_id',
                 'total_due',
                 'total_paid',
+                'status',
                 'order_lines_ids' => [
                     'id',
                     'order_id',

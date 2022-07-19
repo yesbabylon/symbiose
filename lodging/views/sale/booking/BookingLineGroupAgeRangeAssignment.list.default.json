@@ -1,0 +1,34 @@
+{
+    "name": "Booking Line Groupe Age Range Assignment",
+    "description": "",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Booking",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Tranche d'âge",
+                "value": "age_range_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "booking_line_group_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

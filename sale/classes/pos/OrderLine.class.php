@@ -29,7 +29,8 @@ class OrderLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\OrderPayment',
                 'description'       => 'The payement the line relates to.',
-                'default'           => 0
+                'default'           => 0,
+                'ondelete'          => 'null'
             ],
 
             'product_id' => [

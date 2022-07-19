@@ -1,0 +1,54 @@
+{
+    "name": "Préférence de Repas",
+    "plural": "Préférences de Repas",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "",
+            "help": ""
+        },
+        "age_range_id": {
+            "label": "Tranche d'âge",
+            "description": "",
+            "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "description": "",
+            "help": "",
+            "selection": {
+                "2_courses": "2 services",
+                "3_courses": "3 services"
+            }
+        },
+        "pref": {
+            "label": "Préférences alimentaires",
+            "description": "",
+            "help": "",
+            "selection": {
+                "regular": "omnivore",
+                "veggie": "végétarien",
+                "allergen_free": "sans allergène"
+            }
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Préférence de Repas",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Préférences de Repas",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

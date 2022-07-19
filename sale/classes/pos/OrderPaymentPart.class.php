@@ -37,7 +37,7 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
                 'description'       => 'The order the part relates to (based on payment).',
-                'onupdate'          => 'onupdateOrderId'
+                // 'onupdate'          => 'onupdateOrderId'
             ],
 
             'payment_origin' => [

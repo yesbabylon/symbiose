@@ -47,11 +47,6 @@
             "description": "Le paiement intégralement reçu ?",
             "help": ""
         },
-        "is_balance_invoice": {
-            "label": "Facture de solde",
-            "description": "Facture de solde directe.",
-            "help": ""
-        },
         "payment_deadline_id": {
             "label": "Modèle d'échéance",
             "description": "Le modèle de date limite utilisé pour créer le financement, le cas échéant.",

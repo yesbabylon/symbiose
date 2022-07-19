@@ -1,0 +1,42 @@
+{
+	"name": "Pièce Jointe",
+	"plural": "Pièces Jointes",
+	"description": "",
+	"model": {
+		"name":{
+			"label":"Nom",
+			"description": "",
+			"help": ""
+		},
+		"template_id":{
+			"label":"Template", 
+			"description": "",
+			"help": ""
+		},
+        "document_id":{
+			"label":"Document", 
+			"description": "",
+			"help": ""
+		},
+        "lang_id":{
+			"label":"Langue", 
+			"description": "",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Pièce Jointe",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Pièces Jointes",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+	
+	}
+}

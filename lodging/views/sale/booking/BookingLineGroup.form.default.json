@@ -47,11 +47,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "sojourn_type",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "nb_pers",
                                                 "width": "50%"
                                             }

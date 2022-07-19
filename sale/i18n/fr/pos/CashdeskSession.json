@@ -3,11 +3,6 @@
 	"plural": "Sessions de Caisse",
 	"description": "",
 	"model": {
-		"created": {
-			"label": "Date d'ouverture",
-			"description": "Date et heure d'ouverte de la session.",
-			"help": ""
-		},
 		"amount": {
 			"label": "Montant d'ouverture",
 			"description": "Espèces dans la caisse à l'ouverture de la session.",

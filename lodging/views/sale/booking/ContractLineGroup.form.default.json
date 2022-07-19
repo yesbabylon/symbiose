@@ -1,0 +1,83 @@
+{
+    "name": "Contract Line Group",
+    "description": "Contract line groups are related to a booking.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "General info",
+                        "id": "section.contractlineGroup_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "contract_line_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "contract_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "total",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "section.lines",
+                                "label": "Contract Lines",
+                                "rows": [
+                                    {
+                                        "columns": [                                    
+                                            {
+                                                "width": "100%",
+                                                "items": [
+                                                    {
+                                                        "type": "field",
+                                                        "value": "contract_lines_ids",
+                                                        "width": "100%"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            } 
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

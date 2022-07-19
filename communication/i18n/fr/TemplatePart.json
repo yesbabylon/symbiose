@@ -1,0 +1,36 @@
+{
+	"name": "Partie de modèle",
+	"plural": "Parties de modèle",
+	"description": "",
+	"model": {
+		"name":{
+			"label":"Nom",
+			"description": "",
+			"help": ""
+		},
+		"template_id":{
+			"label":"Template", 
+			"description": "",
+			"help": ""
+		},
+        "value":{
+			"label":"Valeur", 
+			"description": "",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Partie de modèle",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Parties de modèle",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+	}
+}

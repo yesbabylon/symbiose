@@ -1,0 +1,58 @@
+{
+    "name": "Préférence de repas",
+    "description": "Les préférences parmi les repas.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "booking_line_group_id",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "age_range_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"  
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "pref",
+                                                "width": "50%"    
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "50%"    
+                                            }
+                                        ]
+                                    }   
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

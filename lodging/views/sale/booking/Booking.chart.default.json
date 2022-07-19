@@ -14,12 +14,12 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA réservations HTVA",
+                "label": "Réservations CA HTVA",
                 "operation": ["SUM", "object.total"],
                 "domain": ["status", "<>", "quote"]
             },
             {
-                "label": "CA réservations TVAC",
+                "label": "Réservations CA TVAC",
                 "operation": ["SUM", "object.price"],
                 "domain": ["status", "<>", "quote"]
             }

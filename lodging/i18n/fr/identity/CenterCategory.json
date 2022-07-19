@@ -12,11 +12,6 @@
 			"label": "Centres",
 			"description": "Liste des catégories auxquelles appartient le centre, le cas échéant.",
 			"help": ""
-		},
-		"rental_units_ids": {
-			"label": "Unités locatives",
-			"description": "Liste des unités locatives liées à la catégorie.",
-			"help": ""
 		}
 	},
 	"view": {

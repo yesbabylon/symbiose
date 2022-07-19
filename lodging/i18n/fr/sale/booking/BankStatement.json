@@ -1,0 +1,19 @@
+{
+    "name": "Relevé Bancaire",
+    "plural": "Relevés Bancaires",
+    "description": "",
+    "model": {
+        "center_office_id": {
+            "label": "Centre de gestion",
+            "description": "Le centre de gestion auquel le relevé bancaire est lié.",
+            "help": ""
+        },
+        "statement_lines_ids": {
+            "label": "Lignes du relevé bancaire",
+            "description": "Les lignes du relevé bancaire.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

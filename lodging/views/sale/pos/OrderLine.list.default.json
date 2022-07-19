@@ -1,0 +1,74 @@
+{
+    "name": "Operation Lines",
+    "description": "This view is intended for displaying the list of operation lines.",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "operations": {
+        "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,    
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "order_id",
+                "width": "20%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "discount",
+                "width": "15%"
+            },            
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Quantity",
+                "value": "qty",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Freebies",
+                "value": "free_qty",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Total excl.",
+                "value": "total",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Total incl.",
+                "value": "price",
+                "width": "15%"
+            }
+        ]
+    }
+}

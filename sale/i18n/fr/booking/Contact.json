@@ -11,6 +11,7 @@
         "type": {
             "label": "Type",
             "help": "Le rôle du contact dans la réservation.",
+            "description": "",
             "selection": {
                 "booking": "réservation",
                 "invoice": "facturation",
