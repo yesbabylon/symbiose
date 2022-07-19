@@ -1,0 +1,65 @@
+{
+    "name": "Ligne de Contrat",
+    "plural": "Lignes de Contrats",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Identification",
+            "description": "Nom abrégé du contrat.",
+            "help": ""
+        },
+        "contract_id": {
+            "label": "Contrat",
+            "description": "Le contrat auquel la ligne se rapporte.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit (SKU) auquel la ligne se rapporte.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix ​​du produit lié à la ligne.",
+            "help": ""
+        },
+        "vat_rate": {
+            "label": "Taux de tva",
+            "description": "Taux de TVA à appliquer.",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité de produit.",
+            "help": ""
+        },
+        "free_qty": {
+            "label": "Gratuités",
+            "description": "Quantité gratuite de produit.",
+            "help": ""
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "Montant total de la remise à appliquer, le cas échéant.",
+            "help": ""
+        },
+		"price": {
+			"label": "Prix",
+			"description": "Prix ​​de la ligne.",
+			"help": ""
+		}
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de Contrat",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Lignes de contrat",
+            "description": "Liste des lignes de contrat.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

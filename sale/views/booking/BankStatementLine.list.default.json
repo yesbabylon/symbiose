@@ -1,0 +1,68 @@
+{
+    "name": "Bank Statement Lines",
+    "description": "This view is intended for displaying the list of bank statement lines.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "order": "created",
+    "sort": "desc",    
+    "domain": ["center_office_id", "in", "user.center_offices_ids"],
+    "actions": [
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import from a Bank Statements file.",
+            "controller": "lodging_payments_import",
+            "confirm": true
+        }
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "account_holder",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "account_iban",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "structured_message",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "message",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            }            
+        ]
+    }
+}

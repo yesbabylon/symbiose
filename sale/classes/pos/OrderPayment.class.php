@@ -51,6 +51,7 @@ class OrderPayment extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pos\OrderLine',
                 'foreign_field'     => 'order_payment_id',
+                'ondetach'          => 'null',
                 'description'       => 'The order lines selected for the payement.',
                 'onupdate'          => 'onupdateOrderLinesIds'
             ],

@@ -1,0 +1,54 @@
+{
+    "name": "Bank Statements",
+    "description": "This view is intended for displaying the list of bank statements.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "actions": [
+        {
+            "id": "action.import",
+            "label": "Import",
+            "description": "Import from a Bank Statements file.",
+            "controller": "lodging_payments_import"
+        }
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "old_balance",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "new_balance",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "bank_account_iban",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            }
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "name": "Groupe de Facture",
+    "plural": "Groupes de Facture",
+    "description": "",
+    "model": {
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture à laquelle le groupe est lié.",
+            "help": ""
+        },
+        "invoice_lines_ids": {
+            "label": "Lignes de facture",
+            "description": "Les lignes du groupe.",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {}
+}

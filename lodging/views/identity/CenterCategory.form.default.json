@@ -50,26 +50,6 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "label": "Rental Units",
-                        "id": "section.rental_units_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "rental_units_ids",
-                                                "width": "100%"                                                
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 ]
             }

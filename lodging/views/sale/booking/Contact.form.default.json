@@ -26,6 +26,8 @@
             {
                 "sections": [
                     {
+                        "label": "Contacts",
+                        "id": "section.contacts",
                         "rows": [
                             {
                                 "columns": [

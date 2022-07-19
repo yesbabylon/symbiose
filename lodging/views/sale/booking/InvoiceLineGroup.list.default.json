@@ -1,0 +1,17 @@
+{
+    "name": "Invoice line groups",
+    "description": "This view is intended for displaying the list of invoice line groups.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Contract",
+                "value": "invoice_id",
+                "width": "30%"
+            }
+        ]
+    }
+}

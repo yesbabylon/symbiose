@@ -1,0 +1,25 @@
+{
+	"name": "Type d'identité",
+	"plural": "Types d'identité",
+	"description": "Types d'identité.",
+	"model": {
+		"name": {
+			"label": "Nom",
+			"description": "Nom de l'utilisateur.",
+			"help": ""
+		},
+		"code": {
+			"label": "Code",
+			"description": "Le code du type d'identité.",
+			"help": ""
+		},
+		"description": {
+			"label": "Description",
+			"description": "Description.",
+			"help": ""
+		}
+	},
+	"view": {
+	},
+	"error": {}
+}

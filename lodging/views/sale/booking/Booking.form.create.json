@@ -60,11 +60,13 @@
                                             {
                                                 "type": "field",
                                                 "value": "customer_id",
+                                                "width": "25%",
                                                 "visible": false
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "status",
+                                                "width": "25%",
                                                 "visible": false
                                             }
                                         ]

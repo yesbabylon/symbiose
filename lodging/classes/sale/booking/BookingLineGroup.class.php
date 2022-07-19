@@ -189,7 +189,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'foreign_object'    => 'lodging\sale\booking\BookingLineGroupAgeRangeAssignment',
                 'foreign_field'     => 'booking_line_group_id',
                 'description'       => 'Age range assignments defined for the group.',
-                'ondelete'          => 'cascade',
+                // 'ondelete'          => 'cascade',
                 'ondetach'          => 'delete'
             ],
 

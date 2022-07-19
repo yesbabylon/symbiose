@@ -1,0 +1,22 @@
+{
+	"name": "Caisse",
+	"plural": "Caisses",
+	"description": "",
+	"model": {
+		"center_id": {
+			"label": "Centre",
+			"description": "Centre auquel est assignée la caisse.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+		},
+		"list.default": {
+		}
+	},
+	"error": {
+        "errors": {
+        }
+    }
+}

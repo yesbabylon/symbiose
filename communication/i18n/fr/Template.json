@@ -8,11 +8,6 @@
             "description": "Code mnémo du modèle.",
             "help": ""
         },
-        "value": {
-            "label": "Contenu du modèle",
-            "description": "Texte du modèle (html).",
-            "help": ""
-        },
         "category_id": {
             "label": "Catégorie",
             "description": "La catégorie à laquelle appartient le modèle.",
@@ -24,7 +19,8 @@
             "selection": {
                 "quote": "devis",
                 "contract": "contrat",
-                "invoice": "facture"
+                "invoice": "facture",
+                "option": "option"
             },
             "help": ""
         }

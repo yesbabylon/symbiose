@@ -1,0 +1,81 @@
+{
+    "name": "Relevé Bancaire",
+    "plural": "Relevés Bancaire",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Identifiant de l'extrait.",
+            "help": ""
+        },
+        "date": {
+            "label": "Date de réception du relevé",
+            "description": "Date de réception du relevé.",
+            "help": ""
+        },
+        "statement_lines_ids": {
+            "label": "Transaction",
+            "description": "Les lignes de transaction qui sont affectées à l'extrait.",
+            "help": ""
+        },
+        "bank_account_bic": {
+            "label": "Code BIC",
+            "description": "Code d'identification de la banque.",
+            "help": ""
+        },
+        "bank_account_number": {
+            "label": "Numéro de compte",
+            "description": "Numéro de compte bancaire.",
+            "help": ""
+        },
+        "bank_account_iban": {
+            "label": "Numéro IBAN",
+            "description": "Compte bancaire associée à l'extrait.",
+            "help": ""
+        },
+        "old_balance": {
+            "label": "Ancien solde",
+            "description": "Solde du compte avant les transactions.",
+            "help": ""
+        },
+        "new_balance": {
+            "label": "Nouveau solde",
+            "description": "Solde du compte après les transactions.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Indicateur d'assignation de l'extrait aux paiements.",
+            "help": "",
+            "selection": {
+                "pending": "à traiter",
+                "reconciled": "réconcilié"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Relevé Bancaire",
+            "description": "",
+            "layout": {
+                "section.bank_statement": {
+                    "label": "Détails"
+                },
+                "section.statment_lines_section": {
+                    "label": "Lignes de transactions"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Relevés Bancaire",
+            "description": "Liste des relevés Bancaire.",
+            "layout": {},
+            "actions": {
+                "action.import": {
+                    "label": "Importer"
+                }
+            }
+        }
+    },
+    "error": {}
+}
