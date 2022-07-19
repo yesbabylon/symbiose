@@ -20,10 +20,22 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'default'       => 'lodging\sale\booking\Booking'
         ],
-        
+
+        'date_from' => [
+            'type'          => 'date',
+            'description'   => "First date of the time interval.",
+            'default'       => null
+        ],
+
+        'date_to' => [
+            'type'          => 'date',
+            'description'   => "Last date of the time interval.",
+            'default'       => null
+        ],
+
         'bank_account_iban' => [
             'type'          => 'string',
-            'usage'         => 'uri/urn:iban',                
+            'usage'         => 'uri/urn:iban',
             'description'   => "Number of the bank account of the Identity, if any."
         ],
 
@@ -67,6 +79,13 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 $domain = $params['domain'];
 $bookings_ids = [];
 
+if(isset($params['date_from'])) {
+    $domain = Domain::conditionAdd($domain, ['date_from', '>=', $params['date_from']]);
+}
+if(isset($params['date_to'])) {
+    $domain = Domain::conditionAdd($domain, ['date_from', '<=', $params['date_to']]);
+}
+
 /*
     center : trivial booking::center_id
 */
@@ -75,7 +94,7 @@ if(isset($params['center_id'])) {
     $domain = Domain::conditionAdd($domain, ['center_id', '=', $params['center_id']]);
 }
 
-/* 
+/*
     bank_account_iban : search in statement lines and identities
 */
 if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) {
@@ -90,13 +109,13 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
         }
     }
 
-    // lookup in identities    
+    // lookup in identities
     $identities_ids = Identity::search(['bank_account_iban', '=', $params['bank_account_iban']])->ids();
-    if(count($identities_ids)) {        
+    if(count($identities_ids)) {
         $domain = Domain::conditionAdd($domain, ['customer_identity_id', 'in', $identities_ids]);
         $found = true;
     }
-    
+
     if(!$found) {
         // add a constraint to void the result set
         $bookings_ids = [0];
@@ -121,7 +140,7 @@ if(isset($params['identity_id'])) {
         if(empty($bookings_ids)) {
             // add a constraint to void the result set
             $bookings_ids = [0];
-        }                        
+        }
     }
     else {
         // add a constraint to void the result set
@@ -136,7 +155,7 @@ if(isset($params['rental_unit_id'])) {
     $assignements = BookingLineRentalUnitAssignement::search(['rental_unit_id', '=', $params['rental_unit_id']])->read(['booking_id'])->get();
     if(count($assignements)) {
         if(count($bookings_ids)) {
-            $bookings_ids = array_intersect( 
+            $bookings_ids = array_intersect(
                                 $bookings_ids,
                                 array_map(function ($a) { return $a['booking_id']; }, $assignements )
                             );

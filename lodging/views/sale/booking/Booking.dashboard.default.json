@@ -25,7 +25,7 @@
                                             },
                                             {
                                                 "id": "item.bookings2",
-                                                "label": "Réservations",
+                                                "label": "Mes Réservations",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",

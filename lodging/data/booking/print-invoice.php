@@ -330,9 +330,11 @@ $lines = [];
 
 // display lines by groups, when present
 foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
+    // generate group label
+    $group_label = (strlen($invoice_line_group['name']))?$invoice_line_group['name']:'';
 
     $line = [
-        'name'          => $invoice_line_group['name'],
+        'name'          => $group_label,
         'price'         => null,
         'total'         => null,
         'unit_price'    => null,
