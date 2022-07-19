@@ -12,7 +12,7 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label" : "CA Total POS",
+                "label" : "CA POS",
                 "operation": ["SUM", "object.amount"],
                 "domain": ["center_id", "in", "user.centers_ids"]
             }

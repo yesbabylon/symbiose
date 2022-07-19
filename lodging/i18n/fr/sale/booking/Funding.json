@@ -1,0 +1,41 @@
+{
+    "name": "Financement",
+    "plural": "Financements",
+    "description": "",
+    "model": {
+        "booking_id": {
+            "label": "Réservation",
+            "description": "Réservation à laquelle est associé le financement.",
+            "help": ""
+        },
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture ciblée par le financement.",
+            "help": ""
+        },
+        "center_office_id": {
+            "label": "Réservation",
+            "description": "Centre de gestion lié au financement.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "",
+            "actions": {
+                "action.invoice": {
+                    "label": "Émettre la facture",
+                    "description": "Générer une facture sur base de la version proforma."
+                }
+            },
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "Liste des factures.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

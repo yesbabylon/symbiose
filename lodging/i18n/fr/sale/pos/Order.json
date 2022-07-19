@@ -1,0 +1,32 @@
+{
+	"name": "Commande",
+	"plural": "Commandes",
+	"description": "",
+	"model": {
+		"has_funding": {
+			"label": "A un financement",
+			"description": "Est-ce que le centre a un financement.",
+			"help": ""
+		},
+        "funding_id": {
+            "label": "Financement",
+			"description": "Le financement associé à la commande.",
+			"help": ""
+        },
+        "invoice_id": {
+            "label": "Facture",
+			"description": "La facture associée à la commande.",
+			"help": ""
+        }
+	},
+	"view": {
+		"form.default": {
+		},
+		"list.default": {
+		}
+	},
+	"error": {
+        "errors": {
+        }
+    }
+}

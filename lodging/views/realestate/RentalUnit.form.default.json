@@ -38,12 +38,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Center Category",
-                                                "value": "center_category_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Rentable",
                                                 "value": "can_rent",
                                                 "width": "50%"

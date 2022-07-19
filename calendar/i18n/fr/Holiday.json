@@ -10,7 +10,7 @@
         },
         "date_from": {
             "label": "Date / Du",
-            "description": "Date / premier jour du congé",
+            "description": "Date / premier jour du congé.",
             "help": ""
         },
         "date_to": {

@@ -1,0 +1,36 @@
+{
+    "name": "Relevé bancaire",
+    "plural": "Relevés bancaires",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Intitulé du relevé bancaire.",
+            "help": ""
+        },
+        "center_office_id": {
+            "label": "Centre de gestion",
+            "description": "Centre de gestion auquel s'applique le relevé.",
+            "help": ""
+        },
+        "statement_lines_ids": {
+            "label": "Lignes de relevé",
+            "description": "Lignes assignées au relevé bancaire.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Règles de Tva",
+            "description": "Vue par défaut des règles comptables avec tous les champs",
+            "layout": {
+            }
+        },
+        "list.default": {
+            "name": "Liste des Règles de Tva",
+            "description": "Cette vue est destinée à afficher les règles comptables.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

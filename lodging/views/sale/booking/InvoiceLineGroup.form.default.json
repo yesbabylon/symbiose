@@ -1,0 +1,58 @@
+{
+    "name": "Invoice Line Group",
+    "description": "Invoice line groups are related to a booking.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "General info",
+                        "id": "section.invoicelineGroup_section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "invoice_id",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "section.lines",
+                                "label": "Invoice Lines",
+                                "rows": [
+                                    {
+                                        "columns": [                                    
+                                            {
+                                                "width": "100%",
+                                                "items": [
+                                                    {
+                                                        "type": "field",
+                                                        "value": "invoice_lines_ids",
+                                                        "width": "100%"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            } 
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

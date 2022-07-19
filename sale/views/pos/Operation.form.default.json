@@ -43,46 +43,6 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "total",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "amount_paid",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "amount_returned",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Payments",
-                        "id": "section.payments_section",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "payments_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
                                     }
                                 ]
                             }

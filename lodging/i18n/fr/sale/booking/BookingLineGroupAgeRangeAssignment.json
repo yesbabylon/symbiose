@@ -1,0 +1,30 @@
+{
+	"name": "Tranche d'âge",
+	"plural": "Tranches d'âge",
+	"description": "Les tranches d'âge pour un groupe de réservation.",
+	"model": {
+		"booking_id": {
+			"label": "Réservation",
+			"description": "La réservation à laquelle est liée la tranche d'âge.",
+			"help": ""
+		},
+        "qty": {
+			"label": "Quantité",
+			"description": "Le nombre de personne par tranche d'âge.",
+			"help": ""
+		},
+        "age_range_id": {
+			"label": "Tranche d'âge",
+			"description": "La tranche d'âge liée.",
+			"help": ""
+		},
+        "booking_line_group_id": {
+			"label": "Groupe de Réservation",
+			"description": "Le groupe de réservation à laquelle s'applique la tranche d'âge.",
+			"help": ""
+		}
+	},
+	"view": {
+	},
+	"error": {}
+}

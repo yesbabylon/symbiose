@@ -1,0 +1,52 @@
+{
+    "name": "Payments",
+    "description": "This view is intended for displaying the list of Payments.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "partner_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "receipt_date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "payment_origin",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "payment_method",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "statement_line_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "funding_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "invoice_id",
+                "width": "20%"
+            }
+
+        ]
+    }
+}

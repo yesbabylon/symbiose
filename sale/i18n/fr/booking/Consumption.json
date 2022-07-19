@@ -37,19 +37,7 @@
             "label": "Fin",
             "description": "Heure à laquelle la prestation est terminée.",
             "help": ""
-        },
-        "moment": {
-            "label": "Moment",
-            "description": "Moement de la journée.",
-            "selection": {
-                "": "",
-                "morning": "matin",
-                "lunchtime": "midi",
-                "afternoon": "après-midi",
-                "evening": "soir"
-            },
-            "help": ""
-        },        
+        },    
         "qty": {
             "label": "Quantité",
             "description": "Nombre de consommations comptabilisées.",

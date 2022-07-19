@@ -1,0 +1,88 @@
+{
+    "name": "Cashdesk Log",
+    "description": "",
+    "access": {
+        "groups": ["pos.default.user"]
+    },
+    "routes": [
+        {
+            "id": "session.orders",
+            "label": "Cashdesk",
+            "description": "",
+            "icon": "point_of_sale",
+            "route": "/session/object.id/orders"
+        },
+        {
+            "id": "session.close",
+            "label": "Close session",
+            "description": "",
+            "icon": "close",
+            "route": "/session/object.id/close"
+        }
+    ],    
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "50%",
+                                                "widget": {                                                
+                                                    "readonly": true,
+                                                    "heading": true                                                    
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "amount",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true,
+                                                    "heading": true                                                    
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%"
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "User",
+                                                "value": "user_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Cashdesk",
+                                                "value": "cashdesk_id",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            }
+                                        ]
+                                    }                                    
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

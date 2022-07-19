@@ -1,0 +1,33 @@
+{
+    "name": "Meal Preferences",
+    "description": "This view is intended for displaying the list of meal preferences.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "booking_line_group_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "age_range_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "pref",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "width": "20%"
+            }
+        ]
+    }
+}

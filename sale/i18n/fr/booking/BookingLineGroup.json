@@ -13,11 +13,6 @@
             "description": "Ordre du groupe dans la liste.",
             "help": ""
         },
-        "pack_id": {
-            "label": "Pack",
-            "description": "Pack (produit) auquel le groupe se rapporte, le cas échéant.",
-            "help": ""
-        },
         "date_from": {
             "label": "Date de",
             "description": "Heure d'arrivée.",

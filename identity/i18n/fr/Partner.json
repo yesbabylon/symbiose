@@ -46,16 +46,6 @@
             },
             "help": ""
         },
-        "customer_rate_class_id": {
-            "label": "Catégorie tarifaire",
-            "description": "Catégorie tarifaire qui s'applique au client.",
-            "help": ""
-        },
-        "customer_type_id": {
-            "label": "Type de client",
-            "description": "Type de client (en relation avec les classes tarifaires).",
-            "help": ""
-        },
         "lang_id": {
             "label": "Langue",
             "description": "Langue du client (en lien avec son identité).",

@@ -17,7 +17,7 @@
                                             {
                                                 "id": "item.finance",
                                                 "label": "Alertes",
-                                                "description": "",
+                                                "description": "Alertes",
                                                 "width": "50%",
                                                 "entity": "core\\alert\\Message",
                                                 "view": "list.dashboard",

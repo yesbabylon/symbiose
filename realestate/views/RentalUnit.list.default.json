@@ -26,11 +26,6 @@
                 "type": "field",
                 "value": "capacity",
                 "width": "20%"                                                
-            },
-            {
-                "type": "field",
-                "value": "sojourn_type_id",
-                "width": "20%"                                                
             }
         ]
     }

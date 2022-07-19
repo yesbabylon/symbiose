@@ -4,14 +4,10 @@
     "access": {
         "groups": ["pos.default.user"]
     },
+    "domain": ["center_id", "in", "user.centers_ids"],
     "header": {
         "actions": {
-            "ACTION.CREATE" : [
-                {
-                    "view": "form.create",
-                    "description": "overload form to use for session creation"
-                }
-            ]
+            "ACTION.CREATE" : false
         }
     },
     "layout": {

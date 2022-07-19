@@ -3,19 +3,14 @@
     "plural": "Équipes de gestion",
     "description": "Une équipe de gestion de centres regroupe plusieurs centres qui ont une gestion administative en commmun.",
     "model": {
-        "group_code": {
+        "code": {
             "label": "Code de groupe",
             "description": "Code unique de regroupement centre (1 chiffre hexa).",
             "help": ""
         },
-        "manager_id": {
-            "label": "Gérant",
-            "description": "Personne de référence pour la gérance, le cas échéant.",
-            "help": ""
-        },
-        "template_category_id": {
-            "label": "Catégorie de modèle",
-            "description": "Catégorie de modèle utilisée par le centre.",
+        "contacts_ids": {
+            "label": "Contacts",
+            "description": "List of contactsattached to the office.",
             "help": ""
         },
         "centers_ids": {

@@ -4,15 +4,21 @@
     "access": {
         "groups": ["booking.default.user"]
     },
-    "controller": "core_model_chart",
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
         "type": "pie",
         "group_by": "field",
-        "field": "type",
+        "field": "sojourn_type_id",
         "datasets": [
             {
-                "operation": ["SUM", "object.total"]
+                "label": "Gîte Auberge",
+                "operation": ["SUM", "object.total"],
+                "domain": ["sojourn_type_id", "=", 1]
+            },
+            {
+                "label": "Gîte de Groupes",
+                "operation": ["SUM", "object.total"],
+                "domain": ["sojourn_type_id", "=", 2]
             }
         ]
     }

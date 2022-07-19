@@ -4,12 +4,12 @@
     "access": {
         "groups": ["booking.default.user"]
     },
-    "controller": "core_model_chart",
+
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
         "stacked": false,
         "group_by": "range",
-        "range_interval": "year",
+        "range_interval": "month",
         "range_from": "date.this.year.first",
         "range_to": "date.this.year.last",
         "datasets": [
@@ -34,47 +34,47 @@
                 "domain": ["customer_nature_id", "=", 4]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Groupe d'amis",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 5]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Animateur",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 6]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Association (sociale divers)",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 7]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Association",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 8]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ancien travailleur CBTJ/Kaleo",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 9]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Centre culturel",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 10]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "CEC et organisme de formation",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 11]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Académie de musique",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 12]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "CPAS - aide aux défavorisés",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 13]
             },
@@ -84,12 +84,12 @@
                 "domain": ["customer_nature_id", "=", 14]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole (non précisée)",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 15]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "AEC (association d'Education permanente)",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 16]
             },
@@ -104,7 +104,7 @@
                 "domain": ["customer_nature_id", "=", 18]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Entreprise (société privée)",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 19]
             },
@@ -124,19 +124,14 @@
                 "domain": ["customer_nature_id", "=", 22]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Fanfare - groupe musique - chorale",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 23]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Gérant gîte Auberge",
                 "operation": ["SUM", "object.total"],
                 "domain": ["customer_nature_id", "=", 24]
-            },
-            {
-                "label": "CA Prévisionnel",
-                "operation": ["SUM", "object.total"],
-                "domain": ["customer_nature_id", "=", 25]
             }
         ]
     }

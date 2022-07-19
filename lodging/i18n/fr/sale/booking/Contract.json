@@ -1,0 +1,25 @@
+{
+    "name": "Contrat",
+    "plural": "Contrats",
+    "description": "Les contrats liés à une réservation",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Le nom du contrat.",
+            "help": ""
+        },
+        "booking_id": {
+            "label": "La réservation",
+            "description": "La réservation à laquelle le contrat est lié.",
+            "help": ""
+        },
+        "contract_lines_ids": {
+            "label": "Les lignes du contrat",
+            "description": "Les lignes du contrat.",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {}
+}

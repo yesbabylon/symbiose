@@ -1,0 +1,79 @@
+{
+    "name": "Ligne de Facture",
+    "plural": "Lignes de Facture",
+    "description": "",
+    "model": {
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture à laquelle la ligne est liée.",
+            "help": ""
+        },
+        "invoice_line_group_id": {
+            "label": "Groupe de facture",
+            "description": "Le groupe lié à la facture.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Le prix unitaire du produit lié à la ligne.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Le prix de la ligne.",
+            "help": ""
+        },
+        "vat_rate": {
+            "label": "TVA",
+            "description": "La tva appliquée.",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "La quantité du produit.",
+            "help": ""
+        },
+        "free_qty": {
+            "label": "Gratuité",
+            "description": "La gratuité liée à la ligne.",
+            "help": ""
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "La remise appliquée au total.",
+            "help": ""
+        }
+        
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "",
+            "actions": {
+                "action.invoice": {
+                    "label": "Émettre la facture",
+                    "description": "Générer une facture sur base de la version proforma."
+                },
+                "action.reverse": {
+                    "label": "Note de crédit",
+                    "description": "Annuler la facture par une note de crédit."
+                }
+            },
+            "layout": {
+                "sections.invoice.lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice.entries": {
+                    "label": "Écritures comptables"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "Liste des factures.",
+            "layout": {
+            }
+        }
+    },
+    "error": {}
+}

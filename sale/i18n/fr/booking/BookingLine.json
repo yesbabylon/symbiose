@@ -58,11 +58,6 @@
             },
             "help": ""
         },
-        "is_paid": {
-            "label": "Payé",
-            "description": "La ligne a-t-elle déjà été payée ?",
-            "help": ""
-        },
         "price_adapters_ids": {
             "label": "Adaptateurs de prix",
             "description": "Adaptateurs de prix qui s'appliquent à la ligne.",

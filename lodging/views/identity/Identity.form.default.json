@@ -79,6 +79,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
+                                                "width": "100%",
                                                 "visible": false
                                             }
                                         ]

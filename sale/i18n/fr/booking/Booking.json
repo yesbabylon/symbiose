@@ -18,11 +18,6 @@
             "description": "Le client au nom de qui sera établie la réservation.",
             "help": ""
         },
-        "center_id": {
-            "label": "Centre",
-            "description": "Le centre pour lequel est prise la réservation.",
-            "help": ""
-        },
         "nb_pers": {
             "label": "Participants",
             "description": "Le total approximatif de participants.",

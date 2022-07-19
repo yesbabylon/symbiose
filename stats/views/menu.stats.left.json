@@ -29,6 +29,17 @@
                                     "view": "chart.default",
                                     "mode": "grid"
                                 }
+                            },
+                            {
+                                "id": "settings.all_documents.categories",
+                                "type": "entry",
+                                "label": "Catégories des documents",
+                                "description": "",
+                                "context": {
+                                    "entity": "documents\\DocumentCategory",
+                                    "view": "chart.default",
+                                    "mode": "grid"
+                                }
                             }
                         ]
                     },
@@ -84,17 +95,6 @@
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.INS",
-                                "type": "entry",
-                                "label": "INS",
-                                "description": "",
-                                "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.INS",
-                                    "mode": "grid"
-                                }
-                            },
-                            {
                                 "id": "stats.booking.total_meals",
                                 "type": "entry",
                                 "label": "CA repas",
@@ -117,17 +117,6 @@
                                 }
                             },
                             {
-                                "id": "stats.booking.total_bookings.sku",
-                                "type": "entry",
-                                "label": "SKU",
-                                "description": "",
-                                "context": {
-                                    "entity": "lodging\\sale\\booking\\Booking",
-                                    "view": "chart.sku",
-                                    "mode": "grid"
-                                }
-                            },
-                            {
                                 "id": "stats.booking.total_bookings.sojournType",
                                 "type": "entry",
                                 "label": "Type de séjour",
@@ -141,7 +130,7 @@
                             {
                                 "id": "stats.booking.total_bookings.taxes",
                                 "type": "entry",
-                                "label": "Nombre de taxes de séjour",
+                                "label": "Taxes de séjour",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\BookingLine",
@@ -184,7 +173,7 @@
                             {
                                 "id": "stats.payment_methods",
                                 "type": "entry",
-                                "label": "Total paiement par carte bancaire",
+                                "label": "Moyens de paiement",
                                 "description": "",
                                 "context": {
                                     "entity": "sale\\pos\\CashdeskSession",
