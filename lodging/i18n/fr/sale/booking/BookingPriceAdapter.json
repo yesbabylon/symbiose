@@ -10,13 +10,13 @@
         },
         "booking_line_group_id": {
             "label": "Groupe de Ligne de Réservation",
-            "description": "Groupe de lignes de réservation auquel l'adaptateur se rapporte, le cas échéant.",
-            "help": ""
+            "description": "Groupe de lignes de réservation auquel l'adaptateur se rapporte.",
+            "help": "Groupe de lignes de réservation auquel l'adaptateur se rapporte, le cas échéant."
         },
         "booking_line_id": {
             "label": "Ligne de Réservation",
-            "description": "Ligne de réservation à laquelle l'adaptateur se rapporte, le cas échéant.",
-            "help": ""
+            "description": "Ligne de réservation à laquelle l'adaptateur se rapporte.",
+            "help": "Ligne de réservation à laquelle l'adaptateur se rapporte, le cas échéant."
         }
     },
     "view": {

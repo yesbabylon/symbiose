@@ -28,8 +28,8 @@
         },
         "number": {
             "label": "Numéro de la facture",
-            "description": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation).",
-            "help": ""
+            "description": "Numéro de la facture, selon la logique d'organisation.",
+            "help": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation)."
         },
         "is_paid": {
             "label": "Payée",
@@ -43,8 +43,8 @@
         },
         "partner_id": {
             "label": "Partenaire",
-            "description": "Organisation responsable de payer les biens et services liés à la vente.",
-            "help": ""
+            "description": "Organisation responsable de payer les biens/services de la vente.",
+            "help": "Organisation responsable de payer les biens et services liés à la vente."
         },
         "organisation_id": {
             "label": "Organisation émettrice",

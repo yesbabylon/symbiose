@@ -44,8 +44,8 @@
         },
         "accounting_rule_id": {
             "label": "Règle comptable",
-            "description": "Règle comptable de vente. Si défini, remplace la règle du produit.",
-            "help": ""
+            "description": "Règle comptable de vente. Elle remplace la règle du produit.",
+            "help": "Règle comptable de vente. Si défini, remplace la règle du produit."
         },
         "product_id": {
             "label": "Produit",

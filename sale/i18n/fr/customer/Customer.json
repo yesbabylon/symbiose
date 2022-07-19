@@ -25,8 +25,8 @@
         },
         "partner_position": {
             "label": "Position",
-            "description": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'.",
-            "help": ""
+            "description": "Position du contact de référence au sein de l'organisation.",
+            "help": "Position du contact de référence (personne physique) au sein de l'organisation (personne morale), par ex. directeur, PDG, responsable régiona'."
         },
         "relationship": {
             "label": "Partenariat",
