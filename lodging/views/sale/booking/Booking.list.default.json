@@ -35,13 +35,15 @@
                 "label": "From",
                 "value": "date_from",
                 "width": "15%",
-                "readonly": true
+                "readonly": true,
+                "sortable": true
             },
             {
                 "type": "field",
                 "label": "To",
                 "value": "date_to",
                 "width": "15%",
+                "sortable": true,                
                 "readonly": true
             },
             {

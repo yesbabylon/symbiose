@@ -78,6 +78,7 @@ if(!file_exists($file)) {
 $fields = [
     'name',
     'modified',
+    'status',
     'date_from',
     'date_to',
     'total',
@@ -200,6 +201,7 @@ $values = [
     'header_img_url'        => $img_url,
     'quote_header_html'     => '',
     'quote_notice_html'     => '',
+    'status'                => ($booking['status'] == 'quote')?'Devis':'Option',
 
     'is_price_tbc'          => $booking['is_price_tbc'],
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
