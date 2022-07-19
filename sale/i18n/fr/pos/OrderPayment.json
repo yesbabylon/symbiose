@@ -15,7 +15,7 @@
         },
         "status": {
             "label": "Statut",
-            "description": "description.",
+            "description": "Description.",
             "selection": {
                 "pending": "en cours",
                 "paid": "payé"
@@ -29,8 +29,8 @@
         },
         "order_payment_parts_ids": {
             "label": "Lignes de paiement",
-            "description": "Les lignes, avec leur mode de paiement, qui composent le paiement.",
-            "help": ""
+            "description": "Les lignes, avec leur mode de paiement, composants le paiement.",
+            "help": "Lignes, avec leur mode de paiement, composants le paiement."
         },
         "total_due": {
             "label": "Total dû",

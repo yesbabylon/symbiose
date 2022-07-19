@@ -10,8 +10,8 @@
         },
         "qty": {
             "label": "Quantité",
-            "description": "Nombre de personnes affectées à l'unité locative pour la ligne de réservation associée.",
-            "help": ""
+            "description": "Personnes affectées à l'unité locative associée.",
+            "help": "Nombre de personnes affectées à l'unité locative pour la ligne de réservation associée."
         },
         "booking_line_id": {
             "label": "Ligne de Réservation",

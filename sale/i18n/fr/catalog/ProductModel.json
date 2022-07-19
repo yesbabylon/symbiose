@@ -45,8 +45,8 @@
         },
         "has_own_price": {
             "label": "A son propre prix",
-            "description": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé).",
-            "help": ""
+            "description": "Le pack a-t-il son propre prix ?.",
+            "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)."
         },
         "type": {
             "label": "Type",
@@ -86,8 +86,8 @@
         },
         "schedule_default_value": {
             "label": "Planification par défaut",
-            "description": "Valeur par défaut du planning selon son type (heure, plage horaire).",
-            "help": ""
+            "description": "Valeur par défaut du planning selon son type.",
+            "help": "Valeur par défaut du planning selon son type (heure, plage horaire)."
         },
         "schedule_offset": {
             "label": "Décalage",

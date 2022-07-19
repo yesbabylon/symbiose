@@ -25,13 +25,13 @@
         },
         "partner_position": {
             "label": "Fonction",
-            "description": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional).",
-            "help": ""
+            "description": "Rôle du contact au sein de l'organisation.",
+            "help": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional)."
         },
         "customer_external_ref": {
             "label": "Référence externe",
-            "description": "Identifiant du client via référence externe (fournisseur ou autre).",
-            "help": ""
+            "description": "Identifiant du client via référence externe.",
+            "help": "Identifiant du client via référence externe (fournisseur ou autre)."
         },
         "relationship": {
             "label": "Relation",

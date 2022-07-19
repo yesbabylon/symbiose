@@ -5,8 +5,8 @@
     "model": {
         "description": {
             "label": "Description",
-            "description": "Description complémentaire de la ligne. Si défini, remplace le nom du produit.",
-            "help": ""
+            "description": "Description complémentaire de la ligne.",
+            "help": "Description complémentaire de la ligne. Si défini, remplace le nom du produit."
         },
         "booking_line_group_id": {
             "label": "Groupe",
@@ -20,8 +20,8 @@
         },
         "booking_id": {
             "label": "Réservation",
-            "description": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
-            "help": ""
+            "description": "La réservation à laquelle la ligne se rapporte.",
+            "help": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."
         },
         "price_id": {
             "label": "Prix",
@@ -40,13 +40,13 @@
         },
         "has_own_qty": {
             "label": "Adaptateur de prix",
-            "description": "Des adaptateurs de prix détenant les remises manuelles appliquées sur la ligne.",
-            "help": ""
+            "description": "Des adaptateurs de prix détenant les remises de la ligne.",
+            "help": "Des adaptateurs de prix détenant les remises manuelles appliquées sur la ligne."
         },
         "order": {
             "label": "Ordre",
-            "description": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement.",
-            "help": ""
+            "description": "Ordre selon lequel la ligne doit être triée.",
+            "help": "Ordre selon lequel la ligne doit être triée lorsqu'elle est présentée visuellement."
         },
         "payment_mode": {
             "label": "Mode de paiement",

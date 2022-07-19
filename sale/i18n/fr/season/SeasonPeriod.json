@@ -30,8 +30,8 @@
         },
         "season_type_id": {
             "label": "Type",
-            "description": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...).",
-            "help": ""
+            "description": "Le type lié au volume de fréquentation.",
+            "help": "Le type lié au volume de fréquentation (basse saison, moyenne saison, ...)."
         }
     },
     "view": {

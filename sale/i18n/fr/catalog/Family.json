@@ -5,8 +5,8 @@
     "model": {
         "name": {
             "label": "Nom",
-            "description": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque.",
-            "help": ""
+            "description": "Nom de la famille de produits.",
+            "help": "Nom de la famille de produits. Une famille est un groupe de biens produits sous la même marque."
         },
         "children_ids": {
             "label": "Sous-familles",
@@ -15,8 +15,8 @@
         },
         "parent_id": {
             "label": "Parent",
-            "description": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant.",
-            "help": ""
+            "description": "Famille de produits à laquelle appartient la famille actuelle.",
+            "help": "Famille de produits à laquelle appartient la famille actuelle, le cas échéant."
         },
         "path": {
             "label": "Chemin",

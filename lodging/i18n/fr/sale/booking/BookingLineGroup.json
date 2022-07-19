@@ -56,13 +56,13 @@
 		},
 		"price_adapters_ids": {
 			"label": "Adaptateurs de Prix",
-			"description": "Des adaptateurs de prix qui s'appliquent à toutes les lignes du groupe (en fonction des paramètres du groupe).",
-			"help": ""
+			"description": "Des adaptateurs de prix qui s'appliquent aux lignes du groupe.",
+			"help": "Des adaptateurs de prix qui s'appliquent à toutes les lignes du groupe (en fonction des paramètres du groupe)."
 		},
 		"booking_id": {
 			"label": "Réservation",
-			"description": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
-			"help": ""
+			"description": "La réservation de la ligne se rapporte.",
+			"help": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."
 		},
 		"accomodations_ids": {
 			"label": "Accomodations",

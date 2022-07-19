@@ -37,13 +37,13 @@
         },
         "short_name": {
             "label": "Nom usuel",
-            "description": "Nom usuel utilisé en interne pour identifier l'organisation (acronyme ou nom abrégé).",
-            "help": ""
+            "description": "Nom usuel utilisé en interne pour identifier l'organisation.",
+            "help": "Nom usuel utilisé en interne pour identifier l'organisation (acronyme ou nom abrégé)."
         },
         "description": {
             "label": "Description",
-            "description": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques.",
-            "help": ""
+            "description": "Court contexte pour aider à identifier l'organisation.",
+            "help": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques."
         },
         "has_vat": {
             "label": "Assujetti TVA",
@@ -92,8 +92,8 @@
         },
         "contacts_ids": {
             "label": "Contacts",
-            "description": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant.",
-            "help": ""
+            "description": "Liste des contacts liés à l'organisation.",
+            "help": "Liste des contacts liés à l'organisation (pas nécessairement des employés), le cas échéant."
         },
         "address_street": {
             "label": "Rue",
@@ -102,8 +102,8 @@
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
-            "description": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...).",
-            "help": ""
+            "description": "Infos optionnelles pour l'envoi du courrier.",
+            "help": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...)."
         },
         "address_city": {
             "label": "Ville",
@@ -147,8 +147,8 @@
         },
         "reference_partner_id": {
             "label": "Personne de référence",
-            "description": "Contact (personne physique) pouvant représenter légalement l'organisation.",
-            "help": ""
+            "description": "Contact pouvant représenter légalement l'organisation.",
+            "help": "Contact (personne physique) pouvant représenter légalement l'organisation."
         },
         "user_id": {
             "label": "Utilisateur",
