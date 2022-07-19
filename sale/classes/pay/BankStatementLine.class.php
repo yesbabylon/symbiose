@@ -74,6 +74,12 @@ class BankStatementLine extends Model {
                 'readonly'          => true
             ],
 
+            'is_suspense' => [
+                'type'              => 'boolean',
+                'description'       => 'Origin is unknown (or unsure) and line has been put on suspense account.',
+                'default'           => false
+            ],
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
