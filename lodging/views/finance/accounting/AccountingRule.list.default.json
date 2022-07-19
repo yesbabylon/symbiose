@@ -20,11 +20,6 @@
                 "type": "field",
                 "value": "type",
                 "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "center_category_id",
-                "width": "20%"
             }
         ]
     }

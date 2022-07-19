@@ -1,0 +1,35 @@
+{
+    "name": "Groupe de Ligne de Contrat",
+    "plural": "Groupes de Lignes de Contrats",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom abrégé du contrat.",
+            "help": ""
+        },
+        "contract_id": {
+            "label": "Contrat",
+            "description": "Le contrat auquel la ligne se rapporte.",
+            "help": ""
+        },
+        "contract_lines_ids": {
+            "label": "Lignes de contrat",
+            "description": "",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Groupe de Ligne de Contrat",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Groupes de Lignes de contrat",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

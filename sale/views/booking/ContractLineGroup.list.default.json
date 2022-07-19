@@ -1,0 +1,32 @@
+{
+    "name": "Contract Line Groups",
+    "description": "This view is intended for displaying the list of contract line groups.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "contrat",
+                "value": "contract_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "rate_class_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "fare_benefit",
+                "width": "20%"
+            }
+        ]
+    }
+}

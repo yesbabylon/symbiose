@@ -13,126 +13,126 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA Prévisionnel",
+                "label": "Ancien administrateur CBTJ/Kaleo",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 1]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 1]], [["status", "=", "balance"], ["customer_nature_id", "=", 1]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Administration publique",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 2]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 2]], [["status", "=", "balance"], ["customer_nature_id", "=", 2]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Administrateur",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 3]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 3]], [["status", "=", "balance"], ["customer_nature_id", "=", 3]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "ATL (Accueil Temps Libre, Ecole de devoirs)",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 4]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 4]], [["status", "=", "balance"], ["customer_nature_id", "=", 4]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Groupe d'amis",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 5]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 5]], [["status", "=", "balance"], ["customer_nature_id", "=", 5]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Animateur",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 6]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 6]], [["status", "=", "balance"], ["customer_nature_id", "=", 6]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Association (sociale divers)",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 7]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 7]], [["status", "=", "balance"], ["customer_nature_id", "=", 7]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Association",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 8]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 8]], [["status", "=", "balance"], ["customer_nature_id", "=", 8]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ancien travailleur CBTJ/Kaleo",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 9]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 9]], [["status", "=", "balance"], ["customer_nature_id", "=", 9]]]
             },{
-                "label": "CA Prévisionnel",
+                "label": "Centre culturel",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 10]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 10]], [["status", "=", "balance"], ["customer_nature_id", "=", 10]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "CEC et organisme de formation",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 11]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 11]], [["status", "=", "balance"], ["customer_nature_id", "=", 11]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Académie de musique",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 12]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 12]], [["status", "=", "balance"], ["customer_nature_id", "=", 12]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "CPAS - aide aux défavorisés",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 13]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 13]], [["status", "=", "balance"], ["customer_nature_id", "=", 13]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Club sportif / Fédération",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 14]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 14]], [["status", "=", "balance"], ["customer_nature_id", "=", 14]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole (non précisée)",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 15]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 15]], [["status", "=", "balance"], ["customer_nature_id", "=", 15]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "AEC (Association d'Education Permanente)",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 16]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 16]], [["status", "=", "balance"], ["customer_nature_id", "=", 16]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Eglise - groupe religieux",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 17]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 17]], [["status", "=", "balance"], ["customer_nature_id", "=", 17]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole maternelle",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 18]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 18]], [["status", "=", "balance"], ["customer_nature_id", "=", 18]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Entreprise (société privée)",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 19]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 19]], [["status", "=", "balance"], ["customer_nature_id", "=", 19]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole primaire",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 20]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 20]], [["status", "=", "balance"], ["customer_nature_id", "=", 20]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Ecole secondaire",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 21]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 21]], [["status", "=", "balance"], ["customer_nature_id", "=", 21]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Famille",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 22]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 22]], [["status", "=", "balance"], ["customer_nature_id", "=", 22]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Fanfare - groupe musique - chorale",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 23]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 23]], [["status", "=", "balance"], ["customer_nature_id", "=", 23]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Gérant gîte Auberge",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 24]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 24]], [["status", "=", "balance"], ["customer_nature_id", "=", 24]]]
             },
             {
-                "label": "CA Prévisionnel",
+                "label": "Gérant gîte de Groupes",
                 "operation": ["SUM", "object.total"],
                 "domain": [[["status", "=", "debit_balance"], ["customer_nature_id", "=", 25]], [["status", "=", "credit_balance"], ["customer_nature_id", "=", 25]], [["status", "=", "balance"], ["customer_nature_id", "=", 25]]]
             }

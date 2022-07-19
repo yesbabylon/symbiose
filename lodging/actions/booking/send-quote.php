@@ -55,6 +55,11 @@ list($params, $providers) = announce([
             'type'          => 'array',
             'default'       => []
         ],
+        'documents_ids' => [
+            'description'   => 'List of identitiers of documents to join.',
+            'type'          => 'array',
+            'default'       => []
+        ],
         'mode' =>  [
             'description'   => 'Mode in which document has to be rendered: simple or detailed.',
             'type'          => 'string',
@@ -128,6 +133,15 @@ if(count($params['attachments_ids'])) {
     $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
     foreach($template_attachments as $tid => $tdata) {
         $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
+        if($document) {
+            $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+        }
+    }
+}
+
+if(count($params['documents_ids'])) {
+    foreach($params['documents_ids'] as $oid) {
+        $document = Document::id($oid)->read(['name', 'data', 'type'])->first();
         if($document) {
             $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
         }

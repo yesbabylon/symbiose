@@ -45,7 +45,7 @@
                                         "items": [
                                             {
                                                 "id": "item.bookings3",
-                                                "label": "Bookings provisional CA (option +)",
+                                                "label": "CA Prévisionnel des réservations",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",
@@ -53,7 +53,7 @@
                                             },
                                             {
                                                 "id": "item.bookings4",
-                                                "label": "Nombre de checkin par mois",
+                                                "label": "Nombre de checkin",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "lodging\\sale\\booking\\Booking",

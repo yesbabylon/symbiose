@@ -99,7 +99,7 @@ $tests = [
             $groups->update([
                 'nb_pers'       => 2
             ]);
-
+            
             $group = $groups->first();
 
             BookingLineGroupAgeRangeAssignment::create([

@@ -1,0 +1,46 @@
+{
+    "name": "Groupe de Ligne de Contrat",
+    "plural": "Groupes de Ligne de Contrat",
+    "description": "Les groupes de lignes de contrat.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du groupe.",
+            "help": ""
+        },
+        "is_pack": {
+            "label": "Est un pack",
+            "description": "La ligne fait-elle partie d'un pack.",
+            "help": ""
+        },
+        "contract_id": {
+            "label": "Contrat",
+            "description": "Le contrat lié à la ligne.",
+            "help": ""
+        },
+        "contract_line_id": {
+            "label": "Ligne de contrat",
+            "description": "La ligne de contrat qui décrit le pack.",
+            "help": ""
+        },
+        "contract_lines_ids": {
+            "label": "Lignes de contrat",
+            "description": "Les lignes de contrats qui appartiennent au contrat.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total",
+            "description": "Total du prix des lignes (hors taxes).",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix",
+            "description": "Total du prix des lignes (taxes inclues).",
+            "help": ""
+        }
+        
+    },
+    "view": {
+    },
+    "error": {}
+}

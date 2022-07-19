@@ -1,0 +1,36 @@
+{
+    "name": "Contract List",
+    "description": "This view is intended for displaying the list of contracts.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "valid_until",
+                "width": "20%"
+            }
+        ]
+    }
+}

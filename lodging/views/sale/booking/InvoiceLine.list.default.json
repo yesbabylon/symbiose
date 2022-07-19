@@ -1,0 +1,61 @@
+{
+    "name": "Invoices",
+    "description": "This view is intented for displaying the invoices.",
+    "access": {
+        "groups": ["finance.default.user", "sale.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "price_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "free_qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "discount",
+                "width": "10%"
+            }
+        ]
+    }
+}

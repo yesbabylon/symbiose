@@ -118,7 +118,7 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id',
-                'onupdate'          => 'sale\catalog\ProductModel::onchangeGroupsIds'
+                'onupdate'          => 'sale\catalog\ProductModel::onupdateGroupsIds'
             ]
 
         ];

@@ -29,11 +29,6 @@
             },
             {
                 "type": "field",
-                "value": "moment",
-                "width": "10%"
-            },
-            {
-                "type": "field",
                 "value": "schedule_from",
                 "width": "10%"
             },

@@ -1,0 +1,27 @@
+{
+    "name": "Contract Lines",
+    "description": "This view is intended for displaying the list of contact lines.",
+    "access": {
+        "groups": ["booking.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Contract",
+                "value": "contract_id",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "contract_line_group_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

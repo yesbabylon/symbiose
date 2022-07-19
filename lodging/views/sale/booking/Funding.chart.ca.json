@@ -12,7 +12,7 @@
         "range_to": "date.prev.year.first",
         "datasets": [
             {
-                "label": "Total Financements",
+                "label": "Total Remboursements",
                 "operation": ["SUM", "object.due_amount"],
                 "domaine": [[["type", "=", "creditNote"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
             }

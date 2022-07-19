@@ -109,7 +109,7 @@ class RentalUnit extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\Repair',
                 'foreign_field'     => 'rental_unit_id',
-                'rental_unit_id'    => "The repairs the rental unit is assigned to."
+                'description'       => "The repairs the rental unit is assigned to."
             ],
 
             // Status relates to current status (NOW) of a rental unit. For availability, refer to related Consumptions

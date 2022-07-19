@@ -13,11 +13,6 @@
             "description": "Code du compte concerné.",
             "help": ""
         },
-        "analytic_section_id":{
-            "label":"Section analytique", 
-            "description": "Code de la section analytique associée.",
-            "help": ""
-        },
         "share":{
             "label":"Part de la ligne", 
             "description": "Part de la ligne, en pourcentage (la somme des lignes doit être de 100 %).",

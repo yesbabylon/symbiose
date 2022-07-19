@@ -1,0 +1,19 @@
+{
+    "name": "Paiement",
+    "plural": "Paiements",
+    "description": "",
+    "model": {
+        "booking_id": {
+            "label": "Réservation",
+            "description": "La réservation à laquelle est lié le paiement.",
+            "help": ""
+        },
+        "funding_id": {
+            "label": "Financement",
+            "description": "Le financement lié au paiement.",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

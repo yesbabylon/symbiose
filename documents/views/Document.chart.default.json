@@ -13,7 +13,7 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label" : "Taille total documents",
+                "label" : "Taille des documents",
                 "operation": ["SUM",["/", "object.size", 1000]],
                 "domain"   : ["size", ">", 0]
             }

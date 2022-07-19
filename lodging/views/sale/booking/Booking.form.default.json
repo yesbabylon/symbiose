@@ -128,7 +128,15 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/booking/object.id/quote",
-            "visible": ["status", "in", ["quote", "option"]]
+            "visible": ["status", "in", ["quote"]]
+        },
+        {
+            "id": "item.booking.option",
+            "label": "Send option",
+            "description": "",
+            "icon": "drive_file_rename_outline",
+            "route": "/booking/object.id/option",
+            "visible": ["status", "in", ["option"]]
         },
         {
             "id": "item.booking.consumptions",
@@ -170,7 +178,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "visible": false
+                                                "visible": false,
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
@@ -279,17 +288,20 @@
                                             {
                                                 "type": "field",
                                                 "value": "center_office_id",
-                                                "visible": false
+                                                "visible": false,
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "customer_id",
-                                                "visible": false
+                                                "visible": false,
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_invoiced",
-                                                "visible": false
+                                                "visible": false,
+                                                "width": "50%"
                                             }
                                         ]
                                     }

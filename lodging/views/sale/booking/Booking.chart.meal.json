@@ -8,17 +8,17 @@
     "layout": {
         "entity": "lodging\\sale\\booking\\BookingLine",
         "group_by": "range",
-        "range_interval": "year",
+        "range_interval": "month",
         "range_from": "date.this.year.first",
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "CA Repas TVAC",
+                "label": "Repas CA TVAC",
                 "operation": ["SUM", "object.total"],
                 "domain": ["is_meal", "=", 1]
             },
             {
-                "label": "CA Repas HTVA",
+                "label": "Repas CA HTVA",
                 "operation": ["SUM", "object.price"],
                 "domain": ["is_meal", "=", 1]
             }

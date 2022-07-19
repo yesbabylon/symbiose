@@ -15,6 +15,7 @@
         },
         "status": {
             "label": "Statut",
+            "description": "description.",
             "selection": {
                 "pending": "en cours",
                 "paid": "payé"

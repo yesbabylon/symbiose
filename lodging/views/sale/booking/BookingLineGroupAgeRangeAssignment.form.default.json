@@ -1,0 +1,60 @@
+{
+    "name": "Booking Line Groupe Age Range Assignment",
+    "description": "",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "booking_id",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true                                                    
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "align": "right",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "age_range_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Groupe de réservation",
+                                                "value": "booking_line_group_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
