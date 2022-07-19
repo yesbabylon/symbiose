@@ -333,8 +333,8 @@
                         ]
                     },
                     {
-                        "label": "Composition",
-                        "id": "section.booking_composition",
+                        "label": "Contracts",
+                        "id": "section.booking_contracts",
                         "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
@@ -344,8 +344,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "composition_items_ids",
-                                                "width": "100%"
+                                                "value": "contracts_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "sort": "desc"
+                                                }
                                             }
                                         ]
                                     }
@@ -375,8 +378,8 @@
                         ]
                     },
                     {
-                        "label": "Contracts",
-                        "id": "section.booking_contracts",
+                        "label": "Composition",
+                        "id": "section.booking_composition",
                         "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
@@ -386,11 +389,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "sort": "desc"
-                                                }
+                                                "value": "composition_items_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -443,8 +443,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoices_ids",
-                                                "width": "100%",                                                
-                                                "widget": {                                                    
+                                                "width": "100%",
+                                                "widget": {
                                                     "view": "list.booking",
                                                     "domain": ["type", "=", "invoice"]
                                                 }
