@@ -15,8 +15,8 @@
 		},
 		"has_own_qty": {
 			"label": "A sa propre quantité",
-			"description": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?",
-			"help": ""
+			"description": "Le produit a-t-il sa propre quantité ?",
+			"help": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?"
 		},
 		"own_qty": {
 			"label": "Quantité",

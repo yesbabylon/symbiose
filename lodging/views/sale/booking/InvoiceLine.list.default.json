@@ -13,16 +13,6 @@
             },
             {
                 "type": "field",
-                "value": "date",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "status",
-                "width": "10%"
-            },
-            {
-                "type": "field",
                 "value": "unit_price",
                 "width": "10%"
             },

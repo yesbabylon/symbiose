@@ -40,8 +40,8 @@
         },
         "booking_id": {
             "label": "Réservation",
-            "description": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
-            "help": ""
+            "description": "La réservation à laquelle la ligne se rapporte.",
+            "help": "La réservation de la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."
         }
     },
     "view": {

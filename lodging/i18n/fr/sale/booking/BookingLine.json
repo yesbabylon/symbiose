@@ -15,13 +15,13 @@
         },
         "booking_line_group_id": {
             "label": "Groupe",
-            "description": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur réservation).",
-            "help": ""
+            "description": "Groupe auquel la ligne se rapporte.",
+            "help": "Groupe auquel la ligne se rapporte (à leur tour, les groupes se rapportent à leur réservation)."
         },
         "booking_id": {
             "label": "Réservation",
-            "description": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent).",
-            "help": ""
+            "description": "La réservation à laquelle la ligne se rapporte.",
+            "help": "La réservation à laquelle la ligne se rapporte (par souci de cohérence, les lignes doivent être accessibles en utilisant le groupe auquel elles appartiennent)."
         },
         "product_id": {
             "label": "Produit",
@@ -30,8 +30,8 @@
         },
         "price_adapters_ids": {
             "label": "Adaptateur de prix",
-            "description": "Des adaptateurs de prix détenant les remises manuelles appliquées sur la ligne.",
-            "help": ""
+            "description": "Des adaptateurs de prix ayant les remises manuelles appliquées.",
+            "help": "Des adaptateurs de prix détenant les remises manuelles appliquées sur la ligne."
         }
     },
     "view": {

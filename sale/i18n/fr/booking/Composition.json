@@ -5,8 +5,8 @@
 	"model": {
 		"name": {
 			"label": "Identification",
-			"description": "Le nom de la composition est basé sur la réservation associée (client et date).",
-			"help": ""
+			"description": "Le nom de la composition est basé sur la réservation associée.",
+			"help": "Le nom de la composition est basé sur la réservation associée (client et date)."
 		},
 		"booking_id": {
 			"label": "Réservation",

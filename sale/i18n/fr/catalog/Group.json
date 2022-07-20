@@ -5,8 +5,8 @@
     "model": {
         "name": {
             "label": "Nom du groupe de produits",
-            "description": "Nom du groupe de modèles de produits (utilisé pour toutes les variantes).",
-            "help": ""
+            "description": "Nom du groupe de modèles de produits.",
+            "help": "Nom du groupe de modèles de produits (utilisé pour toutes les variantes)."
         },
         "family_id": {
             "label": "Famille",

@@ -5,8 +5,8 @@
     "model": {
         "centers_ids": {
             "label": "Centres",
-            "description": "Liste des catégories auxquelles appartient le centre, le cas échéant.",
-            "help": ""
+            "description": "Liste des catégories auxquelles appartient le centre.",
+            "help": "Liste des catégories auxquelles appartient le centre, le cas échéant."
         }
     },
     "view": {
