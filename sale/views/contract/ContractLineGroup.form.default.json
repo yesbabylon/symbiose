@@ -46,7 +46,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contract_line_ids",
+                                                "value": "contract_lines_ids",
                                                 "width": "100%"
                                             }
                                         ]

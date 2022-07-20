@@ -45,8 +45,8 @@
         },
         "address_dispatch": {
             "label": "Complément d'adresse",
-            "description": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...).",
-            "help": ""
+            "description": "Infos optionnelles pour l'envoi du courrier.",
+            "help": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."
         },
         "address_city": {
             "label": "Ville",

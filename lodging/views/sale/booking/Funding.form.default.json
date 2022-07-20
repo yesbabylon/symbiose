@@ -65,7 +65,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "center_office_id",
-                                                "visible": false
+                                                "visible": false,
+                                                "width": "0%"
                                             }
                                         ]
                                     },

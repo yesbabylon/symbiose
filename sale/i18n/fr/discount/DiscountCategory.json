@@ -10,8 +10,8 @@
         },
         "description": {
             "label": "Description",
-            "description": "Contexte dans lequel la catégorie de remise est destinée à être utilisée.",
-            "help": ""
+            "description": "Contexte où la catégorie de remise est destinée à être utilisée.",
+            "help": "Contexte dans lequel la catégorie de remise est destinée à être utilisée."
         }
     },
     "view": {

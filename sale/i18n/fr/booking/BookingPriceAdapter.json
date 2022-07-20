@@ -15,8 +15,8 @@
 		},
 		"is_manual_discount": {
 			"label": "Remise manuelle?",
-			"description": "Indicateur pour définir l'adaptateur comme manuel ou associé à une remise.",
-			"help": ""
+			"description": "Indicateur pour définir l'adaptateur (manuel ou remise).",
+			"help": "Indicateur pour définir l'adaptateur comme manuel ou associé à une remise."
 		},
 		"type": {
 			"label": "Type",

@@ -45,8 +45,8 @@
         },
         "has_contract": {
             "label": "A un contrat",
-            "description": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour.",
-            "help": ""
+            "description": "Un contrat a-t-il déjà été généré ?",
+            "help": "Un contrat a-t-il déjà été généré ? Le drapeau est remis à zéro en cas de changements avant le séjour."
         },
         "contracts_ids": {
             "label": "Contrats",

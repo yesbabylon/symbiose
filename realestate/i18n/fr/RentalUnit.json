@@ -24,8 +24,8 @@
         },
         "rental_unit_category_id": {
             "label": "Catégorie",
-            "description": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives.",
-            "help": ""
+            "description": "Des logements peuvent être attribués // à la catégorie d'UL.",
+            "help": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives."
         },
         "capacity": {
             "label": "Capacité",
@@ -64,8 +64,8 @@
         },
         "parent_id": {
             "label": "Unité parente",
-            "description": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant.",
-            "help": ""
+            "description": "Unité de location à laquelle appartient l'unité actuelle.",
+            "help": "Unité de location à laquelle appartient l'unité actuelle, le cas échéant."
         },
         "status": {
             "label": "Statut",

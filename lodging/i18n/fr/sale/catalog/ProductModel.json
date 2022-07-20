@@ -45,8 +45,8 @@
         },
         "has_own_price": {
             "label": "A son propre prix",
-            "description": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé).",
-            "help": ""
+            "description": "Le pack a-t-il son propre prix ?",
+            "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)."
         },
         "type": {
             "label": "Type",
@@ -86,8 +86,8 @@
         },
         "schedule_default_value": {
             "label": "Planification par défaut",
-            "description": "Valeur par défaut du planning selon son type (heure, plage horaire).",
-            "help": ""
+            "description": "Valeur par défaut du planning selon son type.",
+            "help": "Valeur par défaut du planning selon son type (heure, plage horaire)."
         },
         "schedule_offset": {
             "label": "Décalage",
@@ -132,13 +132,13 @@
         },
         "qty_accounting_method": {
             "label": "Comptabilisation",
-            "description": "Méthode de comptabilisation pour calculer la quantité de produit (par unité [par défaut], par personne ou par logement [ressource]).",
+            "description": "Méthode de comptabilisation pour calculer la quantité de produit.",
             "selection": {
                 "person": "personne",
                 "accomodation": "logement",
                 "unit": "unité"
             },
-            "help": ""
+            "help": "Méthode de comptabilisation pour calculer la quantité de produit (par unité [par défaut], par personne ou par logement [ressource])."
         },
         "booking_type_id": {
             "label": "Type de réservation",
@@ -147,13 +147,13 @@
         },
         "rental_unit_assignement": {
             "label": "Attribution des unités locatives",
-            "description": "Manière dont le produit est affecté à une unité locative (une unité spécifique, une catégorie spécifique, ou en fonction de la capacité).",
+            "description": "Manière dont le produit est affecté à une unité locative.",
             "selection": {
                 "unit": "unité",
                 "category": "catégorie",
                 "capacity": "capacité"
             },
-            "help": ""
+            "help": "Manière dont le produit est affecté à une unité locative (une unité spécifique, une catégorie spécifique, ou en fonction de la capacité)."
         },
         "has_duration": {
             "label": "A une durée",
@@ -162,18 +162,18 @@
         },
         "duration": {
             "label": "Durée",
-            "description": "Durée du service (en jours), utilisées à des fins de planification.",
-            "help": ""
+            "description": "Durée du service, utilisées à des fins de planification.",
+            "help": "Durée du service (en jours), utilisées à des fins de planification."
         },
         "capacity": {
             "label": "Capacité",
-            "description": "Capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants).",
-            "help": ""
+            "description": "Capacité impliquée par le service.",
+            "help": "Capacité impliquée par le service (utilisées pour trouver des logements locatifs correspondants)."
         },
         "is_meal": {
             "label": "Est un repas",
-            "description": "Le produit est-il un repas ? (les repas peuvent faire partie de la pension / services inclus du séjour).",
-            "help": ""
+            "description": "Le produit est-il un repas ?",
+            "help": "Le produit est-il un repas ? (les repas peuvent faire partie de la pension / services inclus du séjour)."
         },
         "is_accomodation": {
             "label": "Est un logement",
@@ -187,13 +187,13 @@
         },
         "rental_unit_category_id": {
             "label": "Catégorie d'unité locative",
-            "description": "Catégorie d'unité locative à laquelle ce produit est lié, le cas échéant.",
-            "help": ""
+            "description": "Catégorie d'unité locative à laquelle ce produit est lié.",
+            "help": "Catégorie d'unité locative à laquelle ce produit est lié, le cas échéant."
         },
         "rental_unit_id": {
             "label": "Unité locative",
-            "description": "Unité locative spécifique à laquelle ce produit est lié, le cas échéant.",
-            "help": ""
+            "description": "Unité locative spécifique à laquelle ce produit est lié.",
+            "help": "Unité locative spécifique à laquelle ce produit est lié, le cas échéant."
         }
     },
     "view": {
