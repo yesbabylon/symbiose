@@ -10,7 +10,7 @@
         },
         "data":{
             "label":"Données",
-            "description":"Données binaires brutes du fichier.",
+            "description":"Données binaires brutes du document.",
             "help": ""
         },
         "type":{
@@ -25,17 +25,17 @@
         },
         "readable_size":{
             "label": "Taille",
-            "description": "Taille du fichier (format simplifié).",
+            "description": "Taille du document (format simplifié).",
             "help": ""
         },
         "hash":{
             "label": "Clé",
-            "description": "Clé de hash unique du fichier.",
+            "description": "Clé de hash unique du docyment.",
             "help": ""
         },
         "link": {
             "label": "Lien",
-            "description": "Lien qui pointe vers un fichier donné.",
+            "description": "Lien direct du document.",
             "help":""
         },
         "public":{

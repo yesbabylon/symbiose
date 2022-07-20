@@ -3,7 +3,7 @@
 La fiche d'édition permet d'éditer certaines informations d'un document.
 
 ### Importer des documents
-Il est possible d'importer des documents de votre pc avec l'onglet au sommet de votre écran, il suffira ensuite de cliquer sur "choisissez ou déposez vos fichiers ici!", soit en faisant glisser des documents de votre PC (N.B.: Certains formats ne sont pas acceptés).  
+Il est possible d'importer des documents de votre appareil avec l'onglet au sommet de votre écran, il suffit ensuite soit de cliquer sur "choisissez ou déposez vos fichiers ici!", soit de faire glisser des documents vers la zone d'upload (N.B.: Certains formats ne sont pas acceptés).  
 
 
 ### Informations générales

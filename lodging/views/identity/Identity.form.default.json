@@ -44,7 +44,7 @@
                                                 "type": "field",
                                                 "value": "short_name",
                                                 "width": "50%"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "firstname",
@@ -72,7 +72,9 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": {
-                                                        "ACTION.CREATE": false  
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
                                                     }
                                                 }
                                             },
@@ -85,7 +87,7 @@
                                         ]
                                     }
                                 ]
-                            }                                                   
+                            }
                         ]
                     }
                 ]
@@ -109,7 +111,7 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": {
-                                                        "ACTION.CREATE": false  
+                                                        "ACTION.CREATE": false
                                                     }
                                                 }
                                             },
@@ -129,7 +131,7 @@
                                                 "width": "100%",
                                                 "label": "Subject to VAT",
                                                 "help": "Do the company have a VAT number?"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "registration_number",
@@ -144,7 +146,7 @@
                                                 "type": "field",
                                                 "value": "vat_number",
                                                 "width": "100%"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "date_of_birth",
@@ -192,7 +194,7 @@
                                                 "value": "reference_partner_id",
                                                 "label": "Person of reference",
                                                 "width": "100%",
-                                                "domain": ["owner_identity_id", "=", "object.id"]                                                
+                                                "domain": ["owner_identity_id", "=", "object.id"]
                                             },
                                             {
                                                 "type": "field",
@@ -223,7 +225,7 @@
                                                 "type": "field",
                                                 "value": "address_country",
                                                 "width": "50%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]
@@ -264,13 +266,13 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "50%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    },                                      
+                    },
                     {
                         "label": "Other addresses",
                         "id": "section.identity_addresses",
@@ -325,13 +327,13 @@
                                                 "type": "field",
                                                 "value": "partners_ids",
                                                 "width": "100%"
-                                            }                        
+                                            }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

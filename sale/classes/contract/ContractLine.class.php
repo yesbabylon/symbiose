@@ -24,6 +24,12 @@ class ContractLine extends Model {
                 'description'       => 'The display name of the line.'
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Complementary description of the line. If set, replaces the product name.',
+                'default'           => ''
+            ],
+
             'contract_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\contract\Contract',

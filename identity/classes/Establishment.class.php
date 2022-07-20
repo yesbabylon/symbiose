@@ -31,7 +31,7 @@ class Establishment extends Model {
             /* parent organisation */
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
+                'foreign_object'    => Identity::getType(),
                 'description'       => "The organisation the establishment belongs to.",
                 'required'          => true
             ],
