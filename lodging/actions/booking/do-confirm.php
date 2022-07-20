@@ -72,6 +72,7 @@ $booking = Booking::id($params['id'])
                             'nb_pers',
                             'booking_lines_ids' => [
                                 'product_id',
+                                'description',
                                 'unit_price',
                                 'vat_rate',
                                 'qty',
@@ -193,6 +194,7 @@ if(!$booking['is_price_tbc']) {
                 'contract_id'               => $contract['id'],
                 'contract_line_group_id'    => $contract_line_group['id'],
                 'product_id'                => $line['product_id'],
+                'description'               => $line['description'],
                 'vat_rate'                  => $line['vat_rate'],
                 'unit_price'                => $line['unit_price'],
                 'qty'                       => $line['qty']

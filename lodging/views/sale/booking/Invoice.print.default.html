@@ -133,7 +133,13 @@ hr {
         <div style="margin-left: 8px;">
             <h3>{{ company_name}}</h3>
             {{ company_address }}<br />
-            Numéro d'entreprise: {{ company_reg_number }}
+            Numéro d'entreprise: {{ company_reg_number }}<br />
+            Numéro de TVA: 
+            {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                N/A
+            {% else %}
+                {{ company_vat_number }}
+            {% endif %}
         </div>
     </div>
     <div style="position: absolute; top: 50px; right: 0px; width: 280px; height: 103px; font-size: 13px;">

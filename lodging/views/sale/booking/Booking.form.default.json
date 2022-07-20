@@ -179,11 +179,19 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "visible": false,
-                                                "width": "33%"
+                                                "width": "0%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "type_id",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
                                                 "width": "33%",
                                                 "widget": {
                                                     "readonly": true
