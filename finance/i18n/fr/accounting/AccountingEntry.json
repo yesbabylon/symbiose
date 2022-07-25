@@ -1,0 +1,45 @@
+{
+    "name": "Entrée comptable",
+    "plural": "Entrées comptables",
+    "description": "Les entrées comtpables traduisent les lignes de facture en entrées qui doivent être crées au sein des livres comptables.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Étiquette pour le groupe.",
+            "help": ""
+        },
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture à laquelle la ligne est liée.",
+            "help": ""
+        },
+        "account_id": {
+            "label": "Identifiant du compte",
+            "description": "",
+            "help": ""
+        },
+        "debit": {
+            "label": "Débit",
+            "description": "",
+            "help": ""
+        },
+        "credit": {
+            "label": "Crédit",
+            "description": "",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Entrée comptable",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Entrées comptables",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

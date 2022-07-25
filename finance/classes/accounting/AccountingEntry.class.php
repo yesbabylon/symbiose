@@ -7,10 +7,10 @@
 namespace finance\accounting;
 use equal\orm\Model;
 
-class InvoiceAccountingEntry extends Model {
+class AccountingEntry extends Model {
 
     public static function getName() {
-        return "Invoice accounting entry";
+        return "Journal accounting entry";
     }
 
     public static function getDescription() {
