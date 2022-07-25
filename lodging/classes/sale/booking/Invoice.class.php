@@ -262,7 +262,7 @@ class Invoice extends \sale\booking\Invoice {
 
                         // generate all required entries
                         foreach($accounting_entries as $eid => $entry) {
-                            $om->create(\finance\accounting\InvoiceAccountingEntry::getType(), $entry);
+                            $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
                         }
 
                     }
