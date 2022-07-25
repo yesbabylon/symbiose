@@ -283,6 +283,7 @@ class Consumption extends \sale\booking\Consumption {
      * @param int $date_to      Timestamp of the last day of the lookup.
      */
     public static function _getAvailableRentalUnits($om, $center_id, $product_id, $date_from, $date_to) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:_getAvailableRentalUnits", QN_REPORT_DEBUG);
 
         // retrieve product and related product model
         $products = $om->read('lodging\sale\catalog\Product', $product_id, ['id', 'product_model_id']);
@@ -317,6 +318,10 @@ class Consumption extends \sale\booking\Consumption {
         }
 
         // retrieve chekin and checkout times related to product
+        $hour_from = 0;
+        $hour_to = 0;
+        $minute_from = 23;
+        $minute_to = 59;
         // #todo - what if we would agree to arrange the checkin/out times (not default values) to make the room available ?
         if(strpos($schedule_default_value, ':')) {
             $parts = explode('-', $schedule_default_value);

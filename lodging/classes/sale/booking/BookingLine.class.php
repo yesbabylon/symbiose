@@ -337,9 +337,10 @@ class BookingLine extends \sale\booking\BookingLine {
                 $date_from = $line['booking_line_group_id.date_from'];
                 $date_to = $line['booking_line_group_id.date_to'];
 
+                // unit, category, capacity
                 $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
 
-                // find available rental units (sorted by capacity, desc)
+                // find available rental units (sorted by capacity, desc; filtered on category)
                 $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
                 // retrieve rental units capacities
                 $rental_units = [];
