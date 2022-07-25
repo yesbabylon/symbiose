@@ -34,6 +34,14 @@ class AccountingJournal extends Model {
                 'type'              => 'string',
                 'description'       => 'Unique code (optional).',
                 'unique'            => true
+            ],
+
+            'accounting_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => AccountingEntry::getType(),
+                'foreign_field'     => 'journal_id',
+                'description'       => 'Accounting entries relating to the journal.',
+                'ondetach'          => 'null'
             ]
 
         ];

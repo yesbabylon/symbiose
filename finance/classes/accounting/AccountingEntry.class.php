@@ -41,6 +41,13 @@ class AccountingEntry extends Model {
                 'ondelete'          => 'null'
             ],
 
+            'journal_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => AccountingJournal::getType(),
+                'description'       => "Accounting journal the entry relates to.",
+                'required'          => true
+            ],
+
             'debit' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
