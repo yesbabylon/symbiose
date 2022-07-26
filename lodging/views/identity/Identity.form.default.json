@@ -72,7 +72,9 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": {
-                                                        "ACTION.CREATE": false  
+                                                        "actions":{
+                                                            "ACTION.CREATE": false  
+                                                        }
                                                     }
                                                 }
                                             },
@@ -243,7 +245,14 @@
                                             {
                                                 "type": "field",
                                                 "value": "user_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions":{
+                                                            "ACTION.CREATE": false  
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

@@ -37,7 +37,12 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "domain": ["id", "in", "user.centers_ids"],
-                                                    "limit": 30
+                                                    "limit": 30,
+                                                    "header": {
+                                                        "actions":{
+                                                            "ACTION.CREATE": false  
+                                                        } 
+                                                    }
                                                 }
                                             },
                                             {
@@ -55,7 +60,14 @@
                                                 "type": "field",
                                                 "label": "Customer Nature",
                                                 "value": "customer_nature_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget":{
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false    
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",
