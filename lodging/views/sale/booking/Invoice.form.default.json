@@ -120,7 +120,12 @@
                                                 "type": "field",
                                                 "label": "Management",
                                                 "value": "center_office_id",
-                                                "width": "33%"
+                                                "width": "33%",
+                                                "widget": {
+                                                    "header": {
+                                                        "ACTION.CREATE": false    
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "label",
