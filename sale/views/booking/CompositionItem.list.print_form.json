@@ -1,0 +1,35 @@
+{
+    "name": "Composition Items",
+    "description": "This view is intended for displaying the list of compostion items.",
+    "access": {
+        "groups": ["booking.default.user"]
+    },
+    "limit": "100",
+    "filters": false,
+    "order": "rental_unit_id",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "firstname",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "lastname",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "gender",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Rental Unit",
+                "value": "rental_unit_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

@@ -78,6 +78,12 @@
         "list.default": {
             "name": "Éléments de composition",
             "description": "Liste des éléments de composition.",
+            "exports": {
+                "export.print.form": {
+                    "label": "Listing vide",
+                    "description": "Imprime le formulaire pour remplissage manuel."
+                }
+            },
             "layout": {}
         }
     },
