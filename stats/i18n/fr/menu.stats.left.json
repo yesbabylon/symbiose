@@ -1,0 +1,22 @@
+{
+    "name": "Menu Statistiques",
+    "description": "",
+    "view": {        
+        "stats": {
+            "label": "Statistiques",
+            "help": ""
+        },
+        "stats.documents": {
+            "label": "Stats Documents",
+            "help": ""
+        },
+        "stats.booking": {
+            "label": "Stats Réservation",
+            "help": ""
+        },
+        "stats.sale": {
+            "label": "Stats Ventes",
+            "help": ""
+        }
+    }
+}

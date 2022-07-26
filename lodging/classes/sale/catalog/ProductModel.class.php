@@ -42,14 +42,14 @@ class ProductModel extends \sale\catalog\ProductModel {
             'is_accomodation' => [
                 'type'              => 'boolean',
                 'description'       => 'Model relates to a rental unit that is an accomodation.',
-                'visible'           => [ ['type', '=', 'service'], ['is_rental_unit', '=', true] ]                 
+                'visible'           => [ ['type', '=', 'service'], ['is_rental_unit', '=', true] ]
             ],
 
             'is_rental_unit' => [
                 'type'              => 'boolean',
                 'description'       => 'Is the product a rental_unit?',
                 'default'           => false,
-                'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ] 
+                'visible'           => [ ['type', '=', 'service'], ['is_meal', '=', false] ]
             ],
 
             'is_meal' => [
@@ -62,7 +62,11 @@ class ProductModel extends \sale\catalog\ProductModel {
             'rental_unit_assignement' => [
                 'type'              => 'string',
                 'description'       => 'The way the product is assigned to a rental unit (a specific unit, a specific category, or based on capacity match).',
-                'selection'         => ['unit', 'category', 'capacity'],
+                'selection'         => [
+                    'unit',
+                    'category',
+                    'capacity'
+                ],
                 'default'           => 'category',
                 'visible'           => [ ['is_rental_unit', '=', true] ]
             ],
@@ -129,7 +133,7 @@ class ProductModel extends \sale\catalog\ProductModel {
      */
     public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\catalog\ProductModel:onupdateRentalUnitId", QN_REPORT_DEBUG);
-        
+
         $models = $om->read(__CLASS__, $oids, ['rental_unit_id.capacity', 'rental_unit_id.is_accomodation'], $lang);
 
         foreach($models as $mid => $model) {

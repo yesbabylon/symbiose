@@ -93,8 +93,8 @@
                         ]
                     },
                     {
-                        "label":"Attachments",
-                        "id": "section.template_attachments",
+                        "label":"Data",
+                        "id": "section.data",
                         "rows": [
                             {
                                 "columns": [
@@ -104,7 +104,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "template_attachments_ids",
+                                                "value": "data",
                                                 "width": "100%"
                                             }
                                         ]

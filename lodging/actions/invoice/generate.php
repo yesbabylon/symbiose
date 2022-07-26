@@ -74,6 +74,7 @@ $booking = Booking::id($params['id'])
                             'nb_pers',
                             'booking_lines_ids' => [
                                 'product_id',
+                                'description',
                                 'price_id',
                                 'unit_price',
                                 'vat_rate',
@@ -178,6 +179,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                 'invoice_id'                => $invoice['id'],
                 'invoice_line_group_id'     => $invoice_line_group['id'],
                 'product_id'                => $line['product_id'],
+                'description'               => $line['description'],
                 'price_id'                  => $line['price_id'],
                 'vat_rate'                  => $line['vat_rate'],
                 'unit_price'                => $line['unit_price'],
@@ -267,7 +269,7 @@ if($fundings) {
                 'unit_price'                => $funding['paid_amount'],
                 // and quantity is set as negative value when something is deducted
                 'qty'                       => -1
-                // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule                
+                // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
             ];
             $new_line = InvoiceLine::create($i_line)->first();
             $i_lines_ids[] = $new_line['id'];

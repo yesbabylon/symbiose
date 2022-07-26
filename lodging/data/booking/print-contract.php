@@ -180,6 +180,7 @@ $fields = [
         ],
         'contract_lines_ids' => [
             'name',
+            'description',
             'qty',
             'unit_price',
             'discount',
@@ -411,7 +412,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
 
             if($params['mode'] == 'grouped') {
                 $line = [
-                    'name'          => $contract_line['name'],
+                    'name'          => (strlen($contract_line['description']) > 0)?$contract_line['description']:$contract_line['name'],
                     'price'         => null,
                     'total'         => null,
                     'unit_price'    => null,
@@ -425,7 +426,7 @@ foreach($contract['contract_line_groups_ids'] as $contract_line_group) {
             }
             else {
                 $line = [
-                    'name'          => $contract_line['name'],
+                    'name'          => (strlen($contract_line['description']) > 0)?$contract_line['description']:$contract_line['name'],
                     'price'         => $contract_line['price'],
                     'total'         => $contract_line['total'],
                     'unit_price'    => $contract_line['unit_price'],

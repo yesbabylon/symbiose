@@ -5,12 +5,12 @@
     "model": {
         "name": {
             "label": "Identification",
-            "description": "Nom de l'épisode.",
+            "description": "Nom de l'épisode de réparation.",
             "help": ""
         },
         "description": {
             "label": "Description",
-            "description": "Note supplémentaire sur le motif du blocage.",
+            "description": "Détails sur le motif du blocage.",
             "help": ""
         },
         "repairs_ids": {
@@ -25,7 +25,7 @@
         },
         "date_from": {
             "label": "Début",
-            "description": "Moment de la journée auquel la prestation est planifiée.",
+            "description": "Premier jour de la période.",
             "help": ""
         },
         "date_to": {

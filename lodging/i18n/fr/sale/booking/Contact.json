@@ -14,8 +14,8 @@
             "help": ""
         },
         "booking_id": {
-            "label": "La réservation",
-            "description": "La réservation à laquelle le contact est lié.",
+            "label": "Réservation",
+            "description": "Code de la réservation à laquelle le contact est lié.",
             "help": ""
         }
     },

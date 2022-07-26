@@ -148,7 +148,7 @@ class Invoice extends Model {
 
             'accounting_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => \finance\accounting\InvoiceAccountingEntry::getType(),
+                'foreign_object'    => AccountingEntry::getType(),
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Accounting entries relating to the lines of the invoice.',
                 'ondetach'          => 'delete'

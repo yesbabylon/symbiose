@@ -180,7 +180,23 @@
                         }
                     }
                 ]
-            }
+            },
+            {
+                "id": "item.repairings",
+                "label": "Repair & Maintenance",
+                "description": "",
+                "icon": "home_repair_service",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.repairings.repairings",
+                        "type": "entry",
+                        "label": "Repairings",
+                        "description": "",
+                        "route": "/repairings"
+                    }
+                ]
+            }            
         ]
     }
 }

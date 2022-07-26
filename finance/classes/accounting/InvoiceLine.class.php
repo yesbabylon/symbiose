@@ -30,7 +30,7 @@ class InvoiceLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Short description for arbitrary line (independant from product).'
+                'description'       => 'Complementary description of the line (independant from product).'
             ],
 
             'invoice_line_group_id' => [

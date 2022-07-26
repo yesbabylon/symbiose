@@ -1,0 +1,16 @@
+{
+    "name": "Suppression",
+    "description": "Ceci supprimera l'épidode de réparation. L'unité locative sera libérée et à nouveau disponible les réservations.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de l'épisode de réparation à supprimer.",
+            "help": ""
+        }
+    },
+    "error": {
+        "reason": {
+            "broken_constraint": "Valeur manquante ou non reconnue."
+        }
+    }
+}

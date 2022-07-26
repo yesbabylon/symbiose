@@ -9,6 +9,10 @@ use equal\orm\Model;
 
 class Booking extends Model {
 
+    public static function getDescription() {
+        return "Bookings group all the information that allow following up of the reservation process of rental units.";
+    }
+
     public static function getLink() {
         return "/booking/#/booking/object.id";
     }

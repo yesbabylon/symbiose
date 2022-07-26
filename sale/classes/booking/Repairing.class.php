@@ -14,6 +14,10 @@ class Repairing extends Model {
         return "Repairings are episodes of repairs and maintenance impacting one or more rental units of a given Center.";
     }
 
+    public static function getLink() {
+        return "/booking/#/repairings/repairing/object.id";
+    }
+
     public static function getColumns() {
         return [
 

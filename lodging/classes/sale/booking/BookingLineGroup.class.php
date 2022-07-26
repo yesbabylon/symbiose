@@ -168,13 +168,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'ondelete'          => 'cascade'         // delete group when parent booking is deleted
             ],
 
+            // we mean rental_units_ids (for rental units assignment)
             'accomodations_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\BookingLine',
+                'foreign_object'    => BookingLine::getType(),
                 'foreign_field'     => 'booking_line_group_id',
                 'description'       => 'Booking lines relating to accomodations.',
                 'ondetach'          => 'delete',
-                'domain'            => ['is_accomodation', '=', true]
+                'domain'            => ['is_rental_unit', '=', true]
             ],
 
             'rental_unit_assignments_ids' => [
