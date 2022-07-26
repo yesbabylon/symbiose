@@ -13,6 +13,12 @@
             },
             {
                 "type": "field",
+                "label": "Center",
+                "value": "center_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "label": "From",
                 "value": "date_from",
                 "width": "15%"

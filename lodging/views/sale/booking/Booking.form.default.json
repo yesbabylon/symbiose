@@ -179,11 +179,19 @@
                                                 "type": "field",
                                                 "value": "status",
                                                 "visible": false,
-                                                "width": "33%"
+                                                "width": "0%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "type_id",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
                                                 "width": "33%",
                                                 "widget": {
                                                     "readonly": true
@@ -345,8 +353,8 @@
                         ]
                     },
                     {
-                        "label": "Composition",
-                        "id": "section.booking_composition",
+                        "label": "Contracts",
+                        "id": "section.booking_contracts",
                         "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
@@ -356,8 +364,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "composition_items_ids",
-                                                "width": "100%"
+                                                "value": "contracts_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "sort": "desc"
+                                                }
                                             }
                                         ]
                                     }
@@ -387,8 +398,8 @@
                         ]
                     },
                     {
-                        "label": "Contracts",
-                        "id": "section.booking_contracts",
+                        "label": "Composition",
+                        "id": "section.booking_composition",
                         "visible": ["status", "not in", ["quote", "option"]],
                         "rows": [
                             {
@@ -398,11 +409,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "contracts_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "sort": "desc"
-                                                }
+                                                "value": "composition_items_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -455,8 +463,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoices_ids",
-                                                "width": "100%",                                                
-                                                "widget": {                                                    
+                                                "width": "100%",
+                                                "widget": {
                                                     "view": "list.booking",
                                                     "domain": ["type", "=", "invoice"]
                                                 }

@@ -33,6 +33,11 @@
             },
             {
                 "type": "field",
+                "value": "product_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "qty",
                 "width": "10%"
             },

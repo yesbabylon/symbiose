@@ -143,6 +143,8 @@ $fields = [
                 'fax',
                 'website',
                 'registration_number',
+                'has_vat',
+                'vat_number',
                 'signature',
                 'bank_account_iban',
                 'bank_account_bic'
@@ -160,6 +162,7 @@ $fields = [
     ],
     'invoice_lines_ids' => [
         'product_id',
+        'description',
         'qty',
         'unit_price',
         'discount',
@@ -174,6 +177,7 @@ $fields = [
         'price',
         'invoice_lines_ids' => [
             'product_id',
+            'description',
             'qty',
             'unit_price',
             'discount',
@@ -266,6 +270,9 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
+    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
+    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
+
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
     'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
@@ -355,7 +362,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
         }
 
         $line = [
-            'name'          => $invoice_line['name'],
+            'name'          => (strlen($invoice_line['description']) > 0)?$invoice_line['description']:$invoice_line['name'],
             'price'         => $invoice_line['price'],
             'total'         => $invoice_line['total'],
             'unit_price'    => $invoice_line['unit_price'],
@@ -411,7 +418,7 @@ foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
 // process remainging stand-alone lines
 foreach($invoice['invoice_lines_ids'] as $invoice_line) {
     $line = [
-        'name'          => $invoice_line['name'],
+        'name'          => (strlen($invoice_line['description']) > 0)?$invoice_line['description']:$invoice_line['name'],
         'price'         => $invoice_line['price'],
         'total'         => $invoice_line['total'],
         'unit_price'    => $invoice_line['unit_price'],

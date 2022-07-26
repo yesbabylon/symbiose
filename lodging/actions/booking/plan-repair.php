@@ -29,6 +29,12 @@ list($params, $providers) = announce([
             'required'      => true
         ],
 
+        'name' =>  [
+            'description'   => 'Name to set to the repairing, if any.',
+            'type'          => 'string',
+            'default'       => ''
+        ],
+
         'description' =>  [
             'description'   => 'Short description about the reason of the maintenance.',
             'type'          => 'string',
@@ -75,7 +81,10 @@ if(!$rental_unit) {
     Create a repairing group for given period and add rental unit to it
 */
 
-$collection = Repairing::create(['center_id' => $rental_unit['center_id'], 'description' => $params['description']])
+$collection = Repairing::create([
+                            'center_id'         => $rental_unit['center_id'],
+                            'description'       => $params['description']
+                        ])
                         ->update([
                             'rental_units_ids'  => [ $params['rental_unit_id'] ],
                             'date_from'         => $params['date_from'],

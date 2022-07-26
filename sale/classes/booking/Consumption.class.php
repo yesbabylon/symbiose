@@ -38,7 +38,17 @@ class Consumption extends Model {
                 'foreign_object'    => 'sale\booking\Booking',
                 'description'       => 'The booking the comsumption relates to.',
                 'ondelete'          => 'cascade',        // delete consumption when parent booking is deleted
-                'readonly'          => true
+                'readonly'          => true,
+                'visible'           => ['type', '<>', 'ooo']
+            ],
+
+            'repairing_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\booking\Repairing',
+                'description'       => 'The booking the comsumption relates to.',
+                'ondelete'          => 'cascade',        // delete repair when parent repairing is deleted
+                'readonly'          => true,                
+                'visible'           => ['type', '=', 'ooo']
             ],
 
             'booking_line_id' => [

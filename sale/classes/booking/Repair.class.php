@@ -23,6 +23,7 @@ class Repair extends Consumption {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Repairing',
                 'description'       => 'The booking the comsumption relates to.',
+                'readonly'          => true,                
                 'ondelete'          => 'cascade'        // delete repair when parent repairing is deleted
             ],
 

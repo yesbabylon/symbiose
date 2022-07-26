@@ -78,6 +78,7 @@ if(!file_exists($file)) {
 $fields = [
     'name',
     'modified',
+    'status',
     'date_from',
     'date_to',
     'total',
@@ -129,6 +130,7 @@ $fields = [
             'fax',
             'website',
             'registration_number',
+            'vat_number',
             'bank_account_iban',
             'bank_account_bic',
             'signature'
@@ -160,6 +162,7 @@ $fields = [
         'nb_pers',
         'booking_lines_ids' => [
             'product_id' => ['label'],
+            'description',
             'qty',
             'unit_price',
             'free_qty',
@@ -200,6 +203,7 @@ $values = [
     'header_img_url'        => $img_url,
     'quote_header_html'     => '',
     'quote_notice_html'     => '',
+    'status'                => ($booking['status'] == 'quote')?'Devis':'Option',
 
     'is_price_tbc'          => $booking['is_price_tbc'],
     'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
@@ -235,6 +239,7 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
+    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
     'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
@@ -385,7 +390,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
             if($params['mode'] == 'grouped') {
                 $line = [
-                    'name'          => $booking_line['name'],
+                    'name'          => (strlen($booking_line['description']) > 0)?$booking_line['description']:$booking_line['name'],
                     'price'         => null,
                     'total'         => null,
                     'unit_price'    => null,
@@ -399,7 +404,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
             }
             else {
                 $line = [
-                    'name'          => $booking_line['name'],
+                    'name'          => (strlen($booking_line['description']) > 0)?$booking_line['description']:$booking_line['name'],
                     'price'         => $booking_line['price'],
                     'total'         => $booking_line['total'],
                     'unit_price'    => $booking_line['unit_price'],
