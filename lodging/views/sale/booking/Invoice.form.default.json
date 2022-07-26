@@ -36,6 +36,7 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
+            "app": "booking",            
             "route": "/booking/object.booking_id/invoice/object.id"
         }
     ],
