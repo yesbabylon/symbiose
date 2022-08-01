@@ -31,13 +31,14 @@ class Payment extends \sale\pay\Payment {
             'payment_method' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'voucher',              // gift, coupon, or tour-operator voucher
                     'cash',                 // cash money
                     'bank_card',            // electronic payment with bank (or credit) card
-                    'booking'               // payment through addition to the final (balance) invoice of a specific booking
+                    'booking',              // payment through addition to the final (balance) invoice of a specific booking
+                    'voucher'               // gift, coupon, or tour-operator voucher                    
                 ],
                 'description'       => "The method used for payment at the cashdesk.",
-                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ]
+                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ],
+                'default'           => 'cash'
             ]
 
         ];
@@ -60,8 +61,8 @@ class Payment extends \sale\pay\Payment {
      * Signature for single object change from views.
      *
      * @param  Object   $om        Object Manager instance.
-     * @param  Array    $event      Associative array holding changed fields as keys, and their related new values.
-     * @param  Array    $values     Copy of the current (partial) state of the object.
+     * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
+     * @param  Array    $values    Copy of the current (partial) state of the object.
      * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */

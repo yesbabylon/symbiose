@@ -36,8 +36,9 @@ class CashdeskSession extends Model {
 
             'cashdesk_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \sale\pos\Cashdesk::getType(),
+                'foreign_object'    => Cashdesk::getType(),
                 'description'       => 'Cash desk the log entry belongs to.',
+                'onupdate'          => 'onupdateCashdeskId',                
                 'required'          => true
             ],
 
@@ -65,21 +66,12 @@ class CashdeskSession extends Model {
      * Check for special constraint : only one session can be opened at a time on a given cashdesk.
      * Make sure there are no other pending sessions, otherwise, deny the update (which might be called on draft instance).
      */
-    public static function canupdate($om, $oids, $values, $lang) {
-        $sessions = $om->read(get_called_class(), $oids, ['status', 'cashdesk_id'], $lang);
-
-        if($sessions > 0) {
-            foreach($sessions as $sid => $session) {
-                $item = array_replace($session, $values);
-                if($item['status'] != 'closed') {
-                    $res = $om->search(get_called_class(), [ ['status', '=', 'pending'], ['cashdesk_id', '=', $item['cashdesk_id']] ]);
-                    if($res > 0 && count($res)) {
-                        return ['status' => ['already_open' => 'There can be only one session at a time on a given cashdesk.']];
-                    }
-                }
-            }
+    public static function cancreate($om, $values, $lang) {
+        $res = $om->search(get_called_class(), [ ['status', '=', 'pending'], ['cashdesk_id', '=', $values['cashdesk_id']] ]);
+        if($res > 0 && count($res)) {
+            return ['status' => ['already_open' => 'There can be only one session at a time on a given cashdesk.']];
         }
-        return parent::canupdate($om, $oids, $values, $lang);
+        return parent::cancreate($om, $values, $lang);
     }
 
     /**
@@ -108,7 +100,9 @@ class CashdeskSession extends Model {
 
         if($sessions > 0) {
             foreach($sessions as $sid => $session) {
-                $result[$sid] = $session['user_id.name'].' - '.$session['cashdesk_id.name'];
+                if(strlen($session['user_id.name']) || strlen($session['cashdesk_id.name'])) {
+                    $result[$sid] = $session['user_id.name'].' - '.$session['cashdesk_id.name'];
+                }                
             }
         }
 
