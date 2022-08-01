@@ -106,9 +106,9 @@ class Identity extends Model {
             ],
             'has_vat' => [
                 'type'              => 'boolean',
-                'default'           => true,
                 'description'       => 'Does the this organisation have a VAT number?',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => [ ['type', '<>', 'I'] ],
+                'default'           => false                
             ],
             'vat_number' => [
                 'type'              => 'string',

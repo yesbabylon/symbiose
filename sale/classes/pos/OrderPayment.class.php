@@ -89,16 +89,6 @@ class OrderPayment extends Model {
      * 
      */
     public static function onupdateOrderId($om, $ids, $values, $lang) {
-        $payments = $om->read(get_called_class(), $ids, ['order_id'], $lang);
-        if($payments > 0) {
-            foreach($payments as $pid => $payment) {
-                // search for remaining (non-assigned) lines from the order
-                $order_lines_ids = $om->search('sale\pos\OrderLine', [ ['order_id', '=', $payment['order_id']], ['order_payment_id', '=', '0'] ]);
-                if($order_lines_ids > 0 && count($order_lines_ids)) {
-                    $om->write(get_called_class(), $pid, ['order_lines_ids' => $order_lines_ids]);    
-                }
-            }            
-        }
     }
 
     public static function calcTotalPaid($om, $ids, $lang) {

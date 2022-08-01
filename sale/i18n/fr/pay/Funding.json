@@ -77,5 +77,9 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "non_editable": "Un financement déjà payé ne peut plus être modifié."
+        }
+    }
 }

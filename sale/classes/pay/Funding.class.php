@@ -40,7 +40,8 @@ class Funding extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount expected for the funding (computed based on VAT incl. price).',
-                'required'          => true
+                'required'          => true,
+                'onupdate'          => 'onupdateDueAmount'
             ],
 
             'due_date' => [
@@ -144,8 +145,37 @@ class Funding extends Model {
         return $result;
     }
 
+    public static function onupdateDueAmount($orm, $oids, $values, $lang) {
+        $orm->update(self::getType(), $oids, ['name' => null], $lang);
+    }
+
     public static function onupdatePaymentDeadlineId($orm, $oids, $values, $lang) {
         $orm->write(get_called_class(), $oids, ['name' => null], $lang);
     }
 
+
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        $fundings = $om->read(self::getType(), $oids, ['is_paid'], $lang);
+
+        if($fundings > 0) {
+            foreach($fundings as $funding) {
+                if( $funding['is_paid'] ) {
+                    return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been paid.']];
+                }
+            }
+        }
+
+        return parent::canupdate($om, $oids, $values, $lang);
+    }
 }
