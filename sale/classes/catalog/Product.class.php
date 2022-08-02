@@ -9,11 +9,14 @@ use equal\orm\Model;
 
 class Product extends Model {
 
+    public static function getName() {
+        return "Product";
+    }
+
     public static function getDescription() {
         return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.\n
          Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).\n
-         A SKU code identifies a product with all its specific characteristics.\n
-        ";
+         A SKU code identifies a single product with all its specific characteristics.\n";
     }
 
     public static function getColumns() {
@@ -56,7 +59,7 @@ class Product extends Model {
 
             'product_model_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\catalog\ProductModel',
+                'foreign_object'    => ProductModel::getType(),
                 'description'       => "Product Model of this variant.",
                 'required'          => true,
                 'onupdate'          => 'onupdateProductModelId'
