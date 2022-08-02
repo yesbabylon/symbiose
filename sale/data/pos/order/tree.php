@@ -160,7 +160,7 @@ switch($params['variant']) {
             ],
             'customer_id' => [
                 'name',
-                'partner_identity_id'=>[
+                'partner_identity_id'=> [
                     'vat_number',
                     'address_city',
                     'address_zip',
