@@ -6,6 +6,10 @@
     },
     "operations": {
         "total": {
+            "amount_share": {
+                "operation": "SUM",
+                "usage": "amount/percent"
+            },
             "due_amount": {
                 "operation": "SUM",
                 "usage": "amount/money:2"

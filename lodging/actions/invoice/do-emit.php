@@ -27,17 +27,18 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']
+    'providers'     => ['context', 'orm', 'cron', 'auth']
 ]);
 
 /**
  * @var \equal\php\Context                  $context
  * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\cron\Scheduler               $cron
  * @var \equal\auth\AuthenticationManager   $auth
  */
-list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
+list($context, $orm, $cron, $auth) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['auth']];
 
-// emit the invoice : changing status will trigger an invoice number assignation
+// emit the invoice (changing status will trigger an invoice number assignation)
 $invoice = Invoice::id($params['id'])->update(['status' => 'invoice'])->read(['booking_id', 'funding_id', 'center_office_id', 'price', 'due_date'])->first();
 
 // if invoice do not yet relate to a funding, it is a final invoice (balance)
@@ -45,8 +46,8 @@ if(is_null($invoice['funding_id'])) {
     try {
         // update booking status
         $booking = Booking::id($invoice['booking_id'])
-                        ->read(['id', 'name', 'status'])
-                        ->first();
+                          ->read(['id', 'name', 'status'])
+                          ->first();
                         
         if(!$booking) {
             throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -81,7 +82,7 @@ if(is_null($invoice['funding_id'])) {
             'issue_date'            => time(),
             'due_date'              => $invoice['due_date']
         ];
-        Funding::create($funding)->read(['name']);
+        $new_funding = Funding::create($funding)->read(['id', 'name'])->first();
     }
     catch(Exception $e) {
         // ignore duplicates (not created)

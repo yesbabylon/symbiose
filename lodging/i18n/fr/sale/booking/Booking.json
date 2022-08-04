@@ -88,6 +88,9 @@
                 "item.booking.quote": {
                     "label": "Envoi du devis"
                 },
+                "item.booking.option": {
+                    "label": "Envoi devis d'option"
+                },
                 "item.booking.consumptions": {
                     "label": "Consommations"
                 },

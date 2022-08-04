@@ -20,6 +20,10 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'min'           => 1,
             'required'      => true
+        ],
+        'partner_id' =>  [
+            'description'   => 'Identifier of the partner to which the invoice must be addressed.',
+            'type'          => 'integer'
         ]
     ],
     'access' => [
@@ -45,6 +49,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 // search for an invoice for this booking with status 'invoice' (there should be none)
 $invoice = Invoice::search([['booking_id', '=', $params['id']], ['status', '=', 'invoice'], ['funding_id', '=', null]])->read(['id'])->first();
+
 if($invoice) {
     throw new Exception("invoice_already_exists", QN_ERROR_NOT_ALLOWED);
 }
@@ -119,7 +124,7 @@ Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])
     Generate the invoice
 */
 
-// #todo - setting for selecting the suitable payment terms
+// #todo - use settings for selecting the suitable payment terms
 
 // remember all booking lines involved
 $booking_lines_ids = [];
@@ -131,7 +136,8 @@ $invoice = Invoice::create([
         'booking_id'        => $params['id'],
         'center_office_id'  => $booking['center_office_id']['id'],
         'status'            => 'proforma',
-        'partner_id'        => $booking['customer_id']['id']
+        // allow to invoice to a "payer" partner distinct from customer
+        'partner_id'        => (isset($params['partner_id']))?$params['partner_id']:$booking['customer_id']['id']
     ])
     ->first();
 
@@ -261,8 +267,8 @@ if($fundings) {
                 continue;
             }
             $i_line = [
-                'description'               => ucfirst($installment_label).' '.date('Y-m'),
                 'invoice_id'                => $invoice['id'],
+                'description'               => ucfirst($installment_label).' '.date('Y-m'),
                 'product_id'                => $downpayment_product_id,
                 'vat_rate'                  => 0.0,
                 // by convention, price is always positive value (so that price, credit and debit remain positive at all time)
@@ -275,9 +281,16 @@ if($fundings) {
             $i_lines_ids[] = $new_line['id'];
         }
         else if($funding['type'] == 'invoice') {
-            $funding_invoice = Invoice::id($funding['invoice_id'])->read(['id', 'name', 'invoice_lines_ids' => ['vat_rate', 'product_id', 'total']])->first();
+            $funding_invoice = Invoice::id($funding['invoice_id'])->read(['id', 'created', 'name', 'partner_id', 'total', 'invoice_lines_ids' => ['vat_rate', 'product_id', 'total']])->first();
 
-            if($funding_invoice) {
+            if(!$funding_invoice) {
+                // inconsistency detected
+                trigger_error("QN_DEBUG_APP::unable to fetch lodging\sale\booking\Invoice[{$funding['invoice_id']}]", QN_REPORT_WARNING);
+                continue;
+            }
+
+            // payer and customer are the same
+            if($funding_invoice['partner_id'] == $booking['customer_id']['id']) {
                 // there should be only one line
                 foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
                     $i_line = [
@@ -296,6 +309,23 @@ if($fundings) {
                     $new_line = InvoiceLine::create($i_line)->first();
                     $i_lines_ids[] = $new_line['id'];
                 }
+            }
+            // payer and customer are distincts
+            else {
+                // consider the invoice as a paid downpayment
+                $i_line = [
+                    'invoice_id'                => $invoice['id'],
+                    'description'               => ucfirst($installment_label).' '.date('Y-m', $funding_invoice['created']),
+                    'product_id'                => $downpayment_product_id,
+                    'vat_rate'                  => 0.0,
+                    // by convention, price is always positive value (so that price, credit and debit remain positive at all time)
+                    'unit_price'                => $funding_invoice['total'],
+                    // and quantity is set as negative value when something is deducted
+                    'qty'                       => -1
+                    // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
+                ];
+                $new_line = InvoiceLine::create($i_line)->first();
+                $i_lines_ids[] = $new_line['id'];
             }
         }
     }

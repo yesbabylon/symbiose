@@ -159,11 +159,11 @@ class Booking extends \sale\booking\Booking {
 
         foreach($bookings as $oid => $booking) {
 
-            $code = 'booking.sequence.'.$booking['center_id.center_office_id.code'];
-            $sequence = Setting::get_value('sale', 'booking', $code);
+            $setting_name = 'booking.sequence.'.$booking['center_id.center_office_id.code'];
+            $sequence = Setting::get_value('sale', 'booking', $setting_name);
 
             if($sequence) {
-                Setting::set_value('sale', 'booking', $code, $sequence + 1);
+                Setting::set_value('sale', 'booking', $setting_name, $sequence + 1);
 
                 $result[$oid] = Setting::parse_format($format, [
                     'center'    => $booking['center_id.center_office_id.code'],
