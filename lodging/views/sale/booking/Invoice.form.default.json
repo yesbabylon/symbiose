@@ -100,7 +100,12 @@
                                                 "value": "reversed_invoice_id",
                                                 "width": "33%",
                                                 "visible": ["status", "=", "cancelled"]
-                                            }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_ref",
+                                                "width": "100%"
+                                            }                                            
                                         ]
                                     },
                                     {

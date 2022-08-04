@@ -6,24 +6,15 @@
 */
 
 use lodging\sale\pos\CashdeskSession;
-use sale\pos\Order;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Provide a fully loaded tree for a given session.",
+    'description'	=>	"Provide a fully loaded tree for a given CashdeskSession.",
     'params' 		=>	[
         'id' => [
-            'description'   => 'Identifier of the order for which the tree is requested.',
+            'description'   => 'Identifier of the session for which the tree is requested.',
             'type'          => 'integer',
             'required'      => true
-        ],
-        'variant' =>  [
-            'description'   => 'Type of tree being requested.',
-            'type'          => 'string',
-            'selection'     => [
-                'session'        
-            ],
-            'default'       => 'lines'
         ]
     ],
     'access' => [
@@ -40,76 +31,69 @@ list($params, $providers) = announce([
 
 list($context) = [$providers['context']];
 
-
-$tree = [];
-
-switch($params['variant']) {
-    case 'session':
-        $tree = [
+$tree = [
+    'id',
+    'amount',
+    'user_id',
+    'cashdesk_id',
+    'status',
+    'orders_ids' => [
+        'id',
+        'name',
+        'created',
+        'status',
+        'has_invoice',
+        'has_funding',
+        'total',
+        'price',
+        'customer_id' => [
+            'name',
+            'partner_identity_id' => [
+                'vat_number'
+            ]
+        ],
+        'total_paid',
+        'order_lines_ids' => [
             'id',
-            'amount',
-            'user_id',
-            'cashdesk_id',
-            'status',
-            'orders_ids' => [
+            'order_id',
+            'name',
+            'unit_price',
+            'vat_rate',
+            'qty',
+            'discount',
+            'free_qty',
+            'total',
+            'price'
+        ],
+        'order_payments_ids' => [
+            'id',
+            'order_id',
+            'total_due',
+            'total_paid',
+            'order_lines_ids' => [
                 'id',
+                'order_id',
+                'order_payment_id',
                 'name',
-                'created',
-                'status',
-                'has_invoice',
-                'has_funding',
+                'unit_price',
+                'vat_rate',
+                'qty',
+                'discount',
+                'free_qty',
                 'total',
-                'price',
-                'customer_id'=>[
-                    'name',
-                    'partner_identity_id'=>[
-                        'vat_number'
-                    ]
-                ],
-                'total_paid',
-                'order_lines_ids' => [
-                    'id',
-                    'order_id',
-                    'name',
-                    'unit_price',
-                    'vat_rate',
-                    'qty',
-                    'discount',
-                    'free_qty',
-                    'total',
-                    'price'
-                ],
-                'order_payments_ids' => [
-                    'id',
-                    'order_id',
-                    'total_due',
-                    'total_paid',
-                    'order_lines_ids' => [
-                        'id',
-                        'order_id',
-                        'order_payment_id',
-                        'name',
-                        'unit_price',
-                        'vat_rate',
-                        'qty',
-                        'discount',
-                        'free_qty',
-                        'total',
-                        'price'
-                    ],
-                    'order_payment_parts_ids' => [
-                        'id',
-                        'order_payment_id',
-                        'amount',
-                        'payment_method',
-                        'booking_id',
-                        'voucher_ref'
-                    ]
-                ]
-            ]    
-        ];
-        break;
-}
+                'price'
+            ],
+            'order_payment_parts_ids' => [
+                'id',
+                'order_payment_id',
+                'amount',
+                'payment_method',
+                'booking_id',
+                'voucher_ref'
+            ]
+        ]
+    ]    
+];
 
 $cashdesksessions = CashdeskSession::id($params['id'])->read($tree)->adapt('txt')->get(true);
 
@@ -118,7 +102,6 @@ if(!$cashdesksessions || !count($cashdesksessions)) {
 }
 
 $cashdesksession = reset($cashdesksessions);
-
 
 $context->httpResponse()
         ->body($cashdesksession)

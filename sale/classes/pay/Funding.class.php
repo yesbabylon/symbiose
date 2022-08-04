@@ -6,6 +6,7 @@
 */
 namespace sale\pay;
 use equal\orm\Model;
+use equal\cron\Scheduler;
 
 class Funding extends Model {
 
@@ -18,6 +19,11 @@ class Funding extends Model {
                 'result_type'       => 'string',
                 'function'          => 'calcName',
                 'store'             => true
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Optional description to identify the funding."
             ],
 
             'payments_ids' => [
@@ -40,7 +46,8 @@ class Funding extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount expected for the funding (computed based on VAT incl. price).',
-                'required'          => true
+                'required'          => true,
+                'onupdate'          => 'onupdateDueAmount'
             ],
 
             'due_date' => [
@@ -82,7 +89,7 @@ class Funding extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'description'       => "The deadline model used for creating the funding, if any.",
-                'onupdate'          => "onupdatePaymentDeadlineId"
+                'onupdate'          => 'onupdatePaymentDeadlineId'
             ],
 
             'invoice_id' => [
@@ -103,11 +110,11 @@ class Funding extends Model {
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['payment_deadline_id.name'], $lang);
+        $fundings = $om->read(get_called_class(), $oids, ['payment_deadline_id.name', 'due_amount'], $lang);
 
         if($fundings > 0) {
             foreach($fundings as $oid => $funding) {
-                $result[$oid] = $funding['payment_deadline_id.name'];
+                $result[$oid] = Setting::format_number_currency($funding['due_amount']).'    '.$funding['payment_deadline_id.name'];
             }
         }
         return $result;
@@ -144,8 +151,101 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function onupdatePaymentDeadlineId($orm, $oids, $values, $lang) {
-        $orm->write(get_called_class(), $oids, ['name' => null], $lang);
+    public static function onupdateDueAmount($om, $oids, $values, $lang) {
+        // reset the name
+        $om->update(self::getType(), $oids, ['name' => null], $lang);
+    }
+
+    /**
+     * Update the description accordint to the deadline, when set.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @param  array                        $values     Associative array holding the new values to be assigned.
+     * @param  string                       $lang       Language in which multilang fields are being updated.
+     */
+    public static function onupdatePaymentDeadlineId($om, $oids, $values, $lang) {
+        $fundings = $om->read(self::getType(), $oids, ['payment_deadline_id.name'], $lang);
+        if($fundings > 0) {
+            foreach($fundings as $oid => $funding) {
+                $om->update(self::getType(), $oid, ['description' => $funding['payment_deadline_id.name']], $lang);
+            }
+        }
+    }
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @param  array                        $values     Associative array holding the new values to be assigned.
+     * @param  string                       $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang) {
+        $fundings = $om->read(self::getType(), $oids, ['is_paid'], $lang);
+
+        if($fundings > 0) {
+            foreach($fundings as $funding) {
+                if( $funding['is_paid'] ) {
+                    return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been paid.']];
+                }
+            }
+        }
+
+        return parent::canupdate($om, $oids, $values, $lang);
+    }
+
+
+    /**
+     * Hook invoked before object update for performing object-specific additional operations.
+     * Update the scheduled tasks related to the fundinds.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @param  array                       $values     Associative array holding the new values that have been assigned.
+     * @param  string                      $lang       Language in which multilang fields are being updated.
+     * @return void
+     */
+    public static function onupdate($om, $oids, $values, $lang) {
+        $cron = $om->getContainer()->get('cron');
+
+        if(isset($values['due_date'])) {
+            foreach($oids as $fid) {
+                // remove any previsously scheduled task
+                $cron->cancel("booking.funding.overdue.{$fid}");
+                // setup a scheduled job upon funding overdue
+                $cron->schedule(
+                    // assign a reproducible unique name
+                    "booking.funding.overdue.{$fid}",
+                    // remind on day following due_date
+                    $values['due_date'] + 86400,
+                    'lodging_funding_check-payment',
+                    [ 'id' => $fid ]
+                );
+            }
+        }
+
+        parent::onupdate($om, $oids, $values, $lang);
+    }
+
+
+    /**
+     * Hook invoked after object deletion for performing object-specific additional operations.
+     * Remove the scheduled tasks related to the deleted fundinds.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @return void
+     */
+    public static function ondelete($om, $oids) {
+        $cron = $om->getContainer()->get('cron');
+
+        foreach($oids as $fid) {
+            // remove any previsously scheduled task
+            $cron->cancel("booking.funding.overdue.{$fid}");
+        }
     }
 
 }

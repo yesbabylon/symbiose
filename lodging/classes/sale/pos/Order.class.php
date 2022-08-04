@@ -52,4 +52,30 @@ class Order extends \sale\pos\Order {
         ];
     }
 
+
+    /**
+     * Assign default customer_id based on the center that the session relates to.
+     */
+    public static function onupdateSessionId($om, $oids, $values, $lang) {
+        $orders = $om->read(__CLASS__, $oids, ['session_id.center_id'], $lang);
+
+        if($orders > 0) {
+            // #todo - store this in the settings
+            $map = [
+                28  => 4,       // LLN
+                27  => 5,       // Ovifat
+                29  => 6,       // Rochefort
+                30  => 7,       // Wanne
+                26  => 8,       // Han
+                24  => 9,       // Eupen
+                25  => 11       // Villers
+            ];
+
+            foreach($orders as $oid => $order) {
+                $om->update(__CLASS__, $oid, ['customer_id' => $map[$order['session_id.center_id']] ], $lang);
+            }
+        }
+        
+        $om->callonce(\sale\pos\CashdeskSession::getType(), 'onupdateCashdeskId', $oids, $values, $lang);
+    }
 }

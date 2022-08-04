@@ -159,11 +159,11 @@ class Booking extends \sale\booking\Booking {
 
         foreach($bookings as $oid => $booking) {
 
-            $code = 'booking.sequence.'.$booking['center_id.center_office_id.code'];
-            $sequence = Setting::get_value('sale', 'booking', $code);
+            $setting_name = 'booking.sequence.'.$booking['center_id.center_office_id.code'];
+            $sequence = Setting::get_value('sale', 'booking', $setting_name);
 
             if($sequence) {
-                Setting::set_value('sale', 'booking', $code, $sequence + 1);
+                Setting::set_value('sale', 'booking', $setting_name, $sequence + 1);
 
                 $result[$oid] = Setting::parse_format($format, [
                     'center'    => $booking['center_id.center_office_id.code'],
@@ -530,8 +530,23 @@ class Booking extends \sale\booking\Booking {
      */
     public static function canupdate($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(get_called_class(), $oids, ['status'], $lang);
+        $bookings = $om->read(get_called_class(), $oids, ['status', 'booking_lines_ids'], $lang);
 
+
+        if(isset($values['center_id'])) {
+            $has_booking_lines = false;
+            foreach($bookings as $bid => $booking) {
+                if(count($booking['booking_lines_ids'])) {
+                    $has_booking_lines = true;
+                    break;
+                }
+            }
+            if($has_booking_lines) {
+                return ['center_id' => ['non_editable' => 'Center cannot be changed once services are attached to the booking.']];
+            }            
+        }
+
+        // if customer nature is missing, make sure the selected customer has one already
         if(isset($values['customer_id']) && !isset($values['customer_nature_id'])) {
             // if we received a customer id, its customer_nature_id must be set
             $customers = $om->read('sale\customer\Customer', $values['customer_id'], [ 'customer_nature_id']);

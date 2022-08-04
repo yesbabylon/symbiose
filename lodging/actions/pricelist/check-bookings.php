@@ -44,7 +44,7 @@ $auth->su();
 $pricelist = PriceList::id($params['id'])->read(['id', 'status', 'price_list_category_id', 'date_from', 'date_to'])->first();
 
 if(!$pricelist) {
-    throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception("unknown_pricelist", QN_ERROR_UNKNOWN_OBJECT);
 }
 
 if($pricelist['status'] == 'published') {
@@ -74,5 +74,5 @@ if($pricelist['status'] == 'published') {
 
 
 $context->httpResponse()
-        ->body($result)
+        ->status(204)
         ->send();

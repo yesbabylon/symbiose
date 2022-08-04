@@ -1,6 +1,6 @@
 {
-    "name": "Contract List",
-    "description": "This view is intended for displaying the list of contracts.",
+    "name": "Contracts",
+    "description": "List of contracts relating to bookings.",
     "access": {
         "groups": ["booking.default.user"]
      },
