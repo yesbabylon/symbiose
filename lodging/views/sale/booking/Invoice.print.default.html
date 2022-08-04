@@ -134,7 +134,7 @@ hr {
             <h3>{{ company_name}}</h3>
             {{ company_address }}<br />
             Numéro d'entreprise: {{ company_reg_number }}<br />
-            Numéro de TVA: 
+            Numéro de TVA:
             {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
                 N/A
             {% else %}
@@ -147,13 +147,16 @@ hr {
         <!-- {{ contact_name }}<br /> -->
         {{ customer_address1 }}<br />
         {{ customer_address2 }}<br />
+        {% if customer_country != 'BE' %}
+            {{ customer_country }}<nr />
+        {% endif %}
         {% if customer_has_vat > 0 %}
-        TVA {{ customer_vat }}
+            TVA {{ customer_vat }}
         {% endif %}
     </div>
 
     <!-- spacer -->
-    <div style="position: relative; height: 150px; width: 100%;"></div>
+    <div style="position: relative; height: 140px; width: 100%;"></div>
 
     <table cellpadding="0" cellspacing="0">
         <tr valign="top">
@@ -190,7 +193,7 @@ hr {
                     Date: <strong>{{ date }}</strong>
                 </div>
                 <div style="margin-bottom: 5px; text-transform: uppercase; font-size: 13px;">
-                    Statut: 
+                    Statut:
                     <strong>
                     {% if is_paid  %}
                         payé
@@ -199,9 +202,12 @@ hr {
                             à payer
                         {% else %}
                             à rembourser
-                        {% endif %}                        
+                        {% endif %}
                     {% endif %}
                     </strong>
+                </div>
+                <div style="margin-bottom: 5px; text-transform: uppercase; font-size: 13px;">
+                    Réf: {{ customer_ref }}
                 </div>
             </td>
         </tr>
@@ -212,6 +218,9 @@ hr {
 <div class="footer">
     <p style="text-align: center;">
         {{ company_name}} - {{ company_address }}
+        {% if not company_has_vat %}
+            &nbsp;- ASBL assujettie exemptée en vertu de l’article 44 §2, 2° du Code TVA
+        {% endif %}
         <br />
         Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }}
         <br />
@@ -358,6 +367,16 @@ hr {
     </div>
 </div>
 {% endif %}
+{% if status == 'proforma' %}
+<div style="position: relative; margin-top: 40px; page-break-inside: avoid;">
+    <div style="font-size: 13px; padding: 10px 35px; border: solid 1px black;">
+        <b>Ceci est une facture PROFORMA</b>, établie pour répondre à une demande de prix exacte.<br />
+        Il s'agit d'un document à usage exclusivement commercial, qui n'a pas de valeur légale et ne doit pas faire l'objet d'un paiement. En cas de prise de service effective, une facture définitive sera établie après la conclusion de la vente.
+    </div>
+</div>
+{% endif %}
+
+
 
 {% if (price < 0.0) %}
 <div style="width: 100%; text-align: center;">Un montant de {{ (-price) | format_currency('EUR') }} vous sera remboursé prochainement.</div>

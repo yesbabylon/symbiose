@@ -42,7 +42,7 @@ class InvoiceLine extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => Invoice::getType(),
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'

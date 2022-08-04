@@ -149,7 +149,7 @@ class PriceList extends Model {
                 if($pricelist['status'] == 'published') {
                     $providers = \eQual::inject(['cron']);
                     $cron = $providers['cron'];
-                    // add a task to the CRON
+                    // add a task to the CRON for updating status of bookings waiting for the pricelist
                     $cron->schedule(
                         "booking.is_tbc.confirm",
                         time() + 60,

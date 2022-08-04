@@ -8,6 +8,11 @@
             "description": "Identification de la facture.",
             "help": ""
         },
+        "customer_ref": {
+            "label": "Référence client",
+            "description": "Référence à indiquer sur la facture (demandé par le client).",
+            "help": ""
+        },
         "status": {
             "label": "Statut",
             "description": "La situation à un moment donné au cours d'un processus.",
@@ -29,7 +34,7 @@
         "number": {
             "label": "Numéro de la facture",
             "description": "Numéro de la facture, selon la logique d'organisation.",
-            "help": "Numéro de la facture, selon la logique d'organisation (@voir config/facturation)."
+            "help": "Numéro de la facture, selon la logique d'organisation."
         },
         "is_paid": {
             "label": "Payée",
@@ -42,9 +47,9 @@
             "help": ""
         },
         "partner_id": {
-            "label": "Partenaire",
-            "description": "Organisation responsable de payer les biens/services de la vente.",
-            "help": "Organisation responsable de payer les biens et services liés à la vente."
+            "label": "Destinataire",
+            "description": "Organisation responsable de payer la facture.",
+            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
         },
         "organisation_id": {
             "label": "Organisation émettrice",

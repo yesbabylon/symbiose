@@ -3,7 +3,20 @@
     "description": "This view is intented for displaying the invoices.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
-     },
+    },
+    "operations": {
+        "total": {
+            "total": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,
     "layout": {
         "items": [
             {
@@ -14,21 +27,6 @@
             {
                 "type": "field",
                 "value": "unit_price",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "price_id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "total",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "vat_rate",
                 "width": "10%"
             },
             {
@@ -44,6 +42,21 @@
             {
                 "type": "field",
                 "value": "discount",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "price",
                 "width": "10%"
             }
         ]

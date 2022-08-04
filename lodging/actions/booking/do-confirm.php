@@ -15,7 +15,7 @@ use lodging\sale\booking\Funding;
 
 
 list($params, $providers) = announce([
-    'description'   => "Sets booking as confirmed, create contract and generate payment plan.",
+    'description'   => "Sets booking as confirmed, creates contract and generates payment plan.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking to mark as confirmed.',
@@ -41,6 +41,7 @@ list($params, $providers) = announce([
  * @var \equal\orm\ObjectManager            $orm
  * @var \equal\cron\Scheduler               $cron
  * @var \equal\dispatch\Dispatcher          $dispatch
+ * @var \equal\error\Reporter               $reporter
  */
 list($context, $orm, $cron, $dispatch, $reporter) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch'], $providers['report']];
 
@@ -318,26 +319,12 @@ $reporter->debug("Selected payment plan: {$payment_plan['name']}");
 
 
 $funding_order = 0;
+
+
+
+// pass-1 : check that remaining days to checkin is more than planned delay
+$on_time = true;
 foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
-
-    // special case: immediate creation of balance invoice with no funding
-    if($deadline['type'] == 'invoice' && $deadline['is_balance_invoice']) {
-        // create proforma balance invoice and do not create funding (raise Exception on failure)
-        eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
-        break;
-    }
-
-    $funding = [
-        'payment_deadline_id'   => $deadline_id,
-        'booking_id'            => $params['id'],
-        'center_office_id'      => $booking['center_id']['center_office_id'],
-        'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
-        'amount_share'          => $deadline['amount_share'],
-        'is_paid'               => false,
-        'type'                  => 'installment',
-        'order'                 => $funding_order
-    ];
-
     $date = time();         // default delay is starting today (at confirmation time / equivalent to 'booking')
     switch($deadline['delay_from_event']) {
         case 'booking':
@@ -350,30 +337,79 @@ foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
             $date = $booking['date_to'];
             break;
     }
-    $funding['issue_date'] = $date + ($deadline['delay_from_event_offset'] * 86400);
-    $funding['due_date'] = $funding['issue_date'] + ($deadline['delay_count'] * 86400);
 
-    // special case: remaining days to checkin is less than planned delay
-    if($funding['due_date'] > $booking['date_from']) {
-        $reporter->debug("Delay too short: due {$funding['due_date']}, from {$booking['date_from']}");
-        // create a single funding with 100% of due amount
-        $funding['due_date'] = $booking['date_from'];
-        $funding['due_amount'] = $booking['price'];
-        $funding['amount_share'] = 1;
-        $funding['payment_deadline_id'] = null;
-        Funding::create($funding)->read(['name'])->get();
+    $issue_date = $date + ($deadline['delay_from_event_offset'] * 86400);
+    if($issue_date < time()) {
+        $on_time = false;
         break;
     }
+}
 
-    // request funding creation
-    try {
-        Funding::create($funding)->read(['name'])->get();
-    }
-    catch(Exception $e) {
-        // ignore duplicates (not created)
-    }
 
-    ++$funding_order;
+// special case: remaining days to checkin is less than planned delay
+if(!$on_time) {
+    $reporter->debug("Delay too short: due {$funding['due_date']}, from {$booking['date_from']}");
+    // create a single funding with 100% of due amount
+    $funding = [
+        'booking_id'            => $params['id'],
+        'center_office_id'      => $booking['center_id']['center_office_id'],
+        'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
+        'amount_share'          => 1.0,
+        'is_paid'               => false,
+        'type'                  => 'installment',
+        'order'                 => 1,
+        'due_date'              => $booking['date_from'],
+        'due_amount'            => $booking['price']            
+    ];        
+    Funding::create($funding)->read(['name'])->get();
+}
+else {
+    // pass-2 : create fundings accordingly to PaymentPlan
+    foreach($payment_plan['payment_deadlines_ids'] as $deadline_id => $deadline) {
+
+        // special case: immediate creation of balance invoice with no funding
+        if($deadline['type'] == 'invoice' && $deadline['is_balance_invoice']) {
+            // create proforma balance invoice and do not create funding (raise Exception on failure)
+            eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
+            break;
+        }
+
+        $funding = [
+            'payment_deadline_id'   => $deadline_id,
+            'booking_id'            => $params['id'],
+            'center_office_id'      => $booking['center_id']['center_office_id'],
+            'due_amount'            => round($booking['price'] * $deadline['amount_share'], 2),
+            'amount_share'          => $deadline['amount_share'],
+            'is_paid'               => false,
+            'type'                  => 'installment',
+            'order'                 => $funding_order
+        ];
+
+        $date = time();         // default delay is starting today (at confirmation time / equivalent to 'booking')
+        switch($deadline['delay_from_event']) {
+            case 'booking':
+                $date = time();
+                break;
+            case 'checkin':
+                $date = $booking['date_from'];
+                break;
+            case 'checkout':
+                $date = $booking['date_to'];
+                break;
+        }
+        $funding['issue_date'] = $date + ($deadline['delay_from_event_offset'] * 86400);
+        $funding['due_date'] = $funding['issue_date'] + ($deadline['delay_count'] * 86400);
+
+        // request funding creation
+        try {
+            $new_funding = Funding::create($funding)->read(['id', 'name'])->first();
+        }
+        catch(Exception $e) {
+            // ignore duplicates (not created)
+        }
+
+        ++$funding_order;
+    }
 }
 
 $context->httpResponse()

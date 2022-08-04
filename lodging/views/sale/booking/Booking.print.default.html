@@ -142,6 +142,9 @@ hr {
         <!--{{ contact_name }}<br />-->
         {{ customer_address1 }}<br />
         {{ customer_address2 }}<br />
+        {% if customer_country != 'BE' %}
+            {{ customer_country }}<nr />
+        {% endif %}
         {% if has_vat > 0 %}
         TVA {{ customer_vat }}
         {% endif %}

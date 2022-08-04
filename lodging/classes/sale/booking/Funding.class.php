@@ -14,7 +14,7 @@ class Funding extends \sale\booking\Funding {
 
             'booking_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'foreign_object'    => Booking::getType(),
                 'description'       => 'Booking the contract relates to.',
                 'ondelete'          => 'cascade',        // delete funding when parent booking is deleted
                 'required'          => true
@@ -35,11 +35,6 @@ class Funding extends \sale\booking\Funding {
             ]
 
         ];
-    }
-
-
-    public function getUnique() {
-        return parent::getUnique();
     }
 
 }
