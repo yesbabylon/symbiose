@@ -20,7 +20,8 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'selection'     => [
                 'lines',        // tree with order lines
-                'payments'      // tree with order payments
+                'payments',     // tree with order payments
+                'ticket'
             ],
             'default'       => 'lines'
         ]
@@ -52,13 +53,13 @@ switch($params['variant']) {
             'has_invoice',
             'total',
             'price',
+            'total_paid',
             'customer_id'=>[
                 'name',
                 'partner_identity_id'=>[
                     'vat_number'
                 ]
             ],
-            'total_paid',
             'order_lines_ids' => [
                 'id',
                 'order_id',
@@ -112,7 +113,9 @@ switch($params['variant']) {
                     'discount',
                     'free_qty',
                     'total',
-                    'price'
+                    'price',
+                    'has_funding',
+                    'funding_id'
                 ],
                 'order_payment_parts_ids' => [
                     'id',
@@ -122,22 +125,59 @@ switch($params['variant']) {
                     'booking_id',
                     'voucher_ref'
                 ]
-                ],
-                'order_lines_ids' => [
-                    'id',
-                    'order_id',
-                    'order_payment_id',
+            ]
+        ];
+        break;
+    case 'ticket':
+        $tree = [
+            'id',
+            'name',
+            'created',
+            'status',
+            'total',
+            'price',
+            'total_paid',
+            'session_id' => [
+                'amount',
+                'user_id',
+                'center_id' => [
                     'name',
-                    'unit_price',
-                    'vat_rate',
-                    'qty',
-                    'discount',
-                    'free_qty',
-                    'total',
-                    'price',
-                    'has_funding',
-                    'funding_id'
-                ],
+                    'phone',
+                    'email',
+                    'organisation_id' => [
+                        'legal_name',
+                        'phone',
+                        'email',
+                        'vat_number'
+                    ],
+                    'center_office_id' => [
+                        'name',
+                        'address_street',
+                        'address_city',
+                        'address_zip'
+                    ]
+                ]
+            ],
+            'customer_id' => [
+                'name',
+                'partner_identity_id'=> [
+                    'vat_number',
+                    'address_city',
+                    'address_zip',
+                    'address_street'
+                ]
+            ],
+            'order_lines_ids' => [
+                'id',
+                'name',
+                'unit_price',
+                'vat_rate',
+                'qty',
+                'discount',
+                'free_qty',
+                'total',
+                'price'
+            ]
         ];
         break;
 }
@@ -149,7 +189,6 @@ if(!$orders || !count($orders)) {
 }
 
 $order = reset($orders);
-
 
 $context->httpResponse()
         ->body($order)

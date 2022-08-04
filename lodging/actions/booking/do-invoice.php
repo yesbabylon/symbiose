@@ -9,13 +9,18 @@ use lodging\sale\booking\Funding;
 use lodging\sale\booking\BookingLine;
 
 list($params, $providers) = announce([
-    'description'   => "Generate final invoice with remaining due balance related to a booking.",
+    'description'   => "Sets booking as invoiced, and generates final invoice for a booking with remaining due balance.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the booking for which the invoice has to be generated.',
-            'type'          => 'integer',
-            'min'           => 1,
-            'required'      => true
+            'description'       => 'Identifier of the booking for which the invoice has to be generated.',
+            'type'              => 'integer',
+            'min'               => 1,
+            'required'          => true
+        ],
+        'partner_id' =>  [
+            'description'       => 'Partner to who address the invoice, if distinct from customer.',
+            'type'              => 'many2one',
+            'foreign_object'    => 'identity\Partner'
         ]
     ],
     'access' => [
@@ -52,7 +57,7 @@ if($booking['status'] != 'checkedout') {
     Remove any non-paid and non-invoice remaining funding
 */
 
-Funding::search([ ['paid_amount', '=', 0], ['type', '=', 'installment'], ['booking_id', '=', $invoice['booking_id']] ])->delete(true);
+Funding::search([ ['paid_amount', '=', 0], ['type', '=', 'installment'], ['booking_id', '=', $params['id']] ])->delete(true);
 
 
 /*
@@ -60,7 +65,7 @@ Funding::search([ ['paid_amount', '=', 0], ['type', '=', 'installment'], ['booki
 */
 
 // generate balance invoice (proforma) (raise exception on failure)
-eQual::run('do', 'lodging_invoice_generate', ['id' => $params['id']]);
+eQual::run('do', 'lodging_invoice_generate', $params);
 
 // mark all booking lines as invoiced
 // #memo - there is no point in doing this now since we can go backward for adding more extra products if necessary

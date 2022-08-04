@@ -8,19 +8,35 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class Category extends Model {
+
+    public static function getName() {
+        return "Product Category";
+    }
+
+    public static function getDescription() {
+        return "Product categories allow to group products in arbitrary ways.\n
+         Categories are not related to Families nor Groups.\n";
+    }
+
     public static function getColumns() {
-        /**
-         * Categories are not related to Families and allow a different way of grouping Products.
-         */
         return [
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product category (used for all variants).",
+                'multilang'         => true,
                 'required'          => true
+            ],
+
+            'code' => [
+                'type'              => 'string',
+                'description'       => "Unique code of the category (to ease searching).",
+                'required'          => true,
+                'unique'            => true
             ],
 
             'description' => [
                 'type'              => 'string',
+                'multilang'         => true,
                 'description'       => "Short string describing the purpose and usage of the category."
             ],
 

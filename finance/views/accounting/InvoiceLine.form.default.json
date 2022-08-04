@@ -36,7 +36,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "price",
+                                                "value": "unit_price",
                                                 "width": "50%"                                                
                                             },
                                             {
@@ -59,7 +59,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "discount",
-                                                "width": "50%"                                                
+                                                "width": "50%"     
                                             }
                                         ]
                                     }

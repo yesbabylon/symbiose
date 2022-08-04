@@ -54,7 +54,6 @@ foreach($statements as $statement) {
     $center_office = CenterOffice::search(['bank_account_iban', '=', $iban])->read(['id'])->first();
 
     if(!$center_office) {
-        // restricted to identified users
         throw new Exception('unknown_account_number', QN_ERROR_INVALID_PARAM);
     }
 
@@ -70,7 +69,7 @@ foreach($statements as $statement) {
     ];
 
     try {
-        // unique constraint on ['date', 'old_balance', 'new_balance']
+        // unique constraint on ['date', 'old_balance', 'new_balance'] will apply
         $bank_statement = BankStatement::create($fields)->adapt('txt')->first();
 
         $result[] = $bank_statement;

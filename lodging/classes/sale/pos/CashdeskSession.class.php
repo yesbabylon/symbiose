@@ -21,7 +21,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
 
             'cashdesk_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \lodging\sale\pos\Cashdesk::getType(),
+                'foreign_object'    => Cashdesk::getType(),
                 'description'       => 'Cash desk the log entry belongs to.',
                 'required'          => true,
                 'onupdate'          => 'onupdateCashdeskId'
@@ -29,7 +29,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
 
             'orders_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\pos\Order',
+                'foreign_object'    => Order::getType(),
                 'foreign_field'     => 'session_id',
                 'description'       => 'The orders that relate to the session.'
             ],
@@ -37,9 +37,8 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
             'center_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Center',
-                'description'       => "The center the desk relates to."
+                'description'       => "The center the desk relates to (from cashdesk)."
             ]
-
 
         ];
     }
@@ -49,10 +48,11 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
 
         if($sessions > 0) {
             foreach($sessions as $sid => $session) {
-                $om->write(__CLASS__,  $sid, ['center_id' => $session['cashdesk_id.center_id']], $lang);
+                $om->update(__CLASS__, $sid, ['center_id' => $session['cashdesk_id.center_id']], $lang);
             }
         }
-        parent::onupdateCashdeskId($om, $oids, $values, $lang);
+        
+        $om->callonce(\sale\pos\CashdeskSession::getType(), 'onupdateCashdeskId', $oids, $values, $lang);
     }
 
 }

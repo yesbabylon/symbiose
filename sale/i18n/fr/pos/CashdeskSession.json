@@ -35,7 +35,12 @@
 		},
 		"list.default": {
 			"name": "Sessions de Caisse",
-			"description": "Liste des journaux de Caisse.",
+			"description": "Liste des sessions de Caisse.",
+			"layout": {}
+		},
+		"dashboard.default": {
+			"name": "Caisse",
+			"description": "",
 			"layout": {}
 		}
 	},
