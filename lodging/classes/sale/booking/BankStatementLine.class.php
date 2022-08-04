@@ -39,7 +39,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                 'description'       => 'The list of payments this line relates to .',
                 'onupdate'          => 'sale\pay\BankStatementLine::onupdatePaymentsIds',
                 'ondetach'          => 'delete'
-            ]            
+            ]
 
         ];
     }
@@ -47,7 +47,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
     /**
      * Try to automatically reconcile a newly created statement line with a funding.
-     * 
+     *
      */
     public static function onupdateCenterOfficeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BankStatementLine::onupdateCenterOfficeId", QN_REPORT_DEBUG);
@@ -57,35 +57,62 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
         if($lines > 0) {
             foreach($lines as $lid => $line) {
 
-                /* 
-                    1) try to reconcile with fundings
-                */
-                $fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['is_paid', '=', false], ['center_office_id', '=', $line['center_office_id']] ]);
+                $found_funding_id = null;
 
-                if($fundings_ids > 0) {
-                    $found_funding_id = null;
-                    // candidates 1
-                    $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['is_paid', '=', false], ['payment_reference', '=', $line['structured_message'] ]]);
-                    if($candidates_fundings_ids > 0 && count($candidates_fundings_ids) == 1) {
-                        $found_funding_id = reset($candidates_fundings_ids);
-                    }
-                    else {
-                        // candidates 2
-                        $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['due_amount', '=', $line['amount']], ['id', 'in', $fundings_ids] ]);
-                        if($candidates_fundings_ids > 0 && count($candidates_fundings_ids) == 1) {
-                            $found_funding_id = reset($candidates_fundings_ids);
+                $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['payment_reference', '=', $line['structured_message']] ]);
+                
+                // if there's no match, fall back to using message as reference
+                if($candidates_fundings_ids <= 0 && !count($candidates_fundings_ids)) {
+                    $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['payment_reference', '=', preg_replace('/[^0-9.]+/', '', $line['message'])] ]);
+                }
+
+                if($candidates_fundings_ids > 0 && count($candidates_fundings_ids)) {
+                    // there should be at max 1 funding (since payment_reference should be unique, based on funding order and booking number)
+                    $fundings = $om->read(Funding::getType(), $candidates_fundings_ids, ['is_paid', 'booking_id.fundings_ids']);
+                    if($fundings > 0 && count($fundings)) {
+
+                        $funding = reset($fundings);
+
+                        // candidate 1: exact match with payment_reference AND still waiting for payment (whatever the due_amount)
+                        if($funding['is_paid'] == false) {
+                            $found_funding_id = $funding['id'];
                         }
+                        // candidate 2: payment_reference matches another funding from a same booking AND amount matches due_amount of a left over funding
+                        // #memo - this supports secondary payments for a booking, made with the reference of a previous funding
+                        else {
+                            $sibling_fundings = $om->read(Funding::getType(), $funding['booking_id.fundings_ids'], ['is_paid', 'due_amount']);
+                            if($sibling_fundings > 0) {
+                                foreach($sibling_fundings as $fid => $sibling_funding) {
+                                    // ignore funding itself
+                                    if($fid == $funding['id']) {
+                                        continue;
+                                    }
+                                    if($sibling_funding['is_paid'] == false && $sibling_funding['due_amount'] == $line['amount']) {
+                                        $found_funding_id = $fid;
+                                    }
+                                }
+                            }
+                            if(!$found_funding_id) {
+                                // error : the amount has already been paid
+                                // notify accountant that a reimbursment is due
+                                $om->write(get_called_class(), $lid, ['status' => 'to_refund']);
+                                continue;
+                            }
+                        }
+
                     }
-                    if($found_funding_id) {
-                        // create a new payment with negative amount
-                        $om->create('sale\pay\Payment', [
-                            'funding_id'        => $found_funding_id,
-                            'statement_line_id' => $lid,
-                            'amount'            => $line['amount'],
-                            'payment_method'    => 'bank'
-                        ], $lang);
-                        $om->write(get_called_class(), $lid, ['status' => 'reconciled']);
-                    }
+                }
+
+                if($found_funding_id) {
+                    // create a new payment with received amount
+                    $om->create('sale\pay\Payment', [
+                        'funding_id'        => $found_funding_id,
+                        'statement_line_id' => $lid,
+                        'amount'            => $line['amount'],
+                        'payment_method'    => 'bank'
+                    ], $lang);
+                    // mark the line as successfully reconciled
+                    $om->write(get_called_class(), $lid, ['status' => 'reconciled']);
                 }
 
             }

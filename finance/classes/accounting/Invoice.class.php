@@ -26,6 +26,11 @@ class Invoice extends Model {
                 'alias'             => "number"
             ],
 
+            'customer_ref' => [
+                'type'              => 'string',
+                'description'       => 'Reference that must appear on invoice (requested by customer).'
+            ],
+
            // the (owner) organisation the invoice relates to (multi-company support)
             'organisation_id' => [
                 'type'              => 'many2one',
@@ -59,7 +64,7 @@ class Invoice extends Model {
                 'function'          => 'calcNumber',
                 'result_type'       => 'string',
                 'store'             => true,
-                'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing)."
+                'description'       => "Unique number of the invoice, according to organisation logic."
             ],
 
             'is_paid' => [
@@ -72,7 +77,7 @@ class Invoice extends Model {
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => self::getType(),
-                'description'       => "Credit note that was created for cancelling the invoice.",
+                'description'       => "Credit note that was created for cancelling the invoice, if any.",
                 'visible'           => ['status', '=', 'cancelled']
             ],
 

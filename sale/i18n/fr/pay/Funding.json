@@ -3,6 +3,11 @@
     "plural": "FinancementS",
     "description": "",
     "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description complémentaire pour identifier le financement.",
+            "help": ""
+        },
         "payments_ids": {
             "label": "Paiements",
             "description": "Liste de paiements.",
@@ -77,5 +82,9 @@
             "layout": {}
         }
     },
-    "error": {}
+    "error": {
+        "errors": {
+            "non_editable": "Un financement déjà payé ne peut plus être modifié."
+        }
+    }
 }

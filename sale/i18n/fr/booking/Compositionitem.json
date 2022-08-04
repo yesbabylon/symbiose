@@ -85,6 +85,12 @@
                 }
             },
             "layout": {}
+        
+        },
+        "list.print_form": {
+            "name": "Feuille d'hébergement",
+            "description": "Template pour répartition manuelle des personnes dans les unités locatives.",
+            "layout": {}
         }
     },
     "error": {}

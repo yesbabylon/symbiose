@@ -6,6 +6,11 @@
             "label": "Identifiant",
             "description": "Identifiant de la réservation ciblée.",
             "help": ""
+        },
+        "partner_id": {
+            "label": "Payeur",
+            "description": "Organisation à qui envoyer la facture, si différent du client.",
+            "help": ""
         }
     },
     "error": {

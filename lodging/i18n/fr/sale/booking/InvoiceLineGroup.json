@@ -1,6 +1,6 @@
 {
-    "name": "Groupe de Facture",
-    "plural": "Groupes de Facture",
+    "name": "Groupe de lignes facture",
+    "plural": "Groupes de lignes de facture",
     "description": "",
     "model": {
         "invoice_id": {
@@ -10,7 +10,7 @@
         },
         "invoice_lines_ids": {
             "label": "Lignes de facture",
-            "description": "Les lignes du groupe.",
+            "description": "Liste des lignes du groupe.",
             "help": ""
         }
     },

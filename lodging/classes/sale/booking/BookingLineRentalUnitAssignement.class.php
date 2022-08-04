@@ -13,14 +13,13 @@ class BookingLineRentalUnitAssignement extends Model {
         return "Rental Unit Assignement";
     }
 
-    /*
-        Assignements are created while selecting the services for a booking.
-        Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.
-    */
+    public static function getDescription() {
+        return "Assignements are created while selecting the services for a booking.\n
+        Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.\n";
+    }
 
     public static function getColumns() {
         return [
-
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Booking',
@@ -62,7 +61,6 @@ class BookingLineRentalUnitAssignement extends Model {
                 'description'       => 'The related rental unit is an accomodation (having at least one bed).',
                 'default'           => true
             ]
-
         ];
     }
 
@@ -71,5 +69,30 @@ class BookingLineRentalUnitAssignement extends Model {
             ['booking_line_id', 'rental_unit_id']
         ];
     }
+
+    // prevent updating if the parent booking is not in quote
+
+    /**
+     * Check wether an object can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $values     Associative array holding the new values to be assigned.
+     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        $lines = $om->read(get_called_class(), $oids, ['booking_id.status'], $lang);
+        if($lines > 0) {
+            foreach($lines as $line) {
+                if($line['booking_id.status'] != 'quote') {
+                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                }
+            }
+        }
+
+        return parent::canupdate($om, $oids, $values, $lang);
+    }    
 
 }

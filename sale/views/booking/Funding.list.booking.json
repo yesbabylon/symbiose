@@ -6,6 +6,10 @@
     },
     "operations": {
         "total": {
+            "amount_share": {
+                "operation": "SUM",
+                "usage": "amount/percent"
+            },
             "due_amount": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
@@ -21,12 +25,12 @@
             },
             {
                 "type": "field",
-                "value": "issue_date",
-                "width": "15%"
+                "value": "description",
+                "width": "25%"
             },
             {
                 "type": "field",
-                "value": "payment_deadline_id",
+                "value": "issue_date",
                 "width": "15%"
             },
             {

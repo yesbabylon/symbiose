@@ -514,16 +514,17 @@ class BookingLine extends \sale\booking\BookingLine {
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
+        // handle execptions for fields that can always be updated
         $allowed = ['is_contractual', 'is_invoiced'];
-        $non_allowed = 0;
+        $count_non_allowed = 0;
 
         foreach($values as $field => $value) {
             if(!in_array($field, $allowed)) {
-                ++$non_allowed;
+                ++$count_non_allowed;
             }
         }
 
-        if($non_allowed > 0) {
+        if($count_non_allowed > 0) {
             $lines = $om->read(get_called_class(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);
             if($lines > 0) {
                 foreach($lines as $line) {

@@ -85,7 +85,8 @@ class BankStatementLine extends Model {
                 'selection'         => [
                     'pending',              // requires a review
                     'ignored',              // has been processed but does not relate to a booking
-                    'reconciled'            // has been processed and assigned to a payment
+                    'reconciled',           // has been processed and assigned to a payment
+                    'to_refund'             // has been processed and refers to a payment already received
                 ],
                 'description'       => 'Status of the line.',
                 'default'           => 'pending',

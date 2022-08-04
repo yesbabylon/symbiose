@@ -45,7 +45,14 @@ class Partner extends Model {
 
             'relationship' => [
                 'type'              => 'string',
-                'selection'         => [ 'contact', 'employee', 'customer', 'provider', 'payer', 'other' ],
+                'selection'         => [ 
+                    'contact', 
+                    'employee', 
+                    'customer', 
+                    'provider', 
+                    'payer', 
+                    'other' 
+                ],
                 'description'       => 'The kind of partnership that exists between the identities.'
             ],
 

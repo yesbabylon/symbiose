@@ -13,11 +13,6 @@ class ProductModel extends \sale\catalog\ProductModel {
         This class extends the ProductModel with fields specific to property rental.
     */
 
-
-	public static function getName() {
-        return "Product Model";
-    }
-
     public static function getColumns() {
 
         return [

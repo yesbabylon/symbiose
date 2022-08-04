@@ -9,7 +9,12 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "15%"
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "10%"
             },
             {
                 "type": "field",

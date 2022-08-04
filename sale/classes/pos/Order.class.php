@@ -42,14 +42,14 @@ class Order extends Model {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The customer the order relates to.',
-                'required'          => true
+                'foreign_object'    => \sale\customer\Customer::getType(),
+                'description'       => 'The customer the order relates to.'
+                // #todo - default to organisation default customer
             ],
 
             'session_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \sale\pos\CashdeskSession::getType(),
+                'foreign_object'    => CashdeskSession::getType(),
                 'description'       => 'The session the order belongs to.',
                 'onupdate'          => 'onupdateSessionId',
                 'required'          => true

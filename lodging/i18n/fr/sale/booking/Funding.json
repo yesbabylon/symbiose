@@ -14,26 +14,20 @@
             "help": ""
         },
         "center_office_id": {
-            "label": "Réservation",
+            "label": "Centre de gestion",
             "description": "Centre de gestion lié au financement.",
             "help": ""
         }
     },
     "view": {
         "form.default": {
-            "name": "Facture",
+            "name": "Financement",
             "description": "",
-            "actions": {
-                "action.invoice": {
-                    "label": "Émettre la facture",
-                    "description": "Générer une facture sur base de la version proforma."
-                }
-            },
             "layout": {}
         },
         "list.default": {
-            "name": "Factures",
-            "description": "Liste des factures.",
+            "name": "Financements",
+            "description": "Liste des financements.",
             "layout": {}
         }
     },

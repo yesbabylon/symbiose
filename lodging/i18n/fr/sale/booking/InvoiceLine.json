@@ -9,12 +9,12 @@
             "help": ""
         },
         "invoice_line_group_id": {
-            "label": "Groupe de facture",
-            "description": "Le groupe lié à la facture.",
+            "label": "Groupe de lignes",
+            "description": "Le groupe de la ligne.",
             "help": ""
         },
         "unit_price": {
-            "label": "Prix unitaire",
+            "label": "P.U.",
             "description": "Le prix unitaire du produit lié à la ligne.",
             "help": ""
         },
@@ -24,8 +24,8 @@
             "help": ""
         },
         "vat_rate": {
-            "label": "TVA",
-            "description": "La tva appliquée.",
+            "label": "Taux TVA",
+            "description": "Le taux de TVA appliqué.",
             "help": ""
         },
         "qty": {
@@ -42,8 +42,7 @@
             "label": "Remise",
             "description": "La remise appliquée au total.",
             "help": ""
-        }
-        
+        }        
     },
     "view": {
         "form.default": {
