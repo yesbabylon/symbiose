@@ -22,7 +22,7 @@ class Funding extends \sale\booking\Funding {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Invoice',
+                'foreign_object'    => Invoice::getType(),
                 'description'       => 'The invoice targeted by the funding, if any.',
                 'visible'           => [ ['type', '=', 'invoice'] ]
             ],

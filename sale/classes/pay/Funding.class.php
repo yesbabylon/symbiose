@@ -21,6 +21,11 @@ class Funding extends Model {
                 'store'             => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => "Optional description to identify the funding."
+            ],
+
             'payments_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Payment',
@@ -84,7 +89,7 @@ class Funding extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentDeadline',
                 'description'       => "The deadline model used for creating the funding, if any.",
-                'onupdate'          => "onupdatePaymentDeadlineId"
+                'onupdate'          => 'onupdatePaymentDeadlineId'
             ],
 
             'invoice_id' => [
@@ -146,15 +151,27 @@ class Funding extends Model {
         return $result;
     }
 
-    public static function onupdateDueAmount($orm, $oids, $values, $lang) {
-        $orm->update(self::getType(), $oids, ['name' => null], $lang);
+    public static function onupdateDueAmount($om, $oids, $values, $lang) {
+        // reset the name
+        $om->update(self::getType(), $oids, ['name' => null], $lang);
     }
 
-    public static function onupdatePaymentDeadlineId($orm, $oids, $values, $lang) {
-        $orm->write(get_called_class(), $oids, ['name' => null], $lang);
+    /**
+     * Update the description accordint to the deadline, when set.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @param  array                        $values     Associative array holding the new values to be assigned.
+     * @param  string                       $lang       Language in which multilang fields are being updated.
+     */
+    public static function onupdatePaymentDeadlineId($om, $oids, $values, $lang) {
+        $fundings = $om->read(self::getType(), $oids, ['payment_deadline_id.name'], $lang);
+        if($fundings > 0) {
+            foreach($fundings as $oid => $funding) {
+                $om->update(self::getType(), $oid, ['description' => $funding['payment_deadline_id.name']], $lang);
+            }
+        }
     }
-
-
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
@@ -217,7 +234,7 @@ class Funding extends Model {
     /**
      * Hook invoked after object deletion for performing object-specific additional operations.
      * Remove the scheduled tasks related to the deleted fundinds.
-     * 
+     *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $oids       List of objects identifiers.
      * @return void

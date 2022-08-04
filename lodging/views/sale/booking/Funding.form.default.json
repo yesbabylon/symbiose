@@ -38,6 +38,37 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "id": "section.funding",
                         "label": "General Info",
                         "rows": [

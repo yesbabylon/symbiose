@@ -3,6 +3,11 @@
     "plural": "FinancementS",
     "description": "",
     "model": {
+        "description": {
+            "label": "Description",
+            "description": "Description complémentaire pour identifier le financement.",
+            "help": ""
+        },
         "payments_ids": {
             "label": "Paiements",
             "description": "Liste de paiements.",

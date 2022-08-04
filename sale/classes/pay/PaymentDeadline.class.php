@@ -16,6 +16,7 @@ class PaymentDeadline extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Short memo of the deadline.',
+                'multilang'         => true
             ],
 
             'code' => [
