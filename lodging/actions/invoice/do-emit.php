@@ -72,6 +72,7 @@ if(is_null($invoice['funding_id'])) {
         }
         // create a new funding relating to the invoice
         $funding = [
+            'description'           => 'Facture de solde',
             'booking_id'            => $invoice['booking_id'],
             'center_office_id'      => $invoice['center_office_id'],
             'due_amount'            => $invoice['price'],

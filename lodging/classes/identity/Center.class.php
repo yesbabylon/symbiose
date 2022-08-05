@@ -138,8 +138,13 @@ class Center extends \identity\Establishment {
                 'foreign_object'    => 'lodging\sale\booking\SojournType',
                 'description'       => 'Default sojourn type of the center.',
                 'required'          => true
-            ]
+            ],
 
+            'pos_default_customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \sale\customer\Customer::getType(),
+                'description'       => 'Dafault customer for sales at POS.'
+            ]
 
         ];
     }
