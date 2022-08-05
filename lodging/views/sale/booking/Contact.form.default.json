@@ -48,7 +48,14 @@
                                             {
                                                 "type": "field",
                                                 "value": "owner_identity_id",
-                                                "width": "80%"
+                                                "width": "80%",
+                                                "widget": {
+                                                    "header":{
+                                                        "actions": {
+                                                            "ACTION.CREATE": false    
+                                                        }
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",
