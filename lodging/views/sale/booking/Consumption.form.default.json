@@ -57,7 +57,14 @@
                                                 "type": "field",
                                                 "label": "Rental Unit",
                                                 "value": "rental_unit_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false  
+                                                        }  
+                                                    }
+                                                }
                                             },
                                             {
                                                 "type": "field",
