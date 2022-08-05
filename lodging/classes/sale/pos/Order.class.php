@@ -57,10 +57,11 @@ class Order extends \sale\pos\Order {
      * Assign default customer_id based on the center that the session relates to.
      */
     public static function onupdateSessionId($om, $oids, $values, $lang) {
-        $orders = $om->read(__CLASS__, $oids, ['session_id.center_id'], $lang);
+        $orders = $om->read(__CLASS__, $oids, ['session_id.center_id.pos_default_customer_id'], $lang);
 
         if($orders > 0) {
             // #todo - store this in the settings
+            // default customers assigned to centers
             $map = [
                 28  => 4,       // LLN
                 27  => 5,       // Ovifat

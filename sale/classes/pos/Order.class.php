@@ -6,7 +6,9 @@
 */
 namespace sale\pos;
 use equal\orm\Model;
-
+/**
+ *  Point of sale Order.
+ */
 class Order extends Model {
 
     public static function getColumns() {
