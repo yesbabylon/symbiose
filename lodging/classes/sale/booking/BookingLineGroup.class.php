@@ -368,7 +368,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         if($groups > 0) {
             foreach($groups as $gid => $group) {
                 // remove any previously set assignments
-                $om->remove('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $group['age_range_assignments_ids'], true);
+                $om->delete('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $group['age_range_assignments_ids'], true);
 
                 if($group['is_sojourn']) {
                     // create default age_range assignment
@@ -391,7 +391,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
                 if(!$group['has_pack']) {
-                    $om->write(__CLASS__, $gid, ['is_locked' => false, 'pack_id' => null ]);
+                    $om->update(__CLASS__, $gid, ['is_locked' => false, 'pack_id' => null ]);
                 }
             }
         }
@@ -439,7 +439,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         foreach($groups as $gid => $group) {
             // if model of chosen product has a non-generic booking type, update the booking of the group accordingly
             if(isset($group['pack_id.product_model_id.booking_type_id']) && $group['pack_id.product_model_id.booking_type_id'] != 1) {
-                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => $group['pack_id.product_model_id.booking_type_id']]);
+                $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => $group['pack_id.product_model_id.booking_type_id']]);
             }
 
             $updated_fields = ['vat_rate' => null];

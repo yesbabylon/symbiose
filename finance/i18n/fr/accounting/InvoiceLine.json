@@ -3,14 +3,14 @@
 	"plural": "Ligne de factures",
 	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
-		"invoice_line_group_id": {
-			"label": "Groupe",
-			"description": "Groupe de lignes de facture.",
-			"help": ""
-		},
 		"invoice_id": {
 			"label": "Facture",
 			"description": "Facture à laquelle la ligne est liée.",
+			"help": ""
+		},
+		"invoice_line_group_id": {
+			"label": "Groupe",
+			"description": "Groupe de lignes de facture.",
 			"help": ""
 		},
 		"product_id": {
@@ -28,33 +28,43 @@
 			"description": "Montant HT associé à la ligne.",
 			"help": ""
 		},
-		"vat_rate": {
-			"label": "TVA %",
-			"description": "Taux de TVA à appliquer.",
-			"help": ""
-		},
-		"qty": {
-			"label": "Quantité",
-			"description": "Quantité de produit.",
-			"help": ""
-		},
-		"free_qty": {
-			"label": "Gratuités",
-			"description": "Quantité(s) offertes.",
-			"help": ""
-		},
-		"discount": {
-			"label": "Rem.%",
-			"description": "Montant total de la remise à appliquer, le cas échéant.",
-			"help": ""
-		}
+        "unit_price": {
+            "label": "P.U.",
+            "description": "Le prix unitaire du produit lié à la ligne.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Le prix de la ligne.",
+            "help": ""
+        },
+        "vat_rate": {
+            "label": "Taux TVA",
+            "description": "Le taux de TVA appliqué.",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "La quantité du produit.",
+            "help": ""
+        },
+        "free_qty": {
+            "label": "Gratuité",
+            "description": "Nombre d'unités accordées gratuitement.",
+            "help": ""
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "La remise appliquée au total.",
+            "help": ""
+        }
 	},
 	"view": {
 		"form.default": {
 			"name": "Line de facture",
 			"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 			"layout": {
-				"section.products_Section": {
+				"section.general": {
 					"label": "Détails"
 				}
 			}

@@ -33,6 +33,11 @@
             "description": "",
             "help": ""
         },
+        "center_offices_ids": {
+            "label": "Équipes de gestion",
+            "description": "",
+            "help": ""
+        },                
         "setting_values_ids": {
             "label": "Préférences",
             "description": "",
@@ -54,6 +59,9 @@
                 },
                 "section.centers": {
                     "label": "Centres"
+                },
+                "section.center_offices": {
+                    "label": "Équipes de gestion"
                 },
                 "section.preferences": {
                     "label": "Préférences"

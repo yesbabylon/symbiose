@@ -46,7 +46,6 @@ class Order extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\customer\Customer::getType(),
                 'description'       => 'The customer the order relates to.'
-                // #todo - default to organisation default customer
             ],
 
             'session_id' => [
@@ -111,6 +110,14 @@ class Order extends Model {
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
                 'description'       => 'The payments that relate to the order.'
+            ],
+
+            'order_payment_parts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\pos\OrderPaymentPart',
+                'foreign_field'     => 'order_id',
+                'ondetach'          => 'delete',
+                'description'       => 'The payments parts that relate to the order.'
             ]
 
         ];

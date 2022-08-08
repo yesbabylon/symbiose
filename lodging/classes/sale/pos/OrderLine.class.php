@@ -14,31 +14,36 @@ class OrderLine extends \sale\pos\OrderLine {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => Order::getType(),
-                'description'       => 'The operation the payment relates to.',
-                'onupdate'          => 'onupdateOrderId'
+                'description'       => 'The operation the payment relates to.'
+            ],
+
+            // we override for using .center_id.price_list_category_id
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \sale\catalog\Product::getType(),
+                'description'       => 'The product (SKU) the line relates to.',
+                'onupdate'          => 'onupdateProductId'
             ]
+
         ];
     }
 
-    public static function onupdateOrderId($om, $oids, $values, $lang) {
-        $lines = $om->read(self::getType(), $oids, [
-            'order_id.session_id.cashdesk_id.center_id.price_list_category_id',
-            'product_id'
-        ]);
+    public static function onupdateProductId($om, $oids, $values, $lang) {
+        $lines = $om->read(self::getType(), $oids, ['product_id', 'order_id.center_id.price_list_category_id']);
 
         foreach($lines as $lid => $line) {
             /*
-                Find the Price List that matches the criteria from the booking with the shortest duration
+                Find the first Price List that matches the criteria from the order with (shortest duration first)
             */
             $price_lists_ids = $om->search(
-                'sale\price\PriceList',
-                [
-                    ['price_list_category_id', '=', $line['order_id.session_id.cashdesk_id.center_id.price_list_category_id']],
+                'sale\price\PriceList', [
+                    ['price_list_category_id', '=', $line['order_id.center_id.price_list_category_id']],
                     ['date_from', '<=', time()],
                     ['date_to', '>=', time()],
                     ['status', 'in', ['published']],
                     ['is_active', '=', true]
-                ]
+                ],
+                ['duration' => 'asc']
             );
 
             $found = false;
@@ -54,10 +59,10 @@ class OrderLine extends \sale\pos\OrderLine {
                         /*
                             Assign found Price to current line
                         */
-                        $prices = $om->read(\sale\price\Price::getType(), $prices_ids, ['price', 'vat_rate']);
+                        $prices = $om->read(\sale\price\Price::getType(), $prices_ids, ['id', 'price', 'vat_rate']);
                         $price = reset($prices);
                         // set unit_price and vat_rate from found price
-                        $om->write(self::getType(), $lid, ['unit_price' => $price['price'], 'vat_rate' => $price['vat_rate']]);
+                        $om->update(self::getType(), $lid, ['price_id' => $price['id'], 'unit_price' => $price['price'], 'vat_rate' => $price['vat_rate']]);
                         $found = true;
                         break;
                     }

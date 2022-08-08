@@ -37,8 +37,30 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "type",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "due_date",
+                                                "width": "25%",
+                                                "visible": ["status", "<>", "cancelled"]
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "is_paid",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reversed_invoice_id",
+                                                "width": "33%",
+                                                "visible": ["status", "=", "cancelled"]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_ref",
+                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -67,9 +89,19 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "sections.invoice.lines",
+                        "label": "Invoice Lines",
+                        "rows": [
                             {
                                 "columns": [
                                     {
@@ -78,7 +110,44 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "sections.invoice.entries",
+                        "label": "Accounting entries",
+                        "visible": ["status", "<>", "proforma"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -87,7 +156,7 @@
                         ]
                     }
                 ]
-            }
+            }            
         ]
     }
 }

@@ -292,7 +292,7 @@ class BookingLineGroup extends Model {
 
         if($groups) {
             foreach($groups as $gid => $group) {
-                $om->write('sale\booking\Booking', $group['booking_id'], ['price' => null, 'total' => null]);
+                $om->update('sale\booking\Booking', $group['booking_id'], ['price' => null, 'total' => null]);
             }
         }
 

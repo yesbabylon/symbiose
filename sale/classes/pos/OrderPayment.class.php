@@ -58,7 +58,7 @@ class OrderPayment extends Model {
 
             'order_payment_parts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pos\OrderPaymentPart',
+                'foreign_object'    => OrderPaymentPart::getType(),
                 'foreign_field'     => 'order_payment_id',
                 'description'       => 'The parts that relate to the payement.',
                 'onupdate'          => 'onupdateOrderPaymentPartsIds'
