@@ -54,7 +54,8 @@ class Payment extends Model {
                     'bank_card'             // electronic payment with bank (or credit) card
                 ],
                 'description'       => "The method used for payment at the cashdesk.",
-                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ]
+                'visible'           => [ ['payment_origin', '=', 'cashdesk'] ],
+                'default'           => 'cash'                
             ],
 
             'operation_id' => [

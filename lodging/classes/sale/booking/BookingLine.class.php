@@ -225,7 +225,7 @@ class BookingLine extends \sale\booking\BookingLine {
         foreach($lines as $lid => $line) {
             // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
             if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 1) {
-                $om->write('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
+                $om->update('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
             }
             $qty = $line['qty'];
             if(!$line['has_own_qty']) {
@@ -248,13 +248,12 @@ class BookingLine extends \sale\booking\BookingLine {
 
             if($qty != $line['qty'] || $line['qty_accounting_method'] == 'accomodation') {
                 // make sure qty is updated in order to re-assign the rental units
-                $om->write(__CLASS__, $lid, ['qty' => $qty]);
+                $om->update(__CLASS__, $lid, ['qty' => $qty]);
             }
         }
 
         // reset computed fields related to price
         $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
-
     }
 
     public static function onupdateQtyVars($om, $oids, $values, $lang) {
@@ -658,17 +657,17 @@ class BookingLine extends \sale\booking\BookingLine {
 
         foreach($lines as $line_id => $line) {
             /*
-                Find the Price List that matches the criteria from the booking with the shortest duration
+                Find the Price List that matches the criteria from the booking (shortest duration first)
             */
             $price_lists_ids = $om->search(
-                'sale\price\PriceList',
+                \sale\price\PriceList::getType(),
                 [
                     ['price_list_category_id', '=', $line['booking_id.center_id.price_list_category_id']],
                     ['date_from', '<=', $line['booking_line_group_id.date_from']],
                     ['date_to', '>=', $line['booking_line_group_id.date_from']],
                     ['status', 'in', ['pending', 'published']]
                 ],
-                ['is_active' => 'desc']
+                ['duration' => 'asc']
             );
 
             $found = false;
@@ -685,14 +684,14 @@ class BookingLine extends \sale\booking\BookingLine {
                             Assign found Price to current line
                         */
                         $found = true;
-                        $om->write(get_called_class(), $line_id, ['price_id' => $prices_ids[0]]);
+                        $om->update(get_called_class(), $line_id, ['price_id' => $prices_ids[0]]);
 
                         // update booking depending on the status of the pricelist
                         $pricelists = $om->read('sale\price\PriceList', $price_list_id, [ 'status' ]);
                         if($pricelists > 0) {
                             $pricelist = reset($pricelists);
                             if($pricelist['status'] == 'pending') {
-                                $om->write('sale\booking\Booking', $line['booking_id'], ['is_price_tbc' => true]);
+                                $om->update('sale\booking\Booking', $line['booking_id'], ['is_price_tbc' => true]);
                             }
                         }
                         break;
@@ -700,7 +699,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 }
             }
             if(!$found) {
-                $om->write(get_called_class(), $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
+                $om->update(get_called_class(), $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
                 $date = date('Y-m-d', $line['booking_line_group_id.date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_ERROR);
             }

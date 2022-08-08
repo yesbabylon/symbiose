@@ -190,20 +190,13 @@ switch($params['variant']) {
                 'total',
                 'price'
             ],
-            'order_payments_ids' => [
+            'order_payment_parts_ids' => [
                 'id',
-                'order_id',
-                'total_due',
-                'total_paid',
-                'status',            
-                'order_payment_parts_ids' => [
-                    'id',
-                    'order_payment_id',
-                    'amount',
-                    'payment_method',
-                    'booking_id',
-                    'voucher_ref'
-                ]
+                'order_payment_id',
+                'amount',
+                'payment_method',
+                'booking_id',
+                'voucher_ref'
             ]
         ];
         break;

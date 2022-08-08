@@ -9,9 +9,6 @@ use equal\orm\Model;
 
 class Price extends Model {
     public static function getColumns() {
-        /**
-         */
-
         return [
 
             'name' => [
