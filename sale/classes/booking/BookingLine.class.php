@@ -258,7 +258,7 @@ class BookingLine extends Model {
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
         if($lines > 0) {
             $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
-            $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $booking_line_groups_ids, [], $lang);
+            $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $booking_line_groups_ids, [], $lang);
         }
     }
 

@@ -36,7 +36,7 @@
             "label": "Imprimer/Envoyer",
             "description": "",
             "icon": "print",
-            "app": "booking",            
+            "app": "booking",
             "route": "/booking/object.booking_id/invoice/object.id"
         }
     ],
@@ -82,7 +82,6 @@
                                                 "value": "type",
                                                 "width": "25%"
                                             },
-
                                             {
                                                 "type": "field",
                                                 "value": "due_date",
@@ -105,7 +104,7 @@
                                                 "type": "field",
                                                 "value": "customer_ref",
                                                 "width": "100%"
-                                            }                                            
+                                            }
                                         ]
                                     },
                                     {
@@ -129,7 +128,7 @@
                                                 "width": "33%",
                                                 "widget": {
                                                     "header": {
-                                                        "ACTION.CREATE": false    
+                                                        "ACTION.CREATE": false
                                                     }
                                                 }
                                             },

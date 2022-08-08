@@ -48,9 +48,7 @@ class Payment extends \sale\pay\Payment {
     public static function calcBookingId($om, $oids, $lang) {
         $result = [];
         $items = $om->read(__CLASS__, $oids, ['funding_id.booking_id']);
-
         foreach($items as $oid => $odata) {
-
             $result[$oid] = $odata['funding_id.booking_id'];
         }
         return $result;
