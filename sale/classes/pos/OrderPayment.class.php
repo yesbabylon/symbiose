@@ -15,7 +15,7 @@ class OrderPayment extends Model {
 
             'order_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pos\Order',
+                'foreign_object'    => Order::getType(),
                 'description'       => 'The order the line relates to.',
                 'onupdate'          => 'onupdateOrderId'
             ],
@@ -40,7 +40,8 @@ class OrderPayment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
                 'description'       => 'The funding the line relates to, if any.',
-                'visible'           => ['has_funding', '=', true]
+                'visible'           => ['has_funding', '=', true],
+                'onupdate'          => 'onupdateFundingId'
             ],
 
             /*
@@ -86,9 +87,19 @@ class OrderPayment extends Model {
     /**
      * Populate the payement with remaining orderLines.
      * This handled is mostly called upon creation and assignation to an order.
-     * 
+     *
      */
     public static function onupdateOrderId($om, $ids, $values, $lang) {
+    }
+
+    public static function onupdateFundingId($om, $ids, $values, $lang) {
+        $payments = $om->read(self::getType(), $ids, ['order_id', 'funding_id'], $lang);
+        if($payments > 0) {
+            foreach($payments as $pid => $payment) {
+                $om->update(self::getType(), $pid, ['has_funding' => ($payment['funding_id'] > 0)], $lang);
+                $om->update(Order::getType(), $payment['order_id'], ['funding_id' => $payment['funding_id']], $lang);
+            }
+        }
     }
 
     public static function calcTotalPaid($om, $ids, $lang) {

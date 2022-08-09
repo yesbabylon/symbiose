@@ -24,6 +24,16 @@
             "description": "La session de caisse à laquelle appartient la commande.",
             "help": ""
         },
+        "has_invoice": {
+            "label": "Facturé",
+			"description": "La commande a fait l'objet d'une facture.",
+			"help": ""
+        },
+        "invoice_id": {
+            "label": "Facture",
+			"description": "La facture associée à la commande.",
+			"help": ""
+        },
         "order_lines_ids": {
             "label": "Lignes de commande",
             "description": "Les lignes de commande sélectionnées pour le paiement.",

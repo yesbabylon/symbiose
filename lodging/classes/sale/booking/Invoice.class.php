@@ -5,7 +5,6 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\sale\booking;
-
 use core\setting\Setting;
 
 class Invoice extends \lodging\finance\accounting\Invoice {

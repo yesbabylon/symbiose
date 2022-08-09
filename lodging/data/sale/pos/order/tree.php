@@ -145,6 +145,8 @@ switch($params['variant']) {
             'total',
             'price',
             'total_paid',
+            'has_invoice',
+            'invoice_id',
             'session_id' => [
                 'amount',
                 'user_id',

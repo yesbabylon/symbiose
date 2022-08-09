@@ -466,7 +466,12 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.booking",
-                                                    "domain": ["type", "=", "invoice"]
+                                                    "domain": ["type", "=", "invoice"],
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]

@@ -105,6 +105,32 @@ $fields = [
             'vat_number'
         ]
     ],
+    'organisation_id' => [
+        'id',
+        'legal_name',
+        'address_street', 'address_zip', 'address_city',
+        'email',
+        'phone',
+        'fax',
+        'website',
+        'registration_number',
+        'has_vat',
+        'vat_number',
+        'signature',
+        'bank_account_iban',
+        'bank_account_bic'
+    ],
+    'center_office_id' => [
+        'code',
+        'address_street',
+        'address_city',
+        'address_zip',
+        'phone',
+        'email',
+        'signature',
+        'bank_account_iban',
+        'bank_account_bic'
+    ],    
     'booking_id' => [
         'name',
         'modified',
@@ -122,33 +148,7 @@ $fields = [
             'bank_account_iban',
             'bank_account_bic',
             'template_category_id',
-            'use_office_details',
-            'center_office_id' => [
-                'code',
-                'address_street',
-                'address_city',
-                'address_zip',
-                'phone',
-                'email',
-                'signature',
-                'bank_account_iban',
-                'bank_account_bic'
-            ],
-            'organisation_id' => [
-                'id',
-                'legal_name',
-                'address_street', 'address_zip', 'address_city',
-                'email',
-                'phone',
-                'fax',
-                'website',
-                'registration_number',
-                'has_vat',
-                'vat_number',
-                'signature',
-                'bank_account_iban',
-                'bank_account_bic'
-            ]
+            'use_office_details'
         ],
         'contacts_ids' => [
             'type',
@@ -217,10 +217,10 @@ $booking = $invoice['booking_id'];
 $img_path = 'public/assets/img/brand/Kaleo.png';
 $img_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
 
-if($booking['center_id']['organisation_id']['id'] == 2) {
+if($invoice['organisation_id']['id'] == 2) {
     $img_path = 'public/assets/img/brand/Villers.png';
 }
-else if($booking['center_id']['organisation_id']['id'] == 3) {
+else if($invoice['organisation_id']['id'] == 3) {
     $img_path = 'public/assets/img/brand/Mozaik.png';
 }
 
@@ -260,26 +260,26 @@ $values = [
     // by default, we use center contact details (overridden in case Center has a management Office, see below)
     'center_phone'          => DataFormatter::format($booking['center_id']['phone'], 'phone'),
     'center_email'          => $booking['center_id']['email'],
-    'center_signature'      => $booking['center_id']['organisation_id']['signature'],
+    'center_signature'      => $invoice['organisation_id']['signature'],
 
     'period'                => 'du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $invoice['price'],
     'total'                 => $invoice['total'],
 
-    'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
-    'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
-    'company_email'         => $booking['center_id']['organisation_id']['email'],
-    'company_phone'         => DataFormatter::format($booking['center_id']['organisation_id']['phone'], 'phone'),
-    'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
-    'company_website'       => $booking['center_id']['organisation_id']['website'],
-    'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
-    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
-    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
+    'company_name'          => $invoice['organisation_id']['legal_name'],
+    'company_address'       => sprintf("%s %s %s", $invoice['organisation_id']['address_street'], $invoice['organisation_id']['address_zip'], $invoice['organisation_id']['address_city']),
+    'company_email'         => $invoice['organisation_id']['email'],
+    'company_phone'         => DataFormatter::format($invoice['organisation_id']['phone'], 'phone'),
+    'company_fax'           => DataFormatter::format($invoice['organisation_id']['fax'], 'phone'),
+    'company_website'       => $invoice['organisation_id']['website'],
+    'company_reg_number'    => $invoice['organisation_id']['registration_number'],
+    'company_has_vat'       => $invoice['organisation_id']['has_vat'],
+    'company_vat_number'    => $invoice['organisation_id']['vat_number'],
 
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
-    'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
-    'company_bic'           => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_bic'], 'bic'),
+    'company_iban'          => DataFormatter::format($invoice['organisation_id']['bank_account_iban'], 'iban'),
+    'company_bic'           => DataFormatter::format($invoice['organisation_id']['bank_account_bic'], 'bic'),
 
     'payment_deadline'      => '',
     'payment_reference'     => '',
@@ -293,13 +293,13 @@ $values = [
 /*
     override contact and payment details with center's office, if set
 */
-if($booking['center_id']['use_office_details']) {
-    $office = $booking['center_id']['center_office_id'];
+if($booking['center_id']['use_office_details'] || !strlen($invoice['booking_id'])) {
+    $office = $invoice['center_office_id'];
     $values['company_iban'] = DataFormatter::format($office['bank_account_iban'], 'iban');
     $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
     $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
     $values['center_email'] = $office['email'];
-    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];
+    $values['center_signature'] = $invoice['organisation_id']['signature'];
 }
 
 

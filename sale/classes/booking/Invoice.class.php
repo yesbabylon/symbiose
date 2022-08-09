@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\booking;
+use core\setting\Setting;
 
 class Invoice extends \finance\accounting\Invoice {
     
@@ -23,22 +24,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Funding',
                 'description'       => 'The funding the invoice originates from, if any.'
-            ],
-
-            /*
-            'unit_price' => [
-                'type'              => 'float',
-                'usage'             => 'amount/money:4',
-                'description'       => 'Unit price of the product related to the line (from booking line).'
-            ],
-
-            'vat_rate' => [
-                'type'              => 'float',
-                'usage'             => 'amount/rate',
-                'description'       => 'VAT rate to be applied (from booking line).',
-                'default'           => 0.0
             ]
-            */
 
         ];
     }
