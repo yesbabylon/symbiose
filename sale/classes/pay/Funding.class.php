@@ -6,7 +6,7 @@
 */
 namespace sale\pay;
 use equal\orm\Model;
-use equal\cron\Scheduler;
+use core\setting\Setting;
 
 class Funding extends Model {
 
@@ -28,7 +28,7 @@ class Funding extends Model {
 
             'payments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pay\Payment',
+                'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'funding_id'
             ],
 

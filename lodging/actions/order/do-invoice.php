@@ -94,19 +94,23 @@ foreach($order['order_payments_ids'] as $payment_id => $payment) {
         $i_line = [
             'invoice_id'                => $invoice['id'],
             'product_id'                => $line['product_id'],
-            'price_id'                  => $line['price_id'],            
-            'vat_rate'                  => $line['vat_rate'],
-            'unit_price'                => $line['unit_price'],
-            'qty'                       => $line['qty'],
-            'free_qty'                  => $line['free_qty'],
-            'discount'                  => $line['discount']
+            'price_id'                  => $line['price_id']
         ];
-        InvoiceLine::create($i_line);
+        // create line and update prices (set upon creation, using price_id)
+        InvoiceLine::create($i_line)
+                    ->update([
+                        'is_paid'                   => true,
+                        'vat_rate'                  => $line['vat_rate'],
+                        'unit_price'                => $line['unit_price'],
+                        'qty'                       => $line['qty'],
+                        'free_qty'                  => $line['free_qty'],
+                        'discount'                  => $line['discount']
+                    ]);
     }
 }
 
 // emit the invoice (changing status will trigger an invoice number assignation)
-$invoice = Invoice::id($invoice['id'])->update(['status' => 'invoice'])->read(['price', 'due_date'])->first();
+$invoice = Invoice::id($invoice['id'])->update(['status' => 'invoice'])->read(['id', 'price', 'due_date'])->first();
 
 // create a new funding relating to the invoice
 $funding = Funding::create([
@@ -121,6 +125,7 @@ $funding = Funding::create([
         'issue_date'            => time(),
         'due_date'              => $invoice['due_date']
     ])
+    ->read(['id'])
     ->first();
 
 // attach order payments (order_payment_part) to the funding
@@ -128,7 +133,7 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
     OrderPaymentPart::ids($payment['order_payment_parts_ids'])->update(['funding_id' => $funding['id']]);
 }
 
-// atatch the invoice to the Order, and mark it as having an invoice
+// attach the invoice to the Order, and mark it as having an invoice
 Order::id($params['id'])->update(['has_invoice' => true, 'invoice_id' => $invoice['id']]);
 
 $context->httpResponse()

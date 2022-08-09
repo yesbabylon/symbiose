@@ -3,7 +3,17 @@
     "description": "Point of Sale order.",
     "access": {
         "groups": ["pos.default.user"]
-     },
+    },
+    "routes": [
+        {
+            "id": "item.order.ticket",
+            "label": "Ticket",
+            "description": "",
+            "icon": "list_alt",
+            "route": "/session/object.session_id/order/object.id/ticket",
+            "visible": ["status", "=", "paid"]
+        }
+    ],
     "layout": {
         "groups": [
             {

@@ -140,6 +140,7 @@ $invoice = Invoice::create([
         // allow to invoice to a "payer" partner distinct from customer
         'partner_id'        => (isset($params['partner_id']))?$params['partner_id']:$booking['customer_id']['id']
     ])
+    ->read(['id'])
     ->first();
 
 // append invoice lines base on booking lines
@@ -158,7 +159,9 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
     $invoice_line_group = InvoiceLineGroup::create([
         'name'              => $group_label,
         'invoice_id'        => $invoice['id']
-    ])->first();
+    ])
+    ->read(['id'])
+    ->first();
 
 
     if($group['has_pack'] && $group['is_locked'] ) {
@@ -175,7 +178,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
             'qty'                       => $group['qty']
         ];
 
-        InvoiceLine::create($i_line)->first();
+        InvoiceLine::create($i_line);
     }
     else {
         // create as many lines as the group booking_lines
@@ -278,7 +281,7 @@ if($fundings) {
                 'qty'                       => -1
                 // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
             ];
-            $new_line = InvoiceLine::create($i_line)->first();
+            $new_line = InvoiceLine::create($i_line)->read(['id'])->first();
             $i_lines_ids[] = $new_line['id'];
         }
         else if($funding['type'] == 'invoice') {
@@ -307,7 +310,7 @@ if($fundings) {
                         'qty'                       => -1
                         // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
                     ];
-                    $new_line = InvoiceLine::create($i_line)->first();
+                    $new_line = InvoiceLine::create($i_line)->read(['id'])->first();
                     $i_lines_ids[] = $new_line['id'];
                 }
             }
@@ -325,7 +328,7 @@ if($fundings) {
                     'qty'                       => -1
                     // #memo - we don't assign a price : downpayments will be identified as such and use a specific accounting rule
                 ];
-                $new_line = InvoiceLine::create($i_line)->first();
+                $new_line = InvoiceLine::create($i_line)->read(['id'])->first();
                 $i_lines_ids[] = $new_line['id'];
             }
         }

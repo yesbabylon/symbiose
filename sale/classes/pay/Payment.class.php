@@ -97,14 +97,13 @@ class Payment extends Model {
     public static function onupdateFundingId($om, $ids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
-        $payments = $om->read(get_called_class(), $ids, ['funding_id', 'partner_id', 'funding_id.due_amount', 'amount', 'partner_id', 'statement_line_id']);
+        $payments = $om->read(get_called_class(), $ids, ['funding_id', 'partner_id', 'funding_id.due_amount', 'amount', 'statement_line_id']);
 
         if($payments > 0) {
             $fundings_ids = [];
             foreach($payments as $pid => $payment) {
 
                 if($payment['funding_id']) {
-                    $partner_id = $payment['partner_id'];
                     // make sure a partner_id is assigned to the payment
                     if(!$payment['partner_id']) {
                         $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);

@@ -57,9 +57,9 @@ switch($params['variant']) {
             'session_id' => [
                 'id', 'name', 'status'
             ],
-            'customer_id'=>[
+            'customer_id' => [
                 'name',
-                'partner_identity_id'=>[
+                'partner_identity_id' => [
                     'vat_number'
                 ]
             ],
@@ -90,9 +90,9 @@ switch($params['variant']) {
             'total',
             'price',
             'total_paid',
-            'customer_id'=>[
+            'customer_id' => [
                 'name',
-                'partner_identity_id'=>[
+                'partner_identity_id' => [
                     'vat_number',
                     'address_city',
                     'address_zip',
@@ -140,6 +140,8 @@ switch($params['variant']) {
             'total',
             'price',
             'total_paid',
+            'has_invoice',
+            'invoice_id',
             'session_id' => [
                 'amount',
                 'user_id',
