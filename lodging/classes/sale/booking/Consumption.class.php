@@ -120,10 +120,11 @@ class Consumption extends \sale\booking\Consumption {
                     // create a new bookingLine
                     $line_id = $om->create('lodging\sale\booking\BookingLine', ['booking_id' => $consumption['booking_id'], 'booking_line_group_id' => $group_id, 'product_id' => $consumption['booking_line_id.product_id']], $lang);
                     // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
-                    $om->write('lodging\sale\booking\BookingLine', $line_id, ['qty' => $diff, 'unit_price' => $consumption['booking_line_id.unit_price'], 'vat_rate' => $consumption['booking_line_id.vat_rate']], $lang);
+                    $om->update('lodging\sale\booking\BookingLine', $line_id, ['qty' => $diff, 'unit_price' => $consumption['booking_line_id.unit_price'], 'vat_rate' => $consumption['booking_line_id.vat_rate']], $lang);
                 }
             }
         }
+        parent::onupdate($om, $oids, $values, $lang);
     }
 
     public static function onupdateBookingId($om, $oids, $values, $lang) {

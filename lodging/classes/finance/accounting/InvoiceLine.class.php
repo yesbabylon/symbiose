@@ -4,9 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace lodging\sale\booking;
+namespace lodging\finance\accounting;
 
-class InvoiceLine extends \lodging\finance\accounting\InvoiceLine {
+class InvoiceLine extends \finance\accounting\InvoiceLine {
 
     public static function getColumns() {
         return [
@@ -25,7 +25,6 @@ class InvoiceLine extends \lodging\finance\accounting\InvoiceLine {
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
                 'ondelete'          => 'cascade'
             ]
-
         ];
     }
 

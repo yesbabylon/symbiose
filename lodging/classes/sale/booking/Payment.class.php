@@ -6,7 +6,7 @@
 */
 namespace lodging\sale\booking;
 
-class Payment extends \sale\booking\Payment {
+class Payment extends \lodging\sale\pay\Payment {
 
     public static function getColumns() {
 
@@ -23,7 +23,7 @@ class Payment extends \sale\booking\Payment {
 
             'funding_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Funding',
+                'foreign_object'    => Funding::getType(),
                 'description'       => 'The funding the payement relates to, if any.',
                 'onupdate'          => 'sale\pay\Payment::onupdateFundingId'
             ]

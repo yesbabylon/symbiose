@@ -23,8 +23,8 @@
             "help": ""
         },
         "due_amount": {
-            "label": "Montant dû",
-            "description": "Montant prévu pour le financement.",
+            "label": "Montant",
+            "description": "Montant total à recevoir.",
             "help": ""
         },
         "paid_amount": {

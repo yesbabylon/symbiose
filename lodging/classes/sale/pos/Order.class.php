@@ -20,14 +20,14 @@ class Order extends \sale\pos\Order {
 
             'funding_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Funding',
+                'foreign_object'    => \lodging\sale\pay\Funding::getType(),
                 'description'       => 'The booking funding that relates to the order, if any.',
                 'visible'           => ['has_funding', '=', true]
             ],
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Invoice',
+                'foreign_object'    => \lodging\finance\accounting\Invoice::getType(),
                 'description'       => 'The invoice that relates to the order, if any.',
                 'visible'           => ['has_invoice', '=', true]
             ],
@@ -38,6 +38,12 @@ class Order extends \sale\pos\Order {
                 'description'       => 'The session the order belongs to.',
                 'onupdate'          => 'onupdateSessionId',
                 'required'          => true
+            ],
+
+            'center_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \lodging\identity\Center::getType(),
+                'description'       => "The center the desk relates to (from session)."
             ],
 
             'order_lines_ids' => [
@@ -57,25 +63,15 @@ class Order extends \sale\pos\Order {
      * Assign default customer_id based on the center that the session relates to.
      */
     public static function onupdateSessionId($om, $oids, $values, $lang) {
-        $orders = $om->read(__CLASS__, $oids, ['session_id.center_id'], $lang);
+        // retrieve default customers assigned to centers
+        $orders = $om->read(__CLASS__, $oids, ['session_id.center_id', 'session_id.center_id.pos_default_customer_id'], $lang);
 
         if($orders > 0) {
-            // #todo - store this in the settings
-            $map = [
-                28  => 4,       // LLN
-                27  => 5,       // Ovifat
-                29  => 6,       // Rochefort
-                30  => 7,       // Wanne
-                26  => 8,       // Han
-                24  => 9,       // Eupen
-                25  => 11       // Villers
-            ];
-
             foreach($orders as $oid => $order) {
-                $om->update(__CLASS__, $oid, ['customer_id' => $map[$order['session_id.center_id']] ], $lang);
+                $om->update(__CLASS__, $oid, ['center_id' => $order['session_id.center_id'], 'customer_id' => $order['session_id.center_id.pos_default_customer_id'] ], $lang);
             }
         }
         
-        $om->callonce(\sale\pos\CashdeskSession::getType(), 'onupdateCashdeskId', $oids, $values, $lang);
+        $om->callonce(parent::getType(), 'onupdateSessionId', $oids, $values, $lang);
     }
 }

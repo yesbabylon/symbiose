@@ -18,7 +18,8 @@
             "description": "La situation à un moment donné au cours d'un processus.",
             "selection": {
                 "proforma": "pro forma",
-                "invoice": "facture"
+                "invoice": "facture",
+                "cancelled": "annulée"
             },
             "help": ""
         },
@@ -80,17 +81,29 @@
             "label": "Écritures comptables",
             "description": "Lignes d'écruture comptables de la facture.",
             "help": ""
-        }
+        },
+        "reversed_invoice_id": {
+            "label": "Note de crédit",
+            "description": "La note de crédit associée à la facture.",
+            "help": ""
+        }        
     },
     "view": {
         "form.default": {
             "name": "Facture",
             "description": "Une facture est un document juridique délivré par un vendeur à un acheteur qui se rapporte à une vente et fait partie du système comptable.",
-            "layout": {}
+            "layout": {
+                "sections.invoice.lines": {
+                    "label": "Lignes de facture"
+                },
+                "sections.invoice.entries": {
+                    "label": "Écritures comptables"
+                }
+            }
         },
         "list.default": {
             "name": "Factures",
-            "description": "Cette vue est destinée à afficher les factures.",
+            "description": "Liste des factures.",
             "layout": {}
         }
     },

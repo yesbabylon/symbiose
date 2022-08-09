@@ -2,48 +2,7 @@
     "name": "Ligne de Facture",
     "plural": "Lignes de Facture",
     "description": "",
-    "model": {
-        "invoice_id": {
-            "label": "Facture",
-            "description": "Facture à laquelle la ligne est liée.",
-            "help": ""
-        },
-        "invoice_line_group_id": {
-            "label": "Groupe de lignes",
-            "description": "Le groupe de la ligne.",
-            "help": ""
-        },
-        "unit_price": {
-            "label": "P.U.",
-            "description": "Le prix unitaire du produit lié à la ligne.",
-            "help": ""
-        },
-        "price_id": {
-            "label": "Prix",
-            "description": "Le prix de la ligne.",
-            "help": ""
-        },
-        "vat_rate": {
-            "label": "Taux TVA",
-            "description": "Le taux de TVA appliqué.",
-            "help": ""
-        },
-        "qty": {
-            "label": "Quantité",
-            "description": "La quantité du produit.",
-            "help": ""
-        },
-        "free_qty": {
-            "label": "Gratuité",
-            "description": "La gratuité liée à la ligne.",
-            "help": ""
-        },
-        "discount": {
-            "label": "Remise",
-            "description": "La remise appliquée au total.",
-            "help": ""
-        }        
-    },
+    "model": {},
     "view": {
         "form.default": {
             "name": "Facture",

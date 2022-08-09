@@ -21,13 +21,12 @@ class OrderLine extends Model {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\Order',
-                'description'       => 'The operation the payment relates to.',
-                'onupdate'          => 'onupdateOrderId'
+                'description'       => 'The operation the payment relates to.'
             ],
 
             'order_payment_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\pos\OrderPayment',
+                'foreign_object'    => OrderPayment::getType(),
                 'description'       => 'The payement the line relates to.',
                 'default'           => 0,
                 'ondelete'          => 'null'
@@ -36,7 +35,14 @@ class OrderLine extends Model {
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\catalog\Product::getType(),
-                'description'       => 'The product (SKU) the line relates to.'
+                'description'       => 'The product (SKU) the line relates to.',
+                'onupdate'          => 'onupdateProductId'
+            ],
+
+            'price_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'description'       => 'The price the line relates to (retrieved by price list).'
             ],
 
             'has_funding' => [
@@ -112,7 +118,7 @@ class OrderLine extends Model {
         ];
     }
 
-    public static function onupdateOrderId($om, $oids, $values, $lang) {
+    public static function onupdateProductId($om, $oids, $values, $lang) {
         $lines = $om->read(self::getType(), $oids, ['product_id']);
 
         foreach($lines as $lid => $line) {
@@ -145,7 +151,7 @@ class OrderLine extends Model {
                         $prices = $om->read(\sale\price\Price::getType(), $prices_ids, ['price', 'vat_rate']);
                         $price = reset($prices);
                         // set unit_price and vat_rate from found price
-                        $om->write(self::getType(), $lid, ['unit_price' => $price['price'], 'vat_rate' => $price['vat_rate']]);
+                        $om->update(self::getType(), $lid, ['price_id' => $price['id'], 'unit_price' => $price['price'], 'vat_rate' => $price['vat_rate']]);
                         $found = true;
                         break;
                     }
