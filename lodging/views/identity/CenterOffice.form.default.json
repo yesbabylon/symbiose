@@ -79,6 +79,26 @@
                                                 "type": "field",
                                                 "value": "fax",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Settings",
+                        "id": "section.settings",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "Communications",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -90,7 +110,7 @@
                                 ]
                             }
                         ]
-                    },
+                    },                    
                     {
                         "label": "Centers",
                         "id": "section.centers_ids",

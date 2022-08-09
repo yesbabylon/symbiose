@@ -41,7 +41,7 @@ list($context, $orm, $cron, $auth) = [$providers['context'], $providers['orm'], 
 // emit the invoice (changing status will trigger an invoice number assignation)
 $invoice = Invoice::id($params['id'])->update(['status' => 'invoice'])->read(['booking_id', 'funding_id', 'center_office_id', 'price', 'due_date'])->first();
 
-// if invoice do not yet relate to a funding, it is a final invoice (balance)
+// if invoice do not yet relate to a funding: it is a final invoice (balance)
 if(is_null($invoice['funding_id'])) {
     try {
         // update booking status
@@ -72,7 +72,9 @@ if(is_null($invoice['funding_id'])) {
         }
         // create a new funding relating to the invoice
         $funding = [
+            'description'           => 'Facture de solde',
             'booking_id'            => $invoice['booking_id'],
+            'invoice_id'            => $invoice['id'],
             'center_office_id'      => $invoice['center_office_id'],
             'due_amount'            => $invoice['price'],
             'is_paid'               => false,

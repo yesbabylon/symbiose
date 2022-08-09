@@ -67,6 +67,11 @@
             "label": "Produit de familles",
             "description": "Produits pour les familles du centre.",
             "help": ""
+        },
+        "pos_default_customer_id": {
+            "label": "Client caisse",
+            "description": "Client à utiliser par défaut pour les points de vente (caisse).",
+            "help": ""
         }
     },
     "view": {

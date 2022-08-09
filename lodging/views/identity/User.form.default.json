@@ -3,7 +3,7 @@
     "description": "Basic form for displaying a User",
     "access": {
         "groups": ["admin"]
-     },
+    },
     "layout": {
         "groups": [
             {
@@ -84,7 +84,15 @@
                                             {
                                                 "type": "field",
                                                 "value": "groups_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -136,7 +144,8 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions": {
-                                                            "ACTION.CREATE": false
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": false
                                                         }
                                                     }
                                                 }
@@ -159,7 +168,15 @@
                                             {
                                                 "type": "field",
                                                 "value": "setting_values_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

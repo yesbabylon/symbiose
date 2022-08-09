@@ -116,7 +116,7 @@ class Funding extends \sale\pay\Funding {
                     $code_ref += $funding['order'];
                 }
             }
-            $result[$oid] = self::get_payment_reference($code_ref, $booking_code);
+            $result[$oid] = self::_get_payment_reference($code_ref, $booking_code);
         }
         return $result;
     }
@@ -125,22 +125,6 @@ class Funding extends \sale\pay\Funding {
         $orm->update(self::getType(), $oids, ['name' => null, 'amount_share' => null], $lang);
     }    
 
-    /**
-     * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
-     *
-     * Note:
-     *  format is aaa-bbbbbbb-XX
-     *  where Xaaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
-     *  as 10000000 % 97 = 76
-     *  we do (aaa * 76 + bbbbbbb) % 97
-     */
-    public static function get_payment_reference($prefix, $suffix) {
-        $a = intval($prefix);
-        $b = intval($suffix);
-        $control = ((76*$a) + $b ) % 97;
-        $control = ($control == 0)?97:$control;
-        return sprintf("%3d%04d%03d%02d", $a, $b / 1000, $b % 1000, $control);
-    }
 
     public function getUnique() {
         return [

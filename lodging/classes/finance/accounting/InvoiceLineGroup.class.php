@@ -4,9 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace lodging\sale\booking;
+namespace lodging\finance\accounting;
 
-class InvoiceLineGroup extends \lodging\finance\accounting\InvoiceLineGroup {
+class InvoiceLineGroup extends \finance\accounting\InvoiceLineGroup {
 
     public static function getColumns() {
         return [
@@ -39,7 +39,7 @@ class InvoiceLineGroup extends \lodging\finance\accounting\InvoiceLineGroup {
             foreach($groups as $gid => $group) {
                 $invoices_ids[] = $group['invoice_id'];
             }
-            $om->update(Invoice::getType(), $invoices_ids, ['price' => null, 'total' => null]);
+            $om->write(Invoice::getType(), $invoices_ids, ['price' => null, 'total' => null]);
         }        
     }
 

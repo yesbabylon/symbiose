@@ -10,7 +10,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "section.products_Section",
+                        "id": "section.general",
                         "rows": [
                             {
                                 "columns": [
