@@ -4,6 +4,7 @@
     Some Rights Reserved, Cedric Francoys, 2010-2021
     Licensed under GNU LGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader;
@@ -15,8 +16,7 @@ use core\User;
 
 list($params, $providers) = announce([
     'description'   => "Generate CSV files for pricelists, prices, product_models and products based on articles exports from Hestia.",
-    'params'        => [
-    ],
+    'params'        => [],
     'response'      => [
         'accept-origin' => '*'
     ],
@@ -28,15 +28,15 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 $file = "packages/db/actions/GiGr_R_Client.csv";
 
-$partner_file = "packages/db/actions/identity_partner_test.csv";
+// $partner_file = "packages/db/actions/identity_partner_test.csv";
 // $file = glob($path);
-if(!file_exists($file)){
+if (!file_exists($file)) {
     throw new Exception();
 }
 
-if(!file_exists($partner_file)){
-    throw new Exception();
-}
+// if(!file_exists($partner_file)){
+//     throw new Exception();
+// }
 
 // global
 global $partners, $identities, $customers;
@@ -50,66 +50,67 @@ $identities = [];       // lodging\identity\Identity
 
 $identity_next_available_id = 15035000;
 
+
 // load CustomerNatures
 $CustomerNatures = [
-'AA' => [ "id" => 1, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'AC' => [ "id" => 2, "rate_class_id"=> 4, "customer_type_id"=> 5],
-'AD' => [ "id" => 3, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'AL' => [ "id" => 4, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'AM' => [ "id" => 5, "rate_class_id"=> 4, "customer_type_id"=> 1],
-'AN' => [ "id" => 6, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'AR' => [ "id" => 7, "rate_class_id"=> 2, "customer_type_id"=> 4],
-'AS' => [ "id" => 8, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'AT' => [ "id" => 9, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'CC' => [ "id" => 10, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'CE' => [ "id" => 11, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'CH' => [ "id" => 12, "rate_class_id"=> 2, "customer_type_id"=> 4],
-'CP' => [ "id" => 13, "rate_class_id"=> 1, "customer_type_id"=> 5],
-'CS' => [ "id" => 14, "rate_class_id"=> 2, "customer_type_id"=> 4],
-'EC' => [ "id" => 15, "rate_class_id"=> 5, "customer_type_id"=> 4],
-'ED' => [ "id" => 16, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'EG' => [ "id" => 17, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'EM' => [ "id" => 18, "rate_class_id"=> 7, "customer_type_id"=> 4],
-'EN' => [ "id" => 19, "rate_class_id"=> 4, "customer_type_id"=> 3],
-'EP' => [ "id" => 20, "rate_class_id"=> 5, "customer_type_id"=> 4],
-'ES' => [ "id" => 21, "rate_class_id"=> 5, "customer_type_id"=> 4],
-'FA' => [ "id" => 22, "rate_class_id"=> 4, "customer_type_id"=> 1],
-'FM' => [ "id" => 23, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'GA' => [ "id" => 24, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'GG' => [ "id" => 25, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'HA' => [ "id" => 26, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'HE' => [ "id" => 27, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'HO' => [ "id" => 28, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'IN' => [ "id" => 30, "rate_class_id"=> 4, "customer_type_id"=> 1],
-'IP' => [ "id" => 31, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'JE' => [ "id" => 33, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'M3' => [ "id" => 34, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'MJ' => [ "id" => 35, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'MO' => [ "id" => 36, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'MU' => [ "id" => 37, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'OF' => [ "id" => 38, "rate_class_id"=> 4, "customer_type_id"=> 5],
-'OJ' => [ "id" => 39, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'PR' => [ "id" => 40, "rate_class_id"=> 4, "customer_type_id"=> 3],
-'SC' => [ "id" => 41, "rate_class_id"=> 1, "customer_type_id"=> 4],
-'SI' => [ "id" => 42, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'SJ' => [ "id" => 43, "rate_class_id"=> 1, "customer_type_id"=> 5],
-'SP' => [ "id" => 45, "rate_class_id"=> 5, "customer_type_id"=> 4],
-'TC' => [ "id" => 46, "rate_class_id"=> 3, "customer_type_id"=> 1],
-'TO' => [ "id" => 47, "rate_class_id"=> 6, "customer_type_id"=> 3],
-'UC' => [ "id" => 48, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'US' => [ "id" => 49, "rate_class_id"=> 2, "customer_type_id"=> 4],
-'PP' => [ "id" => 50, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'OT' => [ "id" => 51, "rate_class_id"=> 4, "customer_type_id"=> 3],
-'ON' => [ "id" => 52, "rate_class_id"=> 4, "customer_type_id"=> 4],
-'PM' => [ "id" => 53, "rate_class_id"=> 2, "customer_type_id"=> 4]
+    'AA' => ["id" => 1, "rate_class_id" => 3, "customer_type_id" => 1],
+    'AC' => ["id" => 2, "rate_class_id" => 4, "customer_type_id" => 5],
+    'AD' => ["id" => 3, "rate_class_id" => 3, "customer_type_id" => 1],
+    'AL' => ["id" => 4, "rate_class_id" => 1, "customer_type_id" => 4],
+    'AM' => ["id" => 5, "rate_class_id" => 4, "customer_type_id" => 1],
+    'AN' => ["id" => 6, "rate_class_id" => 3, "customer_type_id" => 1],
+    'AR' => ["id" => 7, "rate_class_id" => 2, "customer_type_id" => 4],
+    'AS' => ["id" => 8, "rate_class_id" => 4, "customer_type_id" => 4],
+    'AT' => ["id" => 9, "rate_class_id" => 3, "customer_type_id" => 1],
+    'CC' => ["id" => 10, "rate_class_id" => 4, "customer_type_id" => 4],
+    'CE' => ["id" => 11, "rate_class_id" => 1, "customer_type_id" => 4],
+    'CH' => ["id" => 12, "rate_class_id" => 2, "customer_type_id" => 4],
+    'CP' => ["id" => 13, "rate_class_id" => 1, "customer_type_id" => 5],
+    'CS' => ["id" => 14, "rate_class_id" => 2, "customer_type_id" => 4],
+    'EC' => ["id" => 15, "rate_class_id" => 5, "customer_type_id" => 4],
+    'ED' => ["id" => 16, "rate_class_id" => 1, "customer_type_id" => 4],
+    'EG' => ["id" => 17, "rate_class_id" => 4, "customer_type_id" => 4],
+    'EM' => ["id" => 18, "rate_class_id" => 7, "customer_type_id" => 4],
+    'EN' => ["id" => 19, "rate_class_id" => 4, "customer_type_id" => 3],
+    'EP' => ["id" => 20, "rate_class_id" => 5, "customer_type_id" => 4],
+    'ES' => ["id" => 21, "rate_class_id" => 5, "customer_type_id" => 4],
+    'FA' => ["id" => 22, "rate_class_id" => 4, "customer_type_id" => 1],
+    'FM' => ["id" => 23, "rate_class_id" => 4, "customer_type_id" => 4],
+    'GA' => ["id" => 24, "rate_class_id" => 3, "customer_type_id" => 1],
+    'GG' => ["id" => 25, "rate_class_id" => 3, "customer_type_id" => 1],
+    'HA' => ["id" => 26, "rate_class_id" => 1, "customer_type_id" => 4],
+    'HE' => ["id" => 27, "rate_class_id" => 4, "customer_type_id" => 4],
+    'HO' => ["id" => 28, "rate_class_id" => 1, "customer_type_id" => 4],
+    'IN' => ["id" => 30, "rate_class_id" => 4, "customer_type_id" => 1],
+    'IP' => ["id" => 31, "rate_class_id" => 1, "customer_type_id" => 4],
+    'JE' => ["id" => 33, "rate_class_id" => 1, "customer_type_id" => 4],
+    'M3' => ["id" => 34, "rate_class_id" => 4, "customer_type_id" => 4],
+    'MJ' => ["id" => 35, "rate_class_id" => 1, "customer_type_id" => 4],
+    'MO' => ["id" => 36, "rate_class_id" => 1, "customer_type_id" => 4],
+    'MU' => ["id" => 37, "rate_class_id" => 1, "customer_type_id" => 4],
+    'OF' => ["id" => 38, "rate_class_id" => 4, "customer_type_id" => 5],
+    'OJ' => ["id" => 39, "rate_class_id" => 1, "customer_type_id" => 4],
+    'PR' => ["id" => 40, "rate_class_id" => 4, "customer_type_id" => 3],
+    'SC' => ["id" => 41, "rate_class_id" => 1, "customer_type_id" => 4],
+    'SI' => ["id" => 42, "rate_class_id" => 4, "customer_type_id" => 4],
+    'SJ' => ["id" => 43, "rate_class_id" => 1, "customer_type_id" => 5],
+    'SP' => ["id" => 45, "rate_class_id" => 5, "customer_type_id" => 4],
+    'TC' => ["id" => 46, "rate_class_id" => 3, "customer_type_id" => 1],
+    'TO' => ["id" => 47, "rate_class_id" => 6, "customer_type_id" => 3],
+    'UC' => ["id" => 48, "rate_class_id" => 4, "customer_type_id" => 4],
+    'US' => ["id" => 49, "rate_class_id" => 2, "customer_type_id" => 4],
+    'PP' => ["id" => 50, "rate_class_id" => 4, "customer_type_id" => 4],
+    'OT' => ["id" => 51, "rate_class_id" => 4, "customer_type_id" => 3],
+    'ON' => ["id" => 52, "rate_class_id" => 4, "customer_type_id" => 4],
+    'PM' => ["id" => 53, "rate_class_id" => 2, "customer_type_id" => 4]
 ];
 
 
 
 $customer_types = [
-    1 => 'I' ,
+    1 => 'I',
     2 => 'SE',
-    3 => 'C' ,
+    3 => 'C',
     4 => 'NP',
     5 => 'PA'
 ];
@@ -122,35 +123,34 @@ $languages = [
 
 
 
-$data = loadXlsFile($file);
+$data = loadCsvFile($file);
 
 
 $date_last_import = strtotime('2021-08-03');
 
 // main loop
-foreach($data as $row) {
-
+foreach ($data as $row) {
     $date_created = adapt_date($row['Date_Creation']);
     $date_modif = adapt_date($row['Date_Modif']);
 
-    // if( !($date_created > $date_last_import || intval($row['Cle_Client']) > 15012971) || $row['Code_Motif_NPU'] != 0) {
-    //     continue;
-    // }
+    if (!($date_created > $date_last_import || intval($row['Cle_Client']) > 15012971) || $row['Code_Motif_NPU'] != 0) {
+        continue;
+    }
 
     // entry is actually a Contact
-    if(strlen($row['Societe_Client']) > 0) {
+    if (strlen($row['Societe_Client']) > 0) {
 
         // Create the used properties of the customer
-        $nature = isset($CustomerNatures[$row['Nature_Client']])?$row['Nature_Client']:'IN';
+        $nature = isset($CustomerNatures[$row['Nature_Client']]) ? $row['Nature_Client'] : 'IN';
         $nature_id = $CustomerNatures[$nature]['id'];
         $customer_type_id = $CustomerNatures[$nature]['customer_type_id'];
         $type = $customer_types[$customer_type_id];
         $rate_class_id = $CustomerNatures[$nature]['rate_class_id'];
-        $has_vat = isset($row['Libre3'])?1:0;
+        $has_vat = isset($row['Libre3']) ? 1 : 0;
         $lang = strtolower($row['Langue_Client']);
-        $lang_id = isset($languages[$lang])?$languages[$lang]:1;
-        $phone = (strlen($row['Tel_Mob_Payeur']))?$row['Tel_Mob_Payeur']:$row['Tel_Payeur'];
-
+        $lang_id = isset($languages[$lang]) ? $languages[$lang] : 1;
+        $phone = (strlen($row['Tel_Mob_Payeur'])) ? $row['Tel_Mob_Payeur'] : $row['Tel_Payeur'];
+        $email_payeur = str_replace("\r\n", "", $row['Email1_Payeur']);
         // Create Client (Company)
         $customer_identity_id = create_identity(
             $type,
@@ -161,7 +161,7 @@ foreach($data as $row) {
             '',
             '',
             $phone,
-            $row['EMail1_Payeur'],
+            $email_payeur,
             $row['Adr3_Client'],
             $row['CP_Client'],
             $row['Ville_Client'],
@@ -180,30 +180,29 @@ foreach($data as $row) {
         $title = 'Mr';
         $gender = 'M';
 
-        if(in_array($row['Titre_Client'], ['Fam', 'FAM.' , 'M.', 'M', 'Her', 'Herr' ])) {
+        if (in_array($row['Titre_Client'], ['Fam', 'FAM.', 'M.', 'M', 'Her', 'Herr'])) {
             $title = 'Mr';
             $gender = 'M';
-        }
-        else if(in_array($row['Titre_Client'], ['Mme', 'Mevr', 'M&me'])) {
+        } else if (in_array($row['Titre_Client'], ['Mme', 'Mevr', 'M&me'])) {
             $title = 'Mrs';
             $gender = 'F';
         }
 
-        $phone = (strlen($row['Tel_Mob_Client']))?$row['Tel_Mob_Client']:$row['Tel_Client'];
-
+        $phone = (strlen($row['Tel_Mob_Client'])) ? $row['Tel_Mob_Client'] : $row['Tel_Client'];
+        $email = str_replace("\r\n", "", $row['Email1_Client']);
         // Create the contact of the Customer & checks if it does really exist
-        if(isset($row['Prenom_Client']) || isset($row['Nom_Famille_Client'])){
+        if (strlen($row['Prenom_Client']) > 0 || strlen($row['Nom_Famille_Client']) > 0) {
 
             $contact_identity_id = create_identity(
                 'I',
                 1,
-                $row['Prenom_Client'].' '.$row['Nom_Famille_Client'],
+                $row['Prenom_Client'] . ' ' . $row['Nom_Famille_Client'],
                 $row['Prenom_Client'],
                 $row['Nom_Famille_Client'],
                 $gender,
                 $title,
                 $phone,
-                $row['Email1_Client'],
+                $email,
                 '',
                 '',
                 '',
@@ -221,135 +220,139 @@ foreach($data as $row) {
     // entry is a regular customer
     else {
 
-        $nature = isset($CustomerNatures[$row['Nature_Client']])?$row['Nature_Client']:'IN';
+        $nature = isset($CustomerNatures[$row['Nature_Client']]) ? $row['Nature_Client'] : 'IN';
         $nature_id = $CustomerNatures[$nature]['id'];
         $customer_type_id = $CustomerNatures[$nature]['customer_type_id'];
         $type = $customer_types[$customer_type_id];
         $rate_class_id = $CustomerNatures[$nature]['rate_class_id'];
-        $has_vat = isset($row['Libre3'])?1:0;
+        $has_vat = isset($row['Libre3']) ? 1 : 0;
         $lang = strtolower($row['Langue_Client']);
-        $lang_id = isset($languages[$lang])?$languages[$lang]:1;
-        $phone = (strlen($row['Tel_Mob_Client']))?$row['Tel_Mob_Client']:$row['Tel_Client'];
+        $lang_id = isset($languages[$lang]) ? $languages[$lang] : 1;
+        $phone = (strlen($row['Tel_Mob_Client'])) ? $row['Tel_Mob_Client'] : $row['Tel_Client'];
+        $email = str_replace("\r\n", "", $row['Email1_Client']);
 
         $firstname = $row['Prenom_Client'];
         $lastname = $row['Nom_Client'];
         $title = 'Mr';
         $gender = 'M';
 
-        if(in_array($row['Titre_Client'], ['Fam', 'FAM.' , 'M.', 'M', 'Her', 'Herr' ])) {
+        if (in_array($row['Titre_Client'], ['Fam', 'FAM.', 'M.', 'M', 'Her', 'Herr'])) {
             $title = 'Mr';
             $gender = 'M';
-        }
-        else if(in_array($row['Titre_Client'], ['Mme', 'Mevr', 'M&me'])) {
+        } else if (in_array($row['Titre_Client'], ['Mme', 'Mevr', 'M&me'])) {
             $title = 'Mrs';
             $gender = 'F';
         }
 
-        $phone = (strlen($row['Tel_Mob_Client']))?$row['Tel_Mob_Client']:$row['Tel_Client'];
+        $phone = (strlen($row['Tel_Mob_Client'])) ? $row['Tel_Mob_Client'] : $row['Tel_Client'];
 
-        $customer_identity_id = create_identity(
-            $type,
-            $customer_type_id,
-            $row['Prenom_Client'].' '.$row['Nom_Famille_Client'],
-            $row['Prenom_Client'],
-            $row['Nom_Famille_Client'],
-            $gender,
-            $title,
-            $phone,
-            $row['Email1_Client'],
-            $row['Adr3_Client'],
-            $row['CP_Client'],
-            $row['Ville_Client'],
-            $row['Pays_Client'],
-            '',
-            false,
-            '',
-            $lang_id
-        );
+        if (strlen($row['Prenom_Client']) > 0 || strlen($row['Nom_Famille_Client']) > 0 || strlen($row['Nom_Client']) > 0) {
 
-
-        create_customer(1, $customer_identity_id, $nature_id, $customer_type_id, $rate_class_id, 'customer', $lang_id);
+            $customer_identity_id = create_identity(
+                $type,
+                $customer_type_id,
+                $row['Prenom_Client'] . ' ' . $row['Nom_Famille_Client'],
+                $row['Prenom_Client'],
+                $row['Nom_Famille_Client'],
+                $gender,
+                $title,
+                $phone,
+                $email,
+                $row['Adr3_Client'],
+                $row['CP_Client'],
+                $row['Ville_Client'],
+                $row['Pays_Client'],
+                '',
+                false,
+                '',
+                $lang_id
+            );
+            create_customer(1, $customer_identity_id, $nature_id, $customer_type_id, $rate_class_id, 'customer', $lang_id);
+        }
     }
-
 }
 
 
-output_to_file('identities.csv', $identities);
-output_to_file('partners.csv', $partners);
-output_to_file('customers.csv', $customers);
+output_to_file("lodging_identity_Identity.json", "lodging\\identity\\Identity", $identities);
+output_to_file("identity_Partner.json", "identity\\Partner", $partners);
+output_to_file("sale_customer_Customer.json", "sale\\Customer", $customers);
 
 
 
-function output_to_file($filename, $array) {
+function output_to_file($filename, $object, $array)
+{
 
-    $output = $filename;
-    $fp = fopen($output, 'w');
-    
-    $first = reset($array);
-    
-    $columns = array_keys($first);
-    // output BOM
-    fputs($fp, chr(0xEF) . chr(0xBB) . chr(0xBF) );
-    fputcsv($fp, $columns, ';');
-    foreach($array as $row) {
-        fputcsv($fp, $row, ';');
-    }
-    fclose($fp);
 
+    // $output = $filename;
+    // $fp = fopen($output, 'w');
+
+    $json_var = [[
+        "name" => $object,
+        "lang" => "fr",
+        "data" => $array
+    ]];
+
+
+    file_put_contents($filename, json_encode($json_var));
+
+    // $first = reset($array);
+
+    // $columns = array_keys($first);
+    // // output BOM
+    // fputs($fp, chr(0xEF) . chr(0xBB) . chr(0xBF) );
+    // fputcsv($fp, $columns, ';');
+    // foreach($array as $row) {
+    //     fputcsv($fp, $row, ';');
+    // }
+    // fclose($fp);
 }
-
-
 
 
 $context->httpResponse()
-        ->status(204)
-        
-        // ->body(['result' => [
-        //     'partners'      => $partners,
-        //     'identities'    => $identities
-        // ]])
-        
-        ->send();
+    ->status(204)
+
+    // ->body(['result' => [
+    //     'partners'      => $partners,
+    //     'identities'    => $identities
+    // ]])
+
+    ->send();
 
 
-function loadXlsFile($file='') {
+function loadCsvFile($file = '')
+{
 
-    $result = [];
-    $filetype = IOFactory::identify($file);
-    /** @var Reader */
-    $reader = IOFactory::createReader($filetype);
-    $spreadsheet = $reader->load($file);
-    $worksheetData = $reader->listWorksheetInfo($file);
-
-    foreach ($worksheetData as $worksheet) {
-
-        $sheetname = $worksheet['worksheetName'];
-
-        $reader->setLoadSheetsOnly($sheetname);
-        $spreadsheet = $reader->load($file);
-
-        $worksheet = $spreadsheet->getActiveSheet();
-        $data = $worksheet->toArray();
-
-        $header = array_shift($data);
-
-        foreach($data as $raw) {
-            $line = array_combine($header, $raw);
-            $result[] = $line;
+    $header = [];
+    $rows = [];
+    $row = 1;
+    if (($handle = fopen($file, "r")) !== FALSE) {
+        while (($data = fgetcsv($handle, 30000, ";")) !== FALSE) {
+            if ($row == 1) {
+                $data[0] = "Cle_Client";
+                $header[] = $data;
+            } else {
+                $lines = array_combine($header[0], $data);
+                $rows[] = $lines;
+            }
+            $row++;
         }
+
+        fclose($handle);
+        return $rows;
     }
-    return $result;
 }
 
-function adapt_date($raw_date)  {
+function adapt_date($raw_date)
+{
     $date_from_array = date_parse($raw_date);
-    if($date_from_array) {
+    if ($date_from_array) {
         return strtotime(sprintf("%4d-%02d-%02d", intval($date_from_array['year']), intval($date_from_array['month']), intval($date_from_array['day'])));
     }
-    return strtotime('2020-01-03');    
+    return strtotime('2020-01-03');
 }
 
-function create_identity($type, $type_id, $legal_name, $firstname, $lastname, $gender, $title, $phone, $email, $address_street, $address_zip, $address_city, $address_country, $vat_number, $has_vat, $website, $lang_id)  {
+function create_identity($type, $type_id, $legal_name, $firstname, $lastname, $gender, $title, $phone, $email, $address_street, $address_zip, $address_city, $address_country, $vat_number, $has_vat, $website, $lang_id)
+{
     global $identities, $identity_next_available_id;
 
     $identity = [
@@ -380,13 +383,14 @@ function create_identity($type, $type_id, $legal_name, $firstname, $lastname, $g
     return $identity_next_available_id;
 }
 
-function create_partner($owner_identity_id, $partner_identity_id,  $relationship, $lang_id, $partner_position)  {
+function create_partner($owner_identity_id, $partner_identity_id,  $relationship, $lang_id, $partner_position)
+{
     global $partners;
 
     // $customer_nature_id, $customer_type_id, $rate_class_id,
 
-    foreach($partners as $pid => $partner) {
-        if($partner['owner_identity_id'] == $owner_identity_id && $partner['partner_identity_id'] && $partner['relationship'] == $relationship) {
+    foreach ($partners as $pid => $partner) {
+        if ($partner['owner_identity_id'] == $owner_identity_id && $partner['partner_identity_id'] && $partner['relationship'] == $relationship) {
             return $pid;
         }
     }
@@ -404,11 +408,12 @@ function create_partner($owner_identity_id, $partner_identity_id,  $relationship
     return $partner;
 }
 
-function create_customer($owner_identity_id, $partner_identity_id, $customer_nature_id, $customer_type_id, $rate_class_id, $relationship, $lang_id)  {
+function create_customer($owner_identity_id, $partner_identity_id, $customer_nature_id, $customer_type_id, $rate_class_id, $relationship, $lang_id)
+{
     global $customers;
 
-    foreach($customers as $pid => $customer) {
-        if( $customer['partner_identity_id'] == $partner_identity_id) {
+    foreach ($customers as $pid => $customer) {
+        if ($customer['partner_identity_id'] == $partner_identity_id) {
             return $pid;
         }
     }
@@ -428,3 +433,31 @@ function create_customer($owner_identity_id, $partner_identity_id, $customer_nat
     return $customers;
 }
 
+
+
+
+// $result = [];
+    // $filetype = IOFactory::identify($file);
+    // /** @var Reader */
+    // $reader = IOFactory::createReader($filetype);
+    // $spreadsheet = $reader->load($file);
+    // $worksheetData = $reader->listWorksheetInfo($file);
+
+    // foreach ($worksheetData as $worksheet) {
+
+    //     $sheetname = $worksheet['worksheetName'];
+
+    //     $reader->setLoadSheetsOnly($sheetname);
+    //     $spreadsheet = $reader->load($file);
+
+    //     $worksheet = $spreadsheet->getActiveSheet();
+    //     $data = $worksheet->toArray();
+
+    //     $header = array_shift($data);
+
+    //     foreach($data as $raw) {
+    //         $line = array_combine($header, $raw);
+    //         $result[] = $line;
+    //     }
+    // }
+    // return $result;
