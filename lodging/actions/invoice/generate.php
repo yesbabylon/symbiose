@@ -107,6 +107,7 @@ $errors = [];
 // check customer details completeness
 $data = eQual::run('do', 'lodging_booking_check-customer', ['id' => $booking['id']]);
 if(is_array($data) && count($data)) {
+    // response array is not empty: missing customer details
     $errors[] = 'uncomplete_customer';
 }
 
@@ -141,7 +142,7 @@ $invoice = Invoice::create([
     ])
     ->first();
 
-
+// append invoice lines base on booking lines
 foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
     $group_label = $group['name'].' : ';
 

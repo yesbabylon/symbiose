@@ -25,6 +25,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'The funding the invoice originates from, if any.'
             ],
 
+            /*
             'unit_price' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
@@ -37,6 +38,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'VAT rate to be applied (from booking line).',
                 'default'           => 0.0
             ]
+            */
 
         ];
     }

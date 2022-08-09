@@ -226,7 +226,6 @@ class Funding extends Model {
                 );
             }
         }
-
         parent::onupdate($om, $oids, $values, $lang);
     }
 
@@ -246,6 +245,23 @@ class Funding extends Model {
             // remove any previsously scheduled task
             $cron->cancel("booking.funding.overdue.{$fid}");
         }
+        parent::ondelete($om, $oids);
     }
 
+    /**
+     * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
+     *
+     * Note:
+     *  format is aaa-bbbbbbb-XX
+     *  where Xaaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
+     *  as 10000000 % 97 = 76
+     *  we do (aaa * 76 + bbbbbbb) % 97
+     */
+    public static function _get_payment_reference($prefix, $suffix) {
+        $a = intval($prefix);
+        $b = intval($suffix);
+        $control = ((76*$a) + $b ) % 97;
+        $control = ($control == 0)?97:$control;
+        return sprintf("%3d%04d%03d%02d", $a, $b / 1000, $b % 1000, $control);
+    }
 }

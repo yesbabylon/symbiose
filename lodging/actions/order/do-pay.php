@@ -6,9 +6,6 @@
 */
 
 use lodging\sale\pos\Order;
-use lodging\sale\booking\BookingLineGroup;
-use lodging\sale\booking\BookingLine;
-
 
 list($params, $providers) = announce([
     'description'   => "This will mark the order as paid, and updated fundings and bookings involved in order lines, if any.",
@@ -28,7 +25,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']     
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
@@ -36,7 +33,8 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 // read order object
 $order = Order::id($params['id'])
                     ->read([
-                        'id', 'name', 'status',                            
+                        'id', 'name', 'status',
+                        'has_invoice', 'invoice_id',
                         'order_payments_ids' => [
                             'order_lines_ids' => [
                                 'has_funding','funding_id',
@@ -53,12 +51,12 @@ $order = Order::id($params['id'])
                         ]
                     ])
                     ->first();
-                  
+
 if(!$order) {
     throw new Exception("unknown_order", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-// booking already cancelled
+// order already paid
 if($order['status'] == 'paid') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
@@ -67,6 +65,8 @@ if($order['status'] == 'paid') {
 
 // update the funding_id related to the paymentPart, if any
 // loop through order lines to check for payment method  voucher/booking_id if any
+$has_booking = false;
+$has_funding = false;
 foreach($order['order_payments_ids'] as $pid => $payment) {
     // find out if the payment relates to a booking
     $booking_id = 0;
@@ -77,7 +77,8 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
         }
     }
     if($booking_id) {
-        /* 
+        $has_booking = true;
+        /*
             add lines as extra consumption on the targeted booking
         */
 
@@ -92,7 +93,7 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
             $group_id = $new_group['id'];
         }
 
-        // create booking lines according to order lines
+        // create booking lines according to order lines        
         foreach($payment['order_lines_ids'] as $lid => $line) {
             $new_line = BookingLine::create(['booking_id' => $booking_id, 'booking_line_group_id' => $group_id, 'product_id' => $line['product_id']])->first();
             // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
@@ -101,10 +102,24 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
                         ->update(['unit_price' => $line['unit_price'], 'vat_rate' => $line['vat_rate']]);
         }
     }
+    else {
+        // check for fundings
+        foreach($payment['order_lines_ids'] as $lid => $line) {
+            if($line['has_funding']) {
+                $has_funding = true;
+            }
+        }        
+    }
 }
 
-// close the order : set status to 'paid'
+
+// mark the order as paid
 Order::id($params['id'])->update(['status' => 'paid']);
+
+// customer requested an invoice: generate an invoice for the order (only if payment do not relate to a funding)
+if(!$has_funding && $order['has_invoice']) {
+    eQual::run('do', 'lodging_order_do-invoice', ['id' => $params['id']]);
+}
 
 $context->httpResponse()
         ->status(204)

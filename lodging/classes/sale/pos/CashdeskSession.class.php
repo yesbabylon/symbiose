@@ -36,7 +36,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
 
             'center_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\identity\Center',
+                'foreign_object'    => \lodging\identity\Center::getType(),
                 'description'       => "The center the desk relates to (from cashdesk)."
             ]
 

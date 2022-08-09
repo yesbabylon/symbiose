@@ -71,11 +71,14 @@
     },
     "view": {
         "form.default": {
-            "name": "Centre",
-            "description": "Un centre est un établissement d'hébergement offrant un hébergement de nuit et détenant un ou plusieurs logements locatifs.",
+            "name": "Équipe de gestion",
+            "description": "Fiche de base.",
             "layout": {
                 "section.general": {
                     "label": "Général"
+                },
+                "section.settings": {
+                    "label": "Paramètres"
                 },
                 "section.centers_ids": {
                     "label": "Centres"
@@ -86,8 +89,8 @@
             }
         },
         "list.default": {
-            "name": "Centres",
-            "description": "Liste des centres.",
+            "name": "Équipes de gestion",
+            "description": "Liste des équipes de gestion.",
             "layout": {}
         }
     },

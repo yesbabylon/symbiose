@@ -212,6 +212,16 @@
                                                 "width": "100%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "pos_default_customer_id",
+                                                "width": "100%"
+                                            }
+                                        ]
                                     }
                                 ]
                             }

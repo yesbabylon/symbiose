@@ -55,6 +55,13 @@ class InvoiceLine extends Model {
                 'required'          => true
             ],
 
+            'price_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \sale\price\Price::getType(),
+                'description'       => 'The price the line relates to (assigned at line creation).',
+                'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
+            ],
+
             'unit_price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -62,13 +69,6 @@ class InvoiceLine extends Model {
                 'description'       => 'Unit price of the product related to the line.',
                 'function'          => 'finance\accounting\InvoiceLine::calcUnitPrice',
                 'store'             => true
-            ],
-
-            'price_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => \sale\price\Price::getType(),
-                'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
             ],
 
             'vat_rate' => [
@@ -203,50 +203,40 @@ class InvoiceLine extends Model {
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
-        // reset parent invoice price and total
-        $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
-        if($lines > 0)  {
-            foreach($lines as $oid => $line) {
-                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
-            }
-        }
+        $om->update(get_called_class(), $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['price' => null]);
-        // reset parent invoice total
-        $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
-        if($lines > 0)  {
-            foreach($lines as $oid => $line) {
-                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null]);
-            }
-        }
+        $om->update(get_called_class(), $oids, ['price' => null]);
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
     }
 
     public static function onupdateQty($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
+        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
     }
 
     public static function onupdateFreeQty($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
-        // reset parent invoice price and total
-        $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
-        if($lines > 0)  {
-            foreach($lines as $oid => $line) {
-                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
-            }
-        }
+        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
     }
 
     public static function onupdateDiscount($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['price' => null, 'total' => null]);
-        // reset parent invoice price and total
+        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+    }
+
+    public static function _resetInvoice($om, $oids, $values, $lang) {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
-            foreach($lines as $oid => $line) {
-                $om->write('finance\accounting\Invoice', $line['invoice_id'], ['price' => null, 'total' => null]);
-            }
+            $invoices_ids = array_map(function($oid) use($lines) {return $lines[$oid]['invoice_id'];}, $lines);
+            $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
         }
     }
 
