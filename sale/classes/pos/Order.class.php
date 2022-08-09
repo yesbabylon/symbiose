@@ -56,6 +56,20 @@ class Order extends Model {
                 'required'          => true
             ],
 
+            'has_funding' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the order relate to a booking funding?',
+                'default'           => false
+            ],
+
+            'funding_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \sale\pay\Funding::getType(),
+                'description'       => 'The booking funding that relates to the order, if any.',
+                'visible'           => ['has_funding', '=', true],
+                'onupdate'          => 'onupdateFundingId'
+            ],
+
             'has_invoice' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the order relate to an invoice?',
@@ -129,6 +143,15 @@ class Order extends Model {
 
     public static function onupdateOrderLinesIds($om, $ids, $values, $lang) {
         $om->write(get_called_class(), $ids, ['price' => null, 'total' => null], $lang);
+    }
+
+    public static function onupdateFundingId($om, $ids, $values, $lang) {
+        $orders = $om->read(self::getType(), $ids, ['funding_id'], $lang);
+        if($orders > 0) {
+            foreach($orders as $oid => $order) {
+                $om->update(self::getType(), $oid, ['has_funding' => ($order['funding_id'] > 0)], $lang);
+            }
+        }
     }
 
     public static function calcName($om, $ids, $lang) {

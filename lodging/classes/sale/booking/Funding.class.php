@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\sale\booking;
+use core\setting\Setting;
 
 class Funding extends \lodging\sale\pay\Funding {
 

@@ -5,7 +5,6 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\finance\accounting;
-
 use core\setting\Setting;
 
 class Invoice extends \finance\accounting\Invoice {
@@ -105,11 +104,13 @@ class Invoice extends \finance\accounting\Invoice {
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) { 
-        // Generate an invoice number and set emission date
-        $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
-        // force immediate recomuting
-        $om->read(__CLASS__, $oids, ['number'], $lang);
-        // generate accounting entries
-        $om->callonce(\finance\accounting\Invoice::getType(), '_generateAccountingEntries', $oids, [], $lang);
+        if(isset($values['status']) && $values['status'] == 'invoice') {
+            // reset invoice number and set emission date
+            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
+            // generate an invoice number (force immediate recomuting)
+            $om->read(__CLASS__, $oids, ['number'], $lang);
+            // generate accounting entries
+            $om->callonce(\finance\accounting\Invoice::getType(), '_generateAccountingEntries', $oids, [], $lang);
+        }
     }
 }

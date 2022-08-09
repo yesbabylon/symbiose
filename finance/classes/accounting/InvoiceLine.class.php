@@ -235,7 +235,7 @@ class InvoiceLine extends Model {
     public static function _resetInvoice($om, $oids, $values, $lang) {
         $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
         if($lines > 0)  {
-            $invoices_ids = array_map(function($oid) use($lines) {return $lines[$oid]['invoice_id'];}, $lines);
+            $invoices_ids = array_map(function($a) {return $a['invoice_id'];}, $lines);
             $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
         }
     }

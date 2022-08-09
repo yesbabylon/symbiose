@@ -59,12 +59,12 @@
             "help": ""
         },
         "total": {
-            "label": "Total",
+            "label": "Total HTVA",
             "description": "",
             "help": ""
         },
         "price": {
-            "label": "Prix",
+            "label": "Prix TVAC",
             "description": "",
             "help": ""
         }

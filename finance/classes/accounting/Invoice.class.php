@@ -68,10 +68,12 @@ class Invoice extends Model {
             ],
 
             'is_paid' => [
-                'type'              => 'boolean',
-                'description'       => "Flag to mark the invoice as fully paid.",
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => "Indicator of the invoice payment status.",
                 'visible'           => ['status', '=', 'invoice'],
-                'default'           => false
+                'function'          => 'calcIsPaid',
+                'store'             => true
             ],
 
             'reversed_invoice_id' => [
@@ -159,6 +161,12 @@ class Invoice extends Model {
                 'ondetach'          => 'delete'
             ],
 
+            'fundings_ids' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\pay\Funding',
+                'description'       => 'Fundings related to the invoice (should be max. 1).'
+            ],
+
             'payment_terms_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentTerms',
@@ -171,10 +179,26 @@ class Invoice extends Model {
                 'description'       => "Deadline before which the funding is expected.",
                 'function'          => 'calcDueDate',
                 'store'             => true
-            ],
-
+            ]
 
         ];
+    }
+
+    public static function calcIsPaid($om, $oids, $lang) {
+        $result = [];
+        $invoices = $om->read(get_called_class(), $oids, ['fundings_ids.is_paid'], $lang);
+        if($invoices > 0) {
+            foreach($invoices as $oid => $invoice) {
+                $result[$oid] = true;
+                foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
+                    if(!$funding['is_paid']) {
+                        $result[$oid] = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
 
@@ -284,18 +308,17 @@ class Invoice extends Model {
         $om->update(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
-
-    public static function onupdateStatus($om, $oids, $values, $lang) { 
-        if(isset($values['sattus']) && $values['sattus'] == 'invoice') {
+    public static function onupdateStatus($om, $oids, $values, $lang) {
+        if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
+            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
             // generate an invoice number (force immediate recomuting)
             $om->read(__CLASS__, $oids, ['number'], $lang);
             // generate accounting entries
             $om->callonce(__CLASS__, '_generateAccountingEntries', $oids, [], $lang);
         }
     }
-    
+
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
@@ -307,13 +330,18 @@ class Invoice extends Model {
      * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $res = $om->read(get_called_class(), $oids, [ 'status' ]);
+        $res = $om->read(get_called_class(), $oids, ['status']);
 
         if($res > 0) {
             foreach($res as $oids => $odata) {
-                // status can only be changed from 'proforma' to 'invoice' and invoice to 'cancelled'
+                // status can only be changed from 'proforma' to 'invoice' and from 'invoice' to 'cancelled'
+                if($odata['status'] == 'proforma') {
+                    if(isset($values['status']) && !in_array($values['status'], ['proforma', 'invoice'])) {
+                        return ['status' => ['non_editable' => 'Invoice status can only be updated from proforma to invoice.']];
+                    }
+                }
                 if($odata['status'] == 'invoice') {
-                    if(!isset($values['status']) || $values['status'] != 'cancelled') {
+                    if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
                         return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
                     }
                 }
@@ -344,7 +372,7 @@ class Invoice extends Model {
 
 
     public static function _generateAccountingEntries($om, $oids, $values, $lang) {
-        // generate the accounting entries        
+        // generate the accounting entries
         $invoices = $om->read(self::getType(), $oids, ['status', 'type', 'organisation_id', 'invoice_lines_ids'], $lang);
         if($invoices > 0) {
             foreach($invoices as $oid => $invoice) {
