@@ -522,7 +522,7 @@ class Identity extends Model {
                         if( isset($values['type_id']) && $values['type_id'] == 1 ) {
                             return true;
                         }
-                        return (bool) (preg_match('/^[\w\'\-,.][^0-9_!¡?÷?¿\/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$/u', $legal_name));
+                        return (bool) (preg_match('/^[\w\'\-,.][^_!¡?÷?¿\/\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name));
                     }
                 ]
             ],
