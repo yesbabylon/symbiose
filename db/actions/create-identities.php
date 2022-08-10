@@ -145,6 +145,10 @@ foreach ($data as $row) {
         $nature_id = $CustomerNatures[$nature]['id'];
         $customer_type_id = $CustomerNatures[$nature]['customer_type_id'];
         $type = $customer_types[$customer_type_id];
+        if($customer_type_id == 1){
+            $customer_type_id = 3;
+            $type = 'C';
+        }
         $rate_class_id = $CustomerNatures[$nature]['rate_class_id'];
         $has_vat = isset($row['Libre3']) ? 1 : 0;
         $lang = strtolower($row['Langue_Client']);
