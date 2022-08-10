@@ -141,14 +141,19 @@ foreach ($data as $row) {
         $nature_id = $CustomerNatures[$nature]['id'];
         $customer_type_id = $CustomerNatures[$nature]['customer_type_id'];
         $type = $customer_types[$customer_type_id];
+        $id = $row['Cle_Client'];
+        if($customer_type_id == 1){
+            $customer_type_id = 3;
+            $type = 'C';
+        }
         $rate_class_id = $CustomerNatures[$nature]['rate_class_id'];
         $has_vat = isset($row['Libre3']) ? 1 : 0;
         $lang = strtolower($row['Langue_Client']);
         $lang_id = isset($languages[$lang]) ? $languages[$lang] : 1;
         $phone = (strlen($row['Tel_Mob_Payeur'])) ? $row['Tel_Mob_Payeur'] : $row['Tel_Payeur'];
-        $id = $row['Cle_Client'];
+        
         // Create Client (Company)
-        $customer_identity_id = create_identity(
+        $customer_identity_id = update_identity(
             intval($id),
             $type,
             $customer_type_id,
@@ -188,35 +193,37 @@ foreach ($data as $row) {
 
 
         //Checks if the contact already exists
-        $res = Identity::search([['firstname', 'ilike', '%' . $row['Prenom_Client'] . '%'], ['lastname', 'ilike', '%' . $row['Nom_Famille_Client'] . '%']])->read(['id', 'name'])->get();
+        $res = Identity::search([[['firstname', 'ilike', '%' . $row['Prenom_Client'] . '%']], [['lastname', 'ilike', '%' . $row['Nom_Famille_Client'] . '%']]])->read(['id', 'name'])->get();
+       
         if (count($res)) {
             continue;
         }
         // Create the contact of the Customer & checks if it does really exist
-        if (strlen($row['Prenom_Client']) > 0 || strlen($row['Nom_Famille_Client']) > 0) {
-    
-            $contact_identity_id = create_identity(
-                $identity_next_available_id,
-                'I',
-                1,
-                $row['Prenom_Client'] . ' ' . $row['Nom_Famille_Client'],
-                $row['Prenom_Client'],
-                $row['Nom_Famille_Client'],
-                $gender,
-                $title,
-                $phone,
-                $email,
-                '',
-                '',
-                '',
-                'BE',
-                '',
-                false,
-                '',
-                $lang_id
-            );
-    
+        if (strlen($row['Prenom_Client']) > 1 || strlen($row['Nom_Famille_Client']) > 1) {
             
+                Identity::create([
+                    'id'                => $identity_next_available_id,
+                    'type'              => 'I',
+                    'type_id'           => 1,
+                    'legal_name'        => trim($row['Prenom_Client'] . ' ' . $row['Nom_Famille_Client']),
+                    'short_name'        => trim($row['Prenom_Client'] . ' ' . $row['Nom_Famille_Client']),
+                    'firstname'         => strlen($row['Prenom_Client']) > 1 ?trim($row['Prenom_Client']) :$row['Nom_Famille_Client'] ,
+                    'lastname'          => strlen($row['Nom_Famille_Client']) > 1 ?  trim($row['Nom_Famille_Client']):$lastname = $row['Prenom_Client'],
+                    'gender'            => $gender,
+                    'title'             => $title,
+                    'phone'             => $phone,
+                    'email'             => trim($email),
+                    'address_street'    => '',
+                    'address_zip'       => '',
+                    'address_city'      => '',
+                    'address_country'   => 'BE',
+                    'vat_number'        => '',
+                    'has_vat'           => false,
+                    'website'           => '',
+                    'lang_id'           => $lang_id
+                ]);
+        
+    
             $identity_next_available_id++;
         }
     }
@@ -254,8 +261,9 @@ foreach ($data as $row) {
         $id = $row['Cle_Client'];
 
         if (strlen($row['Prenom_Client']) > 0 || strlen($row['Nom_Famille_Client']) > 0){
+            
 
-            $customer_identity_id = create_identity(
+            $customer_identity_id = update_identity(
                 intval($id),
                 $type,
                 $customer_type_id,
@@ -314,45 +322,18 @@ function output_to_file($filename, $array)
 
 }
 
-function create_identity($id, $type, $type_id, $legal_name, $firstname, $lastname, $gender, $title, $phone, $email, $address_street, $address_zip, $address_city, $address_country, $vat_number, $has_vat, $website, $lang_id)
+function update_identity($id, $type, $type_id, $legal_name, $firstname, $lastname, $gender, $title, $phone, $email, $address_street, $address_zip, $address_city, $address_country, $vat_number, $has_vat, $website, $lang_id)
 {
     global $identities;
     global $ids;
 
     $short_name = $legal_name;
-    if(!(preg_match('/^[\w\'\-,.][^_!¡?÷?¿\/\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name))){
-        $legal_name = preg_replace("[_^!¡?÷?¿\/\\+=@#$%ˆ*{}|~<>;:[\]", " ", $legal_name);
-        print_r($legal_name);
+    if(!(preg_match('/^[\w\'\-,.][^_!¡?÷?¿\/\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name))){        
+        $legal_name = preg_replace("/[_!¡?÷?¿\/\\+\-=@#$%ˆ*{}|~<>;:[\]]/", " ", $legal_name);
     }
-    
-    // if(!(strlen(trim($firstname))>0)){
-    //     $firstname = trim($legal_name);    
-    // }
-    // if(!(strlen(trim($lastname))>0)){
-    //     $lastname = trim($legal_name);
-    // }
-    // $last = 0;
-    // for ($i = 0; $i < strlen($legal_name); $i++) {
-        
-    //     if($legal_name[$i] == '#'){
-    //         return;
-    //     }
-    //     if ( ctype_digit($legal_name[$i])) {
-            
-    //         $legal_name = strlen(substr($legal_name,0, $i))>1?substr($legal_name,0, $i): 'ok';
-    //         $firstname = strlen(substr($legal_name,0, $i))>1?substr($legal_name,0, $i): 'ok';
-    //         $lastname = strlen(substr($legal_name,0, $i))>1?substr($legal_name,0, $i): 'ok';
-            
-            
-            
-    //         break;
-    //     }    
-    // }
-    // if((strlen($legal_name>0)))
     
     
 
-    
     $identity = [
         'id'                => $id,
         'type'              => $type,
@@ -375,28 +356,19 @@ function create_identity($id, $type, $type_id, $legal_name, $firstname, $lastnam
         'lang_id'           => $lang_id
     ];
 
-    try{
-        // if(strlen(trim($firstname))>=2){
-        //     array_merge($testeur, ['firstname' => trim($firstname)] );
-        // }
-        // if(strlen(trim($lastname))>2){
-        //     array_merge($testeur, ['firstname' => trim($lastname)] );
-        // }
-        // if(strlen(trim($legal_name))>2){
-        //     print_r(trim($legal_name));
-        //     if(strlen(trim($firstname))== 0){
-        //         array_merge($testeur, ['firstname' => trim($legal_name)] );
-        //     }
-        //     array_merge($testeur, ['legal_name' => trim($legal_name)] );
-        // }
     
+    
+
+    try{
+        
+
         Identity::ids($id)->update([
             'type'              => $type,
             'type_id'           => $type_id,
             'legal_name'        => trim($legal_name),
             'short_name'        => trim($short_name),
-            'firstname'         => trim($firstname),
-            'lastname'          => trim($lastname),
+            'firstname'         => strlen($firstname) > 1 ?trim($firstname) :$lastname,
+            'lastname'          => strlen($lastname) > 1 ?  trim($lastname):$lastname = $firstname,
             'gender'            => $gender,
             'title'             => $title,
             'phone'             => $phone,
@@ -410,8 +382,10 @@ function create_identity($id, $type, $type_id, $legal_name, $firstname, $lastnam
             'website'           => trim($website),
             'lang_id'           => $lang_id
         ]);
+        
+
     }catch(Exception $e){
-       
+       die();
     }
         
         
