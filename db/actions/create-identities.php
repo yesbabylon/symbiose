@@ -150,7 +150,7 @@ foreach ($data as $row) {
         $lang = strtolower($row['Langue_Client']);
         $lang_id = isset($languages[$lang]) ? $languages[$lang] : 1;
         $phone = (strlen($row['Tel_Mob_Payeur'])) ? $row['Tel_Mob_Payeur'] : $row['Tel_Payeur'];
-        $email_payeur = str_replace("\r\n", "", $row['Email1_Payeur']);
+        $email_payeur = str_replace("\r\n", "", $row['EMail1_Payeur']);
         // Create Client (Company)
         $customer_identity_id = create_identity(
             $type,
@@ -275,7 +275,7 @@ foreach ($data as $row) {
 
 output_to_file("lodging_identity_Identity.json", "lodging\\identity\\Identity", $identities);
 output_to_file("identity_Partner.json", "identity\\Partner", $partners);
-output_to_file("sale_customer_Customer.json", "sale\\Customer", $customers);
+output_to_file("sale_customer_Customer.json", "sale\\customer\\Customer", $customers);
 
 
 
@@ -355,11 +355,14 @@ function create_identity($type, $type_id, $legal_name, $firstname, $lastname, $g
 {
     global $identities, $identity_next_available_id;
 
+    $short_name = $legal_name;
+
     $identity = [
         'id'                => $identity_next_available_id,
         'type'              => $type,
         'type_id'           => $type_id,
         'legal_name'        => trim($legal_name),
+        'short_name'        => trim($short_name),
         'firstname'         => trim($firstname),
         'lastname'          => trim($lastname),
         'gender'            => $gender,

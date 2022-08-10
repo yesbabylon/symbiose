@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Reader;
 
 
 use core\User;
-
+use lodging\identity\Identity;
 
 list($params, $providers) = announce([
     'description'   => "Generate CSV files for pricelists, prices, product_models and products based on articles exports from Hestia.",
@@ -63,8 +63,12 @@ foreach ($array_diff as $diff) {
 }
 
 $header = [];
+
 //new deleted ids array to output with headers
 $deleted_ids = [];
+
+Identity::ids($ids_deleted)->delete(true);
+
 foreach ($ids_deleted as $id_deleted) {
     // needs to be an array to be combined
     $id_deleted = [0 => intval($id_deleted)];
@@ -72,6 +76,10 @@ foreach ($ids_deleted as $id_deleted) {
     $deleted_ids[] = $line;
 }
 
+
+print_r($deleted_ids);
+
+// print_r($deleted_ids);
 
 
 $context->httpResponse()
