@@ -404,12 +404,11 @@ class Invoice extends Model {
             $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_trade_debtors]);
             $account_trade_debtors_id = reset($res);
 
-            if($account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
+            if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
                 // a mandatory value could not be retrieved
                 trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
                 return [];
             }
-
 
             foreach($invoices as $oid => $invoice) {
                 if($invoice['status'] != 'invoice') {
