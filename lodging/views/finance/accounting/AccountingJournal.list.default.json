@@ -22,6 +22,14 @@
             },
             {
                 "type": "field",
+                "value": "type",
+                "width": "15%",
+                "widget": {
+                    "sortable": true
+                }
+            },            
+            {
+                "type": "field",
                 "value": "organisation_id",
                 "width": "20%",
                 "widget": {

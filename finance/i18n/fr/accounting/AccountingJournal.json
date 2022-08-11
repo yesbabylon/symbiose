@@ -22,7 +22,20 @@
             "label": "Organisation",
             "description": "",
             "help": ""
+        },
+        "type": {
+            "label": "Type",
+            "selection": {
+                "general_ledger": "grand livre",
+                "sales": "journal des ventes",
+                "purchases": "journal des achats",
+                "bank_cash": "journal de trésorerie",
+                "miscellaneous": "journal des opérations diverses"
+            },
+            "description": "",
+            "help": ""
         }
+
     },
     "view": {
         "form.default": {
