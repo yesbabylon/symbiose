@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use lodging\sale\pos\CashdeskSession;
+use sale\pos\CashdeskSession;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -33,65 +33,20 @@ list($context) = [$providers['context']];
 
 $tree = [
     'id',
-    'amount',
-    'user_id',
+    'amount_opening',
     'cashdesk_id',
     'status',
+    'operations_ids' => [
+        'id',
+        'amount'
+    ],
     'orders_ids' => [
         'id',
         'name',
         'created',
         'status',
-        'has_invoice',
-        'has_funding',
         'total',
-        'price',
-        'customer_id' => [
-            'name',
-            'partner_identity_id' => [
-                'vat_number'
-            ]
-        ],
-        'total_paid',
-        'order_lines_ids' => [
-            'id',
-            'order_id',
-            'name',
-            'unit_price',
-            'vat_rate',
-            'qty',
-            'discount',
-            'free_qty',
-            'total',
-            'price'
-        ],
-        'order_payments_ids' => [
-            'id',
-            'order_id',
-            'total_due',
-            'total_paid',
-            'order_lines_ids' => [
-                'id',
-                'order_id',
-                'order_payment_id',
-                'name',
-                'unit_price',
-                'vat_rate',
-                'qty',
-                'discount',
-                'free_qty',
-                'total',
-                'price'
-            ],
-            'order_payment_parts_ids' => [
-                'id',
-                'order_payment_id',
-                'amount',
-                'payment_method',
-                'booking_id',
-                'voucher_ref'
-            ]
-        ]
+        'price'
     ]    
 ];
 

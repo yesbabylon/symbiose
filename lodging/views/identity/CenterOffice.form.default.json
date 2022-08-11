@@ -112,6 +112,26 @@
                         ]
                     },                    
                     {
+                        "label": "Accounting",
+                        "id": "section.accounting",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_journals_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "label": "Centers",
                         "id": "section.centers_ids",
                         "rows": [

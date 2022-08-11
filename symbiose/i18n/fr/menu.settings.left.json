@@ -286,6 +286,10 @@
             "label": "Plan comptable",
             "help": ""
         },
+        "finance.accounting.accounting_journals": {
+            "label": "Journaux comptables",
+            "help": ""
+        },
         "finance.payments.statements": {
             "label": "Extraits bancaires",
             "help": ""
