@@ -23,17 +23,26 @@ class AccountingJournal extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Label for identifying the journal.',
+                'multilang'         => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Verbose detail of the role of the journale.',
+                'multilang'         => true                
             ],
 
             'code' => [
                 'type'              => 'string',
                 'description'       => 'Unique code (optional).',
                 'unique'            => true
+            ],
+
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \identity\Identity::getType(),
+                'description'       => "The organisation the journal belongs to.",
+                'default'           => 1
             ],
 
             'accounting_entries_ids' => [

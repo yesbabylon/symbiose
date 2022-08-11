@@ -17,6 +17,11 @@
             "label": "Code du journal",
             "description": "",
             "help": ""
+        },
+        "organisation_id": {
+            "label": "Organisation",
+            "description": "",
+            "help": ""
         }
     },
     "view": {

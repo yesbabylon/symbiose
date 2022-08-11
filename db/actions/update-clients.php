@@ -356,38 +356,28 @@ function update_identity($id, $type, $type_id, $legal_name, $firstname, $lastnam
         'lang_id'           => $lang_id
     ];
 
-    
-    
 
-    try{
-        
-
-        Identity::ids($id)->update([
-            'type'              => $type,
-            'type_id'           => $type_id,
-            'legal_name'        => trim($legal_name),
-            'short_name'        => trim($short_name),
-            'firstname'         => strlen($firstname) > 1 ?trim($firstname) :$lastname,
-            'lastname'          => strlen($lastname) > 1 ?  trim($lastname):$lastname = $firstname,
-            'gender'            => $gender,
-            'title'             => $title,
-            'phone'             => $phone,
-            'email'             => trim($email),
-            'address_street'    => trim($address_street),
-            'address_zip'       => $address_zip,
-            'address_city'      => trim($address_city),
-            'address_country'   => trim($address_country),
-            'vat_number'        => $vat_number,
-            'has_vat'           => $has_vat,
-            'website'           => trim($website),
-            'lang_id'           => $lang_id
-        ]);
-        
-
-    }catch(Exception $e){
-       die();
-    }
-        
+    Identity::ids($id)->update([
+        'type'              => $type,
+        'type_id'           => $type_id,
+        'legal_name'        => trim($legal_name),
+        'short_name'        => trim($short_name),
+        'firstname'         => strlen($firstname) > 1 ?trim($firstname) :$lastname,
+        'lastname'          => strlen($lastname) > 1 ?  trim($lastname):$lastname = $firstname,
+        'gender'            => $gender,
+        'title'             => $title,
+        'phone'             => $phone,
+        'email'             => trim($email),
+        'address_street'    => trim($address_street),
+        'address_zip'       => $address_zip,
+        'address_city'      => trim($address_city),
+        'address_country'   => trim($address_country),
+        'vat_number'        => $vat_number,
+        'has_vat'           => $has_vat,
+        'website'           => trim($website),
+        'lang_id'           => $lang_id
+    ]);
+            
         
     $identities[] = $identity;
 
