@@ -315,7 +315,13 @@ class Invoice extends Model {
             // generate an invoice number (force immediate recomuting)
             $om->read(__CLASS__, $oids, ['number'], $lang);
             // generate accounting entries
-            $om->callonce(__CLASS__, '_generateAccountingEntries', $oids, [], $lang);
+            $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
+            // create new entries objects
+            foreach($invoices_accounting_entries as $oid => $accounting_entries) {
+                foreach($accounting_entries as $entry) {
+                    $om->create(AccountingEntry::getType(), $entry);
+                }
+            }
         }
     }
 
@@ -370,11 +376,41 @@ class Invoice extends Model {
         return parent::candelete($om, $oids);
     }
 
-
+    /**
+     * Check wether the invoice can be deleted.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @param  array                       $values     (unused)
+     * @param  string                      $lang       Language code in which to process the request.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
     public static function _generateAccountingEntries($om, $oids, $values, $lang) {
+        $result = [];
         // generate the accounting entries
         $invoices = $om->read(self::getType(), $oids, ['status', 'type', 'organisation_id', 'invoice_lines_ids'], $lang);
         if($invoices > 0) {
+            // retrieve specific accounts numbers
+            $account_sales = Setting::get_value('finance', 'invoice', 'account.sales', 'not_found');
+            $account_sales_taxes = Setting::get_value('finance', 'invoice', 'account.sales_taxes', 'not_found');
+            $account_trade_debtors = Setting::get_value('finance', 'invoice', 'account.trade_debtors', 'not_found');
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_sales]);
+            $account_sales_id = reset($res);
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_sales_taxes]);
+            $account_sales_taxes_id = reset($res);
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_trade_debtors]);
+            $account_trade_debtors_id = reset($res);
+
+            if($account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
+                // a mandatory value could not be retrieved
+                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                return [];
+            }
+
+
             foreach($invoices as $oid => $invoice) {
                 if($invoice['status'] != 'invoice') {
                     continue;
@@ -412,13 +448,13 @@ class Invoice extends Model {
                             $downpayments_sum += abs($line['price']);
                             // if some VTA is due, deduct the sum accordingly
                             $debit_vat_sum += $vat_amount;
-                            // create a debit line with the product, on sale account 70xxxxx (code=7000000, id=895) (VAT excl.)
+                            // create a debit line with the product, on sale account 70xxxxx (code=7000000) (VAT excl.)
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [
                                 'name'          => $line['name'],
                                 'invoice_id'    => $oid,
-                                'account_id'    => 895,
+                                'account_id'    => $account_sales_id,
                                 'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                                 'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                             ];
@@ -466,7 +502,7 @@ class Invoice extends Model {
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
                             'invoice_id'    => $oid,
-                            'account_id'    => 517,
+                            'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                             'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                         ];
@@ -480,7 +516,7 @@ class Invoice extends Model {
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
                             'invoice_id'    => $oid,
-                            'account_id'    => 517,
+                            'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                             'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                         ];
@@ -493,19 +529,17 @@ class Invoice extends Model {
                     $accounting_entries[] = [
                         'name'          => 'créances commerciales',
                         'invoice_id'    => $oid,
-                        'account_id'    => 421,
+                        'account_id'    => $account_trade_debtors_id,
                         'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                         'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                     ];
 
-                    // generate all required entries
-                    foreach($accounting_entries as $eid => $entry) {
-                        $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
-                    }
-
+                    // append generated entries to result
+                    $result[$oid] = $accounting_entries;                    
                 }
             }
         }
+        return $result;
     }
 
 

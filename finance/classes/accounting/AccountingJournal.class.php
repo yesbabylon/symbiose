@@ -38,6 +38,19 @@ class AccountingJournal extends Model {
                 'unique'            => true
             ],
 
+            'type' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'general_ledger',
+                    'sales',
+                    'purchases',
+                    'bank_cash',
+                    'miscellaneous'
+                ],
+                "required"          => true,
+                'description'       => "Type of journal or ledger."
+            ],
+
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \identity\Identity::getType(),

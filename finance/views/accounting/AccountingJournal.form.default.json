@@ -30,6 +30,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
                                             }
