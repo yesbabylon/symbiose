@@ -21,9 +21,11 @@ class AccountingJournal extends Model {
         return [
 
             'name' => [
-                'type'              => 'string',
+                'type'              => 'computed',
+                'result_type'       => 'string',                
                 'description'       => 'Label for identifying the journal.',
-                'multilang'         => true
+                'function'          => 'calcName',
+                'store'             => true
             ],
 
             'description' => [
@@ -67,6 +69,16 @@ class AccountingJournal extends Model {
             ]
 
         ];
+    }
+
+    public static function calcName($om, $oids, $lang) {
+        $result = [];
+        $journals = $om->read(__CLASS__, $oids, ['code', 'organisation_id.name'], $lang);
+
+        foreach($journals as $oid => $journal) {
+            $result[$oid] = $journal['code'].' - '.$journal['organisation_id.name'];
+        }
+        return $result;
     }
 
 }

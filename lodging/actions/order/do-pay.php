@@ -94,7 +94,7 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
             $group_id = $new_group['id'];
         }
 
-        // create booking lines according to order lines        
+        // create booking lines according to order lines
         foreach($payment['order_lines_ids'] as $lid => $line) {
             $new_line = BookingLine::create(['booking_id' => $booking_id, 'booking_line_group_id' => $group_id, 'product_id' => $line['product_id']])->first();
             // #memo - at creation booking_line qty is always set accordingly to its parent group nb_pers
@@ -121,7 +121,8 @@ else if($order['has_invoice']) {
     }
     catch(Exception $e) {
         // ignore errors when trying to issue an invoice (some restrictions apply)
-    }   
+        trigger_error("QN_DEBUG_ORM::".$e->getMessage(), QN_REPORT_WARNING);
+    }
 }
 // no funding and no invoice: generate stand alone accouting entries
 else {
