@@ -58,6 +58,12 @@ class AccountingEntry extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Amount to be disbursed.',
+            ],
+
+            'exported' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the entry as exported.',
+                'default'           => false
             ]
 
         ];

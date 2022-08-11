@@ -33,6 +33,11 @@
                                                 "type": "field",
                                                 "value": "account_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "journal_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },

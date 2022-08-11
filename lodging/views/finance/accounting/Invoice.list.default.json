@@ -1,6 +1,6 @@
 {
     "name": "Invoices",
-    "description": "This view is intented for displaying the invoices.",
+    "description": "List of invoices from the Center Offices.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
      },
@@ -23,6 +23,11 @@
             },
             {
                 "type": "field",
+                "value": "center_office_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "status",
                 "width": "20%"
             },
@@ -33,7 +38,7 @@
             },
             {
                 "type": "field",
-                "value": "price",
+                "value": "total",
                 "width": "15%"
             }
         ]

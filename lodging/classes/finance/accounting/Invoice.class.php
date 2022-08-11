@@ -107,10 +107,32 @@ class Invoice extends \finance\accounting\Invoice {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
             $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
-            // generate an invoice number (force immediate recomuting)
-            $om->read(__CLASS__, $oids, ['number'], $lang);
+            
+            $invoices = $om->read(__CLASS__, $oids, [
+                // #memo - generate an invoice number (force immediate recomputing)
+                'number',
+                'center_office_id'
+            ], $lang);
+
             // generate accounting entries
-            $om->callonce(\finance\accounting\Invoice::getType(), '_generateAccountingEntries', $oids, [], $lang);
+            $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
+
+            // create new entries objects and assign to the sale journal relating to the center_office_id
+            foreach($invoices as $oid => $invoice) {
+
+                $res = $om->search(AccountingJournal::getType(), [['center_office_id', '=', $invoice['center_office_id']], ['type', '=', 'sales']]);
+                $journal_id = reset($res);
+                
+                if(isset($invoices_accounting_entries[$oid])) {
+                    $accounting_entries = $invoices_accounting_entries[$oid];
+
+                    foreach($accounting_entries as $entry) {
+                        $entry['journal_id'] = $journal_id;
+                        $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
+                    }
+                }                
+            }
+
         }
     }
 }
