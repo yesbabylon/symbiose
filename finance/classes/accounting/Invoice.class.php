@@ -412,7 +412,7 @@ class Invoice extends Model {
                             $downpayments_sum += abs($line['price']);
                             // if some VTA is due, deduct the sum accordingly
                             $debit_vat_sum += $vat_amount;
-                            // create a debit line with the product, on sale account 70xxxxx (id=895) (VAT excl.)
+                            // create a debit line with the product, on sale account 70xxxxx (code=7000000, id=895) (VAT excl.)
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [

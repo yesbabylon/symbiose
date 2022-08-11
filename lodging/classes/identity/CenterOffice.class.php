@@ -64,6 +64,13 @@ class CenterOffice extends \identity\Establishment {
                 'usage'             => 'markup/html',
                 'description'       => 'Office signature to append to communications.',
                 'multilang'         => true
+            ],
+
+            'accounting_journals_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => \lodging\finance\accounting\AccountingJournal::getType(),
+                'foreign_field'     => 'center_office_id',
+                'description'       => 'List of accounting journals of the office.'
             ]
 
         ];

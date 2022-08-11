@@ -789,7 +789,7 @@
                         "id": "finance.accounting",
                         "label": "Accounting",
                         "description": "",
-                        "icon": "settings",
+                        "icon": "calculate",
                         "type": "parent",
                         "children": [
                             {
@@ -819,6 +819,16 @@
                                 "description": "",
                                 "context": {
                                     "entity": "finance\\accounting\\AccountChart",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "finance.accounting.accounting_journals",
+                                "type": "entry",
+                                "label": "Accounting journals",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\finance\\accounting\\AccountingJournal",
                                     "view": "list.default"
                                 }
                             }

@@ -32,7 +32,7 @@ class Operation extends Model {
                 'selection'         => [ 
                     'opening',        // operation is a session opening
                     'sale',           // operation is a sale
-                    'move',           // operation is a cash movement (cash in or cash out)
+                    'move'            // operation is a cash movement (cash in or cash out)
                 ],
                 'description'       => 'The kind of operation.'
             ],
@@ -43,6 +43,13 @@ class Operation extends Model {
                 'description'       => 'Cash desk the operations belongs to.',
                 'required'          => true
             ],
+
+            'session_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => CashdeskSession::getType(),
+                'description'       => 'The cashdesk session the operation relates to.',
+                'required'          => true
+            ],            
 
             'amount' => [
                 'type'              => 'float',
@@ -68,7 +75,7 @@ class Operation extends Model {
 
         if($operations > 0) {
             foreach($operations as $oid => $operation) {
-                $result[$oid] = $operation['cashdesk_id.name'].' - '.$operation['type'].': '.$operation['amount'];
+                $result[$oid] = $operation['cashdesk_id.name'].' ('.$operation['type'].') - '.sprintf("%.2f", $operation['amount']);
             }
         }
 
