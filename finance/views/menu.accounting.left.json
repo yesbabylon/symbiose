@@ -51,7 +51,7 @@
                         "description": "",
                         "route": "/invoices",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "entity": "lodging\\finance\\accounting\\Invoice",
                             "view": "list.default"
                         }
                     }
@@ -77,7 +77,56 @@
                         }
                     }
                 ]
-            }
+            },
+            {
+                "id": "item.settings",
+                "label": "Settings",
+                "description": "",
+                "icon": "settings",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "finance.accounting.vat_rules",
+                        "type": "entry",
+                        "label": "VAT rules",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\tax\\VatRule",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "finance.accounting.accounting_rules",
+                        "type": "entry",
+                        "label": "Accounting rules",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\finance\\accounting\\AccountingRule",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "finance.accounting.account_chart",
+                        "type": "entry",
+                        "label": "Chart of accounts",
+                        "description": "",
+                        "context": {
+                            "entity": "finance\\accounting\\AccountChart",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "finance.accounting.accounting_journals",
+                        "type": "entry",
+                        "label": "Accounting journals",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\finance\\accounting\\AccountingJournal",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            }            
         ]
     }
 }

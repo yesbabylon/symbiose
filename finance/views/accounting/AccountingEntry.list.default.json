@@ -31,6 +31,12 @@
             },
             {
                 "type": "field",
+                "label": "Journal",
+                "value": "journal_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
                 "value": "debit",
                 "width": "20%"
             },
