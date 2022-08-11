@@ -24,6 +24,14 @@ class Cashdesk extends Model {
                 'description'       => "The center the desk relates to.",
                 'required'          => true,
                 'ondelete'          => 'cascade'         // delete cashdesk when parent Center is deleted
+            ],
+
+            'sessions_ids'  => [
+                'type'              => 'one2many',
+                'foreign_object'    => CashdeskSession::getType(),
+                'foreign_field'     => 'cashdesk_id',
+                'ondetach'          => 'delete',
+                'description'       => 'List of sessions of the cashdesk.'
             ]
         ];
     }

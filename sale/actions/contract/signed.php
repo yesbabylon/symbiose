@@ -56,6 +56,5 @@ Contract::id($params['id'])->update(['status' => 'signed']);
 // #todo - check if required payment have been paid in the meantime
 
 $context->httpResponse()
-        ->status(200)
-        ->body([])
+        ->status(204)
         ->send();
