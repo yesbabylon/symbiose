@@ -22,7 +22,7 @@ class Center extends \identity\Establishment {
 
             'center_office_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\identity\CenterOffice',
+                'foreign_object'    => CenterOffice::getType(),
                 'description'       => 'Management Group to which the center belongs.'
             ],
 

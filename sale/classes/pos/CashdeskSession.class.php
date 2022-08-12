@@ -36,7 +36,6 @@ class CashdeskSession extends Model {
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => "Amount of money in the cashdesk at the closing.",
-                'onupdate'          => 'onupdateAmountClosing',
                 'default'           => 0.0
             ],
 
@@ -69,6 +68,7 @@ class CashdeskSession extends Model {
                     'closed'
                 ],
                 'description'       => 'Current status of the session.',
+                'onupdate'          => 'onupdateStatus',
                 'default'           => 'pending'
             ],
 
@@ -147,27 +147,30 @@ class CashdeskSession extends Model {
         }
     }
 
-    public static function onupdateAmountClosing($om, $oids, $values, $lang) {
-        $sessions = $om->read(self::getType(), $oids, ['cashdesk_id', 'user_id', 'amount_opening', 'amount_closing', 'operations_ids.amount'], $lang);
-        if($sessions > 0) {
-            foreach($sessions as $sid => $session) {
-                $total_cash = 0.0;
-                foreach($session['operations_ids.amount'] as $oid => $operation) {
-                    $total_cash += $operation['amount'];
-                }
-                // compute the difference (if any) between expected cash and actual cash in the cashdesk
-                $expected_cash = $total_cash + $session['amount_opening'];
-                $delta = $session['amount_closing'] - $expected_cash;
-                if($delta != 0) {
-                    // create a new move with the delta
-                    $om->create(Operation::getType(), [
-                        'cashdesk_id'   => $session['cashdesk_id'],
-                        'session_id'    => $sid,
-                        'user_id'       => $session['user_id'],
-                        'amount'        => $delta,
-                        'type'          => 'move',
-                        'description'   => 'cashdesk closing'
-                    ], $lang);
+    public static function onupdateStatus($om, $oids, $values, $lang) {
+        // upon session closing, create additional operation if there is a delta in cash amount
+        if(isset($values['status']) && $values['status'] == 'closed') {
+            $sessions = $om->read(self::getType(), $oids, ['cashdesk_id', 'user_id', 'amount_opening', 'amount_closing', 'operations_ids.amount'], $lang);
+            if($sessions > 0) {
+                foreach($sessions as $sid => $session) {
+                    $total_cash = 0.0;
+                    foreach($session['operations_ids.amount'] as $oid => $operation) {
+                        $total_cash += $operation['amount'];
+                    }
+                    // compute the difference (if any) between expected cash and actual cash in the cashdesk
+                    $expected_cash = $total_cash + $session['amount_opening'];
+                    $delta = $session['amount_closing'] - $expected_cash;
+                    if($delta != 0) {
+                        // create a new move with the delta
+                        $om->create(Operation::getType(), [
+                            'cashdesk_id'   => $session['cashdesk_id'],
+                            'session_id'    => $sid,
+                            'user_id'       => $session['user_id'],
+                            'amount'        => $delta,
+                            'type'          => 'move',
+                            'description'   => 'cashdesk closing'
+                        ], $lang);
+                    }
                 }
             }
         }

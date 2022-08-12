@@ -6,10 +6,18 @@
 */
 namespace sale\pos;
 use equal\orm\Model;
-/**
- *  Point of sale Order.
- */
+use finance\accounting\Invoice;
+use core\setting\Setting;
+
 class Order extends Model {
+
+    public static function getName() {
+        return "Order";
+    }
+
+    public static function getDescription() {
+        return "Point of sale Order.";
+    }
 
     public static function getColumns() {
 
@@ -39,6 +47,7 @@ class Order extends Model {
                     'paid'               // order is closed and payment has been received
                 ],
                 'description'       => 'Current status of the order.',
+                'onupdate'          => 'onupdateStatus',
                 'default'           => 'pending'
             ],
 
@@ -86,7 +95,7 @@ class Order extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',                
+                'usage'             => 'amount/money',
                 'description'       => 'Total tax-excluded price for all lines (computed).',
                 'function'          => 'calcTotal',
                 'store'             => true
@@ -95,7 +104,7 @@ class Order extends Model {
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',                
+                'usage'             => 'amount/money',
                 'description'       => 'Final tax-included price for all lines (computed).',
                 'function'          => 'calcPrice',
                 'store'             => true
@@ -111,7 +120,7 @@ class Order extends Model {
 
             'order_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pos\OrderLine',
+                'foreign_object'    => OrderLine::getType(),
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
                 'onupdate'          => 'onupdateOrderLinesIds',
@@ -120,7 +129,7 @@ class Order extends Model {
 
             'order_payments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pos\OrderPayment',
+                'foreign_object'    => OrderPayment::getType(),
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
                 'description'       => 'The payments that relate to the order.'
@@ -128,13 +137,45 @@ class Order extends Model {
 
             'order_payment_parts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pos\OrderPaymentPart',
+                'foreign_object'    => OrderPaymentPart::getType(),
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
                 'description'       => 'The payments parts that relate to the order.'
             ]
 
         ];
+    }
+
+    /**
+     * @param \equal\orm\ObjectManager  $om Instance of the ObjectManager service.
+     */
+    public static function onupdateStatus($om, $ids, $values, $lang) {
+        // upon payment of the order, update related funding and invoice, if any
+        if(isset($values['status']) && $values['status'] == 'paid') {
+            $orders = $om->read(self::getType(), $ids, ['has_invoice', 'has_funding', 'funding_id.type', 'funding_id.invoice_id', 'order_lines_ids'], $lang);
+            if($orders > 0) {
+                foreach($orders as $oid => $order) {
+                    if($order['has_funding']) {
+                        if($order['funding_id.type'] == 'invoice') {
+                            $om->update(Invoice::getType(), $order['funding_id.invoice_id'], ['status' => 'invoice', 'is_paid' => null], $lang);
+                        }
+                    }
+                    // no funding and no invoice: generate stand alone accounting entries
+                    else if(!$order['has_invoice']) {
+
+                        // generate accounting entries
+                        $orders_accounting_entries = self::_generateAccountingEntries($om, $ids, $order['order_lines_ids'], $lang);
+
+                        // create new entries objects
+                        foreach($orders_accounting_entries as $oid => $accounting_entries) {
+                            foreach($accounting_entries as $entry) {
+                                $om->create(AccountingEntry::getType(), $entry);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static function onupdateSessionId($om, $ids, $values, $lang) {
@@ -175,7 +216,7 @@ class Order extends Model {
                 $orders_ids = $om->search(get_called_class(), ['session_id', '=', $order['session_id']]);
                 if($orders_ids >= 0) {
                     $result[$oid] = count($orders_ids) + 1;
-                }                
+                }
             }
         }
         return $result;
@@ -229,7 +270,7 @@ class Order extends Model {
                 }
             }
         }
-        return $result;        
+        return $result;
     }
 
     public static function canupdate($om, $ids, $values, $lang) {
@@ -244,5 +285,132 @@ class Order extends Model {
             }
         }
         return parent::canupdate($om, $ids, $values, $lang);
+    }
+
+    /**
+     * Generate the accounting entries according to the order line (only applies on non-invoiced orders).
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @param  array                       $lines_ds   Filtered list of identifiers of lines that must generate entries.
+     * @param  string                      $lang       Language code in which to process the request.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function _generateAccountingEntries($om, $oids, $lines_ids, $lang) {
+        $result = [];
+        // generate the accounting entries
+        $orders = $om->read(self::getType(), $oids, ['status'], $lang);
+        if($orders > 0) {
+            // retrieve specific accounts numbers
+            $account_sales = Setting::get_value('finance', 'invoice', 'account.sales', 'not_found');
+            $account_sales_taxes = Setting::get_value('finance', 'invoice', 'account.sales_taxes', 'not_found');
+            $account_trade_debtors = Setting::get_value('finance', 'invoice', 'account.trade_debtors', 'not_found');
+
+            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_sales]);
+            $account_sales_id = reset($res);
+
+            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_sales_taxes]);
+            $account_sales_taxes_id = reset($res);
+
+            $res = $om->search(\finance\accounting\AccountChartLine::getType(), ['code', '=', $account_trade_debtors]);
+            $account_trade_debtors_id = reset($res);
+
+            if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
+                // a mandatory value could not be retrieved
+                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                return [];
+            }
+
+            foreach($orders as $oid => $order) {
+                if($order['status'] != 'paid') {
+                    continue;
+                }
+
+                $accounting_entries = [];
+
+                // fetch order lines
+                $lines = $om->read(OrderLine::getType(), $lines_ids, [
+                    'name', 'product_id', 'qty', 'total', 'price',
+                    'price_id.accounting_rule_id.accounting_rule_line_ids'
+                ], $lang);
+
+                if($lines > 0) {
+                    $debit_vat_sum = 0.0;
+                    $credit_vat_sum = 0.0;
+                    $prices_sum = 0.0;
+
+                    foreach($lines as $lid => $line) {
+                        $vat_amount = abs($line['price']) - abs($line['total']);
+                        // sum up VAT amounts
+                        $credit_vat_sum += $vat_amount;
+                        // sum up sale prices (VAT incl. price)
+                        $prices_sum += $line['price'];
+                        $rule_lines = [];
+                        if(isset($line['price_id.accounting_rule_id.accounting_rule_line_ids'])) {
+                            // for products, retrieve all lines of accounting rule
+                            $rule_lines = $om->read(\finance\accounting\AccountingRuleLine::getType(), $line['price_id.accounting_rule_id.accounting_rule_line_ids'], ['account_id', 'share']);
+                        }
+                        foreach($rule_lines as $rid => $rline) {
+                            if(isset($rline['account_id']) && isset($rline['share'])) {
+                                // create a credit line with product name, on the account related by the product (VAT excl. price)
+                                $debit = 0.0;
+                                $credit = round($line['total'] * $rline['share'], 2);
+                                $accounting_entries[] = [
+                                    'name'          => $line['name'],
+                                    'invoice_id'    => $oid,
+                                    'account_id'    => $rline['account_id'],
+                                    'debit'         => $debit,
+                                    'credit'        => $credit
+                                ];
+                            }
+                        }
+                    }
+
+                    // create a credit line on account "taxes to pay"
+                    if($credit_vat_sum > 0) {
+                        $debit = 0.0;
+                        $credit = round($credit_vat_sum, 2);
+                        // assign with handling of reversing entries
+                        $accounting_entries[] = [
+                            'name'          => 'taxes TVA à payer',
+                            'invoice_id'    => $oid,
+                            'account_id'    => $account_sales_taxes_id,
+                            'debit'         => $debit,
+                            'credit'        => $credit
+                        ];
+                    }
+
+                    // create a debit line on account "taxes to pay"
+                    if($debit_vat_sum > 0) {
+                        $debit = round($debit_vat_sum, 2);
+                        $credit = 0.0;
+                        // assign with handling of reversing entries
+                        $accounting_entries[] = [
+                            'name'          => 'taxes TVA à payer',
+                            'invoice_id'    => $oid,
+                            'account_id'    => $account_sales_taxes_id,
+                            'debit'         => $debit,
+                            'credit'        => $credit
+                        ];
+                    }
+
+                    // create a debit line on account "trade debtors"
+                    $debit = round($prices_sum, 2);
+                    $credit = 0.0;
+                    // assign with handling of reversing entries
+                    $accounting_entries[] = [
+                        'name'          => 'créances commerciales',
+                        'invoice_id'    => $oid,
+                        'account_id'    => $account_trade_debtors_id,
+                        'debit'         => $debit,
+                        'credit'        => $credit
+                    ];
+
+                    // append generated entries to result
+                    $result[$oid] = $accounting_entries;
+                }
+            }
+        }
+        return $result;
     }
 }
