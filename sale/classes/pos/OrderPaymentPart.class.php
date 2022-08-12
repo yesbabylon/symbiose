@@ -8,15 +8,7 @@ namespace sale\pos;
 
 class OrderPaymentPart extends \sale\booking\Payment {
 
-    /*
-    public function getTable() {
-        // force table name to use distinct tables and ID columns
-        return 'sale_pos_orderpaymentpart';
-    }
-    */
-
     public static function getColumns() {
-
         return [
 
             'order_payment_id' => [
@@ -43,6 +35,16 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'type'              => 'string',
                 'description'       => "Origin of the received money.",
                 'default'           => 'cashdesk'
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',      // payment part hasn't been validated yet
+                    'paid'          // amount has been received (cannot be undone)
+                ],
+                'description'       => 'Current status of the payment part.',
+                'default'           => 'pending'
             ]
 
         ];

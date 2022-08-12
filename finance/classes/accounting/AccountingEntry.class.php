@@ -60,7 +60,7 @@ class AccountingEntry extends Model {
                 'description'       => 'Amount to be disbursed.',
             ],
 
-            'exported' => [
+            'is_exported' => [
                 'type'              => 'boolean',
                 'description'       => 'Mark the entry as exported.',
                 'default'           => false

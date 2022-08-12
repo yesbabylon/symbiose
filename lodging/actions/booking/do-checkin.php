@@ -115,13 +115,13 @@ $consumptions = Consumption::search([
 if($consumptions) {
     foreach($consumptions as $cid => $consumption) {
         if($consumption['type'] == 'book') {
-            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
+            $orm->update('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
         }
         else if($consumption['type'] == 'link') {
-            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
+            $orm->update('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_full']);
         }
         else if($consumption['type'] == 'part') {
-            $orm->write('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_part']);
+            $orm->update('lodging\realestate\RentalUnit', $rental_unit_id, ['status' => 'busy_part']);
         }
     }
 }

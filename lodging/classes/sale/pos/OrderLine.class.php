@@ -23,6 +23,20 @@ class OrderLine extends \sale\pos\OrderLine {
                 'foreign_object'    => \sale\catalog\Product::getType(),
                 'description'       => 'The product (SKU) the line relates to.',
                 'onupdate'          => 'onupdateProductId'
+            ],
+            
+            'order_payment_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => OrderPayment::getType(),
+                'description'       => 'The payement the line relates to.',
+                'default'           => 0,
+                'ondelete'          => 'null'
+            ],
+
+            'has_booking' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the line as paid using a booking.',
+                'default'           => false
             ]
 
         ];
