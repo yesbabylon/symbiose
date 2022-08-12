@@ -27,7 +27,8 @@ class OrderPayment extends Model {
                     'paid'          // amount has been received (cannot be undone)
                 ],
                 'description'       => 'Current status of the payment.',
-                'default'           => 'pending'
+                'default'           => 'pending',
+                'onupdate'          => 'onupdateStatus'
             ],
 
             'has_funding' => [
@@ -45,12 +46,12 @@ class OrderPayment extends Model {
             ],
 
             /*
-                #memo - if the payment is attached to a funding, it can only have one line
+                #memo - if the payment is attached to a funding, it can have only one line
             */
 
             'order_lines_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pos\OrderLine',
+                'foreign_object'    => OrderLine::getType(),
                 'foreign_field'     => 'order_payment_id',
                 'ondetach'          => 'null',
                 'description'       => 'The order lines selected for the payement.',
@@ -90,6 +91,19 @@ class OrderPayment extends Model {
      *
      */
     public static function onupdateOrderId($om, $ids, $values, $lang) {
+    }
+
+    /**
+     *
+     */
+    public static function onupdateStatus($om, $ids, $values, $lang) {
+        /*
+        $payments = $om->read(self::getType(), $ids, ['status', 'order_payment_parts_ids'], $lang);
+        if($payments > 0) {
+            foreach($payments as $pid => $payment) {
+            }
+        }
+        */
     }
 
     public static function onupdateFundingId($om, $ids, $values, $lang) {

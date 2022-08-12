@@ -31,7 +31,6 @@ class Invoice extends Model {
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
             ],
 
-           // the (owner) organisation the invoice relates to (multi-company support)
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -200,7 +199,6 @@ class Invoice extends Model {
         }
         return $result;
     }
-
 
     public static function calcPaymentReference($om, $oids, $lang) {
         $result = [];
@@ -377,7 +375,7 @@ class Invoice extends Model {
     }
 
     /**
-     * Check wether the invoice can be deleted.
+     * Generate the accounting entries according to the invoice lines.
      *
      * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
      * @param  array                       $oids       List of objects identifiers.
@@ -445,9 +443,9 @@ class Invoice extends Model {
                         if($line['product_id'] == $downpayment_product_id && $line['qty'] < 0) {
                             // sum up downpayments (VAT incl. price)
                             $downpayments_sum += abs($line['price']);
-                            // if some VTA is due, deduct the sum accordingly
+                            // if some VAT is due, deduct the sum accordingly
                             $debit_vat_sum += $vat_amount;
-                            // create a debit line with the product, on sale account 70xxxxx (code=7000000) (VAT excl.)
+                            // create a debit line with the product, on account "sales"
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [
@@ -462,14 +460,14 @@ class Invoice extends Model {
                         else {
                             // sum up VAT amounts
                             $credit_vat_sum += $vat_amount;
-                            // sum up sale prices vente (VAT incl. price)
+                            // sum up sale prices (VAT incl. price)
                             $prices_sum += $line['price'];
                             $rule_lines = [];
                             // handle installment invoice
                             if($line['product_id'] == $downpayment_product_id) {
-                                // generate virtual rule for downpayment
+                                // generate virtual rule for downpayment with account "sales"
                                 $rule_lines = [
-                                    ['account_id' => 895, 'share' => 1.0]
+                                    ['account_id' => $account_sales_id, 'share' => 1.0]
                                 ];
                             }
                             else if (isset($line['price_id.accounting_rule_id.accounting_rule_line_ids'])) {
@@ -493,7 +491,7 @@ class Invoice extends Model {
                         }
                     }
 
-                    // create a credit line on account 451 : taxes TVA à payer (somme des TVA) (id=517)
+                    // create a credit line on account "taxes to pay"
                     if($credit_vat_sum > 0) {
                         $debit = 0.0;
                         $credit = round($credit_vat_sum, 2);
@@ -507,7 +505,7 @@ class Invoice extends Model {
                         ];
                     }
 
-                    // create a debit line on account 451 : taxes TVA à payer (somme des TVA) (id=517)
+                    // create a debit line on account "taxes to pay"
                     if($debit_vat_sum > 0) {
                         $debit = round($debit_vat_sum, 2);
                         $credit = 0.0;
@@ -521,7 +519,7 @@ class Invoice extends Model {
                         ];
                     }
 
-                    // create a debit line on account 40000 (id=421): créances commerciales (sommes des prix de vente TVAC - somme des acomptes)
+                    // create a debit line on account "trade debtors"
                     $debit = round($prices_sum-$downpayments_sum, 2);
                     $credit = 0.0;
                     // assign with handling of reversing entries
@@ -540,8 +538,6 @@ class Invoice extends Model {
         }
         return $result;
     }
-
-
 
     /**
      * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
