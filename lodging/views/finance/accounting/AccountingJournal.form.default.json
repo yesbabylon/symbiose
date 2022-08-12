@@ -55,6 +55,29 @@
                         ]
                     }
                 ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.accounting_entries",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_entries_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

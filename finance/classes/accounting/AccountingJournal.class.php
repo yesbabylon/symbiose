@@ -22,7 +22,7 @@ class AccountingJournal extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'result_type'       => 'string',                
+                'result_type'       => 'string',
                 'description'       => 'Label for identifying the journal.',
                 'function'          => 'calcName',
                 'store'             => true
@@ -31,7 +31,7 @@ class AccountingJournal extends Model {
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Verbose detail of the role of the journale.',
-                'multilang'         => true                
+                'multilang'         => true
             ],
 
             'code' => [

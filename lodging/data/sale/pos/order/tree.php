@@ -129,6 +129,7 @@ switch($params['variant']) {
                     'id',
                     'order_payment_id',
                     'amount',
+                    'status',
                     'payment_method',
                     'booking_id',
                     'voucher_ref'
@@ -190,7 +191,8 @@ switch($params['variant']) {
                 'discount',
                 'free_qty',
                 'total',
-                'price'
+                'price',
+                'has_booking'
             ],
             'order_payment_parts_ids' => [
                 'id',

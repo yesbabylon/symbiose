@@ -55,7 +55,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'store'             => true
             ],
 
-            // override onupdate event (uses local calcNumber)
+            // override onupdate event (uses local onupdateStatus)
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
@@ -116,16 +116,15 @@ class Invoice extends \finance\accounting\Invoice {
 
             // generate accounting entries
             $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
-
-            // create new entries objects and assign to the sale journal relating to the center_office_id
+            
             foreach($invoices as $oid => $invoice) {
 
                 $res = $om->search(AccountingJournal::getType(), [['center_office_id', '=', $invoice['center_office_id']], ['type', '=', 'sales']]);
                 $journal_id = reset($res);
                 
-                if(isset($invoices_accounting_entries[$oid])) {
+                if($journal_id && isset($invoices_accounting_entries[$oid])) {
                     $accounting_entries = $invoices_accounting_entries[$oid];
-
+                    // create new entries objects and assign to the sale journal relating to the center_office_id
                     foreach($accounting_entries as $entry) {
                         $entry['journal_id'] = $journal_id;
                         $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
