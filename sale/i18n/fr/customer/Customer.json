@@ -44,7 +44,7 @@
             "help": ""
         },
         "customer_nature_id": {
-            "label": "Nature du client",
+            "label": "Nature client",
             "description": "La nature (origine) permet d'attribuer une catégorie tarifaire.",
             "help": ""
         },
