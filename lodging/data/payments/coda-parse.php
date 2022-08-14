@@ -45,7 +45,6 @@ $lodging_payments_import_getIbanFromBban = function ($bban) {
 
     $code_alpha = $country_code;
     $code_num = '';
-
     for($i = 0; $i < strlen($code_alpha); ++$i) {
         $letter = substr($code_alpha, $i, 1);
         $order = ord($letter) - ord('A');
