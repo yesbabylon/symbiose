@@ -1,0 +1,50 @@
+{
+    "name": "Accounting entries",
+    "description": "Invoice accounting entries.",
+    "access": {
+        "groups": ["finance.default.user", "sale.default.user"]
+    },
+    "operations": {
+        "total": {
+            "credit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "debit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "account_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "label": "Journal",
+                "value": "journal_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "debit",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "credit",
+                "width": "20%"
+            }
+        ]
+    }
+}
