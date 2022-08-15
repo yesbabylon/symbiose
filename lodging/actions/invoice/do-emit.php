@@ -48,7 +48,7 @@ if(is_null($invoice['funding_id'])) {
         $booking = Booking::id($invoice['booking_id'])
                           ->read(['id', 'name', 'status'])
                           ->first();
-                        
+
         if(!$booking) {
             throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
         }

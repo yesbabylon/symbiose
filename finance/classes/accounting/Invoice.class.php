@@ -169,7 +169,8 @@ class Invoice extends Model {
             'payment_terms_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentTerms',
-                'description'       => "The payment terms to apply to the invoice."
+                'description'       => "The payment terms to apply to the invoice.",
+                'default'           => 1
             ],
 
             'due_date' => [

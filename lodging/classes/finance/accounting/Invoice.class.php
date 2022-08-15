@@ -38,7 +38,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'Office the invoice relates to (for center management).',
                 'required'          => true
             ],
-            
+
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => self::getType(),
@@ -103,11 +103,11 @@ class Invoice extends \finance\accounting\Invoice {
         return $result;
     }
 
-    public static function onupdateStatus($om, $oids, $values, $lang) { 
+    public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
             $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
-            
+
             $invoices = $om->read(__CLASS__, $oids, [
                 // #memo - generate an invoice number (force immediate recomputing)
                 'number',
@@ -116,12 +116,12 @@ class Invoice extends \finance\accounting\Invoice {
 
             // generate accounting entries
             $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
-            
+
             foreach($invoices as $oid => $invoice) {
 
                 $res = $om->search(AccountingJournal::getType(), [['center_office_id', '=', $invoice['center_office_id']], ['type', '=', 'sales']]);
                 $journal_id = reset($res);
-                
+
                 if($journal_id && isset($invoices_accounting_entries[$oid])) {
                     $accounting_entries = $invoices_accounting_entries[$oid];
                     // create new entries objects and assign to the sale journal relating to the center_office_id
@@ -129,7 +129,7 @@ class Invoice extends \finance\accounting\Invoice {
                         $entry['journal_id'] = $journal_id;
                         $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
                     }
-                }                
+                }
             }
 
         }

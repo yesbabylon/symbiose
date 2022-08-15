@@ -34,7 +34,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch']     
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
 /**
@@ -49,7 +49,7 @@ list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm
 $booking = Booking::id($params['id'])
                   ->read(['id', 'name', 'status', 'contracts_ids', 'booking_lines_ids', 'fundings_ids' => ['id', 'is_paid']])
                   ->first();
-                  
+
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
@@ -75,7 +75,7 @@ if($booking['status'] != 'quote') {
 
     $fundings_ids_to_remove = [];
     foreach($booking['fundings_ids'] as $fid => $funding) {
-        if($funding['type'] == 'invoice') { 
+        if($funding['type'] == 'invoice') {
             // once emitted, we cannot remove an invoice without creating a credit note
             continue;
         }
@@ -83,11 +83,11 @@ if($booking['status'] != 'quote') {
             $fundings_ids_to_remove[] = "-$fid";
         }
     }
-    // mark contracts as expired        
+    // mark contracts as expired
     // #memo - generated contracts are kept for history (we never delete them)
     Contract::ids($booking['contracts_ids'])->update(['status' => 'cancelled']);
     // remove consumptions if requested (link & part)
-    if($params['free_rental_units']) {        
+    if($params['free_rental_units']) {
         Consumption::search(['booking_id', '=', $params['id']])->delete(true);
     }
     // mark lines as not 'invoiced' (waiting for payment)

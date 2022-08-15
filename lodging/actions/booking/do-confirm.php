@@ -120,8 +120,7 @@ $cron->cancel("booking.option.deprecation.{$params['id']}");
 */
 
 
-// #memo we allow setting a booking to 'confirmed' even if is has is_price_tbc set to true
-// BUT contracts will not be generated for these
+// #memo we allow setting a booking to 'confirmed' even if is has is_price_tbc set to true, but contracts will not be generated for these
 if(!$booking['is_price_tbc']) {
     // remember all booking lines involved
     $booking_lines_ids = [];
@@ -359,8 +358,8 @@ if(!$on_time) {
         'type'                  => 'installment',
         'order'                 => 1,
         'due_date'              => $booking['date_from'],
-        'due_amount'            => $booking['price']            
-    ];        
+        'due_amount'            => $booking['price']
+    ];
     Funding::create($funding)->read(['name'])->get();
 }
 else {
@@ -403,6 +402,10 @@ else {
         // request funding creation
         try {
             $new_funding = Funding::create($funding)->read(['id', 'name'])->first();
+            if($deadline['type'] == 'invoice') {
+                // an invoice was requested: convert the installement to an invoice
+                eQual::run('do', 'lodging_funding_convert', ['id' => $new_funding['id'], 'partner_id' => $booking['customer_id']['id']]);
+            }
         }
         catch(Exception $e) {
             // ignore duplicates (not created)

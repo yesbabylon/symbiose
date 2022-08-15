@@ -25,7 +25,7 @@ class Payment extends \lodging\sale\pay\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => Funding::getType(),
                 'description'       => 'The funding the payement relates to, if any.',
-                'onupdate'          => 'sale\pay\Payment::onupdateFundingId'
+                'onupdate'          => 'onupdateFundingId'
             ]
 
         ];
@@ -43,13 +43,36 @@ class Payment extends \lodging\sale\pay\Payment {
         return $result;
     }
 
+    /**
+     * Check newly assigned funding and create an invoice for long term downpayments.
+     * #memo - This cannot be undone.
+     */
+    public static function onupdateFundingId($om, $ids, $values, $lang) {
+        // call parent onupdate
+        parent::onupdateFundingId($om, $ids, $values, $lang);
+
+        $payments = $om->read(self::getType(), $ids, ['funding_id', 'booking_id', 'booking_id.date_from', 'funding_id.type']);
+
+        if($payments > 0) {
+            foreach($payments as $pid => $payment) {
+                // if payment relates to a funding attached to a booking that will occur after the 31th of december of current year, convert the funding to an invoice
+                if($payment['funding_id'] && $payment['booking_id']) {
+                    $last_date = mktime(0, 0, 0, 12, 31, date('Y'));
+                    if($payment['funding_id.type'] != 'invoice' && $payment['booking_id.date_from'] > $last_date) {
+                        // convert the funding to an invoice
+                        $om->callonce(Funding::getType(), '_convertToInvoice', $payment['funding_id']);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Signature for single object change from views.
      *
      * @param  Object   $om        Object Manager instance.
-     * @param  Array    $event      Associative array holding changed fields as keys, and their related new values.
-     * @param  Array    $values     Copy of the current (partial) state of the object.
+     * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
+     * @param  Array    $values    Copy of the current (partial) state of the object.
      * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */

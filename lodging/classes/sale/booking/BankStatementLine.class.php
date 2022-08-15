@@ -59,11 +59,11 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
                 $found_funding_id = null;
 
-                $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['payment_reference', '=', $line['structured_message']] ]);
-                
+                $candidates_fundings_ids = $om->search(Funding::getType(), [ ['payment_reference', '=', $line['structured_message']] ]);
+
                 // if there's no match, fall back to using message as reference
                 if($candidates_fundings_ids <= 0 && !count($candidates_fundings_ids)) {
-                    $candidates_fundings_ids = $om->search('lodging\sale\booking\Funding', [ ['payment_reference', '=', preg_replace('/[^0-9.]+/', '', $line['message'])] ]);
+                    $candidates_fundings_ids = $om->search(Funding::getType(), [ ['payment_reference', '=', preg_replace('/[^0-9.]+/', '', $line['message'])] ]);
                 }
 
                 if($candidates_fundings_ids > 0 && count($candidates_fundings_ids)) {
@@ -93,9 +93,9 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                                 }
                             }
                             if(!$found_funding_id) {
-                                // error : the amount has already been paid
-                                // notify accountant that a reimbursment is due
-                                $om->write(get_called_class(), $lid, ['status' => 'to_refund']);
+                                // error: the amount has already been paid
+                                // #todo - notify accountant that a reimbursment is due
+                                $om->update(get_called_class(), $lid, ['status' => 'to_refund']);
                                 continue;
                             }
                         }
@@ -105,14 +105,14 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
                 if($found_funding_id) {
                     // create a new payment with received amount
-                    $om->create('sale\pay\Payment', [
+                    $om->create(Payment::getType(), [
                         'funding_id'        => $found_funding_id,
                         'statement_line_id' => $lid,
                         'amount'            => $line['amount'],
                         'payment_method'    => 'bank'
                     ], $lang);
                     // mark the line as successfully reconciled
-                    $om->write(get_called_class(), $lid, ['status' => 'reconciled']);
+                    $om->update(get_called_class(), $lid, ['status' => 'reconciled']);
                 }
 
             }
