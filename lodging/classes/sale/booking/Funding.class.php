@@ -5,7 +5,13 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace lodging\sale\booking;
+
+use lodging\sale\booking\Invoice;
+use lodging\sale\booking\InvoiceLine;
+use lodging\sale\catalog\Product;
+use sale\price\Price;
 use core\setting\Setting;
+
 
 class Funding extends \lodging\sale\pay\Funding {
 
@@ -38,13 +44,13 @@ class Funding extends \lodging\sale\pay\Funding {
             ],
 
             'amount_share' => [
-                'type'              => 'computed',                
+                'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/percent',
                 'function'          => 'calcAmountShare',
                 'store'             => true,
                 'description'       => "Share of the payment over the total due amount (booking)."
-            ],   
+            ],
 
             // override to use local calcPaymentReference with booking_id
             'payment_reference' => [
@@ -88,7 +94,7 @@ class Funding extends \lodging\sale\pay\Funding {
         }
 
         return $result;
-    }  
+    }
 
     public static function calcPaymentReference($om, $oids, $lang) {
         $result = [];
@@ -112,7 +118,7 @@ class Funding extends \lodging\sale\pay\Funding {
 
     public static function onupdateDueAmount($orm, $oids, $values, $lang) {
         $orm->update(self::getType(), $oids, ['name' => null, 'amount_share' => null], $lang);
-    }    
+    }
 
     public function getUnique() {
         return [
@@ -171,14 +177,105 @@ class Funding extends \lodging\sale\pay\Funding {
                     foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
                         if($oid != $fid) {
                             $fundings_price += $odata['due_amount'];
-                        }                        
+                        }
                     }
                     if($fundings_price > $booking['price']) {
                         return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total ({$fundings_price})."]];
-                    }                    
+                    }
                 }
             }
-        }        
+        }
         return parent::canupdate($om, $oids, $values, $lang);
     }
+
+    /**
+     * Convert an installment to an invoice.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     */
+    public static function _convertToInvoice($om, $oids, $values, $lang) {
+
+        $fundings = $om->read(self::getType(), $oids, [
+            'due_amount',
+            'booking_id',
+            'booking_id.customer_id',
+            'booking_id.date_from',
+            'booking_id.center_id.organisation_id',
+            'booking_id.center_id.center_office_id',
+            'booking_id.center_id.price_list_category_id'
+            ], $lang);
+
+        if($fundings > 0) {
+
+            foreach($fundings as $fid => $funding) {
+
+                // retrieve downpayment product
+                $downpayment_product_id = 0;
+
+                $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku.'.$funding['booking_id.center_id.organisation_id']);
+                if($downpayment_sku) {
+                    $products_ids = $om->search(Product::getType(), ['sku', '=', $downpayment_sku]);
+                    if($products_ids > 0 && count($products_ids)) {
+                        $downpayment_product_id = reset($products_ids);
+                    }
+                }
+
+                // create a new invoice
+                $invoice_id = $om->create(Invoice::getType(), [
+                    'organisation_id'   => $funding['booking_id.center_id.organisation_id'],
+                    'center_office_id'  => $funding['booking_id.center_id.center_office_id'],
+                    'booking_id'        => $funding['booking_id'],
+                    'partner_id'        => $funding['booking_id.customer_id'],
+                    'funding_id'        => $fid
+                ], $lang);
+
+                /*
+                    Find vat rule, based on Price for product for current year
+                */
+                $vat_rate = 0.0;
+
+                // find suitable price list
+                $price_lists_ids = $om->search('sale\price\PriceList', [
+                        ['price_list_category_id', '=', $funding['booking_id.center_id.price_list_category_id']],
+                        ['date_from', '<=', $funding['booking_id.date_from']],
+                        ['date_to', '>=', $funding['booking_id.date_from']],
+                        ['status', 'in', ['published']]
+                    ],
+                    ['is_active' => 'desc']
+                );
+
+                // search for a matching Price within the found Price List
+                foreach($price_lists_ids as $price_list_id) {
+                    // there should be one or zero matching pricelist with status 'published', if none of the found pricelist
+                    $prices_ids = $om->search('sale\price\Price', [ ['price_list_id', '=', $price_list_id], ['product_id', '=', $downpayment_product_id]]);
+                    if($prices_ids > 0 && count($prices_ids)) {
+                        $prices = $om->read(Price::getType(), $prices_ids, ['vat_rate'], $lang);
+                        $price = reset($prices);
+                        $vat_rate = $price['vat_rate'];
+                    }
+                }
+
+                // #memo - funding already includes the VAT, if any (funding due_amount cannot be changed)
+                $unit_price = $funding['due_amount'];
+
+                if($vat_rate > 0) {
+                    // deduct VAT from due amount
+                    $unit_price = round($unit_price / (1+$vat_rate), 4);
+                }
+
+                // create invoice line related to the downpayment
+                $om->create(InvoiceLine::getType(), [
+                    'invoice_id' => $invoice_id,
+                    'product_id' => $downpayment_product_id,
+                    'unit_price' => $unit_price,
+                    'qty'        => 1,
+                    'vat_rate'   => $vat_rate
+                ]);
+
+                // convert funding to 'invoice' type
+                $om->update(Funding::getType(), $fid, ['type' => 'invoice', 'invoice_id' => $invoice_id]);
+            }
+        }
+    }
+
 }
