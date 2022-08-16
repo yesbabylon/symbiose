@@ -16,8 +16,8 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)	
-        'groups'            => ['sale.default.user'],// list of groups ids or names granted 
+        'visibility'        => 'protected',
+        'groups'            => ['sale.default.user'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -38,14 +38,13 @@ if($user_id <= 0) {
 }
 
 // function for converting BBAN to IBAN
-$lodging_payments_import_getIbanFromBban = function ($bban) {    
+$lodging_payments_import_getIbanFromBban = function ($bban) {
     $result = '';
 
     $country_code = 'BE';
 
     $code_alpha = $country_code;
     $code_num = '';
-    
     for($i = 0; $i < strlen($code_alpha); ++$i) {
         $letter = substr($code_alpha, $i, 1);
         $order = ord($letter) - ord('A');
@@ -60,7 +59,7 @@ $lodging_payments_import_getIbanFromBban = function ($bban) {
         $check_digits = substr($bban, -2);
         $dummy = intval($check_digits.$check_digits.$code_num.'00');
         $control = 98 - ($dummy % 97);
-        $result = sprintf("BE%s%s", $control, $bban);    
+        $result = sprintf("BE%s%s", $control, $bban);
     }
     return $result;
 };
@@ -105,7 +104,7 @@ foreach ($statements as $statement) {
         $line['transactions'][] = [
             'account'   => [
                 "name"      => $account->getName(),
-                "bic"       => $account->getBic(),                
+                "bic"       => $account->getBic(),
                 "number"    => $account->getNumber(),
                 "currency"  => $account->getCurrencyCode()
             ],

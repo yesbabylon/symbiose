@@ -22,7 +22,7 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "10%"
+                "width": "20%"
             },
             {
                 "type": "field",

@@ -55,7 +55,7 @@ class Payment extends Model {
                 ],
                 'description'       => "The method used for payment at the cashdesk.",
                 'visible'           => [ ['payment_origin', '=', 'cashdesk'] ],
-                'default'           => 'cash'                
+                'default'           => 'cash'
             ],
 
             'operation_id' => [
@@ -94,6 +94,11 @@ class Payment extends Model {
         ];
     }
 
+    /**
+     * Assign partner_id and invoice_id from invoice relating to funding, if any.
+     * Force recomputing of target funding computed fields (is_paid and paid_amount).
+     *
+     */
     public static function onupdateFundingId($om, $ids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
@@ -116,11 +121,11 @@ class Payment extends Model {
                                 $values['partner_id'] = $funding['invoice_id.partner_id.id'];
                                 $values['invoice_id'] = $funding['invoice_id'];
                             }
-                            $om->write(get_called_class(), $pid, $values);
+                            $om->update(get_called_class(), $pid, $values);
                         }
                     }
 
-                    $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null, 'paid_amount' => null]);
+                    $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null, 'paid_amount' => null]);
                     $fundings_ids[] = $payment['funding_id'];
                 }
             }

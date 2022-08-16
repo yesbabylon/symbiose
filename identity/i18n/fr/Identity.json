@@ -37,8 +37,8 @@
         },
         "short_name": {
             "label": "Nom usuel",
-            "description": "Nom usuel utilisé en interne pour identifier l'organisation.",
-            "help": "Nom usuel utilisé en interne pour identifier l'organisation (acronyme ou nom abrégé)."
+            "description": "Nom utilisé en interne pour identifier l'organisation.",
+            "help": "Le nom usuel n'est jamais présenté au client et peut contenir tout caractère ou mot permettant de faciliter l'identification de l'organisation (acronyme ou nom abrégé)."
         },
         "description": {
             "label": "Description",

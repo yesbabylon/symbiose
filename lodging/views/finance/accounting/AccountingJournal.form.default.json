@@ -1,6 +1,6 @@
 {
-    "name": "Invoice Accounting Entry",
-    "description": "Invoice Accounting Entries.",
+    "name": "Accounting journal",
+    "description": "Accounting Entries.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
     },
@@ -20,24 +20,18 @@
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "invoice_id",
+                                                "value": "code",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "account_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "journal_id",
-                                                "width": "50%"
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -46,13 +40,36 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "debit",
+                                                "value": "type",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "credit",
+                                                "value": "center_office_id",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.accounting_entries",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_entries_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

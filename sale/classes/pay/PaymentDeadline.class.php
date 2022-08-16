@@ -47,7 +47,7 @@ class PaymentDeadline extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'installment',                 // pre-payment (can be converted to invoice): there can be many of those
-                    'invoice'                      // balance invoice (there should be only one ot that type) 
+                    'invoice'                      // balance invoice (there should be only one ot that type)
                 ],
                 'description'       => "Deadlines are installment except for last one, the final invoice."
             ],
@@ -67,7 +67,7 @@ class PaymentDeadline extends Model {
             ],
 
             'payment_plan_id' => [
-                'type'              => 'many2one',                
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentPlan',
                 'description'       => "The payment plan the deadline applies to.",
                 'ondelete'          => 'delete'

@@ -1,0 +1,9 @@
+{
+    "model": {
+        "center_office_id": {
+            "label": "Équipe de gestion",
+            "description": "Centre de gestion auquel appartient le journal.",
+            "help": ""
+        }
+    }
+}

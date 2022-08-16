@@ -19,7 +19,7 @@ list($params, $providers) = announce([
         ]
     ],
     'access' => [
-        'visibility'        => 'public',
+        'visibility'        => 'protected',
         'groups'            => ['sale.default.user'],
     ],
     'response'      => [
@@ -88,6 +88,7 @@ foreach($statements as $statement) {
                     'structured_message'    => $transaction['structured_message'],
                     'center_office_id'      => $center_office['id']
                 ];
+                // will trigger auto-reconcile (through `onupdateCenterOfficeId()`)
                 BankStatementLine::create($fields);
             }
             catch(Exception $e) {

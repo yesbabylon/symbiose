@@ -45,6 +45,11 @@ list($params, $providers) = announce([
     'providers'     => ['context', 'orm', 'auth']     
 ]);
 
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\auth\AuthenticationManager   $auth
+ */
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 // read booking object
