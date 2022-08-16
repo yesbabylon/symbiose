@@ -52,6 +52,12 @@ class Customer extends \identity\Partner {
                 'description'       => 'Force relationship to Customer'
             ],
 
+            'is_tour_operator' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the customer as a Tour Operator.',
+                'default'           => false
+            ],
+
             'count_booking_12' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
