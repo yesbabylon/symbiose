@@ -13,9 +13,9 @@
         "range_to": "date.this.year.last",
         "datasets": [
             {
-                "label": "Réservations non facturées",
+                "label": "Réservations non-facturées",
                 "operation": ["COUNT", "object.id"],
-                "domain": ["status", "=", "debit balance"]
+                "domain": ["status", "=", "debit_balance"]
             }
         ]
     }
