@@ -21,23 +21,18 @@
         "items": [
             {
                 "type": "field",
-                "value": "account_id",
-                "width": "25%"
-            },
-            {
-                "type": "field",
                 "value": "name",
                 "width": "25%"
             },
             {
                 "type": "field",
-                "value": "debit",
-                "width": "20%"
+                "value": "code",
+                "width": "25%"
             },
             {
                 "type": "field",
-                "value": "credit",
-                "width": "20%"
+                "value": "description",
+                "width": "25%"
             }
         ]
     }

@@ -68,6 +68,14 @@
         "item.planning.occupancies": {
             "label": "Occupations",
             "help": ""
+        },
+        "item.repairings": {
+            "label": "Réparation & Maintenance",
+            "help": ""
+        },
+        "item.repairings.repairings": {
+            "label": "Réparations",
+            "help": ""
         }
     }
 }
