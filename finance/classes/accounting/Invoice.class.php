@@ -31,7 +31,6 @@ class Invoice extends Model {
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
             ],
 
-           // the (owner) organisation the invoice relates to (multi-company support)
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -170,7 +169,8 @@ class Invoice extends Model {
             'payment_terms_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\PaymentTerms',
-                'description'       => "The payment terms to apply to the invoice."
+                'description'       => "The payment terms to apply to the invoice.",
+                'default'           => 1
             ],
 
             'due_date' => [
@@ -200,7 +200,6 @@ class Invoice extends Model {
         }
         return $result;
     }
-
 
     public static function calcPaymentReference($om, $oids, $lang) {
         $result = [];
@@ -315,7 +314,13 @@ class Invoice extends Model {
             // generate an invoice number (force immediate recomuting)
             $om->read(__CLASS__, $oids, ['number'], $lang);
             // generate accounting entries
-            $om->callonce(__CLASS__, '_generateAccountingEntries', $oids, [], $lang);
+            $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
+            // create new entries objects
+            foreach($invoices_accounting_entries as $oid => $accounting_entries) {
+                foreach($accounting_entries as $entry) {
+                    $om->create(AccountingEntry::getType(), $entry);
+                }
+            }
         }
     }
 
@@ -370,11 +375,40 @@ class Invoice extends Model {
         return parent::candelete($om, $oids);
     }
 
-
+    /**
+     * Generate the accounting entries according to the invoice lines.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @param  array                       $values     (unused)
+     * @param  string                      $lang       Language code in which to process the request.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
     public static function _generateAccountingEntries($om, $oids, $values, $lang) {
+        $result = [];
         // generate the accounting entries
         $invoices = $om->read(self::getType(), $oids, ['status', 'type', 'organisation_id', 'invoice_lines_ids'], $lang);
         if($invoices > 0) {
+            // retrieve specific accounts numbers
+            $account_sales = Setting::get_value('finance', 'invoice', 'account.sales', 'not_found');
+            $account_sales_taxes = Setting::get_value('finance', 'invoice', 'account.sales_taxes', 'not_found');
+            $account_trade_debtors = Setting::get_value('finance', 'invoice', 'account.trade_debtors', 'not_found');
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_sales]);
+            $account_sales_id = reset($res);
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_sales_taxes]);
+            $account_sales_taxes_id = reset($res);
+
+            $res = $om->search(AccountChartLine::getType(), ['code', '=', $account_trade_debtors]);
+            $account_trade_debtors_id = reset($res);
+
+            if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
+                // a mandatory value could not be retrieved
+                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                return [];
+            }
+
             foreach($invoices as $oid => $invoice) {
                 if($invoice['status'] != 'invoice') {
                     continue;
@@ -410,15 +444,15 @@ class Invoice extends Model {
                         if($line['product_id'] == $downpayment_product_id && $line['qty'] < 0) {
                             // sum up downpayments (VAT incl. price)
                             $downpayments_sum += abs($line['price']);
-                            // if some VTA is due, deduct the sum accordingly
+                            // if some VAT is due, deduct the sum accordingly
                             $debit_vat_sum += $vat_amount;
-                            // create a debit line with the product, on sale account 70xxxxx (id=895) (VAT excl.)
+                            // create a debit line with the product, on account "sales"
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [
                                 'name'          => $line['name'],
                                 'invoice_id'    => $oid,
-                                'account_id'    => 895,
+                                'account_id'    => $account_sales_id,
                                 'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                                 'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                             ];
@@ -427,14 +461,14 @@ class Invoice extends Model {
                         else {
                             // sum up VAT amounts
                             $credit_vat_sum += $vat_amount;
-                            // sum up sale prices vente (VAT incl. price)
+                            // sum up sale prices (VAT incl. price)
                             $prices_sum += $line['price'];
                             $rule_lines = [];
                             // handle installment invoice
                             if($line['product_id'] == $downpayment_product_id) {
-                                // generate virtual rule for downpayment
+                                // generate virtual rule for downpayment with account "sales"
                                 $rule_lines = [
-                                    ['account_id' => 895, 'share' => 1.0]
+                                    ['account_id' => $account_sales_id, 'share' => 1.0]
                                 ];
                             }
                             else if (isset($line['price_id.accounting_rule_id.accounting_rule_line_ids'])) {
@@ -458,7 +492,7 @@ class Invoice extends Model {
                         }
                     }
 
-                    // create a credit line on account 451 : taxes TVA à payer (somme des TVA) (id=517)
+                    // create a credit line on account "taxes to pay"
                     if($credit_vat_sum > 0) {
                         $debit = 0.0;
                         $credit = round($credit_vat_sum, 2);
@@ -466,13 +500,13 @@ class Invoice extends Model {
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
                             'invoice_id'    => $oid,
-                            'account_id'    => 517,
+                            'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                             'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                         ];
                     }
 
-                    // create a debit line on account 451 : taxes TVA à payer (somme des TVA) (id=517)
+                    // create a debit line on account "taxes to pay"
                     if($debit_vat_sum > 0) {
                         $debit = round($debit_vat_sum, 2);
                         $credit = 0.0;
@@ -480,35 +514,31 @@ class Invoice extends Model {
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
                             'invoice_id'    => $oid,
-                            'account_id'    => 517,
+                            'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                             'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                         ];
                     }
 
-                    // create a debit line on account 40000 (id=421): créances commerciales (sommes des prix de vente TVAC - somme des acomptes)
+                    // create a debit line on account "trade debtors"
                     $debit = round($prices_sum-$downpayments_sum, 2);
                     $credit = 0.0;
                     // assign with handling of reversing entries
                     $accounting_entries[] = [
                         'name'          => 'créances commerciales',
                         'invoice_id'    => $oid,
-                        'account_id'    => 421,
+                        'account_id'    => $account_trade_debtors_id,
                         'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
                         'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
                     ];
 
-                    // generate all required entries
-                    foreach($accounting_entries as $eid => $entry) {
-                        $om->create(\finance\accounting\AccountingEntry::getType(), $entry);
-                    }
-
+                    // append generated entries to result
+                    $result[$oid] = $accounting_entries;                    
                 }
             }
         }
+        return $result;
     }
-
-
 
     /**
      * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.

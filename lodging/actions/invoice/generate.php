@@ -22,7 +22,7 @@ list($params, $providers) = announce([
             'required'      => true
         ],
         'partner_id' =>  [
-            'description'   => 'Identifier of the partner to which the invoice must be addressed.',
+            'description'   => 'Identifier of the partner to which the invoice must be addressed, if not set defaults to customer_id.',
             'type'          => 'integer'
         ]
     ],

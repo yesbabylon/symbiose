@@ -1,0 +1,54 @@
+{
+    "name": "Accounting journal",
+    "description": "List of accounting journals.",
+    "access": {
+        "groups": ["finance.default.user", "sale.default.user"]
+    },
+    "domain": ["center_office_id", "in", "user.center_offices_ids"],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "10%",
+                "widget": {
+                    "sortable": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%",
+                "widget": {
+                    "sortable": true
+                }
+            },            
+            {
+                "type": "field",
+                "value": "organisation_id",
+                "width": "20%",
+                "widget": {
+                    "sortable": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "center_office_id",
+                "width": "25%",
+                "widget": {
+                    "sortable": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "25%"
+            }
+        ]
+    }
+}

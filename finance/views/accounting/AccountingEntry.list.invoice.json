@@ -4,6 +4,19 @@
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
     },
+    "operations": {
+        "total": {
+            "credit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
+            "debit": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,
     "layout": {
         "items": [
             {

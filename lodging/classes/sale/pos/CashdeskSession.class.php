@@ -27,17 +27,17 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
                 'onupdate'          => 'onupdateCashdeskId'
             ],
 
+            'center_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \lodging\identity\Center::getType(),
+                'description'       => "The center the desk relates to (from cashdesk)."
+            ],
+
             'orders_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => Order::getType(),
                 'foreign_field'     => 'session_id',
                 'description'       => 'The orders that relate to the session.'
-            ],
-
-            'center_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => \lodging\identity\Center::getType(),
-                'description'       => "The center the desk relates to (from cashdesk)."
             ]
 
         ];
