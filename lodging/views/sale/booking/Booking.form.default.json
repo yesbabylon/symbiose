@@ -279,19 +279,19 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Center",
                                                 "value": "center_id",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_identity_id",
-                                                "width": "50%"
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
@@ -312,8 +312,30 @@
                                                 "width": "50%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Via Tour Operator?",
+                                                "value": "has_tour_operator",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Tour Operator",
+                                                "value": "tour_operator_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Reference",
+                                                "value": "tour_operator_ref",
+                                                "width": "50%"
+                                            }
+                                        ]
                                     }
-
                                 ]
                             },
                             {
