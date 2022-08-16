@@ -35,7 +35,7 @@
         },
         "has_tour_operator": {
             "label": "Via Tour Opérateur ?",
-            "description": "La réservation a été conclue via un Tour Opérateur ou une OTA.",
+            "description": "La réservation conclue via un Tour Opérateur ou une OTA.",
             "help": ""
         },
         "tour_operator_id": {
