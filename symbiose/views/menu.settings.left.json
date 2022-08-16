@@ -321,6 +321,7 @@
                         "icon": "people_alt",
                         "context": {
                             "entity": "sale\\customer\\TourOperator",
+                            "domain": ["is_tour_operator", "=", true],
                             "view": "list.default"
                         }
                     },
