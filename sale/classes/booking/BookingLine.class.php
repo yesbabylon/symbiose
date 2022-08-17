@@ -253,7 +253,7 @@ class BookingLine extends Model {
             // #memo - vat_rate and unit_price can be set manually, we don't want to overwrite the update !
             $new_values = $values;
         }
-        $om->write(__CLASS__, $oids, $new_values);
+        $om->update(__CLASS__, $oids, $new_values);
         // update parent objects
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
         if($lines > 0) {
