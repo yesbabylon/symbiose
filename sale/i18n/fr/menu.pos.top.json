@@ -1,0 +1,9 @@
+{
+    "description": "",
+    "view": {
+        "item.home": {
+            "label": "Accueil",
+            "help": ""
+        }
+    }
+}

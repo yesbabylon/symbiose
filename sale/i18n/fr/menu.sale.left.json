@@ -9,12 +9,68 @@
 			"label": "Paiements à réconcilier", 
 			"help": ""
 		},
+		"item.bank_statements.statements_ready": {
+			"label": "Paiements réconciliés", 
+			"help": ""
+		},
 		"item.bank_statements.all_lines": {
 			"label": "Tous les paiements", 
 			"help": ""
 		},
-		"item.bank_statements.statements_ready": {
-			"label": "Extraits à envoyer", 
+		"item.customers": {
+			"label": "Clients", 
+			"help": ""
+		},
+		"item.customers_types": {
+			"label": "Types de client", 
+			"help": ""
+		},
+		"item.all_customers_types": {
+			"label": "Tous les types", 
+			"help": ""
+		},
+		"item.customers_natures": {
+			"label": "Natures de client", 
+			"help": ""
+		},
+		"item.all_customers_natures": {
+			"label": "Toutes les natures", 
+			"help": ""
+		},
+		"item.new_customer": {
+			"label": "Nouveau client", 
+			"help": ""
+		},
+		"item.all_customers": {
+			"label": "Tous les clients", 
+			"help": ""
+		},
+		"item.all_partners": {
+			"label": "Tous les partenaires", 
+			"help": ""
+		},
+		"item.fundings": {
+			"label": "Financements", 
+			"help": ""
+		},
+		"item.fundings.waiting": {
+			"label": "Paiements en attente", 
+			"help": ""
+		},
+		"item.fundings.overdue": {
+			"label": "Paiements en retard", 
+			"help": ""
+		},
+		"item.invoices": {
+			"label": "Factures", 
+			"help": ""
+		},
+		"item.invoices.all": {
+			"label": "Toutes les factures", 
+			"help": ""
+		},
+		"item.invoices.overdue": {
+			"label": "Factures en retard", 
 			"help": ""
 		}
 	}

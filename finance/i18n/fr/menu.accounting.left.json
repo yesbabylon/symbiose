@@ -26,7 +26,27 @@
             "help": ""
         },
         "item.fundings.reimburse": {
-            "label": "Remboursements à faire",
+            "label": "Paiements à rembourser",
+            "help": ""
+        },
+        "item.settings": {
+            "label": "Paramètres",
+            "help": ""
+        },
+        "finance.accounting.vat_rules": {
+            "label": "Règles TVA",
+            "help": ""
+        },
+        "finance.accounting.accounting_rules": {
+            "label": "Règles comptables",
+            "help": ""
+        },
+        "finance.accounting.account_chart": {
+            "label": "Plan comptable",
+            "help": ""
+        },
+        "finance.accounting.accounting_journals": {
+            "label": "Journaux comptables",
             "help": ""
         }
     }
