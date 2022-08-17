@@ -584,11 +584,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
         }
 
-
         $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
-
 
         // second-pass: update agerange assignments and build booking_lines_ids
         if($groups > 0) {
@@ -605,10 +603,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
             // re-compute bookinglines quantities
             $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
-            // invalidate prices
-            $om->callonce(BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
         }
 
+        // invalidate prices
+        $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
     }
 
 
