@@ -579,7 +579,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
         $bookings_ids = [];
         if($groups > 0) {
             $booking_lines_ids = [];
@@ -592,8 +592,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $bookings_ids[] = $group['booking_id'];
             }
             // re-compute bookinglines quantities
-            $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $booking_lines_ids, [], $lang);
+            $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
+            // reset sibling groups price adapters (this is necessary since the nb_pers is based on the booking total participants)
+            // #todo - no longer required once the packs will hold products models instead of products
+            $om->callonce(BookingLineGroup::getType(), '_updatePriceAdapters', $group['booking_id.booking_lines_groups_ids'], [], $lang);
         }
+
         // reset parent bookings nb_pers
         $om->write('sale\booking\Booking', $bookings_ids, ['nb_pers' => null]);
     }
