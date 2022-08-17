@@ -1,6 +1,6 @@
 {
-    "name": "Invoice Accounting Entry",
-    "description": "Invoice Accounting Entries.",
+    "name": "Accounting journal",
+    "description": "Accounting Entries.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
     },
@@ -9,8 +9,6 @@
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.accounting_journal_section",
                         "rows": [
                             {
                                 "columns": [
@@ -22,24 +20,36 @@
                                                 "value": "name",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
+                                                    "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "code",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
-                                    }                                   
+                                    }
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "sections": [
                     {
-                        "label": "Accounting Entries",
-                        "id": "section.accounting_entries_section",
+                        "id": "section.accounting_entries",
                         "rows": [
                             {
                                 "columns": [
@@ -52,12 +62,11 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    }                               
+                                    }
                                 ]
                             }
                         ]
                     }
-
                 ]
             }
         ]

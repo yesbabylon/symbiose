@@ -193,7 +193,7 @@
                             {
                                 "id": "stats.finance_funding",
                                 "type": "entry",
-                                "label": "Total Remboursements",
+                                "label": "Total Reimbursements",
                                 "description": "",
                                 "context": {
                                     "entity": "lodging\\sale\\booking\\Funding",
@@ -204,7 +204,7 @@
                         ]
                     }
                 ]
-            }                  
+            }
         ]
     }
 }

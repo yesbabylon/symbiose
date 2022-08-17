@@ -54,7 +54,7 @@
                                             },
                                             {
                                                 "id": "item.pos4",
-                                                "label": "Payment methods",
+                                                "label": "Méthodes de paiement",
                                                 "description": "",
                                                 "width": "50%",
                                                 "entity": "sale\\pos\\CashdeskSession",

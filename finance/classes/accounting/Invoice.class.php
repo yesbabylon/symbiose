@@ -60,7 +60,7 @@ class Invoice extends Model {
 
             'number' => [
                 'type'              => 'computed',
-                'resulttype'        => 'string',
+                'result_type'        => 'string',
                 'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing).",
                 'function'          => 'calcNumber',
                 'store'             => true
