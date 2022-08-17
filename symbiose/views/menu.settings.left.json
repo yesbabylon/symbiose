@@ -1013,7 +1013,7 @@
                                 }
                             },
                             {
-                                "id": "settings.calendar.holidays.holydays",
+                                "id": "settings.calendar.holidays.holidays",
                                 "type": "entry",
                                 "label": "Holidays",
                                 "description": "",
