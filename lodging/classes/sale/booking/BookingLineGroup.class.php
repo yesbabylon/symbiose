@@ -574,7 +574,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
 
         // invalidate prices
-        //$om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
+        $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
 
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
 
@@ -599,14 +599,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
                 // reset sibling groups prices and price adapters (this is necessary since the nb_pers is based on the booking total participants)
                 // #todo - no longer required once the packs will hold products models instead of products
-                $om->callonce(BookingLineGroup::getType(), '_updatePriceAdapters', $group['booking_id.booking_lines_groups_ids'], [], $lang);
+                $om->callonce(BookingLineGroup::getType(), 'onupdateNbPers', $group['booking_id.booking_lines_groups_ids'], [], $lang);
             }
             // re-compute bookinglines quantities
             $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
         }
-
-        // invalidate prices
-        $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
     }
 
 
@@ -1077,16 +1074,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             remove groups related to autosales that already exist
         */
         $groups = $om->read(__CLASS__, $oids, [
-                                                    'is_autosale',
-                                                    'nb_pers',
-                                                    'nb_nights',
-                                                    'date_from',
-                                                    'date_to',
-                                                    'booking_id',
-                                                    'booking_id.center_id.autosale_list_category_id',
-                                                    'booking_id.customer_id.count_booking_12',
-                                                    'booking_lines_ids'
-                                                ], $lang);
+                'is_autosale',
+                'nb_pers',
+                'nb_nights',
+                'date_from',
+                'date_to',
+                'booking_id',
+                'booking_id.center_id.autosale_list_category_id',
+                'booking_id.customer_id.count_booking_12',
+                'booking_lines_ids'
+            ], $lang);
 
         // loop through groups and create lines for autosale products, if any
         foreach($groups as $group_id => $group) {
@@ -1103,8 +1100,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
                 $om->write(__CLASS__, $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
             }
-
-
 
             /*
                 Find the first Autosale List that matches the booking dates
