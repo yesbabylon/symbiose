@@ -574,20 +574,24 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
 
         // invalidate prices
-        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        //$om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
+
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
+
+        // first-pass: reset parent bookings nb_pers
+        if($groups > 0) {
+            $bookings_ids = array_map(function($a) {return $a['booking_id'];}, $groups);
+            $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
+        }
+
 
         $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
 
+        // second-pass: update agerange assignments and build booking_lines_ids
         if($groups > 0) {
-            // first-pass: reset parent bookings nb_pers
-            $bookings_ids = array_map(function($a) {return $a['booking_id'];}, $groups);
-            $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
-
-            // second-pass: update agerange assignments and build booking_lines_ids
             $booking_lines_ids = [];
             foreach($groups as $group) {
                 if($group['is_sojourn'] && count($group['age_range_assignments_ids']) == 1) {
@@ -595,12 +599,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $om->update(BookingLineGroupAgeRangeAssignment::getType(), $age_range_assignment_id, ['qty' => $group['nb_pers']]);
                 }
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
+                // reset sibling groups prices and price adapters (this is necessary since the nb_pers is based on the booking total participants)
+                // #todo - no longer required once the packs will hold products models instead of products
+                $om->callonce(BookingLineGroup::getType(), '_updatePriceAdapters', $group['booking_id.booking_lines_groups_ids'], [], $lang);
             }
             // re-compute bookinglines quantities
             $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
-            // reset sibling groups price adapters (this is necessary since the nb_pers is based on the booking total participants)
-            // #todo - no longer required once the packs will hold products models instead of products
-            $om->callonce(BookingLineGroup::getType(), '_updatePriceAdapters', $group['booking_id.booking_lines_groups_ids'], [], $lang);
+            // invalidate prices
+            $om->callonce(BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
         }
 
     }

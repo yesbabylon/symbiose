@@ -165,7 +165,6 @@ class BookingLineGroup extends Model {
         ];
     }
 
-
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
         $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
