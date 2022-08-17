@@ -1,7 +1,7 @@
 {
     "name": "Menu Statistiques",
     "description": "",
-    "view": {        
+    "view": {
         "stats": {
             "label": "Statistiques",
             "help": ""
@@ -16,6 +16,14 @@
         },
         "stats.sale": {
             "label": "Stats Ventes",
+            "help": ""
+        },
+        "stats.finance": {
+            "label": "Stats Finance",
+            "help": ""
+        },
+        "stats.finance_funding": {
+            "label": "Total Remboursements",
             "help": ""
         }
     }

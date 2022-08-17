@@ -29,7 +29,7 @@
 			"help": ""
 		},
         "unit_price": {
-            "label": "P.U.",
+            "label": "P.U. ",
             "description": "Le prix unitaire du produit lié à la ligne.",
             "help": ""
         },
