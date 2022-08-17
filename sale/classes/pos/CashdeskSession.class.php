@@ -108,14 +108,14 @@ class CashdeskSession extends Model {
      * These tests come in addition to the unique constraints return by method `getUnique()`.
      * This method can be overriden to define a more precise set of tests.
      *
-     * @param  ObjectManager    $om         ObjectManager instance.
-     * @param  array            $oids       List of objects identifiers.
-     * @param  array            $values     Associative array holding the new values to be assigned.
-     * @param  string           $lang       Language in which multilang fields are being updated.
-     * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $oids       List of objects identifiers.
+     * @param  array                       $values     Associative array holding the new values to be assigned.
+     * @param  string                      $lang       Language in which multilang fields are being updated.
+     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang) {
-        $sessions = $om->read(__CLASS__, $oids, ['status'], $lang);        
+        $sessions = $om->read(__CLASS__, $oids, ['status'], $lang);
 
         if($sessions > 0) {
             foreach($sessions as $sid => $session) {
@@ -123,13 +123,14 @@ class CashdeskSession extends Model {
                     return ['status' => ['non_editable' => 'Closed session cannot be modified.']];
                 }
             }
-        }              
+        }
         return parent::canupdate($om, $oids, $values, $lang);
     }
 
     /**
      * Create an 'opening' operation in the operations log.
      * Cashdesk assignement cannot be changed, so this handler is called once, when the session has just been created.
+     *
      */
     public static function onupdateCashdeskId($om, $oids, $values, $lang) {
         $sessions = $om->read(__CLASS__, $oids, ['cashdesk_id', 'amount_opening', 'user_id'], $lang);

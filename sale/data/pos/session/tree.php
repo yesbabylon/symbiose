@@ -38,7 +38,8 @@ $tree = [
     'status',
     'operations_ids' => [
         'id',
-        'amount'
+        'amount',
+        'type'
     ],
     'orders_ids' => [
         'id',
@@ -47,7 +48,7 @@ $tree = [
         'status',
         'total',
         'price'
-    ]    
+    ]
 ];
 
 $cashdesksessions = CashdeskSession::id($params['id'])->read($tree)->adapt('txt')->get(true);
