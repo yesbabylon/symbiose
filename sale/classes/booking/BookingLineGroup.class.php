@@ -69,7 +69,7 @@ class BookingLineGroup extends Model {
 
             'is_extra' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the group relate to sales made off-contract? (ex. point of sale)',
+                'description'       => 'Group relates to sales made off-contract. (ex. point of sale)',
                 'default'           => false
             ],
 

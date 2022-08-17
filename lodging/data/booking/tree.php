@@ -40,7 +40,7 @@ $tree = [
         'id', 'name', 'sojourn_type_id', 'product_groups_ids'
     ],
     'booking_lines_groups_ids' => [
-        'id', 'name', 'order', 'has_pack', 'total', 'price', 'fare_benefit', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'time_from', 'time_to', 'nb_pers', 'nb_nights', 
+        'id', 'name', 'order', 'has_pack', 'total', 'price', 'fare_benefit', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'time_from', 'time_to', 'nb_pers', 'nb_nights',
         'is_sojourn', 'is_event',
         'sojourn_type_id',
         'pack_id' => ['id', 'name'],
@@ -69,7 +69,7 @@ $tree = [
             'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
             'price_id',
             'product_id' => [
-                'name', 'sku', 'product_model_id' => ['has_duration', 'duration']
+                'name', 'sku', 'product_model_id' => ['schedule_offset', 'has_duration', 'duration']
             ],
             'auto_discounts_ids' => [
                 'id', 'type', 'value',

@@ -162,7 +162,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             'booking_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'foreign_object'    => Booking::getType(),
                 'description'       => 'Booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true,
                 'ondelete'          => 'cascade'         // delete group when parent booking is deleted
@@ -579,7 +579,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
-
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
         $bookings_ids = [];
         if($groups > 0) {
@@ -701,6 +700,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type_id', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
                                                     'booking_lines_ids',
+                                                    'booking_id.nb_pers',
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
                                                     'booking_id.center_id.discount_list_category_id']);
@@ -736,19 +736,27 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             else {
                 trigger_error("QN_DEBUG_ORM:: no discount List found", QN_REPORT_DEBUG);
             }
+
             /*
                 Search for matching Discounts within the found Discount List
             */
             if($discount_list_id) {
                 $operands = [];
                 $operands['count_booking_24'] = $group['booking_id.customer_id.count_booking_24'];
-                $operands['duration'] = $group['nb_nights'];     // duration in nights
-                $operands['nb_pers'] = $group['nb_pers'];        // number of participants
+                // duration in nights
+                $operands['duration'] = $group['nb_nights'];
+                // number of participants
+                // #update - we use the booking nb_pers rather than the group nb_pers (to allow adapters to consider large groups)
+                // #todo - this should be reverted once packs will hold product Models (instead of products)
+                // $operands['nb_pers'] = $group['nb_pers'];
+                $operands['nb_pers'] = $group['booking_id.nb_pers'];
 
                 $date = $group['date_from'];
+
                 /*
                     Pick up the first season period that matches the year and the season category of the center
                 */
+
                 $year = date('Y', $date);
                 $seasons_ids = $om->search('sale\season\SeasonPeriod', [
                     ['season_category_id', '=', $group['booking_id.center_id.season_category_id']],
