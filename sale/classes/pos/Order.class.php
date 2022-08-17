@@ -288,6 +288,28 @@ class Order extends Model {
     }
 
     /**
+     * Check wether an object can be deleted.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  ObjectManager    $om         ObjectManager instance.
+     * @param  array            $oids       List of objects identifiers.
+     * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $oids) {
+        $orders = $om->read(self::getType(), $oids, [ 'price' ]);
+
+        if($orders > 0) {
+            foreach($orders as $oid => $order) {
+                if($order['price'] > 0.0) {
+                    return ['price' => ['non_removable' => 'Orders with products cannot be deleted.']];
+                }
+            }
+        }
+        return parent::candelete($om, $oids);
+    }
+
+
+    /**
      * Generate the accounting entries according to the order line (only applies on non-invoiced orders).
      *
      * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.

@@ -140,7 +140,7 @@ class ProductModel extends Model {
 
             'description_receipt' => [
                 'type'              => 'string',
-                'usage'             => 'text/plain',                
+                'usage'             => 'text/plain',
                 'description'       => "Description for reception vouchers."
             ],
 
@@ -192,7 +192,7 @@ class ProductModel extends Model {
         }
     }
 
-        
+
     /**
      *
      * Update related products can_sell

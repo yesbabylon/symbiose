@@ -197,15 +197,17 @@ class Booking extends \sale\booking\Booking {
 
     public static function calcNbPers($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids.nb_pers', 'booking_lines_groups_ids.is_autosale']);
+        $bookings = $om->read(self::getType(), $oids, ['booking_lines_groups_ids']);
 
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 $result[$bid] = 0;
-                foreach($booking['booking_lines_groups_ids.nb_pers'] as $group_id => $group) {
-                    $is_autosale = $booking['booking_lines_groups_ids.is_autosale'][$group_id]['is_autosale'];
-                    if(!$is_autosale) {
-                        $result[$bid] += $group['nb_pers'];
+                $groups = $om->read(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], ['nb_pers', 'is_autosale', 'is_extra']);
+                if($groups > 0) {
+                    foreach($groups as $group_id => $group) {
+                        if(!$group['is_autosale'] && !$group['is_extra']) {
+                            $result[$bid] += $group['nb_pers'];
+                        }
                     }
                 }
             }
