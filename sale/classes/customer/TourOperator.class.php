@@ -12,6 +12,10 @@ class TourOperator extends Customer {
         return 'Tour Operator';
     }
 
+    public static function getDescription() {
+        return 'Tour Operators are travel agent specialized in package holidays or OTA acting as intermediary for completing bookings.';
+    }
+
     public static function getColumns() {
 
         return [

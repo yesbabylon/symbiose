@@ -162,7 +162,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             'booking_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'foreign_object'    => Booking::getType(),
                 'description'       => 'Booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true,
                 'ondelete'          => 'cascade'         // delete group when parent booking is deleted
@@ -572,31 +572,38 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onupdateNbPers($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
+
         // invalidate prices
-        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+        $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
+
+        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
+
+        // first-pass: reset parent bookings nb_pers
+        if($groups > 0) {
+            $bookings_ids = array_map(function($a) {return $a['booking_id'];}, $groups);
+            $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
+        }
 
         $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
 
-
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
-        $bookings_ids = [];
+        // second-pass: update agerange assignments and build booking_lines_ids
         if($groups > 0) {
             $booking_lines_ids = [];
             foreach($groups as $group) {
                 if($group['is_sojourn'] && count($group['age_range_assignments_ids']) == 1) {
                     $age_range_assignment_id = reset($group['age_range_assignments_ids']);
-                    $om->write('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $age_range_assignment_id, ['qty' => $group['nb_pers']]);
+                    $om->update(BookingLineGroupAgeRangeAssignment::getType(), $age_range_assignment_id, ['qty' => $group['nb_pers']]);
                 }
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
-                $bookings_ids[] = $group['booking_id'];
+                // trigger sibling groups nb_pers update (this is necessary since the nb_pers is based on the booking total participants)
+                // #todo - no longer required once the packs will hold products models instead of products
+                $om->callonce(BookingLineGroup::getType(), 'onupdateNbPers', $group['booking_id.booking_lines_groups_ids'], [], $lang);
             }
             // re-compute bookinglines quantities
-            $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $booking_lines_ids, [], $lang);
+            $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
         }
-        // reset parent bookings nb_pers
-        $om->write('sale\booking\Booking', $bookings_ids, ['nb_pers' => null]);
     }
 
 
@@ -684,6 +691,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     /**
+     * Hook invoked before object deletion for performing object-specific additional operations.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @return void
+     */
+    public static function ondelete($om, $oids) {
+        // trigger an update of parent booking nb_pers + sibling groups prices adapters
+        $om->update(self::getType(), $oids, ['nb_pers' => 0]);
+        return parent::ondelete($om, $oids);
+    }
+
+    /**
      * Create Price adapters according to group settings.
      *
      * Price adapters are applied only on meal and accomodation products
@@ -701,6 +721,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type_id', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
                                                     'booking_lines_ids',
+                                                    'booking_id.nb_pers',
                                                     'booking_id.customer_id.count_booking_24',
                                                     'booking_id.center_id.season_category_id',
                                                     'booking_id.center_id.discount_list_category_id']);
@@ -736,19 +757,27 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             else {
                 trigger_error("QN_DEBUG_ORM:: no discount List found", QN_REPORT_DEBUG);
             }
+
             /*
                 Search for matching Discounts within the found Discount List
             */
             if($discount_list_id) {
                 $operands = [];
                 $operands['count_booking_24'] = $group['booking_id.customer_id.count_booking_24'];
-                $operands['duration'] = $group['nb_nights'];     // duration in nights
-                $operands['nb_pers'] = $group['nb_pers'];        // number of participants
+                // duration in nights
+                $operands['duration'] = $group['nb_nights'];
+                // number of participants
+                // #update - we use the booking nb_pers rather than the group nb_pers (to allow adapters to consider large groups)
+                // #todo - this should be reverted once packs will hold product Models (instead of products)
+                // $operands['nb_pers'] = $group['nb_pers'];
+                $operands['nb_pers'] = $group['booking_id.nb_pers'];
 
                 $date = $group['date_from'];
+
                 /*
                     Pick up the first season period that matches the year and the season category of the center
                 */
+
                 $year = date('Y', $date);
                 $seasons_ids = $om->search('sale\season\SeasonPeriod', [
                     ['season_category_id', '=', $group['booking_id.center_id.season_category_id']],
@@ -1058,16 +1087,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             remove groups related to autosales that already exist
         */
         $groups = $om->read(__CLASS__, $oids, [
-                                                    'is_autosale',
-                                                    'nb_pers',
-                                                    'nb_nights',
-                                                    'date_from',
-                                                    'date_to',
-                                                    'booking_id',
-                                                    'booking_id.center_id.autosale_list_category_id',
-                                                    'booking_id.customer_id.count_booking_12',
-                                                    'booking_lines_ids'
-                                                ], $lang);
+                'is_autosale',
+                'nb_pers',
+                'nb_nights',
+                'date_from',
+                'date_to',
+                'booking_id',
+                'booking_id.center_id.autosale_list_category_id',
+                'booking_id.customer_id.count_booking_12',
+                'booking_lines_ids'
+            ], $lang);
 
         // loop through groups and create lines for autosale products, if any
         foreach($groups as $group_id => $group) {
@@ -1084,8 +1113,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
                 $om->write(__CLASS__, $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
             }
-
-
 
             /*
                 Find the first Autosale List that matches the booking dates
@@ -1216,10 +1243,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function _updateMealPreferences($om, $oids, $values, $lang) {
 
         $groups = $om->read(__CLASS__, $oids, [
-                                                    'is_sojourn',
-                                                    'nb_pers',
-                                                    'meal_preferences_ids'
-                                                ], $lang);
+                'is_sojourn',
+                'nb_pers',
+                'meal_preferences_ids'
+            ], $lang);
 
         if($groups > 0) {
             foreach($groups as $gid => $group) {

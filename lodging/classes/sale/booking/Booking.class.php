@@ -142,6 +142,26 @@ class Booking extends \sale\booking\Booking {
                 "type"              => "boolean",
                 "description"       => "Flag for handling special case where invoice is emitted at confirmation.",
                 "default"           => false
+            ],
+
+            'has_tour_operator' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the booking as completed by a Tour Operator.',
+                'default'           => false
+            ],
+
+            'tour_operator_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => \sale\customer\TourOperator::getType(),
+                'domain'            => ['is_tour_operator', '=', true],
+                'description'       => 'Tour Operator that completed the booking.',
+                'visible'           => ['has_tour_operator', '=', true]
+            ],
+
+            'tour_operator_ref' => [
+                'type'              => 'string',
+                'description'       => 'Specific reference, voucher code, or booking ID for the TO.',
+                'visible'           => ['has_tour_operator', '=', true]
             ]
 
         ];
@@ -177,15 +197,17 @@ class Booking extends \sale\booking\Booking {
 
     public static function calcNbPers($om, $oids, $lang) {
         $result = [];
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_groups_ids.nb_pers', 'booking_lines_groups_ids.is_autosale']);
+        $bookings = $om->read(self::getType(), $oids, ['booking_lines_groups_ids']);
 
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 $result[$bid] = 0;
-                foreach($booking['booking_lines_groups_ids.nb_pers'] as $group_id => $group) {
-                    $is_autosale = $booking['booking_lines_groups_ids.is_autosale'][$group_id]['is_autosale'];
-                    if(!$is_autosale) {
-                        $result[$bid] += $group['nb_pers'];
+                $groups = $om->read(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], ['nb_pers', 'is_autosale', 'is_extra']);
+                if($groups > 0) {
+                    foreach($groups as $group_id => $group) {
+                        if(!$group['is_autosale'] && !$group['is_extra']) {
+                            $result[$bid] += $group['nb_pers'];
+                        }
                     }
                 }
             }

@@ -231,7 +231,7 @@ class Funding extends Model {
 
 
     /**
-     * Hook invoked after object deletion for performing object-specific additional operations.
+     * Hook invoked before object deletion for performing object-specific additional operations.
      * Remove the scheduled tasks related to the deleted fundinds.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
@@ -242,7 +242,7 @@ class Funding extends Model {
         $cron = $om->getContainer()->get('cron');
 
         foreach($oids as $fid) {
-            // remove any previsously scheduled task
+            // remove any previously scheduled task
             $cron->cancel("booking.funding.overdue.{$fid}");
         }
         parent::ondelete($om, $oids);
