@@ -57,6 +57,11 @@
             "label": "Compte de référence",
             "description": "IBAN arbitraire associé au client.",
             "help": ""
+        },
+        "is_tour_operator": {
+            "label": "Tour opérateur",
+            "description": "Le client est un Tour Opérateur ou une OTA.",
+            "help": ""
         }
     },
     "view": {

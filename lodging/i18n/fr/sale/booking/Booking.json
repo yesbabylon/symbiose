@@ -32,6 +32,21 @@
             "label": "Groupes de Lignes de Réservation",
             "description": "Consommations groupées de la réservation.",
             "help": ""
+        },
+        "has_tour_operator": {
+            "label": "Via Tour Opérateur ?",
+            "description": "Réservation conclue via un Tour Opérateur ou une OTA.",
+            "help": ""
+        },
+        "tour_operator_id": {
+            "label": "Tour Opérateur",
+            "description": "Le Tour Opérateur à l'origine de la réservation.",
+            "help": ""
+        },
+        "tour_operator_ref": {
+            "label": "Référence",
+            "description": "Référence spécifique, code Voucher ou code réservation du TO.",
+            "help": ""
         }
     },
     "view": {

@@ -30,7 +30,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "75%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -45,13 +45,13 @@
                                         ]
                                     }
                                 ]
-                            }                           
+                            }
                         ]
                     }
                 ]
             },
             {
-                "sections": [            
+                "sections": [
                     {
                         "id": "section.customer_details",
                         "label": "Details",
@@ -120,6 +120,11 @@
                                                 "type": "field",
                                                 "value": "ref_account",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_tour_operator",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -140,13 +145,13 @@
                                                 "type": "field",
                                                 "value": "bookings_ids",
                                                 "width": "100%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
-                    }                                        
+                    }
                 ]
             }
         ]

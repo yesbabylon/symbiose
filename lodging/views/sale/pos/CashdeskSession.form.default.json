@@ -19,7 +19,7 @@
             "icon": "close",
             "route": "/session/object.id/close"
         }
-    ],    
+    ],
     "layout": {
         "groups": [
             {
@@ -35,18 +35,31 @@
                                                 "type": "field",
                                                 "value": "created",
                                                 "width": "50%",
-                                                "widget": {                                                
+                                                "widget": {
                                                     "readonly": true,
-                                                    "heading": true                                                    
+                                                    "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "amount",
+                                                "value": "amount_opening",
                                                 "width": "50%",
                                                 "widget": {
                                                     "readonly": true,
-                                                    "heading": true                                                    
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "amount_closing",
+                                                "width": "50%",
+                                                "visible": ["status", "", "closed"],
+                                                "widget": {
+                                                    "readonly": true,
+                                                    "heading": true
                                                 }
                                             }
                                         ]
@@ -76,7 +89,51 @@
                                                 }
                                             }
                                         ]
-                                    }                                    
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id":"section.orders",
+                        "label": "Orders",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "orders_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id":"section.operations",
+                        "label": "Operations",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "operations_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
                                 ]
                             }
                         ]

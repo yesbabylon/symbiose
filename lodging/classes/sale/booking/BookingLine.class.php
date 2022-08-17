@@ -73,7 +73,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
             'booking_line_group_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
+                'foreign_object'    => BookingLineGroup::getType(),
                 'description'       => 'Group the line relates to (in turn, groups relate to their booking).',
                 'required'          => true,             // must be set at creation
                 'onupdate'          => 'onupdateBookingLineGroupId',
@@ -82,7 +82,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
             'booking_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'foreign_object'    => Booking::getType(),
                 'description'       => 'The booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'required'          => true,
                 'ondelete'          => 'cascade'
@@ -720,15 +720,15 @@ class BookingLine extends \sale\booking\BookingLine {
         */
 
         $lines = $om->read(__CLASS__, $oids, ['consumptions_ids'], $lang);
-    
+
         foreach($lines as $lid => $line) {
             $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
         }
 
-        /* 
+        /*
             Get in-memory list of consumptions for all lines.
         */
-        
+
         $consumptions = $om->call(__CLASS__, '_getResultingConsumptions', $oids, [], $lang);
 
         /*
@@ -973,7 +973,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                             }
                                         }
                                     }
-                                    
+
                                     foreach($children_ids as $child_id) {
                                         $consumption['type'] = 'link';
                                         $consumption['rental_unit_id'] = $child_id;
@@ -1031,7 +1031,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                     $pref = ($preference['pref'] == 'veggie')?'végétarien':(($preference['pref'] == 'allergen_free')?'sans allergène':'normal');
 
                                     $description .= "<p>{$type} / {$pref} : {$preference['qty']} ; </p>";
-                                }                                
+                                }
                                 $consumption['description'] = $description;
                             }
                             $consumptions[] = $consumption;

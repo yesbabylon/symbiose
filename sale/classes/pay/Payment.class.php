@@ -160,20 +160,19 @@ class Payment extends Model {
 
 
     /**
-     * Check wether an object can be deleted, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * Hook invoked before object deletion for performing object-specific additional operations.
      *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
-     * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be deleted.
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @return void
      */
     public static function ondelete($om, $oids) {
         // set back related statement line status to 'pending'
         $payments = $om->read(__CLASS__, $oids, ['statement_line_id', 'funding_id']);
-        if($payments) {
+        if($payments > 0) {
             foreach($payments as $pid => $payment) {
-                $om->write('sale\pay\BankStatementLine', $payment['statement_line_id'], ['status' => 'pending']);
-                $om->write('sale\pay\Funding', $payment['funding_id'], ['is_paid' => false]);
+                $om->update('sale\pay\BankStatementLine', $payment['statement_line_id'], ['status' => 'pending']);
+                $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => false]);
             }
         }
         return parent::ondelete($om, $oids);

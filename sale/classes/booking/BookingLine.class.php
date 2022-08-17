@@ -248,12 +248,12 @@ class BookingLine extends Model {
     // reset computed fields related to price
     public static function _resetPrices($om, $oids, $values, $lang) {
         $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
-        if(count($values)) {            
+        if(count($values)) {
             // list of fields being reset can be customized by caller
             // #memo - vat_rate and unit_price can be set manually, we don't want to overwrite the update !
             $new_values = $values;
         }
-        $om->write(__CLASS__, $oids, $new_values);
+        $om->update(__CLASS__, $oids, $new_values);
         // update parent objects
         $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
         if($lines > 0) {

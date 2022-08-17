@@ -69,7 +69,7 @@ class BookingLineGroup extends Model {
 
             'is_extra' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the group relate to sales made off-contract? (ex. point of sale)',
+                'description'       => 'Group relates to sales made off-contract. (ex. point of sale)',
                 'default'           => false
             ],
 
@@ -165,7 +165,6 @@ class BookingLineGroup extends Model {
         ];
     }
 
-
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
         $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
     }
@@ -175,7 +174,7 @@ class BookingLineGroup extends Model {
      */
     public static function _resetPrices($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null, 'fare_benefit' => null]);
+        $om->update(__CLASS__, $oids, ['total' => null, 'price' => null, 'fare_benefit' => null]);
         $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids', 'is_extra'], $lang);
         if($groups > 0) {
             $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $groups);
