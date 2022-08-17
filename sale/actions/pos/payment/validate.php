@@ -73,7 +73,6 @@ if($cash_in > 0.0) {
         'amount'        => $cash_in,
         'type'          => 'sale',
         'user_id'       => $payment['creator'],
-        'cashdesk_id'   => $session['cashdesk_id'],
         'session_id'    => $session['id']
     ]);
 }
@@ -84,7 +83,6 @@ if($payment['total_paid'] > $payment['total_due']) {
         'amount'        => round($payment['total_due'] - $payment['total_paid'], 2),
         'type'          => 'sale',
         'user_id'       => $payment['creator'],
-        'cashdesk_id'   => $session['cashdesk_id'],
         'session_id'    => $session['id']
     ]);
 }

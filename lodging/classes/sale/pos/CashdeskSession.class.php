@@ -51,7 +51,7 @@ class CashdeskSession extends \sale\pos\CashdeskSession {
                 $om->update(__CLASS__, $sid, ['center_id' => $session['cashdesk_id.center_id']], $lang);
             }
         }
-        
+
         $om->callonce(\sale\pos\CashdeskSession::getType(), 'onupdateCashdeskId', $oids, $values, $lang);
     }
 

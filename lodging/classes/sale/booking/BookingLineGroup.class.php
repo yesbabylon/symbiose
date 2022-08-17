@@ -597,7 +597,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $om->update(BookingLineGroupAgeRangeAssignment::getType(), $age_range_assignment_id, ['qty' => $group['nb_pers']]);
                 }
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
-                // reset sibling groups prices and price adapters (this is necessary since the nb_pers is based on the booking total participants)
+                // trigger sibling groups nb_pers update (this is necessary since the nb_pers is based on the booking total participants)
                 // #todo - no longer required once the packs will hold products models instead of products
                 $om->callonce(BookingLineGroup::getType(), 'onupdateNbPers', $group['booking_id.booking_lines_groups_ids'], [], $lang);
             }
@@ -688,6 +688,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         }
 
         return parent::candelete($om, $oids);
+    }
+
+    /**
+     * Hook invoked before object deletion for performing object-specific additional operations.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @return void
+     */
+    public static function ondelete($om, $oids) {
+        // trigger an update of parent booking nb_pers + sibling groups prices adapters
+        $om->update(self::getType(), $oids, ['nb_pers' => 0]);
+        return parent::ondelete($om, $oids);
     }
 
     /**
@@ -1230,10 +1243,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function _updateMealPreferences($om, $oids, $values, $lang) {
 
         $groups = $om->read(__CLASS__, $oids, [
-                                                    'is_sojourn',
-                                                    'nb_pers',
-                                                    'meal_preferences_ids'
-                                                ], $lang);
+                'is_sojourn',
+                'nb_pers',
+                'meal_preferences_ids'
+            ], $lang);
 
         if($groups > 0) {
             foreach($groups as $gid => $group) {

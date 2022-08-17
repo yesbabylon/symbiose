@@ -13,7 +13,7 @@
                 }
             ]
         }
-    },     
+    },
     "layout": {
         "items": [
             {
@@ -41,13 +41,13 @@
             },
             {
                 "type": "field",
-                "label": "Funding",
-                "value": "funding_id",
+                "value": "has_funding",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "has_funding",
+                "label": "Funding",
+                "value": "funding_id",
                 "width": "20%"
             }
         ]
