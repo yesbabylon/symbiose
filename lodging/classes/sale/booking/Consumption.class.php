@@ -229,7 +229,10 @@ class Consumption extends \sale\booking\Consumption {
                     continue;
                 }
 
-                $date_index = substr(date('c', $consumption['date']), 0, 10);
+                // retrieve UTC timestamp
+                $moment = $consumption['date'] - date('Z', $consumption['date']) + $consumption['schedule_from'];
+                $date_index = substr(date('c', $moment), 0, 10);
+
                 $rental_unit_id = $consumption['rental_unit_id'];
                 $booking_line_group_id = $consumption['booking_line_group_id'];
 

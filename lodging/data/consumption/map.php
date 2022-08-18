@@ -55,7 +55,7 @@ $consumptions = Consumption::ids($consumptions_ids)
                 ->read([
                     'date','schedule_from','schedule_to', 'is_rental_unit', 'qty', 'type',
                     'customer_id'       => ['id', 'name'],
-                    'rental_unit_id'    => ['id', 'name'],                    
+                    'rental_unit_id'    => ['id', 'name'],
                     'booking_id'        => ['id', 'name', 'status', 'description', 'payment_status'],
                     'repairing_id'      => ['id', 'name', 'description']
                 ])
@@ -75,6 +75,5 @@ foreach($result as $rental_unit_id => $dates) {
 }
 
 $context->httpResponse()
-        ->status(200)
         ->body($result)
         ->send();

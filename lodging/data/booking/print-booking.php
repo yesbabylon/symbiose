@@ -161,6 +161,7 @@ $fields = [
         'date_to',
         'nb_pers',
         'booking_lines_ids' => [
+            'name',
             'product_id' => ['label'],
             'description',
             'qty',
@@ -526,10 +527,10 @@ try {
 
     $template = $twig->load("{$class_path}.{$params['view_id']}.html");
 
-
     $html = $template->render($values);
 }
 catch(Exception $e) {
+    trigger_error("QN_DEBUG_ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
     throw new Exception("template_parsing_issue", QN_ERROR_INVALID_CONFIG);
 }
 
