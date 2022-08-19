@@ -47,7 +47,7 @@ class Consumption extends Model {
                 'foreign_object'    => 'sale\booking\Repairing',
                 'description'       => 'The booking the comsumption relates to.',
                 'ondelete'          => 'cascade',        // delete repair when parent repairing is deleted
-                'readonly'          => true,                
+                'readonly'          => true,
                 'visible'           => ['type', '=', 'ooo']
             ],
 
@@ -149,7 +149,7 @@ class Consumption extends Model {
             'cleanup_type' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'none',                    
+                    'none',
                     'daily',
                     'full'
                 ],
@@ -184,7 +184,7 @@ class Consumption extends Model {
                     $cleanup_type = 'none';
                     if($consumption['rental_unit_id.is_accomodation']) {
                         $cleanup_type = 'daily';
-                        if($consumption['booking_line_group_id.date_from'] == $consumption['date']) {    
+                        if($consumption['booking_line_group_id.date_from'] == $consumption['date']) {
                             // no cleanup the day of arrival
                             $cleanup_type = 'none';
                             continue;

@@ -30,7 +30,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'is_rental_unit' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Line relates to a renta(b)l(e) unit (from product_model).',
+                'description'       => 'Line relates to a rental unit (from product_model).',
                 'function'          => 'calcIsRentalUnit',
                 'store'             => true
             ],
@@ -275,7 +275,7 @@ class BookingLine extends \sale\booking\BookingLine {
                     foreach($qty_vars as $variation) {
                         $qty += $nb_pers + $variation;
                     }
-                    $om->write(__CLASS__, $lid, ['qty' => $qty]);
+                    $om->update(__CLASS__, $lid, ['qty' => $qty]);
                 }
                 else {
                     $om->callonce(__CLASS__, '_updateQty', $oids, [], $lang);
@@ -622,7 +622,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                 else if($diff < 0) {
                                     $qty_vars = array_slice($qty_vars, 0, $factor);
                                 }
-                                $om->write(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
+                                $om->update(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
                                 // will trigger onupdateQtyVar which will update  qty
                             }
                         }

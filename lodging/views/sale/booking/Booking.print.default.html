@@ -58,13 +58,13 @@ div.inner p {
 
 div.inner .wrapper {
     margin: 0px;
-    margin-top: 20px;    
+    margin-top: 20px;
     padding: 0px;
     border: none;
 }
 
 div.inner .wrapper table {
-    page-break-inside: auto; 
+    page-break-inside: auto;
     border: solid 1px black;
 }
 
@@ -101,12 +101,12 @@ div.header {
 }
 
 div.header table {
-    width: 100%; 
-    border-spacing: 0px; 
-    border-collapse: separate; 
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: separate;
     border: solid 1px rgb(204, 204, 204);
-    border-top-left-radius: 15px; 
-    border-top-right-radius: 15px; 
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 div.footer {
@@ -186,15 +186,15 @@ hr {
                 </div>
             </td>
         </tr>
-    </table>    
+    </table>
 
 </div>
 
 <div class="footer">
     <p style="text-align: center;">
-        {{ company_name}} - {{ company_address }} 
-        <br />        
-        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }} 
+        {{ company_name}} - {{ company_address }}
+        <br />
+        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }}
         <br />
         Email: {{ company_email }} - Web: {{ company_website }} - Tel {{ company_phone }}
         {% if company_fax %}
@@ -233,7 +233,7 @@ hr {
                     Prix HT
                 </th>
             </tr>
-            </thead>             
+            </thead>
             <!-- for each line -->
             {% for line in lines %}
                 <tr valign="top">
@@ -347,7 +347,7 @@ hr {
                 <td style="text-align: center;"><b>Petits déjeuners</b></td>
                 <td style="text-align: center;"><b>Repas midi</b></td>
                 <td style="text-align: center;"><b>Repas soir</b></td>
-                <td style="text-align: right;"><b>Nuitées</b></td>                                
+                <td style="text-align: right;"><b>Nuitées</b></td>
             </tr>
             {% for date_index,map in consumptions_map %}
             <tr>
