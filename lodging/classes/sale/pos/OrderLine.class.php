@@ -24,7 +24,7 @@ class OrderLine extends \sale\pos\OrderLine {
                 'description'       => 'The product (SKU) the line relates to.',
                 'onupdate'          => 'onupdateProductId'
             ],
-            
+
             'order_payment_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => OrderPayment::getType(),
@@ -84,9 +84,9 @@ class OrderLine extends \sale\pos\OrderLine {
             }
             if(!$found) {
                 $date = date('Y-m-d', time());
-                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_ERROR);
+                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_WARNING);
             }
         }
     }
-    
+
 }

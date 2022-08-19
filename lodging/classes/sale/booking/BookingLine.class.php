@@ -701,7 +701,7 @@ class BookingLine extends \sale\booking\BookingLine {
             if(!$found) {
                 $om->update(get_called_class(), $line_id, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0, 'price' => 0]);
                 $date = date('Y-m-d', $line['booking_line_group_id.date_from']);
-                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_ERROR);
+                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_WARNING);
             }
         }
     }
