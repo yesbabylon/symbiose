@@ -186,7 +186,8 @@
                                                 "value": "type_id",
                                                 "width": "33%",
                                                 "widget": {
-                                                    "readonly": true
+                                                    "readonly": true,
+                                                    "header": false
                                                 }
                                             },
                                             {

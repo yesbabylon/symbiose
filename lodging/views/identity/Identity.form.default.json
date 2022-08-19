@@ -73,7 +73,7 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions":{
-                                                            "ACTION.CREATE": false  
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }
@@ -111,7 +111,10 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": {
-                                                        "ACTION.CREATE": false
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.OPEN": false
+                                                        }
                                                     }
                                                 }
                                             },
@@ -249,7 +252,7 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions":{
-                                                            "ACTION.CREATE": false  
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }

@@ -30,14 +30,14 @@ class Partner extends Model {
 
             'owner_identity_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
+                'foreign_object'    => Identity::getType(),
                 'description'       => 'The identity organisation which the targeted identity is a partner of.',
                 'default'           => 1
             ],
 
             'partner_identity_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
+                'foreign_object'    => Identity::getType(),
                 'description'       => 'The targeted identity (the partner).',
                 'onupdate'          => 'onupdatePartnerIdentityId',
                 'required'          => true

@@ -24,7 +24,7 @@
                                                 "type": "field",
                                                 "value": "short_name",
                                                 "width": "50%"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "firstname",
@@ -61,7 +61,7 @@
                                         ]
                                     }
                                 ]
-                            }                                                   
+                            }
                         ]
                     }
                 ]
@@ -163,7 +163,7 @@
                                                 "value": "reference_partner_id",
                                                 "label": "Person of reference",
                                                 "width": "100%",
-                                                "domain": ["owner_identity_id", "=", "object.id"]                                                
+                                                "domain": ["owner_identity_id", "=", "object.id"]
                                             },
                                             {
                                                 "type": "field",
@@ -195,13 +195,13 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "50%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Main address",
                         "id": "section.identity_main_address",
@@ -243,11 +243,11 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Other addresses",
                         "id": "section.identity_addresses",
@@ -302,13 +302,13 @@
                                                 "type": "field",
                                                 "value": "partners_ids",
                                                 "width": "100%"
-                                            }                        
+                                            }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

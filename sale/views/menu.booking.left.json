@@ -75,7 +75,7 @@
                             "view": "list.default",
                             "domain": ["status", "=", "checkedin"]
                         }
-                    }                    
+                    }
                 ]
             },
             {
@@ -94,7 +94,7 @@
                         "context": {
                             "entity": "lodging\\identity\\Identity",
                             "view": "form.create",
-                            "purpose": "create"                            
+                            "purpose": "create"
                         }
                     },
                     {
@@ -196,7 +196,7 @@
                         "route": "/repairings"
                     }
                 ]
-            }            
+            }
         ]
     }
 }
