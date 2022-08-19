@@ -212,6 +212,8 @@ class BookingLine extends \sale\booking\BookingLine {
         // quantity might depends on the product model AND the sojourn (nb_pers, nb_nights)
         $lines = $om->read(__CLASS__, $oids, [
             'product_id.product_model_id.booking_type_id',
+            'product_id.product_model_id',
+            'booking_line_group_id',
             'booking_id',
             'qty',
             'has_own_qty',
@@ -227,6 +229,26 @@ class BookingLine extends \sale\booking\BookingLine {
             if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 1) {
                 $om->update('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
             }
+
+            // if line is an accomodation, use its related product info to update parent group schedule, if possible
+            if($line['is_accomodation']) {
+                $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $line['product_id.product_model_id'], ['type', 'service_type', 'schedule_type', 'schedule_default_value'], $lang);
+                if($models > 0 && count($models)) {
+                    $model = reset($models);
+                    if($model['type'] == 'service' && $model['service_type'] == 'schedulable' && $model['schedule_type'] == 'timerange') {
+                        // retrieve relative timestamps
+                        $schedule = $model['schedule_default_value'];
+                        $times = explode('-', $schedule);
+                        $parts = explode(':', $times[0]);
+                        $schedule_from = $parts[0]*3600 + $parts[1]*60;
+                        $parts = explode(':', $times[1]);
+                        $schedule_to = $parts[0]*3600 + $parts[1]*60;
+                        // update the parent group schedule
+                        $om->update(BookingLineGroup::getType(), $line['booking_line_group_id'], ['time_from' => $schedule_from, 'time_to' => $schedule_to], $lang);
+                    }
+                }
+            }
+
             $qty = $line['qty'];
             if(!$line['has_own_qty']) {
                 if($line['qty_accounting_method'] == 'accomodation') {
