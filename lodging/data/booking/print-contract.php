@@ -81,15 +81,6 @@ if(!file_exists($file)) {
 }
 
 
-$loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
-
-$twig = new TwigEnvironment($loader);
-/**  @var ExtensionInterface **/
-$extension  = new IntlExtension();
-$twig->addExtension($extension);
-
-$twigTemplate = $twig->load("{$class_path}.{$params['view_id']}.html");
-
 // read contract
 $fields = [
     'created',
@@ -646,9 +637,40 @@ $values['consumptions_map'] = $consumptions_map;
 /*
     Inject all values into the template
 */
-$html = $twigTemplate->render($values);
+
+try {
+    $current_locale = setlocale(LC_ALL, 0);
+    // use localisation prefs for rendering
+    if(defined('L10N_LOCALE')) {
+        $res = setlocale(LC_ALL, constant('L10N_LOCALE'));
+        if($res) {
+            trigger_error("QN_DEBUG_PHP::set locale to ".constant('L10N_LOCALE'), QN_REPORT_DEBUG);
+        }
+        else {
+            trigger_error("QN_DEBUG_PHP::unknown locale ".constant('L10N_LOCALE'), QN_REPORT_WARNING);
+        }
+    }
+
+    $loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
+
+    $twig = new TwigEnvironment($loader);
+    /**  @var ExtensionInterface **/
+    $extension  = new IntlExtension();
+    $twig->addExtension($extension);
+
+    $template = $twig->load("{$class_path}.{$params['view_id']}.html");
+
+    $html = $template->render($values);
+}
+catch(Exception $e) {
+    trigger_error("QN_DEBUG_ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
+    throw new Exception("template_parsing_issue", QN_ERROR_INVALID_CONFIG);
+}
 
 
+/*
+    Convert HTML to PDF
+*/
 
 // instantiate and use the dompdf class
 $options = new DompdfOptions();

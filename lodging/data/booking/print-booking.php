@@ -529,6 +529,7 @@ try {
             trigger_error("QN_DEBUG_PHP::unknown locale ".constant('L10N_LOCALE'), QN_REPORT_WARNING);
         }
     }
+
     $loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
 
     $twig = new TwigEnvironment($loader);
@@ -539,6 +540,7 @@ try {
     $template = $twig->load("{$class_path}.{$params['view_id']}.html");
 
     $html = $template->render($values);
+    // restore original locale
     setlocale(LC_ALL, $current_locale);
 }
 catch(Exception $e) {
@@ -550,7 +552,6 @@ catch(Exception $e) {
 /*
     Convert HTML to PDF
 */
-
 
 // instantiate and use the dompdf class
 $options = new DompdfOptions();
