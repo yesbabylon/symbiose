@@ -551,44 +551,40 @@ foreach($booking['fundings_ids'] as $funding) {
     $values['fundings'][] = $line;
 }
 
-// no funding found
+
 if($installment_date == PHP_INT_MAX) {
-    // set default delay to 20 days
-    $installment_date = time() + (60 * 60 *24 * 20);
-    // set default amount to 20%
-    $installment_amount = $booking['price'] * 0.2;
-    // set installment reference    ('+++xxx/+++' where xxx is 150 for initial installment)
-    $installment_ref = Funding::_get_payment_reference(150, $booking['name']);
+    // no funding found : the final invoice will be release and generate a funding
+    // qr code is not generated
 }
+else {
+    $values['installment_date'] = date('d/m/Y', $installment_date);
+    $values['installment_amount'] = (float) $installment_amount;
+    $values['installment_reference'] = DataFormatter::format($installment_ref, 'scor');
 
-$values['installment_date'] = date('d/m/Y', $installment_date);
-$values['installment_amount'] = (float) $installment_amount;
-$values['installment_reference'] = DataFormatter::format($installment_ref, 'scor');
+    // generate a QR code
+    try {
+        $paymentData = Data::create()
+            ->setServiceTag('BCD')
+            ->setIdentification('SCT')
+            ->setName($values['company_name'])
+            ->setIban(str_replace(' ', '', $booking['center_id']['bank_account_iban']))
+            ->setBic(str_replace(' ', '', $booking['center_id']['bank_account_bic']))
+            ->setRemittanceReference($values['installment_reference'])
+            ->setAmount($values['installment_amount']);
 
-// generate a QR code
-try {
-    $paymentData = Data::create()
-        ->setServiceTag('BCD')
-        ->setIdentification('SCT')
-        ->setName($values['company_name'])
-        ->setIban(str_replace(' ', '', $booking['center_id']['bank_account_iban']))
-        ->setBic(str_replace(' ', '', $booking['center_id']['bank_account_bic']))
-        ->setRemittanceReference($values['installment_reference'])
-        ->setAmount($values['installment_amount']);
+        $result = Builder::create()
+            ->data($paymentData)
+            ->errorCorrectionLevel(new ErrorCorrectionLevelMedium()) // required by EPC standard
+            ->build();
 
-    $result = Builder::create()
-        ->data($paymentData)
-        ->errorCorrectionLevel(new ErrorCorrectionLevelMedium()) // required by EPC standard
-        ->build();
+        $dataUri = $result->getDataUri();
+        $values['installment_qr_url'] = $dataUri;
 
-    $dataUri = $result->getDataUri();
-    $values['installment_qr_url'] = $dataUri;
-
+    }
+    catch(Exception $exception) {
+        // unknown error
+    }
 }
-catch(Exception $exception) {
-    // unknown error
-}
-
 
 
 /*

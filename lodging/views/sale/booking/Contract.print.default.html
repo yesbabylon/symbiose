@@ -406,7 +406,7 @@ hr {
             <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total'][2] | default("0") }}</td>
             <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total'][4] | default("0")}}</td>
             <td style="text-align: center; font-weight: bold;">{{ consumptions_map['total']['night'] | default("0")}}</td>
-        </tr>        
+        </tr>
     </table>
 
 </div>
@@ -414,6 +414,7 @@ hr {
 
 <div class="notice">{{ contract_notice_html | raw }}</div>
 
+{% if installment_amount > 0 %}
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
         Le montant de <b>{{ installment_amount | format_currency('EUR') }}</b> doit être versé avant le <b>{{ installment_date}}</b>
@@ -430,6 +431,7 @@ hr {
         <img src="{{ installment_qr_url }}" width= "150" height="150" />
     </div>
 </div>
+{% endif %}
 
 <div style="margin-top: 50px;">
     <table style="width: 100%; page-break-inside: avoid;">
