@@ -95,7 +95,7 @@ class Consumption extends \sale\booking\Consumption {
     /**
      * Hook invoked before object update for performing object-specific additional operations.
      * Current values of the object can still be read for comparing with new values.
-     * 
+     *
      * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
      * @param  array                      $oids       List of objects identifiers.
      * @param  array                      $values     Associative array holding the new values that have been assigned.
@@ -131,19 +131,60 @@ class Consumption extends \sale\booking\Consumption {
         $consumptions = $om->read(__CLASS__, $oids, ['booking_id.customer_id'], $lang);
         if($consumptions) {
             foreach($consumptions as $cid => $consumption) {
-                $om->write(__CLASS__, $cid, [ 'customer_id' => $consumption['booking_id.customer_id'] ], $lang);
+                $om->update(__CLASS__, $cid, [ 'customer_id' => $consumption['booking_id.customer_id'] ], $lang);
             }
         }
     }
 
     /**
+     * Hook invoked after updates on field `schedule_from`.
      * Adapt time_slot_id according to new moment.
+     * Update siblings consumptions (same day same line) relating to rental units to use the same value for schedule_from.
+     *
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  int[]                      $oids       List of objects identifiers in the collection.
+     * @param  array                      $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string                     $lang       Language in which multilang fields are being updated.
+     * @return void
      */
     public static function onupdateScheduleFrom($om, $oids, $values, $lang) {
+        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_from', 'booking_line_id'], $lang);
+        if($consumptions > 0) {
+            foreach($consumptions as $oid => $consumption) {
+                if($consumption['is_rental_unit']) {
+                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                    if($siblings_ids > 0 && count($siblings_ids)) {
+                        $om->update(self::getType(), $siblings_ids, ['schedule_from' => $consumption['schedule_from']]);
+                    }
+                }
+            }
+        }
         $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
     }
 
+    /**
+     * Hook invoked after updates on field `schedule_to`.
+     * Adapt time_slot_id according to new moment.
+     * Update siblings consumptions (same day same line) relating to rental units to use the same value for schedule_to.
+     *
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  int[]                      $oids       List of objects identifiers in the collection.
+     * @param  array                      $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string                     $lang       Language in which multilang fields are being updated.
+     * @return void
+     */
     public static function onupdateScheduleTo($om, $oids, $values, $lang) {
+        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_to', 'booking_line_id'], $lang);
+        if($consumptions > 0) {
+            foreach($consumptions as $oid => $consumption) {
+                if($consumption['is_rental_unit']) {
+                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                    if($siblings_ids > 0 && count($siblings_ids)) {
+                        $om->update(self::getType(), $siblings_ids, ['schedule_to' => $consumption['schedule_to']]);
+                    }
+                }
+            }
+        }
         $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
     }
 
@@ -156,7 +197,7 @@ class Consumption extends \sale\booking\Consumption {
                 // retrieve timeslot according to schedule_from
                 foreach($moments as $mid => $moment) {
                     if($consumption['schedule_from'] >= $moment['schedule_from'] && $consumption['schedule_to'] < $moment['schedule_to']) {
-                        $om->write(__CLASS__, $cid, ['time_slot_id' => $mid]);
+                        $om->update(__CLASS__, $cid, ['time_slot_id' => $mid]);
                     }
                 }
             }

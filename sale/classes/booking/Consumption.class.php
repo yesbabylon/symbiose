@@ -53,7 +53,7 @@ class Consumption extends Model {
 
             'booking_line_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\BookingLine',
+                'foreign_object'    => BookingLine::getType(),
                 'description'       => 'The booking line the consumption relates to.',
                 'ondelete'          => 'cascade',        // delete consumption when parent line is deleted
                 'readonly'          => true

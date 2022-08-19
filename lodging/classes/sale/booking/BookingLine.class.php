@@ -476,9 +476,9 @@ class BookingLine extends \sale\booking\BookingLine {
      * These tests come in addition to the unique constraints return by method `getUnique()`.
      * This method can be overriden to define a more precise set of tests.
      *
-     * @param  object   $om         ObjectManager instance.
-     * @param  array    $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
-     * @param  string   $lang       Language in which multilang fields are being updated.
+     * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
+     * @param  array                      $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string                     $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be created.
      */
     public static function cancreate($om, $values, $lang) {
