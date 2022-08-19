@@ -18,6 +18,7 @@ use communication\TemplateAttachment;
 use documents\Document;
 use lodging\sale\booking\Invoice;
 use core\setting\Setting;
+use core\Lang;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -104,7 +105,7 @@ $attachment = eQual::run('get', 'lodging_booking_print-invoice', [
 ]);
 
 // get 'invoice' term transaltion
-$main_attachment_name = Setting::get_value('sale', 'locale', 'terms.invoice', 'invoice', 0, $params['lang']);
+$main_attachment_name = Lang::get_term('sale', 'invoice', 'invoice', $params['lang']);
 
 // generate signature
 $signature = '';

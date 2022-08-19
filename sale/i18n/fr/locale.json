@@ -1,0 +1,10 @@
+{
+    "terms": {
+        "installment": "paiement",
+        "invoice": "facture",
+        "downpayments": "acomptes",
+        "contract": "contrat",
+        "option": "option",
+        "quote": "devis"
+    }
+}

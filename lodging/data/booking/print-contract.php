@@ -24,6 +24,7 @@ use communication\TemplatePart;
 use communication\TemplateAttachment;
 use equal\data\DataFormatter;
 
+use core\Lang;
 
 list($params, $providers) = announce([
     'description'   => "Render a contract given its ID as a PDF document.",

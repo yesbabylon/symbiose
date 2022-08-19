@@ -19,6 +19,7 @@ use documents\Document;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
 use core\setting\Setting;
+use core\Lang;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -105,7 +106,7 @@ $attachment = eQual::run('get', 'lodging_booking_print-contract', [
 ]);
 
 // get 'contract' term transaltion
-$main_attachment_name = Setting::get_value('sale', 'locale', 'terms.contract', 'contract', 0, $params['lang']);
+$main_attachment_name = Lang::get_term('sale', 'contract', 'contract', $params['lang']);
 
 // generate signature
 $signature = '';

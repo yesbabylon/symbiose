@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use core\setting\Setting;
+use core\Lang;
 use lodging\sale\booking\Invoice;
 use lodging\sale\booking\InvoiceLine;
 use lodging\sale\booking\InvoiceLineGroup;
@@ -260,8 +261,9 @@ if($fundings) {
     }
 
     $i_lines_ids = [];
-    $invoice_label = Setting::get_value('sale', 'locale', 'terms.invoice', 'Invoice', 0, $customer_lang);
-    $installment_label = Setting::get_value('sale', 'locale', 'terms.installment', 'Downpayment', 0, $customer_lang);
+
+    $invoice_label = Lang::get_term('sale', 'invoice', 'invoice', $customer_lang);
+    $installment_label = Lang::get_term('sale', 'installment', 'downpayment', $customer_lang);
 
     foreach($fundings as $fid => $funding) {
         if($funding['type'] == 'installment') {
@@ -335,7 +337,7 @@ if($fundings) {
     }
 
     // get the group name according to requested lang
-    $group_label = ucfirst(Setting::get_value('sale', 'locale', 'terms.downpayments', 'Downpayments', 0, $customer_lang));
+    $group_label = ucfirst(Lang::get_term('sale', 'downpayments', 'downpayments', $customer_lang));
 
     InvoiceLineGroup::create([
         'name'              => $group_label,
