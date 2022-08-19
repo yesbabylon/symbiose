@@ -567,7 +567,7 @@ if($installment_date == PHP_INT_MAX) {
     // set default amount to 20%
     $installment_amount = $booking['price'] * 0.2;
     // set installment reference    ('+++xxx/+++' where xxx is 150 for initial installment)
-    $installment_ref = Funding::get_payment_reference(150, $booking['name']);
+    $installment_ref = Funding::_get_payment_reference(150, $booking['name']);
 }
 
 $values['installment_date'] = date('d/m/Y', $installment_date);

@@ -29,13 +29,13 @@ class Funding extends \sale\pay\Funding {
             ],
 
             'amount_share' => [
-                'type'              => 'computed',                
+                'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/percent',
                 'function'          => 'calcAmountShare',
                 'store'             => true,
                 'description'       => "Share of the payment over the total due amount (booking)."
-            ],            
+            ],
 
             'booking_id' => [
                 'type'              => 'many2one',
@@ -99,7 +99,7 @@ class Funding extends \sale\pay\Funding {
         }
 
         return $result;
-    }    
+    }
 
     public static function calcPaymentReference($om, $oids, $lang) {
         $result = [];
@@ -123,7 +123,7 @@ class Funding extends \sale\pay\Funding {
 
     public static function onupdateDueAmount($orm, $oids, $values, $lang) {
         $orm->update(self::getType(), $oids, ['name' => null, 'amount_share' => null], $lang);
-    }    
+    }
 
 
     public function getUnique() {
@@ -183,14 +183,14 @@ class Funding extends \sale\pay\Funding {
                     foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
                         if($oid != $fid) {
                             $fundings_price += $odata['due_amount'];
-                        }                        
+                        }
                     }
                     if($fundings_price > $booking['price']) {
                         return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total ({$fundings_price})."]];
-                    }                    
+                    }
                 }
             }
-        }        
+        }
         return parent::canupdate($om, $oids, $values, $lang);
     }
 }
