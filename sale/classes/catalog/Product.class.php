@@ -47,7 +47,7 @@ class Product extends Model {
 
             'ean' => [
                 'type'              => 'string',
-                'usage'             => 'uri/urn:ean',
+                'usage'             => 'uri/urn.ean',
                 'description'       => "IAN/EAN code for barcode generation."
             ],
 

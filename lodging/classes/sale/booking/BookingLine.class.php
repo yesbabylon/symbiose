@@ -744,7 +744,7 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(__CLASS__, $oids, ['consumptions_ids'], $lang);
 
         foreach($lines as $lid => $line) {
-            $om->write(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
+            $om->update(__CLASS__, $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
         }
 
         /*

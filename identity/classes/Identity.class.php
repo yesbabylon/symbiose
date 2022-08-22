@@ -72,14 +72,14 @@ class Identity extends Model {
             ],
 
             'bank_account_iban' => [
-                'type'          => 'string',
-                'usage'         => 'uri/urn:iban',
-                'description'   => "Number of the bank account of the Identity, if any."
+                'type'              => 'string',
+                'usage'             => 'uri/urn:iban',
+                'description'       => "Number of the bank account of the Identity, if any."
             ],
 
             'bank_account_bic' => [
-                'type'          => 'string',
-                'description'   => "Identitifer of the Bank related to the Identity's bank account, when set."
+                'type'              => 'string',
+                'description'       => "Identitifer of the Bank related to the Identity's bank account, when set."
             ],
 
             'signature' => [
@@ -108,7 +108,7 @@ class Identity extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Does the this organisation have a VAT number?',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'default'           => false                
+                'default'           => false
             ],
             'vat_number' => [
                 'type'              => 'string',
@@ -365,7 +365,7 @@ class Identity extends Model {
         }
         // force re-computing of related partners names
         $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
-        $om->read('identity\Partner', $partners_ids, ['name'], $lang);        
+        $om->read('identity\Partner', $partners_ids, ['name'], $lang);
     }
 
 
@@ -384,10 +384,10 @@ class Identity extends Model {
                 }
                 $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
                 $om->write(__CLASS__, $oid, $values, $lang);
-            }            
+            }
             $om->read(__CLASS__, $oids, ['display_name'], $lang);
             // force re-computing of related partners names
-            $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);            
+            $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
             $om->read('identity\Partner', $partners_ids, ['name'], $lang);
         }
     }
@@ -502,13 +502,13 @@ class Identity extends Model {
                         return ['legal_name' => ['missing' => 'Legal name cannot be empty for legal person.']];
                     }
                 }
-            }            
+            }
         }
         return parent::canupdate($om, $oids, $values, $lang);
     }
 
     public static function getConstraints() {
-        return [            
+        return [
             'legal_name' =>  [
                 'too_short' => [
                     'message'       => 'Legal name must be minimum 2 chars long.',

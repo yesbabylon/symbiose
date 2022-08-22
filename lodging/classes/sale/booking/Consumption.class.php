@@ -143,18 +143,21 @@ class Consumption extends \sale\booking\Consumption {
      *
      * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
      * @param  int[]                      $oids       List of objects identifiers in the collection.
-     * @param  array                      $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  array                      $values     Associative array holding the values newly assigned to the new instance (not all fields might be set).
      * @param  string                     $lang       Language in which multilang fields are being updated.
      * @return void
      */
     public static function onupdateScheduleFrom($om, $oids, $values, $lang) {
-        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_from', 'booking_line_id'], $lang);
-        if($consumptions > 0) {
-            foreach($consumptions as $oid => $consumption) {
-                if($consumption['is_rental_unit']) {
-                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
-                    if($siblings_ids > 0 && count($siblings_ids)) {
-                        $om->update(self::getType(), $siblings_ids, ['schedule_from' => $consumption['schedule_from']]);
+        // booking_id is only assigned upon creation, so hook is called because of an update (not a creation)
+        if(!isset($values['booking_id'])) {
+            $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_from', 'booking_line_id'], $lang);
+            if($consumptions > 0) {
+                foreach($consumptions as $oid => $consumption) {
+                    if($consumption['is_rental_unit']) {
+                        $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                        if($siblings_ids > 0 && count($siblings_ids)) {
+                            $om->update(self::getType(), $siblings_ids, ['schedule_from' => $consumption['schedule_from']]);
+                        }
                     }
                 }
             }
@@ -174,13 +177,16 @@ class Consumption extends \sale\booking\Consumption {
      * @return void
      */
     public static function onupdateScheduleTo($om, $oids, $values, $lang) {
-        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_to', 'booking_line_id'], $lang);
-        if($consumptions > 0) {
-            foreach($consumptions as $oid => $consumption) {
-                if($consumption['is_rental_unit']) {
-                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
-                    if($siblings_ids > 0 && count($siblings_ids)) {
-                        $om->update(self::getType(), $siblings_ids, ['schedule_to' => $consumption['schedule_to']]);
+        // booking_id is only assigned upon creation, so hook is called because of an update (not a creation)
+        if(!isset($values['booking_id'])) {
+            $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_to', 'booking_line_id'], $lang);
+            if($consumptions > 0) {
+                foreach($consumptions as $oid => $consumption) {
+                    if($consumption['is_rental_unit']) {
+                        $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                        if($siblings_ids > 0 && count($siblings_ids)) {
+                            $om->update(self::getType(), $siblings_ids, ['schedule_to' => $consumption['schedule_to']]);
+                        }
                     }
                 }
             }

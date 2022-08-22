@@ -109,10 +109,10 @@ class Establishment extends Model {
 
             'signature' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => 'Establishment signature to append to communications.',
                 'multilang'         => true
-            ]            
+            ]
 
         ];
     }

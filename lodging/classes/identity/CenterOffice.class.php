@@ -61,7 +61,7 @@ class CenterOffice extends \identity\Establishment {
 
             'signature' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => 'Office signature to append to communications.',
                 'multilang'         => true
             ],

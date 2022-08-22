@@ -39,7 +39,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch'] 
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
 /**
@@ -94,7 +94,7 @@ if(is_array($data) && count($data)) {
     $errors[] = 'invalid_booking';
 }
 
-// check list of services 
+// check list of services
 $data = eQual::run('do', 'lodging_booking_check-empty', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {
     $errors[] = 'empty_booking';
@@ -130,7 +130,7 @@ $dispatch->cancel('lodging.booking.quote.blocking', 'lodging\sale\booking\Bookin
 
 if($params['no_expiry'] || $booking['is_price_tbc']) {
     // set booking as never expiring
-    Booking::id($params['id'])->update(['is_noexpiry' => true]);        
+    Booking::id($params['id'])->update(['is_noexpiry' => true]);
 }
 else {
     // retrieve expiry delay setting
