@@ -78,6 +78,7 @@ class BookingLine extends Model {
                 'onupdate'          => 'onupdatePriceAdaptersIds'
             ],
 
+            // automatic price adapters are used for computing the unit_price
             'auto_discounts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingPriceAdapter',
@@ -86,6 +87,7 @@ class BookingLine extends Model {
                 'description'       => 'Price adapters relating to auto discounts only.'
             ],
 
+            // manual discounts are used for computing the resulting discount rate (except freebies)
             'manual_discounts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingPriceAdapter',
@@ -149,6 +151,7 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
+            // freebies are from both automatic price adapters and manual discounts
             'free_qty' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
@@ -355,15 +358,19 @@ class BookingLine extends Model {
     public static function calcDiscount($om, $oids, $lang) {
         $result = [];
 
-        $lines = $om->read(get_called_class(), $oids, ['manual_discounts_ids']);
+        $lines = $om->read(get_called_class(), $oids, ['manual_discounts_ids', 'unit_price']);
 
-        foreach($lines as $oid => $odata) {
+        foreach($lines as $oid => $line) {
             $result[$oid] = 0;
             // apply additional manual discounts
-            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
+            $discounts = $om->read('sale\booking\BookingPriceAdapter', $line['manual_discounts_ids'], ['type', 'value']);
             foreach($discounts as $aid => $adata) {
                 if($adata['type'] == 'percent') {
                     $result[$oid] += $adata['value'];
+                }
+                else if($adata['type'] == 'amount') {
+                    // amount discount is converted to a rate
+                    $result[$oid] += ($adata['value'] / $line['unit_price']);
                 }
             }
         }
@@ -396,10 +403,7 @@ class BookingLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $price = (float) $odata['total'];
-            $vat = (float) $odata['vat_rate'];
-
-            $result[$oid] = round( $price  * (1.0 + $vat), 2);
+            $result[$oid] = round( $odata['total']  * (1.0 + $odata['vat_rate']), 2);
         }
         return $result;
     }
@@ -413,47 +417,19 @@ class BookingLine extends Model {
         $lines = $om->read(get_called_class(), $oids, [
                     'qty',
                     'unit_price',
-                    'auto_discounts_ids',
-                    'manual_discounts_ids',
+                    'free_qty',
+                    'discount',
                     'payment_mode'
                 ]);
 
-        foreach($lines as $oid => $odata) {
+        foreach($lines as $oid => $line) {
 
-            if($odata['payment_mode'] == 'free') {
+            if($line['payment_mode'] == 'free') {
                 $result[$oid] = 0;
                 continue;
             }
 
-            $price = (float) $odata['unit_price'];
-            $disc_percent = 0.0;
-            $disc_value = 0.0;
-            $qty = intval($odata['qty']);
-            // apply freebies from auto-discounts
-            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
-            foreach($adapters as $aid => $adata) {
-                // amount and percent discounts have been applied in ::calcUnitPrice()
-                if($adata['type'] == 'freebie') {
-                    $qty -= $adata['value'];
-                }
-            }
-            // apply additional manual discounts
-            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
-            foreach($discounts as $aid => $adata) {
-                if($adata['type'] == 'amount') {
-                    $disc_value += $adata['value'];
-                }
-                else if($adata['type'] == 'percent') {
-                    $disc_percent += $adata['value'];
-                }
-                else if($adata['type'] == 'freebie') {
-                    $qty -= $adata['value'];
-                }
-            }
-            // apply discount amount VAT excl.
-            $price = ($price * (1.0-$disc_percent)) - $disc_value;
-
-            $result[$oid] = max(0, $price * $qty);
+            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
 
         return $result;

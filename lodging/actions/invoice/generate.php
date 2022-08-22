@@ -85,7 +85,8 @@ $booking = Booking::id($params['id'])
                                 'unit_price',
                                 'vat_rate',
                                 'qty',
-                                'price_adapters_ids' => ['type', 'value', 'is_manual_discount']
+                                'free_qty',
+                                'discount'
                             ]
                         ]
                   ])
@@ -194,40 +195,11 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                 'price_id'                  => $line['price_id'],
                 'vat_rate'                  => $line['vat_rate'],
                 'unit_price'                => $line['unit_price'],
-                'qty'                       => $line['qty']
+                'qty'                       => $line['qty'],
+                'free_qty'                  => $line['free_qty'],
+                'discount'                  => $line['discount']
             ];
 
-            $disc_value = 0;
-            $disc_percent = 0;
-            $free_qty = 0;
-            // use adapters to set discount and free quantity
-            foreach($line['price_adapters_ids'] as $aid => $adata) {
-                if($adata['is_manual_discount']) {
-                    if($adata['type'] == 'amount') {
-                        $disc_value += $adata['value'];
-                    }
-                    else if($adata['type'] == 'percent') {
-                        $disc_percent += $adata['value'];
-                    }
-                    else if($adata['type'] == 'freebie') {
-                        $free_qty += $adata['value'];
-                    }
-                }
-                // auto granted freebies are displayed as manual discounts
-                else {
-                    if($adata['type'] == 'freebie') {
-                        $free_qty += $adata['value'];
-                    }
-                }
-            }
-            // convert discount value to a percentage
-            $disc_value = $disc_value / (1 + $line['vat_rate']);
-            $price = $line['unit_price'] * $line['qty'];
-            $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
-            $disc_percent += (1-$disc_value_perc);
-
-            $i_line['free_qty'] = $free_qty;
-            $i_line['discount'] = $disc_percent;
             InvoiceLine::create($i_line);
         }
 

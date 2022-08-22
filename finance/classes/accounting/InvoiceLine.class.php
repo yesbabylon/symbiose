@@ -171,15 +171,8 @@ class InvoiceLine extends Model {
 
         $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
 
-        foreach($lines as $oid => $odata) {
-            $price = (float) $odata['unit_price'];
-            $disc = (float) $odata['discount'];
-            $qty = intval($odata['qty']) - intval($odata['free_qty']);
-
-            // apply discount amount VAT excl.
-            $price = ($price * (1.0 - $disc));
-
-            $result[$oid] = $price * $qty;
+        foreach($lines as $oid => $line) {
+            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
         return $result;
     }

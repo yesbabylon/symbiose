@@ -114,7 +114,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
             'price_adapters_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\BookingPriceAdapter',
+                'foreign_object'    => BookingPriceAdapter::getType(),
                 'foreign_field'     => 'booking_line_id',
                 'description'       => 'Price adapters holding the manual discounts applied on the line.',
                 'onupdate'          => 'sale\booking\BookingLine::onupdatePriceAdaptersIds'

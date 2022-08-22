@@ -11,7 +11,7 @@ class ContractLine extends Model {
 
     public static function getName() {
         return "Contract line";
-    }  
+    }
 
     public static function getColumns() {
 
@@ -49,33 +49,33 @@ class ContractLine extends Model {
                 'required'          => true
             ],
 
-            'unit_price' => [ 
-                'type'              => 'float', 
-                'usage'             => 'amount/money:4',                
+            'unit_price' => [
+                'type'              => 'float',
+                'usage'             => 'amount/money:4',
                 'description'       => 'Tax-excluded price of the product related to the line.',
                 'required'          => true
             ],
 
-            'vat_rate' => [ 
-                'type'              => 'float', 
+            'vat_rate' => [
+                'type'              => 'float',
                 'description'       => 'VAT rate to be applied.',
                 'required'          => true
             ],
-            
-            'qty' => [ 
-                'type'              => 'float', 
+
+            'qty' => [
+                'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'required'          => true
             ],
 
-            'free_qty' => [ 
-                'type'              => 'integer', 
+            'free_qty' => [
+                'type'              => 'integer',
                 'description'       => 'Free quantity.',
                 'default'           => 0
             ],
 
-            'discount' => [ 
-                'type'              => 'float', 
+            'discount' => [
+                'type'              => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0
             ],
@@ -85,7 +85,7 @@ class ContractLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the line.',
-                'function'          => 'sale\contract\ContractLine::getTotal',
+                'function'          => 'calcTotal',
                 'store'             => true
             ],
 
@@ -94,7 +94,7 @@ class ContractLine extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
                 'description'       => 'Final tax-included price of the line.',
-                'function'          => 'sale\contract\ContractLine::getPrice',
+                'function'          => 'calcPrice',
                 'store'             => true
             ]
 
@@ -114,24 +114,23 @@ class ContractLine extends Model {
      * Compute the VAT excl. total price of the line, with discounts applied.
      *
      */
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['unit_price', 'qty', 'free_qty', 'discount']);
 
         if($lines > 0 && count($lines)) {
             foreach($lines as $lid => $line) {
-                $price = $line['unit_price'] * (1-$line['discount']);
-                $result[$lid] = $price * ($line['qty'] - $line['free_qty']);
+                $result[$lid] = $line['unit_price'] * (1 - $line['discount']) * ($line['qty'] - $line['free_qty']);
             }
         }
         return $result;
-    }  
+    }
 
     /**
      * Compute the final VAT incl. price of the line.
      *
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(__CLASS__, $oids, ['total', 'vat_rate']);
 
@@ -141,6 +140,6 @@ class ContractLine extends Model {
             }
         }
         return $result;
-    }    
+    }
 
 }

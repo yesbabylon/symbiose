@@ -10,7 +10,7 @@ class ContractLine extends \sale\booking\ContractLine {
 
     public static function getName() {
         return "Contract line";
-    }  
+    }
 
     public static function getColumns() {
 
