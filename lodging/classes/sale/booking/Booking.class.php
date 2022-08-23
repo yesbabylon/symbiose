@@ -24,7 +24,7 @@ class Booking extends \sale\booking\Booking {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
+                'foreign_object'    => \lodging\sale\customer\Customer::getType(),
                 'description'       => "The customer whom the booking relates to (from selected identity).",
                 'onupdate'          => 'onupdateCustomerId'
             ],
