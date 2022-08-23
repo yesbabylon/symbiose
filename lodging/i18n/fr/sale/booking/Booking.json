@@ -65,7 +65,7 @@
                 "action.option-confirm": {
                     "label": "Confirmer",
                     "description": "Les unités locatives seront réservées, un contrat sera créé et une facture proforma sera éditée."
-                },                
+                },
                 "action.confirm": {
                     "label": "Confirmer",
                     "description": "Les unités locatives seront réservées, un contrat sera créé et un échéancier de paiement sera généré."
@@ -111,7 +111,7 @@
                 },
                 "item.booking.payments": {
                     "label": "Paiements"
-                }    
+                }
             },
             "layout": {
                 "section.booking_info": {
