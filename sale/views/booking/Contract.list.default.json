@@ -3,7 +3,9 @@
     "description": "List of contracts relating to bookings.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
+    "order": "created",
+    "sort": "desc",
     "layout": {
         "items": [
             {

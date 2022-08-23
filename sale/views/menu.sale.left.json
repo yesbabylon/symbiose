@@ -108,7 +108,7 @@
                         "label": "New customer",
                         "description": "",
                         "icon": "add",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "form.create",
@@ -121,7 +121,7 @@
                         "type": "entry",
                         "label": "All customers",
                         "description": "",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "list.default",
@@ -133,7 +133,7 @@
                         "type": "entry",
                         "label": "All partners",
                         "description": "",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "identity\\Partner",
                             "view": "list.default"
@@ -204,7 +204,27 @@
                         }
                     }
                 ]
-            }            
+            },
+            {
+                "id": "item.contracts",
+                "label": "Contracts",
+                "description": "",
+                "icon": "drive_file_rename_outline",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.contracts.all",
+                        "type": "entry",
+                        "label": "All contracts",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\contract\\Contract",
+                            "view": "list.default",
+                            "domain": ["status", "<>", "cancelled"]
+                        }
+                    }
+                ]
+            }
         ]
     }
 }

@@ -6,7 +6,7 @@
 */
 namespace lodging\sale\customer;
 
-class Customer extends \sale\Customer {
+class Customer extends \sale\customer\Customer {
 
     public static function getColumns() {
 
