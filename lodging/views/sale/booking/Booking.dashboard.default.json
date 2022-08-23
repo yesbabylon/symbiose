@@ -7,14 +7,14 @@
                 "label": "test",
                 "height": "100%",
                 "sections": [
-                    {                
+                    {
                         "rows": [
                             {
-                                "height": "50%", 
+                                "height": "50%",
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "items": [ 
+                                        "items": [
                                             {
                                                 "id": "item.bookings",
                                                 "label": "Alertes",
@@ -64,11 +64,11 @@
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
                     }
                 ]
-            }            
+            }
         ]
     }
 }
