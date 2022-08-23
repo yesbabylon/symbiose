@@ -78,7 +78,7 @@ class Booking extends \sale\booking\Booking {
 
             'consumptions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\Consumption',
+                'foreign_object'    => Consumption::getType(),
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Consumptions related to the booking.',
                 // consumptions are also created for resulting blocked (link) or partially blocked (part) units

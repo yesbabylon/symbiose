@@ -351,7 +351,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 $booking_line_groups_ids[] = $line['booking_line_group_id'];
 
                 // remove all previous rental_unit assignements
-                $om->write(__CLASS__, $lid, ['rental_unit_assignments_ids' => array_map(function($a) { return "-$a";}, $line['rental_unit_assignments_ids'])]);
+                $om->update(__CLASS__, $lid, ['rental_unit_assignments_ids' => array_map(function($a) { return "-$a";}, $line['rental_unit_assignments_ids'])]);
 
                 $center_id = $line['booking_id.center_id'];
                 $nb_pers = $line['booking_line_group_id.nb_pers'];
@@ -363,6 +363,16 @@ class BookingLine extends \sale\booking\BookingLine {
 
                 // find available rental units (sorted by capacity, desc; filtered on category)
                 $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
+
+                // append rental units from own booking (use case: come and go between 'draft' and 'option')
+                $bookings = $om->read(Booking::getType(), $line['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
+                if($bookings > 0 && count($bookings)) {
+                    $booking = reset($bookings);
+                    foreach($booking['consumptions_ids.rental_unit_id'] as $consumption) {
+                        $rental_units_ids[] = $consumption['rental_unit_id'];
+                    }
+                }
+
                 // retrieve rental units capacities
                 $rental_units = [];
                 $assigned_rental_units = [];

@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use lodging\sale\booking\Consumption;
+use lodging\sale\booking\Booking;
 use lodging\realestate\RentalUnit;
 use equal\orm\Domain;
 
@@ -16,8 +17,12 @@ list($params, $providers) = announce([
             'type'          => 'integer',
             'required'      => true
         ],
+        'booking_id' =>  [
+            'description'   => 'Identifier of the related product.',
+            'type'          => 'integer'
+        ],
         'product_id' =>  [
-            'description'   => 'Identifier of the targeted booking.',
+            'description'   => 'Identifier of the related product.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -57,13 +62,23 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 
 $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $params['center_id'], $params['product_id'], $params['date_from'], $params['date_to']);
 
+// append rental units from own booking (use case: come and go between 'draft' and 'option')
+if(isset($params['booking_id'])) {
+    $booking = Booking::id($params['booking_id'])->read(['consumptions_ids' => ['rental_unit_id']])->get();
+    if($booking) {
+        foreach($booking['consumptions_ids'] as $consumption) {
+            $rental_units_ids[] = $consumption['rental_unit_id'];
+        }
+    }
+}
+
 $rental_units = RentalUnit::ids($rental_units_ids)->read(['id', 'name', 'capacity'])->adapt('txt')->get(true);
 
 $result = [];
 
 $domain = new Domain($params['domain']);
 
-// filter results    
+// filter results
 foreach($rental_units as $index => $rental_unit) {
     if($domain->evaluate($rental_unit)) {
         $result[] = $rental_unit;

@@ -200,7 +200,7 @@ class BookingLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'VAT rate that applies to this line.',
-                'function'          => 'getVatRate',
+                'function'          => 'calcVatRate',
                 'store'             => true,
                 'onupdate'          => 'onupdateVatRate'
             ],
@@ -436,7 +436,7 @@ class BookingLine extends Model {
     }
 
 
-    public static function getVatRate($om, $oids, $lang) {
+    public static function calcVatRate($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(get_called_class(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {

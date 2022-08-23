@@ -325,7 +325,7 @@ class Consumption extends \sale\booking\Consumption {
 
     /**
      *
-     * #memo - used in controllers
+     * #memo - This method is used in controllers
      *
      * @param \equal\orm\ObjectManager $om  Instance of Object Manager service.
      * @param int $center_id    Identifier of the center for which to perform the lookup.
