@@ -34,7 +34,7 @@ class Identity extends \identity\Identity {
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Partnerships that relate to the identity.',
                 'domain'            => ['owner_identity_id', '<>', 'object.id']
-            ]            
+            ]
         ];
     }
 
