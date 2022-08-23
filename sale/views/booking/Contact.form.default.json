@@ -44,7 +44,7 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions": {
-                                                            "ACTION.CREATE": false    
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }
@@ -63,7 +63,7 @@
                                                 "type": "field",
                                                 "value": "partner_position",
                                                 "width": "50%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]

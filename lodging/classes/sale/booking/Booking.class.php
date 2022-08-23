@@ -296,16 +296,23 @@ class Booking extends \sale\booking\Booking {
                 // remove all contacts
                 if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
                     $om->update(__CLASS__, $bid, ['contacts_ids' => array_map( function($a) { return -$a; }, $booking['contacts_ids'] )], $lang);
-                }                
-                // #todo - if customer is a legal person, import all its contacts
-                $contact_id = $om->create('lodging\sale\booking\Contact', [
-                    'booking_id' => $bid,
-                    'owner_identity_id' => $booking['customer_identity_id'],
-                    'partner_identity_id' => $booking['customer_id.partner_identity_id']]);
-                if($contact_id > 0) {
-                    // update booking
-                    $om->update(__CLASS__, $bid, ['contacts_ids' => [$contact_id]], $lang);
                 }
+                // if customer is a legal person, import all its contacts (non-assigned to a booking)
+                $contacts_ids = $om->search('lodging\sale\booking\Contact', [ ['owner_identity_id', '=', $booking['customer_id.partner_identity_id']], ['booking_id', 'is', null] ]);
+                if($contacts_ids <= 0) {
+                    $contacts_ids = [];
+                }
+                // append customer identity's own contact
+                $contact_id = $om->create('lodging\sale\booking\Contact', [
+                    'booking_id'            => $bid,
+                    'owner_identity_id'     => $booking['customer_identity_id'],
+                    'partner_identity_id'   => $booking['customer_id.partner_identity_id']
+                ]);
+                if($contact_id > 0) {
+                    $contacts_ids[] = $contact_id;
+                }
+                // update booking
+                $om->update(__CLASS__, $bid, ['contacts_ids' => $contacts_ids], $lang);
                 // update bookingline group rate_class_id   (triggers _resetPrices and _updatePriceAdapters)
                 if($booking['booking_lines_groups_ids'] && count($booking['booking_lines_groups_ids'])) {
                     $om->update('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
@@ -325,7 +332,7 @@ class Booking extends \sale\booking\Booking {
                 if($booking_lines_ids > 0 && count($booking_lines_ids)) {
                     $om->callonce('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, [], $lang);
                 }
-                $om->write(__CLASS__, $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
+                $om->update(__CLASS__, $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
             }
         }
     }
@@ -565,7 +572,7 @@ class Booking extends \sale\booking\Booking {
             }
             if($has_booking_lines) {
                 return ['center_id' => ['non_editable' => 'Center cannot be changed once services are attached to the booking.']];
-            }            
+            }
         }
 
         // if customer nature is missing, make sure the selected customer has one already
