@@ -165,6 +165,7 @@ class Identity extends Model {
                 'description'       => 'List of employees of the organisation, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
+
             'customers_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
@@ -173,6 +174,7 @@ class Identity extends Model {
                 'description'       => 'List of customers of the organisation, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
+
             'providers_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',

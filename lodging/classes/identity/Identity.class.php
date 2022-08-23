@@ -30,11 +30,12 @@ class Identity extends \identity\Identity {
             // field for retrieving all partners related to the identity
             'partners_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\customer\Customer',
+                'foreign_object'    => 'lodging\sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Partnerships that relate to the identity.',
                 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ]
+
         ];
     }
 
