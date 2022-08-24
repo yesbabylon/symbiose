@@ -24,7 +24,7 @@ class TemplateAttachment extends Model {
                 'foreign_object'    => 'documents\Document',
                 'description'       => "The document that the attachment points to."
             ],
-            
+
             'template_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'communication\Template',

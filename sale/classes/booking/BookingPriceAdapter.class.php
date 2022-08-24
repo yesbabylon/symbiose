@@ -61,6 +61,7 @@ class BookingPriceAdapter extends Model {
                 'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'value' => [
                 'type'              => 'float',
                 'description'       => "Value of the discount (monetary amount or percentage).",

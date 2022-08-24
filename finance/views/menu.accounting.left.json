@@ -16,7 +16,7 @@
                         "id": "item.bank_statements.ready",
                         "type": "entry",
                         "label": "Statements to export",
-                        "description": "", 
+                        "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
@@ -28,7 +28,7 @@
                         "id": "item.bank_statements.all",
                         "type": "entry",
                         "label": "All statements",
-                        "description": "", 
+                        "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
@@ -126,7 +126,7 @@
                         }
                     }
                 ]
-            }            
+            }
         ]
     }
 }

@@ -38,7 +38,7 @@ class CenterOffice extends \identity\Establishment {
 
             'centers_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\identity\Center',
+                'foreign_object'    => Center::getType(),
                 'foreign_field'     => 'center_office_id',
                 'description'       => 'List of centers attached to the office.'
             ],

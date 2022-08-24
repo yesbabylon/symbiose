@@ -96,6 +96,7 @@ class InvoiceLine extends Model {
                 'onupdate'          => 'onupdateFreeQty'
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',

@@ -5,17 +5,30 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use lodging\sale\booking\BankStatement;
+use finance\accounting\AccountingEntry;
 
+use lodging\finance\accounting\AccountingJournal;
+
+use lodging\identity\CenterOffice;
 
 list($params, $providers) = announce([
     'description'   => "Export a zip archive containing all reconciled bank statements for importing in an external accounting software.",
+    'params'        => [
+        'center_office_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => CenterOffice::getType(),
+            'description'       => 'Management Group to which the center belongs.',
+            'required'          => true
+        ],
+    ],
     'access' => [
         'visibility'        => 'public',
         'groups'            => ['sale.default.user'],
     ],
     'response'      => [
-        'content-type'        => 'application/zip',
-        'content-disposition' => 'attachment; filename="export.zip"',
+        // 'content-type'        => 'application/zip',
+        'content-type'        => 'text/plain',
+        // 'content-disposition' => 'attachment; filename="export.zip"',
         'charset'             => 'utf-8',
         'accept-origin'       => '*'
     ],
@@ -25,44 +38,55 @@ list($params, $providers) = announce([
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 
-$statements = BankStatement::search([['status', '=', 'reconciled'], ['is_exported', '=', false]])
-  ->read(['name', 'raw_data', 'status', 'statement_lines_ids' => ['account_iban', 'customer_id' => ['id', 'ref_account'] ]])
-  ->get();
+// 1) entries related to invoices
+/*
+
+Postulats
+* l'origine des fichiers n'a pas d'importance
+* les noms de fichiers peuvent avoir de l'importance
+* les fichiers peuvent regrouper des lignes issues de différents centres
+* les imports COMPTA se font par centre de gestion : il faut un export par centre de gestion
+
+$columns = [
+    'TDBK'
+]
+
+*/
 
 
-if($statements) {
+// find journals for given center_office
+$office = CenterOffice::id($params['center_office_id'])
+            ->read([
+                'accounting_journals_ids',
+                'centers_ids' => [
+                    'analytic_section_id' => [
+                        'code'
+                    ]
+                ]
+            ])
+            ->first();
 
-    // create zip archive
-    $tmpfile = tempnam(sys_get_temp_dir(), "zip");
-    $zip = new ZipArchive();
-    $zip->open($tmpfile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-
-    foreach($statements as $statement) {
-        $coda = $statement['raw_data'];
-        // adapt account numbers with customers ref_account
-        foreach($statement['statement_lines_ids'] as $lid => $line) {
-            if( $line['customer_id'] ) {    
-                $ref_account = $line['customer_id']['ref_account'];
-                if(!$ref_account) {
-                    $ref_account = $line['account_iban'];
-                    $orm->write('sale\customer\Customer', $line['customer_id']['id'], ['ref_account' => $ref_account]);
-                }
-                else {
-                    $coda = str_replace($line['account_iban'], $ref_account, $coda);
-                }    
-            }
-        }
-        // add statement as CODA file to the archive
-        $zip->addFromString($statement['name'].'.cod', $coda);
-        // mark statement as exported
-        BankStatement::id($statement['id'])->update(['is_exported' => true]);
-    }
-    $zip->close();
-    $data = file_get_contents($tmpfile);
-    unlink($tmpfile);   
+if(!$office) {
+    throw new Exception("unknown_center_office", QN_ERROR_UNKNOWN_OBJECT);
 }
 
+$entries = AccountingEntry::search([ ['is_exported', '=', false], ['has_invoice', '=', true], ['journal_id', 'in', $office['accounting_journals_ids']] ])
+            ->read([
+                'invoice_id' => [
+                    'name'
+                ],
+                'journal_id' => [
+                    'code'
+                ]
+            ])
+            ->get();
+
+$result = [];
+foreach($entries as $entry) {
+    $result[] = $entry;
+}
+
+
 $context->httpResponse()
-        ->body($data)
+        ->body($result)
         ->send();

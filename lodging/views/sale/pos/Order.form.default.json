@@ -121,9 +121,33 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "id": "section.accounting_entries",
+                        "label": "Accounting Entries",
+                        "visible": ["has_invoice", "=", false],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accounting_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.order"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
-            }            
+            }
         ]
     }
 }

@@ -275,15 +275,19 @@ if($booking['center_id']['template_category_id']) {
 
     $template = Template::search([
                             ['category_id', '=', $booking['center_id']['template_category_id']],
-                            ['code', '=', 'quote'],
-                            ['type', '=', 'quote']
+                            ['code', '=', $booking['status']],
+                            ['type', '=', $booking['status']]
                         ])
                         ->read(['parts_ids' => ['name', 'value']], $params['lang'])
                         ->first();
 
     foreach($template['parts_ids'] as $part_id => $part) {
         if($part['name'] == 'header') {
-            $values['quote_header_html'] = $part['value'].$values['center_signature'];
+            $value = $part['value'].$values['center_signature'];
+            $value = str_replace('{center}', $booking['center_id']['name'], $value);
+            $value = str_replace('{date_from}', date('d/m/Y', $booking['date_from']), $value);
+            $value = str_replace('{date_to}', date('d/m/Y', $booking['date_to']), $value);
+            $values['quote_header_html'] = $value;
         }
         else if($part['name'] == 'notice') {
             $values['invoice_notice_html'] = $part['value'];

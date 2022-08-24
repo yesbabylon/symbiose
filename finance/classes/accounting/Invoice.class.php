@@ -451,6 +451,7 @@ class Invoice extends Model {
                             $credit = 0.0;
                             $accounting_entries[] = [
                                 'name'          => $line['name'],
+                                'has_invoice'   => true,
                                 'invoice_id'    => $oid,
                                 'account_id'    => $account_sales_id,
                                 'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -482,6 +483,7 @@ class Invoice extends Model {
                                     $credit = round($line['total'] * $rline['share'], 2);
                                     $accounting_entries[] = [
                                         'name'          => $line['name'],
+                                        'has_invoice'   => true,
                                         'invoice_id'    => $oid,
                                         'account_id'    => $rline['account_id'],
                                         'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -499,6 +501,7 @@ class Invoice extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
+                            'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -513,6 +516,7 @@ class Invoice extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
+                            'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -526,6 +530,7 @@ class Invoice extends Model {
                     // assign with handling of reversing entries
                     $accounting_entries[] = [
                         'name'          => 'créances commerciales',
+                        'has_invoice'   => true,
                         'invoice_id'    => $oid,
                         'account_id'    => $account_trade_debtors_id,
                         'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -533,7 +538,7 @@ class Invoice extends Model {
                     ];
 
                     // append generated entries to result
-                    $result[$oid] = $accounting_entries;                    
+                    $result[$oid] = $accounting_entries;
                 }
             }
         }

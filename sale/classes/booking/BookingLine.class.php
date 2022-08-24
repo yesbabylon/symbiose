@@ -160,6 +160,7 @@ class BookingLine extends Model {
                 'store'             => true
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -383,7 +384,7 @@ class BookingLine extends Model {
 
     public static function calcFareBenefit($om, $oids, $lang) {
         $result = [];
-        // #memo - price adapters are already applied on unit_price (so we need price_id)
+        // #memo - price adapters are already applied on unit_price, so we need price_id
         $lines = $om->read(get_called_class(), $oids, ['free_qty', 'qty', 'price_id.price', 'vat_rate', 'unit_price']);
         if($lines) {
             foreach($lines as $lid => $line) {

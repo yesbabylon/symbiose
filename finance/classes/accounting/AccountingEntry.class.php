@@ -25,12 +25,32 @@ class AccountingEntry extends Model {
                 'description'       => 'Label for identifying the entry.',
             ],
 
+            'has_invoice' => [
+                'type'              => 'boolean',
+                'description'       => 'Signals that the entry relates to an invoice.',
+                'default'           => false
+            ],
+
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => Invoice::getType(),
                 'description'       => 'Invoice that the line relates to.',
-                'required'          => true,
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'cascade',
+                'visible'           => ['has_invoice', '=', true]
+            ],
+
+            'has_order' => [
+                'type'              => 'boolean',
+                'description'       => 'Signals that the entry relates to an order.',
+                'default'           => false
+            ],
+
+            'order_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\pos\Order',
+                'description'       => 'Invoice that the line relates to.',
+                'ondelete'          => 'cascade',
+                'visible'           => ['has_order', '=', true]
             ],
 
             'account_id' => [

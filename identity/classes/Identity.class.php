@@ -84,7 +84,7 @@ class Identity extends Model {
 
             'signature' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => 'Identity signature to append to communications.',
                 'multilang'         => true
             ],

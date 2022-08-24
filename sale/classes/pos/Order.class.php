@@ -141,6 +141,14 @@ class Order extends Model {
                 'foreign_field'     => 'order_id',
                 'ondetach'          => 'delete',
                 'description'       => 'The payments parts that relate to the order.'
+            ],
+
+            'accounting_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => \finance\accounting\AccountingEntry::getType(),
+                'foreign_field'     => 'order_id',
+                'description'       => 'Accounting entries relating to the lines of the order.',
+                'ondetach'          => 'delete'
             ]
 
         ];
@@ -310,7 +318,7 @@ class Order extends Model {
 
 
     /**
-     * Generate the accounting entries according to the order line (only applies on non-invoiced orders).
+     * Generate the accounting entries according to the order line (applies only on non-invoiced orders).
      *
      * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
      * @param  array                       $oids       List of objects identifiers.
@@ -379,7 +387,8 @@ class Order extends Model {
                                 $credit = round($line['total'] * $rline['share'], 2);
                                 $accounting_entries[] = [
                                     'name'          => $line['name'],
-                                    'invoice_id'    => $oid,
+                                    'has_order'     => true,
+                                    'order_id'      => $oid,
                                     'account_id'    => $rline['account_id'],
                                     'debit'         => $debit,
                                     'credit'        => $credit
@@ -395,7 +404,8 @@ class Order extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
-                            'invoice_id'    => $oid,
+                            'has_order'     => true,
+                            'order_id'      => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => $debit,
                             'credit'        => $credit
@@ -409,7 +419,8 @@ class Order extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
-                            'invoice_id'    => $oid,
+                            'has_order'     => true,
+                            'order_id'      => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => $debit,
                             'credit'        => $credit
@@ -422,7 +433,8 @@ class Order extends Model {
                     // assign with handling of reversing entries
                     $accounting_entries[] = [
                         'name'          => 'créances commerciales',
-                        'invoice_id'    => $oid,
+                        'has_order'     => true,
+                        'order_id'      => $oid,
                         'account_id'    => $account_trade_debtors_id,
                         'debit'         => $debit,
                         'credit'        => $credit

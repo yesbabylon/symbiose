@@ -103,7 +103,7 @@ class Establishment extends Model {
 
             'analytic_section_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AnalyticSection',
+                'foreign_object'    => \finance\accounting\AnalyticSection::getType(),
                 'description'       => "Related analytic section, if any."
             ],
 
