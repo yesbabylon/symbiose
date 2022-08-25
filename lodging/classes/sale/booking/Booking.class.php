@@ -9,7 +9,6 @@ use core\setting\Setting;
 
 class Booking extends \sale\booking\Booking {
 
-
     public static function getColumns() {
         return [
 

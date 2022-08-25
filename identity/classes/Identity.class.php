@@ -325,7 +325,7 @@ class Identity extends Model {
 
             'lang_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'core\Lang',
+                'foreign_object'    => \core\Lang::getType(),
                 'description'       => "Preferred language of the identity.",
                 'default'           => 1,
                 'onupdate'          => 'onupdateLangId'

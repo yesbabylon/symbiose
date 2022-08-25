@@ -111,15 +111,15 @@ class Invoice extends Model {
 
             'partner_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'description'       => "Organisation which has to pay for the goods and services related to the sale.",
+                'foreign_object'    => \identity\Partner::getType(),
+                'description'       => "The counter party organisation related to the sale.",
                 'required'          => true
             ],
 
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::calcPrice',
+                'function'          => 'calcPrice',
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included invoiced amount (computed)."
@@ -128,7 +128,7 @@ class Invoice extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::calcTotal',
+                'function'          => 'calcTotal',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the invoice (computed).',
                 'store'             => true
@@ -176,7 +176,7 @@ class Invoice extends Model {
             'due_date' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'description'       => "Deadline before which the funding is expected.",
+                'description'       => "Deadline for the payment is expected, from payment terms.",
                 'function'          => 'calcDueDate',
                 'store'             => true
             ]
@@ -450,12 +450,13 @@ class Invoice extends Model {
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [
-                                'name'          => $line['name'],
-                                'has_invoice'   => true,
-                                'invoice_id'    => $oid,
-                                'account_id'    => $account_sales_id,
-                                'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                                'name'              => $line['name'],
+                                'has_invoice'       => true,
+                                'invoice_id'        => $oid,
+                                'invoice_line_id'   => $lid,
+                                'account_id'        => $account_sales_id,
+                                'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
                             ];
                         }
                         // line is a regular product line
@@ -482,12 +483,13 @@ class Invoice extends Model {
                                     $debit = 0.0;
                                     $credit = round($line['total'] * $rline['share'], 2);
                                     $accounting_entries[] = [
-                                        'name'          => $line['name'],
-                                        'has_invoice'   => true,
-                                        'invoice_id'    => $oid,
-                                        'account_id'    => $rline['account_id'],
-                                        'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                        'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                                        'name'              => $line['name'],
+                                        'has_invoice'       => true,
+                                        'invoice_id'        => $oid,
+                                        'invoice_line_id'   => $lid,
+                                        'account_id'        => $rline['account_id'],
+                                        'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                        'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
                                     ];
                                 }
                             }

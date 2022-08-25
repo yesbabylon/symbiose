@@ -6,8 +6,10 @@
 */
 use lodging\sale\booking\Consumption;
 use lodging\sale\booking\Booking;
+use lodging\sale\booking\BookingLineRentalUnitAssignement;
 use lodging\realestate\RentalUnit;
 use equal\orm\Domain;
+
 
 list($params, $providers) = announce([
     'description'   => "Retrieve the list of available rental units for a given center, during a specific timerange.",
@@ -19,6 +21,10 @@ list($params, $providers) = announce([
         ],
         'booking_id' =>  [
             'description'   => 'Identifier of the related product.',
+            'type'          => 'integer'
+        ],
+        'booking_line_id' =>  [
+            'description'   => 'Specific line for which availability list is requested.',
             'type'          => 'integer'
         ],
         'product_id' =>  [
@@ -62,7 +68,7 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 
 $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $params['center_id'], $params['product_id'], $params['date_from'], $params['date_to']);
 
-// append rental units from own booking (use case: come and go between 'draft' and 'option')
+// append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
 if(isset($params['booking_id'])) {
     $booking = Booking::id($params['booking_id'])->read(['consumptions_ids' => ['rental_unit_id']])->get();
     if($booking) {
@@ -70,7 +76,20 @@ if(isset($params['booking_id'])) {
             $rental_units_ids[] = $consumption['rental_unit_id'];
         }
     }
+
+    // remove units from other lines
+    if($params['booking_line_id']) {
+        $assignments = BookingLineRentalUnitAssignement::search(['booking_id', '=', $params['booking_id']])->read(['rental_unit_id', 'booking_line_id'])->get();
+        $used_rental_units_ids = [];
+        foreach($assignments as $assignment) {
+            if($assignment['booking_line_id'] != $params['booking_line_id']) {
+                $used_rental_units_ids[] = $assignment['rental_unit_id'];
+            }
+        }
+        $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
+    }
 }
+
 
 $rental_units = RentalUnit::ids($rental_units_ids)->read(['id', 'name', 'capacity'])->adapt('txt')->get(true);
 

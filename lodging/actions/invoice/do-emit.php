@@ -39,7 +39,7 @@ list($params, $providers) = announce([
 list($context, $orm, $cron, $auth) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['auth']];
 
 // emit the invoice (changing status will trigger an invoice number assignation)
-$invoice = Invoice::id($params['id'])->update(['status' => 'invoice'])->read(['booking_id', 'funding_id', 'center_office_id', 'price', 'due_date'])->first();
+$invoice = Invoice::id($params['id'])->update(['status' => 'invoice'])->read(['id', 'booking_id', 'funding_id', 'center_office_id', 'price', 'due_date'])->first();
 
 // if invoice do not yet relate to a funding: it is a final invoice (balance)
 if(is_null($invoice['funding_id'])) {

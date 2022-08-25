@@ -364,6 +364,19 @@ class BookingLine extends \sale\booking\BookingLine {
                 // find available rental units (sorted by capacity, desc; filtered on category)
                 $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
 
+                // remove units that are already used within the current booking
+                $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_id', '=', $line['booking_id']]);
+                $assignments = $om->read(BookingLineRentalUnitAssignement::getType(), $assignments_ids, ['rental_unit_id']);
+
+                $used_rental_units_ids = [];
+                if($assignments > 0) {
+                    foreach($assignments as $assignment) {
+                        $used_rental_units_ids[] = $assignment['rental_unit_id'];
+                    }
+                }
+
+                $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
+
                 // append rental units from own booking (use case: come and go between 'draft' and 'option')
                 $bookings = $om->read(Booking::getType(), $line['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
                 if($bookings > 0 && count($bookings)) {
@@ -619,11 +632,18 @@ class BookingLine extends \sale\booking\BookingLine {
             'product_id.product_model_id.duration'
         ], $lang);
 
+        // remove all previous rental_unit assignements - we need to do this because each line must know which units are already taken in same booking
+        $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_line_id', 'in', $oids]);
+        $om->delete(BookingLineRentalUnitAssignement::getType(), $assignments_ids, true);
+
         if($lines > 0) {
             foreach($lines as $lid => $line) {
-                if(!$line['has_own_qty']) {
+                if($line['has_own_qty']) {
+                    // own quantity has been assigned in onupdateProductId
+                }
+                else {
                     if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                        $om->write(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
+                        $om->update(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
                     }
                     else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
                         if(!$line['qty_vars']) {
@@ -634,10 +654,9 @@ class BookingLine extends \sale\booking\BookingLine {
                             else if($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
                                 $factor = max(1, $line['booking_line_group_id.nb_nights']);
                             }
-
                             $qty = $line['booking_line_group_id.nb_pers'] * $factor;
                             $qty_vars = array_fill(0, $factor, 0);
-                            $om->write(__CLASS__, $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
+                            $om->update(__CLASS__, $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
                         }
                         else {
                             $qty_vars = json_decode($line['qty_vars']);
@@ -654,14 +673,11 @@ class BookingLine extends \sale\booking\BookingLine {
                                 else if($diff < 0) {
                                     $qty_vars = array_slice($qty_vars, 0, $factor);
                                 }
+                                // will trigger onupdateQtyVar which will update qty
                                 $om->update(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
-                                // will trigger onupdateQtyVar which will update  qty
                             }
                         }
                     }
-                }
-                else {
-                    // own quantity has been assigned in onupdateProductId
                 }
             }
         }

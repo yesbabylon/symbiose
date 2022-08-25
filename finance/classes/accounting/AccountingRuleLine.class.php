@@ -8,7 +8,7 @@ namespace finance\accounting;
 use equal\orm\Model;
 
 class AccountingRuleLine extends Model {
-    
+
     public static function getName() {
         return "Accounting Rule Line";
     }
@@ -64,7 +64,7 @@ class AccountingRuleLine extends Model {
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
                 $result[$oid] = $odata['account_id.code'];
-            }    
+            }
         }
         return $result;
     }

@@ -34,7 +34,10 @@ class AccountingRule extends Model {
             'type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",
-                'selection'         => ['purchase', 'sale'],
+                'selection'         => [
+                    'purchase',
+                    'sale'
+                ],
                 'required'          => true
             ],
 
@@ -53,7 +56,7 @@ class AccountingRule extends Model {
 
             'vat_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\tax\VatRule',
+                'foreign_object'    => \finance\tax\VatRule::getType(),
                 'description'       => "VAT rule the line is related to.",
                 'onupdate'          => 'onupdateVatRuleId'
             ],
