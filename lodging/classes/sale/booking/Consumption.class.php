@@ -368,7 +368,7 @@ class Consumption extends \sale\booking\Consumption {
             $date_to += 24*3600;
         }
 
-        // retrieve chekin and checkout times related to product
+        // retrieve checkin and checkout times related to product
         $hour_from = 0;
         $hour_to = 0;
         $minute_from = 23;

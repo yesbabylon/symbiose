@@ -68,6 +68,11 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 
 $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $params['center_id'], $params['product_id'], $params['date_from'], $params['date_to']);
 
+ob_start();
+print_r($rental_units_ids);
+$out = ob_get_clean();
+trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
+
 // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
 if(isset($params['booking_id'])) {
     $booking = Booking::id($params['booking_id'])->read(['consumptions_ids' => ['rental_unit_id']])->first();
