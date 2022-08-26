@@ -345,7 +345,7 @@ class Consumption extends \sale\booking\Consumption {
         $product = reset($products);
 
         $models = $om->read('lodging\sale\catalog\ProductModel', $product['product_model_id'], [
-            'type','service_type','is_accomodation','schedule_offset','schedule_type','schedule_default_value',
+            'type','service_type','is_accomodation','schedule_offset','schedule_type',
             'rental_unit_assignement', 'rental_unit_category_id', 'rental_unit_id', 'capacity'
         ]);
 
@@ -356,35 +356,11 @@ class Consumption extends \sale\booking\Consumption {
         $product_model = reset($models);
         $product_type = $product_model['type'];
         $service_type = $product_model['service_type'];
-        $schedule_default_value = $product_model['schedule_default_value'];
         $rental_unit_assignement = $product_model['rental_unit_assignement'];
 
         if($product_type != 'service' || $service_type != 'schedulable') {
             return [];
         }
-
-        if($product_model['is_accomodation']) {
-            // checkout is the day following the last night
-            // ?? this is not correct : not the place for that adaptation
-            // $date_to += 24*3600;
-        }
-
-        // retrieve checkin and checkout times related to product
-        $hour_from = 0;
-        $hour_to = 0;
-        $minute_from = 23;
-        $minute_to = 59;
-        // #todo - what if we would agree to arrange the checkin/out times (not default values) to make the room available ?
-        if(strpos($schedule_default_value, ':')) {
-            $parts = explode('-', $schedule_default_value);
-            list($hour_from, $minute_from) = explode(':', $parts[0]);
-            list($hour_to, $minute_to) = [$hour_from+1, $minute_from];
-            if(count($parts) > 1) {
-                list($hour_to, $minute_to) = explode(':', $parts[1]);
-            }
-        }
-        $schedule_from  = $hour_from * 3600 + $minute_from * 60;
-        $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
         if($rental_unit_assignement == 'unit') {
             $rental_units_ids = [$product_model['rental_unit_id']];
@@ -405,13 +381,7 @@ class Consumption extends \sale\booking\Consumption {
             }
             // retrieve list of possible rental_units based on center_id
             $rental_units_ids = $om->search('lodging\realestate\RentalUnit', $domain, ['capacity' => 'desc']);
-
         }
-
-        ob_start();
-        print_r($rental_units_ids);
-        $out = ob_get_clean();
-        trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
 
         /*
             If there are consumptions in the range for some of the found rental units, remove those
@@ -420,32 +390,14 @@ class Consumption extends \sale\booking\Consumption {
 
         $booked_rental_units_ids = [];
 
-        $range_from = $date_from + $schedule_from;
-        $range_to = $date_to + $schedule_to;
-
         foreach($existing_consumptions_map as $rental_unit_id => $dates) {
             foreach($dates as $date_index => $consumption) {
 
                 $consumption_from = $consumption['date'] + $consumption['schedule_from'];
                 $consumption_to = $consumption['date'] + $consumption['schedule_to'];
-
-                if( ($consumption_from >= $range_from && $consumption_from <= $range_to)
-                    ||
-                    ($consumption_to >= $range_from && $consumption_to <= $range_to) ) {
+                // we don't allow instant transition (checkin of a booking == checkout of previous booking)
+                if( ($consumption_from >= $date_from && $consumption_from <= $date_to) || ($consumption_to >= $date_from && $consumption_to <= $date_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
-                    ob_start();
-                    print_r($consumption);
-                    echo ($range_from).PHP_EOL;
-                    echo ($range_to).PHP_EOL;
-                    echo "EITHER $consumption_from >= $range_from && $consumption_from <= $range_to".PHP_EOL;
-                    echo "OR $consumption_to >= $range_from && $consumption_to <= $range_to".PHP_EOL;
-                    echo date('c', $consumption_from).PHP_EOL;
-                    echo date('c', $consumption_to).PHP_EOL;
-                    echo date('c', $range_from).PHP_EOL;
-                    echo date('c', $range_to).PHP_EOL;
-                    $out = ob_get_clean();
-                    trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
-
                     continue 2;
                 }
             }

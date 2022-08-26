@@ -332,6 +332,8 @@ class BookingLine extends \sale\booking\BookingLine {
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.date_from',
             'booking_line_group_id.date_to',
+            'booking_line_group_id.time_from',
+            'booking_line_group_id.time_to',
             'product_id',
             'product_id.product_model_id',
             'qty_accounting_method',
@@ -368,8 +370,8 @@ class BookingLine extends \sale\booking\BookingLine {
 
                 $center_id = $line['booking_id.center_id'];
                 $nb_pers = $line['booking_line_group_id.nb_pers'];
-                $date_from = $line['booking_line_group_id.date_from'];
-                $date_to = $line['booking_line_group_id.date_to'];
+                $date_from = $line['booking_line_group_id.date_from'] + $line['booking_line_group_id.time_from'];
+                $date_to = $line['booking_line_group_id.date_to'] + $line['booking_line_group_id.time_to'];
 
                 // unit, category, capacity
                 $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
