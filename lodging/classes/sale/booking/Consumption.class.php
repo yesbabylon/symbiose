@@ -436,6 +436,8 @@ class Consumption extends \sale\booking\Consumption {
                     print_r($consumption);
                     echo ($range_from).PHP_EOL;
                     echo ($range_to).PHP_EOL;
+                    echo "EITHER $consumption_from >= $range_from && $consumption_from <= $range_to".PHP_EOL;
+                    echo "OR $consumption_to >= $range_from && $consumption_to <= $range_to".PHP_EOL;
                     $out = ob_get_clean();
                     trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
 
