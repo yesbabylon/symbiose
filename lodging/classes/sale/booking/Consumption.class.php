@@ -432,6 +432,14 @@ class Consumption extends \sale\booking\Consumption {
                     ||
                     ($consumption_to >= $range_from && $consumption_to <= $range_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
+                    ob_start();
+                    print_r($consumption);
+                    echo ($range_from).PHP_EOL;
+                    echo ($range_to).PHP_EOL;
+                    $out = ob_get_clean();
+                    trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
+
+                    continue 2;
                 }
             }
         }
