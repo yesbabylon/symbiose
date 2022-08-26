@@ -185,7 +185,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
     /**
      *
-     * New group assignement : should (only) be called upon creation
+     * New group assignement (should be called upon creation only)
      *
      */
     public static function onupdateBookingLineGroupId($om, $oids, $values, $lang) {
@@ -201,7 +201,7 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateProductId", QN_REPORT_DEBUG);
 
         // reset computed fields related to product model
-        $om->write(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
+        $om->update(__CLASS__, $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
         // resolve price_id for new product_id
         $om->callonce(__CLASS__, '_updatePriceId', $oids, [], $lang);
@@ -309,16 +309,26 @@ class BookingLine extends \sale\booking\BookingLine {
     /**
      * Update the quantity of products.
      *
-     * This handler is called at booking line creation and is in charge of updating the rental units assignments related to the line.
+     * This handler is called at booking line creation and all subsequent qty updates.
+     * It is in charge of updating the rental units assignments related to the line.
      */
     public static function onupdateQty($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQty", QN_REPORT_DEBUG);
 
-        // try to auto-assign a rental_unit
+        /*
+            Reset computed fields related to price (because they depend on qty)
+        */
+
+        $om->callonce(\sale\booking\BookingLine::getType(), '_resetPrices', $oids, [], $lang);
+
+        /*
+            Attempt to auto-assign rental units.
+        */
 
         $lines = $om->read(__CLASS__, $oids, [
             'booking_id', 'booking_id.center_id',
             'booking_line_group_id',
+            'booking_line_group_id.has_locked_rental_units',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.date_from',
             'booking_line_group_id.date_to',
@@ -347,6 +357,9 @@ class BookingLine extends \sale\booking\BookingLine {
             ], $lang);
 
             foreach($lines as $lid => $line) {
+                if($line['booking_line_group_id.has_locked_rental_units']) {
+                    continue;
+                }
                 $bookings_ids[] = $line['booking_id'];
                 $booking_line_groups_ids[] = $line['booking_line_group_id'];
 
@@ -510,8 +523,6 @@ class BookingLine extends \sale\booking\BookingLine {
             }
         }
 
-        // reset computed fields related to price
-        $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
     }
 
 
@@ -623,6 +634,8 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(__CLASS__, $oids, [
             'has_own_qty',
             'qty_vars',
+            'rental_unit_assignments_ids',
+            'booking_line_group_id.has_locked_rental_units',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
             'product_id.product_model_id.qty_accounting_method',
@@ -632,11 +645,16 @@ class BookingLine extends \sale\booking\BookingLine {
             'product_id.product_model_id.duration'
         ], $lang);
 
-        // remove all previous rental_unit assignements - we need to do this because each line must know which units are already taken in same booking
-        $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_line_id', 'in', $oids]);
-        $om->delete(BookingLineRentalUnitAssignement::getType(), $assignments_ids, true);
 
         if($lines > 0) {
+            // first-pass: remove all previous rental_unit assignements (- )we need to do this because each line must know which units are already taken within their booking)
+            foreach($lines as $lid => $line) {
+                if(!$line['booking_line_group_id.has_locked_rental_units']) {
+                    $om->delete(BookingLineRentalUnitAssignement::getType(), $line['rental_unit_assignments_ids'], true);
+                }
+            }
+
+            // second-pass: update lines quantities
             foreach($lines as $lid => $line) {
                 if($line['has_own_qty']) {
                     // own quantity has been assigned in onupdateProductId
@@ -656,6 +674,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             }
                             $qty = $line['booking_line_group_id.nb_pers'] * $factor;
                             $qty_vars = array_fill(0, $factor, 0);
+                            // #memo - triggers onupdateQty and onupdateQtyVar
                             $om->update(__CLASS__, $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
                         }
                         else {
@@ -673,7 +692,7 @@ class BookingLine extends \sale\booking\BookingLine {
                                 else if($diff < 0) {
                                     $qty_vars = array_slice($qty_vars, 0, $factor);
                                 }
-                                // will trigger onupdateQtyVar which will update qty
+                                // #memo - will trigger onupdateQtyVar which will update qty
                                 $om->update(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
                             }
                         }

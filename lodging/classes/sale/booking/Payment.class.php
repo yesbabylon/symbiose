@@ -80,17 +80,25 @@ class Payment extends \lodging\sale\pay\Payment {
         $result = [];
 
         if(isset($event['funding_id'])) {
-            $fundings = $om->read('lodging\sale\booking\Funding', $event['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);
+            $fundings = $om->read(Funding::getType(), $event['funding_id'], [
+                    'type',
+                    'due_amount',
+                    'booking_id.customer_id.id',
+                    'booking_id.customer_id.name',
+                    'invoice_id.partner_id.id',
+                    'invoice_id.partner_id.name'
+                ],
+                $lang
+            );
+
             if($fundings > 0) {
                 $funding = reset($fundings);
-
                 if($funding['type'] == 'invoice')  {
                     $result['partner_id'] = [ 'id' => $funding['invoice_id.partner_id.id'], 'name' => $funding['invoice_id.partner_id.name'] ];
                 }
                 else {
                     $result['partner_id'] = [ 'id' => $funding['booking_id.customer_id.id'], 'name' => $funding['booking_id.customer_id.name'] ];
                 }
-
                 if(isset($values['amount']) && $values['amount'] > $funding['due_amount']) {
                     $result['amount'] = $funding['due_amount'];
                 }
@@ -98,10 +106,5 @@ class Payment extends \lodging\sale\pay\Payment {
         }
 
         return $result;
-    }
-
-
-    public static function getConstraints() {
-        return parent::getConstraints();
     }
 }

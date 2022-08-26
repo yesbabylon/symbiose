@@ -26,6 +26,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'onupdate'          => 'onupdateIsSojourn'
             ],
 
+            'has_locked_rental_units' => [
+                'type'              => 'boolean',
+                'description'       => 'Can the rental units assingments be changed?',
+                'default'           => false
+            ],
+
             'has_pack' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the group relates to a pack?',

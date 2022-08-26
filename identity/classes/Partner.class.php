@@ -22,7 +22,7 @@ class Partner extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'calcDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the partner (related organisation name).'
@@ -78,22 +78,31 @@ class Partner extends Model {
                 'visible'           => ['relationship', '=', 'customer']
             ],
 
+            // #memo - email remains related to identity
             'email' => [
                 'type'              => 'computed',
                 'function'          => 'calcEmail',
                 'result_type'       => 'string',
                 'usage'             => 'email',
                 'description'       => 'Email of the contact (from Identity).'
-                // #memo - email origin remains the related identity
             ],
 
+            // #memo - phone remains related to identity
             'phone' => [
                 'type'              => 'computed',
                 'function'          => 'calcPhone',
                 'result_type'       => 'string',
                 'usage'             => 'phone',
                 'description'       => 'Phone number of the contact (from Identity).'
-                // #memo - phone origin remains the related identity
+            ],
+
+            // #memo - mobile remains related to identity
+            'mobile' => [
+                'type'              => 'computed',
+                'function'          => 'calcMobile',
+                'result_type'       => 'string',
+                'usage'             => 'phone',
+                'description'       => 'Mobile phone number of the contact (from Identity).'
             ],
 
             'title' => [
@@ -132,9 +141,9 @@ class Partner extends Model {
         $om->read(get_called_class(), $oids, [ 'name' ], $lang);
     }
 
-    public static function calcDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
-        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.name'], $lang);
+        $partners = $om->read(self::getType(), $oids, ['partner_identity_id.name'], $lang);
         foreach($partners as $oid => $partner) {
             if(isset($partner['partner_identity_id.name'])) {
                 $result[$oid] = $partner['partner_identity_id.name'];
@@ -162,6 +171,18 @@ class Partner extends Model {
             $result[$oid] = '';
             if(isset($partner['partner_identity_id.phone'])) {
                 $result[$oid] = $partner['partner_identity_id.phone'];
+            }
+        }
+        return $result;
+    }
+
+    public static function calcMobile($om, $oids, $lang) {
+        $result = [];
+        $partners = $om->read(get_called_class(), $oids, ['partner_identity_id.mobile'], $lang);
+        foreach($partners as $oid => $partner) {
+            $result[$oid] = '';
+            if(isset($partner['partner_identity_id.mobile'])) {
+                $result[$oid] = $partner['partner_identity_id.mobile'];
             }
         }
         return $result;

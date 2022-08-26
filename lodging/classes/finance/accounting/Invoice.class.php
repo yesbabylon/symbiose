@@ -65,12 +65,6 @@ class Invoice extends \finance\accounting\Invoice {
                 ],
                 'default'           => 'proforma',
                 'onupdate'          => 'onupdateStatus'
-            ],
-
-            'is_exported' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the invoice as exported to accounting soft.',
-                'default'           => false
             ]
 
         ];

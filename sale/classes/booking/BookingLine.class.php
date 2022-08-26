@@ -57,7 +57,7 @@ class BookingLine extends Model {
 
             'price_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\price\Price',
+                'foreign_object'    => \sale\price\Price::getType(),
                 'description'       => 'The price the line relates to (retrieved by price list).',
                 'onupdate'          => 'onupdatePriceId'
             ],
@@ -248,23 +248,38 @@ class BookingLine extends Model {
         $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
-
-    // reset computed fields related to price
+    /**
+     * Reset computed fields related to price.
+     */
     public static function _resetPrices($om, $oids, $values, $lang) {
-        $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
-        if(count($values)) {
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
+
+        $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'booking_line_group_id'], $lang);
+
+        if($lines > 0) {
+            $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
+
             // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the update !
-            $fields = array_keys($new_values);
-            foreach($values as $field => $value) {
-                if(in_array($field, $fields) && !is_null($value)) {
-                    unset($new_values[$field]);
+            if(count($values)) {
+                $fields = array_keys($new_values);
+                foreach($values as $field => $value) {
+                    if(in_array($field, $fields) && !is_null($value)) {
+                        unset($new_values[$field]);
+                    }
                 }
             }
-        }
-        $om->update(__CLASS__, $oids, $new_values);
-        // update parent objects
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
-        if($lines > 0) {
+
+            // update lines
+            foreach($lines as $lid => $line) {
+                $assigned_values = $new_values;
+                // we dont want to reset unit_price for products that have a price_id with a value of 0.0 ()
+                if($line['price_id.price'] == 0.0) {
+                    unset($assigned_values['unit_price']);
+                }
+                $om->update(__CLASS__, $lid, $assigned_values);
+            }
+
+            // update parent objects
             $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
             $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $booking_line_groups_ids, [], $lang);
         }

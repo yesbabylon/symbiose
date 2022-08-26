@@ -43,7 +43,7 @@ $booking_line_groups = $booking['booking_lines_groups_ids'];
 $mismatch = false;
 
 if($booking_line_groups) {
-    foreach($booking_line_groups as $gid => $group) {        
+    foreach($booking_line_groups as $gid => $group) {
         if(!$group['is_sojourn']) {
             continue;
         }

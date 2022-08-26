@@ -238,7 +238,13 @@ class Identity extends Model {
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'description'       => "Identity main phone number."
+                'description'       => "Identity main phone number (mobile or landline)."
+            ],
+
+            'mobile' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity mobile phone number."
             ],
 
             'fax' => [

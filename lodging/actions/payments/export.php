@@ -8,9 +8,10 @@ use equal\text\TextTransformer;
 use lodging\sale\booking\Invoice;
 use lodging\finance\accounting\AccountingJournal;
 use lodging\identity\CenterOffice;
+use lodging\documents\Export;
 
 list($params, $providers) = announce([
-    'description'   => "Export a zip archive containing all reconciled bank statements for importing in an external accounting software.",
+    'description'   => "Creates an export archive containing all emitted invoices that haven't been exported yet (for external accounting software).",
     'params'        => [
         'center_office_id' => [
             'type'              => 'many2one',
@@ -24,9 +25,6 @@ list($params, $providers) = announce([
         // 'groups'            => ['sale.default.user'],
     ],
     'response'      => [
-        'content-type'        => 'application/zip',
-        // 'content-type'        => 'text/plain',
-        'content-disposition' => 'attachment; filename="export.zip"',
         'charset'             => 'utf-8',
         'accept-origin'       => '*'
     ],
@@ -38,23 +36,9 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 /*
     This controller generates an export file related to invoices of a given center Office.
-
     Invoices can only be exported once, but the result of the export generation is kept as history that can be re-downloaded if necessary.
 
-
-
-    créer un object Export
-    date d'export
-    type d'export
-    contenu (download)
-
-    les exports sont des documents
-    -> héritage de documents\Document avec autre table et ajout dans la partie compta
-*/
-
-/*
     Kaleo uses a double imports the CODA files (in Discope AND in accounting soft [BOB])
-
 
     Postulats
     * l'origine des fichiers n'a pas d'importance
@@ -77,6 +61,77 @@ $journal = AccountingJournal::search([['center_office_id', '=', $params['center_
 if(!$journal) {
     throw new Exception("unknown_center_office", QN_ERROR_UNKNOWN_OBJECT);
 }
+
+/*
+    Retrieve non-exported invoices.
+*/
+
+$invoices = Invoice::search([
+        ['is_exported', '=', false],
+        ['center_office_id', '=', $params['center_office_id']],
+        ['booking_id', '>', 0],
+        ['status', '<>', 'proforma'],
+    ])
+    ->read([
+        'id',
+        'name',
+        'date',
+        'due_date',
+        'type',
+        'status',
+        'price',
+        'partner_id' => [
+            'id',
+            'name',
+            'partner_identity_id' => [
+                'id',
+                'address_street',
+                'address_dispatch',
+                'address_city',
+                'address_zip',
+                'address_country',
+                'vat_number',
+                'phone',
+                'fax',
+                'lang_id' => [
+                    'code'
+                ]
+            ]
+        ],
+        'booking_id' => [
+            'name',
+            'date_from',
+            'date_to',
+            'center_id' => [
+                'analytic_section_id' => [
+                    'code'
+                ]
+            ]
+        ],
+        'invoice_lines_ids' => [
+            'id',
+            'total',
+            'price',
+            'price_id' => [
+                'id',
+                'vat_rate',
+                'accounting_rule_id' => [
+                    'accounting_rule_line_ids' => [
+                        'account_id' => [
+                            'code'
+                        ],
+                        'share'
+                    ]
+                ]
+            ]
+        ]
+    ]);
+
+if(iterator_count($invoices) == 0) {
+    // exit with no error
+    throw new Exception('no match', 0);
+}
+
 
 ob_start();
 echo "[CLIENTS_FACT]
@@ -171,75 +226,6 @@ Field18=TVATAMN,Float,21,02,205
 Field19=TVSTORED,Char,10,00,226
 ";
 $invoices_lines_schema = ob_get_clean();
-
-
-
-
-/*
-    Retrieve non-exported invoices.
-*/
-
-$invoices = Invoice::search([
-        ['is_exported', '=', false],
-        ['center_office_id', '=', $params['center_office_id']],
-        ['booking_id', '>', 0],
-        ['status', '<>', 'proforma'],
-    ])
-    ->read([
-        'id',
-        'name',
-        'date',
-        'due_date',
-        'type',
-        'status',
-        'price',
-        'partner_id' => [
-            'id',
-            'name',
-            'partner_identity_id' => [
-                'id',
-                'address_street',
-                'address_dispatch',
-                'address_city',
-                'address_zip',
-                'address_country',
-                'vat_number',
-                'phone',
-                'fax',
-                'lang_id' => [
-                    'code'
-                ]
-            ]
-        ],
-        'booking_id' => [
-            'name',
-            'date_from',
-            'date_to',
-            'center_id' => [
-                'analytic_section_id' => [
-                    'code'
-                ]
-            ]
-        ],
-        'invoice_lines_ids' => [
-            'id',
-            'total',
-            'price',
-            'price_id' => [
-                'id',
-                'vat_rate',
-                'accounting_rule_id' => [
-                    'accounting_rule_line_ids' => [
-                        'account_id' => [
-                            'code'
-                        ],
-                        'share'
-                    ]
-                ]
-            ]
-        ]
-    ]);
-
 
 
 /*
@@ -401,7 +387,7 @@ foreach($invoices as $invoice) {
         $vat_rate = ($amount != 0.0)?round($vat / $amount, 2):0.0;
         if(!isset($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'])) {
             // #memo - this should not occur ! - we should raise an Exception and products shouldn't be embedded to booking/invoices if there is no price found
-            throw new Exception('no price found');
+            throw new Exception('No related price found for non-null amount', QN_ERROR_UNKNOWN);
             continue;
         }
         foreach($line['price_id']['accounting_rule_id']['accounting_rule_line_ids'] as $rlid => $rline) {
@@ -462,7 +448,10 @@ $invoices_lines_data = implode("\r\n", $result);
 // generate the zip archive
 $tmpfile = tempnam(sys_get_temp_dir(), "zip");
 $zip = new ZipArchive();
-$zip->open($tmpfile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+if($zip->open($tmpfile, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+    // could not create the ZIP archive
+    throw new Exception('Unable to create a ZIP file.', QN_ERROR_UNKNOWN);
+}
 
 // embed schema files
 $zip->addFromString('CLIENTS_FACT.sch', $customers_schema);
@@ -470,7 +459,7 @@ $zip->addFromString('HOPDIV_FACT.sch', $invoices_header_schema);
 $zip->addFromString('LOPDIV_FACT.sch', $invoices_lines_schema);
 // embed data files
 $zip->addFromString('CLIENTS_FACT.txt', $customers_data);
-$zip->addFromString('LOPDIV_FACT.txt', $invoices_header_data);
+$zip->addFromString('HOPDIV_FACT.txt', $invoices_header_data);
 $zip->addFromString('LOPDIV_FACT.txt', $invoices_lines_data);
 
 $zip->close();
@@ -479,8 +468,23 @@ $zip->close();
 $data = file_get_contents($tmpfile);
 unlink($tmpfile);
 
-// #todo - ne pas renvoyer directement les exports, mais conserver pour téléchargement ultérieur (objets Export, avec date de création)
+if($data === false) {
+    throw new Exception('Unable to retrieve ZIP file content.', QN_ERROR_UNKNOWN);
+}
+
+// switch to root user
+$auth->su();
+
+// create the export archive
+Export::create([
+    'center_office_id'      => $params['center_office_id'],
+    'export_type'           => 'invoices',
+    'data'                  => $data
+]);
+
+// mark  invoices as exported and
+$invoices->update(['is_exported' => true]);
 
 $context->httpResponse()
-        ->body($data)
+        ->status(201)
         ->send();

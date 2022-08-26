@@ -9,7 +9,7 @@
                 "id": "item.bank_statements",
                 "label": "Statements",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "list_alt",
                 "type": "parent",
                 "children": [
                     {
@@ -38,10 +38,30 @@
                 ]
             },
             {
+                "id": "item.exports",
+                "label": "Exports",
+                "description": "",
+                "icon":"import_export",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.exports.all",
+                        "type": "entry",
+                        "label": "All exports",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\documents\\Export",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "item.invoices",
                 "label": "Invoices",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "receipt_long",
                 "type": "parent",
                 "children": [
                     {
@@ -61,7 +81,7 @@
                 "id": "item.fundings",
                 "label": "Fundings",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "attach_money",
                 "type": "parent",
                 "children": [
                     {
@@ -82,7 +102,7 @@
                 "id": "item.settings",
                 "label": "Settings",
                 "description": "",
-                "icon": "settings",
+                "icon": "menu_book",
                 "type": "parent",
                 "children": [
                     {

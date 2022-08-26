@@ -95,7 +95,7 @@ if($center && count($center)) {
     }
     if(isset($center['email'])) {
       $signature .= "@ <a href=\"mailto:{$center['email']}\">{$center['email']}</a> <br />";
-    }  
+    }
   }
 
   if(isset($center['organisation_id']['website'])) {

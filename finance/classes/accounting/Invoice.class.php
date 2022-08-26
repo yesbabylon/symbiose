@@ -179,6 +179,12 @@ class Invoice extends Model {
                 'description'       => "Deadline for the payment is expected, from payment terms.",
                 'function'          => 'calcDueDate',
                 'store'             => true
+            ],
+
+            'is_exported' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the invoice as exported to accounting soft.',
+                'default'           => false
             ]
 
         ];
@@ -335,7 +341,7 @@ class Invoice extends Model {
      * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $res = $om->read(get_called_class(), $oids, ['status']);
+        $res = $om->read(self::getType(), $oids, ['status']);
 
         if($res > 0) {
             foreach($res as $oids => $odata) {
@@ -347,7 +353,10 @@ class Invoice extends Model {
                 }
                 if($odata['status'] == 'invoice') {
                     if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
-                        return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                        // only allow modifiable fields
+                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status','is_exported'])) ) {
+                            return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                        }
                     }
                 }
             }
@@ -368,7 +377,7 @@ class Invoice extends Model {
         if($res > 0) {
             foreach($res as $oids => $odata) {
                 if($odata['status'] != 'proforma') {
-                    return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
                 }
             }
         }

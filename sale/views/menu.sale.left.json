@@ -8,7 +8,7 @@
                 "id": "item.bank_statements",
                 "label": "Statements",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "list_alt",
                 "type": "parent",
                 "children": [
                     {

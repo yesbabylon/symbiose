@@ -19,7 +19,7 @@ class Contact extends \identity\Partner {
     public function getTable() {
         // force table name to use distinct tables and ID columns
         return 'sale_booking_contact';
-    }    
+    }
 
     public static function getColumns() {
 

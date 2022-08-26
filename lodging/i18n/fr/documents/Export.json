@@ -1,0 +1,46 @@
+{
+    "name": "Export",
+    "plural": "Exports",
+    "description": "",
+    "model": {
+        "export_type": {
+            "label": "Type",
+            "description": "Type de réservation (automatique, selon les produits choisis).",
+            "selection": {
+                "invoices": "factures",
+                "payments": "payments"
+            },
+            "help": ""
+        },
+        "is_exported": {
+            "label": "Téléchargé?",
+            "description": "L'archive a-t-elle déjà été téléchargée ?",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Export",
+            "description": "Export incrémental des données comptables.",
+            "actions": {
+                "action.download": {
+                    "label": "Télécharger",
+                    "description": "Obtenir l'archive ZIP."
+                }
+            }
+        },
+        "list.default": {
+            "name": "Exports",
+            "description": "",
+            "exports": {
+                "export.print.contract": {
+                    "label": "Imprimer le contrat"
+                }
+            },
+            "layout": {
+
+            }
+        }
+    },
+    "error": {}
+}

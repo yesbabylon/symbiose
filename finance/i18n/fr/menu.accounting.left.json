@@ -2,15 +2,19 @@
     "description": "",
     "view": {
         "item.bank_statements": {
-            "label": "Extraits",
-            "help": ""
-        },
-        "item.bank_statements.ready": {
-            "label": "Extraits à exporter",
+            "label": "Extraits bancaires",
             "help": ""
         },
         "item.bank_statements.all": {
             "label": "Tous les extraits",
+            "help": ""
+        },
+        "item.exports": {
+            "label": "Exports",
+            "help": ""
+        },
+        "item.exports.all": {
+            "label": "Tous les exports",
             "help": ""
         },
         "item.invoices": {

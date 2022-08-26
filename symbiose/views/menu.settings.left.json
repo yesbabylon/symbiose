@@ -880,6 +880,25 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "id": "finance.exports",
+                        "label": "Exports",
+                        "description": "",
+                        "icon":"import_export",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "finance.exports.all",
+                                "type": "entry",
+                                "label": "All exports",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\documents\\Export",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     }
                 ]
             },

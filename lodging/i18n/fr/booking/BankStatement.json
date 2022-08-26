@@ -21,13 +21,13 @@
     },
     "view": {
         "form.default": {
-            "name": "Règles de Tva",
+            "name": "Relevé bancaire",
             "description": "Vue par défaut des règles comptables avec tous les champs",
             "layout": {
             }
         },
         "list.default": {
-            "name": "Liste des Règles de Tva",
+            "name": "Relevés bancaires",
             "description": "Cette vue est destinée à afficher les règles comptables.",
             "layout": {}
         }
