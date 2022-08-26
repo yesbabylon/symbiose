@@ -407,6 +407,11 @@ class Consumption extends \sale\booking\Consumption {
 
         }
 
+        ob_start();
+        print_r($rental_units_ids);
+        $out = ob_get_clean();
+        trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
+        
         /*
             If there are consumptions in the range for some of the found rental units, remove those
         */
