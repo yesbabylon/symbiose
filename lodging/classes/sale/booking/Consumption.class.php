@@ -365,7 +365,8 @@ class Consumption extends \sale\booking\Consumption {
 
         if($product_model['is_accomodation']) {
             // checkout is the day following the last night
-            $date_to += 24*3600;
+            // ?? this is not correct : not the place for that adaptation
+            // $date_to += 24*3600;
         }
 
         // retrieve checkin and checkout times related to product
