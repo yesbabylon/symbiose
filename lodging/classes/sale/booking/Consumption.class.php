@@ -425,8 +425,8 @@ class Consumption extends \sale\booking\Consumption {
         foreach($existing_consumptions_map as $rental_unit_id => $dates) {
             foreach($dates as $date_index => $consumption) {
 
-                $consumption_from = $consumption['date'] + $consumption['from'];
-                $consumption_to = $consumption['date'] + $consumption['to'];
+                $consumption_from = $consumption['date'] + $consumption['schedule_from'];
+                $consumption_to = $consumption['date'] + $consumption['schedule_to'];
 
                 if( ($consumption_from >= $range_from && $consumption_from <= $range_to)
                     ||
