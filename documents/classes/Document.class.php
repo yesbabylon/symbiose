@@ -123,7 +123,7 @@ class Document extends Model {
         foreach($res as $oid => $odata) {
             $result[$oid] = '/document/'.$odata['hash'];
         }
-        
+
         return $result;
     }
 
@@ -144,7 +144,7 @@ class Document extends Model {
 
             // set hash if not assigned yet
             if(strlen($odata['hash']) <= 0) {
-                $om->write(__CLASS__, $oid, ['hash'=> md5($oid.substr($content, 0, 128))]);                
+                $om->write(__CLASS__, $oid, ['hash'=> md5($oid.substr($content, 0, 128))]);
             }
         }
         // reset preview image

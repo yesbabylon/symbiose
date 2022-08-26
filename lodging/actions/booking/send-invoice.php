@@ -141,10 +141,23 @@ if(count($params['attachments_ids'])) {
 }
 
 // send message
-$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
+$transport = new Swift_SmtpTransport(
+    EMAIL_SMTP_HOST,
+    EMAIL_SMTP_PORT,
+    (defined('EMAIL_SMTP_ENCRYPT') && in_array(constant('EMAIL_SMTP_ENCRYPT'), ['tls', 'ssl']))?EMAIL_SMTP_ENCRYPT:null
+);
 
 $transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
           ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
+
+if(defined('EMAIL_SMTP_ENCRYPT') && in_array(constant('EMAIL_SMTP_ENCRYPT'), ['tls', 'ssl'])) {
+    $transport->setStreamOptions([
+        'ssl' => [
+            'allow_self_signed'     => true,
+            'verify_peer'           => false
+        ]
+    ]);
+}
 
 $message = new Swift_Message();
 $message->setTo($params['recipient_email'])

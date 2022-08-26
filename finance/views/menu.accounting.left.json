@@ -111,8 +111,9 @@
                         "label": "Chart of accounts",
                         "description": "",
                         "context": {
-                            "entity": "finance\\accounting\\AccountChart",
-                            "view": "list.default"
+                            "entity": "finance\\accounting\\AccountChartLine",
+                            "view": "list.default",
+                            "domain": ["account_chart_id", "=", 1]
                         }
                     },
                     {

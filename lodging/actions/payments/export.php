@@ -39,8 +39,17 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 /*
     This controller generates an export file related to invoices of a given center Office.
 
-    invoices can only be exported once
-    but the result of the export generation is kept as history that can be re-downloaded if necessary
+    Invoices can only be exported once, but the result of the export generation is kept as history that can be re-downloaded if necessary.
+
+
+
+    créer un object Export
+    date d'export
+    type d'export
+    contenu (download)
+
+    les exports sont des documents
+    -> héritage de documents\Document avec autre table et ajout dans la partie compta
 */
 
 /*
