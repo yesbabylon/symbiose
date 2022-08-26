@@ -411,7 +411,7 @@ class Consumption extends \sale\booking\Consumption {
         print_r($rental_units_ids);
         $out = ob_get_clean();
         trigger_error("QN_DEBUG_ORM::$out", QN_REPORT_DEBUG);
-        
+
         /*
             If there are consumptions in the range for some of the found rental units, remove those
         */
@@ -419,32 +419,19 @@ class Consumption extends \sale\booking\Consumption {
 
         $booked_rental_units_ids = [];
 
+        $range_from = $date_from + $schedule_from;
+        $range_to = $date_to + $schedule_to;
+
         foreach($existing_consumptions_map as $rental_unit_id => $dates) {
             foreach($dates as $date_index => $consumption) {
 
-                if($consumption['date_from'] > $date_from && $consumption['date_to'] < $date_to) {
+                $consumption_from = $consumption['date'] + $consumption['from'];
+                $consumption_to = $consumption['date'] + $consumption['to'];
+
+                if( ($consumption_from >= $range_from && $consumption_from <= $range_to)
+                    ||
+                    ($consumption_to >= $range_from && $consumption_to <= $range_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
-                    continue 2;
-                }
-                if($consumption['date_from'] <= $date_from) {
-                    if($consumption['date_to'] > $date_from) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                    else if($consumption['date_to'] == $date_from && $consumption['schedule_to'] > $schedule_from) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                }
-                if($consumption['date_to'] >= $date_to) {
-                    if($consumption['date_from'] < $date_to) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                    else if($consumption['date_from'] == $date_to && $consumption['schedule_from'] < $schedule_to) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
                 }
             }
         }
