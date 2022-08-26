@@ -70,7 +70,7 @@ $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $params['center_
 
 // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
 if(isset($params['booking_id'])) {
-    $booking = Booking::id($params['booking_id'])->read(['consumptions_ids' => ['rental_unit_id']])->get();
+    $booking = Booking::id($params['booking_id'])->read(['consumptions_ids' => ['rental_unit_id']])->first();
     if($booking) {
         foreach($booking['consumptions_ids'] as $consumption) {
             $rental_units_ids[] = $consumption['rental_unit_id'];
