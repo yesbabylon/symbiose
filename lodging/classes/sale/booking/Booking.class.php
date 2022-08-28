@@ -161,6 +161,13 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'string',
                 'description'       => 'Specific reference, voucher code, or booking ID for the TO.',
                 'visible'           => ['has_tour_operator', '=', true]
+            ],
+
+            'mails_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'core\Mail',
+                'foreign_field'     => 'object_id',
+                'domain'            => ['object_class', '=', self::getType()]
             ]
 
         ];

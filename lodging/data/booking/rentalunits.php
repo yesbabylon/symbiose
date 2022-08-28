@@ -62,6 +62,7 @@ if($line) {
     $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $line['booking_id']['center_id'], $line['product_id'], $date_from, $date_to);
 
     // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
+    // #memo - this leads to an edge case: quote -> option -> quote, update nb_pers or time_from (list is not accurate and might return units that are not free)
     $booking = Booking::id($line['booking_id']['id'])->read(['consumptions_ids' => ['rental_unit_id']])->first();
     if($booking) {
         foreach($booking['consumptions_ids'] as $consumption) {
@@ -69,14 +70,12 @@ if($line) {
         }
     }
 
-    // remove units from other lines
+    // remove units already assigned (to prevent providing wrong choices)
     if($params['booking_line_id']) {
-        $assignments = BookingLineRentalUnitAssignement::search(['booking_id', '=', $params['booking_id']])->read(['rental_unit_id', 'booking_line_id'])->get();
+        $assignments = BookingLineRentalUnitAssignement::search(['booking_id', '=', $line['booking_id']['id']])->read(['rental_unit_id', 'booking_line_id'])->get();
         $used_rental_units_ids = [];
         foreach($assignments as $assignment) {
-            if($assignment['booking_line_id'] != $params['booking_line_id']) {
-                $used_rental_units_ids[] = $assignment['rental_unit_id'];
-            }
+            $used_rental_units_ids[] = $assignment['rental_unit_id'];
         }
         $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
     }

@@ -4,19 +4,13 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-if(!file_exists(QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php')) {
-    throw new Exception("missing_dependency", QN_ERROR_INVALID_CONFIG);
-}
-require_once QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php';
-
-use \Swift_SmtpTransport as Swift_SmtpTransport;
-use \Swift_Message as Swift_Message;
-use \Swift_Mailer as Swift_Mailer;
-
+use equal\email\Email;
+use equal\email\EmailAttachment;
 
 use communication\Template;
 use lodging\sale\booking\Booking;
 use core\setting\Setting;
+use core\Mail;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
@@ -94,23 +88,15 @@ catch(Exception $e) {
 
 $body .= $signature;
 
-
-// send message
-$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
-
-$transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
-          ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
-
-$message = new Swift_Message();
+// create message
+$message = new Email();
 $message->setTo($params['recipient_email'])
         ->setSubject($title)
         ->setContentType("text/html")
-        ->setBody(str_replace(['<br>', '<p></p>'], '', $body))
-        ->setFrom([$params['sender_email'] => EMAIL_SMTP_ACCOUNT_DISPLAYNAME]);
+        ->setBody(str_replace(['<br>', '<p></p>'], '', $body));
 
-$mailer = new Swift_Mailer($transport);
-$result = $mailer->send($message);
-
+// queue message
+Mail::queue($message, 'lodging\sale\booking\Booking', $params['id']);
 
 $context->httpResponse()
         ->status(204)
