@@ -141,7 +141,7 @@ $message = new Email();
 $message->setTo($params['recipient_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
-        ->setBody(str_replace(['<br>', '<p></p>'], '', $params['message']));
+        ->setBody($params['message']);
 
 foreach($attachments as $attachment) {
     $message->addAttachment($attachment);

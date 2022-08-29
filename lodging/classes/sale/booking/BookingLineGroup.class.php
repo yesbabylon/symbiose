@@ -145,7 +145,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The fare class that applies to the group.",
-                'default'           => 1,
+                'default'           => 4,                       // default to 'general public'
                 'onupdate'          => 'onupdateRateClassId'
             ],
 

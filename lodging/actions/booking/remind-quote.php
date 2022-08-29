@@ -93,7 +93,7 @@ $message = new Email();
 $message->setTo($params['recipient_email'])
         ->setSubject($title)
         ->setContentType("text/html")
-        ->setBody(str_replace(['<br>', '<p></p>'], '', $body));
+        ->setBody($body);
 
 // queue message
 Mail::queue($message, 'lodging\sale\booking\Booking', $params['id']);
