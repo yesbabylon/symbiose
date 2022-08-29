@@ -30,7 +30,7 @@ class BankStatement extends \sale\booking\BankStatement {
                 'foreign_object'    => 'lodging\identity\CenterOffice',
                 'description'       => 'Center office related to the satement (bassed on account number).'
             ]
-            
+
         ];
     }
 

@@ -146,12 +146,11 @@ class Payment extends Model {
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         if(isset($values['amount'])) {
-            $payments = $om->read('sale\pay\Payment', $oids, ['statement_line_id.amount'], $lang);
+            $payments = $om->read('sale\pay\Payment', $oids, ['statement_line_id.remaining_amount'], $lang);
 
             foreach($payments as $pid => $payment) {
-                if($values['amount'] > $payment['statement_line_id.amount']) {
-                    // #memo - allow excessive amount : overpaid amounts generate negative fundings that will be discounted on the final invoice
-                    // return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
+                if($values['amount'] > $payment['statement_line_id.remaining_amount']) {
+                    return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
                 }
             }
         }

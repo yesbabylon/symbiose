@@ -41,6 +41,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "remaining_amount",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "status",
                                                 "width": "33%"
                                             }
@@ -88,9 +93,9 @@
                                                         "actions": {
                                                             "ACTION.CREATE": [ {
                                                                 "view": "form.statement",
-                                                                "domain": [ ["amount", "=", "object.amount"], ["receipt_date", "=", "object.date"] ]
+                                                                "domain": [ ["amount", "=", "object.remaining_amount"], ["receipt_date", "=", "object.date"] ]
                                                             } ]
-                                                        }    
+                                                        }
                                                     }
                                                 }
                                             }

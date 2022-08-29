@@ -18,7 +18,7 @@ class BankStatement extends \sale\pay\BankStatement {
                 'foreign_field'     => 'bank_statement_id',
                 'description'       => 'The lines that are assigned to the statement.'
             ]
-    
+
         ];
     }
 

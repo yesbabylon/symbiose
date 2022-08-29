@@ -21,7 +21,7 @@ class BankStatementLine extends Model {
 
             'payments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\pay\Payment',
+                'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
                 'onupdate'          => 'onupdatePaymentsIds',
@@ -59,6 +59,15 @@ class BankStatementLine extends Model {
                 'usage'             => 'amount/money',
                 'description'       => 'Amount of the transaction.',
                 'readonly'          => true
+            ],
+
+            'remaining_amount' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money',
+                'description'       => 'Amount that still needs to be assigned to payments.',
+                'function'          => 'calcRemainingAmount',
+                'store'             => true
             ],
 
             'account_iban' => [
@@ -116,7 +125,7 @@ class BankStatementLine extends Model {
                 if($sum == $line['amount']) {
                     $status = 'reconciled';
                 }
-                $om->write(__CLASS__, $lid, ['status' => $status]);
+                $om->update(__CLASS__, $lid, ['status' => $status]);
             }
         }
     }
@@ -146,5 +155,59 @@ class BankStatementLine extends Model {
         }
     }
 
+    public static function calcRemainingAmount($om, $oids, $lang) {
+        $result = [];
+        $lines = $om->read(self::getType(), $oids, ['payments_ids', 'amount'], $lang);
+        if($lines > 0) {
+            foreach($lines as $lid => $line) {
+                $sum = 0.0;
+                $payments = $om->read(Payment::getType(), $line['payments_ids'], ['amount'], $lang);
+                if($payments > 0 && count($payments)) {
+                    foreach($payments as $pid => $payment) {
+                        $sum += $payment['amount'];
+                    }
+                }
+                $result[$lid] = $line['amount'] - $sum;
+            }
+        }
+        return $result;
+    }
+
+   /**
+     * Check wether an object can be updated.
+     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * Checks wheter the sum of the fundings of each booking remains lower than the price of the booking itself.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @param  array                        $values     Associative array holding the new values to be assigned.
+     * @param  string                       $lang       Language in which multilang fields are being updated.
+     * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang) {
+        if(isset($values['payments_ids'])) {
+            $new_payments_ids = array_map(function ($a) {return abs($a);}, $values['payments_ids']);
+            $new_payments = $om->read(Payment::getType(), $new_payments_ids, ['amount'], $lang);
+            $new_payments_sum = 0.0;
+            foreach($values['payments_ids'] as $pid) {
+                if($pid < 0) {
+                    $new_payments_sum -= $new_payments[abs($pid)]['amount'];
+                }
+                else {
+                    $new_payments_sum += $new_payments[$pid]['amount'];
+                }
+            }
+            $lines = $om->read(self::getType(), $oids, ['payments_ids', 'amount', 'remaining_amount'], $lang);
+
+            if($lines > 0) {
+                foreach($lines as $lid => $line) {
+                    if($new_payments_sum > $line['remaining_amount']) {
+                        return ['amount' => ['exceded_price' => "Sum of the payments cannot be higher than the line total."]];
+                    }
+                }
+            }
+            return parent::canupdate($om, $oids, $values, $lang);
+        }
+    }
 
 }

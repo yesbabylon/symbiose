@@ -76,7 +76,7 @@ class Product extends Model {
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsPack',
                 'description'       => 'Is the product a pack? (from model).',
-                'store'             => true,                
+                'store'             => true,
                 'readonly'          => true
             ],
 
@@ -156,7 +156,7 @@ class Product extends Model {
     }
 
     /**
-     * Computes the display_name of the product as a concatenation of Label and SKU.
+     * Computes the display name of the product as a concatenation of Label and SKU.
      *
      */
     public static function calcName($om, $oids, $lang) {

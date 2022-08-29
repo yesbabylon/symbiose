@@ -32,6 +32,7 @@ list($params, $providers) = announce([
         'message' => [
             'description'   => 'Body of the message.',
             'type'          => 'string',
+            'usage'         => 'text/html',
             'required'      => true
         ],
         'sender_email' => [

@@ -28,12 +28,12 @@
                     {
                         "id": "item.bank_statements.all_lines",
                         "type": "entry",
-                        "label": "Reconciled lines",
+                        "label": "All lines",
                         "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.reconciled",
+                            "view": "list.default",
                             "order": "date",
                             "sort": "desc"
                         }
@@ -45,11 +45,10 @@
                         "description": "",
                         "route": "/",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
                             "view": "list.reconciled",
                             "domain": [
-                                ["status", "=", "reconciled"],
-                                ["is_exported", "=", false]
+                                ["status", "=", "reconciled"]
                             ]
                         }
                     }

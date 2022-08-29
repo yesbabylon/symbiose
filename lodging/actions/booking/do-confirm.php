@@ -55,15 +55,21 @@ $booking = Booking::id($params['id'])
                         'date_to',
                         'price',                                  // total price VAT incl.
                         'contracts_ids',
-                        'center_id' => ['center_office_id', 'sojourn_type_id'],
-                        'customer_id' => ['id', 'rate_class_id'],
+                        'center_id' => [
+                            'center_office_id',
+                            'sojourn_type_id'
+                        ],
+                        'customer_id' => [
+                            'id',
+                            'rate_class_id'
+                        ],
                         'booking_lines_groups_ids' => [
                             'name',
                             'date_from',
                             'date_to',
                             'has_pack',
                             'is_locked',
-                            'pack_id' => ['id', 'display_name'],
+                            'pack_id' => ['id', 'name'],
                             'vat_rate',
                             'unit_price',
                             'fare_benefit',
@@ -152,6 +158,7 @@ if(!$booking['is_price_tbc']) {
         }
 
         $group_label .= ' - '.$group['nb_pers'].' p.';
+        $group_rate_class_id = (isset($group['rate_class_id']) && $group['rate_class_id'])?$group['rate_class_id']:$booking['customer_id']['rate_class_id'];
 
         if($group['has_pack'] && $group['is_locked'] ) {
             // create a contract group based on the booking group
@@ -161,7 +168,7 @@ if(!$booking['is_price_tbc']) {
                 'is_pack'           => true,
                 'contract_id'       => $contract['id'],
                 'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group['rate_class_id']
+                'rate_class_id'     => $group_rate_class_id
             ])->first();
 
             // create a line based on the group
@@ -183,7 +190,7 @@ if(!$booking['is_price_tbc']) {
                 'is_pack'           => false,
                 'contract_id'       => $contract['id'],
                 'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group['rate_class_id']
+                'rate_class_id'     => $group_rate_class_id
             ])->first();
         }
 

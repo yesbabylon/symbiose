@@ -21,13 +21,18 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "heading": true,
-                                                    "readonly": true                                                    
+                                                    "readonly": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
                                             }
                                         ]
                                     },
