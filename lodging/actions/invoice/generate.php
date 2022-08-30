@@ -165,42 +165,42 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
     ->read(['id'])
     ->first();
 
-
     if($group['has_pack'] && $group['is_locked'] ) {
         // invoice group with a single line
 
         // create a line based on the booking Line Group
-        $i_line = [
-            'invoice_id'                => $invoice['id'],
-            'invoice_line_group_id'     => $invoice_line_group['id'],
-            'product_id'                => $group['pack_id']['id'],
-            'price_id'                  => $group['price_id'],
-            'vat_rate'                  => $group['vat_rate'],
-            'unit_price'                => $group['unit_price'],
-            'qty'                       => $group['qty']
-        ];
-
-        InvoiceLine::create($i_line);
+        InvoiceLine::create([
+                'invoice_id'                => $invoice['id'],
+                'invoice_line_group_id'     => $invoice_line_group['id'],
+                'product_id'                => $group['pack_id']['id'],
+                'price_id'                  => $group['price_id'],
+            ])
+            ->update([
+                'vat_rate'                  => $group['vat_rate'],
+                'unit_price'                => $group['unit_price'],
+                'qty'                       => $group['qty']
+            ]);
     }
     else {
         // create as many lines as the group booking_lines
         foreach($group['booking_lines_ids'] as $lid => $line) {
             $booking_lines_ids[] = $lid;
 
-            $i_line = [
-                'invoice_id'                => $invoice['id'],
-                'invoice_line_group_id'     => $invoice_line_group['id'],
-                'product_id'                => $line['product_id'],
-                'description'               => $line['description'],
-                'price_id'                  => $line['price_id'],
-                'vat_rate'                  => $line['vat_rate'],
-                'unit_price'                => $line['unit_price'],
-                'qty'                       => $line['qty'],
-                'free_qty'                  => $line['free_qty'],
-                'discount'                  => $line['discount']
-            ];
-
-            InvoiceLine::create($i_line);
+            // create line in two steps (not to overwrite details from the line)
+            InvoiceLine::create( [
+                    'invoice_id'                => $invoice['id'],
+                    'invoice_line_group_id'     => $invoice_line_group['id'],
+                    'product_id'                => $line['product_id'],
+                    'description'               => $line['description'],
+                    'price_id'                  => $line['price_id']
+                ])
+                ->update([
+                    'vat_rate'                  => $line['vat_rate'],
+                    'unit_price'                => $line['unit_price'],
+                    'qty'                       => $line['qty'],
+                    'free_qty'                  => $line['free_qty'],
+                    'discount'                  => $line['discount']
+                ]);
         }
 
     }

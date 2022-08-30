@@ -69,16 +69,16 @@ else {
             // send an alert saying that option has expired and reverted to quote
             $dispatch->dispatch('lodging.booking.option.expired', 'lodging\sale\booking\Booking', $params['id'], 'warning');
         }
-        else {            
+        else {
             // check quote for blocked rental units (might raise alert lodging.booking.quote.blocking)
-            eQual::run('do', 'lodging_booking_check-quote', ['id' => $params['id']]);            
+            eQual::run('do', 'lodging_booking_check-quote', ['id' => $params['id']]);
         }
-/*        
+/*
     }
     catch(Exception $e) {
         // ignore errors
     }
-*/    
+*/
 }
 
 $context->httpResponse()

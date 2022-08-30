@@ -39,8 +39,8 @@ class InvoiceLineGroup extends \finance\accounting\InvoiceLineGroup {
             foreach($groups as $gid => $group) {
                 $invoices_ids[] = $group['invoice_id'];
             }
-            $om->write(Invoice::getType(), $invoices_ids, ['price' => null, 'total' => null]);
-        }        
+            $om->update(Invoice::getType(), $invoices_ids, ['price' => null, 'total' => null]);
+        }
     }
 
 

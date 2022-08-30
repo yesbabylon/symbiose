@@ -59,7 +59,7 @@ class InvoiceLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\price\Price::getType(),
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
+                'onupdate'          => 'onupdatePriceId'
             ],
 
             'unit_price' => [

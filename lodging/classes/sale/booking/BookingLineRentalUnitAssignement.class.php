@@ -86,13 +86,13 @@ class BookingLineRentalUnitAssignement extends Model {
         $lines = $om->read(get_called_class(), $oids, ['booking_id.status'], $lang);
         if($lines > 0) {
             foreach($lines as $line) {
-                if($line['booking_id.status'] != 'quote') {
+                if(!in_array($line['booking_id.status'], ['quote', 'checkedout'])) {
                     return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
                 }
             }
         }
 
         return parent::canupdate($om, $oids, $values, $lang);
-    }    
+    }
 
 }

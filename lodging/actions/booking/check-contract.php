@@ -61,9 +61,13 @@ else {
 
 if($status != 'signed') {
     $result[] = $booking['id'];
+    $links = [];
+
+    // #todo - that route redirects to the sengding form (should show the contract object)
+    // $links = "[{$booking['name']}](/booking/#/booking/{$booking['id']}/contract/{$contract_id})";
 
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.contract.unsigned', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-contract', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.contract.unsigned', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-contract', ['id' => $params['id']], $links);
 
     $httpResponse->status(qn_error_http(QN_ERROR_MISSING_PARAM));
 }

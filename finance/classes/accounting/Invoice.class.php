@@ -195,12 +195,15 @@ class Invoice extends Model {
         $invoices = $om->read(get_called_class(), $oids, ['fundings_ids.is_paid'], $lang);
         if($invoices > 0) {
             foreach($invoices as $oid => $invoice) {
-                $result[$oid] = true;
+                $result[$oid] = false;
+                $count_paid = 0;
                 foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
-                    if(!$funding['is_paid']) {
-                        $result[$oid] = false;
-                        break;
+                    if($funding['is_paid']) {
+                        ++$count_paid;
                     }
+                }
+                if($count_paid > 0 && count($invoice['fundings_ids.is_paid']) == $count_paid) {
+                    $result[$oid] = true;
                 }
             }
         }
@@ -316,7 +319,7 @@ class Invoice extends Model {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
+            $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
             // generate an invoice number (force immediate recomuting)
             $om->read(__CLASS__, $oids, ['number'], $lang);
             // generate accounting entries

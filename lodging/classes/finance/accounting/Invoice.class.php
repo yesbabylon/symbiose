@@ -106,7 +106,7 @@ class Invoice extends \finance\accounting\Invoice {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
+            $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
 
             $invoices = $om->read(__CLASS__, $oids, [
                 // #memo - generate an invoice number (force immediate recomputing)
