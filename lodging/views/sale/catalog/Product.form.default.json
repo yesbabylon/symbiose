@@ -49,7 +49,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "can_sell",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
+                                                "width": "33%"
                                             }
                                         ]
                                     }
@@ -129,7 +139,7 @@
                     {
                         "label": "Pack Products",
                         "id": "section.pack_lines",
-                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"]],
+                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"] ],
                         "rows": [
                             {
                                 "columns": [
@@ -150,6 +160,7 @@
                     {
                         "label": "Pack Lines",
                         "id": "section.ref_pack_lines",
+                        "visible": [ ["is_pack", "=", false], ["state", "<>", "draft"] ],
                         "rows": [
                             {
                                 "columns": [

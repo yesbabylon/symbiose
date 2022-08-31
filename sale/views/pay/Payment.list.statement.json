@@ -1,6 +1,6 @@
 {
     "name": "Payments",
-    "description": "This view is intended for displaying the list of payments.",
+    "description": "List of payments related to a bank statement line.",
     "access": {
         "groups": ["sale.default.user"]
     },
@@ -19,17 +19,29 @@
                 "type": "field",
                 "label": "Partner",
                 "value": "partner_id",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "amount",
-                "width": "10%"
+                "width": "25%"
             },
             {
                 "type": "field",
                 "label": "Funding",
                 "value": "funding_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Funding",
+                "value": "booking_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Office",
+                "value": "center_office_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
                 "width": "10%"
             }
         ]

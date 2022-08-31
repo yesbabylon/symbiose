@@ -156,7 +156,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         $group_label .= date('d/m/y', $group['date_from']).' - '.date('d/m/y', $group['date_to']);
     }
 
-    $group_label .= ' - '.$group['nb_pers'].' p.';
+    $group_label .= ' - '.$group['nb_pers'].'p.';
 
     $invoice_line_group = InvoiceLineGroup::create([
         'name'              => $group_label,

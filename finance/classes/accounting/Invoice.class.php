@@ -112,7 +112,7 @@ class Invoice extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \identity\Partner::getType(),
-                'description'       => "The counter party organisation related to the sale.",
+                'description'       => "The counter party organisation the invoice relates to.",
                 'required'          => true
             ],
 
@@ -183,7 +183,7 @@ class Invoice extends Model {
 
             'is_exported' => [
                 'type'              => 'boolean',
-                'description'       => 'Mark the invoice as exported to accounting soft.',
+                'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
                 'default'           => false
             ]
 

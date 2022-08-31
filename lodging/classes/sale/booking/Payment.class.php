@@ -11,12 +11,11 @@ class Payment extends \lodging\sale\pay\Payment {
     public static function getColumns() {
 
         return [
-
             'booking_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'function'          => 'getBookingId',
-                'foreign_object'    => 'lodging\sale\booking\Booking',
+                'function'          => 'calcBookingId',
+                'foreign_object'    => Booking::getType(),
                 'description'       => 'The booking the payement relates to, if any (computed).',
                 'store'             => true
             ],
@@ -26,45 +25,79 @@ class Payment extends \lodging\sale\pay\Payment {
                 'foreign_object'    => Funding::getType(),
                 'description'       => 'The funding the payement relates to, if any.',
                 'onupdate'          => 'onupdateFundingId'
-            ]
+            ],
 
+            'center_office_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'lodging\identity\CenterOffice',
+                'function'          => 'calcBookingId',
+                'description'       => 'Center office related to the satement (from statement_line_id).',
+                'store'             => true
+            ],
+
+            'statement_line_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => BankStatementLine::getType(),
+                'description'       => 'The bank statement line the payment relates to.',
+                'visible'           => [ ['payment_origin', '=', 'bank'] ]
+            ]
         ];
     }
 
 
-    public static function getBookingId($om, $oids, $lang) {
+    public static function calcBookingId($om, $oids, $lang) {
         $result = [];
         $items = $om->read(__CLASS__, $oids, ['funding_id.booking_id']);
 
         foreach($items as $oid => $odata) {
+            if(isset($odata['funding_id.booking_id'])) {
+                $result[$oid] = $odata['funding_id.booking_id'];
+            }
+        }
+        return $result;
+    }
 
-            $result[$oid] = $odata['funding_id.booking_id'];
+    public static function calcCenterOfficeId($om, $oids, $lang) {
+        $result = [];
+        $items = $om->read(__CLASS__, $oids, ['statement_line_id.center_office_id']);
+
+        foreach($items as $oid => $odata) {
+            if(isset($odata['statement_line_id.center_office_id'])) {
+                $result[$oid] = $odata['statement_line_id.center_office_id'];
+            }
         }
         return $result;
     }
 
     /**
      * Check newly assigned funding and create an invoice for long term downpayments.
+     * From an accounting perspective, if a downpayment has been received and is not related to an invoice yet,
+     * it must relate to a service that will be delivered within the current year.
+     * If the service will be delivered the downpayment is converted into an invoice.
+     *
      * #memo - This cannot be undone.
      */
     public static function onupdateFundingId($om, $ids, $values, $lang) {
         // call parent onupdate
         parent::onupdateFundingId($om, $ids, $values, $lang);
 
-        $payments = $om->read(self::getType(), $ids, ['funding_id', 'booking_id', 'booking_id.date_from', 'funding_id.type']);
+        $payments = $om->read(self::getType(), $ids, ['funding_id', 'funding_id.booking_id', 'funding_id.booking_id.date_from', 'funding_id.type']);
 
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
                 // if payment relates to a funding attached to a booking that will occur after the 31th of december of current year, convert the funding to an invoice
-                if($payment['funding_id'] && $payment['booking_id']) {
-                    $last_date = mktime(0, 0, 0, 12, 31, date('Y'));
-                    if($payment['funding_id.type'] != 'invoice' && $payment['booking_id.date_from'] > $last_date) {
+                if($payment['funding_id'] && $payment['funding_id.booking_id']) {
+                    $current_year_last_day = mktime(0, 0, 0, 12, 31, date('Y'));
+                    if($payment['funding_id.type'] != 'invoice' && $payment['funding_id.booking_id.date_from'] > $current_year_last_day) {
                         // convert the funding to an invoice
                         $om->callonce(Funding::getType(), '_convertToInvoice', $payment['funding_id']);
                     }
                 }
             }
         }
+        // reset booking_id
+        $om->update(self::getType(), $ids, ['booking_id' => null]);
     }
 
     /**

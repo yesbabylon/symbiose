@@ -74,7 +74,7 @@ class Invoice extends \finance\accounting\Invoice {
     public static function calcNumber($om, $oids, $lang) {
         $result = [];
 
-        $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
+        $invoices = $om->read(self::getType(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
 
         foreach($invoices as $oid => $invoice) {
 

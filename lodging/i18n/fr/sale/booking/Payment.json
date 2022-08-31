@@ -12,6 +12,11 @@
             "label": "Financement",
             "description": "Le financement lié au paiement.",
             "help": ""
+        },
+        "center_office_id": {
+            "label": "Centre de gestion",
+            "description": "Le centre de gestion lié au paiement.",
+            "help": ""
         }
     },
     "view": {},

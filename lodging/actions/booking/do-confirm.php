@@ -157,7 +157,7 @@ if(!$booking['is_price_tbc']) {
             $group_label .= date('d/m/y', $group['date_from']).' - '.date('d/m/y', $group['date_to']);
         }
 
-        $group_label .= ' - '.$group['nb_pers'].' p.';
+        $group_label .= ' - '.$group['nb_pers'].'p.';
         $group_rate_class_id = (isset($group['rate_class_id']) && $group['rate_class_id'])?$group['rate_class_id']:$booking['customer_id']['rate_class_id'];
 
         if($group['has_pack'] && $group['is_locked'] ) {

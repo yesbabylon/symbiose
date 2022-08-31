@@ -315,7 +315,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
         $group_label .= date('d/m/y', $booking_line_group['date_from']).' - '.date('d/m/y', $booking_line_group['date_to']);
     }
 
-    $group_label .= ' - '.$booking_line_group['nb_pers'].' p.';
+    $group_label .= ' - '.$booking_line_group['nb_pers'].'p.';
 
     if($booking_line_group['has_pack'] && $booking_line_group['is_locked']) {
         // group is a product pack (bundle) with own price

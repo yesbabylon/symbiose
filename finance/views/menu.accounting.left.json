@@ -79,7 +79,7 @@
             },
             {
                 "id": "item.fundings",
-                "label": "Fundings",
+                "label": "Payments",
                 "description": "",
                 "icon": "attach_money",
                 "type": "parent",
@@ -94,6 +94,18 @@
                             "entity": "lodging\\sale\\booking\\Funding",
                             "view": "list.default",
                             "domain": ["due_amount", "<", 0]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statement_lines.reimburse",
+                        "type": "entry",
+                        "label": "Bank payments to reimburse",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.default",
+                            "domain": ["status", "=", "to_refund"]
                         }
                     }
                 ]

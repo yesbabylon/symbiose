@@ -12,6 +12,12 @@ class AccountingJournal extends \finance\accounting\AccountingJournal {
     public static function getColumns() {
         return [
 
+            'index' => [
+                'type'              => 'integer',
+                'description'       => 'Counter for payments exports.',
+                'default'           => 120000
+            ],
+
             'center_office_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \lodging\identity\CenterOffice::getType(),

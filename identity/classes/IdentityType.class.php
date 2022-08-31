@@ -27,7 +27,7 @@ class IdentityType extends Model {
                 'description'       => "Short description of the identity type.",
                 "multilang"         => true
             ]
-            
+
         ];
     }
 

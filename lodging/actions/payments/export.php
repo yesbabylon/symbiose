@@ -21,8 +21,7 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'visibility'        => 'public',
-        // 'groups'            => ['sale.default.user'],
+        'groups'            => ['sale.default.user'],
     ],
     'response'      => [
         'charset'             => 'utf-8',
@@ -38,7 +37,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
     This controller generates an export file related to invoices of a given center Office.
     Invoices can only be exported once, but the result of the export generation is kept as history that can be re-downloaded if necessary.
 
-    Kaleo uses a double imports the CODA files (in Discope AND in accounting soft [BOB])
+    Kaleo uses a double import of the CODA files (in Discope AND in accounting soft [BOB])
 
     Postulats
     * l'origine des fichiers n'a pas d'importance

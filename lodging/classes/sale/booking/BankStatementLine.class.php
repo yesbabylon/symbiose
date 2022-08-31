@@ -21,7 +21,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
             'center_office_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
-                'description'       => 'Center office related to the satement (bassed on account number).',
+                'description'       => 'Center office related to the satement (based on account number).',
                 'onupdate'          => 'onupdateCenterOfficeId'
             ],
 
