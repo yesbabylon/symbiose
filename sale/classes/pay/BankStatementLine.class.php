@@ -99,7 +99,6 @@ class BankStatementLine extends Model {
                 ],
                 'description'       => 'Status of the line.',
                 'default'           => 'pending',
-                'readonly'          => true,
                 'onupdate'          => 'onupdateStatus',
             ]
 
@@ -133,23 +132,23 @@ class BankStatementLine extends Model {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\pay\BankStatementLine::onupdateStatus", QN_REPORT_DEBUG);
 
-        $lines = $om->read(get_called_class(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
+        $lines = $om->read(self::getType(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
 
         if($lines > 0) {
             $bank_statements_ids = [];
             foreach($lines as $lid => $line) {
+                // mark related statement for re-computing
+                $bank_statements_ids[$line['bank_statement_id']] = true;
                 if($line['status'] == 'reconciled') {
-                    // mark related statement for re-computing
-                    $bank_statements_ids[$line['bank_statement_id']] = true;
                     // resolve customer_id: retrieve first payment
                     if(isset($line['payments_ids.partner_id']) && count($line['payments_ids.partner_id'])) {
                         $payment = reset($line['payments_ids.partner_id']);
-                        $om->write(get_called_class(), $lid, ['customer_id' => $payment['partner_id']]);
+                        $om->update(self::getType(), $lid, ['customer_id' => $payment['partner_id']]);
                     }
                 }
             }
             $bank_statements_ids = array_keys($bank_statements_ids);
-            $om->write('sale\pay\BankStatement', $bank_statements_ids, ['status' => null]);
+            $om->update('sale\pay\BankStatement', $bank_statements_ids, ['status' => null]);
             // force immediate re-computing
             $om->read('sale\pay\BankStatement', $bank_statements_ids, ['status']);
         }

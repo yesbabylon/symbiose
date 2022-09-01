@@ -539,8 +539,10 @@ foreach($booking['fundings_ids'] as $funding) {
 
     if($funding['due_date'] < $installment_date) {
         $installment_date = $funding['due_date'];
-        $installment_amount = $funding['due_amount'];
         $installment_ref = $funding['payment_reference'];
+        if(!$funding['is_paid']) {
+            $installment_amount = $funding['due_amount'];
+        }
     }
     $line = [
         'name'          => $funding['payment_deadline_id']['name'],
@@ -557,7 +559,7 @@ if($installment_date == PHP_INT_MAX) {
     // no funding found : the final invoice will be release and generate a funding
     // qr code is not generated
 }
-else {
+else if ($installment_amount > 0) {
     $values['installment_date'] = date('d/m/Y', $installment_date);
     $values['installment_amount'] = (float) $installment_amount;
     $values['installment_reference'] = DataFormatter::format($installment_ref, 'scor');

@@ -43,7 +43,7 @@
                 "label": "To",
                 "value": "date_to",
                 "width": "15%",
-                "sortable": true,                
+                "sortable": true,
                 "readonly": true
             },
             {
@@ -87,7 +87,7 @@
                 "value": "price",
                 "width": "15%",
                 "sortable": true,
-                "readonly": true                
+                "readonly": true
             }
         ]
     }

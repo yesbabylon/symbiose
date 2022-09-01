@@ -12,6 +12,19 @@
                 "type": "parent",
                 "children": [
                     {
+                        "id": "item.bank_statements.all",
+                        "type": "entry",
+                        "label": "All Bank Statements",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc"
+                        }
+                    },
+                    {
                         "id": "item.bank_statements.lines_to_review",
                         "type": "entry",
                         "label": "Lines to review",

@@ -14,13 +14,13 @@ class BankStatementLine extends \sale\pay\BankStatementLine {
 
             'bank_statement_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\booking\BankStatement',
+                'foreign_object'    => BankStatement::getType(),
                 'description'       => 'The bank statement the line relates to.'
             ],
 
             'payments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\booking\Payment',
+                'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
                 'onupdate'          => 'sale\pay\BankStatementLine::onupdatePaymentsIds',

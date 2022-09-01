@@ -58,8 +58,7 @@ class BankStatement extends Model {
                 'function'          => 'calcStatus',
                 'selection'         => [
                     'pending',                // hasn't been fully processed yet
-                    'reconciled',             // has been fully processed (all lines either ignored or reconciled)
-                    'ignored'                 // cannot be reconciled or is irrelevant (will no longer be displayed)
+                    'reconciled'              // has been fully processed (all lines either ignored or reconciled)
                 ],
                 'description'       => 'Status of the statement (depending on lines).',
                 'store'             => true
@@ -121,7 +120,7 @@ class BankStatement extends Model {
             foreach($statements as $sid => $statement) {
                 $is_reconciled = true;
                 foreach($statement['statement_lines_ids.status'] as $lid => $line) {
-                    if($line['status'] != 'reconciled') {
+                    if( !in_array($line['status'], ['reconciled', 'ignored']) ) {
                         $is_reconciled = false;
                         break;
                     }

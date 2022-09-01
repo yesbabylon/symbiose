@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of prices.",
     "access": {
         "groups": ["sale.default.user"]
-     },
+    },
     "header": {
         "actions": {
             "ACTION.CREATE" : [

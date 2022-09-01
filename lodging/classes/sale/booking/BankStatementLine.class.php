@@ -14,7 +14,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
             'bank_statement_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BankStatement',
+                'foreign_object'    => BankStatement::getType(),
                 'description'       => 'The bank statement the line relates to.'
             ],
 
