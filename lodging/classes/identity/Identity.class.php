@@ -11,6 +11,14 @@ class Identity extends \identity\Identity {
     public static function getColumns() {
         return [
 
+            'contacts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => Contact::getType(),
+                'foreign_field'     => 'owner_identity_id',
+                'domain'            => ['partner_identity_id', '<>', 'object.id'],
+                'description'       => 'List of contacts relating to the organisation (not necessarily employees), if any.'
+            ],
+
             'lang_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\Lang',
