@@ -189,10 +189,9 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['partner_identity_id', '<>', 'object.id'],
+                'domain'            => [ ['partner_identity_id', '<>', 'object.id'], ['relationship', '=', 'contact'] ],
                 'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
             ],
-
 
             /*
                 Description of the Identity address.
@@ -202,22 +201,27 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Street and number.'
             ],
+
             'address_dispatch' => [
                 'type'              => 'string',
                 'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).'
             ],
+
             'address_city' => [
                 'type'              => 'string',
                 'description'       => 'City.'
             ],
+
             'address_zip' => [
                 'type'              => 'string',
                 'description'       => 'Postal code.'
             ],
+
             'address_state' => [
                 'type'              => 'string',
                 'description'       => 'State or region.'
             ],
+
             'address_country' => [
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',
@@ -270,7 +274,7 @@ class Identity extends Model {
             ],
 
             /*
-                For organisations, there is a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
+                For organisations, there might be a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
                 These contact details are commonly requested by service providers for validating the identity of an organisation.
             */
             'reference_partner_id' => [
@@ -278,6 +282,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'domain'            => ['relationship', '=', 'contact'],
                 'description'       => 'Contact (natural person) that can legally represent the organisation.',
+                'onupdate'          => 'onupdateReferencePartnerId',
                 'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
             ],
 
@@ -365,14 +370,14 @@ class Identity extends Model {
     }
 
     public static function onupdateName($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
+        $om->update(__CLASS__, $oids, [ 'display_name' => null ], $lang);
         $res = $om->read(__CLASS__, $oids, ['partners_ids']);
         $partners_ids = [];
         foreach($res as $oid => $odata) {
             $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
         }
         // force re-computing of related partners names
-        $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
+        $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
         $om->read('identity\Partner', $partners_ids, ['name'], $lang);
     }
 
@@ -391,11 +396,11 @@ class Identity extends Model {
                     $values['lastname'] = '';
                 }
                 $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
-                $om->write(__CLASS__, $oid, $values, $lang);
+                $om->update(__CLASS__, $oid, $values, $lang);
             }
             $om->read(__CLASS__, $oids, ['display_name'], $lang);
             // force re-computing of related partners names
-            $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
+            $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
             $om->read('identity\Partner', $partners_ids, ['name'], $lang);
         }
     }
@@ -408,7 +413,27 @@ class Identity extends Model {
 
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
-                $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
+                $om->update('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
+            }
+        }
+    }
+
+    /**
+     * When a reference partner is given, add it to the identity's contacts list.
+     */
+    public static function onupdateReferencePartnerId($om, $oids, $values, $lang) {
+        $identities = $om->read(self::getType(), $oids, ['reference_partner_id', 'reference_partner_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
+
+        if($identities > 0) {
+            foreach($identities as $oid => $identity) {
+                if(!in_array($identity['reference_partner_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $identity['contacts_ids.partner_identity_id']))) {
+                    // create a contact with the customer as 'booking' contact
+                    $om->create('identity\Partner', [
+                        'owner_identity_id'     => $oid,
+                        'partner_identity_id'   => $identity['reference_partner_id.partner_identity_id'],
+                        'relationship'          => 'contact'
+                    ]);
+                }
             }
         }
     }

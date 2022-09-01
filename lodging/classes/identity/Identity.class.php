@@ -10,14 +10,6 @@ class Identity extends \identity\Identity {
 
     public static function getColumns() {
         return [
-            // Any Identity can have several contacts
-            'contacts_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\Contact',
-                'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['partner_identity_id', '<>', 'object.id'],
-                'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
-            ],
 
             'lang_id' => [
                 'type'              => 'many2one',

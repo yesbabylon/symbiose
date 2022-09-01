@@ -321,10 +321,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "contacts_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": ["booking_id", "is", "null"]
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }
