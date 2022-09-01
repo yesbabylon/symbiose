@@ -7,6 +7,7 @@
 use equal\orm\Domain;
 use lodging\sale\booking\BankStatementLine;
 use lodging\identity\Identity;
+use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLineRentalUnitAssignement;
 use lodging\sale\booking\Contact;
 use sale\booking\Payment;
@@ -126,16 +127,21 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
     identity_id : search in contacts (customer should be in it as well)
 */
 if(isset($params['identity_id'])) {
-    $contacts = Contact::search(['partner_identity_id', '=', $params['identity_id']])->read(['booking_id'])->get();
-    if(count($contacts)) {
+
+    $matches_ids = array_merge(
+        Booking::search(['customer_identity_id', '=', $params['identity_id']])->read(['id'])->ids(),
+        array_map(function ($a) { return $a['booking_id']; }, Contact::search(['partner_identity_id', '=', $params['identity_id']])->read(['booking_id'])->get() )
+    );
+
+    if(count($matches_ids)) {
         if(count($bookings_ids)) {
             $bookings_ids = array_intersect(
-                                $bookings_ids,
-                                array_map(function ($a) { return $a['booking_id']; }, $contacts )
-                            );
+                $bookings_ids,
+                $matches_ids
+            );
         }
         else {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $contacts );
+            $bookings_ids = $matches_ids;
         }
         if(empty($bookings_ids)) {
             // add a constraint to void the result set
