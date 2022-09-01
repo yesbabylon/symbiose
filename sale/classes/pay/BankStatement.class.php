@@ -59,6 +59,7 @@ class BankStatement extends Model {
                 'selection'         => [
                     'pending',                // hasn't been fully processed yet
                     'reconciled',             // has been fully processed (all lines either ignored or reconciled)
+                    'ignored'                 // cannot be reconciled or is irrelevant (will no longer be displayed)
                 ],
                 'description'       => 'Status of the statement (depending on lines).',
                 'store'             => true

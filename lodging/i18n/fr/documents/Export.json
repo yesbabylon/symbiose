@@ -8,7 +8,7 @@
             "description": "Type de réservation (automatique, selon les produits choisis).",
             "selection": {
                 "invoices": "factures",
-                "payments": "payments"
+                "payments": "règlements"
             },
             "help": ""
         },

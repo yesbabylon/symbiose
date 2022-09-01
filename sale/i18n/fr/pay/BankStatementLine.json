@@ -39,8 +39,8 @@
             "help": "",
             "selection": {
                 "pending": "à traiter",
-                "ignored": "ignoré",
-                "reconciled": "réconcilié"
+                "reconciled": "réconciliée",
+                "ignored": "ignorée"
             }
         },
         "structured_message": {

@@ -125,7 +125,7 @@ class BankStatementLine extends Model {
                 if($sum == $line['amount']) {
                     $status = 'reconciled';
                 }
-                $om->update(__CLASS__, $lid, ['status' => $status]);
+                $om->update(__CLASS__, $lid, ['status' => $status, 'remaining_amount' => null]);
             }
         }
     }

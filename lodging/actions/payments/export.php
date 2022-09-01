@@ -481,7 +481,7 @@ Export::create([
     'data'                  => $data
 ]);
 
-// mark  invoices as exported and
+// mark processed invoices as exported and
 $invoices->update(['is_exported' => true]);
 
 $context->httpResponse()

@@ -142,10 +142,13 @@ $payments = Payment::search([
         ]
     ]);
 
-if(iterator_count($payments) == 0) {
+
+$payments_count = iterator_count($payments);
+if($payments_count == 0) {
     // exit with no error
     throw new Exception('no match', 0);
 }
+
 
 
 
@@ -384,6 +387,7 @@ $payments_header_data = implode("\r\n", $result);
 */
 
 $result = [];
+// we use journal index + offset as virtual document ref. for payments
 $offset = 0;
 foreach($payments as $payment) {
     // retrieve targeted partner
@@ -473,16 +477,6 @@ foreach($payments as $payment) {
 $payments_lines_data = implode("\r\n", $result);
 
 
-echo $customers_schema.PHP_EOL;
-echo $payments_header_schema.PHP_EOL;
-echo $payments_lines_schema.PHP_EOL;
-// embed data files
-echo $customers_data.PHP_EOL;
-echo $payments_header_data.PHP_EOL;
-echo $payments_lines_data.PHP_EOL;
-
-die();
-
 // generate the zip archive
 $tmpfile = tempnam(sys_get_temp_dir(), "zip");
 $zip = new ZipArchive();
@@ -521,10 +515,10 @@ Export::create([
 ]);
 
 
-// update journal index to the latest value
-AccountingJournal::id($journal['id'])->update(['index' => $journal['index']+$offset]);
+// update journal index according to the number of payemnts
+AccountingJournal::id($journal['id'])->update(['index' => $journal['index']+$payments_count]);
 
-// mark  invoices as exported and
+// mark processed payements as exported and
 $payments->update(['is_exported' => true]);
 
 $context->httpResponse()

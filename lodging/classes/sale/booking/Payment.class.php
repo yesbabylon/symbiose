@@ -116,6 +116,8 @@ class Payment extends \lodging\sale\pay\Payment {
             $fundings = $om->read(Funding::getType(), $event['funding_id'], [
                     'type',
                     'due_amount',
+                    'booking_id',
+                    'booking_id.name',
                     'booking_id.customer_id.id',
                     'booking_id.customer_id.name',
                     'invoice_id.partner_id.id',
@@ -126,6 +128,7 @@ class Payment extends \lodging\sale\pay\Payment {
 
             if($fundings > 0) {
                 $funding = reset($fundings);
+                $result['booking_id'] = [ 'id' => $funding['booking_id'], 'name' => $funding['booking_id.name'] ];
                 if($funding['type'] == 'invoice')  {
                     $result['partner_id'] = [ 'id' => $funding['invoice_id.partner_id.id'], 'name' => $funding['invoice_id.partner_id.name'] ];
                 }
