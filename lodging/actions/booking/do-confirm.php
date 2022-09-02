@@ -162,14 +162,14 @@ if(!$booking['is_price_tbc']) {
 
         if($group['has_pack'] && $group['is_locked'] ) {
             // create a contract group based on the booking group
-
             $contract_line_group = ContractLineGroup::create([
-                'name'              => $group_label,
-                'is_pack'           => true,
-                'contract_id'       => $contract['id'],
-                'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group_rate_class_id
-            ])->first();
+                    'name'              => $group_label,
+                    'is_pack'           => true,
+                    'contract_id'       => $contract['id'],
+                    'fare_benefit'      => $group['fare_benefit'],
+                    'rate_class_id'     => $group_rate_class_id
+                ])
+                ->first();
 
             // create a line based on the group
             $c_line = [
@@ -186,12 +186,13 @@ if(!$booking['is_price_tbc']) {
         }
         else {
             $contract_line_group = ContractLineGroup::create([
-                'name'              => $group_label,
-                'is_pack'           => false,
-                'contract_id'       => $contract['id'],
-                'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group_rate_class_id
-            ])->first();
+                    'name'              => $group_label,
+                    'is_pack'           => false,
+                    'contract_id'       => $contract['id'],
+                    'fare_benefit'      => $group['fare_benefit'],
+                    'rate_class_id'     => $group_rate_class_id
+                ])
+                ->first();
         }
 
         // create as many lines as the group booking_lines
@@ -239,7 +240,7 @@ catch(Exception $e) {
 
 
 /*
-    Genarate the payment plan
+    Generate the payment plan
     (expected fundings of the booking)
 */
 

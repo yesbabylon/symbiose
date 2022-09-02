@@ -10,6 +10,7 @@ use lodging\identity\Identity;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLineRentalUnitAssignement;
 use lodging\sale\booking\Contact;
+use lodging\sale\booking\Funding;
 use sale\booking\Payment;
 
 list($params, $providers) = announce([
@@ -38,6 +39,11 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'usage'         => 'uri/urn:iban',
             'description'   => "Number of the bank account of the Identity, if any."
+        ],
+
+        'structured_message' => [
+            'type'          => 'string',
+            'description'   => "Structured message from bank statement."
         ],
 
         'identity_id' => [
@@ -105,7 +111,7 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
     if(count($lines_ids)) {
         $payments = Payment::search(['statement_line_id', 'in', $lines_ids])->read(['id', 'booking_id'])->get();
         if(count($payments)) {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $payments );
+            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $payments);
             $found = true;
         }
     }
@@ -118,6 +124,30 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
     }
 
     if(!$found) {
+        // add a constraint to void the result set
+        $bookings_ids = [0];
+    }
+}
+
+
+/*
+    structured_message : search in funding
+*/
+if(isset($params['structured_message']) && strlen($params['structured_message'])) {
+    $fundings = Funding::search(['payment_reference', '=', $params['structured_message']])->read(['booking_id'])->get();
+    if(count($fundings)) {
+        $matches_ids = array_map(function ($a) { return $a['booking_id']; }, $fundings);
+        if(count($bookings_ids)) {
+            $bookings_ids = array_intersect(
+                $bookings_ids,
+                $matches_ids
+            );
+        }
+        else {
+            $bookings_ids = $matches_ids;
+        }
+    }
+    else {
         // add a constraint to void the result set
         $bookings_ids = [0];
     }

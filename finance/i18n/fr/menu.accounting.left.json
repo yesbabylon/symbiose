@@ -13,6 +13,10 @@
             "label": "Exports",
             "help": ""
         },
+        "item.exports.downloads": {
+            "label": "Exports à télécharger",
+            "help": ""
+        },
         "item.exports.all": {
             "label": "Tous les exports",
             "help": ""

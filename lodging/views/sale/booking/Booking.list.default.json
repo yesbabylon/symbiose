@@ -32,9 +32,18 @@
             },
             {
                 "type": "field",
+                "value": "created",
+                "width": "15%",
+                "sortable": true,
+                "widget": {
+                    "usage": "datetime/short"
+                }
+            },
+            {
+                "type": "field",
                 "label": "From",
                 "value": "date_from",
-                "width": "15%",
+                "width": "10%",
                 "readonly": true,
                 "sortable": true
             },
@@ -42,7 +51,7 @@
                 "type": "field",
                 "label": "To",
                 "value": "date_to",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
@@ -77,7 +86,7 @@
                 "type": "field",
                 "label": "Nb Pers",
                 "value": "nb_pers",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },

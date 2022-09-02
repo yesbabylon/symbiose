@@ -986,6 +986,25 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "id": "communication.emails",
+                        "label": "Emails",
+                        "description": "",
+                        "icon": "alternate_email",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "communication.emails.all",
+                                "type": "entry",
+                                "label": "All emails",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\Mail",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     }
                 ]
             },

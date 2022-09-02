@@ -9,8 +9,8 @@
             "help": ""
         },
         "date": {
-            "label": "Date de réception du relevé",
-            "description": "Date de réception du relevé.",
+            "label": "Date du relevé",
+            "description": "Date du relevé.",
             "help": ""
         },
         "statement_lines_ids": {

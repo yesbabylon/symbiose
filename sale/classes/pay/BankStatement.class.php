@@ -33,6 +33,7 @@ class BankStatement extends Model {
 
             'old_balance' => [
                 'type'              => 'float',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Account balance before the transactions.',
                 'required'          => true,
                 'readonly'          => true
@@ -40,6 +41,7 @@ class BankStatement extends Model {
 
             'new_balance' => [
                 'type'              => 'float',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Account balance after the transactions.',
                 'required'          => true,
                 'readonly'          => true

@@ -28,13 +28,23 @@
         "form.default": {
             "name": "Ligne de relevé bancaire",
             "description": "Vue par défaut des règles comptables avec tous les champs",
+            "actions": {
+                "action.reconcile": {
+                    "label": "Réconcil. auto",
+                    "description": "Ceci tentera une nouvelle fois de réconcilier automatiquement la ligne d'extrait en cherchant des financements en attente de paiement parmi les réservations."
+                }
+            },
             "layout": {
             }
         },
         "list.default": {
             "name": "Lignes de relevé bancaire",
             "description": "Cette vue est destinée à afficher les règles comptables.",
-            "layout": {}
+            "layout": {
+                "header.selection.actions.mark_ignored": {
+                    "label": "Marquer comme ignoré"
+                }
+            }
         }
     },
     "error": {}

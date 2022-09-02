@@ -10,6 +10,14 @@ use core\setting\Setting;
 class Booking extends \sale\booking\Booking {
 
     public static function getColumns() {
+
+        /** @property string                                    name                        */
+        /** @property \lodging\sale\customer\Customer           customer_id                 */
+        /** @property \lodging\identity\Identity                customer_identity_id        */
+        /** @property \sale\customer\CustomerNature             customer_nature_id          */
+        /** @property \lodging\identity\Center                  center_id                   */
+        /** @property \lodging\identity\CenterOffice            center_office_id            */
+
         return [
 
             'name' => [
@@ -23,7 +31,7 @@ class Booking extends \sale\booking\Booking {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \lodging\sale\customer\Customer::getType(),
+                'foreign_object'    => 'lodging\sale\customer\Customer',
                 'description'       => "The customer whom the booking relates to (from selected identity).",
                 'onupdate'          => 'onupdateCustomerId'
             ],

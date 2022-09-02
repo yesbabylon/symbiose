@@ -5,6 +5,10 @@
             "label": "Extraits bancaires",
             "help": ""
         },
+        "item.bank_statements.statements_to_process": {
+            "label": "Extraits à réconcilier",
+            "help": ""
+        },
         "item.bank_statements.all": {
             "label": "Tous les extraits",
             "help": ""

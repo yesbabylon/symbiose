@@ -45,6 +45,17 @@
                 "type": "parent",
                 "children": [
                     {
+                        "id": "item.exports.downloads",
+                        "type": "entry",
+                        "label": "Exports to download",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\documents\\Export",
+                            "view": "list.downloads"
+                        }
+                    },
+                    {
                         "id": "item.exports.all",
                         "type": "entry",
                         "label": "All exports",

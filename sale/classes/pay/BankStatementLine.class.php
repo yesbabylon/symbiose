@@ -107,7 +107,7 @@ class BankStatementLine extends Model {
 
     /**
      * Update status according to the payments attached to the line.
-     * Line is reconciled if its amount matches the sum of its payments.
+     * Line is considered 'reconciled' if its amount matches the sum of its payments.
      *
      */
     public static function onupdatePaymentsIds($om, $oids, $values, $lang) {

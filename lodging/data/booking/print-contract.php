@@ -132,9 +132,11 @@ $fields = [
                 'fax',
                 'website',
                 'registration_number',
-                'signature',
+                'has_vat',
+                'vat_number',
                 'bank_account_iban',
-                'bank_account_bic'
+                'bank_account_bic',
+                'signature'
             ]
         ],
         'contacts_ids' => [
@@ -258,6 +260,9 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
+    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
+    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
+
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
     'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),

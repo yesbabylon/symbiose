@@ -258,10 +258,18 @@ hr {
                     Rem%
                 </th>
                 <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
-                    TVA
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Taxes
+                    {% else %}
+                        TVA
+                    {% endif %}
                 </th>
                 <th width="13%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
-                    Prix HT
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Prix
+                    {% else %}
+                        Prix HT
+                    {% endif %}
                 </th>
             </tr>
             </thead>
@@ -293,7 +301,7 @@ hr {
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if line.vat_rate is not null and line.vat_rate > 0 %}
+                        {% if line.vat_rate is not null and company_has_vat %}
                             {{ line.vat_rate | format_number(style='percent') }}
                         {% endif %}
                     </td>

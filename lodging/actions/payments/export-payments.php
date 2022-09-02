@@ -21,11 +21,9 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'visibility'        => 'public',
-        // 'groups'            => ['sale.default.user'],
+        'groups'            => ['finance.default.user'],
     ],
     'response'      => [
-        'content-type'        => 'text/plain',
         'charset'             => 'utf-8',
         'accept-origin'       => '*'
     ],

@@ -12,6 +12,20 @@
                 "type": "parent",
                 "children": [
                     {
+                        "id": "item.bank_statements.statements_to_process",
+                        "type": "entry",
+                        "label": "Statements to process",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc",
+                            "domain": ["status", "=", "pending"]
+                        }
+                    },
+                    {
                         "id": "item.bank_statements.all",
                         "type": "entry",
                         "label": "All Bank Statements",

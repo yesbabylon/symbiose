@@ -45,13 +45,13 @@
             },
             {
                 "type": "field",
-                "value": "message",
-                "width": "30%"
+                "value": "status",
+                "width": "10%"
             },
             {
                 "type": "field",
-                "value": "status",
-                "width": "10%"
+                "value": "message",
+                "width": "30%"
             }
         ]
     }
