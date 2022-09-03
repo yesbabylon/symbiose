@@ -41,7 +41,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth, $adapter) = [$providers['context'], $providers['orm'], $providers['auth'], $providers['adapt']];
 
 // get associative array mapping rental units and dates with consumptions
-$result = Consumption::_getExistingConsumptions($orm, $params['centers_ids'], $params['date_from'], $params['date_to']);
+$result = Consumption::getExistingConsumptions($orm, $params['centers_ids'], $params['date_from'], $params['date_to']);
 
 $consumptions_ids = [];
 foreach($result as $rental_unit_id => $dates) {
@@ -52,15 +52,15 @@ foreach($result as $rental_unit_id => $dates) {
 
 // read additional fields for the view
 $consumptions = Consumption::ids($consumptions_ids)
-                ->read([
-                    'date','schedule_from','schedule_to', 'is_rental_unit', 'qty', 'type',
-                    'customer_id'       => ['id', 'name'],
-                    'rental_unit_id'    => ['id', 'name'],
-                    'booking_id'        => ['id', 'name', 'status', 'description', 'payment_status'],
-                    'repairing_id'      => ['id', 'name', 'description']
-                ])
-                ->adapt('txt')
-                ->get();
+    ->read([
+        'date','schedule_from','schedule_to', 'is_rental_unit', 'qty', 'type',
+        'customer_id'       => ['id', 'name'],
+        'rental_unit_id'    => ['id', 'name'],
+        'booking_id'        => ['id', 'name', 'status', 'description', 'payment_status'],
+        'repairing_id'      => ['id', 'name', 'description']
+    ])
+    ->adapt('txt')
+    ->get();
 
 // enrich and adapt result
 foreach($result as $rental_unit_id => $dates) {
@@ -69,6 +69,7 @@ foreach($result as $rental_unit_id => $dates) {
         $result[$rental_unit_id][$date_index] = array_merge($consumption, $odata, [
             'date_from'     => $adapter->adapt($consumption['date_from'], 'date', 'txt', 'php'),
             'date_to'       => $adapter->adapt($consumption['date_to'], 'date', 'txt', 'php'),
+            'schedule_from' => $adapter->adapt($consumption['schedule_from'], 'time', 'txt', 'php'),
             'schedule_to'   => $adapter->adapt($consumption['schedule_to'], 'time', 'txt', 'php')
         ]);
     }

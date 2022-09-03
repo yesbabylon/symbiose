@@ -47,6 +47,13 @@ class Consumption extends \sale\booking\Consumption {
                 'readonly'          => true
             ],
 
+            'repairing_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Repairing',
+                'description'       => 'The booking the comsumption relates to.',
+                'ondelete'          => 'cascade'        // delete repair when parent repairing is deleted
+            ],
+
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
@@ -215,73 +222,96 @@ class Consumption extends \sale\booking\Consumption {
      * #memo - used in controllers
      * @param \equal\orm\ObjectManager $om
      */
-    public static function _getExistingConsumptions($om, $centers_ids, $date_from, $date_to) {
+    public static function getExistingConsumptions($om, $centers_ids, $date_from, $date_to) {
         // read all consumptions and repairs (book, ooo, link, part)
-        $consumptions_ids = $om->search(__CLASS__, [
-                                ['date', '>=', $date_from],
-                                ['date', '<=', $date_to],
-                                ['center_id', 'in',  $centers_ids],
-                                ['is_rental_unit', '=', true]
-                            ], ['date' => 'asc']);
+        $consumptions_ids = $om->search(self::getType(), [
+                ['date', '>=', $date_from],
+                ['date', '<=', $date_to],
+                ['center_id', 'in',  $centers_ids],
+                ['is_rental_unit', '=', true]
+            ], ['date' => 'asc']);
 
-        $consumptions = $om->read(__CLASS__, $consumptions_ids, [
-                                'id', 'date','schedule_from','schedule_to',
-                                'rental_unit_id', 'booking_line_group_id'
-                            ]);
+        $consumptions = $om->read(self::getType(), $consumptions_ids, [
+                'id', 'date','schedule_from','schedule_to',
+                'rental_unit_id',
+                'booking_line_group_id',
+                'repairing_id'
+            ]);
 
         /*
             Result is a 2-level associative array, mapping consumptions by rental unit and date
         */
         $result = [];
 
-        $sojourns_map = [];
+        $bookings_map = [];
+        $repairings_map = [];
 
         if($consumptions > 0) {
-
             /*
                 Join consecutive consumptions of a same booking_line_group for usingas same rental unit.
                 All consumptions are enriched with additional fields `date_from`and `date_to`.
                 Field schedule_from and schedule_to are adapted consequently.
             */
 
-            // pass-1 : group consumptions by rental unit and booking line group
-            foreach($consumptions as $index => $consumption) {
+            $booking_line_groups = $om->read(BookingLineGroup::getType(),
+                    array_map(function($a) {return (int) $a['booking_line_group_id'];}, $consumptions),
+                    ['id','date_from', 'date_to','time_from', 'time_to']
+                );
+
+            $repairings = $om->read(Repairing::getType(),
+                    array_map(function($a) {return (int) $a['repairing_id'];}, $consumptions),
+                    ['id','date_from', 'date_to']
+                );
+
+            // pass-1 : group consumptions by rental unit and booking (line group) or repairing
+            foreach($consumptions as $cid => $consumption) {
                 if(!isset($consumption['rental_unit_id']) || empty($consumption['rental_unit_id'])) {
                     // ignore consumptions not relating to a rental unit
-                    unset($consumptions[$index]);
+                    unset($consumptions[$cid]);
                     continue;
                 }
 
                 $rental_unit_id = $consumption['rental_unit_id'];
-                $booking_line_group_id = $consumption['booking_line_group_id'];
 
-                if(!isset($sojourns_map[$rental_unit_id])) {
-                    $sojourns_map[$rental_unit_id] = [];
+                if(!isset($bookings_map[$rental_unit_id])) {
+                    $bookings_map[$rental_unit_id] = [];
                 }
 
-                if(!isset($sojourns_map[$rental_unit_id][$booking_line_group_id])) {
-                    $sojourns_map[$rental_unit_id][$booking_line_group_id] = [];
+                if(isset($consumption['booking_line_group_id'])) {
+                    $booking_line_group_id = $consumption['booking_line_group_id'];
+                    if(!isset($bookings_map[$rental_unit_id][$booking_line_group_id])) {
+                        $bookings_map[$rental_unit_id][$booking_line_group_id] = [];
+                    }
+                    $bookings_map[$rental_unit_id][$booking_line_group_id][] = $cid;
                 }
 
-                $sojourns_map[$rental_unit_id][$booking_line_group_id][] = $consumption;
+                if(isset($consumption['repairing_id'])) {
+                    $repairing_id = $consumption['repairing_id'];
+                    if(!isset($repairings_map[$rental_unit_id][$repairing_id])) {
+                        $repairings_map[$rental_unit_id][$repairing_id] = [];
+                    }
+                    $repairings_map[$rental_unit_id][$repairing_id][] = $cid;
+                }
+
             }
 
             // pass-2 : generate map
 
             // associative array for mapping processed consumptions: each consumption is present only once in the result set
             $processed_consumptions = [];
+
+            // generate a map associating dates to rental_units_ids, and having only one consumption for each first visible date
             foreach($consumptions as $consumption) {
 
                 if(isset($processed_consumptions[$consumption['id']])) {
                     continue;
                 }
 
-                // retrieve UTC timestamp
-                $moment = $consumption['date'] - date('Z', $consumption['date']) + $consumption['schedule_from'];
+                // convert to date index
+                $moment = $consumption['date'] + $consumption['schedule_from'];
                 $date_index = substr(date('c', $moment), 0, 10);
 
                 $rental_unit_id = $consumption['rental_unit_id'];
-                $booking_line_group_id = $consumption['booking_line_group_id'];
 
                 if(!isset($result[$rental_unit_id])) {
                     $result[$rental_unit_id] = [];
@@ -291,29 +321,30 @@ class Consumption extends \sale\booking\Consumption {
                     $result[$rental_unit_id][$date_index] = [];
                 }
 
-                $group_len = count($sojourns_map[$rental_unit_id][$booking_line_group_id]);
-                if(isset($sojourns_map[$rental_unit_id][$booking_line_group_id]) && $group_len > 0) {
+                // handle consumptions from bookings
+                if(isset($consumption['booking_line_group_id'])) {
+                    $booking_line_group_id = $consumption['booking_line_group_id'];
 
-                    foreach($sojourns_map[$rental_unit_id][$booking_line_group_id] as $group_consumption) {
-                        $processed_consumptions[$group_consumption['id']] = true;
+                    foreach($bookings_map[$rental_unit_id][$booking_line_group_id] as $cid) {
+                        $processed_consumptions[$cid] = true;
                     }
-                    if($group_len == 1) {
-                        $consumption['date_from'] = $consumption['date'];
-                        $consumption['date_to'] = $consumption['date'];
-                        $result[$rental_unit_id][$date_index] = $consumption;
-                    }
-                    else {
-                        $first = $sojourns_map[$rental_unit_id][$booking_line_group_id][0];
-                        $last = $sojourns_map[$rental_unit_id][$booking_line_group_id][$group_len-1];
 
-                        $consumption['date_from'] = $first['date'];
-                        $consumption['date_to'] = $last['date'];
-                        $consumption['schedule_to'] = $last['schedule_to'];
-                    }
+                    $consumption['date_from'] = $booking_line_groups[$booking_line_group_id]['date_from'];
+                    $consumption['date_to'] = $booking_line_groups[$booking_line_group_id]['date_to'];
+                    $consumption['schedule_from'] = $booking_line_groups[$booking_line_group_id]['time_from'];
+                    $consumption['schedule_to'] = $booking_line_groups[$booking_line_group_id]['time_to'];
+
                 }
-                else {
-                    $consumption['date_from'] = $consumption['date'];
-                    $consumption['date_to'] = $consumption['date'];
+                // handle consumptions from repairings
+                elseif( isset($consumption['repairing_id']) ) {
+                    $repairing_id = $consumption['repairing_id'];
+
+                    foreach($repairings_map[$rental_unit_id][$repairing_id] as $cid) {
+                        $processed_consumptions[$cid] = true;
+                    }
+
+                    $consumption['date_from'] = $repairings[$repairing_id]['date_from'];
+                    $consumption['date_to'] = $repairings[$repairing_id]['date_to'];
                 }
                 $result[$rental_unit_id][$date_index] = $consumption;
             }
@@ -386,7 +417,7 @@ class Consumption extends \sale\booking\Consumption {
         /*
             If there are consumptions in the range for some of the found rental units, remove those
         */
-        $existing_consumptions_map = self::_getExistingConsumptions($om, [$center_id], $date_from, $date_to);
+        $existing_consumptions_map = self::getExistingConsumptions($om, [$center_id], $date_from, $date_to);
 
         $booked_rental_units_ids = [];
 

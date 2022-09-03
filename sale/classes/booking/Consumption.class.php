@@ -42,6 +42,7 @@ class Consumption extends Model {
                 'visible'           => ['type', '<>', 'ooo']
             ],
 
+            // #memo - this field actually belong to Repair objects, we need it to be able to fetch both kind of consumptions
             'repairing_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Repairing',
