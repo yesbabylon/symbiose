@@ -219,6 +219,7 @@ class BookingLine extends \sale\booking\BookingLine {
             'has_own_qty',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
+            'is_rental_unit',
             'is_accomodation',
             'is_meal',
             'qty_accounting_method'
@@ -230,8 +231,8 @@ class BookingLine extends \sale\booking\BookingLine {
                 $om->update('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
             }
 
-            // if line is an accomodation, use its related product info to update parent group schedule, if possible
-            if($line['is_accomodation']) {
+            // if line is a rental unit, use its related product info to update parent group schedule, if possible
+            if($line['is_rental_unit']) {
                 $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $line['product_id.product_model_id'], ['type', 'service_type', 'schedule_type', 'schedule_default_value'], $lang);
                 if($models > 0 && count($models)) {
                     $model = reset($models);
@@ -268,7 +269,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 }
             }
 
-            if($qty != $line['qty'] || $line['qty_accounting_method'] == 'accomodation') {
+            if($qty != $line['qty'] || $line['is_rental_unit']) {
                 // make sure qty is updated in order to re-assign the rental units
                 $om->update(__CLASS__, $lid, ['qty' => $qty]);
             }
