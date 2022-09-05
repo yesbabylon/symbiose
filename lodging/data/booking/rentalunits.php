@@ -42,7 +42,8 @@ list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $provid
 $result = [];
 
 // retrieve booking line data
-$line = BookingLine::id($params['booking_line_id'])->read([
+$line = BookingLine::id($params['booking_line_id'])
+    ->read([
         'product_id',
         'booking_id' => [
             'center_id'
@@ -51,15 +52,17 @@ $line = BookingLine::id($params['booking_line_id'])->read([
             'date_from',
             'date_to',
             'time_from',
-            'time_to']
-    ])->first();
+            'time_to'
+        ]
+    ])
+    ->first();
 
 if($line) {
 
     $date_from = $line['booking_line_group_id']['date_from'] + $line['booking_line_group_id']['time_from'];
     $date_to = $line['booking_line_group_id']['date_to'] + $line['booking_line_group_id']['time_to'];
     // retrieve available rental units based on schedule and product_id
-    $rental_units_ids = Consumption::_getAvailableRentalUnits($orm, $line['booking_id']['center_id'], $line['product_id'], $date_from, $date_to);
+    $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $line['booking_id']['center_id'], $line['product_id'], $date_from, $date_to);
 
     // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
     // #memo - this leads to an edge case: quote -> option -> quote, update nb_pers or time_from (list is not accurate and might return units that are not free)

@@ -377,7 +377,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
 
                 // find available rental units (sorted by capacity, desc; filtered on category)
-                $rental_units_ids = Consumption::_getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
+                $rental_units_ids = Consumption::getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
 
                 // remove units that are already used within the current booking
                 $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_id', '=', $line['booking_id']]);

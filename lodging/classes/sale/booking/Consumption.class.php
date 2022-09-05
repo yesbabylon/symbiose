@@ -364,8 +364,8 @@ class Consumption extends \sale\booking\Consumption {
      * @param int $date_from    Timestamp of the first day of the lookup.
      * @param int $date_to      Timestamp of the last day of the lookup.
      */
-    public static function _getAvailableRentalUnits($om, $center_id, $product_id, $date_from, $date_to) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:_getAvailableRentalUnits", QN_REPORT_DEBUG);
+    public static function getAvailableRentalUnits($om, $center_id, $product_id, $date_from, $date_to) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:getAvailableRentalUnits", QN_REPORT_DEBUG);
 
         // retrieve product and related product model
         $products = $om->read('lodging\sale\catalog\Product', $product_id, ['id', 'product_model_id']);
@@ -423,10 +423,9 @@ class Consumption extends \sale\booking\Consumption {
 
         foreach($existing_consumptions_map as $rental_unit_id => $dates) {
             foreach($dates as $date_index => $consumption) {
-
-                $consumption_from = $consumption['date'] + $consumption['schedule_from'];
-                $consumption_to = $consumption['date'] + $consumption['schedule_to'];
-                // we don't allow instant transition (checkin of a booking == checkout of previous booking)
+                $consumption_from = $consumption['date_from'] + $consumption['schedule_from'];
+                $consumption_to = $consumption['date_to'] + $consumption['schedule_to'];
+                // we don't allow instant transition (i.e. checkin time of a booking equals checkout time of previous booking)
                 if( ($consumption_from >= $date_from && $consumption_from <= $date_to) || ($consumption_to >= $date_from && $consumption_to <= $date_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
                     continue 2;

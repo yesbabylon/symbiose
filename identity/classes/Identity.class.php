@@ -262,7 +262,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'usage'             => 'url',
                 'description'       => 'Organisation main official website URL, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => ['type', '<>', 'I']
             ],
 
             // an identity can have several addresses
@@ -293,7 +293,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             /*
@@ -303,14 +303,14 @@ class Identity extends Model {
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => [ ['type', '=', 'I'] ],
+                'visible'           => ['type', '=', 'I'],
                 'onupdate'          => 'onupdateName'
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => [ ['type', '=', 'I'] ],
+                'visible'           => ['type', '=', 'I'],
                 'onupdate'          => 'onupdateName'
             ],
 
@@ -318,20 +318,20 @@ class Identity extends Model {
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'lang_id' => [
