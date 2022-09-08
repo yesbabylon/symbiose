@@ -13,7 +13,7 @@ list($params, $providers) = announce([
     'description'   => "Checks consistency of hosts composition (age ranges) for a given booking.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the booking for which the composition is checked.',
+            'description'   => 'Identifier of the booking for which the composition must be checked.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -46,7 +46,7 @@ $booking_line_groups = $booking['booking_lines_groups_ids'];
 $mismatch = false;
 
 if($booking_line_groups) {
-    foreach($booking_line_groups as $gid => $group) {        
+    foreach($booking_line_groups as $gid => $group) {
         if(!$group['age_range_assignments_ids'] || !count($group['age_range_assignments_ids'])) {
             continue;
         }
@@ -79,7 +79,7 @@ $httpResponse = $context->httpResponse()->status(200);
 if($mismatch) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.ages_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-ages-assignment', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.ages_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-ages-assignments', ['id' => $params['id']]);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {

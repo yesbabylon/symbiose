@@ -83,7 +83,13 @@ if($booking['status'] != 'quote') {
 $errors = [];
 
 // check age ranges assignments
-$data = eQual::run('do', 'lodging_booking_check-ages-assignment', ['id' => $params['id']]);
+$data = eQual::run('do', 'lodging_booking_check-ages-assignments', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'invalid_booking';
+}
+
+// check age ranges assignments
+$data = eQual::run('do', 'lodging_booking_check-mealprefs-assignments', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {
     $errors[] = 'invalid_booking';
 }

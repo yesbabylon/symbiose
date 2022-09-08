@@ -213,17 +213,22 @@ class BookingLine extends \sale\booking\BookingLine {
         $lines = $om->read(__CLASS__, $oids, [
             'product_id.product_model_id.booking_type_id',
             'product_id.product_model_id',
+            'product_id.has_age_range',
+            'product_id.age_range_id',
             'booking_line_group_id',
             'booking_id',
             'qty',
             'has_own_qty',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
+            'booking_line_group_id.nb_pers',
+            'booking_line_group_id.age_range_assignments_ids',
             'is_rental_unit',
             'is_accomodation',
             'is_meal',
             'qty_accounting_method'
         ], $lang);
+
 
         foreach($lines as $lid => $line) {
             // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
@@ -239,13 +244,15 @@ class BookingLine extends \sale\booking\BookingLine {
                     if($model['type'] == 'service' && $model['service_type'] == 'schedulable' && $model['schedule_type'] == 'timerange') {
                         // retrieve relative timestamps
                         $schedule = $model['schedule_default_value'];
-                        $times = explode('-', $schedule);
-                        $parts = explode(':', $times[0]);
-                        $schedule_from = $parts[0]*3600 + $parts[1]*60;
-                        $parts = explode(':', $times[1]);
-                        $schedule_to = $parts[0]*3600 + $parts[1]*60;
-                        // update the parent group schedule
-                        $om->update(BookingLineGroup::getType(), $line['booking_line_group_id'], ['time_from' => $schedule_from, 'time_to' => $schedule_to], $lang);
+                        if(strlen($schedule)) {
+                            $times = explode('-', $schedule);
+                            $parts = explode(':', $times[0]);
+                            $schedule_from = $parts[0]*3600 + $parts[1]*60;
+                            $parts = explode(':', $times[1]);
+                            $schedule_to = $parts[0]*3600 + $parts[1]*60;
+                            // update the parent group schedule
+                            $om->update(BookingLineGroup::getType(), $line['booking_line_group_id'], ['time_from' => $schedule_from, 'time_to' => $schedule_to], $lang);
+                        }
                     }
                 }
             }
@@ -257,21 +264,30 @@ class BookingLine extends \sale\booking\BookingLine {
                     // which should have been stored in the nb_nights field
                     $qty = $line['booking_line_group_id.nb_nights'];
                 }
-                else if($line['qty_accounting_method'] == 'person') {
+                else if($line['qty_accounting_method'] == 'person') {;
+                    $age_assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $line['booking_line_group_id.age_range_assignments_ids'], ['age_range_id', 'qty']);
+                    $nb_pers = $line['booking_line_group_id.nb_pers'];
+                    if($line['product_id.has_age_range']) {
+                        foreach($age_assignments as $aid => $assignment) {
+                            if($assignment['age_range_id'] == $line['product_id.age_range_id']) {
+                                $nb_pers = $assignment['qty'];
+                            }
+                        }
+                    }
                     // lines having a product 'by person' have a qty assigned to the 'duration' x 'nb_pers' of the sojourn
                     // which should have been stored in the nb_pers field
                     if($line['is_meal'] || $line['is_accomodation']) {
-                        $qty = $line['booking_line_group_id.nb_pers'] * max(1, $line['booking_line_group_id.nb_nights']);
+                        $qty = $nb_pers * max(1, $line['booking_line_group_id.nb_nights']);
                     }
                     else {
-                        $qty = $line['booking_line_group_id.nb_pers'];
+                        $qty = $nb_pers;
                     }
                 }
             }
 
             if($qty != $line['qty'] || $line['is_rental_unit']) {
                 // make sure qty is updated in order to re-assign the rental units
-                $om->update(__CLASS__, $lid, ['qty' => $qty]);
+                $om->update(self::getType(), $lid, ['qty' => $qty]);
             }
         }
 
@@ -285,12 +301,27 @@ class BookingLine extends \sale\booking\BookingLine {
         // reset computed fields related to price
         $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
 
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id.nb_pers','qty_vars']);
+        $lines = $om->read(self::getType(), $oids, [
+            'booking_line_group_id.nb_pers',
+            'qty_vars',
+            'booking_line_group_id.age_range_assignments_ids',
+            'product_id.has_age_range',
+            'product_id.age_range_id'
+        ]);
 
         if($lines > 0) {
             // set quantities according to qty_vars arrays
             foreach($lines as $lid => $line) {
                 $nb_pers = $line['booking_line_group_id.nb_pers'];
+                if($line['product_id.has_age_range']) {
+                    $age_range_assignements = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $line['booking_line_group_id.age_range_assignments_ids'], ['age_range_id', 'qty']);
+                    foreach($age_range_assignements as $aid => $assignment) {
+                        if($assignment['age_range_id'] == $line['product_id.age_range_id']) {
+                            $nb_pers = $assignment['qty'];
+                            break;
+                        }
+                    }
+                }
                 // qty_vars should be a JSON array holding a series of deltas
                 $qty_vars = json_decode($line['qty_vars']);
                 if($qty_vars) {
@@ -298,10 +329,10 @@ class BookingLine extends \sale\booking\BookingLine {
                     foreach($qty_vars as $variation) {
                         $qty += $nb_pers + $variation;
                     }
-                    $om->update(__CLASS__, $lid, ['qty' => $qty]);
+                    $om->update(self::getType(), $lid, ['qty' => $qty]);
                 }
                 else {
-                    $om->callonce(__CLASS__, '_updateQty', $oids, [], $lang);
+                    $om->callonce(self::getType(), '_updateQty', $oids, [], $lang);
                 }
             }
         }
@@ -316,215 +347,8 @@ class BookingLine extends \sale\booking\BookingLine {
     public static function onupdateQty($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQty", QN_REPORT_DEBUG);
 
-        /*
-            Reset computed fields related to price (because they depend on qty)
-        */
-
+        // Reset computed fields related to price (because they depend on qty)
         $om->callonce(\sale\booking\BookingLine::getType(), '_resetPrices', $oids, [], $lang);
-
-        /*
-            Attempt to auto-assign rental units.
-        */
-
-        $lines = $om->read(__CLASS__, $oids, [
-            'booking_id', 'booking_id.center_id',
-            'booking_line_group_id',
-            'booking_line_group_id.has_locked_rental_units',
-            'booking_line_group_id.nb_pers',
-            'booking_line_group_id.date_from',
-            'booking_line_group_id.date_to',
-            'booking_line_group_id.time_from',
-            'booking_line_group_id.time_to',
-            'product_id',
-            'product_id.product_model_id',
-            'qty_accounting_method',
-            'is_rental_unit',
-            'rental_unit_assignments_ids'
-        ], $lang);
-
-        // drop lines that do not relate to rental units
-        $lines = array_filter($lines, function($a) { return $a['is_rental_unit']; });
-
-        $bookings_ids = [];
-        $booking_line_groups_ids = [];
-
-        if(count($lines)) {
-
-            // read all related product models at once
-            $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
-            $product_models = $om->read('lodging\sale\catalog\ProductModel', $product_models_ids, [
-                'rental_unit_assignement',
-                'capacity',
-                'rental_unit_category_id',
-                'rental_unit_id'
-            ], $lang);
-
-            foreach($lines as $lid => $line) {
-                if($line['booking_line_group_id.has_locked_rental_units']) {
-                    continue;
-                }
-                $bookings_ids[] = $line['booking_id'];
-                $booking_line_groups_ids[] = $line['booking_line_group_id'];
-
-                // remove all previous rental_unit assignements
-                $om->update(__CLASS__, $lid, ['rental_unit_assignments_ids' => array_map(function($a) { return "-$a";}, $line['rental_unit_assignments_ids'])]);
-
-                $center_id = $line['booking_id.center_id'];
-                $nb_pers = $line['booking_line_group_id.nb_pers'];
-                $date_from = $line['booking_line_group_id.date_from'] + $line['booking_line_group_id.time_from'];
-                $date_to = $line['booking_line_group_id.date_to'] + $line['booking_line_group_id.time_to'];
-
-                // unit, category, capacity
-                $rental_unit_assignement = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
-
-                // find available rental units (sorted by capacity, desc; filtered on category)
-                $rental_units_ids = Consumption::getAvailableRentalUnits($om, $center_id, $line['product_id'], $date_from, $date_to);
-
-                // remove units that are already used within the current booking
-                $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_id', '=', $line['booking_id']]);
-                $assignments = $om->read(BookingLineRentalUnitAssignement::getType(), $assignments_ids, ['rental_unit_id']);
-
-                $used_rental_units_ids = [];
-                if($assignments > 0) {
-                    foreach($assignments as $assignment) {
-                        $used_rental_units_ids[] = $assignment['rental_unit_id'];
-                    }
-                }
-
-                $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
-
-                // append rental units from own booking (use case: come and go between 'draft' and 'option')
-                $bookings = $om->read(Booking::getType(), $line['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
-                if($bookings > 0 && count($bookings)) {
-                    $booking = reset($bookings);
-                    foreach($booking['consumptions_ids.rental_unit_id'] as $consumption) {
-                        $rental_units_ids[] = $consumption['rental_unit_id'];
-                    }
-                }
-
-                // retrieve rental units capacities
-                $rental_units = [];
-                $assigned_rental_units = [];
-
-                if($rental_units_ids > 0 && count($rental_units_ids)) {
-                    $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity', 'is_accomodation']));
-                }
-
-                $found = false;
-                // pass-1 - search for an exact capacity match
-                for($i = 0, $n = count($rental_units); $i < $n; ++$i) {
-                    if($rental_units[$i]['capacity'] == $nb_pers) {
-                        $rental_units = [$rental_units[$i]];
-                        $found = true;
-                        break;
-                    }
-                }
-                if(!$found) {
-                    // handle special case : smallest rental unit has bigger capacity than nb_pers
-                    if($nb_pers < $rental_units[$n-1]['capacity']) {
-                        $rental_units = [$rental_units[$n-1]];
-                    }
-                    else {
-                        // pass-2 - no exact match, choose between min matching capacity and spreading pers across units
-                        $i = 0;
-                        while($rental_units[$i]['capacity'] > $nb_pers) {
-                            // we should reach at max $n-2
-                            ++$i;
-                        }
-                        $alternate_index = $i-1;
-                        $alternate = 0;
-                        if($alternate_index >= 0) {
-                            $rental_unit = $rental_units[$alternate_index];
-                            $alternate = $rental_unit['capacity'];
-                        }
-
-                        $collect = [];
-                        $list = array_slice($rental_units, $i);
-
-                        $combinations = self::_get_rental_units_combinations($list, $nb_pers, 0, 0, $collect);
-
-                        if(count($combinations)) {
-                            $min_index = -1;
-                            // $D = abs($alternate - $nb_pers);
-                            // favour a single accomodation
-                            $D = abs($alternate - $nb_pers) / 2;
-
-                            foreach($combinations as $index => $combination) {
-                                // $R = floor($nb_pers / count($combination));
-                                $R = count($combination);
-
-                                if($R <= $D) {
-                                    if($min_index >= 0) {
-                                        if(count($combinations[$min_index]) > count($combination)) {
-                                            $min_index = $index;
-                                        }
-                                    }
-                                    else {
-                                        $min_index = $index;
-                                    }
-                                }
-                            }
-                            // we found at least one combination
-                            if($min_index >= 0) {
-                                $rental_units = $combinations[$min_index];
-                            }
-                            else if($alternate_index >= 0) {
-                                $rental_units = [$rental_units[$alternate_index]];
-                            }
-                            else {
-                                $rental_units = [];
-                            }
-                        }
-                        else {
-                            $rental_units = [];
-                        }
-                    }
-                }
-
-                /*
-                    Assign to selected rental units
-                */
-
-                $remaining = $nb_pers;
-
-                // min serie for available capacity starts from max(0, i-1)
-                for($j = 0, $n = count($rental_units) ;$j < $n; ++$j) {
-                    $rental_unit = $rental_units[$j];
-                    $assigned = min($rental_unit['capacity'], $remaining);
-                    $rental_unit['assigned'] = $assigned;
-                    $assigned_rental_units[] = $rental_unit;
-                    $remaining -= $assigned;
-                    if($remaining <= 0) break;
-                }
-
-                if($remaining > 0) {
-                    // no availability !
-                    $assignement = [
-                        'booking_id'            => $line['booking_id'],
-                        'booking_line_id'       => $lid,
-                        'booking_line_group_id' => $line['booking_line_group_id'],
-                        'rental_unit_id'        => 0,
-                        'qty'                   => $nb_pers
-                    ];
-                    trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
-                    $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
-                }
-                else {
-                    foreach($assigned_rental_units as $rental_unit) {
-                        $assignement = [
-                            'booking_id'            => $line['booking_id'],
-                            'booking_line_id'       => $lid,
-                            'booking_line_group_id' => $line['booking_line_group_id'],
-                            'rental_unit_id'        => $rental_unit['id'],
-                            'qty'                   => $rental_unit['assigned'],
-                            'is_accomodation'       => $rental_unit['is_accomodation']
-                        ];
-                        trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['id']}", QN_REPORT_DEBUG);
-                        $om->create('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignement);
-                    }
-                }
-            }
-        }
 
     }
 
@@ -634,20 +458,22 @@ class BookingLine extends \sale\booking\BookingLine {
     public static function _updateQty($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:_updateQty", QN_REPORT_DEBUG);
 
-        $lines = $om->read(__CLASS__, $oids, [
+        $lines = $om->read(self::getType(), $oids, [
             'has_own_qty',
             'qty_vars',
             'rental_unit_assignments_ids',
             'booking_line_group_id.has_locked_rental_units',
             'booking_line_group_id.nb_pers',
             'booking_line_group_id.nb_nights',
+            'booking_line_group_id.age_range_assignments_ids',
+            'product_id.has_age_range',
+            'product_id.age_range_id',
             'product_id.product_model_id.qty_accounting_method',
             'product_id.product_model_id.is_rental_unit',
             'product_id.product_model_id.is_meal',
             'product_id.product_model_id.has_duration',
             'product_id.product_model_id.duration'
         ], $lang);
-
 
         if($lines > 0) {
             // first-pass: remove all previous rental_unit assignements (- )we need to do this because each line must know which units are already taken within their booking)
@@ -664,10 +490,11 @@ class BookingLine extends \sale\booking\BookingLine {
                 }
                 else {
                     if($line['product_id.product_model_id.qty_accounting_method'] == 'accomodation') {
-                        $om->update(__CLASS__, $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
+                        $om->update(self::getType(), $lid, ['qty' => $line['booking_line_group_id.nb_nights']]);
                     }
                     else if($line['product_id.product_model_id.qty_accounting_method'] == 'person') {
-                        if(!$line['qty_vars']) {
+                        $qty_vars = json_decode($line['qty_vars']);
+                        if(!$qty_vars) {
                             $factor = 1;
                             if($line['product_id.product_model_id.has_duration']) {
                                 $factor = $line['product_id.product_model_id.duration'];
@@ -675,29 +502,37 @@ class BookingLine extends \sale\booking\BookingLine {
                             else if($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
                                 $factor = max(1, $line['booking_line_group_id.nb_nights']);
                             }
-                            $qty = $line['booking_line_group_id.nb_pers'] * $factor;
+                            // nb_pers is either nb_pers or age_range.qty
+                            $nb_pers = $line['booking_line_group_id.nb_pers'];
+                            if($line['product_id.has_age_range']) {
+                                $age_range_assignements = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $line['booking_line_group_id.age_range_assignments_ids'], ['age_range_id', 'qty']);
+                                foreach($age_range_assignements as $aid => $assignment) {
+                                    if($assignment['age_range_id'] == $line['product_id.age_range_id']) {
+                                        $nb_pers = $assignment['qty'];
+                                        break;
+                                    }
+                                }
+                            }
+                            $qty = $nb_pers * $factor;
                             $qty_vars = array_fill(0, $factor, 0);
                             // #memo - triggers onupdateQty and onupdateQtyVar
-                            $om->update(__CLASS__, $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
+                            $om->update(self::getType(), $lid, ['qty' => $qty, 'qty_vars' => json_encode($qty_vars)]);
                         }
+                        // qty_vars is set and valid
                         else {
-                            $qty_vars = json_decode($line['qty_vars']);
-                            // qty_vars is set and valid
-                            if($qty_vars) {
-                                $factor = $line['booking_line_group_id.nb_nights'];
-                                if($line['product_id.product_model_id.has_duration']) {
-                                    $factor = $line['product_id.product_model_id.duration'];
-                                }
-                                $diff = $factor - count($qty_vars);
-                                if($diff > 0) {
-                                    $qty_vars = array_pad($qty_vars, $factor, 0);
-                                }
-                                else if($diff < 0) {
-                                    $qty_vars = array_slice($qty_vars, 0, $factor);
-                                }
-                                // #memo - will trigger onupdateQtyVar which will update qty
-                                $om->update(__CLASS__, $lid, ['qty_vars' => json_encode($qty_vars)]);
+                            $factor = $line['booking_line_group_id.nb_nights'];
+                            if($line['product_id.product_model_id.has_duration']) {
+                                $factor = $line['product_id.product_model_id.duration'];
                             }
+                            $diff = $factor - count($qty_vars);
+                            if($diff > 0) {
+                                $qty_vars = array_pad($qty_vars, $factor, 0);
+                            }
+                            else if($diff < 0) {
+                                $qty_vars = array_slice($qty_vars, 0, $factor);
+                            }
+                            // #memo - will trigger onupdateQtyVar which will update qty
+                            $om->update(self::getType(), $lid, ['qty_vars' => json_encode($qty_vars)]);
                         }
                     }
                 }
@@ -846,7 +681,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
         // read all related product models at once
         $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
-        $product_models = $om->read('lodging\sale\catalog\ProductModel', $product_models_ids, [
+        $product_models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $product_models_ids, [
             'type',
             'service_type',
             'schedule_offset',
@@ -996,7 +831,7 @@ class BookingLine extends \sale\booking\BookingLine {
                             $c_schedule_to = $c_schedule_from + $diff;
                         }
 
-                        // create as many consumptions as the number of rental units assigned to the line
+                        // create as many consumptions as the number of rental units assignments
                         if($is_rental_unit) {
                             // if day is not the arrival day
                             if($i > 0) {
@@ -1117,45 +952,5 @@ class BookingLine extends \sale\booking\BookingLine {
         return $consumptions;
     }
 
-
-    protected static function _get_rental_units_combinations($list, $target, $start, $sum, $collect) {
-        $result = [];
-
-        // current sum matches target
-        if($sum == $target) {
-            return [$collect];
-        }
-
-        // try sub-combinations
-        for($i = $start, $n = count($list); $i < $n; ++$i) {
-
-            // check if the sum exceeds target
-            if( ($sum + $list[$i]['capacity']) > $target ) {
-                continue;
-            }
-
-            // check if it is repeated or not
-            if( ($i > $start) && ($list[$i]['capacity'] == $list[$i-1]['capacity']) ) {
-                continue;
-            }
-
-            // take the element into the combination
-            $collect[] = $list[$i];
-
-            // recursive call
-            $res = self::_get_rental_units_combinations($list, $target, $i + 1, $sum + $list[$i]['capacity'], $collect);
-
-            if(count($res)) {
-                foreach($res as $r) {
-                    $result[] = $r;
-                }
-            }
-
-            // Remove element from the combination
-            array_pop($collect);
-        }
-
-        return $result;
-    }
 
 }

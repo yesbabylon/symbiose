@@ -6,11 +6,12 @@
 */
 use lodging\sale\booking\Booking;
 
+
 list($params, $providers) = announce([
-    'description'   => "Checks the consistency of rental units assignments for a given booking.",
+    'description'   => "Checks consistency of meal preferences and restrictions (nb_pers) for a given booking.",
     'params'        => [
         'id' =>  [
-            'description'   => 'Identifier of the booking for which the assignments are checked.',
+            'description'   => 'Identifier of the booking for which the preferences must be checked.',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -33,7 +34,7 @@ list($params, $providers) = announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_groups_ids' => ['is_sojourn', 'nb_pers', 'rental_unit_assignments_ids' => ['is_accomodation', 'qty']]])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_groups_ids' => ['nb_pers', 'meal_preferences_ids' => ['qty']]])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -44,16 +45,15 @@ $mismatch = false;
 
 if($booking_line_groups) {
     foreach($booking_line_groups as $gid => $group) {
-        if(!$group['is_sojourn']) {
+        if(!$group['meal_preferences_ids'] || !count($group['meal_preferences_ids'])) {
             continue;
         }
         $nb_pers = $group['nb_pers'];
         $assigned_count = 0;
-        foreach($group['rental_unit_assignments_ids'] as $aid => $assignment) {
-            if($assignment['is_accomodation']) {
-                $assigned_count += $assignment['qty'];
-            }
+        foreach($group['meal_preferences_ids'] as $aid => $assignment) {
+            $assigned_count += $assignment['qty'];
         }
+
         if($nb_pers != $assigned_count) {
             $mismatch = true;
             break;
@@ -69,16 +69,16 @@ if($booking_line_groups) {
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 
-
+// compare with the number of lines of compositions we got so far
 if($mismatch) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.rental_units_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-units-assignments', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.mealprefs_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-mealprefs-assignments', ['id' => $params['id']]);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {
     // symetrical removal of the alert (if any)
-    $dispatch->cancel('lodging.booking.rental_units_assignment', 'lodging\sale\booking\Booking', $params['id']);
+    $dispatch->cancel('lodging.booking.mealprefs_assignment', 'lodging\sale\booking\Booking', $params['id']);
 }
 
 $httpResponse->body($result)

@@ -58,9 +58,9 @@ class ProductModel extends \sale\catalog\ProductModel {
                 'type'              => 'string',
                 'description'       => 'The way the product is assigned to a rental unit (a specific unit, a specific category, or based on capacity match).',
                 'selection'         => [
-                    'unit',
-                    'category',
-                    'capacity'
+                    'unit',             // only one specific rental unit can be assigned to the products
+                    'category',         // only rental units of the specified category can be assigned to the products
+                    'auto'              // rental unit assignement is based on required qty/capacity (best match first)
                 ],
                 'default'           => 'category',
                 'visible'           => [ ['is_rental_unit', '=', true] ]

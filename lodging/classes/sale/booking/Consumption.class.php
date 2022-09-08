@@ -358,24 +358,16 @@ class Consumption extends \sale\booking\Consumption {
      *
      * #memo - This method is used in controllers
      *
-     * @param \equal\orm\ObjectManager $om  Instance of Object Manager service.
-     * @param int $center_id    Identifier of the center for which to perform the lookup.
-     * @param int $product_id   Identifier of the product for which we are looking for rental units.
-     * @param int $date_from    Timestamp of the first day of the lookup.
-     * @param int $date_to      Timestamp of the last day of the lookup.
+     * @param \equal\orm\ObjectManager  $om                 Instance of Object Manager service.
+     * @param int                       $center_id          Identifier of the center for which to perform the lookup.
+     * @param int                       $product_model_id   Identifier of the product model for which we are looking for rental units.
+     * @param int                       $date_from          Timestamp of the first day of the lookup.
+     * @param int                       $date_to            Timestamp of the last day of the lookup.
      */
-    public static function getAvailableRentalUnits($om, $center_id, $product_id, $date_from, $date_to) {
+    public static function getAvailableRentalUnits($om, $center_id, $product_model_id, $date_from, $date_to) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:getAvailableRentalUnits", QN_REPORT_DEBUG);
 
-        // retrieve product and related product model
-        $products = $om->read('lodging\sale\catalog\Product', $product_id, ['id', 'product_model_id']);
-
-        if($products <= 0 || count($products) < 1) {
-            return [];
-        }
-        $product = reset($products);
-
-        $models = $om->read('lodging\sale\catalog\ProductModel', $product['product_model_id'], [
+        $models = $om->read('lodging\sale\catalog\ProductModel', $product_model_id, [
             'type','service_type','is_accomodation','schedule_offset','schedule_type',
             'rental_unit_assignement', 'rental_unit_category_id', 'rental_unit_id', 'capacity'
         ]);
@@ -403,12 +395,8 @@ class Consumption extends \sale\booking\Consumption {
                 $domain[] = ['is_accomodation', '=', true];
             }
 
-            if($rental_unit_assignement == 'category') {
-                $rental_unit_category_id = $product_model['rental_unit_category_id'];
-
-                if($rental_unit_category_id) {
-                    $domain[] = ['rental_unit_category_id', '=', $rental_unit_category_id];
-                }
+            if($rental_unit_assignement == 'category' && $product_model['rental_unit_category_id']) {
+                $domain[] = ['rental_unit_category_id', '=', $product_model['rental_unit_category_id']];
             }
             // retrieve list of possible rental_units based on center_id
             $rental_units_ids = $om->search('lodging\realestate\RentalUnit', $domain, ['capacity' => 'desc']);
@@ -425,7 +413,7 @@ class Consumption extends \sale\booking\Consumption {
             foreach($dates as $date_index => $consumption) {
                 $consumption_from = $consumption['date_from'] + $consumption['schedule_from'];
                 $consumption_to = $consumption['date_to'] + $consumption['schedule_to'];
-                // we don't allow instant transition (i.e. checkin time of a booking equals checkout time of previous booking)
+                // #memo - we don't allow instant transition (i.e. checkin time of a booking equals checkout time of a previous booking)
                 if( ($consumption_from >= $date_from && $consumption_from <= $date_to) || ($consumption_to >= $date_from && $consumption_to <= $date_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
                     continue 2;

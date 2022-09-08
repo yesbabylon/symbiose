@@ -87,27 +87,39 @@ class ProductModel extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['consumable', 'service'],
+                'selection'         => [
+                    'consumable',
+                    'service'
+                ],
                 'required'          => true,
                 'default'           => 'service'
             ],
 
             'consumable_type' => [
                 'type'              => 'string',
-                'selection'         => ['simple', 'storable'],
+                'selection'         => [
+                    'simple',
+                    'storable'
+                ],
                 'visible'           => ['type', '=', 'consumable']
             ],
 
             'service_type' => [
                 'type'              => 'string',
-                'selection'         => ['simple', 'schedulable'],
+                'selection'         => [
+                    'simple',
+                    'schedulable'
+                ],
                 'visible'           => ['type', '=', 'service'],
                 'default'           => 'simple'
             ],
 
             'schedule_type' => [
                 'type'              => 'string',
-                'selection'         => ['time', 'timerange'],
+                'selection'         => [
+                    'time',
+                    'timerange'
+                ],
                 'default'           => 'time',
                 'visible'           => [ ['type', '=', 'service'], ['service_type', '=', 'schedulable'] ]
             ],
@@ -127,7 +139,12 @@ class ProductModel extends Model {
 
             'tracking_type' => [
                 'type'              => 'string',
-                'selection'         => ['none', 'batch', 'sku', 'upc'],
+                'selection'         => [
+                    'none',
+                    'batch',
+                    'sku',
+                    'upc'
+                ],
                 'visible'           => [ ['type', '=', 'consumable'], ['consumable_type', '=', 'storable'] ],
                 'default'           => 'sku'
             ],
@@ -135,13 +152,15 @@ class ProductModel extends Model {
             'description_delivery' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => "Description for delivery notes."
+                'description'       => "Description for delivery notes.",
+                'multilang'         => true
             ],
 
             'description_receipt' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => "Description for reception vouchers."
+                'description'       => "Description for reception vouchers.",
+                'multilang'         => true
             ],
 
             'groups_ids' => [

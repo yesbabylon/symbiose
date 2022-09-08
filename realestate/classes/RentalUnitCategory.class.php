@@ -14,6 +14,14 @@ class RentalUnitCategory extends Model {
         return [
 
             'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "Short code of the rental unit category.",
+                'function'          => 'calcName',
+                'store'             => true
+            ],
+
+            'code' => [
                 'type'              => 'string',
                 'description'       => "Short code of the rental unit category."
             ],
@@ -32,6 +40,15 @@ class RentalUnitCategory extends Model {
             ]
 
         ];
+    }
+
+    public static function calcName($om, $ids, $lang) {
+        $result = [];
+        $categories = $om->read(self::getType(), $ids, ['code', 'description'], $lang);
+        foreach($categories as $cid => $category) {
+            $result[$cid] = "{$category['code']} - {$category['description']}";
+        }
+        return $result;
     }
 
 }

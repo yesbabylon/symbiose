@@ -41,19 +41,29 @@ $tree = [
     ],
     'booking_lines_groups_ids' => [
         'id', 'name', 'order', 'has_pack', 'total', 'price', 'fare_benefit', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'time_from', 'time_to', 'nb_pers', 'nb_nights',
-        'is_sojourn', 'is_event',
-        'has_locked_rental_units',
+        'is_sojourn', 'is_event', 'has_locked_rental_units',
         'sojourn_type_id',
         'pack_id' => ['id', 'name'],
-        'rate_class_id' => ['id', 'name', 'description'],
-        'accomodations_ids' => [
-            'id', 'booking_line_group_id',
-            'product_id' => [
-                'id', 'name'
+        'rate_class_id' => [
+            'id',
+            'name',
+            'description'
+        ],
+        'age_range_assignments_ids' => [
+            'age_range_id', 'qty'
+        ],
+        'sojourn_product_models_ids' => [
+            'id',
+            'qty',
+            'booking_line_group_id',
+            'product_model_id' => [
+                'id',
+                'name'
             ],
             'rental_unit_assignments_ids' => [
-                'id', 'qty',
-                'booking_line_id',
+                'id',
+                'qty',
+                'booking_line_group_id',
                 'rental_unit_id' => [
                     'id', 'name', 'capacity'
                 ]
@@ -71,7 +81,13 @@ $tree = [
             'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
             'price_id',
             'product_id' => [
-                'name', 'sku', 'product_model_id' => ['schedule_offset', 'has_duration', 'duration']
+                'name',
+                'sku',
+                'has_age_range',
+                'age_range_id',
+                'product_model_id' => [
+                    'schedule_offset', 'has_duration', 'duration'
+                ]
             ],
             'auto_discounts_ids' => [
                 'id', 'type', 'value',

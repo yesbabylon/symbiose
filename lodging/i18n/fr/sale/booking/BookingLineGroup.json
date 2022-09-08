@@ -98,5 +98,9 @@
 			"layout": {}
 		}
 	},
-	"error": {}
+	"error": {
+        "nb_pers": {
+            "count_mismatch": "Le nombre de personnes ne correspond pas aux tranches d'âges."
+        }
+    }
 }

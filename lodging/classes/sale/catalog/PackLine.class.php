@@ -11,7 +11,7 @@ class PackLine extends \sale\catalog\PackLine {
     public static function getColumns() {
 
         return [
-            
+
             'parent_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
@@ -19,13 +19,22 @@ class PackLine extends \sale\catalog\PackLine {
                 'required'          => true
             ],
 
+            // #todo - deprecate
             'child_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
                 'required'          => true,
-                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'                
-            ]            
+                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'
+            ],
+
+            'child_product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'description'       => "The Product this line refers to.",
+                'required'          => true,
+                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductModelId'
+            ]
 
         ];
     }

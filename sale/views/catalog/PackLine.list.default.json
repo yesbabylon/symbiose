@@ -14,14 +14,21 @@
             },
             {
                 "type": "field",
-                "label": "Parent's Product",
+                "label": "Parent Product",
                 "value": "parent_product_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "label": "Child's Product",
+                "label": "Child Product",
                 "value": "child_product_id",
+                "width": "20%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Child Model",
+                "value": "child_product_model_id",
                 "width": "20%"
             },
             {

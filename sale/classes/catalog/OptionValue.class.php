@@ -22,7 +22,7 @@ class OptionValue extends Model {
                 'type'              => 'string',
                 'description'       => "The choice (possible value) for the related option."
             ],
-            
+
             'description' => [
                 'type'              => 'string',
                 'description'       => "Short description of the value.",

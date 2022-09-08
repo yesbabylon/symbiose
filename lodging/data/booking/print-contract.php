@@ -542,12 +542,10 @@ $installment_ref = '';
 
 foreach($booking['fundings_ids'] as $funding) {
 
-    if($funding['due_date'] < $installment_date) {
+    if($funding['due_date'] < $installment_date && !$funding['is_paid']) {
         $installment_date = $funding['due_date'];
         $installment_ref = $funding['payment_reference'];
-        if(!$funding['is_paid']) {
-            $installment_amount = $funding['due_amount'];
-        }
+        $installment_amount = $funding['due_amount'];
     }
     $line = [
         'name'          => $funding['payment_deadline_id']['name'],
@@ -599,11 +597,16 @@ else if ($installment_amount > 0) {
     Generate consumptions map
 */
 
-$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])->read(['id', 'date', 'qty', 'is_meal', 'rental_unit_id', 'is_accomodation', 'time_slot_id'])->get();
+$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])->read(['id', 'date', 'qty', 'is_meal', 'rental_unit_id', 'is_accomodation', 'time_slot_id', 'schedule_to'])->get();
+
 $days_names = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 $consumptions_map = [];
 foreach($consumptions as $cid => $consumption) {
-
+    // #memo - we only count overnight accomodations (a sojourn always has nb_nights+1 days)
+    // ignore accomodation consumptions that do not end at midnight (24:00:00)
+    if($consumption['is_accomodation'] && $consumption['schedule_to'] != 86400) {
+        continue;
+    }
 
     $date = date('d/m/Y', $consumption['date']).' ('.$days_names[date('w', $consumption['date'])].')';
     if(!isset($consumptions_map[$date])) {

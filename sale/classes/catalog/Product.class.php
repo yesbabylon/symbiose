@@ -95,7 +95,8 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'visible'           => ['is_pack', '=', true]
             ],
 
             'product_attributes_ids' => [
@@ -150,7 +151,20 @@ class Product extends Model {
                 'rel_table'         => 'sale_catalog_product_rel_product_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'product_id'
-            ]
+            ],
+
+            'has_age_range' => [
+                'type'              => 'boolean',
+                'description'       => "Applies on a specific age range?",
+                'default'           => false
+            ],
+
+            'age_range_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\AgeRange',
+                'description'       => 'Customers age range the product is intended for.',
+                'visible'           => [ ['has_age_range', '=', true] ]
+            ],
 
         ];
     }

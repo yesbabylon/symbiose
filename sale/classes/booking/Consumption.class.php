@@ -14,7 +14,7 @@ class Consumption extends Model {
     }
 
     public static function getDescription() {
-        return "A Consumption is a service delivery that can be scheduled and relates to a booking.";
+        return "A Consumption is a service delivery that can be scheduled, relates to a booking, and is independant from the fare rate and the invoicing.";
     }
 
     public static function getColumns() {

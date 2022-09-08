@@ -175,6 +175,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             ],
 
             // we mean rental_units_ids (for rental units assignment)
+            // #todo - deprecate
             'accomodations_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => BookingLine::getType(),
@@ -184,11 +185,20 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'domain'            => ['is_rental_unit', '=', true]
             ],
 
+            'sojourn_product_models_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModel',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => "The product models groups assigned to the sojourn (from lines).",
+                'ondetach'          => 'delete'
+            ],
+
             'rental_unit_assignments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\BookingLineRentalUnitAssignement',
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModelRentalUnitAssignement',
                 'foreign_field'     => 'booking_line_group_id',
-                'description'       => "The rental units lines of the group are assigned to (from lines)."
+                'description'       => "The rental units assigned to the group (from lines).",
+                'ondetach'          => 'delete'
             ],
 
             'age_range_assignments_ids' => [
@@ -228,7 +238,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function calcVatRate($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
+        $lines = $om->read(self::getType(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {
             $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
         }
@@ -237,7 +247,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function calcQty($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['has_pack', 'is_locked', 'pack_id.product_model_id.qty_accounting_method', 'nb_pers', 'nb_nights']);
+        $groups = $om->read(self::getType(), $oids, ['has_pack', 'is_locked', 'pack_id.product_model_id.qty_accounting_method', 'nb_pers', 'nb_nights']);
         foreach($groups as $gid => $group) {
             $result[$gid] = 1;
             if($group['has_pack'] && $group['is_locked']) {
@@ -264,7 +274,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function calcUnitPrice($om, $oids, $lang) {
         $result = [];
 
-        $groups = $om->read(__CLASS__, $oids, ['price_id.price']);
+        $groups = $om->read(self::getType(), $oids, ['price_id.price']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
@@ -311,7 +321,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function calcPrice($om, $oids, $lang) {
         $result = [];
 
-        $groups = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'total', 'vat_rate', 'is_locked', 'has_pack']);
+        $groups = $om->read(self::getType(), $oids, ['booking_lines_ids', 'total', 'vat_rate', 'is_locked', 'has_pack']);
 
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
@@ -338,7 +348,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function calcTotal($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_lines_ids', 'is_locked', 'has_pack', 'unit_price', 'qty']);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'booking_lines_ids', 'is_locked', 'has_pack', 'unit_price', 'qty']);
         $bookings_ids = [];
 
         if($groups > 0 && count($groups)) {
@@ -370,11 +380,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @param \equal\orm\ObjectManager  $om
      */
     public static function onupdateIsSojourn($om, $oids, $values, $lang) {
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'nb_pers', 'is_sojourn', 'age_range_assignments_ids'], $lang);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'nb_pers', 'is_sojourn', 'age_range_assignments_ids'], $lang);
         if($groups > 0) {
             foreach($groups as $gid => $group) {
                 // remove any previously set assignments
-                $om->delete('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $group['age_range_assignments_ids'], true);
+                $om->delete(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], true);
 
                 if($group['is_sojourn']) {
                     // create default age_range assignment
@@ -384,7 +394,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         'booking_id'            => $group['booking_id'],
                         'qty'                   => $group['nb_pers']
                     ];
-                    $om->create('lodging\sale\booking\BookingLineGroupAgeRangeAssignment', $assignment, $lang);
+                    $om->create(BookingLineGroupAgeRangeAssignment::getType(), $assignment, $lang);
                 }
             }
         }
@@ -393,11 +403,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdateHasPack($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeHasPack", QN_REPORT_DEBUG);
 
-        $groups = $om->read(__CLASS__, $oids, ['has_pack']);
+        $groups = $om->read(self::getType(), $oids, ['has_pack']);
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
                 if(!$group['has_pack']) {
-                    $om->update(__CLASS__, $gid, ['is_locked' => false, 'pack_id' => null ]);
+                    $om->update(self::getType(), $gid, ['is_locked' => false, 'pack_id' => null ]);
                 }
             }
         }
@@ -407,7 +417,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeIsLocked", QN_REPORT_DEBUG);
         // invalidate prices
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updatePriceId', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updatePriceId', $oids, [], $lang);
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
@@ -416,25 +426,25 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     /**
-     * Update is_locked field according to selected pack (pack_id).
-     * (This is done when pack_id is changed, but can be manually set by the user afterward.)
+     * Handler called after pack_id has changed.
+     * Updates is_locked field according to selected pack (pack_id).
+     * (is_locked can be manually set by the user afterward)
      *
      * Since this method is called, we assume that current group has 'has_pack' set to true,
-     * and that pack_id relates to a product_model that is a pack.
+     * and that pack_id relates to a product that is a pack.
      */
     public static function onupdatePackId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangePackId", QN_REPORT_DEBUG);
-        // invalidate prices
-        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        // generate booking lines
-        $om->callonce(__CLASS__, '_updatePackId', $oids, [], $lang);
-        // update groups, if necessary
-        $groups = $om->read(__CLASS__, $oids, [
+
+        $groups = $om->read(self::getType(), $oids, [
             'booking_id',
             'date_from',
             'nb_pers',
             'is_locked',
             'booking_lines_ids',
+            'age_range_assignments_ids',
+            'pack_id.has_age_range',
+            'pack_id.age_range_id',
             'pack_id.product_model_id.qty_accounting_method',
             'pack_id.product_model_id.has_duration',
             'pack_id.product_model_id.duration',
@@ -442,6 +452,29 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'pack_id.product_model_id.booking_type_id'
         ]);
 
+        // pass-1 : update age ranges for packs with a specific age range
+        foreach($groups as $gid => $group) {
+            if($group['pack_id.has_age_range']) {
+                // remove any previously set assignments
+                $om->delete(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], true);
+                // create default age_range assignment
+                $assignment = [
+                    'age_range_id'          => $group['pack_id.age_range_id'],
+                    'booking_line_group_id' => $gid,
+                    'booking_id'            => $group['booking_id'],
+                    'qty'                   => $group['nb_pers']
+                ];
+                $om->create(BookingLineGroupAgeRangeAssignment::getType(), $assignment, $lang);
+            }
+        }
+
+        // invalidate prices
+        $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
+
+        // (re)generate booking lines
+        $om->callonce(self::getType(), '_updatePack', $oids, [], $lang);
+
+        // pass-2 : update groups and related bookings, if necessary
         foreach($groups as $gid => $group) {
             // if model of chosen product has a non-generic booking type, update the booking of the group accordingly
             if(isset($group['pack_id.product_model_id.booking_type_id']) && $group['pack_id.product_model_id.booking_type_id'] != 1) {
@@ -463,7 +496,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $updated_fields['nb_pers'] = $group['pack_id.product_model_id.capacity'];
             }
 
-            $om->write(__CLASS__, $gid, $updated_fields, $lang);
+            $om->update(self::getType(), $gid, $updated_fields, $lang);
         }
     }
 
@@ -472,12 +505,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // invalidate prices
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
-        $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
-        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->update(self::getType(), $oids, ['nb_nights' => null ]);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'booking_lines_ids']);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'is_sojourn', 'has_pack', 'nb_nights', 'booking_lines_ids']);
         if($groups > 0 && count($groups)) {
             foreach($groups as $group) {
                 // notify booking lines that price_id has to be updated
@@ -486,7 +519,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
+                    $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['date_from' => null]);
                 }
             }
         }
@@ -497,19 +530,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // invalidate prices
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
-        $om->write(__CLASS__, $oids, ['nb_nights' => null ]);
-        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
+        $om->update(self::getType(), $oids, ['nb_nights' => null ]);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'is_sojourn', 'is_event', 'has_pack', 'nb_nights', 'nb_pers', 'booking_lines_ids']);
         if($groups > 0) {
             foreach($groups as $group) {
                 // re-compute bookinglines quantities
                 $om->callonce('lodging\sale\booking\BookingLine', '_updateQty', $group['booking_lines_ids'], [], $lang);
                 if($group['is_sojourn'] || $group['is_event']) {
                     // force parent booking to recompute date_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
+                    $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['date_to' => null]);
                 }
             }
         }
@@ -519,12 +552,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
 
         // update parent booking
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
         if($groups > 0) {
             foreach($groups as $group) {
                 if($group['is_sojourn'] || $group['is_event']) {
                     // force parent booking to recompute time_from
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null]);
+                    $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null]);
                 }
             }
         }
@@ -534,12 +567,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onupdateTimeTo", QN_REPORT_DEBUG);
 
         // update parent booking
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
         if($groups > 0) {
             foreach($groups as $group) {
                 if($group['is_sojourn'] || $group['is_event']) {
                     // force parent booking to recompute time_to
-                    $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_to' => null]);
+                    $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['time_to' => null]);
                 }
             }
         }
@@ -547,50 +580,50 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function onupdateBookingLinesIds($om, $oids, $values, $lang) {
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'is_sojourn', 'is_event'], $lang);
         foreach($groups as $gid => $group) {
             if($group['is_sojourn'] || $group['is_event']) {
                 // force parent booking to recompute time_from
-                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null, 'time_to' => null]);
+                $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['time_from' => null, 'time_to' => null]);
             }
         }
     }
 
     public static function onupdateRateClassId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeRateClassId", QN_REPORT_DEBUG);
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'rate_class_id.name'], $lang);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'rate_class_id.name'], $lang);
         // #todo - add support for assigning an optional booking_type_id to each rate_class
         foreach($groups as $gid => $group) {
             // if model of chosen product has a non-generic booking type, update the booking of the group accordingly
             if($group['rate_class_id.name'] == 'T5' || $group['rate_class_id.name'] == 'T7') {
-                $om->write('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => 4]);
+                $om->update('lodging\sale\booking\Booking', $group['booking_id'], ['type_id' => 4]);
             }
         }
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateSojournTypeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournTypeId", QN_REPORT_DEBUG);
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateNbPers($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeNbPers", QN_REPORT_DEBUG);
 
-        // invalidate prices
-        $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $oids, [], $lang);
+        // 1) invalidate prices
+        $om->callonce(self::getType(), '_resetPrices', $oids, [], $lang);
 
-        $groups = $om->read(__CLASS__, $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
+        $groups = $om->read(self::getType(), $oids, ['booking_id', 'booking_id.booking_lines_groups_ids', 'nb_nights', 'nb_pers', 'has_pack', 'is_locked', 'booking_lines_ids', 'is_sojourn', 'age_range_assignments_ids']);
 
-        // first-pass: reset parent bookings nb_pers
+        // 2) reset parent bookings nb_pers
         if($groups > 0) {
             $bookings_ids = array_map(function($a) {return $a['booking_id'];}, $groups);
             $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
         }
 
-        // second-pass: update agerange assignments and build booking_lines_ids
+        // 3) update agerange assignments
         if($groups > 0) {
             $booking_lines_ids = [];
             foreach($groups as $group) {
@@ -600,16 +633,17 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
                 $booking_lines_ids = array_merge($group['booking_lines_ids']);
                 // trigger sibling groups nb_pers update (this is necessary since the nb_pers is based on the booking total participants)
-                // #todo - no longer required once the packs will hold products models instead of products
-                $om->callonce(BookingLineGroup::getType(), 'onupdateNbPers', $group['booking_id.booking_lines_groups_ids'], [], $lang);
             }
             // re-compute bookinglines quantities
+            $om->update(BookingLine::getType(), $booking_lines_ids, ['qty_vars' => null], $lang);
             $om->callonce(BookingLine::getType(), '_updateQty', $booking_lines_ids, [], $lang);
         }
 
-        $om->callonce(__CLASS__, '_updatePriceAdapters', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
-        $om->callonce(__CLASS__, '_updateMealPreferences', $oids, [], $lang);
+        // 4) update dependencies
+        $om->callonce(self::getType(), '_updateRentalUnitsAssignements', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
     }
 
 
@@ -653,16 +687,20 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra'], $lang);
+        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra', 'age_range_assignments_ids'], $lang);
 
         if($groups > 0) {
             foreach($groups as $group) {
-                if(
-                    in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                    ||
-                    ($group['booking_id.status'] != 'quote' && !$group['is_extra'])
-                ) {
+                if( in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                    || ($group['booking_id.status'] != 'quote' && !$group['is_extra']) ) {
                     return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                }
+                if(isset($values['nb_pers']) && count($group['age_range_assignments_ids']) > 1 ) {
+                    $assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['qty'], $lang);
+                    $qty = array_reduce($assignments, function($c, $a) { return $c+$a['qty']; }, 0);
+                    if($values['nb_pers'] != $qty) {
+                        return ['nb_pers' => ['count_mismatch' => 'Number of persons does not match the age ranges.']];
+                    }
                 }
             }
         }
@@ -725,7 +763,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
-        $line_groups = $om->read(__CLASS__, $oids, ['rate_class_id', 'sojourn_type_id', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
+        $line_groups = $om->read(self::getType(), $oids, ['rate_class_id', 'sojourn_type_id', 'date_from', 'date_to', 'nb_pers', 'nb_nights', 'booking_id', 'is_locked',
                                                     'booking_lines_ids',
                                                     'booking_id.nb_pers',
                                                     'booking_id.customer_id.count_booking_24',
@@ -773,10 +811,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // duration in nights
                 $operands['duration'] = $group['nb_nights'];
                 // number of participants
-                // #update - we use the booking nb_pers rather than the group nb_pers (to allow adapters to consider large groups)
-                // #todo - this should be reverted once packs will hold product Models (instead of products)
-                // $operands['nb_pers'] = $group['nb_pers'];
-                $operands['nb_pers'] = $group['booking_id.nb_pers'];
+                $operands['nb_pers'] = $group['nb_pers'];
 
                 $date = $group['date_from'];
 
@@ -954,11 +989,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * Update pack_id and re-create booking lines accordingly.
      *
      */
-    public static function _updatePackId($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:_updatePackId", QN_REPORT_DEBUG);
+    public static function _updatePack($om, $oids, $values, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:_updatePack", QN_REPORT_DEBUG);
 
-        $groups = $om->read(__CLASS__, $oids, [
-            'booking_id', 'booking_lines_ids',
+        $groups = $om->read(self::getType(), $oids, [
+            'booking_id',
+            'booking_lines_ids',
+            'age_range_assignments_ids',
+            'nb_pers',
             'pack_id.is_locked',
             'pack_id.pack_lines_ids',
             'pack_id.product_model_id.has_own_price'
@@ -972,52 +1010,493 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             // might need to update price_id
             if($group['pack_id.product_model_id.has_own_price']) {
-                $om->write(__CLASS__, $gid, ['is_locked' => true], $lang);
+                $om->update(self::getType(), $gid, ['is_locked' => true], $lang);
             }
             else {
-                $om->write(__CLASS__, $gid, ['is_locked' => $group['pack_id.is_locked'] ], $lang);
+                $om->update(self::getType(), $gid, ['is_locked' => $group['pack_id.is_locked'] ], $lang);
             }
 
-            /*
-                Reset booking_lines (updating booking_lines_ids will trigger ondetach event)
-            */
-            $om->write(__CLASS__, $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
+            // remove existing booking_lines (updating booking_lines_ids will trigger ondetach events)
+            $om->update(self::getType(), $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
 
             /*
                 Create booking lines according to pack composition
             */
             $pack_lines = $om->read('lodging\sale\catalog\PackLine', $group['pack_id.pack_lines_ids'], [
-                'child_product_id',
-                'has_own_qty', 'own_qty',
-                'has_own_duration', 'own_duration',
-                'child_product_id.product_model_id.qty_accounting_method'
+                'child_product_model_id',
+                'has_own_qty',
+                'own_qty',
+                'has_own_duration',
+                'own_duration',
+                'child_product_model_id.qty_accounting_method'
             ]);
             $order = 1;
 
+            // retrieve age_range assignements (there must be at least one)
+            $age_assignements = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['age_range_id']);
+
             foreach($pack_lines as $pid => $pack_line) {
-                $line = [
-                    'order'                     => $order,
-                    'booking_id'                => $group['booking_id'],
-                    'booking_line_group_id'     => $gid,
-                    'product_id'                => $pack_line['child_product_id'],
-                    'qty_accounting_method'     => $pack_line['child_product_id.product_model_id.qty_accounting_method']
-                ];
-                if($pack_line['has_own_qty']) {
-                    $line['has_own_qty'] = true;
-                    $line['qty'] = $pack_line['own_qty'];
+                /*
+                    retrieve the product(s) to add, based on child_product_model_id and group age_ranges, if set
+                    if no specific product with age_range, use nb_pers
+                    if no product for a specific age_range, use "all age" product
+                 */
+                // we expect any group to have at min. 1 age range (default)
+                foreach($age_assignements as $age_assignement) {
+
+                    $line = [
+                        'order'                     => $order++,
+                        'booking_id'                => $group['booking_id'],
+                        'booking_line_group_id'     => $gid,
+                        'qty_accounting_method'     => $pack_line['child_product_model_id.qty_accounting_method']
+                    ];
+
+                    $has_single_range = false;
+
+                    // search for a product matching model and age_range (there should be 1 or 0)
+                    $products_ids = $om->search('lodging\sale\catalog\Product', [ ['product_model_id', '=', $pack_line['child_product_model_id']], ['age_range_id', '=', $age_assignement['age_range_id']], ['can_sell', '=', true] ]);
+                    // if no product for a specific age_range, use "all age" product and use range.qty
+                    if($products_ids < 0 || !count($products_ids)) {
+                        $products_ids = $om->search('lodging\sale\catalog\Product', [ ['product_model_id', '=', $pack_line['child_product_model_id']], ['has_age_range', '=', false], ['can_sell', '=', true] ]);
+                        if($products_ids < 0 || !count($products_ids)) {
+                            // issue a warning : no product match for line
+                            trigger_error("QN_DEBUG_ORM::no match for age range {$age_assignement['age_range_id']} and no 'all ages' product found for model {$pack_line['child_product_model_id']}", QN_REPORT_WARNING);
+                            // skip the line
+                            continue 2;
+                        }
+                        else {
+                            // create a single line for all ages
+                            $has_single_range = true;
+                        }
+                    }
+                    $product_id = reset($products_ids);
+
+                    // create a booking line with found product
+                    $line['product_id'] = $product_id;
+
+                    if($pack_line['has_own_qty']) {
+                        $line['has_own_qty'] = true;
+                        $line['qty'] = $pack_line['own_qty'];
+                    }
+                    if($pack_line['has_own_duration']) {
+                        $line['has_own_duration'] = true;
+                        $line['own_duration'] = $pack_line['own_duration'];
+                    }
+                    // qty is auto assigned upon line creation
+                    $lid = $om->create('lodging\sale\booking\BookingLine', $line, $lang);
+                    if($lid > 0) {
+                        $om->update(self::getType(), $gid, ['booking_lines_ids' => ["+$lid"] ]);
+                    }
+
+                    if($has_single_range) {
+                        break;
+                    }
                 }
-                if($pack_line['has_own_duration']) {
-                    $line['has_own_duration'] = true;
-                    $line['own_duration'] = $pack_line['own_duration'];
-                }
-                $lid = $om->create('lodging\sale\booking\BookingLine', $line, $lang);
-                if($lid > 0) {
-                    $om->write(__CLASS__, $gid, ['booking_lines_ids' => ["+$lid"] ]);
-                }
-                ++$order;
+
             }
         }
+
+        // update dependencies
+        $om->callonce(self::getType(), '_createRentalUnitsAssignements', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
+
     }
+
+
+    public static function _createRentalUnitsAssignements($om, $oids, $values, $lang) {
+
+            // Attempt to auto-assign rental units.
+
+            // Pour les UL :
+
+            // 1) décrémenter nb_pers pour les lignes au logement (capacity)
+            // 2) créer les SPM si pas existant
+
+
+            // si au logement
+            //     (on considère que le l'unité est un logement)
+            //     1) trouver un logement libre capacity >= product_model.capacity
+            //     2) créer assignment @capacity
+
+
+            // si à la personne
+            //     si logement
+            //         1) trouver logement libre
+            //         2) créer assignment @nb_pers
+            //         (ignorer les prochaines lignes logement à la personne)
+            //     sinon
+            //         1) trouver logement libre
+            //         2) créer assignment @group.nb_pers
+
+            // si à l'unité
+            //     1) trouver unité libre
+            //     2) créer assignment @group.nb_pers
+
+
+
+        $groups = $om->read(self::getType(), $oids, [
+            'booking_id',
+            'nb_pers',
+            'has_locked_rental_units',
+            'booking_lines_ids',
+            'date_from',
+            'date_to',
+            'time_from',
+            'time_to',
+            'sojourn_product_models_ids'
+        ]);
+
+        foreach($groups as $gid => $group) {
+
+            if($group['has_locked_rental_units']) {
+                continue;
+            }
+
+            // remove all previous SPM and rental_unit assignements
+            $om->update(self::getType(), $gid, ['sojourn_product_models_ids' => array_map(function($a) { return "-$a";}, $group['sojourn_product_models_ids'])]);
+
+            // retrieve rental units involved in booking consumptions, if any
+            $consumptions = [];
+            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
+            if($bookings > 0 && count($bookings)) {
+                $booking = reset($bookings);
+                $consumptions = $booking['consumptions_ids.rental_unit_id'];
+            }
+
+            // create a map with all product_model_id within the group
+            $group_product_models_ids = [];
+
+            // read children booking lines
+            $lines = $om->read(BookingLine::getType(), $group['booking_lines_ids'], [
+                    'booking_id.center_id',
+                    'product_id',
+                    'product_id.product_model_id',
+                    'qty_accounting_method',
+                    'is_rental_unit'
+                ],
+                $lang);
+
+            // drop lines that do not relate to rental units
+            $lines = array_filter($lines, function($a) { return $a['is_rental_unit']; });
+
+            if(count($lines)) {
+
+                // read all related product models at once
+                $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
+                $product_models = $om->read('lodging\sale\catalog\ProductModel', $product_models_ids, ['is_accomodation', 'qty_accounting_method', 'rental_unit_assignement', 'capacity'], $lang);
+
+                $nb_pers = $group['nb_pers'];
+                $date_from = $group['date_from'] + $group['time_from'];
+                $date_to = $group['date_to'] + $group['time_to'];
+
+                // pass-1 : withdraw persons assigned to accomodations from nb_pers and create SPMs
+                foreach($lines as $lid => $line) {
+                    $product_model_id = $line['product_id.product_model_id'];
+                    if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
+                        $nb_pers -= $product_models[$product_model_id]['capacity'];
+                    }
+                    if(!isset($group_product_models_ids[$product_model_id])) {
+                        $sojourn_product_model_id = $om->create(SojournProductModel::getType(), [
+                            'booking_id'            => $group['booking_id'],
+                            'booking_line_group_id' => $gid,
+                            'product_model_id'      => $product_model_id
+                        ]);
+                        $group_product_models_ids[$product_model_id] = $sojourn_product_model_id;
+                    }
+                }
+
+                // pass-2 : process lines
+                $has_processed_accomodation_by_person = false;
+                foreach($lines as $lid => $line) {
+
+                    $center_id = $line['booking_id.center_id'];
+
+                    $is_accomodation = $product_models[$line['product_id.product_model_id']]['is_accomodation'];
+                    // 'accomodation', 'person', 'unit'
+                    $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
+
+                    // 'category', 'capacity', 'auto'
+                    // #memo - the assignment-based filtering is done in `Consumption::getAvailableRentalUnits`
+                    $rental_unit_assignment = $product_models[$line['product_id.product_model_id']]['rental_unit_assignement'];
+
+                    // all lines with same product_model are processed at the first line, remaining lines must be ignored
+                    if($qty_accounting_method == 'person' && $is_accomodation && $has_processed_accomodation_by_person) {
+                        continue;
+                    }
+
+                    $nb_pers_to_assign = $nb_pers;
+
+                    if($qty_accounting_method == 'accomodation') {
+                        $nb_pers_to_assign = min($product_models[$line['product_id.product_model_id']]['capacity'], $group['nb_pers']);
+                    }
+                    elseif($qty_accounting_method == 'unit') {
+                        $nb_pers_to_assign = $group['nb_pers'];
+                    }
+
+
+                    // find available rental units (sorted by capacity, desc; filtered on product model category)
+                    $rental_units_ids = Consumption::getAvailableRentalUnits($om, $center_id, $line['product_id.product_model_id'], $date_from, $date_to);
+                    // append rental units from consumptions of own booking (use case: come and go between 'quote' and 'option')
+                    foreach($consumptions as $consumption) {
+                        $rental_units_ids[] = $consumption['rental_unit_id'];
+                    }
+                    // retrieve rental units with matching capacities (best match first)
+                    $rental_units = self::_getRentalUnitsMatches($om, $rental_units_ids, $nb_pers_to_assign);
+
+
+                    // assign to selected rental units
+
+                    $remaining = $nb_pers_to_assign;
+                    $assigned_rental_units = [];
+
+                    // min serie for available capacity starts from max(0, i-1)
+                    for($j = 0, $n = count($rental_units) ;$j < $n; ++$j) {
+                        $rental_unit = $rental_units[$j];
+                        $assigned = min($rental_unit['capacity'], $remaining);
+                        $rental_unit['assigned'] = $assigned;
+                        $assigned_rental_units[] = $rental_unit;
+                        $remaining -= $assigned;
+                        if($remaining <= 0) break;
+                    }
+
+                    if($remaining > 0) {
+                        // no availability !
+                        trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
+                    }
+                    else {
+                        foreach($assigned_rental_units as $rental_unit) {
+                            $assignement = [
+                                'booking_id'                    => $group['booking_id'],
+                                'booking_line_group_id'         => $gid,
+                                'sojourn_product_model_id'      => $group_product_models_ids[$line['product_id.product_model_id']],
+                                'qty'                           => $rental_unit['assigned'],
+                                'rental_unit_id'                => $rental_unit['id']
+                            ];
+                            trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['assigned']} p. to {$rental_unit['id']}", QN_REPORT_DEBUG);
+                            $om->create(SojournProductModelRentalUnitAssignement::getType(), $assignement);
+                        }
+
+                        if($qty_accounting_method == 'person' && $is_accomodation) {
+                            $has_processed_accomodation_by_person = true;
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
+
+    public static function _updateRentalUnitsAssignements($om, $oids, $values, $lang) {
+
+        // read groups
+        $groups = $om->read(self::getType(), $oids, [
+                'booking_id',
+                'booking_id.center_id',
+                'nb_pers',
+                'has_locked_rental_units',
+                'booking_lines_ids',
+                'date_from',
+                'date_to',
+                'time_from',
+                'time_to',
+                'sojourn_product_models_ids',
+                'age_range_assignments_ids'
+            ]);
+
+        foreach($groups as $gid => $group) {
+            $date_from = $group['date_from'] + $group['time_from'];
+            $date_to = $group['date_to'] + $group['time_to'];
+
+            // retrieve rental units involved in booking consumptions, if any
+            $consumptions = [];
+            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
+            if($bookings > 0 && count($bookings)) {
+                $booking = reset($bookings);
+                $consumptions = $booking['consumptions_ids.rental_unit_id'];
+            }
+
+            // get a list of ids of rental units that are already used within the current booking
+            $assignments_ids = $om->search(BookingLineRentalUnitAssignement::getType(), ['booking_id', '=', $group['booking_id']]);
+            $rental_unit_assignments = $om->read(BookingLineRentalUnitAssignement::getType(), $assignments_ids, ['rental_unit_id', 'qty']);
+            $booking_rental_units_ids = [];
+            if($rental_unit_assignments > 0) {
+                foreach($rental_unit_assignments as $assignment) {
+                    $booking_rental_units_ids[] = $assignment['rental_unit_id'];
+                }
+            }
+
+            // read all ages assignments
+            $age_range_assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['age_range_id', 'qty']);
+            $map_age_ranges = [];
+            foreach($age_range_assignments as $assignment) {
+                $map_age_ranges[$assignment['age_range_id']] = $assignment['qty'];
+            }
+
+
+            // 1) create a map with current product_model_id within the group
+
+            $group_product_models_ids = [];
+            $sojourn_product_models_ids = $om->search(SojournProductModel::getType(), ['booking_line_group_id', '=', $gid]);
+            $sojourn_product_models = $om->read(SojournProductModel::getType(), $sojourn_product_models_ids, ['product_model_id', 'qty', 'rental_unit_assignments_ids']);
+            foreach($sojourn_product_models as $spid => $sojourn_product_model) {
+                $group_product_models_ids[$sojourn_product_model['product_model_id']] = $spid;
+            }
+
+
+            // 2) create a map with required quantities by product_model_id
+
+            $lines = $om->read(BookingLine::getType(), $group['booking_lines_ids'], [
+                    'product_id.product_model_id',
+                    'product_id.has_age_range',
+                    'product_id.age_range_id'
+                ]);
+            // read all related product models at once
+            $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
+            $product_models = $om->read('lodging\sale\catalog\ProductModel', $product_models_ids, ['is_accomodation', 'qty_accounting_method', 'rental_unit_assignement', 'capacity'], $lang);
+
+            // pass-1 : compute resulting nb_pers without 'by accomodation' rental_units
+            $nb_pers = $group['nb_pers'];
+            foreach($lines as $lid => $line) {
+                $product_model_id = $line['product_id.product_model_id'];
+                $product_model = $product_models[$product_model_id];
+                if($product_model['qty_accounting_method'] == 'accomodation') {
+                    $nb_pers -= $product_model['capacity'];
+                }
+            }
+
+            // pass-2 : compute required quantities for each product_model
+            $map_product_models = [];
+            foreach($lines as $lid => $line) {
+                $product_model_id = $line['product_id.product_model_id'];
+                $product_model = $product_models[$product_model_id];
+                if($product_model['qty_accounting_method'] == 'accomodation') {
+                    if(!isset($map_product_models[$product_model_id])) {
+                        $map_product_models[$product_model_id] = 0;
+                    }
+                    $map_product_models[$product_model_id] += $product_model['capacity'];
+                }
+                elseif($product_model['qty_accounting_method'] == 'accomodation') {
+                    if($product_model['is_accomodation']) {
+                        if(isset($map_product_models[$product_model_id])) {
+                            continue;
+                        }
+                        $map_product_models[$product_model_id] = $nb_pers;
+                    }
+                    else {
+                        if(!isset($map_product_models[$product_model_id])) {
+                            $map_product_models[] = 0;
+                        }
+                        $map_product_models[$product_model_id] += $group['nb_pers'];
+                    }
+                }
+                elseif($product_model['qty_accounting_method'] == 'unit') {
+                    if(!isset($map_product_models[$product_model_id])) {
+                        $map_product_models[$product_model_id] = 0;
+                    }
+                    $map_product_models[$product_model_id] += $group['nb_pers'];
+                }
+
+            }
+
+
+            // 3) compare current and required, and remove or append
+
+
+            foreach($map_product_models as $product_model_id => $required_qty) {
+
+                // find available rental units (sorted by capacity, desc; filtered on product model category)
+                $rental_units_ids = Consumption::getAvailableRentalUnits($om, $group['booking_id.center_id'], $product_model_id, $date_from, $date_to);
+                // append rental units from consumptions of own booking (use case: come and go between 'quote' and 'option')
+                foreach($consumptions as $consumption) {
+                    $rental_units_ids[] = $consumption['rental_unit_id'];
+                }
+
+                $rental_units_ids = array_diff($rental_units_ids, $booking_rental_units_ids);
+
+                $product_model = $product_models[$product_model_id];
+                $current_qty = 0;
+                if(isset($group_product_models_ids[$product_model_id])) {
+                    $spid = $group_product_models_ids[$product_model_id];
+                    $current_qty = $sojourn_product_models[$spid]['qty'];
+                }
+
+                if($current_qty < $required_qty) {
+                    // assign more units
+                    $delta = $required_qty - $current_qty;
+
+                    if(!isset($group_product_models_ids[$product_model_id])) {
+                        // create SPM
+                        $sojourn_product_model_id = $om->create(SojournProductModel::getType(), [
+                            'booking_id'            => $group['booking_id'],
+                            'booking_line_group_id' => $gid,
+                            'product_model_id'      => $product_model_id
+                        ]);
+                        $group_product_models_ids[$product_model_id] = $sojourn_product_model_id;
+                        $sojourn_product_models[$sojourn_product_model_id] = $delta;
+                    }
+
+                    // create assignment with rental_unit best match
+
+                    // retrieve rental units with matching capacities (best match first)
+                    $rental_units = self::_getRentalUnitsMatches($om, $rental_units_ids, $delta);
+
+                    $remaining = $delta;
+                    $assigned_rental_units = [];
+
+                    // min serie for available capacity starts from max(0, i-1)
+                    for($j = 0, $n = count($rental_units) ;$j < $n; ++$j) {
+                        $rental_unit = $rental_units[$j];
+                        $assigned = min($rental_unit['capacity'], $remaining);
+                        $rental_unit['assigned'] = $assigned;
+                        $assigned_rental_units[] = $rental_unit;
+                        $remaining -= $assigned;
+                        if($remaining <= 0) break;
+                    }
+
+                    if($remaining > 0) {
+                        // no availability !
+                        trigger_error("QN_DEBUG_ORM::no availability", QN_REPORT_DEBUG);
+                    }
+                    else {
+                        foreach($assigned_rental_units as $rental_unit) {
+                            $assignement = [
+                                'booking_id'                    => $group['booking_id'],
+                                'booking_line_group_id'         => $gid,
+                                'sojourn_product_model_id'      => $group_product_models_ids[$product_model_id],
+                                'qty'                           => $rental_unit['assigned'],
+                                'rental_unit_id'                => $rental_unit['id']
+                            ];
+                            trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['assigned']} p. to {$rental_unit['id']}", QN_REPORT_DEBUG);
+                            $om->create(SojournProductModelRentalUnitAssignement::getType(), $assignement);
+                            $booking_rental_units_ids[] = $rental_unit['id'];
+                        }
+                    }
+
+                }
+                elseif($current_qty > $required_qty) {
+                    // unassign units
+                    $delta = $current_qty - $required_qty;
+                    $assignments = $om->read(SojournProductModelRentalUnitAssignement::getType(), $sojourn_product_models[$spid]['rental_unit_assignments_ids'], ['qty']);
+                    foreach($assignments as $aid => $assignment) {
+                        if($assignment['qty'] <= $delta) {
+                            $delta -= $assignment['qty'];
+                            $om->delete(SojournProductModelRentalUnitAssignement::getType(), $aid, true);
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
 
 
     /**
@@ -1031,7 +1510,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function _updatePriceId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLineGroup:_updatePriceId", QN_REPORT_DEBUG);
 
-        $groups = $om->read(__CLASS__, $oids, [
+        $groups = $om->read(self::getType(), $oids, [
             'has_pack',
             'date_from',
             'pack_id',
@@ -1067,13 +1546,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                             Assign found Price to current group
                         */
                         $found = true;
-                        $om->write(__CLASS__, $gid, ['price_id' => $prices_ids[0]]);
+                        $om->update(self::getType(), $gid, ['price_id' => $prices_ids[0]]);
                         break;
                     }
                 }
             }
             if(!$found) {
-                $om->write(__CLASS__, $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
+                $om->update(self::getType(), $gid, ['price_id' => null, 'vat_rate' => 0, 'unit_price' => 0]);
                 $date = date('Y-m-d', $group['date_from']);
                 trigger_error("QN_DEBUG_ORM::no matching price list found for group at date {$date}", QN_REPORT_ERROR);
             }
@@ -1092,7 +1571,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         /*
             remove groups related to autosales that already exist
         */
-        $groups = $om->read(__CLASS__, $oids, [
+        $groups = $om->read(self::getType(), $oids, [
                 'is_autosale',
                 'nb_pers',
                 'nb_nights',
@@ -1117,7 +1596,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         $lines_ids_to_delete[] = -$lid;
                     }
                 }
-                $om->write(__CLASS__, $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
+                $om->update(self::getType(), $group_id, ['booking_lines_ids' => $lines_ids_to_delete], $lang);
             }
 
             /*
@@ -1248,7 +1727,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     public static function _updateMealPreferences($om, $oids, $values, $lang) {
 
-        $groups = $om->read(__CLASS__, $oids, [
+        $groups = $om->read(self::getType(), $oids, [
                 'is_sojourn',
                 'nb_pers',
                 'meal_preferences_ids'
@@ -1268,11 +1747,133 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         $om->create('sale\booking\MealPreference', $pref, $lang);
                     }
                     else if(count($group['meal_preferences_ids']) == 1)  {
-                        $om->write('sale\booking\MealPreference', $group['meal_preferences_ids'], ['qty' => $group['nb_pers']], $lang);
+                        $om->update('sale\booking\MealPreference', $group['meal_preferences_ids'], ['qty' => $group['nb_pers']], $lang);
                     }
                 }
             }
         }
+    }
+
+    protected static function _getRentalUnitsCombinations($list, $target, $start, $sum, $collect) {
+        $result = [];
+
+        // current sum matches target
+        if($sum == $target) {
+            return [$collect];
+        }
+
+        // try sub-combinations
+        for($i = $start, $n = count($list); $i < $n; ++$i) {
+
+            // check if the sum exceeds target
+            if( ($sum + $list[$i]['capacity']) > $target ) {
+                continue;
+            }
+
+            // check if it is repeated or not
+            if( ($i > $start) && ($list[$i]['capacity'] == $list[$i-1]['capacity']) ) {
+                continue;
+            }
+
+            // take the element into the combination
+            $collect[] = $list[$i];
+
+            // recursive call
+            $res = self::_getRentalUnitsCombinations($list, $target, $i + 1, $sum + $list[$i]['capacity'], $collect);
+
+            if(count($res)) {
+                foreach($res as $r) {
+                    $result[] = $r;
+                }
+            }
+
+            // Remove element from the combination
+            array_pop($collect);
+        }
+
+        return $result;
+    }
+
+
+    protected static function _getRentalUnitsMatches($om, $rental_units_ids, $nb_pers_to_assign) {
+        // retrieve rental units capacities
+        $rental_units = [];
+
+        if($rental_units_ids > 0 && count($rental_units_ids)) {
+            $rental_units = array_values($om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['id', 'capacity']));
+        }
+
+        $found = false;
+        // pass-1 - search for an exact capacity match
+        for($i = 0, $n = count($rental_units); $i < $n; ++$i) {
+            if($rental_units[$i]['capacity'] == $nb_pers_to_assign) {
+                $rental_units = [$rental_units[$i]];
+                $found = true;
+                break;
+            }
+        }
+        if(!$found) {
+            // handle special case : smallest rental unit has bigger capacity than nb_pers
+            if($nb_pers_to_assign < $rental_units[$n-1]['capacity']) {
+                $rental_units = [$rental_units[$n-1]];
+            }
+            else {
+                // pass-2 - no exact match, choose between min matching capacity and spreading pers across units
+                $i = 0;
+                while($rental_units[$i]['capacity'] > $nb_pers_to_assign) {
+                    // we should reach $n-2 at maximum
+                    ++$i;
+                }
+                $alternate_index = $i-1;
+                $alternate = 0;
+                if($alternate_index >= 0) {
+                    $rental_unit = $rental_units[$alternate_index];
+                    $alternate = $rental_unit['capacity'];
+                }
+
+                $collect = [];
+                $list = array_slice($rental_units, $i);
+
+                $combinations = self::_getRentalUnitsCombinations($list, $nb_pers_to_assign, 0, 0, $collect);
+
+                if(count($combinations)) {
+                    $min_index = -1;
+                    // $D = abs($alternate - $nb_pers);
+                    // favour a single accomodation
+                    $D = abs($alternate - $nb_pers_to_assign) / 2;
+
+                    foreach($combinations as $index => $combination) {
+                        // $R = floor($nb_pers / count($combination));
+                        $R = count($combination);
+
+                        if($R <= $D) {
+                            if($min_index >= 0) {
+                                if(count($combinations[$min_index]) > count($combination)) {
+                                    $min_index = $index;
+                                }
+                            }
+                            else {
+                                $min_index = $index;
+                            }
+                        }
+                    }
+                    // we found at least one combination
+                    if($min_index >= 0) {
+                        $rental_units = $combinations[$min_index];
+                    }
+                    else if($alternate_index >= 0) {
+                        $rental_units = [$rental_units[$alternate_index]];
+                    }
+                    else {
+                        $rental_units = [];
+                    }
+                }
+                else {
+                    $rental_units = [];
+                }
+            }
+        }
+        return $rental_units;
     }
 
 }

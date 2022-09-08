@@ -40,12 +40,12 @@
         },
         "is_pack": {
             "label": "Pack",
-            "description": "Le produit contient d'autres produits.",
+            "description": "Contient d'autres produits.",
             "help": ""
         },
         "has_own_price": {
             "label": "A son propre prix",
-            "description": "Le pack a son propre prix.",
+            "description": "Pack avec prix propre.",
             "help": ""
         },
         "family_id": {
@@ -60,7 +60,7 @@
         },
         "can_sell": {
             "label": "Peut être vendu",
-            "description": "Ce produit peut-il être vendu ?",
+            "description": "Produit visible et sélectionnable ?",
             "help": ""
         },
         "stat_section_id": {
@@ -76,6 +76,21 @@
         "product_attributes_ids": {
             "label": "Attributs",
             "description": "Attributs définis pour le produit.",
+            "help": ""
+        },
+        "groups_ids": {
+            "label": "Groupes",
+            "description": "Groupes de produits.",
+            "help": ""
+        },
+        "has_age_range": {
+            "label": "Tranche d'âge?",
+            "description": "Assigné à une tranche d'âge spécifique.",
+            "help": ""
+        },
+        "age_range_id": {
+            "label": "Age (tranche)",
+            "description": "Tranche d'âge cible du produit.",
             "help": ""
         }
     },

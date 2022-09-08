@@ -29,13 +29,21 @@ class PackLine extends Model {
                 'description'       => "The Product this line belongs to.",
                 'required'          => true
             ],
-
+            // #todo - deprecate
             'child_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
                 'required'          => true,
-                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'                
+                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'
+            ],
+
+            'child_product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'description'       => "The Product Model the line refers to.",
+                'required'          => true,
+                'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductModelId'
             ],
 
             'has_own_qty' => [
@@ -73,14 +81,19 @@ class PackLine extends Model {
     }
 
     public static function onupdateChildProductId($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, [ 'name' => null ], $lang);
+        // #memo - disabled since one should use child_product_model_id instead of child_product_id
+        // $om->update(__CLASS__, $oids, [ 'name' => null ], $lang);
+    }
+
+    public static function onupdateChildProductModelId($om, $oids, $values, $lang) {
+        $om->update(__CLASS__, $oids, [ 'name' => null ], $lang);
     }
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['child_product_id.name']);
+        $lines = $om->read(__CLASS__, $oids, ['child_product_model_id.name']);
         foreach($oids as $oid) {
-            $result[$oid] = $lines[$oid]['child_product_id.name'];
+            $result[$oid] = $lines[$oid]['child_product_model_id.name'];
         }
         return $result;
     }
@@ -98,5 +111,5 @@ class PackLine extends Model {
         return [
             ['parent_product_id', 'child_product_id']
         ];
-    }       
+    }
 }

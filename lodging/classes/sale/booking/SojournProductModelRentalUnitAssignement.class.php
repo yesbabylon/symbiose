@@ -7,7 +7,7 @@
 namespace lodging\sale\booking;
 use equal\orm\Model;
 
-class BookingLineRentalUnitAssignement extends Model {
+class SojournProductModelRentalUnitAssignement extends Model {
 
     public static function getName() {
         return "Rental Unit Assignement";
@@ -15,7 +15,7 @@ class BookingLineRentalUnitAssignement extends Model {
 
     public static function getDescription() {
         return "Assignements are created while selecting the services for a booking.\n
-        Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.\n";
+        Each product line that targets a product model that is used to assign one or morea rental unit, based on capacity and capacity.\n";
     }
 
     public static function getColumns() {
@@ -35,19 +35,11 @@ class BookingLineRentalUnitAssignement extends Model {
                 'ondelete'          => 'cascade'
             ],
 
-            // #memo - optional: set only for age-range specific products
-            // #deprecated - to remove
-            'booking_line_id' => [
+            'sojourn_product_model_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BookingLine',
-                'description'       => 'Booking Line the assignment relates to.',
-                'ondelete'          => 'cascade'
-            ],
-
-            'product_model_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
-                'description'       => "Product Model of this variant.",
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModel',
+                'description'       => "Product Model group of the assignment.",
+                'ondelete'          => 'cascade',
                 'required'          => true
             ],
 
@@ -65,16 +57,28 @@ class BookingLineRentalUnitAssignement extends Model {
             ],
 
             'is_accomodation' => [
-                'type'              => 'boolean',
-                'description'       => 'The related rental unit is an accomodation (having at least one bed).',
-                'default'           => true
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Total persons assigned to this model.',
+                'function'          => 'calcIsAccomodation',
+                'store'             => true
             ]
+
         ];
+    }
+
+    public static function calcIsAccomodation($om, $ids, $lang) {
+        $result = [];
+        $models = $om->read(self::getType(), $ids, ['rental_unit_id.is_accomodation'], $lang);
+        foreach($models as $oid => $model) {
+            $result[$oid] = $model['rental_unit_id.is_accomodation'];
+        }
+        return $result;
     }
 
     public function getUnique() {
         return [
-            ['booking_line_id', 'rental_unit_id']
+            ['sojourn_product_model_id', 'rental_unit_id']
         ];
     }
 
@@ -94,7 +98,7 @@ class BookingLineRentalUnitAssignement extends Model {
         if($lines > 0) {
             foreach($lines as $line) {
                 if(!in_array($line['booking_id.status'], ['quote', 'checkedout'])) {
-                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                    // return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
                 }
             }
         }

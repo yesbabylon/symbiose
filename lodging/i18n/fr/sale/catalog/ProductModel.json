@@ -3,133 +3,6 @@
     "plural": "Modèles de produits",
     "description": "Détails du Modèle de produit.",
     "model": {
-        "name": {
-            "label": "Nom du modèle",
-            "description": "Nom du modèle de produit (utilisé pour toutes les variantes).",
-            "help": ""
-        },
-        "family_id": {
-            "label": "Famille",
-            "description": "Famille de produits à laquelle appartient le produit actuel.",
-            "help": ""
-        },
-        "selling_accounting_rule_id": {
-            "label": "Règle de vente",
-            "description": "Règle comptable a utiliser pour les ventes.",
-            "help": ""
-        },
-        "buying_accounting_rule_id": {
-            "label": "Règle d'achat",
-            "description": "Règle comptable a utiliser pour les achats.",
-            "help": ""
-        },
-        "can_buy": {
-            "label": "Peut être acheté",
-            "description": "Ce produit peut-il être acheté ?",
-            "help": ""
-        },
-        "can_sell": {
-            "label": "Peut être vendu ou loué",
-            "description": "Ce produit peut-il être vendu ?",
-            "help": ""
-        },
-        "cost": {
-            "label": "Coût",
-            "description": "Coût d'achat.",
-            "help": ""
-        },
-        "is_pack": {
-            "label": "Pack",
-            "description": "S'agit-il d'un pack ?",
-            "help": ""
-        },
-        "has_own_price": {
-            "label": "A son propre prix",
-            "description": "Le pack a-t-il son propre prix ?",
-            "help": "Le pack a-t-il son propre prix ? (sinon le prix de chaque produit est utilisé)."
-        },
-        "type": {
-            "label": "Type",
-            "description": "Type de produit.",
-            "selection": {
-                "consumable": "consommable",
-                "service": "service"
-            },
-            "help": ""
-        },
-        "consumable_type": {
-            "label": "Type de consommable",
-            "description": "Liste des types de produit consommable.",
-            "selection": {
-                "simple": "simple",
-                "storable": "stockable"
-            },
-            "help": ""
-        },
-        "service_type": {
-            "label": "Type de service",
-            "description": "Précision du type de 'service'.",
-            "selection": {
-                "simple": "simple",
-                "schedulable": "planifiable"
-            },
-            "help": ""
-        },
-        "schedule_type": {
-            "label": "Mode de planification",
-            "description": "Planification a un moment précis, ou pour un intervalle de temps.",
-            "selection": {
-                "time": "heure",
-                "timerange": "intervalle"
-            },
-            "help": ""
-        },
-        "schedule_default_value": {
-            "label": "Planification par défaut",
-            "description": "Valeur par défaut du planning selon son type.",
-            "help": "Valeur par défaut du planning selon son type (heure, plage horaire)."
-        },
-        "schedule_offset": {
-            "label": "Décalage",
-            "description": "Décalage, en jours, à partir de la date de début de séjour.",
-            "help": ""
-        },
-        "tracking_type": {
-            "label": "Type de suivi",
-            "description": "Manière dont le produit est identifé pour les suivis.",
-            "selection": {
-                "none": "rien",
-                "batch": "grouper",
-                "sku": "sku",
-                "upc": "upc"
-            },
-            "help": ""
-        },
-        "description_delivery": {
-            "label": "Description de livraison",
-            "description": "Description des bons de livraison.",
-            "help": ""
-        },
-        "description_receipt": {
-            "label": "Description de réception",
-            "description": "Description pour les bons de réception.",
-            "help": ""
-        },
-        "groups_ids": {
-            "label": "Groupes",
-            "description": "Liste des groupes auxquels appartient le modèle.",
-            "help": ""
-        },
-        "categories_ids": {
-            "label": "Catégories",
-            "description": "Liste des catégories assignés au modèle.",
-            "help": ""
-        },
-        "products_ids": {
-            "label": "Produits (variantes)",
-            "description": "Liste des variantes de ce modèle.",
-            "help": ""
-        },
         "qty_accounting_method": {
             "label": "Comptabilisation",
             "description": "Méthode de comptabilisation pour calculer la quantité de produit.",
@@ -151,7 +24,7 @@
             "selection": {
                 "unit": "unité",
                 "category": "catégorie",
-                "capacity": "capacité"
+                "auto": "automatique"
             },
             "help": "Manière dont le produit est affecté à une unité locative (une unité spécifique, une catégorie spécifique, ou en fonction de la capacité)."
         },
@@ -162,8 +35,8 @@
         },
         "duration": {
             "label": "Durée",
-            "description": "Durée du service, utilisées à des fins de planification.",
-            "help": "Durée du service (en jours), utilisées à des fins de planification."
+            "description": "Durée du service (en jours), utilisée pour le planning.",
+            "help": "Durée du service, exprimée en jours, utilisée à des fins de planification."
         },
         "capacity": {
             "label": "Capacité",
@@ -187,8 +60,8 @@
         },
         "rental_unit_category_id": {
             "label": "Catégorie d'unité locative",
-            "description": "Catégorie d'unité locative à laquelle ce produit est lié.",
-            "help": "Catégorie d'unité locative à laquelle ce produit est lié, le cas échéant."
+            "description": "Catégorie d'unités locatives assignables aux produits.",
+            "help": "Seules les untiés locatives appartenant à la catégorie spécifiée pourront être assignées aux produits de ce modèle."
         },
         "rental_unit_id": {
             "label": "Unité locative",

@@ -9,14 +9,16 @@ use core\setting\Setting;
 
 class Booking extends \sale\booking\Booking {
 
-    public static function getColumns() {
+    /** @property string                                    name                        */
+    /** @property \lodging\sale\customer\Customer           customer_id                 */
+    /** @property \lodging\identity\Identity                customer_identity_id        */
+    /** @property \sale\customer\CustomerNature             customer_nature_id          */
+    /** @property \lodging\identity\Center                  center_id                   */
+    /** @property \lodging\identity\CenterOffice            center_office_id            */
+    /** @property \lodging\sale\booking\Contact             contacts_ids                */
+    /** @property \lodging\sale\booking\Contract            contracts_ids               */
 
-        /** @property string                                    name                        */
-        /** @property \lodging\sale\customer\Customer           customer_id                 */
-        /** @property \lodging\identity\Identity                customer_identity_id        */
-        /** @property \sale\customer\CustomerNature             customer_nature_id          */
-        /** @property \lodging\identity\Center                  center_id                   */
-        /** @property \lodging\identity\CenterOffice            center_office_id            */
+    public static function getColumns() {
 
         return [
 
@@ -309,10 +311,10 @@ class Booking extends \sale\booking\Booking {
                 $values = [];
                 // remove all contacts
                 if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
-                    $om->update(__CLASS__, $bid, ['contacts_ids' => array_map( function($a) { return -$a; }, $booking['contacts_ids'] )], $lang);
+                    $om->update(self::getType(), $bid, ['contacts_ids' => array_map( function($a) { return -$a; }, $booking['contacts_ids'] )], $lang);
                 }
-                // if customer is a legal person, import all its contacts (non-assigned to a booking)
-                $contacts_ids = $om->search('lodging\sale\booking\Contact', [ ['owner_identity_id', '=', $booking['customer_id.partner_identity_id']], ['booking_id', 'is', null] ]);
+                // if customer has contacts assigned to its identity, import those
+                $contacts_ids = $om->search(\lodging\identity\Contact::getType(), [ ['owner_identity_id', '=', $booking['customer_id.partner_identity_id']], ['relationship', '=', 'contact'] ]);
                 if($contacts_ids <= 0) {
                     $contacts_ids = [];
                 }

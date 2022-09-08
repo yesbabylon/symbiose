@@ -10,13 +10,17 @@ use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\BookingLineRentalUnitAssignement;
 use lodging\realestate\RentalUnit;
 use equal\orm\Domain;
-
+use lodging\sale\booking\BookingLineGroup;
 
 list($params, $providers) = announce([
-    'description'   => "Retrieve the list of available rental units for a given center, during a specific timerange.",
+    'description'   => "Retrieve the list of available rental units for a given sojourn, during a specific timerange.",
     'params'        => [
-        'booking_line_id' =>  [
-            'description'   => 'Specific line for which availability list is requested.',
+        'booking_line_group_id' =>  [
+            'description'   => 'Specific sojourn for which is made the request.',
+            'type'          => 'integer'
+        ],
+        'product_model_id' =>  [
+            'description'   => 'Specific product model for which a matching rental unit list is requested.',
             'type'          => 'integer'
         ],
         'domain' =>  [
@@ -33,47 +37,49 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron']
+    'providers'     => ['context', 'orm']
 ]);
 
 
-list($context, $orm, $cron) = [$providers['context'], $providers['orm'], $providers['cron']];
+list($context, $orm) = [$providers['context'], $providers['orm']];
 
 $result = [];
 
-// retrieve booking line data
-$line = BookingLine::id($params['booking_line_id'])
+// retrieve sojourn data
+$sojourn = BookingLineGroup::id($params['booking_line_group_id'])
     ->read([
-        'product_id',
         'booking_id' => [
+            'id',
             'center_id'
         ],
-        'booking_line_group_id' => [
-            'date_from',
-            'date_to',
-            'time_from',
-            'time_to'
-        ]
+        'date_from',
+        'date_to',
+        'time_from',
+        'time_to'
     ])
     ->first();
 
-if($line) {
-
-    $date_from = $line['booking_line_group_id']['date_from'] + $line['booking_line_group_id']['time_from'];
-    $date_to = $line['booking_line_group_id']['date_to'] + $line['booking_line_group_id']['time_to'];
+if($sojourn) {
+    $date_from = $sojourn['date_from'] + $sojourn['time_from'];
+    $date_to = $sojourn['date_to'] + $sojourn['time_to'];
     // retrieve available rental units based on schedule and product_id
-    $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $line['booking_id']['center_id'], $line['product_id'], $date_from, $date_to);
+    $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $sojourn['booking_id']['center_id'], $params['product_model_id'], $date_from, $date_to);
 
     // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
     // #memo - this leads to an edge case: quote -> option -> quote, update nb_pers or time_from (list is not accurate and might return units that are not free)
-    $booking = Booking::id($line['booking_id']['id'])->read(['consumptions_ids' => ['rental_unit_id']])->first();
+    $booking = Booking::id($sojourn['booking_id']['id'])
+        ->read(['consumptions_ids' => ['rental_unit_id']])
+        ->first();
+
     if($booking) {
         foreach($booking['consumptions_ids'] as $consumption) {
             $rental_units_ids[] = $consumption['rental_unit_id'];
         }
     }
 
-    // remove units already assigned (to prevent providing wrong choices)
+    // remove units already assigned in same booking (to prevent providing wrong choices)
+    // #memo - we cannot do that since the allocation of an accomodation might be splitted on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
+    /*
     if($params['booking_line_id']) {
         $assignments = BookingLineRentalUnitAssignement::search(['booking_id', '=', $line['booking_id']['id']])->read(['rental_unit_id', 'booking_line_id'])->get();
         $used_rental_units_ids = [];
@@ -82,8 +88,12 @@ if($line) {
         }
         $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
     }
+    */
 
-    $rental_units = RentalUnit::ids($rental_units_ids)->read(['id', 'name', 'capacity'])->adapt('txt')->get(true);
+    $rental_units = RentalUnit::ids($rental_units_ids)
+        ->read(['id', 'name', 'capacity'])
+        ->adapt('txt')
+        ->get(true);
 
     $domain = new Domain($params['domain']);
 
