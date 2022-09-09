@@ -87,7 +87,7 @@ foreach($booking_line_groups as $gid => $group) {
                 try {
                     SojournProductModelRentalUnitAssignement::id($aid)->update(['sojourn_product_model_id' => $map[$product_model_id]]);
                 }
-                catch(Exception) {
+                catch(Exception $e) {
                     // ignore errors
                 }
             }
