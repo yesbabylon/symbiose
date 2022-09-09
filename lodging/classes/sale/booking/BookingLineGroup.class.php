@@ -1226,10 +1226,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             // retrieve rental units involved in booking consumptions, if any
             $consumptions = [];
-            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['consumptions_ids.rental_unit_id'], $lang);
+            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['consumptions_ids'], $lang);
             if($bookings > 0 && count($bookings)) {
                 $booking = reset($bookings);
-                $consumptions = $booking['consumptions_ids.rental_unit_id'];
+                $consumptions = $om->read(Consumption::getType(), $booking['consumptions_ids'], ['rental_unit_id', 'product_model_id.is_accomodation'], $lang);
             }
 
             // create a map with all product_model_id within the group
@@ -1326,7 +1326,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     $rental_units_ids = Consumption::getAvailableRentalUnits($om, $center_id, $line['product_id.product_model_id'], $date_from, $date_to);
                     // append rental units from consumptions of own booking (use case: come and go between 'quote' and 'option')
                     foreach($consumptions as $consumption) {
-                        $rental_units_ids[] = $consumption['rental_unit_id'];
+                        if($is_accomodation == $consumption['product_model_id.is_accomodation']) {
+                            $rental_units_ids[] = $consumption['rental_unit_id'];
+                        }
                     }
 
                     // retrieve rental units with matching capacities (best match first)
