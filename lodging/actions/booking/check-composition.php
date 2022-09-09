@@ -6,7 +6,7 @@
 */
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLineGroup;
-use lodging\sale\booking\BookingLineRentalUnitAssignement;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 
 
 list($params, $providers) = announce([
@@ -45,7 +45,7 @@ if(!$booking) {
 }
 
 // retrieve the number of persons involved in sojourns with accomodation
-$assignments = BookingLineRentalUnitAssignement::search([
+$assignments = SojournProductModelRentalUnitAssignement::search([
         ['booking_id', '=', $params['id']],
         ['is_accomodation', '=', true]
     ])

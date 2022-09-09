@@ -8,7 +8,7 @@ use equal\orm\Domain;
 use lodging\sale\booking\BankStatementLine;
 use lodging\identity\Identity;
 use lodging\sale\booking\Booking;
-use lodging\sale\booking\BookingLineRentalUnitAssignement;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 use lodging\sale\booking\Contact;
 use lodging\sale\booking\Funding;
 use sale\booking\Payment;
@@ -188,13 +188,13 @@ if(isset($params['identity_id'])) {
     rental_unit : search amonst rental_unit_assignment
 */
 if(isset($params['rental_unit_id'])) {
-    $assignements = BookingLineRentalUnitAssignement::search(['rental_unit_id', '=', $params['rental_unit_id']])->read(['booking_id'])->get();
+    $assignements = SojournProductModelRentalUnitAssignement::search(['rental_unit_id', '=', $params['rental_unit_id']])->read(['booking_id'])->get();
     if(count($assignements)) {
         if(count($bookings_ids)) {
             $bookings_ids = array_intersect(
-                                $bookings_ids,
-                                array_map(function ($a) { return $a['booking_id']; }, $assignements )
-                            );
+                    $bookings_ids,
+                    array_map(function ($a) { return $a['booking_id']; }, $assignements )
+                );
         }
         else {
             $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $assignements );

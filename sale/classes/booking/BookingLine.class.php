@@ -286,15 +286,6 @@ class BookingLine extends Model {
     }
 
     /**
-     * This method is called upon change on: qty
-     */
-    public static function _createConsumptions($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
-        // done upon status change : when booking status is set to 'option'
-    }
-
-
-    /**
      * For BookingLines the display name is the name of the product it relates to.
      *
      */

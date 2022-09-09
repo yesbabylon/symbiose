@@ -31,6 +31,7 @@ class Consumption extends \sale\booking\Consumption {
                 'onupdate'          => 'onupdateBookingId'
             ],
 
+            // #todo - deprecate : relation bewteen consumptions and lines might be indirect
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -54,10 +55,18 @@ class Consumption extends \sale\booking\Consumption {
                 'ondelete'          => 'cascade'        // delete repair when parent repairing is deleted
             ],
 
+            // #todo - deprecate : only the rental_unit_id matters, and consumptions are created based on product_model (not products)
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
-                'description'       => "The Product this Attribute belongs to.",
+                'description'       => "The Product the consumptiob related to.",
+                'readonly'          => true
+            ],
+
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'description'       => "The Product the consumptiob related to.",
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -169,7 +178,7 @@ class Consumption extends \sale\booking\Consumption {
                 }
             }
         }
-        $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_updateTimeSlotId', $oids, $values, $lang);
     }
 
     /**
@@ -367,16 +376,24 @@ class Consumption extends \sale\booking\Consumption {
     public static function getAvailableRentalUnits($om, $center_id, $product_model_id, $date_from, $date_to) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:getAvailableRentalUnits", QN_REPORT_DEBUG);
 
-        $models = $om->read('lodging\sale\catalog\ProductModel', $product_model_id, [
-            'type','service_type','is_accomodation','schedule_offset','schedule_type',
-            'rental_unit_assignement', 'rental_unit_category_id', 'rental_unit_id', 'capacity'
-        ]);
+        $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $product_model_id, [
+                'type',
+                'service_type',
+                'is_accomodation',
+                'schedule_offset',
+                'schedule_type',
+                'rental_unit_assignement',
+                'rental_unit_category_id',
+                'rental_unit_id',
+                'capacity'
+            ]);
 
         if($models <= 0 || count($models) < 1) {
             return [];
         }
 
         $product_model = reset($models);
+
         $product_type = $product_model['type'];
         $service_type = $product_model['service_type'];
         $rental_unit_assignement = $product_model['rental_unit_assignement'];

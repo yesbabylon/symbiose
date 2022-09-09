@@ -19,7 +19,6 @@ class Booking extends \sale\booking\Booking {
     /** @property \lodging\sale\booking\Contract            contracts_ids               */
 
     public static function getColumns() {
-
         return [
 
             'name' => [
@@ -90,8 +89,7 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => Consumption::getType(),
                 'foreign_field'     => 'booking_id',
                 'description'       => 'Consumptions related to the booking.',
-                // consumptions are also created for resulting blocked (link) or partially blocked (part) units
-                'domain'            => ['type', '=', 'book']
+                'ondetach'          => 'delete'
             ],
 
             'booking_lines_ids' => [
@@ -111,11 +109,12 @@ class Booking extends \sale\booking\Booking {
                 'onupdate'          => 'onupdateBookingLinesGroupsIds'
             ],
 
-            'rental_unit_assignments_ids' => [
+            'sojourn_product_models_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\BookingLineRentalUnitAssignement',
-                'foreign_field'     => 'booking_id',
-                'description'       => 'Rental units assignments related to the booking.'
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModel',
+                'foreign_field'     => 'booking_line_group_id',
+                'description'       => "The product models groups assigned to the sojourn (from lines).",
+                'ondetach'          => 'delete'
             ],
 
             'fundings_ids' => [
@@ -633,6 +632,400 @@ class Booking extends \sale\booking\Booking {
         }
 
         return parent::canupdate($om, $oids, $values, $lang);
+    }
+
+
+    /**
+     * Resets and recreates booking consumptions from bookinglines and rental units assignements.
+     * This method is called upon setting booking status to 'option' or 'confirmed' (#see `option.php`)
+     * #memo - consumptions are used in the planning.
+     *
+     */
+    public static function createConsumptions($om, $oids, $values, $lang) {
+        // Reset consumptions (updating consumptions_ids will trigger ondetach event).
+        $lines = $om->read(self::getType(), $oids, ['consumptions_ids'], $lang);
+
+        foreach($lines as $lid => $line) {
+            $om->update(self::getType(), $lid, ['consumptions_ids' => array_map(function($a) { return "-$a";}, $line['consumptions_ids'])]);
+        }
+
+        // Get in-memory list of consumptions for all lines.
+        $consumptions = $om->call(self::getType(), 'getResultingConsumptions', $oids, [], $lang);
+
+        // Create consumptions objects.
+        foreach($consumptions as $consumption) {
+            $om->create(Consumption::getType(), $consumption, $lang);
+        }
+    }
+
+
+    /**
+     * Process BookingLines to create an in-memory list of consumptions objects.
+     *
+     */
+    public static function getResultingConsumptions($om, $oids, $values, $lang) {
+
+        // resulting consumptions objects
+        $consumptions = [];
+
+        $bookings = $om->read(self::getType(), $oids, [
+                'center_id',
+                'booking_lines_groups_ids',
+                'sojourn_product_models_ids'
+            ], $lang);
+
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+
+                $groups = $om->read(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], [
+                        'booking_lines_ids',
+                        'nb_pers',
+                        'nb_nights',
+                        'date_from',
+                        'time_from',
+                        'time_to',
+                        'age_range_assignments_ids',
+                        'rental_unit_assignments_ids',
+                        'meal_preferences_ids'
+                    ],
+                    $lang);
+
+                if($groups > 0) {
+
+                    // pass-1 : create consumptions for rental_units
+                    foreach($groups as $gid => $group) {
+                        // retrieve assigned rental units (assigned during booking)
+
+                        $sojourn_products_models_ids = $om->search(SojournProductModel::getType(), ['booking_line_group_id', '=', $gid]);
+                        if($sojourn_products_models_ids <= 0) {
+                            continue;
+                        }
+                        $sojourn_product_models = $om->read(SojournProductModel::getType(), $sojourn_products_models_ids, [
+                                'product_model_id',
+                                'product_model_id.is_accomodation',
+                                'product_model_id.qty_accounting_method',
+                                'product_model_id.schedule_offset',
+                                'product_model_id.schedule_default_value',
+                                'rental_unit_assignments_ids'
+                            ]);
+                        if($sojourn_product_models <= 0) {
+                            continue;
+                        }
+                        foreach($sojourn_product_models as $spid => $spm) {
+                            $rental_units_assignments = $om->read(SojournProductModelRentalUnitAssignement::getType(), $spm['rental_unit_assignments_ids'], ['rental_unit_id','qty']);
+                            // retrieve all involved rental units (limited to 2 levels above and 2 levels below)
+                            $rental_units = [];
+                            if($rental_units_assignments > 0) {
+                                $rental_units_ids = array_map(function ($a) { return $a['rental_unit_id']; }, array_values($rental_units_assignments));
+
+                                // fetch 2 levels of rental units identifiers
+                                for($i = 0; $i < 2; ++$i) {
+                                    $units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
+                                    if($units > 0) {
+                                        foreach($units as $uid => $unit) {
+                                            if($unit['parent_id'] > 0) {
+                                                $rental_units_ids[] = $unit['parent_id'];
+                                            }
+                                            if(count($unit['children_ids'])) {
+                                                foreach($unit['children_ids'] as $uid) {
+                                                    $rental_units_ids[] = $uid;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // read all involved rental units
+                                $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
+                            }
+
+                            $nb_nights  = $group['nb_nights'];
+                            $nb_times = $group['nb_pers'];
+
+                            if($spm['product_model_id.qty_accounting_method'] == 'accomodation') {
+                                $nb_times = 1;  // an accomodation is accounted independently from the number of persons
+                            }
+
+                            list($day, $month, $year) = [ date('j', $group['date_from']), date('n', $group['date_from']), date('Y', $group['date_from']) ];
+
+                            // retrieve default time for consumption
+                            list($hour_from, $minute_from, $hour_to, $minute_to) = [12, 0, 13, 0];
+                            $schedule_default_value = $spm['product_model_id.schedule_default_value'];
+                            if(strpos($schedule_default_value, ':')) {
+                                $parts = explode('-', $schedule_default_value);
+                                list($hour_from, $minute_from) = explode(':', $parts[0]);
+                                list($hour_to, $minute_to) = [$hour_from+1, $minute_from];
+                                if(count($parts) > 1) {
+                                    list($hour_to, $minute_to) = explode(':', $parts[1]);
+                                }
+                            }
+
+                            $schedule_from  = $hour_from * 3600 + $minute_from * 60;
+                            $schedule_to    = $hour_to * 3600 + $minute_to * 60;
+
+                            // fetch the offset, in days, for the scheduling
+                            $offset = $spm['product_model_id.schedule_offset'];
+
+                            // #todo - we don't check (yet) for daily variations (from booking lines)
+
+                            $is_first = true;
+                            for($i = 0; $i < $nb_nights; ++$i) {
+                                $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
+                                $c_schedule_from = $schedule_from;
+                                $c_schedule_to = $schedule_to;
+
+                                // first consumption has to match the checkin time of the sojourn (from group)
+                                if($is_first) {
+                                    $is_first = false;
+                                    $diff = $c_schedule_to - $schedule_from;
+                                    $c_schedule_from = $group['time_from'];
+                                    $c_schedule_to = $c_schedule_from + $diff;
+                                }
+
+                                // if day is not the arrival day
+                                if($i > 0) {
+                                    $c_schedule_from = 0;               // midnight same day
+                                }
+
+                                if($i == $nb_nights) {                  // last day
+                                    $c_schedule_to = $group['time_to'];
+                                }
+                                else {
+                                    $c_schedule_to = 24 * 3600;         // midnight next day
+                                }
+
+                                if($rental_units_assignments > 0) {
+                                    foreach($rental_units_assignments as $assignment) {
+                                        $rental_unit_id = $assignment['rental_unit_id'];
+                                        $consumption = [
+                                            'booking_id'            => $bid,
+                                            'booking_line_group_id' => $gid,
+                                            'center_id'             => $booking['center_id'],
+                                            'date'                  => $c_date,
+                                            'schedule_from'         => $c_schedule_from,
+                                            'schedule_to'           => $c_schedule_to,
+                                            'product_model_id'      => $spm['product_model_id'],
+                                            'age_range_id'          => null,
+                                            'is_rental_unit'        => true,
+                                            'is_accomodation'       => $spm['product_model_id.is_accomodation'],
+                                            'is_meal'               => false,
+                                            'rental_unit_id'        => $rental_unit_id,
+                                            'qty'                   => $assignment['qty'],
+                                            'type'                  => 'book'
+                                        ];
+                                        $consumptions[] = $consumption;
+
+                                        // 1) recurse through children : all child units are blocked as 'link'
+                                        $children_ids = [];
+                                        $children_stack = (isset($rental_units[$rental_unit_id]) && isset($rental_units[$rental_unit_id]['children_ids']))?$rental_units[$rental_unit_id]['children_ids']:[];
+                                        while(count($children_stack)) {
+                                            $unit_id = array_pop($children_stack);
+                                            $children_ids[] = $unit_id;
+                                            if(isset($rental_units[$unit_id]) && $rental_units[$unit_id]['children_ids']) {
+                                                foreach($units[$unit_id]['children_ids'] as $child_id) {
+                                                    $children_stack[] = $child_id;
+                                                }
+                                            }
+                                        }
+
+                                        foreach($children_ids as $child_id) {
+                                            $consumption['type'] = 'link';
+                                            $consumption['rental_unit_id'] = $child_id;
+                                            $consumptions[] = $consumption;
+                                        }
+
+                                        // 2) loop through parents : if a parent has 'can_partial_rent', it is partially blocked as 'part', otherwise fully blocked as 'link'
+                                        $parents_ids = [];
+                                        $unit_id = $rental_unit_id;
+
+                                        while( isset($rental_units[$unit_id]) ) {
+                                            $parent_id = $rental_units[$unit_id]['parent_id'];
+                                            if($parent_id > 0) {
+                                                $parents_ids[] = $parent_id;
+                                            }
+                                            $unit_id = $parent_id;
+                                        }
+
+                                        foreach($parents_ids as $parent_id) {
+                                            $consumption['type'] = ($rental_units[$parent_id]['can_partial_rent'])?'part':'link';
+                                            $consumption['rental_unit_id'] = $parent_id;
+                                            $consumptions[] = $consumption;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // pass-2 : create consumptions for booking lines targeting non-rental_unit products (any other schedulable product)
+                    foreach($groups as $gid => $group) {
+
+                        $lines = $om->read(BookingLine::getType(), $group['booking_lines_ids'], [
+                                'product_id',
+                                'qty',
+                                'qty_vars',
+                                'product_id.product_model_id',
+                                'product_id.has_age_range',
+                                'product_id.age_range_id'
+                            ],
+                            $lang);
+
+                        if($lines > 0 && count($lines)) {
+                            $is_first = true;
+
+                            // read all related product models at once
+                            $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
+                            $product_models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $product_models_ids, [
+                                    'type',
+                                    'service_type',
+                                    'schedule_offset',
+                                    'schedule_type',
+                                    'schedule_default_value',
+                                    'qty_accounting_method',
+                                    'has_duration',
+                                    'duration',
+                                    'is_rental_unit',
+                                    'is_accomodation',
+                                    'is_meal'
+                                ]);
+
+                            // create consumptions according to each line product and quantity
+                            foreach($lines as $lid => $line) {
+
+                                if($line['qty'] <= 0) {
+                                    continue;
+                                }
+                                // ignore rental units : these are already been handled for the booking (grouped in SPM rental unit assignments)
+                                if($product_models[$line['product_id.product_model_id']]['is_rental_unit']) {
+                                    continue;
+                                }
+
+                                $product_type = $product_models[$line['product_id.product_model_id']]['type'];
+                                $service_type = $product_models[$line['product_id.product_model_id']]['service_type'];
+                                $has_duration = $product_models[$line['product_id.product_model_id']]['has_duration'];
+
+                                // consumptions are schedulable services
+                                if($product_type != 'service' || $service_type != 'schedulable') {
+                                    continue;
+                                }
+
+                                // retrieve default time for consumption
+                                list($hour_from, $minute_from, $hour_to, $minute_to) = [12, 0, 13, 0];
+                                $schedule_default_value = $product_models[$line['product_id.product_model_id']]['schedule_default_value'];
+                                if(strpos($schedule_default_value, ':')) {
+                                    $parts = explode('-', $schedule_default_value);
+                                    list($hour_from, $minute_from) = explode(':', $parts[0]);
+                                    list($hour_to, $minute_to) = [$hour_from+1, $minute_from];
+                                    if(count($parts) > 1) {
+                                        list($hour_to, $minute_to) = explode(':', $parts[1]);
+                                    }
+                                }
+                                $schedule_from  = $hour_from * 3600 + $minute_from * 60;
+                                $schedule_to    = $hour_to * 3600 + $minute_to * 60;
+
+                                $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
+                                $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
+
+                                // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
+                                $nb_products = $group['nb_nights'];
+                                $nb_times = $group['nb_pers'];
+
+                                // adapt nb_pers based on if product from line has age_range
+                                if($qty_accounting_method == 'person') {
+                                    $age_assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['age_range_id', 'qty']);
+                                    if($line['product_id.has_age_range']) {
+                                        foreach($age_assignments as $aid => $assignment) {
+                                            if($assignment['age_range_id'] == $line['product_id.age_range_id']) {
+                                                $nb_times = $assignment['qty'];
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if($has_duration) {
+                                    $nb_products = $product_models[$line['product_id.product_model_id']]['duration'];
+                                }
+
+                                list($day, $month, $year) = [ date('j', $group['date_from']), date('n', $group['date_from']), date('Y', $group['date_from']) ];
+                                // fetch the offset, in days, for the scheduling
+                                $offset = $product_models[$line['product_id.product_model_id']]['schedule_offset'];
+
+                                $days_nb_times = array_fill(0, $nb_products, $nb_times);
+
+                                if( $qty_accounting_method == 'person' && ($nb_times * $nb_products) != $line['qty']) {
+                                    // $nb_times varies from one day to another : load specific days_nb_times array
+                                    $qty_vars = json_decode($line['qty_vars']);
+                                    // qty_vars is set and valid
+                                    if($qty_vars) {
+                                        $i = 0;
+                                        foreach($qty_vars as $variation) {
+                                            if($nb_products < $i+1) {
+                                                break;
+                                            }
+                                            $days_nb_times[$i] = $nb_times + $variation;
+                                            ++$i;
+                                        }
+                                    }
+                                }
+
+                                // $nb_products represent each day of the stay
+                                for($i = 0; $i < $nb_products; ++$i) {
+                                    $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
+                                    $c_schedule_from = $schedule_from;
+                                    $c_schedule_to = $schedule_to;
+
+                                    // first consumption has to match the checkin time of the sojourn (from group)
+                                    if($is_first) {
+                                        $is_first = false;
+                                        $diff = $c_schedule_to - $schedule_from;
+                                        $c_schedule_from = $group['time_from'];
+                                        $c_schedule_to = $c_schedule_from + $diff;
+                                    }
+
+                                    // create a single consumption with the quantity set accordingly (may vary from one day to another)
+
+                                    $consumption = [
+                                        'booking_id'            => $bid,
+                                        'booking_line_group_id' => $gid,
+                                        'booking_line_id'       => $lid,
+                                        'center_id'             => $booking['center_id'],
+                                        'date'                  => $c_date,
+                                        'schedule_from'         => $c_schedule_from,
+                                        'schedule_to'           => $c_schedule_to,
+                                        'product_model_id'      => $line['product_id.product_model_id'],
+                                        'age_range_id'          => $line['product_id.age_range_id'],
+                                        'is_rental_unit'        => false,
+                                        'is_accomodation'       => false,
+                                        'is_meal'               => $is_meal,
+                                        'qty'                   => $days_nb_times[$i],
+                                        'type'                  => 'book'
+                                    ];
+                                    // for meals, we add the age ranges and prefs with the description field
+                                    if($is_meal) {
+                                        $description = '';
+                                        $age_range_assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['age_range_id.name','qty'], $lang);
+                                        $meal_preferences = $om->read(\sale\booking\MealPreference::getType(), $group['meal_preferences_ids'], ['type','pref', 'qty'], $lang);
+                                        foreach($age_range_assignments as $oid => $assignment) {
+                                            $description .= "<p>{$assignment['age_range_id.name']} : {$assignment['qty']} ; </p>";
+                                        }
+                                        foreach($meal_preferences as $oid => $preference) {
+                                            // #todo : use translation file
+                                            $type = ($preference['type'] == '3_courses')?'3 services':'2 services';
+                                            $pref = ($preference['pref'] == 'veggie')?'végétarien':(($preference['pref'] == 'allergen_free')?'sans allergène':'normal');
+
+                                            $description .= "<p>{$type} / {$pref} : {$preference['qty']} ; </p>";
+                                        }
+                                        $consumption['description'] = $description;
+                                    }
+                                    $consumptions[] = $consumption;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $consumptions;
     }
 
 }

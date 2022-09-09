@@ -53,7 +53,8 @@ class SojournProductModelRentalUnitAssignement extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => 'Rental unit assigned to booking line.',
-                'ondelete'          => 'null'
+                'ondelete'          => 'null',
+                'onupdate'          => 'onupdateRentalUnitId'
             ],
 
             'is_accomodation' => [
@@ -69,11 +70,15 @@ class SojournProductModelRentalUnitAssignement extends Model {
 
     public static function calcIsAccomodation($om, $ids, $lang) {
         $result = [];
-        $models = $om->read(self::getType(), $ids, ['rental_unit_id.is_accomodation'], $lang);
-        foreach($models as $oid => $model) {
-            $result[$oid] = $model['rental_unit_id.is_accomodation'];
+        $assignments = $om->read(self::getType(), $ids, ['rental_unit_id.is_accomodation'], $lang);
+        foreach($assignments as $oid => $assignment) {
+            $result[$oid] = $assignment['rental_unit_id.is_accomodation'];
         }
         return $result;
+    }
+
+    public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
+        $om->update(self::getType(), $oids, ['is_accomodation' => null], $lang);
     }
 
     public function getUnique() {

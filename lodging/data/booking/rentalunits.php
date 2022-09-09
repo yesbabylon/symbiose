@@ -6,8 +6,6 @@
 */
 use lodging\sale\booking\Consumption;
 use lodging\sale\booking\Booking;
-use lodging\sale\booking\BookingLine;
-use lodging\sale\booking\BookingLineRentalUnitAssignement;
 use lodging\realestate\RentalUnit;
 use equal\orm\Domain;
 use lodging\sale\booking\BookingLineGroup;
@@ -79,16 +77,6 @@ if($sojourn) {
 
     // remove units already assigned in same booking (to prevent providing wrong choices)
     // #memo - we cannot do that since the allocation of an accomodation might be splitted on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
-    /*
-    if($params['booking_line_id']) {
-        $assignments = BookingLineRentalUnitAssignement::search(['booking_id', '=', $line['booking_id']['id']])->read(['rental_unit_id', 'booking_line_id'])->get();
-        $used_rental_units_ids = [];
-        foreach($assignments as $assignment) {
-            $used_rental_units_ids[] = $assignment['rental_unit_id'];
-        }
-        $rental_units_ids = array_diff($rental_units_ids, $used_rental_units_ids);
-    }
-    */
 
     $rental_units = RentalUnit::ids($rental_units_ids)
         ->read(['id', 'name', 'capacity'])

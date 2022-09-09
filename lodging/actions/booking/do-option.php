@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Consumption;
 
@@ -63,7 +62,6 @@ list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm
 $booking = Booking::id($params['id'])
                   ->read([
                       'status',
-                      'booking_lines_ids',
                       'is_price_tbc'
                    ])
                   ->first();
@@ -123,10 +121,8 @@ foreach($errors as $error) {
     If consumptions already exist, they're removed before hand.
 */
 
-// remove consumptions, if any (link & part)
-Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 // re-create consumptions
-$orm->call('lodging\sale\booking\BookingLine', '_createConsumptions', $booking['booking_lines_ids']);
+$orm->call(Booking::getType(), 'createConsumptions', $params['id']);
 
 /*
     Update alerts & cron jobs

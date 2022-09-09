@@ -43,17 +43,14 @@ $user_id = $auth->userId();
 
 // read groups and nb_pers from the targeted booking object, and subsequent lines (make sure user has access to it)
 $booking = Booking::id($params['booking_id'])
-                  ->read([
-                        'customer_identity_id' => ['type', 'firstname', 'lastname', 'gender', 'date_of_birth', 'email', 'phone', 'address_street', 'address_city', 'address_country'],
-                        'booking_lines_groups_ids' => [
-                            'nb_pers',
-                            'booking_lines_ids' => [
-                                'id', 'is_accomodation', 'rental_unit_id',
-                                'rental_unit_assignments_ids' => ['qty', 'rental_unit_id']
-                            ]
-                        ]
-                   ])
-                   ->first();
+    ->read([
+        'customer_identity_id' => ['type', 'firstname', 'lastname', 'gender', 'date_of_birth', 'email', 'phone', 'address_street', 'address_city', 'address_country'],
+        'booking_lines_groups_ids' => [
+            'nb_pers',
+            'rental_unit_assignments_ids' => ['qty', 'rental_unit_id']
+        ]
+    ])
+    ->first();
 
 if(!$booking) {
     throw new Exception('unknown_booking', QN_ERROR_INVALID_PARAM);
@@ -80,22 +77,18 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
     */
 
     $rental_units_map = [];
-    foreach($group['booking_lines_ids'] as $line) {
-        if($line['is_accomodation']) {
-            foreach($line['rental_unit_assignments_ids'] as $assignment) {
+    foreach($group['rental_unit_assignments_ids'] as $assignment) {
 
-                $rental_unit_id = $assignment['rental_unit_id'];
-                $rental_unit = RentalUnit::id($rental_unit_id)->read(['capacity', 'has_children', 'children_ids'])->first();
-                if($rental_unit) {
-                    if($rental_unit['has_children'] && $rental_unit['capacity'] > 10) {
-                        foreach($rental_unit['children_ids'] as $child_id) {
-                            $rental_units_map[$child_id] = true;
-                        }
-                    }
-                    else {
-                        $rental_units_map[$rental_unit_id] = true;
-                    }
+        $rental_unit_id = $assignment['rental_unit_id'];
+        $rental_unit = RentalUnit::id($rental_unit_id)->read(['capacity', 'has_children', 'children_ids'])->first();
+        if($rental_unit) {
+            if($rental_unit['has_children'] && $rental_unit['capacity'] > 10) {
+                foreach($rental_unit['children_ids'] as $child_id) {
+                    $rental_units_map[$child_id] = true;
                 }
+            }
+            else {
+                $rental_units_map[$rental_unit_id] = true;
             }
         }
     }
@@ -160,7 +153,7 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
                     $item['phone'] = $booking['customer_identity_id']['phone'];
                     $item['address'] = $booking['customer_identity_id']['address_street'].' '.$booking['customer_identity_id']['address_city'];
                     $item['country'] = $booking['customer_identity_id']['address_country'];
-                }                
+                }
                 $is_first = false;
             }
             CompositionItem::create($item);
@@ -171,7 +164,5 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
 
 
 $context->httpResponse()
-        // ->status(204)
-        ->status(200)
-        ->body([])
+        ->status(204)
         ->send();

@@ -6,7 +6,7 @@
 */
 
 use lodging\sale\booking\Booking;
-use lodging\sale\booking\BookingLineRentalUnitAssignement;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 
 list($params, $providers) = announce([
     'description'   => "Sets booking as checked out.",
@@ -42,7 +42,7 @@ Booking::id($params['id'])->update(['status' => 'checkedout']);
 
 // mark involved rental_units as ready (no more customer occupying)
 // retrieve accomodations assigned to the booking
-$assignments_ids = BookingLineRentalUnitAssignement::search([
+$assignments_ids = SojournProductModelRentalUnitAssignement::search([
         ['booking_id', '=', $params['id']],
         ['is_accomodation', '=', true]
     ])

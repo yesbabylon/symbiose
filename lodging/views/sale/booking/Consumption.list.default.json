@@ -12,20 +12,26 @@
         "items": [
             {
                 "type": "field",
+                "value": "date",
+                "width": "10%",
+                "visible": false
+            },
+            {
+                "type": "field",
                 "label": "Product",
-                "value": "product_id",
-                "width": "30%"
+                "value": "product_model_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "Age",
+                "value": "age_range_id",
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "qty",
                 "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "date",
-                "width": "0%",
-                "visible": false
             },
             {
                 "type": "field",

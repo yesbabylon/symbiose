@@ -597,7 +597,18 @@ else if ($installment_amount > 0) {
     Generate consumptions map
 */
 
-$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])->read(['id', 'date', 'qty', 'is_meal', 'rental_unit_id', 'is_accomodation', 'time_slot_id', 'schedule_to'])->get();
+$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])
+    ->read([
+        'id',
+        'date',
+        'qty',
+        'is_meal',
+        'rental_unit_id',
+        'is_accomodation',
+        'time_slot_id',
+        'schedule_to'
+    ])
+    ->get();
 
 $days_names = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 $consumptions_map = [];
