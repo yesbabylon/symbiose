@@ -170,8 +170,7 @@ class Consumption extends Model {
             'age_range_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\AgeRange',
-                'description'       => 'Customers age range the product is intended for.',
-                'visible'           => [ ['has_age_range', '=', true] ]
+                'description'       => 'Customers age range the product is intended for.'
             ]
 
         ];

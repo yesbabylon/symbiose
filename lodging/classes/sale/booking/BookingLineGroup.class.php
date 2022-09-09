@@ -1053,9 +1053,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         foreach($groups as $gid => $group) {
 
-            /*
-                Update current group according to selected pack
-            */
+            // 1) Update current group according to selected pack
 
             // might need to update price_id
             if($group['pack_id.product_model_id.has_own_price']) {
@@ -1065,12 +1063,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $om->update(self::getType(), $gid, ['is_locked' => $group['pack_id.is_locked'] ], $lang);
             }
 
-            // remove existing booking_lines (updating booking_lines_ids will trigger ondetach events)
-            $om->update(self::getType(), $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
-
-            /*
-                Create booking lines according to pack composition
-            */
+            // retrieve the composition of the pack
             $pack_lines = $om->read('lodging\sale\catalog\PackLine', $group['pack_id.pack_lines_ids'], [
                 'child_product_model_id',
                 'has_own_qty',
@@ -1079,6 +1072,25 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'own_duration',
                 'child_product_model_id.qty_accounting_method'
             ]);
+
+            $pack_product_models_ids = array_map(function($a) {return $a['child_product_model_id'];}, $pack_lines);
+
+            // remove booking lines that are part of the pack (others might have been added manually, we leave them untouched)
+            $booking_lines = $om->read(BookingLine::getType(), $group['booking_lines_ids'], ['product_id.product_model_id'], $lang);
+            if($booking_lines > 0) {
+                $filtered_lines_ids = [];
+                foreach($booking_lines as $lid => $line) {
+                    if(in_array($line['product_id.product_model_id'], $pack_product_models_ids) ) {
+                        $filtered_lines_ids[] = $lid;
+                    }
+                }
+                // remove existing booking_lines (updating booking_lines_ids will trigger ondetach events)
+                $om->update(self::getType(), $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $filtered_lines_ids)]);
+            }
+
+
+            // 2) Create booking lines according to pack composition.
+
             $order = 1;
 
             // retrieve age_range assignements (there must be at least one)
