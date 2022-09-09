@@ -68,7 +68,7 @@ class Consumption extends \sale\booking\Consumption {
                 'foreign_object'    => 'lodging\sale\catalog\ProductModel',
                 'description'       => "The Product the consumptiob related to.",
                 'required'          => true,
-                // 'readonly'          => true
+                'readonly'          => true
             ],
 
             'rental_unit_id' => [

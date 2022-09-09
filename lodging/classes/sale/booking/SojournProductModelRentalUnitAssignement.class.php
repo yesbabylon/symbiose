@@ -103,7 +103,7 @@ class SojournProductModelRentalUnitAssignement extends Model {
         if($lines > 0) {
             foreach($lines as $line) {
                 if(!in_array($line['booking_id.status'], ['quote', 'checkedout'])) {
-                    // return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
                 }
             }
         }
