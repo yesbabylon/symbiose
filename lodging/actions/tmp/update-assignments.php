@@ -84,7 +84,12 @@ foreach($booking_line_groups as $gid => $group) {
             $product_model_id = $assignment['sojourn_product_model_id']['product_model_id'];
 
             if($assignment['sojourn_product_model_id']['id'] != $map[$product_model_id]) {
-                SojournProductModelRentalUnitAssignement::id($aid)->update(['sojourn_product_model_id' => $map[$product_model_id]]);
+                try {
+                    SojournProductModelRentalUnitAssignement::id($aid)->update(['sojourn_product_model_id' => $map[$product_model_id]]);
+                }
+                catch(Exception) {
+                    // ignore errors
+                }
             }
         }
     }

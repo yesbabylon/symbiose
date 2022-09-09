@@ -274,7 +274,6 @@ class BookingLine extends \sale\booking\BookingLine {
                 }
 
                 if($qty != $line['qty'] || $line['is_rental_unit']) {
-                    // make sure qty is updated in order to re-assign the rental units
                     $om->update(self::getType(), $lid, ['qty' => $qty]);
                 }
             }
