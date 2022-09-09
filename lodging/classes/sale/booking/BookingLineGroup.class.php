@@ -402,10 +402,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     public static function onupdateHasPack($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeHasPack", QN_REPORT_DEBUG);
 
-        $groups = $om->read(self::getType(), $oids, ['has_pack']);
+        $groups = $om->read(self::getType(), $oids, ['has_pack', 'booking_lines_ids']);
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
                 if(!$group['has_pack']) {
+                    // remove existing booking_lines
+                    $om->update(self::getType(), $gid, ['booking_lines_ids' => array_map(function($a) { return "-$a";}, $group['booking_lines_ids'])]);
+                    // reset lock and pack_id
                     $om->update(self::getType(), $gid, ['is_locked' => false, 'pack_id' => null ]);
                 }
             }
