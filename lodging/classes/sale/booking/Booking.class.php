@@ -739,10 +739,15 @@ class Booking extends \sale\booking\Booking {
                             }
 
                             $nb_nights  = $group['nb_nights'];
-                            $nb_times = $group['nb_pers'];
 
-                            if($spm['product_model_id.qty_accounting_method'] == 'accomodation') {
-                                $nb_times = 1;  // an accomodation is accounted independently from the number of persons
+                            if($spm['product_model_id.qty_accounting_method'] == 'person') {
+                                // #todo - we don't check (yet) for daily variations (from booking lines)
+                                // rental_units_assignments.qty should be adapted on a daily basis
+                                /*
+                                    pour les product_model_id comptabilisés à la personne
+                                    on prend toutes les lignes et on extrait les qty_vars, qu'on additionne à group.nb_pers
+                                    on a donc les qty par date
+                                */
                             }
 
                             list($day, $month, $year) = [ date('j', $group['date_from']), date('n', $group['date_from']), date('Y', $group['date_from']) ];
@@ -764,8 +769,6 @@ class Booking extends \sale\booking\Booking {
 
                             // fetch the offset, in days, for the scheduling
                             $offset = $spm['product_model_id.schedule_offset'];
-
-                            // #todo - we don't check (yet) for daily variations (from booking lines)
 
                             $is_first = true;
                             for($i = 0; $i < $nb_nights; ++$i) {

@@ -492,7 +492,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
 
             // always update nb_pers
-            // to make sure to trigger self::_updatePriceAdapters and BookingLine::_updateQty
+            // to make sure to trigger self::updatePriceAdapters and BookingLine::_updateQty
             $updated_fields['nb_pers'] = $group['nb_pers'];
             if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation' && $group['pack_id.product_model_id.capacity'] > 0) {
                 $updated_fields['nb_pers'] = $group['pack_id.product_model_id.capacity'];
@@ -508,7 +508,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
         $om->update(self::getType(), $oids, ['nb_nights' => null ]);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
@@ -533,7 +533,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
 
         $om->update(self::getType(), $oids, ['nb_nights' => null ]);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
 
         // update bookinglines
@@ -604,13 +604,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
         }
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateSojournTypeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangeSojournTypeId", QN_REPORT_DEBUG);
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
     }
 
     public static function onupdateNbPers($om, $oids, $values, $lang) {
@@ -651,7 +651,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         // 4) update dependencies
         $om->callonce(self::getType(), '_createRentalUnitsAssignments', $oids, [], $lang);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
     }
@@ -797,8 +797,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      *
      * (This method is called upon booking_id.customer_id change)
      */
-    public static function _updatePriceAdapters($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:_updatePriceAdapters (".implode(',', $oids).")", QN_REPORT_DEBUG);
+    public static function updatePriceAdapters($om, $oids, $values, $lang) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:updatePriceAdapters (".implode(',', $oids).")", QN_REPORT_DEBUG);
         /*
             Remove all previous price adapters that were automatically created
         */
@@ -1037,6 +1037,235 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
 
+    public static function updatePriceAdaptersFromLines($om, $oids, $booking_lines_ids, $lang) {
+        /*
+            Remove all previous price adapters relating to given lines were automatically created
+        */
+        $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [ ['booking_line_id', 'in', $booking_lines_ids], ['is_manual_discount','=', false]]);
+
+        $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
+
+        $line_groups = $om->read(self::getType(), $oids, [
+                'rate_class_id',
+                'sojourn_type_id',
+                'date_from',
+                'date_to',
+                'nb_pers',
+                'nb_nights',
+                'booking_id',
+                'is_locked',
+                'booking_lines_ids',
+                'booking_id.nb_pers',
+                'booking_id.customer_id.count_booking_24',
+                'booking_id.center_id.season_category_id',
+                'booking_id.center_id.discount_list_category_id'
+            ]);
+
+        foreach($line_groups as $group_id => $group) {
+            /*
+                Find the first Discount List that matches the booking dates
+            */
+
+            // the discount list category to use is the one defined for the center, unless it is ('GA' or 'GG') AND sojourn_type <> category.name
+            $discount_category_id = $group['booking_id.center_id.discount_list_category_id'];
+
+            if(in_array($discount_category_id, [1 /*GA*/, 2 /*GG*/]) && $discount_category_id != $group['sojourn_type_id']) {
+                $discount_category_id = $group['sojourn_type_id'];
+            }
+
+            $discount_lists_ids = $om->search('sale\discount\DiscountList', [
+                ['rate_class_id', '=', $group['rate_class_id']],
+                ['discount_list_category_id', '=', $discount_category_id],
+                ['valid_from', '<=', $group['date_from']],
+                ['valid_until', '>=', $group['date_from']]
+            ]);
+
+            $discount_lists = $om->read('sale\discount\DiscountList', $discount_lists_ids, ['id', 'discounts_ids', 'rate_min', 'rate_max']);
+            $discount_list_id = 0;
+            $discount_list = null;
+            if($discount_lists > 0 && count($discount_lists)) {
+                // use first match (there should alwasy be only one or zero)
+                $discount_list = array_pop($discount_lists);
+                $discount_list_id = $discount_list['id'];
+                trigger_error("QN_DEBUG_ORM:: match with discount List {$discount_list_id}", QN_REPORT_DEBUG);
+            }
+            else {
+                trigger_error("QN_DEBUG_ORM:: no discount List found", QN_REPORT_DEBUG);
+            }
+
+            /*
+                Search for matching Discounts within the found Discount List
+            */
+            if($discount_list_id) {
+                $operands = [];
+                $operands['count_booking_24'] = $group['booking_id.customer_id.count_booking_24'];
+                // duration in nights
+                $operands['duration'] = $group['nb_nights'];
+                // number of participants
+                $operands['nb_pers'] = $group['nb_pers'];
+
+                $date = $group['date_from'];
+
+                /*
+                    Pick up the first season period that matches the year and the season category of the center
+                */
+
+                $year = date('Y', $date);
+                $seasons_ids = $om->search('sale\season\SeasonPeriod', [
+                    ['season_category_id', '=', $group['booking_id.center_id.season_category_id']],
+                    ['date_from', '<=', $group['date_from']],
+                    ['date_to', '>=', $group['date_from']],
+                    ['year', '=', $year]
+                ]);
+
+                $periods = $om->read('sale\season\SeasonPeriod', $seasons_ids, ['id', 'season_type_id.name']);
+                if($periods > 0 && count($periods)){
+                    $period = array_shift($periods);
+                    $operands['season'] = $period['season_type_id.name'];
+                }
+
+                $discounts = $om->read('sale\discount\Discount', $discount_list['discounts_ids'], ['value', 'type', 'conditions_ids']);
+
+                // filter discounts based on related conditions
+                $discounts_to_apply = [];
+                // keep track of the final rate (for discounts with type 'percent')
+                $rate_to_apply = 0;
+
+                // filter discounts to be applied on booking lines
+                foreach($discounts as $discount_id => $discount) {
+                    $conditions = $om->read('sale\discount\Condition', $discount['conditions_ids'], ['operand', 'operator', 'value']);
+                    $valid = true;
+                    foreach($conditions as $c_id => $condition) {
+                        if(!in_array($condition['operator'], ['>', '>=', '<', '<=', '='])) {
+                            // unknown operator
+                            continue;
+                        }
+                        $operator = $condition['operator'];
+                        if($operator == '=') {
+                            $operator = '==';
+                        }
+                        if(!isset($operands[$condition['operand']])) {
+                            $valid = false;
+                            break;
+                        }
+                        $operand = $operands[$condition['operand']];
+                        $value = $condition['value'];
+                        if(!is_numeric($operand)) {
+                            $operand = "'$operand'";
+                        }
+                        if(!is_numeric($value)) {
+                            $value = "'$value'";
+                        }
+                        trigger_error(" testing {$operand} {$operator} {$value}", QN_REPORT_DEBUG);
+                        $valid = $valid && (bool) eval("return ( {$operand} {$operator} {$value});");
+                        if(!$valid) break;
+                    }
+                    if($valid) {
+                        trigger_error("QN_DEBUG_ORM:: all conditions fullfilled, applying {$discount['value']} {$discount['type']}", QN_REPORT_DEBUG);
+                        $discounts_to_apply[$discount_id] = $discount;
+                        if($discount['type'] == 'percent') {
+                            $rate_to_apply += $discount['value'];
+                        }
+                    }
+                }
+
+                // guaranteed rate (rate_min) is always granted
+                if($discount_list['rate_min'] > 0) {
+                    $rate_to_apply += $discount_list['rate_min'];
+                    $discounts_to_apply[0] = [
+                        'type'      => 'percent',
+                        'value'     => $discount_list['rate_min']
+                    ];
+                }
+
+                // if max rate (rate_max) has been reached, use max instead
+                if($rate_to_apply > $discount_list['rate_max'] ) {
+                    // remove all 'percent' discounts
+                    foreach($discounts_to_apply as $discount_id => $discount) {
+                        if($discount['type'] == 'percent') {
+                            unset($discounts_to_apply[$discount_id]);
+                        }
+                    }
+                    // add a custom discount with maximal rate
+                    $discounts_to_apply[0] = [
+                        'type'      => 'percent',
+                        'value'     => $discount_list['rate_max']
+                    ];
+                }
+
+                // apply all applicable discounts
+                foreach($discounts_to_apply as $discount_id => $discount) {
+
+                    /*
+                        create related price adapter for all lines, according to discount and group settings
+                    */
+
+                    // read all lines from group
+                    $lines = $om->read('lodging\sale\booking\BookingLine', $booking_lines_ids, [
+                        'product_id',
+                        'product_id.product_model_id',
+                        'product_id.product_model_id.has_duration',
+                        'product_id.product_model_id.duration',
+                        'is_meal',
+                        'is_accomodation',
+                        'qty_accounting_method'
+                    ]);
+
+                    foreach($lines as $line_id => $line) {
+                        // do not apply discount on lines that cannot have a price
+                        if($group['is_locked']) {
+                            continue;
+                        }
+                        // do not apply freebies on accomodations for groups
+                        if($discount['type'] == 'freebie' && $line['qty_accounting_method'] == 'accomodation') {
+                            continue;
+                        }
+                        if(
+                            // for GG: apply discounts only on accomodations
+                            (
+                                $group['sojourn_type_id'] == 2 /*'GG'*/ && $line['is_accomodation']
+                            )
+                            ||
+                            // for GA: apply discounts on meals and accomodations
+                            (
+                                $group['sojourn_type_id'] == 1 /*'GA'*/
+                                &&
+                                (
+                                    $line['is_accomodation'] || $line['is_meal']
+                                )
+                            )
+                        ) {
+                            trigger_error("QN_DEBUG_ORM:: creating price adapter", QN_REPORT_DEBUG);
+                            $factor = $group['nb_nights'];
+
+                            if($line['product_id.product_model_id.has_duration']) {
+                                $factor = $line['product_id.product_model_id.duration'];
+                            }
+
+                            // current discount must be applied on the line: create a price adpter
+                            $price_adapters_ids = $om->create('lodging\sale\booking\BookingPriceAdapter', [
+                                'is_manual_discount'    => false,
+                                'booking_id'            => $group['booking_id'],
+                                'booking_line_group_id' => $group_id,
+                                'booking_line_id'       => $line_id,
+                                'discount_id'           => $discount_id,
+                                'discount_list_id'      => $discount_list_id,
+                                'type'                  => $discount['type'],
+                                'value'                 => ($discount['type'] == 'freebie')?($discount['value']*$factor):$discount['value']
+                            ]);
+                        }
+                    }
+                }
+
+            }
+            else {
+                $date = date('Y-m-d', $group['date_from']);
+                trigger_error("QN_DEBUG_ORM::no matching discount list found for date {$date}", QN_REPORT_DEBUG);
+            }
+        }
+    }
+
+
     /**
      * Update pack_id and re-create booking lines accordingly.
      *
@@ -1161,7 +1390,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         // update dependencies
         $om->callonce(self::getType(), '_createRentalUnitsAssignments', $oids, [], $lang);
-        $om->callonce(self::getType(), '_updatePriceAdapters', $oids, [], $lang);
+        $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
 
@@ -1208,7 +1437,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             // remove all previous SPM and rental_unit assignements
             $om->update(self::getType(), $gid, ['sojourn_product_models_ids' => array_map(function($a) { return "-$a";}, $group['sojourn_product_models_ids'])]);
             // attempt to auto-assign rental units
-            $om->callonce(self::getType(), '_createRentalUnitsAssignmentsFromLines', $gid, $group['booking_lines_ids'], $lang);
+            $om->callonce(self::getType(), 'createRentalUnitsAssignmentsFromLines', $gid, $group['booking_lines_ids'], $lang);
         }
 
     }
@@ -1216,9 +1445,9 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
     /**
      * Updates rental unit assigments from a set of booking lines (called by BookingLine::onupdateProductId).
-     * The references booking_lines_ids are expected to be identifiers of lines that have just been modified
+     * The references booking_lines_ids are expected to be identifiers of lines that have just been modified and to belong to a same sojourn (BookingLineGroup).
      */
-    public static function _createRentalUnitsAssignmentsFromLines($om, $oids, $booking_lines_ids, $lang) {
+    public static function createRentalUnitsAssignmentsFromLines($om, $oids, $booking_lines_ids, $lang) {
 
         // Attempt to auto-assign rental units.
         $groups = $om->read(self::getType(), $oids, [
@@ -1230,7 +1459,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'date_to',
             'time_from',
             'time_to',
-            'sojourn_product_models_ids'
+            'sojourn_product_models_ids',
+            'rental_unit_assignments_ids.rental_unit_id'
         ]);
 
         foreach($groups as $gid => $group) {
@@ -1278,7 +1508,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $date_from = $group['date_from'] + $group['time_from'];
                 $date_to = $group['date_to'] + $group['time_to'];
 
-                // pass-1 : withdraw persons assigned to accomodations from nb_pers and create SPMs
+                // pass-1 : withdraw persons assigned to units accounted by 'accomodation' from nb_pers, and create SPMs
                 foreach($lines as $lid => $line) {
                     $product_model_id = $line['product_id.product_model_id'];
                     if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
@@ -1295,7 +1525,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 }
             }
 
-            // read targeted booking lines
+            // read targeted booking lines (received as method param)
             $lines = $om->read(BookingLine::getType(), $booking_lines_ids, [
                     'booking_id.center_id',
                     'product_id',
@@ -1310,6 +1540,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             if(count($lines)) {
                 // pass-2 : process lines
+                $group_assigned_rental_units_ids = [];
                 $has_processed_accomodation_by_person = false;
                 foreach($lines as $lid => $line) {
 
@@ -1346,6 +1577,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         }
                     }
 
+                    // remove rental units that have been just assigned
+                    $rental_units_ids = array_diff($rental_units_ids, $group_assigned_rental_units_ids);
                     // retrieve rental units with matching capacities (best match first)
                     $rental_units = self::_getRentalUnitsMatches($om, $rental_units_ids, $nb_pers_to_assign);
 
@@ -1377,6 +1610,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                             ];
                             trigger_error("QN_DEBUG_ORM::assigning {$rental_unit['assigned']} p. to {$rental_unit['id']}", QN_REPORT_DEBUG);
                             $om->create(SojournProductModelRentalUnitAssignement::getType(), $assignement);
+                            // remember assigned rental units (for next lines processing)
+                            $group_assigned_rental_units_ids[]= $rental_unit['id'];
                         }
 
                         if($qty_accounting_method == 'person' && $is_accomodation) {

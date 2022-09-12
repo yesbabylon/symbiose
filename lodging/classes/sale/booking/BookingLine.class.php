@@ -95,6 +95,12 @@ class BookingLine extends \sale\booking\BookingLine {
                 'onupdate'          => 'onupdateProductId'
             ],
 
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'description'       => 'The product model the line relates to (from product).'
+            ],
+
             'consumptions_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Consumption',
@@ -191,23 +197,38 @@ class BookingLine extends \sale\booking\BookingLine {
     public static function onupdateProductId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateProductId", QN_REPORT_DEBUG);
 
-        // reset computed fields related to product model
+        /*
+            update product model according to newly set product
+        */
+        $lines = $om->read(self::getType(), $oids, ['product_id.product_model_id', 'booking_line_group_id', 'booking_line_group_id.has_locked_rental_units'], $lang);
+        foreach($lines as $lid => $line) {
+            $om->update(self::getType(), $lid, ['product_model_id' => $line['product_id.product_model_id']]);
+        }
+
+        /*
+            reset computed fields related to product model
+        */
         $om->update(self::getType(), $oids, ['name' => null, 'qty_accounting_method' => null, 'is_rental_unit' => null, 'is_accomodation' => null, 'is_meal' => null]);
 
-        // resolve price_id for new product_id
+        /*
+            resolve price_id according to new product_id
+        */
         $om->callonce(self::getType(), '_updatePriceId', $oids, [], $lang);
 
-        // if qty is not amongst the updated fields, retrieve the quantity to assign to each line
+        /*
+            if qty is not amongst the updated fields, retrieve the quantity to assign to each line
+        */
         if(!isset($values['qty'])) {
             $lines = $om->read(self::getType(), $oids, [
                     'product_id.product_model_id.booking_type_id',
                     'product_id.product_model_id',
                     'product_id.has_age_range',
                     'product_id.age_range_id',
-                    'booking_line_group_id',
                     'booking_id',
                     'qty',
                     'has_own_qty',
+                    'booking_line_group_id',
+                    'booking_line_group_id.has_locked_rental_units',
                     'booking_line_group_id.nb_pers',
                     'booking_line_group_id.nb_nights',
                     'booking_line_group_id.nb_pers',
@@ -277,14 +298,47 @@ class BookingLine extends \sale\booking\BookingLine {
                     $om->update(self::getType(), $lid, ['qty' => $qty]);
                 }
             }
-
-            // reset computed fields related to price
-            $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
-
         }
 
-        // update parent groups rental unit assignments
-        $lines = $om->read(self::getType(), $oids, ['booking_line_group_id'], $lang);
+        /*
+            update parent groups rental unit assignments
+        */
+
+        // group lines by booking_line_group
+        $sojourns = [];
+        foreach($lines as $lid => $line) {
+            // do not update rental unit assignements for lines whose group is marked as locked rental units
+            if($line['booking_line_group_id.has_locked_rental_units']) {
+                continue;
+            }
+
+            $gid = $line['booking_line_group_id'];
+
+            if(!isset($sojourns[$gid])) {
+                $sojourns[$gid] = [];
+            }
+            $sojourns[$gid][] = $lid;
+        }
+        foreach($sojourns as $gid => $lines_ids) {
+            // retrieve all impacted product_models
+            $olines = $om->read(self::getType(), $lines_ids, ['product_id.product_model_id'], $lang);
+            $product_models_ids = array_map(function($a) { return $a['product_id.product_model_id'];}, $olines);
+            // remove all assignments relating to found product_model
+            $spm_ids = $om->search(SojournProductModel::getType(), ['product_model_id', 'in', $product_models_ids]);
+            $om->remove(SojournProductModel::getType(), $spm_ids, true);
+            // retrieve all lines from parent group that need to be reassigned
+            // #memo - we need to handle these all at a time to avoid assigning a same rental unit twice
+            $lines_ids = $om->search(self::getType(), [['booking_line_group_id', '=', $gid], ['product_model_id', 'in', $product_models_ids]], $lang);
+            // recreate rental unit assignments
+            $om->callonce(BookingLineGroup::getType(), 'createRentalUnitsAssignmentsFromLines', $gid, $lines_ids, $lang);
+        }
+
+
+        /*
+            update parent groups rental unit assignments
+        */
+
+        // group lines by booking_line_group
         $sojourns = [];
         foreach($lines as $lid => $line) {
             $gid = $line['booking_line_group_id'];
@@ -294,8 +348,13 @@ class BookingLine extends \sale\booking\BookingLine {
             $sojourns[$gid][] = $lid;
         }
         foreach($sojourns as $gid => $lines_ids) {
-            $om->callonce(BookingLineGroup::getType(), '_createRentalUnitsAssignmentsFromLines', $gid, $lines_ids, $lang);
+            $om->callonce(BookingLineGroup::getType(), 'updatePriceAdaptersFromLines', $gid, $lines_ids, $lang);
         }
+
+        /*
+            reset computed fields related to price
+        */
+        $om->callonce(self::getType(), '_resetPrices', $oids, [], $lang);
 
     }
 
@@ -303,7 +362,7 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQtyVars", QN_REPORT_DEBUG);
 
         // reset computed fields related to price
-        $om->callonce('sale\booking\BookingLine', '_resetPrices', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, [], $lang);
 
         $lines = $om->read(self::getType(), $oids, [
             'booking_line_group_id.nb_pers',
@@ -353,7 +412,7 @@ class BookingLine extends \sale\booking\BookingLine {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLine:onupdateQty", QN_REPORT_DEBUG);
 
         // Reset computed fields related to price (because they depend on qty)
-        $om->callonce(\sale\booking\BookingLine::getType(), '_resetPrices', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, [], $lang);
     }
 
 

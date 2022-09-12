@@ -93,7 +93,7 @@ class BankStatementLine extends Model {
                 'type'              => 'string',
                 'selection'         => [
                     'pending',              // requires a review
-                    'ignored',              // has been processed but does not relate to a booking
+                    'ignored',              // has been manually processed but does not relate to a booking
                     'reconciled',           // has been processed and assigned to a payment
                     'to_refund'             // has been processed and refers to a payment already received
                 ],
@@ -111,7 +111,7 @@ class BankStatementLine extends Model {
      *
      */
     public static function onupdatePaymentsIds($om, $oids, $values, $lang) {
-        $lines = $om->read(__CLASS__, $oids, ['amount', 'payments_ids.amount']);
+        $lines = $om->read(self::getType(), $oids, ['amount', 'payments_ids.amount']);
 
         if($lines > 0) {
             foreach($lines as $lid => $line) {
@@ -124,7 +124,7 @@ class BankStatementLine extends Model {
                 if($sum == $line['amount']) {
                     $status = 'reconciled';
                 }
-                $om->update(__CLASS__, $lid, ['status' => $status, 'remaining_amount' => null]);
+                $om->update(self::getType(), $lid, ['status' => $status, 'remaining_amount' => null]);
             }
         }
     }

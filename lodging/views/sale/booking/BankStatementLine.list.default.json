@@ -47,7 +47,8 @@
             {
                 "type": "field",
                 "value": "amount",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -67,7 +68,8 @@
             {
                 "type": "field",
                 "value": "status",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",

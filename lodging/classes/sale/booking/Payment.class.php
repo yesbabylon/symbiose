@@ -31,7 +31,7 @@ class Payment extends \lodging\sale\pay\Payment {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
-                'function'          => 'calcBookingId',
+                'function'          => 'calcCenterOfficeId',
                 'description'       => 'Center office related to the satement (from statement_line_id).',
                 'store'             => true
             ],
@@ -48,7 +48,7 @@ class Payment extends \lodging\sale\pay\Payment {
 
     public static function calcBookingId($om, $oids, $lang) {
         $result = [];
-        $items = $om->read(__CLASS__, $oids, ['funding_id.booking_id']);
+        $items = $om->read(self::getType(), $oids, ['funding_id.booking_id']);
 
         foreach($items as $oid => $odata) {
             if(isset($odata['funding_id.booking_id'])) {
@@ -60,7 +60,7 @@ class Payment extends \lodging\sale\pay\Payment {
 
     public static function calcCenterOfficeId($om, $oids, $lang) {
         $result = [];
-        $items = $om->read(__CLASS__, $oids, ['statement_line_id.center_office_id']);
+        $items = $om->read(self::getType(), $oids, ['statement_line_id.center_office_id']);
 
         foreach($items as $oid => $odata) {
             if(isset($odata['statement_line_id.center_office_id'])) {

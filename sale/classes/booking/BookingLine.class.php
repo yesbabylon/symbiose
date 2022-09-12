@@ -55,6 +55,12 @@ class BookingLine extends Model {
                 'onupdate'          => 'onupdateProductId'
             ],
 
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'description'       => 'The product model the line relates to (from product).',
+            ],
+
             'price_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\price\Price::getType(),
@@ -220,7 +226,12 @@ class BookingLine extends Model {
 
     public static function onupdateProductId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        // update product model according to newly set product
+        $lines = $om->read(self::getType(), $oids, ['product_id.product_model_id'], $lang);
+        foreach($lines as $lid => $line) {
+            $om->update(self::getType(), $lid, ['product_model_id' => $line['product_id.product_model_id']]);
+        }
     }
 
     public static function onupdateQty($om, $oids, $values, $lang) {

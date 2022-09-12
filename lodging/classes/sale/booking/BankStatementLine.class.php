@@ -86,7 +86,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                         if($funding['is_paid'] == false) {
                             $found_funding_id = $funding['id'];
                         }
-                        // candidate 2: payment_reference matches another funding from a same booking AND amount matches due_amount of a left over funding
+                        // candidate 2: payment_reference matches another funding AND amount matches due_amount of a left over funding from a same booking
                         // #memo - this supports secondary payments for a booking, made with the reference of a previous funding
                         else {
                             $sibling_fundings = $om->read(Funding::getType(), $funding['booking_id.fundings_ids'], ['is_paid', 'due_amount']);

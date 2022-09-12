@@ -13,6 +13,10 @@ class Establishment extends Model {
         return "Establishment unit";
     }
 
+    public static function getDescription() {
+        return "A corporation always have a single headquarters address, but can have several places of operations or offices (establishment units).";
+    }
+
     public static function getColumns() {
 
         return [
