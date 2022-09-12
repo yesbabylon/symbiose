@@ -24,7 +24,6 @@ class PackLine extends \sale\catalog\PackLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
-                'required'          => true,
                 'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'
             ],
 
