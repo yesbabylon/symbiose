@@ -277,7 +277,49 @@ class Booking extends \sale\booking\Booking {
                     }
                 }
                 if($partner_id) {
-                    $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
+                    $om->update(__CLASS__, $oid, ['customer_id' => $partner_id]);
+                }
+            }
+        }
+    }
+
+    public static function createContacts($om, $oids, $values, $lang) {
+        $bookings = $om->read(self::getType(), $oids, [
+            'customer_identity_id',
+            'contacts_ids'
+        ], $lang);
+
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $partners_ids = [];
+                $existing_partners_ids = [];
+                // read all contacts (to prevent importing contacts twice)
+                if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
+                    $contacts = $om->read(\lodging\sale\booking\Contact::getType(), $booking['contacts_ids'], ['partner_identity_id']);
+                    $existing_partners_ids = array_map(function($a) { return $a['partner_identity_id'];}, $contacts);
+                }
+                // if customer has contacts assigned to its identity, import those
+                $identity_contacts_ids = $om->search(\lodging\identity\Contact::getType(), [
+                        ['owner_identity_id', '=', $booking['customer_identity_id']],
+                        ['relationship', '=', 'contact']
+                    ]);
+                if($identity_contacts_ids > 0) {
+                    $contacts = $om->read(\lodging\identity\Contact::getType(), $identity_contacts_ids, ['partner_identity_id']);
+                    foreach($contacts as $cid => $contact) {
+                        $partners_ids[] = $contact['partner_identity_id'];
+                    }
+                }
+                // append customer identity's own contact
+                $partners_ids[] = $booking['customer_identity_id'];
+                // keep only partners_ids not present yet
+                $partners_ids = array_diff($partners_ids, $existing_partners_ids);
+                // create booking contacts
+                foreach($partners_ids as $partner_id) {
+                    $om->create(\lodging\sale\booking\Contact::getType(), [
+                        'booking_id'            => $bid,
+                        'owner_identity_id'     => $booking['customer_identity_id'],
+                        'partner_identity_id'   => $partner_id
+                    ]);
                 }
             }
         }
@@ -295,47 +337,26 @@ class Booking extends \sale\booking\Booking {
      */
     public static function onupdateCustomerId($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, [
-            'customer_identity_id',
+        // update rate_class, based on customer
+        $bookings = $om->read(self::getType(), $oids, [
             'booking_lines_groups_ids',
             'customer_id.rate_class_id',
-            'customer_id.partner_identity_id',
-            'customer_id.partner_identity_id.description',
-            'contacts_ids'
         ], $lang);
 
         if($bookings > 0) {
-
             foreach($bookings as $bid => $booking) {
-                $values = [];
-                // remove all contacts
-                if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
-                    $om->update(self::getType(), $bid, ['contacts_ids' => array_map( function($a) { return -$a; }, $booking['contacts_ids'] )], $lang);
-                }
-                // if customer has contacts assigned to its identity, import those
-                $contacts_ids = $om->search(\lodging\identity\Contact::getType(), [ ['owner_identity_id', '=', $booking['customer_id.partner_identity_id']], ['relationship', '=', 'contact'] ]);
-                if($contacts_ids <= 0) {
-                    $contacts_ids = [];
-                }
-                // append customer identity's own contact
-                $contact_id = $om->create('lodging\sale\booking\Contact', [
-                    'booking_id'            => $bid,
-                    'owner_identity_id'     => $booking['customer_identity_id'],
-                    'partner_identity_id'   => $booking['customer_id.partner_identity_id']
-                ]);
-                if($contact_id > 0) {
-                    $contacts_ids[] = $contact_id;
-                }
-                // update booking
-                $om->update(__CLASS__, $bid, ['contacts_ids' => $contacts_ids], $lang);
                 // update bookingline group rate_class_id   (triggers _resetPrices and _updatePriceAdapters)
                 if($booking['booking_lines_groups_ids'] && count($booking['booking_lines_groups_ids'])) {
-                    $om->update('lodging\sale\booking\BookingLineGroup', $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
+                    $om->update(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
                 }
             }
-
-            $om->callonce(__CLASS__, '_updateAutosaleProducts', $oids, [], $lang);
         }
+
+        // import contacts from customer
+        $om->callonce(self::getType(), 'createContacts', $oids, [], $lang);
+
+        // update auto sale products
+        $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
     }
 
     public static function onupdateCenterId($om, $oids, $values, $lang) {
@@ -743,11 +764,6 @@ class Booking extends \sale\booking\Booking {
                             if($spm['product_model_id.qty_accounting_method'] == 'person') {
                                 // #todo - we don't check (yet) for daily variations (from booking lines)
                                 // rental_units_assignments.qty should be adapted on a daily basis
-                                /*
-                                    pour les product_model_id comptabilisés à la personne
-                                    on prend toutes les lignes et on extrait les qty_vars, qu'on additionne à group.nb_pers
-                                    on a donc les qty par date
-                                */
                             }
 
                             list($day, $month, $year) = [ date('j', $group['date_from']), date('n', $group['date_from']), date('Y', $group['date_from']) ];

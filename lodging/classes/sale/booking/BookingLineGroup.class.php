@@ -1042,7 +1042,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             Remove all previous price adapters relating to given lines were automatically created
         */
         $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [ ['booking_line_id', 'in', $booking_lines_ids], ['is_manual_discount','=', false]]);
-
         $om->remove('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, true);
 
         $line_groups = $om->read(self::getType(), $oids, [
@@ -1201,7 +1200,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     */
 
                     // read all lines from group
-                    $lines = $om->read('lodging\sale\booking\BookingLine', $booking_lines_ids, [
+                    $lines = $om->read(BookingLine::getType(), $booking_lines_ids, [
                         'product_id',
                         'product_id.product_model_id',
                         'product_id.product_model_id.has_duration',
