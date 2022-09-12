@@ -29,12 +29,12 @@ class PackLine extends Model {
                 'description'       => "The Product this line belongs to.",
                 'required'          => true
             ],
+
             // #todo - deprecate
             'child_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => "The Product this line refers to.",
-                'required'          => true,
                 'onupdate'          => 'sale\catalog\PackLine::onupdateChildProductId'
             ],
 
