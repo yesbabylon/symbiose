@@ -216,56 +216,59 @@ class BookingLine extends \sale\booking\BookingLine {
         $om->callonce(self::getType(), '_updatePriceId', $oids, [], $lang);
 
         /*
-            if qty is not amongst the updated fields, retrieve the quantity to assign to each line
+            check booking type and chekin/out times dependencies, and auto-assign qty if required
         */
-        if(!isset($values['qty'])) {
-            $lines = $om->read(self::getType(), $oids, [
-                    'product_id.product_model_id.booking_type_id',
-                    'product_id.product_model_id',
-                    'product_id.has_age_range',
-                    'product_id.age_range_id',
-                    'booking_id',
-                    'qty',
-                    'has_own_qty',
-                    'booking_line_group_id',
-                    'booking_line_group_id.has_locked_rental_units',
-                    'booking_line_group_id.nb_pers',
-                    'booking_line_group_id.nb_nights',
-                    'booking_line_group_id.nb_pers',
-                    'booking_line_group_id.age_range_assignments_ids',
-                    'is_rental_unit',
-                    'is_accomodation',
-                    'is_meal',
-                    'qty_accounting_method'
-                ], $lang);
 
-            foreach($lines as $lid => $line) {
-                // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
-                if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 1) {
-                    $om->update('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
-                }
+        $lines = $om->read(self::getType(), $oids, [
+                'product_id.product_model_id.booking_type_id',
+                'product_id.product_model_id',
+                'product_id.has_age_range',
+                'product_id.age_range_id',
+                'booking_id',
+                'booking_line_group_id',
+                'booking_line_group_id.has_locked_rental_units',
+                'booking_line_group_id.nb_pers',
+                'booking_line_group_id.nb_nights',
+                'booking_line_group_id.nb_pers',
+                'booking_line_group_id.age_range_assignments_ids',
+                'qty',
+                'has_own_qty',
+                'is_rental_unit',
+                'is_accomodation',
+                'is_meal',
+                'qty_accounting_method'
+            ], $lang);
 
-                // if line is a rental unit, use its related product info to update parent group schedule, if possible
-                if($line['is_rental_unit']) {
-                    $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $line['product_id.product_model_id'], ['type', 'service_type', 'schedule_type', 'schedule_default_value'], $lang);
-                    if($models > 0 && count($models)) {
-                        $model = reset($models);
-                        if($model['type'] == 'service' && $model['service_type'] == 'schedulable' && $model['schedule_type'] == 'timerange') {
-                            // retrieve relative timestamps
-                            $schedule = $model['schedule_default_value'];
-                            if(strlen($schedule)) {
-                                $times = explode('-', $schedule);
-                                $parts = explode(':', $times[0]);
-                                $schedule_from = $parts[0]*3600 + $parts[1]*60;
-                                $parts = explode(':', $times[1]);
-                                $schedule_to = $parts[0]*3600 + $parts[1]*60;
-                                // update the parent group schedule
-                                $om->update(BookingLineGroup::getType(), $line['booking_line_group_id'], ['time_from' => $schedule_from, 'time_to' => $schedule_to], $lang);
-                            }
+        foreach($lines as $lid => $line) {
+            // if model of chosen product has a non-generic booking type, update the booking of the line accordingly
+            if(isset($line['product_id.product_model_id.booking_type_id']) && $line['product_id.product_model_id.booking_type_id'] != 1) {
+                $om->update('lodging\sale\booking\Booking', $line['booking_id'], ['type_id' => $line['product_id.product_model_id.booking_type_id']]);
+            }
+
+            // if line is a rental unit, use its related product info to update parent group schedule, if possible
+            if($line['is_rental_unit']) {
+                $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $line['product_id.product_model_id'], ['type', 'service_type', 'schedule_type', 'schedule_default_value'], $lang);
+                if($models > 0 && count($models)) {
+                    $model = reset($models);
+                    if($model['type'] == 'service' && $model['service_type'] == 'schedulable' && $model['schedule_type'] == 'timerange') {
+                        // retrieve relative timestamps
+                        $schedule = $model['schedule_default_value'];
+                        if(strlen($schedule)) {
+                            $times = explode('-', $schedule);
+                            $parts = explode(':', $times[0]);
+                            $schedule_from = $parts[0]*3600 + $parts[1]*60;
+                            $parts = explode(':', $times[1]);
+                            $schedule_to = $parts[0]*3600 + $parts[1]*60;
+                            // update the parent group schedule
+                            $om->update(BookingLineGroup::getType(), $line['booking_line_group_id'], ['time_from' => $schedule_from, 'time_to' => $schedule_to], $lang);
                         }
                     }
                 }
-
+            }
+        }
+        // if qty is not amongst the updated fields, retrieve the quantity to assign to each line
+        if(!isset($values['qty'])) {
+            foreach($lines as $lid => $line) {
                 $qty = $line['qty'];
                 if(!$line['has_own_qty']) {
                     if($line['qty_accounting_method'] == 'accomodation') {
@@ -335,7 +338,7 @@ class BookingLine extends \sale\booking\BookingLine {
 
 
         /*
-            update parent groups rental unit assignments
+            update parent groups price adapters
         */
 
         // group lines by booking_line_group
@@ -427,18 +430,15 @@ class BookingLine extends \sale\booking\BookingLine {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be created.
      */
     public static function cancreate($om, $values, $lang) {
-        $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
-        $groups = $om->read('lodging\sale\booking\BookingLineGroup', $values['booking_line_group_id'], ['is_extra'], $lang);
+        $bookings = $om->read(Booking::getType(), $values['booking_id'], ['status'], $lang);
+        $groups = $om->read(BookingLineGroup::getType(), $values['booking_line_group_id'], ['is_extra'], $lang);
 
         if($bookings > 0 && $groups > 0) {
             $booking = reset($bookings);
             $group = reset($groups);
 
-            if(
-                in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                ||
-                ($booking['status'] != 'quote' && !$group['is_extra'])
-            ) {
+            if( in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                || ($booking['status'] != 'quote' && !$group['is_extra']) ) {
                 return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
             }
         }
