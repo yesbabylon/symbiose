@@ -10,7 +10,7 @@ class ContractLine extends \sale\contract\ContractLine {
 
     public static function getName() {
         return "Contract line";
-    }  
+    }
 
     public static function getColumns() {
 
@@ -27,6 +27,6 @@ class ContractLine extends \sale\contract\ContractLine {
 
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         return ['contract_id' => ['not_allowed' => 'Contract cannot be manually updated.']];
-    }    
+    }
 
 }

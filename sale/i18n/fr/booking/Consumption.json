@@ -37,7 +37,7 @@
             "label": "Fin",
             "description": "Heure à laquelle la prestation est terminée.",
             "help": ""
-        },    
+        },
         "qty": {
             "label": "Quantité",
             "description": "Nombre de consommations comptabilisées.",
@@ -54,7 +54,12 @@
         },
         "product_id": {
             "label": "Produit",
-            "description": "Le produit auquel appartient cet attribut.",
+            "description": "Le produit auquel se rapporte la consommation.",
+            "help": ""
+        },
+        "product_model_id": {
+            "label": "Produit",
+            "description": "Le produit auquel se rapporte la consommation.",
             "help": ""
         },
         "rental_unit_id": {

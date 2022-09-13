@@ -16,7 +16,7 @@ class BookingPriceAdapter extends Model {
     public static function getDescription() {
         return "Adapters allow to adapt the final price of the booking lines, either by performing a direct computation, or by using a discount definition.";
     }
-    
+
     public static function getColumns() {
         return [
 
@@ -41,7 +41,7 @@ class BookingPriceAdapter extends Model {
                 'description'       => 'Booking Line the adapter relates to, if any.',
                 'ondelete'          => 'cascade'
             ],
-            
+
             'is_manual_discount' => [
                 'type'              => 'boolean',
                 'description'       => "Flag to set the adapter as manual or related to a discount.",
@@ -50,15 +50,20 @@ class BookingPriceAdapter extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'selection'         => ['percent', 'amount', 'freebie'],         
+                'selection'         => [
+                    'percent',
+                    'amount',
+                    'freebie'
+                ],
                 'description'       => 'Type of manual discount (fixed amount or percentage of the price).',
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 'percent',
                 'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'value' => [
-                'type'              => 'float',                
+                'type'              => 'float',
                 'description'       => "Value of the discount (monetary amount or percentage).",
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 0.0,
@@ -69,17 +74,15 @@ class BookingPriceAdapter extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\discount\Discount',
                 'description'       => 'Discount related to the adapter, if any.',
-                'visible'           => ['is_manual_discount', '=', false]                
+                'visible'           => ['is_manual_discount', '=', false]
             ],
 
             'discount_list_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\discount\DiscountList',
                 'description'       => 'Discount List related to the adapter, if any.',
-                'visible'           => ['is_manual_discount', '=', false]                
+                'visible'           => ['is_manual_discount', '=', false]
             ]
-
-
         ];
     }
 
@@ -91,9 +94,9 @@ class BookingPriceAdapter extends Model {
             $bookings_ids = array_map( function($a) { return $a['booking_id']; }, $discounts);
             $booking_lines_ids = array_map( function($a) { return $a['booking_line_id']; }, $discounts);
             $booking_line_groups_ids = array_map( function($a) { return $a['booking_line_group_id']; }, $discounts);
-            $om->write('sale\booking\Booking', $bookings_ids, ['price' => null, 'total' => null]);
-            $om->write('sale\booking\BookingLine', $booking_lines_ids, ['discount' => null, 'unit_price' => null, 'price' => null, 'total' => null]);
-            $om->write('sale\booking\BookingLineGroup', $booking_line_groups_ids, ['price' => null, 'total' => null]);
+            $om->update(Booking::getType(), $bookings_ids, ['price' => null, 'total' => null]);
+            $om->callonce(BookingLine::getType(), '_resetPrices', $booking_lines_ids, [], $lang);
+            $om->callonce(BookingLineGroup::getType(), '_resetPrices', $booking_line_groups_ids, [], $lang);
         }
     }
 
@@ -108,6 +111,6 @@ class BookingPriceAdapter extends Model {
                 ]
             ]
         ];
-    }    
+    }
 
 }

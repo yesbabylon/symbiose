@@ -55,15 +55,21 @@ $booking = Booking::id($params['id'])
                         'date_to',
                         'price',                                  // total price VAT incl.
                         'contracts_ids',
-                        'center_id' => ['center_office_id', 'sojourn_type_id'],
-                        'customer_id' => ['id', 'rate_class_id'],
+                        'center_id' => [
+                            'center_office_id',
+                            'sojourn_type_id'
+                        ],
+                        'customer_id' => [
+                            'id',
+                            'rate_class_id'
+                        ],
                         'booking_lines_groups_ids' => [
                             'name',
                             'date_from',
                             'date_to',
                             'has_pack',
                             'is_locked',
-                            'pack_id' => ['id', 'display_name'],
+                            'pack_id' => ['id', 'name'],
                             'vat_rate',
                             'unit_price',
                             'fare_benefit',
@@ -77,7 +83,8 @@ $booking = Booking::id($params['id'])
                                 'unit_price',
                                 'vat_rate',
                                 'qty',
-                                'price_adapters_ids' => ['type', 'value', 'is_manual_discount']
+                                'free_qty',
+                                'discount'
                             ]
                         ]
                   ])
@@ -150,18 +157,19 @@ if(!$booking['is_price_tbc']) {
             $group_label .= date('d/m/y', $group['date_from']).' - '.date('d/m/y', $group['date_to']);
         }
 
-        $group_label .= ' - '.$group['nb_pers'].' p.';
+        $group_label .= ' - '.$group['nb_pers'].'p.';
+        $group_rate_class_id = (isset($group['rate_class_id']) && $group['rate_class_id'])?$group['rate_class_id']:$booking['customer_id']['rate_class_id'];
 
         if($group['has_pack'] && $group['is_locked'] ) {
             // create a contract group based on the booking group
-
             $contract_line_group = ContractLineGroup::create([
-                'name'              => $group_label,
-                'is_pack'           => true,
-                'contract_id'       => $contract['id'],
-                'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group['rate_class_id']
-            ])->first();
+                    'name'              => $group_label,
+                    'is_pack'           => true,
+                    'contract_id'       => $contract['id'],
+                    'fare_benefit'      => $group['fare_benefit'],
+                    'rate_class_id'     => $group_rate_class_id
+                ])
+                ->first();
 
             // create a line based on the group
             $c_line = [
@@ -178,12 +186,13 @@ if(!$booking['is_price_tbc']) {
         }
         else {
             $contract_line_group = ContractLineGroup::create([
-                'name'              => $group_label,
-                'is_pack'           => false,
-                'contract_id'       => $contract['id'],
-                'fare_benefit'      => $group['fare_benefit'],
-                'rate_class_id'     => $group['rate_class_id']
-            ])->first();
+                    'name'              => $group_label,
+                    'is_pack'           => false,
+                    'contract_id'       => $contract['id'],
+                    'fare_benefit'      => $group['fare_benefit'],
+                    'rate_class_id'     => $group_rate_class_id
+                ])
+                ->first();
         }
 
         // create as many lines as the group booking_lines
@@ -197,39 +206,11 @@ if(!$booking['is_price_tbc']) {
                 'description'               => $line['description'],
                 'vat_rate'                  => $line['vat_rate'],
                 'unit_price'                => $line['unit_price'],
-                'qty'                       => $line['qty']
+                'qty'                       => $line['qty'],
+                'free_qty'                  => $line['free_qty'],
+                'discount'                  => $line['discount']
             ];
 
-            $disc_value = 0;
-            $disc_percent = 0;
-            $free_qty = 0;
-            foreach($line['price_adapters_ids'] as $aid => $adata) {
-                if($adata['is_manual_discount']) {
-                    if($adata['type'] == 'amount') {
-                        $disc_value += $adata['value'];
-                    }
-                    else if($adata['type'] == 'percent') {
-                        $disc_percent += $adata['value'];
-                    }
-                    else if($adata['type'] == 'freebie') {
-                        $free_qty += $adata['value'];
-                    }
-                }
-                // auto granted freebies are displayed as manual discounts
-                else {
-                    if($adata['type'] == 'freebie') {
-                        $free_qty += $adata['value'];
-                    }
-                }
-            }
-            // convert discount value to a percentage
-            $disc_value = $disc_value / (1 + $line['vat_rate']);
-            $price = $line['unit_price'] * $line['qty'];
-            $disc_value_perc = ($price) ? ($price - $disc_value) / $price : 0;
-            $disc_percent += (1-$disc_value_perc);
-
-            $c_line['free_qty'] = $free_qty;
-            $c_line['discount'] = $disc_percent;
             ContractLine::create($c_line);
         }
 
@@ -259,7 +240,7 @@ catch(Exception $e) {
 
 
 /*
-    Genarate the payment plan
+    Generate the payment plan
     (expected fundings of the booking)
 */
 

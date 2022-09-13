@@ -38,6 +38,16 @@
             "label": "Client",
             "description": "Le client auquel se rapporte le contrat.",
             "help": ""
+        },
+        "price": {
+            "label": "Prix TTC",
+            "description": "Prix total TTC de la réservation.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total HT",
+            "description": "Prix total hors-taxes de la réservation.",
+            "help": ""
         }
     },
     "view": {

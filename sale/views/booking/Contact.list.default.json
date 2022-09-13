@@ -19,6 +19,11 @@
             },
             {
                 "type": "field",
+                "value": "mobile",
+                "width": "20%"
+            },
+            {
+                "type": "field",
                 "value": "email",
                 "width": "20%"
             },

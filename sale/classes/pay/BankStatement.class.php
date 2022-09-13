@@ -23,7 +23,7 @@ class BankStatement extends Model {
                 'type'              => 'binary',
                 'description'       => 'Original file used for creating the statement.'
             ],
-        
+
             'date' => [
                 'type'              => 'date',
                 'description'       => 'Date the statement was received.',
@@ -33,15 +33,17 @@ class BankStatement extends Model {
 
             'old_balance' => [
                 'type'              => 'float',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Account balance before the transactions.',
-                'required'          => true,                
+                'required'          => true,
                 'readonly'          => true
             ],
 
             'new_balance' => [
                 'type'              => 'float',
+                'usage'             => 'amount/money:2',
                 'description'       => 'Account balance after the transactions.',
-                'required'          => true,                
+                'required'          => true,
                 'readonly'          => true
             ],
 
@@ -58,7 +60,7 @@ class BankStatement extends Model {
                 'function'          => 'calcStatus',
                 'selection'         => [
                     'pending',                // hasn't been fully processed yet
-                    'reconciled',             // has been fully processed (all lines either ignored or reconciled) 
+                    'reconciled'              // has been fully processed (all lines either ignored or reconciled)
                 ],
                 'description'       => 'Status of the statement (depending on lines).',
                 'store'             => true
@@ -70,7 +72,7 @@ class BankStatement extends Model {
                 'default'           => false
             ],
 
-            // #memo - CODA statements comes with IBAN or BBAN numbers for reference account    
+            // #memo - CODA statements comes with IBAN or BBAN numbers for reference account
             'bank_account_number' => [
                 'type'              => 'string',
                 'description'       => 'Original number of the account (as provided in the statement might not be IBAN).'
@@ -89,7 +91,7 @@ class BankStatement extends Model {
                 'description'       => 'IBAN representation of the account number.',
                 'store'             => true
             ]
-    
+
         ];
     }
 
@@ -120,7 +122,7 @@ class BankStatement extends Model {
             foreach($statements as $sid => $statement) {
                 $is_reconciled = true;
                 foreach($statement['statement_lines_ids.status'] as $lid => $line) {
-                    if($line['status'] != 'reconciled') {
+                    if( !in_array($line['status'], ['reconciled', 'ignored']) ) {
                         $is_reconciled = false;
                         break;
                     }
@@ -150,7 +152,7 @@ class BankStatement extends Model {
 
         $code_alpha = $country_code;
         $code_num = '';
-        
+
         for($i = 0; $i < strlen($code_alpha); ++$i) {
             $letter = substr($code_alpha, $i, 1);
             $order = ord($letter) - ord('A');
@@ -168,5 +170,5 @@ class BankStatement extends Model {
         return [
             ['date', 'old_balance', 'new_balance']
         ];
-    }    
+    }
 }

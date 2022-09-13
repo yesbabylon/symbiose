@@ -4,15 +4,8 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-if(!file_exists(QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php')) {
-    throw new Exception("missing_dependency", QN_ERROR_INVALID_CONFIG);
-}
-require_once QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php';
-
-use \Swift_SmtpTransport as Swift_SmtpTransport;
-use \Swift_Message as Swift_Message;
-use \Swift_Mailer as Swift_Mailer;
-use \Swift_Attachment as Swift_Attachment;
+use equal\email\Email;
+use equal\email\EmailAttachment;
 
 use communication\TemplateAttachment;
 use documents\Document;
@@ -126,32 +119,26 @@ catch(Exception $e) {
 
 $params['message'] .= $signature;
 
-
+/** @var EmailAttachment[] */
 $attachments = [];
 
 // push main attachment
-$attachments[] = new Swift_Attachment($attachment, $main_attachment_name.'.pdf', 'application/pdf');
+$attachments[] = new EmailAttachment($main_attachment_name.'.pdf', (string) $attachment, 'application/pdf');
 
-// send message
-$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
-
-$transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
-          ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
-
-$message = new Swift_Message();
+// create message
+$message = new Email();
 $message->setTo($params['recipient_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
-        ->setBody(str_replace(['<br>', '<p></p>'], '', $params['message']))
-        ->setFrom([$params['sender_email'] => EMAIL_SMTP_ACCOUNT_DISPLAYNAME]);
+        ->setBody($params['message']);
 
+// append attachments to message
 foreach($attachments as $attachment) {
-    $message->attach($attachment);
+    $message->addAttachment($attachment);
 }
 
-$mailer = new Swift_Mailer($transport);
-$result = $mailer->send($message);
-
+// queue message
+Mail::queue($message, 'lodging\sale\booking\Booking', $booking['id']);
 
 $context->httpResponse()
         ->status(204)

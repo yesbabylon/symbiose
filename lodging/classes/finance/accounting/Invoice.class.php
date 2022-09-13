@@ -74,7 +74,7 @@ class Invoice extends \finance\accounting\Invoice {
     public static function calcNumber($om, $oids, $lang) {
         $result = [];
 
-        $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
+        $invoices = $om->read(self::getType(), $oids, ['status', 'organisation_id', 'center_office_id.code'], $lang);
 
         foreach($invoices as $oid => $invoice) {
 
@@ -106,9 +106,9 @@ class Invoice extends \finance\accounting\Invoice {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
+            $om->update(self::getType(), $oids, ['number' => null, 'date' => time()], $lang);
 
-            $invoices = $om->read(__CLASS__, $oids, [
+            $invoices = $om->read(self::getType(), $oids, [
                 // #memo - generate an invoice number (force immediate recomputing)
                 'number',
                 'center_office_id'

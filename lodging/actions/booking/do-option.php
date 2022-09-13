@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Consumption;
 
@@ -39,7 +38,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch'] 
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
 /**
@@ -63,7 +62,6 @@ list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm
 $booking = Booking::id($params['id'])
                   ->read([
                       'status',
-                      'booking_lines_ids',
                       'is_price_tbc'
                    ])
                   ->first();
@@ -83,7 +81,13 @@ if($booking['status'] != 'quote') {
 $errors = [];
 
 // check age ranges assignments
-$data = eQual::run('do', 'lodging_booking_check-ages-assignment', ['id' => $params['id']]);
+$data = eQual::run('do', 'lodging_booking_check-ages-assignments', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'invalid_booking';
+}
+
+// check age ranges assignments
+$data = eQual::run('do', 'lodging_booking_check-mealprefs-assignments', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {
     $errors[] = 'invalid_booking';
 }
@@ -94,7 +98,7 @@ if(is_array($data) && count($data)) {
     $errors[] = 'invalid_booking';
 }
 
-// check list of services 
+// check list of services
 $data = eQual::run('do', 'lodging_booking_check-empty', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {
     $errors[] = 'empty_booking';
@@ -117,10 +121,8 @@ foreach($errors as $error) {
     If consumptions already exist, they're removed before hand.
 */
 
-// remove consumptions, if any (link & part)
-Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 // re-create consumptions
-$orm->call('lodging\sale\booking\BookingLine', '_createConsumptions', $booking['booking_lines_ids']);
+$orm->call(Booking::getType(), 'createConsumptions', $params['id']);
 
 /*
     Update alerts & cron jobs
@@ -130,7 +132,7 @@ $dispatch->cancel('lodging.booking.quote.blocking', 'lodging\sale\booking\Bookin
 
 if($params['no_expiry'] || $booking['is_price_tbc']) {
     // set booking as never expiring
-    Booking::id($params['id'])->update(['is_noexpiry' => true]);        
+    Booking::id($params['id'])->update(['is_noexpiry' => true]);
 }
 else {
     // retrieve expiry delay setting

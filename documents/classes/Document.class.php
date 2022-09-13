@@ -29,12 +29,14 @@ class Document extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'readonly'          => true
+                'readonly'          => true,
+                'desription'        => 'Content type of the document (from data).'
             ],
 
             'size'		    => [
                 'type'              => 'integer',
-                'readonly'          => true
+                'readonly'          => true,
+                'desription'        => 'Size of the document, in octets (from data).'
             ],
 
             'readable_size' => [
@@ -123,12 +125,12 @@ class Document extends Model {
         foreach($res as $oid => $odata) {
             $result[$oid] = '/document/'.$odata['hash'];
         }
-        
+
         return $result;
     }
 
     public static function onupdateData($om, $oids, $values, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['hash', 'data']);
+        $res = $om->read(self::getType(), $oids, ['hash', 'data']);
 
         foreach($res as $oid => $odata) {
             $content = $odata['data'];
@@ -137,18 +139,18 @@ class Document extends Model {
             // retrieve content_type from MIME
             $finfo = new \finfo(FILEINFO_MIME);
             $content_type = explode(';', $finfo->buffer($content))[0];
-            $om->write(__CLASS__, $oid, [
+            $om->update(self::getType(), $oid, [
                 'size'  => $size,
                 'type'	=> $content_type
             ]);
 
             // set hash if not assigned yet
             if(strlen($odata['hash']) <= 0) {
-                $om->write(__CLASS__, $oid, ['hash'=> md5($oid.substr($content, 0, 128))]);                
+                $om->update(self::getType(), $oid, ['hash'=> md5($oid.substr($content, 0, 128))]);
             }
         }
         // reset preview image
-        $om->write(__CLASS__, $oids, ['preview_image' => null, 'readable_size' => null]);
+        $om->update(self::getType(), $oids, ['preview_image' => null, 'readable_size' => null]);
     }
 
     /**

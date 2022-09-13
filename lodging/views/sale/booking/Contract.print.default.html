@@ -227,10 +227,18 @@ hr {
                     Rem%
                 </th>
                 <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
-                    TVA
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Taxes
+                    {% else %}
+                        TVA
+                    {% endif %}
                 </th>
                 <th width="13%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
-                    Prix HT
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Prix
+                    {% else %}
+                        Prix HT
+                    {% endif %}
                 </th>
             </tr>
             </thead>
@@ -261,7 +269,7 @@ hr {
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
-                        {% if line.vat_rate is not null %}
+                        {% if line.vat_rate is not null and company_has_vat %}
                             {{ line.vat_rate | format_number(style='percent') }}
                         {% endif %}
                     </td>
@@ -281,7 +289,7 @@ hr {
         <table width="100%" style="border: 0px; border-right: solid 1px black;" cellpadding="4" cellspacing="0">
             <tr valign="top">
                 <td width="87%" style="text-align: right; padding-right: 10px;">
-                    MONTANT TOTAL
+                    TOTAL HT
                 </td>
                 <td width="13%" style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
                     {{ total | format_currency('EUR') }}
@@ -364,6 +372,8 @@ hr {
                 <td width="25%" style="text-align: center;">
                     {% if funding.is_paid == true %}
                         oui
+                    {% else %}
+                        non
                     {% endif %}
                 </td>
                 <td width="25%" style="text-align: right;">

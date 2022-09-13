@@ -7,8 +7,10 @@
 use equal\orm\Domain;
 use lodging\sale\booking\BankStatementLine;
 use lodging\identity\Identity;
-use lodging\sale\booking\BookingLineRentalUnitAssignement;
+use lodging\sale\booking\Booking;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 use lodging\sale\booking\Contact;
+use lodging\sale\booking\Funding;
 use sale\booking\Payment;
 
 list($params, $providers) = announce([
@@ -37,6 +39,11 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'usage'         => 'uri/urn:iban',
             'description'   => "Number of the bank account of the Identity, if any."
+        ],
+
+        'structured_message' => [
+            'type'          => 'string',
+            'description'   => "Structured message from bank statement."
         ],
 
         'identity_id' => [
@@ -104,7 +111,7 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
     if(count($lines_ids)) {
         $payments = Payment::search(['statement_line_id', 'in', $lines_ids])->read(['id', 'booking_id'])->get();
         if(count($payments)) {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $payments );
+            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $payments);
             $found = true;
         }
     }
@@ -122,20 +129,49 @@ if(isset($params['bank_account_iban']) && strlen($params['bank_account_iban'])) 
     }
 }
 
+
+/*
+    structured_message : search in funding
+*/
+if(isset($params['structured_message']) && strlen($params['structured_message'])) {
+    $fundings = Funding::search(['payment_reference', '=', $params['structured_message']])->read(['booking_id'])->get();
+    if(count($fundings)) {
+        $matches_ids = array_map(function ($a) { return $a['booking_id']; }, $fundings);
+        if(count($bookings_ids)) {
+            $bookings_ids = array_intersect(
+                $bookings_ids,
+                $matches_ids
+            );
+        }
+        else {
+            $bookings_ids = $matches_ids;
+        }
+    }
+    else {
+        // add a constraint to void the result set
+        $bookings_ids = [0];
+    }
+}
+
 /*
     identity_id : search in contacts (customer should be in it as well)
 */
 if(isset($params['identity_id'])) {
-    $contacts = Contact::search(['partner_identity_id', '=', $params['identity_id']])->read(['booking_id'])->get();
-    if(count($contacts)) {
+
+    $matches_ids = array_merge(
+        Booking::search(['customer_identity_id', '=', $params['identity_id']])->read(['id'])->ids(),
+        array_map(function ($a) { return $a['booking_id']; }, Contact::search(['partner_identity_id', '=', $params['identity_id']])->read(['booking_id'])->get() )
+    );
+
+    if(count($matches_ids)) {
         if(count($bookings_ids)) {
             $bookings_ids = array_intersect(
-                                $bookings_ids,
-                                array_map(function ($a) { return $a['booking_id']; }, $contacts )
-                            );
+                $bookings_ids,
+                $matches_ids
+            );
         }
         else {
-            $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $contacts );
+            $bookings_ids = $matches_ids;
         }
         if(empty($bookings_ids)) {
             // add a constraint to void the result set
@@ -152,13 +188,13 @@ if(isset($params['identity_id'])) {
     rental_unit : search amonst rental_unit_assignment
 */
 if(isset($params['rental_unit_id'])) {
-    $assignements = BookingLineRentalUnitAssignement::search(['rental_unit_id', '=', $params['rental_unit_id']])->read(['booking_id'])->get();
+    $assignements = SojournProductModelRentalUnitAssignement::search(['rental_unit_id', '=', $params['rental_unit_id']])->read(['booking_id'])->get();
     if(count($assignements)) {
         if(count($bookings_ids)) {
             $bookings_ids = array_intersect(
-                                $bookings_ids,
-                                array_map(function ($a) { return $a['booking_id']; }, $assignements )
-                            );
+                    $bookings_ids,
+                    array_map(function ($a) { return $a['booking_id']; }, $assignements )
+                );
         }
         else {
             $bookings_ids = array_map(function ($a) { return $a['booking_id']; }, $assignements );

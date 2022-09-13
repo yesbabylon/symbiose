@@ -124,10 +124,10 @@ class CompositionItem extends Model {
         foreach($items as $oid => $odata) {
 
             $rental_units_ids = [];
-            $assignments_ids = $om->search('lodging\sale\booking\BookingLineRentalUnitAssignement', ['booking_id', '=', $odata['composition_id.booking_id']]);
+            $assignments_ids = $om->search(\lodging\sale\booking\SojournProductModelRentalUnitAssignement::getType(), ['booking_id', '=', $odata['composition_id.booking_id']]);
 
             if($assignments_ids > 0 && count($assignments_ids)) {
-                $assignments = $om->read('lodging\sale\booking\BookingLineRentalUnitAssignement', $assignments_ids, ['rental_unit_id']);
+                $assignments = $om->read(\lodging\sale\booking\SojournProductModelRentalUnitAssignement::getType(), $assignments_ids, ['rental_unit_id']);
                 $rental_units_ids = array_filter(array_map(function($a) { return $a['rental_unit_id']; }, array_values($assignments)), function($a) {return $a > 0;});
             }
 

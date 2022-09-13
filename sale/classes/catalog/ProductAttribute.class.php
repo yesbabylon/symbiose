@@ -8,12 +8,18 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class ProductAttribute extends Model {
-    public static function getColumns() {
-        /**
-         * A Product Attrribute corresponds to the value of an attribute available for a Product of a given Family.
-         * It is equivalent to the M2M table between Product and Option (the possible values for the attribtues are limited by OptionValue).
-         */
 
+    public static function getName() {
+        return "Attribute";
+    }
+
+    public static function getDescription() {
+        return "A Product Attrribute corresponds to the value of an attribute available for a Product of a given Family.\n
+            It is equivalent to the M2M table between Product and Option (the possible values for the attribtues are limited by OptionValue).\n
+        ";
+    }
+
+    public static function getColumns() {
         return [
 
             'product_id' => [
@@ -29,7 +35,7 @@ class ProductAttribute extends Model {
                 'description'       => "Product Option this attribute relates to.",
                 'required'          => true
             ],
-            
+
             'option_value_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\OptionValue',

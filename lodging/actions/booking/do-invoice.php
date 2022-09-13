@@ -53,7 +53,7 @@ if($booking['status'] != 'checkedout') {
 }
 
 
-/* 
+/*
     Remove any non-paid and non-invoice remaining funding
 */
 

@@ -24,8 +24,8 @@
         },
         "rental_unit_category_id": {
             "label": "Catégorie",
-            "description": "Des logements peuvent être attribués // à la catégorie d'UL.",
-            "help": "Des logements peuvent être attribués en fonction de la catégorie d'unités locatives."
+            "description": "Catégorie des produits auxquels l'unité peut être assignée.",
+            "help": "Lorsque des produits de type logements sont attachés à une catégorie d'unité locative, seules les unités de la catégorie cible peuvent y être assignées."
         },
         "capacity": {
             "label": "Capacité",
@@ -36,7 +36,7 @@
             "label": "Logement",
             "description": "L'unité locative est un logement.",
             "help": ""
-        },        
+        },
         "has_children": {
             "label": "Sous-unités",
             "description": "Drapeau indiquant que l'unité a des sous-unités.",
@@ -56,7 +56,7 @@
             "label": "Location partielle ?",
             "description": "L'unité peut être louée partiellement.",
             "help": ""
-        },        
+        },
         "children_ids": {
             "label": "Sous-unités",
             "description": "Unités locatives 'enfants' composant l'unité.",
@@ -128,6 +128,6 @@
         },
         "capacity": {
             "lte_zero": "Doit être une valeur positive."
-        }        
+        }
     }
 }

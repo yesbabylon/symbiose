@@ -184,16 +184,16 @@ class Funding extends Model {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang) {
-        $fundings = $om->read(self::getType(), $oids, ['is_paid'], $lang);
-
-        if($fundings > 0) {
-            foreach($fundings as $funding) {
-                if( $funding['is_paid'] ) {
-                    return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been paid.']];
+        if(count($values) > 1 || !isset($values['is_paid'])) {
+            $fundings = $om->read(self::getType(), $oids, ['is_paid'], $lang);
+            if($fundings > 0) {
+                foreach($fundings as $funding) {
+                    if( $funding['is_paid'] ) {
+                        return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been paid.']];
+                    }
                 }
             }
         }
-
         return parent::canupdate($om, $oids, $values, $lang);
     }
 

@@ -14,14 +14,14 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
             'bank_statement_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BankStatement',
+                'foreign_object'    => BankStatement::getType(),
                 'description'       => 'The bank statement the line relates to.'
             ],
 
             'center_office_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterOffice',
-                'description'       => 'Center office related to the satement (bassed on account number).',
+                'description'       => 'Center office related to the satement (based on account number).',
                 'onupdate'          => 'onupdateCenterOfficeId'
             ],
 
@@ -34,7 +34,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
             'payments_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\Payment',
+                'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'statement_line_id',
                 'description'       => 'The list of payments this line relates to .',
                 'onupdate'          => 'sale\pay\BankStatementLine::onupdatePaymentsIds',
@@ -46,12 +46,21 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
 
     /**
-     * Try to automatically reconcile a newly created statement line with a funding.
+     * Handler for center_office_id updates.
      *
      */
     public static function onupdateCenterOfficeId($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BankStatementLine::onupdateCenterOfficeId", QN_REPORT_DEBUG);
 
+        $om->call(self::getType(), 'reconcile', $oids, $values, $lang);
+    }
+
+
+    /**
+     * Try to automatically reconcile a newly created statement line with a funding.
+     * This method is called by current class (onupdateCenterOfficeId) and controller `lodging_sale_pay_bankstatementline_do-reconcile`
+     */
+    public static function reconcile($om, $oids, $values, $lang) {
         $lines = $om->read(get_called_class(), $oids, ['amount', 'center_office_id', 'structured_message']);
 
         if($lines > 0) {
@@ -68,7 +77,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
 
                 if($candidates_fundings_ids > 0 && count($candidates_fundings_ids)) {
                     // there should be at max 1 funding (since payment_reference should be unique, based on funding order and booking number)
-                    $fundings = $om->read(Funding::getType(), $candidates_fundings_ids, ['is_paid', 'booking_id.fundings_ids']);
+                    $fundings = $om->read(Funding::getType(), $candidates_fundings_ids, ['id', 'is_paid', 'booking_id.fundings_ids']);
                     if($fundings > 0 && count($fundings)) {
 
                         $funding = reset($fundings);
@@ -77,7 +86,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                         if($funding['is_paid'] == false) {
                             $found_funding_id = $funding['id'];
                         }
-                        // candidate 2: payment_reference matches another funding from a same booking AND amount matches due_amount of a left over funding
+                        // candidate 2: payment_reference matches another funding AND amount matches due_amount of a left over funding from a same booking
                         // #memo - this supports secondary payments for a booking, made with the reference of a previous funding
                         else {
                             $sibling_fundings = $om->read(Funding::getType(), $funding['booking_id.fundings_ids'], ['is_paid', 'due_amount']);
@@ -115,7 +124,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                     $om->update(get_called_class(), $lid, ['status' => 'reconciled']);
                 }
 
-            }
+            } /* end foreach */
         }
     }
 

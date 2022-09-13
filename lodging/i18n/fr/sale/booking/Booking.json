@@ -65,7 +65,7 @@
                 "action.option-confirm": {
                     "label": "Confirmer",
                     "description": "Les unités locatives seront réservées, un contrat sera créé et une facture proforma sera éditée."
-                },                
+                },
                 "action.confirm": {
                     "label": "Confirmer",
                     "description": "Les unités locatives seront réservées, un contrat sera créé et un échéancier de paiement sera généré."
@@ -85,6 +85,10 @@
                 "action.cancel": {
                     "label": "Annuler",
                     "description": "La réservation sera annulée et les unités locatives seront libérées. Les éventuels frais d'annulation seront appliqués."
+                },
+                "action.import-contats": {
+                    "label": "Importer les contacts",
+                    "description": "Les contacts du client sélectionné seront (ré)importés dans les contcats de la réservations."
                 }
             },
             "routes": {
@@ -111,7 +115,7 @@
                 },
                 "item.booking.payments": {
                     "label": "Paiements"
-                }    
+                }
             },
             "layout": {
                 "section.booking_info": {

@@ -39,7 +39,7 @@ class Contract extends \sale\contract\Contract {
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
-        
+
         $res = $om->read(get_called_class(), $oids, ['booking_id', 'customer_id.name', 'booking_id.name']);
         foreach($res as $oid => $odata) {
             $ids = $om->search(get_called_class(), ['booking_id', '=', $odata['booking_id']]);

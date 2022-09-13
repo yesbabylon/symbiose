@@ -25,12 +25,12 @@
                                                 "type": "field",
                                                 "label": "Amount",
                                                 "value": "amount",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "funding_id",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "header": {
                                                         "actions": {
@@ -38,6 +38,21 @@
                                                         }
                                                     },
                                                     "domain": ["is_paid", "=", false]
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Booking",
+                                                "value": "booking_id",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true,
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.OPEN": false
+                                                        }
+                                                    }
                                                 }
                                             },
                                             {

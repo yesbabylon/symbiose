@@ -55,9 +55,15 @@ class BookingLine extends Model {
                 'onupdate'          => 'onupdateProductId'
             ],
 
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'description'       => 'The product model the line relates to (from product).',
+            ],
+
             'price_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\price\Price',
+                'foreign_object'    => \sale\price\Price::getType(),
                 'description'       => 'The price the line relates to (retrieved by price list).',
                 'onupdate'          => 'onupdatePriceId'
             ],
@@ -78,6 +84,7 @@ class BookingLine extends Model {
                 'onupdate'          => 'onupdatePriceAdaptersIds'
             ],
 
+            // automatic price adapters are used for computing the unit_price
             'auto_discounts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingPriceAdapter',
@@ -86,6 +93,7 @@ class BookingLine extends Model {
                 'description'       => 'Price adapters relating to auto discounts only.'
             ],
 
+            // manual discounts are used for computing the resulting discount rate (except freebies)
             'manual_discounts_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\booking\BookingPriceAdapter',
@@ -149,6 +157,7 @@ class BookingLine extends Model {
                 'default'           => false
             ],
 
+            // freebies are from both automatic price adapters and manual discounts
             'free_qty' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
@@ -157,6 +166,7 @@ class BookingLine extends Model {
                 'store'             => true
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -197,7 +207,7 @@ class BookingLine extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'description'       => 'VAT rate that applies to this line.',
-                'function'          => 'getVatRate',
+                'function'          => 'calcVatRate',
                 'store'             => true,
                 'onupdate'          => 'onupdateVatRate'
             ],
@@ -216,60 +226,75 @@ class BookingLine extends Model {
 
     public static function onupdateProductId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        // update product model according to newly set product
+        $lines = $om->read(self::getType(), $oids, ['product_id.product_model_id'], $lang);
+        foreach($lines as $lid => $line) {
+            $om->update(self::getType(), $lid, ['product_model_id' => $line['product_id.product_model_id']]);
+        }
     }
 
     public static function onupdateQty($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, ['total' => null, 'price' => null, 'fare_benefit' => null], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, ['total' => null, 'price' => null, 'fare_benefit' => null], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdatePriceAdaptersIds($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, [], $lang);
+        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
     }
 
-
-    // reset computed fields related to price
+    /**
+     * Reset computed fields related to price.
+     */
     public static function _resetPrices($om, $oids, $values, $lang) {
-        $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
-        if(count($values)) {
-            // list of fields being reset can be customized by caller
-            // #memo - vat_rate and unit_price can be set manually, we don't want to overwrite the update !
-            $new_values = $values;
-        }
-        $om->update(__CLASS__, $oids, $new_values);
-        // update parent objects
-        $lines = $om->read(__CLASS__, $oids, ['booking_line_group_id'], $lang);
+        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
+
+        $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'booking_line_group_id'], $lang);
+
         if($lines > 0) {
+            $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
+
+            // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the update !
+            if(count($values)) {
+                $fields = array_keys($new_values);
+                foreach($values as $field => $value) {
+                    if(in_array($field, $fields) && !is_null($value)) {
+                        unset($new_values[$field]);
+                    }
+                }
+            }
+
+            // update lines
+            foreach($lines as $lid => $line) {
+                $assigned_values = $new_values;
+                // we dont want to reset unit_price for products that have a price_id with a value of 0.0 ()
+                if($line['price_id.price'] == 0.0) {
+                    unset($assigned_values['unit_price']);
+                }
+                $om->update(__CLASS__, $lid, $assigned_values);
+            }
+
+            // update parent objects
             $booking_line_groups_ids = array_map(function ($a) { return $a['booking_line_group_id']; }, array_values($lines));
             $om->callonce(\sale\booking\BookingLineGroup::getType(), '_resetPrices', $booking_line_groups_ids, [], $lang);
         }
     }
-
-    /**
-     * This method is called upon change on: qty
-     */
-    public static function _createConsumptions($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_createConsumptions", QN_REPORT_DEBUG);
-        // done upon status change : when booking status is set to 'option'
-    }
-
 
     /**
      * For BookingLines the display name is the name of the product it relates to.
@@ -320,7 +345,7 @@ class BookingLine extends Model {
                         }
                     }
                 }
-                $result[$oid] = round(($price * (1-$disc_percent)) - $disc_value, 2);
+                $result[$oid] = round(($price * (1 - $disc_percent)) - $disc_value, 4);
             }
         }
         return $result;
@@ -355,15 +380,19 @@ class BookingLine extends Model {
     public static function calcDiscount($om, $oids, $lang) {
         $result = [];
 
-        $lines = $om->read(get_called_class(), $oids, ['manual_discounts_ids']);
+        $lines = $om->read(get_called_class(), $oids, ['manual_discounts_ids', 'unit_price']);
 
-        foreach($lines as $oid => $odata) {
-            $result[$oid] = 0;
+        foreach($lines as $oid => $line) {
+            $result[$oid] = (float) 0.0;
             // apply additional manual discounts
-            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
+            $discounts = $om->read('sale\booking\BookingPriceAdapter', $line['manual_discounts_ids'], ['type', 'value']);
             foreach($discounts as $aid => $adata) {
                 if($adata['type'] == 'percent') {
                     $result[$oid] += $adata['value'];
+                }
+                else if($adata['type'] == 'amount') {
+                    // amount discount is converted to a rate
+                    $result[$oid] += round($adata['value'] / $line['unit_price'], 2);
                 }
             }
         }
@@ -372,14 +401,14 @@ class BookingLine extends Model {
 
     public static function calcFareBenefit($om, $oids, $lang) {
         $result = [];
-        // #memo - price adapters are already applied on unit_price (so we need price_id)
-        $lines = $om->read(get_called_class(), $oids, ['free_qty', 'qty', 'price_id.price', 'vat_rate', 'price']);
+        // #memo - price adapters are already applied on unit_price, so we need price_id
+        $lines = $om->read(get_called_class(), $oids, ['free_qty', 'qty', 'price_id.price', 'vat_rate', 'unit_price']);
         if($lines) {
             foreach($lines as $lid => $line) {
                 // delta between final price and catalog price
-                $benefit = ( $line['price_id.price'] * ($line['qty']-$line['free_qty']) * (1.0+$line['vat_rate']) ) - $line['price'];
-                // add vat_incl value of the free products
-                $benefit += $line['price_id.price'] * $line['free_qty'] * (1.0+$line['vat_rate']);
+                $catalog_price = $line['price_id.price'] * $line['qty'] * (1.0 + $line['vat_rate']);
+                $fare_price = $line['unit_price'] * ($line['qty'] - $line['free_qty']) * (1.0 + $line['vat_rate']);
+                $benefit = $catalog_price - $fare_price;
                 $result[$lid] = max(0.0, $benefit);
             }
         }
@@ -396,10 +425,7 @@ class BookingLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $price = (float) $odata['total'];
-            $vat = (float) $odata['vat_rate'];
-
-            $result[$oid] = round( $price  * (1.0 + $vat), 2);
+            $result[$oid] = round( $odata['total']  * (1.0 + $odata['vat_rate']), 2);
         }
         return $result;
     }
@@ -413,54 +439,26 @@ class BookingLine extends Model {
         $lines = $om->read(get_called_class(), $oids, [
                     'qty',
                     'unit_price',
-                    'auto_discounts_ids',
-                    'manual_discounts_ids',
+                    'free_qty',
+                    'discount',
                     'payment_mode'
                 ]);
 
-        foreach($lines as $oid => $odata) {
+        foreach($lines as $oid => $line) {
 
-            if($odata['payment_mode'] == 'free') {
-                $result[$oid] = 0;
+            if($line['payment_mode'] == 'free') {
+                $result[$oid] = 0.0;
                 continue;
             }
 
-            $price = (float) $odata['unit_price'];
-            $disc_percent = 0.0;
-            $disc_value = 0.0;
-            $qty = intval($odata['qty']);
-            // apply freebies from auto-discounts
-            $adapters = $om->read('sale\booking\BookingPriceAdapter', $odata['auto_discounts_ids'], ['type', 'value']);
-            foreach($adapters as $aid => $adata) {
-                // amount and percent discounts have been applied in ::calcUnitPrice()
-                if($adata['type'] == 'freebie') {
-                    $qty -= $adata['value'];
-                }
-            }
-            // apply additional manual discounts
-            $discounts = $om->read('sale\booking\BookingPriceAdapter', $odata['manual_discounts_ids'], ['type', 'value']);
-            foreach($discounts as $aid => $adata) {
-                if($adata['type'] == 'amount') {
-                    $disc_value += $adata['value'];
-                }
-                else if($adata['type'] == 'percent') {
-                    $disc_percent += $adata['value'];
-                }
-                else if($adata['type'] == 'freebie') {
-                    $qty -= $adata['value'];
-                }
-            }
-            // apply discount amount VAT excl.
-            $price = ($price * (1.0-$disc_percent)) - $disc_value;
-
-            $result[$oid] = max(0, $price * $qty);
+            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
 
         return $result;
     }
 
 
-    public static function getVatRate($om, $oids, $lang) {
+    public static function calcVatRate($om, $oids, $lang) {
         $result = [];
         $lines = $om->read(get_called_class(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {

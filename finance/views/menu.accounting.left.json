@@ -9,14 +9,14 @@
                 "id": "item.bank_statements",
                 "label": "Statements",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "list_alt",
                 "type": "parent",
                 "children": [
                     {
                         "id": "item.bank_statements.ready",
                         "type": "entry",
                         "label": "Statements to export",
-                        "description": "", 
+                        "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
@@ -28,7 +28,7 @@
                         "id": "item.bank_statements.all",
                         "type": "entry",
                         "label": "All statements",
-                        "description": "", 
+                        "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatement",
@@ -38,10 +38,41 @@
                 ]
             },
             {
+                "id": "item.exports",
+                "label": "Exports",
+                "description": "",
+                "icon":"import_export",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.exports.downloads",
+                        "type": "entry",
+                        "label": "Exports to download",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\documents\\Export",
+                            "view": "list.downloads"
+                        }
+                    },
+                    {
+                        "id": "item.exports.all",
+                        "type": "entry",
+                        "label": "All exports",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\documents\\Export",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "item.invoices",
                 "label": "Invoices",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "receipt_long",
                 "type": "parent",
                 "children": [
                     {
@@ -59,9 +90,9 @@
             },
             {
                 "id": "item.fundings",
-                "label": "Fundings",
+                "label": "Payments",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "attach_money",
                 "type": "parent",
                 "children": [
                     {
@@ -75,6 +106,18 @@
                             "view": "list.default",
                             "domain": ["due_amount", "<", 0]
                         }
+                    },
+                    {
+                        "id": "item.bank_statement_lines.reimburse",
+                        "type": "entry",
+                        "label": "Bank payments to reimburse",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.default",
+                            "domain": ["status", "=", "to_refund"]
+                        }
                     }
                 ]
             },
@@ -82,7 +125,7 @@
                 "id": "item.settings",
                 "label": "Settings",
                 "description": "",
-                "icon": "settings",
+                "icon": "menu_book",
                 "type": "parent",
                 "children": [
                     {
@@ -111,8 +154,9 @@
                         "label": "Chart of accounts",
                         "description": "",
                         "context": {
-                            "entity": "finance\\accounting\\AccountChart",
-                            "view": "list.default"
+                            "entity": "finance\\accounting\\AccountChartLine",
+                            "view": "list.default",
+                            "domain": ["account_chart_id", "=", 1]
                         }
                     },
                     {
@@ -126,7 +170,7 @@
                         }
                     }
                 ]
-            }            
+            }
         ]
     }
 }

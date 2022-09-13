@@ -172,21 +172,23 @@ class Funding extends \sale\pay\Funding {
      * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang) {
-        $fundings = $om->read(self::getType(), $oids, ['booking_id'], $lang);
+        if(isset($values['due_amount'])) {
+            $fundings = $om->read(self::getType(), $oids, ['booking_id'], $lang);
 
-        if($fundings > 0) {
-            foreach($fundings as $fid => $funding) {
-                $bookings = $om->read(Booking::getType(), $funding['booking_id'], ['price', 'fundings_ids.due_amount'], $lang);
-                if($bookings > 0 && count($bookings)) {
-                    $booking = reset($bookings);
-                    $fundings_price = $values['due_amount'];
-                    foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
-                        if($oid != $fid) {
-                            $fundings_price += $odata['due_amount'];
+            if($fundings > 0) {
+                foreach($fundings as $fid => $funding) {
+                    $bookings = $om->read(Booking::getType(), $funding['booking_id'], ['price', 'fundings_ids.due_amount'], $lang);
+                    if($bookings > 0 && count($bookings)) {
+                        $booking = reset($bookings);
+                        $fundings_price = $values['due_amount'];
+                        foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
+                            if($oid != $fid) {
+                                $fundings_price += $odata['due_amount'];
+                            }
                         }
-                    }
-                    if($fundings_price > $booking['price']) {
-                        return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total ({$fundings_price})."]];
+                        if($fundings_price > $booking['price']) {
+                            return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total."]];
+                        }
                     }
                 }
             }

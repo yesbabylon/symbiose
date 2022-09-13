@@ -9,7 +9,7 @@
             {
                 "type": "field",
                 "label": "Product",
-                "value": "product_id",
+                "value": "product_model_id",
                 "width": "25%"
             },
             {
@@ -26,7 +26,7 @@
                 "type": "field",
                 "value": "schedule_to",
                 "width": "10%"
-            },            
+            },
             {
                 "type": "field",
                 "value": "type",

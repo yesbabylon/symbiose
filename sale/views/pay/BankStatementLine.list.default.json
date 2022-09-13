@@ -5,7 +5,7 @@
         "groups": ["sale.default.user"]
     },
     "order": "created",
-    "sort": "desc",    
+    "sort": "desc",
     "domain": ["center_office_id", "in", "user.center_offices_ids"],
     "actions": [
         {
@@ -62,7 +62,7 @@
                 "type": "field",
                 "value": "status",
                 "width": "10%"
-            }            
+            }
         ]
     }
 }

@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of contacts.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "items": [
             {
@@ -15,6 +15,11 @@
             {
                 "type": "field",
                 "value": "phone",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "mobile",
                 "width": "20%"
             },
             {

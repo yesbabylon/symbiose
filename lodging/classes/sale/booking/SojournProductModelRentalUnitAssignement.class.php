@@ -7,7 +7,7 @@
 namespace lodging\sale\booking;
 use equal\orm\Model;
 
-class BookingLineRentalUnitAssignement extends Model {
+class SojournProductModelRentalUnitAssignement extends Model {
 
     public static function getName() {
         return "Rental Unit Assignement";
@@ -15,7 +15,7 @@ class BookingLineRentalUnitAssignement extends Model {
 
     public static function getDescription() {
         return "Assignements are created while selecting the services for a booking.\n
-        Each product line that targets a product configured to relate to a rental unit (or catogory) is assigned to one or more rental units.\n";
+        Each product line that targets a product model that is used to assign one or morea rental unit, based on capacity and capacity.\n";
     }
 
     public static function getColumns() {
@@ -25,6 +25,22 @@ class BookingLineRentalUnitAssignement extends Model {
                 'foreign_object'    => 'lodging\sale\booking\Booking',
                 'description'       => 'The booking the line relates to (for consistency, lines should be accessed using the group they belong to).',
                 'ondelete'          => 'cascade'         // delete assignment when parent booking is deleted
+            ],
+
+            'booking_line_group_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
+                'description'       => 'Booking lines Group the assignment relates to.',
+                'required'          => true,
+                'ondelete'          => 'cascade'
+            ],
+
+            'sojourn_product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModel',
+                'description'       => "Product Model group of the assignment.",
+                'ondelete'          => 'cascade',
+                'required'          => true
             ],
 
             'qty' => [
@@ -37,44 +53,44 @@ class BookingLineRentalUnitAssignement extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\realestate\RentalUnit',
                 'description'       => 'Rental unit assigned to booking line.',
-                'ondelete'          => 'null'
-            ],
-
-            'booking_line_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BookingLine',
-                'description'       => 'Booking Line the assignment relates to.',
-                'required'          => true,
-                'ondelete'          => 'cascade'
-            ],
-
-            'booking_line_group_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'lodging\sale\booking\BookingLineGroup',
-                'description'       => 'Booking lines Group the assignment relates to.',
-                'required'          => true,
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'null',
+                'onupdate'          => 'onupdateRentalUnitId'
             ],
 
             'is_accomodation' => [
-                'type'              => 'boolean',
-                'description'       => 'The related rental unit is an accomodation (having at least one bed).',
-                'default'           => true
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Total persons assigned to this model.',
+                'function'          => 'calcIsAccomodation',
+                'store'             => true
             ]
+
         ];
+    }
+
+    public static function calcIsAccomodation($om, $ids, $lang) {
+        $result = [];
+        $assignments = $om->read(self::getType(), $ids, ['rental_unit_id.is_accomodation'], $lang);
+        foreach($assignments as $oid => $assignment) {
+            $result[$oid] = $assignment['rental_unit_id.is_accomodation'];
+        }
+        return $result;
+    }
+
+    public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
+        $om->update(self::getType(), $oids, ['is_accomodation' => null], $lang);
     }
 
     public function getUnique() {
         return [
-            ['booking_line_id', 'rental_unit_id']
+            ['sojourn_product_model_id', 'rental_unit_id']
         ];
     }
-
-    // prevent updating if the parent booking is not in quote
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
+     * It prevents updating if the parent booking is not in quote.
      *
      * @param  object   $om         ObjectManager instance.
      * @param  array    $oids       List of objects identifiers.
@@ -86,13 +102,13 @@ class BookingLineRentalUnitAssignement extends Model {
         $lines = $om->read(get_called_class(), $oids, ['booking_id.status'], $lang);
         if($lines > 0) {
             foreach($lines as $line) {
-                if($line['booking_id.status'] != 'quote') {
+                if(!in_array($line['booking_id.status'], ['quote', 'checkedout'])) {
                     return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
                 }
             }
         }
 
         return parent::canupdate($om, $oids, $values, $lang);
-    }    
+    }
 
 }

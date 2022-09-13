@@ -52,7 +52,7 @@
                                                 "widget": {
                                                     "header":{
                                                         "actions": {
-                                                            "ACTION.CREATE": false    
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }
@@ -77,7 +77,7 @@
                                                 "type": "field",
                                                 "value": "type",
                                                 "width": "100%"
-                                            }                                            
+                                            }
                                         ]
                                     },
                                     {
@@ -92,7 +92,7 @@
                                                 "type": "field",
                                                 "value": "partner_position",
                                                 "width": "100%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]

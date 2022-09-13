@@ -8,7 +8,7 @@ namespace finance\accounting;
 use equal\orm\Model;
 
 class AnalyticSection extends Model {
-    
+
     public static function getName() {
         return "Analytic Section";
     }

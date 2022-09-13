@@ -1,55 +1,60 @@
 {
-	"name": "Ligne de Pack",
-	"plural": "Lignes de Pack",
-	"description": "",
-	"model": {
-		"parent_product_id": {
-			"label": "Pack",
-			"description": "Le produit auquel appartient cet attribut.",
-			"help": ""
-		},
-		"child_product_id": {
-			"label": "Produit lié",
-			"description": "Le produit auquel appartient cet attribut.",
-			"help": ""
-		},
-		"has_own_qty": {
-			"label": "Quantité spécifique",
-			"description": "Le produit a-t-il sa propre quantité ?",
-			"help": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?"
-		},
-		"own_qty": {
-			"label": "Quantité",
-			"description": "Quantité auto-assignée pour ce produit.",
-			"help": ""
-		},
-		"has_own_duration": {
-			"label": "Durée spécifique",
-			"description": "Le produit a-t-il sa propre durée?",
-			"help": ""
-		},
-		"own_duration": {
-			"label": "Durée",
-			"description": "Durée, en jours, pour ce produit.",
-			"help": ""
-		},		
-		"share": {
-			"label": "Part",
-			"description": "Part de la ligne pour l'analyse (en pourcentage).",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Ligne de Pack",
-			"description": "Une ligne Pack correspond à la relation entre un produit « Pack » et un autre produit qu'il inclus.",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Ligne de Pack",
-			"description": "Cette vue affiche la liste des lignes de Pack.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Ligne de Pack",
+    "plural": "Lignes de Pack",
+    "description": "",
+    "model": {
+        "parent_product_id": {
+            "label": "Pack",
+            "description": "Le produit auquel appartient la ligne.",
+            "help": ""
+        },
+        "child_product_id": {
+            "label": "Produit lié",
+            "description": "Le produit référencé par la ligne.",
+            "help": ""
+        },
+        "child_product_model_id": {
+            "label": "Modèle Produit lié",
+            "description": "Le modèle de produit de la ligne.",
+            "help": ""
+        },
+        "has_own_qty": {
+            "label": "Quantité spécifique",
+            "description": "Le produit a-t-il sa propre quantité ?",
+            "help": "Le produit a-t-il sa propre quantité (quelle que soit la quantité appliquée au produit parent) ?"
+        },
+        "own_qty": {
+            "label": "Quantité",
+            "description": "Quantité auto-assignée pour ce produit.",
+            "help": ""
+        },
+        "has_own_duration": {
+            "label": "Durée spécifique",
+            "description": "Le produit a-t-il sa propre durée?",
+            "help": ""
+        },
+        "own_duration": {
+            "label": "Durée",
+            "description": "Durée, en jours, pour ce produit.",
+            "help": ""
+        },
+        "share": {
+            "label": "Part",
+            "description": "Part de la ligne pour l'analyse (en pourcentage).",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de Pack",
+            "description": "Une ligne Pack correspond à la relation entre un produit « Pack » et un autre produit qu'il inclus.",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Ligne de Pack",
+            "description": "Cette vue affiche la liste des lignes de Pack.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }

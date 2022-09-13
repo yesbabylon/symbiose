@@ -10,7 +10,7 @@ use lodging\sale\booking\BankStatement;
 use lodging\sale\booking\BankStatementLine;
 
 list($params, $providers) = announce([
-    'description'   => "Import a Bank statements file and return the list of created statements. Already existing statements will be ignored.",
+    'description'   => "Import a Bank statements file and return the list of created statements. Already existing statements are ignored.",
     'params'        => [
         'data' =>  [
             'description'   => 'TXT file holding the data to import as statements.',

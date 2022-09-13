@@ -72,19 +72,19 @@ class Identity extends Model {
             ],
 
             'bank_account_iban' => [
-                'type'          => 'string',
-                'usage'         => 'uri/urn:iban',
-                'description'   => "Number of the bank account of the Identity, if any."
+                'type'              => 'string',
+                'usage'             => 'uri/urn:iban',
+                'description'       => "Number of the bank account of the Identity, if any."
             ],
 
             'bank_account_bic' => [
-                'type'          => 'string',
-                'description'   => "Identitifer of the Bank related to the Identity's bank account, when set."
+                'type'              => 'string',
+                'description'       => "Identitifer of the Bank related to the Identity's bank account, when set."
             ],
 
             'signature' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => 'Identity signature to append to communications.',
                 'multilang'         => true
             ],
@@ -108,7 +108,7 @@ class Identity extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Does the this organisation have a VAT number?',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'default'           => false                
+                'default'           => false
             ],
             'vat_number' => [
                 'type'              => 'string',
@@ -165,6 +165,7 @@ class Identity extends Model {
                 'description'       => 'List of employees of the organisation, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
+
             'customers_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
@@ -173,6 +174,7 @@ class Identity extends Model {
                 'description'       => 'List of customers of the organisation, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
+
             'providers_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
@@ -187,10 +189,9 @@ class Identity extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['partner_identity_id', '<>', 'object.id'],
+                'domain'            => [ ['partner_identity_id', '<>', 'object.id'], ['relationship', '=', 'contact'] ],
                 'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
             ],
-
 
             /*
                 Description of the Identity address.
@@ -200,22 +201,27 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Street and number.'
             ],
+
             'address_dispatch' => [
                 'type'              => 'string',
                 'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).'
             ],
+
             'address_city' => [
                 'type'              => 'string',
                 'description'       => 'City.'
             ],
+
             'address_zip' => [
                 'type'              => 'string',
                 'description'       => 'Postal code.'
             ],
+
             'address_state' => [
                 'type'              => 'string',
                 'description'       => 'State or region.'
             ],
+
             'address_country' => [
                 'type'              => 'string',
                 'usage'             => 'country/iso-3166:2',
@@ -236,7 +242,13 @@ class Identity extends Model {
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
-                'description'       => "Identity main phone number."
+                'description'       => "Identity main phone number (mobile or landline)."
+            ],
+
+            'mobile' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity mobile phone number."
             ],
 
             'fax' => [
@@ -250,7 +262,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'usage'             => 'url',
                 'description'       => 'Organisation main official website URL, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'visible'           => ['type', '<>', 'I']
             ],
 
             // an identity can have several addresses
@@ -262,7 +274,7 @@ class Identity extends Model {
             ],
 
             /*
-                For organisations, there is a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
+                For organisations, there might be a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
                 These contact details are commonly requested by service providers for validating the identity of an organisation.
             */
             'reference_partner_id' => [
@@ -270,6 +282,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'domain'            => ['relationship', '=', 'contact'],
                 'description'       => 'Contact (natural person) that can legally represent the organisation.',
+                'onupdate'          => 'onupdateReferencePartnerId',
                 'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
             ],
 
@@ -280,7 +293,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             /*
@@ -290,14 +303,14 @@ class Identity extends Model {
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => [ ['type', '=', 'I'] ],
+                'visible'           => ['type', '=', 'I'],
                 'onupdate'          => 'onupdateName'
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => [ ['type', '=', 'I'] ],
+                'visible'           => ['type', '=', 'I'],
                 'onupdate'          => 'onupdateName'
             ],
 
@@ -305,25 +318,25 @@ class Identity extends Model {
                 'type'              => 'string',
                 'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
                 'description'       => 'Reference contact gender.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'title' => [
                 'type'              => 'string',
                 'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
                 'description'       => 'Reference contact title.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'date_of_birth' => [
                 'type'              => 'date',
                 'description'       => 'Date of birth.',
-                'visible'           => [ ['type', '=', 'I'] ]
+                'visible'           => ['type', '=', 'I']
             ],
 
             'lang_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'core\Lang',
+                'foreign_object'    => \core\Lang::getType(),
                 'description'       => "Preferred language of the identity.",
                 'default'           => 1,
                 'onupdate'          => 'onupdateLangId'
@@ -357,15 +370,15 @@ class Identity extends Model {
     }
 
     public static function onupdateName($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
+        $om->update(__CLASS__, $oids, [ 'display_name' => null ], $lang);
         $res = $om->read(__CLASS__, $oids, ['partners_ids']);
         $partners_ids = [];
         foreach($res as $oid => $odata) {
             $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
         }
         // force re-computing of related partners names
-        $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
-        $om->read('identity\Partner', $partners_ids, ['name'], $lang);        
+        $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
+        $om->read('identity\Partner', $partners_ids, ['name'], $lang);
     }
 
 
@@ -383,11 +396,11 @@ class Identity extends Model {
                     $values['lastname'] = '';
                 }
                 $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
-                $om->write(__CLASS__, $oid, $values, $lang);
-            }            
+                $om->update(__CLASS__, $oid, $values, $lang);
+            }
             $om->read(__CLASS__, $oids, ['display_name'], $lang);
             // force re-computing of related partners names
-            $om->write('identity\Partner', $partners_ids, [ 'name' => null ], $lang);            
+            $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
             $om->read('identity\Partner', $partners_ids, ['name'], $lang);
         }
     }
@@ -400,7 +413,27 @@ class Identity extends Model {
 
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
-                $om->write('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
+                $om->update('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
+            }
+        }
+    }
+
+    /**
+     * When a reference partner is given, add it to the identity's contacts list.
+     */
+    public static function onupdateReferencePartnerId($om, $oids, $values, $lang) {
+        $identities = $om->read(self::getType(), $oids, ['reference_partner_id', 'reference_partner_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
+
+        if($identities > 0) {
+            foreach($identities as $oid => $identity) {
+                if(!in_array($identity['reference_partner_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $identity['contacts_ids.partner_identity_id']))) {
+                    // create a contact with the customer as 'booking' contact
+                    $om->create('identity\Partner', [
+                        'owner_identity_id'     => $oid,
+                        'partner_identity_id'   => $identity['reference_partner_id.partner_identity_id'],
+                        'relationship'          => 'contact'
+                    ]);
+                }
             }
         }
     }
@@ -502,13 +535,13 @@ class Identity extends Model {
                         return ['legal_name' => ['missing' => 'Legal name cannot be empty for legal person.']];
                     }
                 }
-            }            
+            }
         }
         return parent::canupdate($om, $oids, $values, $lang);
     }
 
     public static function getConstraints() {
-        return [            
+        return [
             'legal_name' =>  [
                 'too_short' => [
                     'message'       => 'Legal name must be minimum 2 chars long.',

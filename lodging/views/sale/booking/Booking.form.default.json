@@ -83,7 +83,18 @@
             },
             "confirm": true,
             "visible": ["status", "not in", ["checkedin", "checkedout", "invoiced", "debit_balance", "credit_balance", "balanced"]]
+        },
+        {
+            "id": "action.import-contats",
+            "label": "Import contacts",
+            "description": "The contacts from the selected customer will be (re) imported to the booking.",
+            "controller": "lodging_booking_import-contacts",
+            "params": {
+                "id": "object.id"
+            },
+            "confirm": true
         }
+
     ],
     "routes": [
         {
@@ -490,6 +501,33 @@
                                                 "widget": {
                                                     "view": "list.booking",
                                                     "domain": ["type", "=", "invoice"],
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Mails",
+                        "id": "section.mails",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "mails_ids",
+                                                "width": "100%",
+                                                "widget": {
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false

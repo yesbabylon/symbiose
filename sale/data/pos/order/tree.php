@@ -90,6 +90,9 @@ switch($params['variant']) {
             'total',
             'price',
             'total_paid',
+            'session_id' => [
+                'id', 'name', 'status'
+            ],
             'customer_id' => [
                 'name',
                 'partner_identity_id' => [

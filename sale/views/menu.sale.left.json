@@ -8,9 +8,36 @@
                 "id": "item.bank_statements",
                 "label": "Statements",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "list_alt",
                 "type": "parent",
                 "children": [
+                    {
+                        "id": "item.bank_statements.statements_to_process",
+                        "type": "entry",
+                        "label": "Statements to process",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc",
+                            "domain": ["status", "=", "pending"]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.all",
+                        "type": "entry",
+                        "label": "All Bank Statements",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc"
+                        }
+                    },
                     {
                         "id": "item.bank_statements.lines_to_review",
                         "type": "entry",
@@ -28,12 +55,12 @@
                     {
                         "id": "item.bank_statements.all_lines",
                         "type": "entry",
-                        "label": "Reconciled lines",
+                        "label": "All lines",
                         "description": "",
                         "route": "/",
                         "context": {
                             "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.reconciled",
+                            "view": "list.default",
                             "order": "date",
                             "sort": "desc"
                         }
@@ -45,11 +72,10 @@
                         "description": "",
                         "route": "/",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
                             "view": "list.reconciled",
                             "domain": [
-                                ["status", "=", "reconciled"],
-                                ["is_exported", "=", false]
+                                ["status", "=", "reconciled"]
                             ]
                         }
                     }
@@ -108,7 +134,7 @@
                         "label": "New customer",
                         "description": "",
                         "icon": "add",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "form.create",
@@ -121,7 +147,7 @@
                         "type": "entry",
                         "label": "All customers",
                         "description": "",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "list.default",
@@ -133,7 +159,7 @@
                         "type": "entry",
                         "label": "All partners",
                         "description": "",
-                        "route": "/",                        
+                        "route": "/",
                         "context": {
                             "entity": "identity\\Partner",
                             "view": "list.default"
@@ -204,7 +230,27 @@
                         }
                     }
                 ]
-            }            
+            },
+            {
+                "id": "item.contracts",
+                "label": "Contracts",
+                "description": "",
+                "icon": "drive_file_rename_outline",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.contracts.all",
+                        "type": "entry",
+                        "label": "All contracts",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\contract\\Contract",
+                            "view": "list.default",
+                            "domain": ["status", "<>", "cancelled"]
+                        }
+                    }
+                ]
+            }
         ]
     }
 }

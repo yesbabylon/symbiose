@@ -10,13 +10,13 @@ class Identity extends \identity\Identity {
 
     public static function getColumns() {
         return [
-            // Any Identity can have several contacts
+
             'contacts_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'lodging\sale\booking\Contact',
+                'foreign_object'    => Contact::getType(),
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['partner_identity_id', '<>', 'object.id'],
-                'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
+                'description'       => 'List of contacts relating to the organisation (not necessarily employees), if any.'
             ],
 
             'lang_id' => [
@@ -30,11 +30,12 @@ class Identity extends \identity\Identity {
             // field for retrieving all partners related to the identity
             'partners_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'sale\customer\Customer',
+                'foreign_object'    => 'lodging\sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Partnerships that relate to the identity.',
                 'domain'            => ['owner_identity_id', '<>', 'object.id']
-            ]            
+            ]
+
         ];
     }
 

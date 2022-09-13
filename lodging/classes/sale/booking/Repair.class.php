@@ -32,7 +32,7 @@ class Repair extends Consumption {
                 'selection'         => [
                     'ooo'                              // out-of-order (repair & maintenance)
                 ],
-                'readonly'          => true,               
+                'readonly'          => true,
                 'default'           => 'ooo'
             ],
 
@@ -52,7 +52,7 @@ class Repair extends Consumption {
                 'type'              => 'integer',
                 'description'       => "How many times the consumption is booked for.",
                 'default'           => 1,
-                'readonly'          => true                
+                'readonly'          => true
             ]
 
         ];

@@ -8,7 +8,7 @@ namespace finance\tax;
 use equal\orm\Model;
 
 class VatRule extends Model {
-    
+
     public static function getName() {
         return "VAT Rule";
     }
@@ -29,12 +29,11 @@ class VatRule extends Model {
 
             'rate' => [
                 'type'              => 'float',
-                'usage'             => 'amount/percent',                
+                'usage'             => 'amount/percent',
                 'description'       => "Name of the VAT rule.",
-                'usage'             => 'amount/percentage',
                 'required'          => true
             ],
-            
+
             'type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",

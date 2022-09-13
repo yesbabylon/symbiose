@@ -38,7 +38,7 @@ $order = Order::id($params['id'])
                     'id', 'name', 'status', 'has_invoice', 'invoice_id',
                     'has_funding',
                     'funding_id' => [
-                        'type', 
+                        'type',
                         'invoice_id'
                     ],
                     'center_id' => [
@@ -69,7 +69,7 @@ if($order['status'] == 'paid') {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
-/* 
+/*
     Handle products (lines) that must be added as extra on a booking
 */
 
@@ -89,13 +89,13 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
             add lines as extra consumption on the targeted booking
         */
 
-        // find any existing 'extra' group id 
+        // find any existing 'extra' group id
         $groups_ids = BookingLineGroup::search([['booking_id', '=', $booking_id], ['is_extra', '=', true]])->ids();
         if($groups_ids > 0 && count($groups_ids)) {
             $group_id = reset(($groups_ids));
         }
         // no 'extra' group: create one
-        else {            
+        else {
             $new_group = BookingLineGroup::create(['name' => 'Suppléments', 'booking_id' => $booking_id, 'is_extra' => true])->first();
             $group_id = $new_group['id'];
         }
@@ -109,8 +109,8 @@ foreach($order['order_payments_ids'] as $pid => $payment) {
                         ->update([
                             'qty'           => $line['qty']
                         ])
-                        ->update([                            
-                            'unit_price'    => $line['unit_price'], 
+                        ->update([
+                            'unit_price'    => $line['unit_price'],
                             'vat_rate'      => $line['vat_rate']
                         ]);
         }

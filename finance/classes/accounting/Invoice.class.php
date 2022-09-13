@@ -111,15 +111,15 @@ class Invoice extends Model {
 
             'partner_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'description'       => "Organisation which has to pay for the goods and services related to the sale.",
+                'foreign_object'    => \identity\Partner::getType(),
+                'description'       => "The counter party organisation the invoice relates to.",
                 'required'          => true
             ],
 
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::calcPrice',
+                'function'          => 'calcPrice',
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included invoiced amount (computed)."
@@ -128,7 +128,7 @@ class Invoice extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'finance\accounting\Invoice::calcTotal',
+                'function'          => 'calcTotal',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the invoice (computed).',
                 'store'             => true
@@ -176,9 +176,15 @@ class Invoice extends Model {
             'due_date' => [
                 'type'              => 'computed',
                 'result_type'       => 'date',
-                'description'       => "Deadline before which the funding is expected.",
+                'description'       => "Deadline for the payment is expected, from payment terms.",
                 'function'          => 'calcDueDate',
                 'store'             => true
+            ],
+
+            'is_exported' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
+                'default'           => false
             ]
 
         ];
@@ -189,12 +195,15 @@ class Invoice extends Model {
         $invoices = $om->read(get_called_class(), $oids, ['fundings_ids.is_paid'], $lang);
         if($invoices > 0) {
             foreach($invoices as $oid => $invoice) {
-                $result[$oid] = true;
+                $result[$oid] = false;
+                $count_paid = 0;
                 foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
-                    if(!$funding['is_paid']) {
-                        $result[$oid] = false;
-                        break;
+                    if($funding['is_paid']) {
+                        ++$count_paid;
                     }
+                }
+                if($count_paid > 0 && count($invoice['fundings_ids.is_paid']) == $count_paid) {
+                    $result[$oid] = true;
                 }
             }
         }
@@ -310,7 +319,7 @@ class Invoice extends Model {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, array_merge($values, ['number' => null, 'date' => time()]), $lang);
+            $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
             // generate an invoice number (force immediate recomuting)
             $om->read(__CLASS__, $oids, ['number'], $lang);
             // generate accounting entries
@@ -335,7 +344,7 @@ class Invoice extends Model {
      * @return array                      Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $res = $om->read(get_called_class(), $oids, ['status']);
+        $res = $om->read(self::getType(), $oids, ['status']);
 
         if($res > 0) {
             foreach($res as $oids => $odata) {
@@ -347,7 +356,10 @@ class Invoice extends Model {
                 }
                 if($odata['status'] == 'invoice') {
                     if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
-                        return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                        // only allow modifiable fields
+                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status','is_exported'])) ) {
+                            return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                        }
                     }
                 }
             }
@@ -368,7 +380,7 @@ class Invoice extends Model {
         if($res > 0) {
             foreach($res as $oids => $odata) {
                 if($odata['status'] != 'proforma') {
-                    return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
+                    return ['status' => ['non_removable' => 'Invoice can only be deleted while its status is proforma.']];
                 }
             }
         }
@@ -450,11 +462,13 @@ class Invoice extends Model {
                             $debit = abs($line['total']);
                             $credit = 0.0;
                             $accounting_entries[] = [
-                                'name'          => $line['name'],
-                                'invoice_id'    => $oid,
-                                'account_id'    => $account_sales_id,
-                                'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                                'name'              => $line['name'],
+                                'has_invoice'       => true,
+                                'invoice_id'        => $oid,
+                                'invoice_line_id'   => $lid,
+                                'account_id'        => $account_sales_id,
+                                'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
                             ];
                         }
                         // line is a regular product line
@@ -481,11 +495,13 @@ class Invoice extends Model {
                                     $debit = 0.0;
                                     $credit = round($line['total'] * $rline['share'], 2);
                                     $accounting_entries[] = [
-                                        'name'          => $line['name'],
-                                        'invoice_id'    => $oid,
-                                        'account_id'    => $rline['account_id'],
-                                        'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                        'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                                        'name'              => $line['name'],
+                                        'has_invoice'       => true,
+                                        'invoice_id'        => $oid,
+                                        'invoice_line_id'   => $lid,
+                                        'account_id'        => $rline['account_id'],
+                                        'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
+                                        'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
                                     ];
                                 }
                             }
@@ -499,6 +515,7 @@ class Invoice extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
+                            'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -513,6 +530,7 @@ class Invoice extends Model {
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
                             'name'          => 'taxes TVA à payer',
+                            'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
                             'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -526,6 +544,7 @@ class Invoice extends Model {
                     // assign with handling of reversing entries
                     $accounting_entries[] = [
                         'name'          => 'créances commerciales',
+                        'has_invoice'   => true,
                         'invoice_id'    => $oid,
                         'account_id'    => $account_trade_debtors_id,
                         'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
@@ -533,7 +552,7 @@ class Invoice extends Model {
                     ];
 
                     // append generated entries to result
-                    $result[$oid] = $accounting_entries;                    
+                    $result[$oid] = $accounting_entries;
                 }
             }
         }

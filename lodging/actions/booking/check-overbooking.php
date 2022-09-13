@@ -5,7 +5,6 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use sale\booking\Consumption;
-use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\Booking;
 
 list($params, $providers) = announce([
@@ -34,7 +33,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_ids'])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -48,35 +47,33 @@ if(!$booking) {
 // map of consumptions by rental_unit (ordered on date)
 $consumptions_map = [];
 
-if(count($booking['booking_lines_ids'])) {
-    $consumptions = $orm->call('lodging\sale\booking\BookingLine', '_getResultingConsumptions', $booking['booking_lines_ids']);
+$consumptions = $orm->call(Booking::getType(), 'getResultingConsumptions', $params['id']);
 
-    // filter to keep only accomodations
-    $consumptions = array_filter($consumptions, function($a) {
-        return $a['is_rental_unit'];
-    });
+// filter to keep only accomodations
+$consumptions = array_filter($consumptions, function($a) {
+    return $a['is_rental_unit'];
+});
 
-    // sort ascending on date
-    usort($consumptions, function($a, $b) {
-        return ($a['date'] < $b['date'])?-1:1;
-    });
+// sort ascending on date
+usort($consumptions, function($a, $b) {
+    return ($a['date'] < $b['date'])?-1:1;
+});
 
+foreach($consumptions as $consumption) {
+    $rental_unit_id = $consumption['rental_unit_id'];
+    $booking_line_group_id = $consumption['booking_line_group_id'];
 
-    foreach($consumptions as $consumption) {
-        $rental_unit_id = $consumption['rental_unit_id'];
-        $booking_line_group_id = $consumption['booking_line_group_id'];
-
-        if($rental_unit_id <= 0) continue;
-        if(!isset($consumptions_map[$booking_line_group_id])) {
-            $consumptions_map[$booking_line_group_id] = [];
-        }
-
-        if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
-            $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
-        }
-        $consumptions_map[$booking_line_group_id][$rental_unit_id][] = $consumption;
+    if($rental_unit_id <= 0) continue;
+    if(!isset($consumptions_map[$booking_line_group_id])) {
+        $consumptions_map[$booking_line_group_id] = [];
     }
+
+    if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
+        $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
+    }
+    $consumptions_map[$booking_line_group_id][$rental_unit_id][] = $consumption;
 }
+
 
 /*
     Detect collisions and keep involved bookings ids.

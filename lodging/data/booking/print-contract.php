@@ -132,9 +132,11 @@ $fields = [
                 'fax',
                 'website',
                 'registration_number',
-                'signature',
+                'has_vat',
+                'vat_number',
                 'bank_account_iban',
-                'bank_account_bic'
+                'bank_account_bic',
+                'signature'
             ]
         ],
         'contacts_ids' => [
@@ -258,6 +260,9 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
+    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
+    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
+
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
     'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
@@ -537,10 +542,10 @@ $installment_ref = '';
 
 foreach($booking['fundings_ids'] as $funding) {
 
-    if($funding['due_date'] < $installment_date) {
+    if($funding['due_date'] < $installment_date && !$funding['is_paid']) {
         $installment_date = $funding['due_date'];
-        $installment_amount = $funding['due_amount'];
         $installment_ref = $funding['payment_reference'];
+        $installment_amount = $funding['due_amount'];
     }
     $line = [
         'name'          => $funding['payment_deadline_id']['name'],
@@ -557,7 +562,7 @@ if($installment_date == PHP_INT_MAX) {
     // no funding found : the final invoice will be release and generate a funding
     // qr code is not generated
 }
-else {
+else if ($installment_amount > 0) {
     $values['installment_date'] = date('d/m/Y', $installment_date);
     $values['installment_amount'] = (float) $installment_amount;
     $values['installment_reference'] = DataFormatter::format($installment_ref, 'scor');
@@ -592,11 +597,27 @@ else {
     Generate consumptions map
 */
 
-$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])->read(['id', 'date', 'qty', 'is_meal', 'rental_unit_id', 'is_accomodation', 'time_slot_id'])->get();
+$consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['type', '=', 'book'] ])
+    ->read([
+        'id',
+        'date',
+        'qty',
+        'is_meal',
+        'rental_unit_id',
+        'is_accomodation',
+        'time_slot_id',
+        'schedule_to'
+    ])
+    ->get();
+
 $days_names = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 $consumptions_map = [];
 foreach($consumptions as $cid => $consumption) {
-
+    // #memo - we only count overnight accomodations (a sojourn always has nb_nights+1 days)
+    // ignore accomodation consumptions that do not end at midnight (24:00:00)
+    if($consumption['is_accomodation'] && $consumption['schedule_to'] != 86400) {
+        continue;
+    }
 
     $date = date('d/m/Y', $consumption['date']).' ('.$days_names[date('w', $consumption['date'])].')';
     if(!isset($consumptions_map[$date])) {

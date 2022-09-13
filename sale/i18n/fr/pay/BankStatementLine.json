@@ -39,8 +39,9 @@
             "help": "",
             "selection": {
                 "pending": "à traiter",
-                "ignored": "ignoré",
-                "reconciled": "réconcilié"
+                "ignored": "ignorée",
+                "reconciled": "réconciliée",
+                "to_refund": "à rembourser"
             }
         },
         "structured_message": {
@@ -73,6 +74,9 @@
         }
     },
     "error": {
+        "amount": {
+            "exceded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
+        },
         "errors": {
             "already_imported": "Fichier déjà importé."
         }

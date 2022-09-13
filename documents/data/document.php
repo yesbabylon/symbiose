@@ -13,6 +13,14 @@ list($params, $providers) = announce([
             'description'   => 'Unique identifier of the resource.',
             'type'          => 'string',
             'required'      => true
+        ],
+        'disposition' => [
+            'type'          => 'string',
+            'selection'     => [
+                'inline',
+                'attachment'
+            ],
+            'default'       => 'inline'
         ]
     ],
     'access' => [
@@ -44,9 +52,10 @@ if(!$document['public']) {
     $auth->su($user_id);
 }
 
-$document = $collection->read(['name', 'data', 'type', 'size'])->first();
+$document = $collection->read(['name', 'data', 'type'])->first();
 
 $context->httpResponse()
+        ->header('Content-Disposition', $params['disposition'].'; filename="'.$document['name'].'"')
         ->header('Content-Type', $document['type'])
         ->body($document['data'], true)
         ->send();

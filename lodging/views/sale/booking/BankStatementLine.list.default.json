@@ -5,7 +5,7 @@
         "groups": ["sale.default.user"]
     },
     "order": "created",
-    "sort": "desc",    
+    "sort": "desc",
     "domain": ["center_office_id", "in", "user.center_offices_ids"],
     "actions": [
         {
@@ -16,6 +16,22 @@
             "confirm": true
         }
     ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        },
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.mark_ignored",
+                    "label": "Mark as ignored",
+                    "icon": "",
+                    "controller": "lodging_sale_booking_bankstatementline_bulk-ignore"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
@@ -31,7 +47,8 @@
             {
                 "type": "field",
                 "value": "amount",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -50,14 +67,15 @@
             },
             {
                 "type": "field",
-                "value": "message",
-                "width": "30%"
+                "value": "status",
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
-                "value": "status",
-                "width": "10%"
-            }            
+                "value": "message",
+                "width": "30%"
+            }
         ]
     }
 }

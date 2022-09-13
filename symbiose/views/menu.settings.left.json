@@ -880,6 +880,25 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "id": "finance.exports",
+                        "label": "Exports",
+                        "description": "",
+                        "icon":"import_export",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "finance.exports.all",
+                                "type": "entry",
+                                "label": "All exports",
+                                "description": "",
+                                "context": {
+                                    "entity": "lodging\\documents\\Export",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     }
                 ]
             },
@@ -963,6 +982,25 @@
                                 "description": "",
                                 "context": {
                                     "entity": "core\\alert\\MessageModel",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "communication.emails",
+                        "label": "Emails",
+                        "description": "",
+                        "icon": "alternate_email",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "communication.emails.all",
+                                "type": "entry",
+                                "label": "All emails",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\Mail",
                                     "view": "list.default"
                                 }
                             }

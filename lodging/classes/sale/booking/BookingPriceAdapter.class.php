@@ -15,7 +15,7 @@ class BookingPriceAdapter extends \sale\booking\BookingPriceAdapter {
     public static function getDescription() {
         return "Adapters allow to adapt the final price of the booking lines, either by performing a direct computation, or by using a discount definition.";
     }
-    
+
     public static function getColumns() {
         return [
 
@@ -43,6 +43,6 @@ class BookingPriceAdapter extends \sale\booking\BookingPriceAdapter {
 
         ];
     }
-   
+
 
 }

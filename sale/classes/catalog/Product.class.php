@@ -47,7 +47,7 @@ class Product extends Model {
 
             'ean' => [
                 'type'              => 'string',
-                'usage'             => 'uri/urn:ean',
+                'usage'             => 'uri/urn.ean',
                 'description'       => "IAN/EAN code for barcode generation."
             ],
 
@@ -76,7 +76,7 @@ class Product extends Model {
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsPack',
                 'description'       => 'Is the product a pack? (from model).',
-                'store'             => true,                
+                'store'             => true,
                 'readonly'          => true
             ],
 
@@ -95,7 +95,8 @@ class Product extends Model {
                 'foreign_object'    => 'sale\catalog\PackLine',
                 'foreign_field'     => 'parent_product_id',
                 'description'       => "Products that are bundled in the pack.",
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'visible'           => ['is_pack', '=', true]
             ],
 
             'product_attributes_ids' => [
@@ -150,13 +151,26 @@ class Product extends Model {
                 'rel_table'         => 'sale_catalog_product_rel_product_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'product_id'
-            ]
+            ],
+
+            'has_age_range' => [
+                'type'              => 'boolean',
+                'description'       => "Applies on a specific age range?",
+                'default'           => false
+            ],
+
+            'age_range_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\AgeRange',
+                'description'       => 'Customers age range the product is intended for.',
+                'visible'           => [ ['has_age_range', '=', true] ]
+            ],
 
         ];
     }
 
     /**
-     * Computes the display_name of the product as a concatenation of Label and SKU.
+     * Computes the display name of the product as a concatenation of Label and SKU.
      *
      */
     public static function calcName($om, $oids, $lang) {

@@ -540,6 +540,11 @@ $dompdf = new Dompdf($options);
 // if external fonts are involved, tell dompdf to store them in /bin
 $options->setFontDir(QN_BASEDIR.'/bin');
 $dompdf->setPaper('A4', 'portrait');
+
+// remove utf8mb4 chars (emojis)
+$html = preg_replace('/(?:\xF0[\x90-\xBF][\x80-\xBF]{2} | [\xF1-\xF3][\x80-\xBF]{3} | \xF4[\x80-\x8F][\x80-\xBF]{2})/xs', '', $html);
+
+
 $dompdf->loadHtml((string) $html, 'UTF-8');
 $dompdf->render();
 

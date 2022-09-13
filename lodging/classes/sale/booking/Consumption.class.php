@@ -31,6 +31,7 @@ class Consumption extends \sale\booking\Consumption {
                 'onupdate'          => 'onupdateBookingId'
             ],
 
+            // #todo - deprecate : relation bewteen consumptions and lines might be indirect
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -47,10 +48,25 @@ class Consumption extends \sale\booking\Consumption {
                 'readonly'          => true
             ],
 
+            'repairing_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\booking\Repairing',
+                'description'       => 'The booking the comsumption relates to.',
+                'ondelete'          => 'cascade'        // delete repair when parent repairing is deleted
+            ],
+
+            // #todo - deprecate : only the rental_unit_id matters, and consumptions are created based on product_model (not products)
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\catalog\Product',
-                'description'       => "The Product this Attribute belongs to.",
+                'description'       => "The Product the consumptiob related to.",
+                'readonly'          => true
+            ],
+
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'lodging\sale\catalog\ProductModel',
+                'description'       => "The Product the consumptiob related to.",
                 'required'          => true,
                 'readonly'          => true
             ],
@@ -143,23 +159,26 @@ class Consumption extends \sale\booking\Consumption {
      *
      * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
      * @param  int[]                      $oids       List of objects identifiers in the collection.
-     * @param  array                      $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  array                      $values     Associative array holding the values newly assigned to the new instance (not all fields might be set).
      * @param  string                     $lang       Language in which multilang fields are being updated.
      * @return void
      */
     public static function onupdateScheduleFrom($om, $oids, $values, $lang) {
-        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_from', 'booking_line_id'], $lang);
-        if($consumptions > 0) {
-            foreach($consumptions as $oid => $consumption) {
-                if($consumption['is_rental_unit']) {
-                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
-                    if($siblings_ids > 0 && count($siblings_ids)) {
-                        $om->update(self::getType(), $siblings_ids, ['schedule_from' => $consumption['schedule_from']]);
+        // booking_id is only assigned upon creation, so hook is called because of an update (not a creation)
+        if(!isset($values['booking_id'])) {
+            $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_from', 'booking_line_id'], $lang);
+            if($consumptions > 0) {
+                foreach($consumptions as $oid => $consumption) {
+                    if($consumption['is_rental_unit']) {
+                        $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                        if($siblings_ids > 0 && count($siblings_ids)) {
+                            $om->update(self::getType(), $siblings_ids, ['schedule_from' => $consumption['schedule_from']]);
+                        }
                     }
                 }
             }
         }
-        $om->callonce(__CLASS__, '_updateTimeSlotId', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_updateTimeSlotId', $oids, $values, $lang);
     }
 
     /**
@@ -174,13 +193,16 @@ class Consumption extends \sale\booking\Consumption {
      * @return void
      */
     public static function onupdateScheduleTo($om, $oids, $values, $lang) {
-        $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_to', 'booking_line_id'], $lang);
-        if($consumptions > 0) {
-            foreach($consumptions as $oid => $consumption) {
-                if($consumption['is_rental_unit']) {
-                    $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
-                    if($siblings_ids > 0 && count($siblings_ids)) {
-                        $om->update(self::getType(), $siblings_ids, ['schedule_to' => $consumption['schedule_to']]);
+        // booking_id is only assigned upon creation, so hook is called because of an update (not a creation)
+        if(!isset($values['booking_id'])) {
+            $consumptions = $om->read(self::getType(), $oids, ['is_rental_unit', 'date', 'schedule_to', 'booking_line_id'], $lang);
+            if($consumptions > 0) {
+                foreach($consumptions as $oid => $consumption) {
+                    if($consumption['is_rental_unit']) {
+                        $siblings_ids = $om->search(self::getType(), [['id', '<>', $oid], ['is_rental_unit', '=', true], ['booking_line_id', '=', $consumption['booking_line_id']], ['date', '=', $consumption['date']] ]);
+                        if($siblings_ids > 0 && count($siblings_ids)) {
+                            $om->update(self::getType(), $siblings_ids, ['schedule_to' => $consumption['schedule_to']]);
+                        }
                     }
                 }
             }
@@ -209,73 +231,96 @@ class Consumption extends \sale\booking\Consumption {
      * #memo - used in controllers
      * @param \equal\orm\ObjectManager $om
      */
-    public static function _getExistingConsumptions($om, $centers_ids, $date_from, $date_to) {
+    public static function getExistingConsumptions($om, $centers_ids, $date_from, $date_to) {
         // read all consumptions and repairs (book, ooo, link, part)
-        $consumptions_ids = $om->search(__CLASS__, [
-                                ['date', '>=', $date_from],
-                                ['date', '<=', $date_to],
-                                ['center_id', 'in',  $centers_ids],
-                                ['is_rental_unit', '=', true]
-                            ], ['date' => 'asc']);
+        $consumptions_ids = $om->search(self::getType(), [
+                ['date', '>=', $date_from],
+                ['date', '<=', $date_to],
+                ['center_id', 'in',  $centers_ids],
+                ['is_rental_unit', '=', true]
+            ], ['date' => 'asc']);
 
-        $consumptions = $om->read(__CLASS__, $consumptions_ids, [
-                                'id', 'date','schedule_from','schedule_to',
-                                'rental_unit_id', 'booking_line_group_id'
-                            ]);
+        $consumptions = $om->read(self::getType(), $consumptions_ids, [
+                'id', 'date','schedule_from','schedule_to',
+                'rental_unit_id',
+                'booking_line_group_id',
+                'repairing_id'
+            ]);
 
         /*
             Result is a 2-level associative array, mapping consumptions by rental unit and date
         */
         $result = [];
 
-        $sojourns_map = [];
+        $bookings_map = [];
+        $repairings_map = [];
 
         if($consumptions > 0) {
-
             /*
                 Join consecutive consumptions of a same booking_line_group for usingas same rental unit.
                 All consumptions are enriched with additional fields `date_from`and `date_to`.
                 Field schedule_from and schedule_to are adapted consequently.
             */
 
-            // pass-1 : group consumptions by rental unit and booking line group
-            foreach($consumptions as $index => $consumption) {
+            $booking_line_groups = $om->read(BookingLineGroup::getType(),
+                    array_map(function($a) {return (int) $a['booking_line_group_id'];}, $consumptions),
+                    ['id','date_from', 'date_to','time_from', 'time_to']
+                );
+
+            $repairings = $om->read(Repairing::getType(),
+                    array_map(function($a) {return (int) $a['repairing_id'];}, $consumptions),
+                    ['id','date_from', 'date_to']
+                );
+
+            // pass-1 : group consumptions by rental unit and booking (line group) or repairing
+            foreach($consumptions as $cid => $consumption) {
                 if(!isset($consumption['rental_unit_id']) || empty($consumption['rental_unit_id'])) {
                     // ignore consumptions not relating to a rental unit
-                    unset($consumptions[$index]);
+                    unset($consumptions[$cid]);
                     continue;
                 }
 
                 $rental_unit_id = $consumption['rental_unit_id'];
-                $booking_line_group_id = $consumption['booking_line_group_id'];
 
-                if(!isset($sojourns_map[$rental_unit_id])) {
-                    $sojourns_map[$rental_unit_id] = [];
+                if(!isset($bookings_map[$rental_unit_id])) {
+                    $bookings_map[$rental_unit_id] = [];
                 }
 
-                if(!isset($sojourns_map[$rental_unit_id][$booking_line_group_id])) {
-                    $sojourns_map[$rental_unit_id][$booking_line_group_id] = [];
+                if(isset($consumption['booking_line_group_id'])) {
+                    $booking_line_group_id = $consumption['booking_line_group_id'];
+                    if(!isset($bookings_map[$rental_unit_id][$booking_line_group_id])) {
+                        $bookings_map[$rental_unit_id][$booking_line_group_id] = [];
+                    }
+                    $bookings_map[$rental_unit_id][$booking_line_group_id][] = $cid;
                 }
 
-                $sojourns_map[$rental_unit_id][$booking_line_group_id][] = $consumption;
+                if(isset($consumption['repairing_id'])) {
+                    $repairing_id = $consumption['repairing_id'];
+                    if(!isset($repairings_map[$rental_unit_id][$repairing_id])) {
+                        $repairings_map[$rental_unit_id][$repairing_id] = [];
+                    }
+                    $repairings_map[$rental_unit_id][$repairing_id][] = $cid;
+                }
+
             }
 
             // pass-2 : generate map
 
             // associative array for mapping processed consumptions: each consumption is present only once in the result set
             $processed_consumptions = [];
+
+            // generate a map associating dates to rental_units_ids, and having only one consumption for each first visible date
             foreach($consumptions as $consumption) {
 
                 if(isset($processed_consumptions[$consumption['id']])) {
                     continue;
                 }
 
-                // retrieve UTC timestamp
-                $moment = $consumption['date'] - date('Z', $consumption['date']) + $consumption['schedule_from'];
+                // convert to date index
+                $moment = $consumption['date'] + $consumption['schedule_from'];
                 $date_index = substr(date('c', $moment), 0, 10);
 
                 $rental_unit_id = $consumption['rental_unit_id'];
-                $booking_line_group_id = $consumption['booking_line_group_id'];
 
                 if(!isset($result[$rental_unit_id])) {
                     $result[$rental_unit_id] = [];
@@ -285,29 +330,30 @@ class Consumption extends \sale\booking\Consumption {
                     $result[$rental_unit_id][$date_index] = [];
                 }
 
-                $group_len = count($sojourns_map[$rental_unit_id][$booking_line_group_id]);
-                if(isset($sojourns_map[$rental_unit_id][$booking_line_group_id]) && $group_len > 0) {
+                // handle consumptions from bookings
+                if(isset($consumption['booking_line_group_id'])) {
+                    $booking_line_group_id = $consumption['booking_line_group_id'];
 
-                    foreach($sojourns_map[$rental_unit_id][$booking_line_group_id] as $group_consumption) {
-                        $processed_consumptions[$group_consumption['id']] = true;
+                    foreach($bookings_map[$rental_unit_id][$booking_line_group_id] as $cid) {
+                        $processed_consumptions[$cid] = true;
                     }
-                    if($group_len == 1) {
-                        $consumption['date_from'] = $consumption['date'];
-                        $consumption['date_to'] = $consumption['date'];
-                        $result[$rental_unit_id][$date_index] = $consumption;
-                    }
-                    else {
-                        $first = $sojourns_map[$rental_unit_id][$booking_line_group_id][0];
-                        $last = $sojourns_map[$rental_unit_id][$booking_line_group_id][$group_len-1];
 
-                        $consumption['date_from'] = $first['date'];
-                        $consumption['date_to'] = $last['date'];
-                        $consumption['schedule_to'] = $last['schedule_to'];
-                    }
+                    $consumption['date_from'] = $booking_line_groups[$booking_line_group_id]['date_from'];
+                    $consumption['date_to'] = $booking_line_groups[$booking_line_group_id]['date_to'];
+                    $consumption['schedule_from'] = $booking_line_groups[$booking_line_group_id]['time_from'];
+                    $consumption['schedule_to'] = $booking_line_groups[$booking_line_group_id]['time_to'];
+
                 }
-                else {
-                    $consumption['date_from'] = $consumption['date'];
-                    $consumption['date_to'] = $consumption['date'];
+                // handle consumptions from repairings
+                elseif( isset($consumption['repairing_id']) ) {
+                    $repairing_id = $consumption['repairing_id'];
+
+                    foreach($repairings_map[$rental_unit_id][$repairing_id] as $cid) {
+                        $processed_consumptions[$cid] = true;
+                    }
+
+                    $consumption['date_from'] = $repairings[$repairing_id]['date_from'];
+                    $consumption['date_to'] = $repairings[$repairing_id]['date_to'];
                 }
                 $result[$rental_unit_id][$date_index] = $consumption;
             }
@@ -319,65 +365,42 @@ class Consumption extends \sale\booking\Consumption {
 
     /**
      *
-     * #memo - used in controllers
+     * #memo - This method is used in controllers
      *
-     * @param \equal\orm\ObjectManager $om  Instance of Object Manager service.
-     * @param int $center_id    Identifier of the center for which to perform the lookup.
-     * @param int $product_id   Identifier of the product for which we are looking for rental units.
-     * @param int $date_from    Timestamp of the first day of the lookup.
-     * @param int $date_to      Timestamp of the last day of the lookup.
+     * @param \equal\orm\ObjectManager  $om                 Instance of Object Manager service.
+     * @param int                       $center_id          Identifier of the center for which to perform the lookup.
+     * @param int                       $product_model_id   Identifier of the product model for which we are looking for rental units.
+     * @param int                       $date_from          Timestamp of the first day of the lookup.
+     * @param int                       $date_to            Timestamp of the last day of the lookup.
      */
-    public static function _getAvailableRentalUnits($om, $center_id, $product_id, $date_from, $date_to) {
-        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:_getAvailableRentalUnits", QN_REPORT_DEBUG);
+    public static function getAvailableRentalUnits($om, $center_id, $product_model_id, $date_from, $date_to) {
+        trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\Consumption:getAvailableRentalUnits", QN_REPORT_DEBUG);
 
-        // retrieve product and related product model
-        $products = $om->read('lodging\sale\catalog\Product', $product_id, ['id', 'product_model_id']);
-
-        if($products <= 0 || count($products) < 1) {
-            return [];
-        }
-        $product = reset($products);
-
-        $models = $om->read('lodging\sale\catalog\ProductModel', $product['product_model_id'], [
-            'type','service_type','is_accomodation','schedule_offset','schedule_type','schedule_default_value',
-            'rental_unit_assignement', 'rental_unit_category_id', 'rental_unit_id', 'capacity'
-        ]);
+        $models = $om->read(\lodging\sale\catalog\ProductModel::getType(), $product_model_id, [
+                'type',
+                'service_type',
+                'is_accomodation',
+                'schedule_offset',
+                'schedule_type',
+                'rental_unit_assignement',
+                'rental_unit_category_id',
+                'rental_unit_id',
+                'capacity'
+            ]);
 
         if($models <= 0 || count($models) < 1) {
             return [];
         }
 
         $product_model = reset($models);
+
         $product_type = $product_model['type'];
         $service_type = $product_model['service_type'];
-        $schedule_default_value = $product_model['schedule_default_value'];
         $rental_unit_assignement = $product_model['rental_unit_assignement'];
 
         if($product_type != 'service' || $service_type != 'schedulable') {
             return [];
         }
-
-        if($product_model['is_accomodation']) {
-            // checkout is the day following the last night
-            $date_to += 24*3600;
-        }
-
-        // retrieve chekin and checkout times related to product
-        $hour_from = 0;
-        $hour_to = 0;
-        $minute_from = 23;
-        $minute_to = 59;
-        // #todo - what if we would agree to arrange the checkin/out times (not default values) to make the room available ?
-        if(strpos($schedule_default_value, ':')) {
-            $parts = explode('-', $schedule_default_value);
-            list($hour_from, $minute_from) = explode(':', $parts[0]);
-            list($hour_to, $minute_to) = [$hour_from+1, $minute_from];
-            if(count($parts) > 1) {
-                list($hour_to, $minute_to) = explode(':', $parts[1]);
-            }
-        }
-        $schedule_from  = $hour_from * 3600 + $minute_from * 60;
-        $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
         if($rental_unit_assignement == 'unit') {
             $rental_units_ids = [$product_model['rental_unit_id']];
@@ -389,51 +412,28 @@ class Consumption extends \sale\booking\Consumption {
                 $domain[] = ['is_accomodation', '=', true];
             }
 
-            if($rental_unit_assignement == 'category') {
-                $rental_unit_category_id = $product_model['rental_unit_category_id'];
-
-                if($rental_unit_category_id) {
-                    $domain[] = ['rental_unit_category_id', '=', $rental_unit_category_id];
-                }
+            if($rental_unit_assignement == 'category' && $product_model['rental_unit_category_id']) {
+                $domain[] = ['rental_unit_category_id', '=', $product_model['rental_unit_category_id']];
             }
             // retrieve list of possible rental_units based on center_id
             $rental_units_ids = $om->search('lodging\realestate\RentalUnit', $domain, ['capacity' => 'desc']);
-
         }
 
         /*
             If there are consumptions in the range for some of the found rental units, remove those
         */
-        $existing_consumptions_map = self::_getExistingConsumptions($om, [$center_id], $date_from, $date_to);
+        $existing_consumptions_map = self::getExistingConsumptions($om, [$center_id], $date_from, $date_to);
 
         $booked_rental_units_ids = [];
 
         foreach($existing_consumptions_map as $rental_unit_id => $dates) {
             foreach($dates as $date_index => $consumption) {
-
-                if($consumption['date_from'] > $date_from && $consumption['date_to'] < $date_to) {
+                $consumption_from = $consumption['date_from'] + $consumption['schedule_from'];
+                $consumption_to = $consumption['date_to'] + $consumption['schedule_to'];
+                // #memo - we don't allow instant transition (i.e. checkin time of a booking equals checkout time of a previous booking)
+                if( ($consumption_from >= $date_from && $consumption_from <= $date_to) || ($consumption_to >= $date_from && $consumption_to <= $date_to) ) {
                     $booked_rental_units_ids[] = $rental_unit_id;
                     continue 2;
-                }
-                if($consumption['date_from'] <= $date_from) {
-                    if($consumption['date_to'] > $date_from) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                    else if($consumption['date_to'] == $date_from && $consumption['schedule_to'] > $schedule_from) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                }
-                if($consumption['date_to'] >= $date_to) {
-                    if($consumption['date_from'] < $date_to) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
-                    else if($consumption['date_from'] == $date_to && $consumption['schedule_from'] < $schedule_to) {
-                        $booked_rental_units_ids[] = $rental_unit_id;
-                        continue 2;
-                    }
                 }
             }
         }

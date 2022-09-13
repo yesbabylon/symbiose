@@ -4,21 +4,15 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-if(!file_exists(QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php')) {
-    throw new Exception("missing_dependency", QN_ERROR_INVALID_CONFIG);
-}
-require_once QN_BASEDIR.'/vendor/swiftmailer/swiftmailer/lib/swift_required.php';
-
-use \Swift_SmtpTransport as Swift_SmtpTransport;
-use \Swift_Message as Swift_Message;
-use \Swift_Mailer as Swift_Mailer;
-use \Swift_Attachment as Swift_Attachment;
+use equal\email\Email;
+use equal\email\EmailAttachment;
 
 use communication\TemplateAttachment;
 use documents\Document;
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\Contract;
 use core\setting\Setting;
+use core\Mail;
 use core\Lang;
 
 // announce script and fetch parameters values
@@ -38,6 +32,7 @@ list($params, $providers) = announce([
         'message' => [
             'description'   => 'Body of the message.',
             'type'          => 'string',
+            'usage'         => 'text/html',
             'required'      => true
         ],
         'sender_email' => [
@@ -123,43 +118,37 @@ catch(Exception $e) {
 
 $params['message'] .= $signature;
 
-
+/** @var EmailAttachment[] */
 $attachments = [];
 
 // push main attachment
-$attachments[] = new Swift_Attachment($attachment, $main_attachment_name.'.pdf', 'application/pdf');
+$attachments[] = new EmailAttachment($main_attachment_name.'.pdf', (string) $attachment, 'application/pdf');
 
 // add attachments whose ids have been received as param ($params['attachments_ids'])
 if(count($params['attachments_ids'])) {
-    $params['attachments_ids'] = array_unique($params['attachments_ids']);    
+    $params['attachments_ids'] = array_unique($params['attachments_ids']);
     $template_attachments = TemplateAttachment::ids($params['attachments_ids'])->read(['name', 'document_id'])->get();
     foreach($template_attachments as $tid => $tdata) {
         $document = Document::id($tdata['document_id'])->read(['name', 'data', 'type'])->first();
         if($document) {
-            $attachments[] = new Swift_Attachment($document['data'], $document['name'], $document['type']);
+            $attachments[] = new EmailAttachment($document['name'], $document['data'], $document['type']);
         }
     }
 }
 
-// send message
-$transport = new Swift_SmtpTransport(EMAIL_SMTP_HOST, EMAIL_SMTP_PORT /*, 'ssl'*/);
-
-$transport->setUsername(EMAIL_SMTP_ACCOUNT_USERNAME)
-          ->setPassword(EMAIL_SMTP_ACCOUNT_PASSWORD);
-
-$message = new Swift_Message();
+// create message
+$message = new Email();
 $message->setTo($params['recipient_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
-        ->setBody(str_replace(['<br>', '<p></p>'], '', $params['message']))
-        ->setFrom([$params['sender_email'] => EMAIL_SMTP_ACCOUNT_DISPLAYNAME]);
+        ->setBody($params['message']);
 
 foreach($attachments as $attachment) {
-    $message->attach($attachment);
+    $message->addAttachment($attachment);
 }
 
-$mailer = new Swift_Mailer($transport);
-$result = $mailer->send($message);
+// queue message
+Mail::queue($message, 'lodging\sale\booking\Booking', $params['booking_id']);
 
 /*
     Update contract status (mark as sent, if not already)

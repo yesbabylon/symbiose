@@ -130,6 +130,7 @@ $fields = [
             'fax',
             'website',
             'registration_number',
+            'has_vat',
             'vat_number',
             'bank_account_iban',
             'bank_account_bic',
@@ -241,7 +242,9 @@ $values = [
     'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
     'company_website'       => $booking['center_id']['organisation_id']['website'],
     'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
+    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
     'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
+
 
     // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
     'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
@@ -275,15 +278,19 @@ if($booking['center_id']['template_category_id']) {
 
     $template = Template::search([
                             ['category_id', '=', $booking['center_id']['template_category_id']],
-                            ['code', '=', 'quote'],
-                            ['type', '=', 'quote']
+                            ['code', '=', $booking['status']],
+                            ['type', '=', $booking['status']]
                         ])
                         ->read(['parts_ids' => ['name', 'value']], $params['lang'])
                         ->first();
 
     foreach($template['parts_ids'] as $part_id => $part) {
         if($part['name'] == 'header') {
-            $values['quote_header_html'] = $part['value'].$values['center_signature'];
+            $value = $part['value'].$values['center_signature'];
+            $value = str_replace('{center}', $booking['center_id']['name'], $value);
+            $value = str_replace('{date_from}', date('d/m/Y', $booking['date_from']), $value);
+            $value = str_replace('{date_to}', date('d/m/Y', $booking['date_to']), $value);
+            $values['quote_header_html'] = $value;
         }
         else if($part['name'] == 'notice') {
             $values['invoice_notice_html'] = $part['value'];
@@ -311,7 +318,7 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
         $group_label .= date('d/m/y', $booking_line_group['date_from']).' - '.date('d/m/y', $booking_line_group['date_to']);
     }
 
-    $group_label .= ' - '.$booking_line_group['nb_pers'].' p.';
+    $group_label .= ' - '.$booking_line_group['nb_pers'].'p.';
 
     if($booking_line_group['has_pack'] && $booking_line_group['is_locked']) {
         // group is a product pack (bundle) with own price

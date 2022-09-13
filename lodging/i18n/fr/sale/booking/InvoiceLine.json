@@ -27,8 +27,8 @@
             }
         },
         "list.default": {
-            "name": "Factures",
-            "description": "Liste des factures.",
+            "name": "Lignes de facture",
+            "description": "Liste des lignes de facture.",
             "layout": {
             }
         }

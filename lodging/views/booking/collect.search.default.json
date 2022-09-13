@@ -26,6 +26,12 @@
                                                 "label": "Identity",
                                                 "value": "identity_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Communication",
+                                                "value": "structured_message",
+                                                "width": "100%"
                                             }
                                         ]
                                     },

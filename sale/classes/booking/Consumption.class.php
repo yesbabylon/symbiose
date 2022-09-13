@@ -14,7 +14,7 @@ class Consumption extends Model {
     }
 
     public static function getDescription() {
-        return "A Consumption is a service delivery that can be scheduled and relates to a booking.";
+        return "A Consumption is a service delivery that can be scheduled, relates to a booking, and is independant from the fare rate and the invoicing.";
     }
 
     public static function getColumns() {
@@ -42,6 +42,7 @@ class Consumption extends Model {
                 'visible'           => ['type', '<>', 'ooo']
             ],
 
+            // #memo - this field actually belong to Repair objects, we need it to be able to fetch both kind of consumptions
             'repairing_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\booking\Repairing',
@@ -51,6 +52,7 @@ class Consumption extends Model {
                 'visible'           => ['type', '=', 'ooo']
             ],
 
+            // #todo - deprecate : relation bewteen consumptions and lines might be indirect
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => BookingLine::getType(),
@@ -100,10 +102,18 @@ class Consumption extends Model {
                 'readonly'          => true
             ],
 
+            'product_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\ProductModel',
+                'description'       => "The Product Model the consumption relates to .",
+                'required'          => true
+            ],
+
+            // #todo - deprecate : only the rental_unit_id matters, and consumptions are created based on product_model (not products)
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
-                'description'       => "The Product this Attribute belongs to.",
+                'description'       => "The Product the consumption relates to.",
                 'required'          => true
             ],
 
@@ -155,6 +165,12 @@ class Consumption extends Model {
                 ],
                 'visible'           => ['is_accomodation', '=', true],
                 'default'           => 'none'
+            ],
+
+            'age_range_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\AgeRange',
+                'description'       => 'Customers age range the product is intended for.'
             ]
 
         ];

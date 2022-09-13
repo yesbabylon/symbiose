@@ -21,7 +21,7 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "heading": true,
-                                                    "readonly": true                                                    
+                                                    "readonly": true
                                                 }
                                             },
                                             {
@@ -33,6 +33,11 @@
                                                 "type": "field",
                                                 "value": "center_office_id",
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
                                             }
                                         ]
                                     },

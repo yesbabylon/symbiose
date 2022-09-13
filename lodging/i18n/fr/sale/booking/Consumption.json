@@ -39,6 +39,11 @@
             "name": "Planning des nettoyages",
             "description": "Liste des nettoyages sur base des nuitées.",
             "layout": {}
+        },
+        "list.occupancies": {
+            "name": "Planning des occupations de chambres",
+            "description": "Liste des occupations sur base des nuitées.",
+            "layout": {}
         }
     },
     "error": {}

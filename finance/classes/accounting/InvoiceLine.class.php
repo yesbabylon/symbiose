@@ -59,7 +59,7 @@ class InvoiceLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\price\Price::getType(),
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'finance\accounting\InvoiceLine::onupdatePriceId'
+                'onupdate'          => 'onupdatePriceId'
             ],
 
             'unit_price' => [
@@ -96,6 +96,7 @@ class InvoiceLine extends Model {
                 'onupdate'          => 'onupdateFreeQty'
             ],
 
+            // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
                 'description'       => 'Total amount of discount to apply, if any.',
@@ -171,15 +172,8 @@ class InvoiceLine extends Model {
 
         $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
 
-        foreach($lines as $oid => $odata) {
-            $price = (float) $odata['unit_price'];
-            $disc = (float) $odata['discount'];
-            $qty = intval($odata['qty']) - intval($odata['free_qty']);
-
-            // apply discount amount VAT excl.
-            $price = ($price * (1.0 - $disc));
-
-            $result[$oid] = $price * $qty;
+        foreach($lines as $oid => $line) {
+            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
         return $result;
     }

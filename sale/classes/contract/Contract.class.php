@@ -37,7 +37,7 @@ class Contract extends Model {
             'status' => [
                 'type'              => 'string',
                 'selection'         => [
-                    'pending', 
+                    'pending',
                     'sent',                 // sent to customer for signature
                     'signed',               // signed by customer (valid)
                     'cancelled'             // outdated or rejected
@@ -75,16 +75,16 @@ class Contract extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'sale\contract\Contract::getTotal',
+                'function'          => 'calcTotal',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the contract (computed).',
                 'store'             => true
             ],
-    
+
             'price' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'function'          => 'sale\contract\Contract::getPrice',                
+                'function'          => 'calcPrice',
                 'usage'             => 'amount/money:2',
                 'store'             => true,
                 'description'       => "Final tax-included contract amount (computed)."
@@ -102,12 +102,11 @@ class Contract extends Model {
         return $result;
     }
 
-
     /**
      * Compute the VAT excl. total price of the contract, with discounts applied.
      *
      */
-    public static function getTotal($om, $oids, $lang) {
+    public static function calcTotal($om, $oids, $lang) {
         $result = [];
         $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.total']);
 
@@ -116,15 +115,14 @@ class Contract extends Model {
                 return $c + $a['total'];
             }, 0.0);
         }
-        
         return $result;
-    }  
+    }
 
     /**
      * Compute the final VAT incl. price of the contract.
      *
      */
-    public static function getPrice($om, $oids, $lang) {
+    public static function calcPrice($om, $oids, $lang) {
         $result = [];
         $contracts = $om->read(__CLASS__, $oids, ['contract_lines_ids.price']);
 
@@ -135,6 +133,6 @@ class Contract extends Model {
         }
 
         return $result;
-    }    
+    }
 
 }

@@ -8,10 +8,10 @@ namespace lodging\finance\accounting;
 
 
 class AccountingRule extends \finance\accounting\AccountingRule {
-    
+
     public static function getColumns() {
 
-        return [       
+        return [
 
             'code_legacy' => [
                 'type'              => 'string',
@@ -19,7 +19,7 @@ class AccountingRule extends \finance\accounting\AccountingRule {
             ],
 
             /*
-            // les règles comptables devraient être relatives aux organisations et pas au catégories de centre
+            // les règles comptables devraient être relatives aux organisations et pas aux catégories de centre
             'center_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\CenterCategory',

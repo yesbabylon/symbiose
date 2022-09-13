@@ -8,7 +8,7 @@ namespace sale\booking;
 use core\setting\Setting;
 
 class Invoice extends \finance\accounting\Invoice {
-    
+
     public static function getColumns() {
 
         return [

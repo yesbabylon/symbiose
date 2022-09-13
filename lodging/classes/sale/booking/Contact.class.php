@@ -37,8 +37,7 @@ class Contact extends \sale\booking\Contact {
             'booking_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\Booking',
-                'description'       => 'Booking the contact relates to.',
-                'required'          => true
+                'description'       => 'Booking the contact relates to.'
             ],
 
             'owner_identity_id' => [

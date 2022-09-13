@@ -48,7 +48,28 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "has_age_range",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "can_sell",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Age range",
+                                                "value": "age_range_id",
                                                 "width": "50%"
                                             }
                                         ]
@@ -84,7 +105,8 @@
                     {
                         "label": "Attributes",
                         "id": "section.attributes",
-                        "visible": ["state", "<>", "draft"],
+                        "visible": false,
+                        "description": "Kaleo only uses the age_range",
                         "rows": [
                             {
                                 "columns": [
@@ -129,7 +151,7 @@
                     {
                         "label": "Pack Products",
                         "id": "section.pack_lines",
-                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"]],
+                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"] ],
                         "rows": [
                             {
                                 "columns": [
@@ -150,6 +172,7 @@
                     {
                         "label": "Pack Lines",
                         "id": "section.ref_pack_lines",
+                        "visible": [ ["is_pack", "=", false], ["state", "<>", "draft"] ],
                         "rows": [
                             {
                                 "columns": [

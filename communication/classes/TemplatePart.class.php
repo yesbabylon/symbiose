@@ -21,7 +21,7 @@ class TemplatePart extends Model {
 
             'value' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => "Template body (html).",
                 'multilang'         => true
             ],

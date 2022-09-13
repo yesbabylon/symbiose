@@ -7,7 +7,7 @@
                 "label": "test",
                 "height": "100%",
                 "sections": [
-                    {                
+                    {
                         "rows": [
                             {
                                 "height": "50%",
@@ -29,7 +29,7 @@
                                                 "label": "Extraits bancaires",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "sale\\pay\\BankStatementLine",
+                                                "entity": "sale\\pay\\BankStatement",
                                                 "view": "list.dashboard",
                                                 "domain": ["status", "=", "pending"]
                                             }
@@ -64,11 +64,11 @@
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
                     }
                 ]
-            }            
+            }
         ]
     }
 }

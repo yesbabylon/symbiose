@@ -13,6 +13,10 @@ class Establishment extends Model {
         return "Establishment unit";
     }
 
+    public static function getDescription() {
+        return "A corporation always have a single headquarters address, but can have several places of operations or offices (establishment units).";
+    }
+
     public static function getColumns() {
 
         return [
@@ -103,16 +107,16 @@ class Establishment extends Model {
 
             'analytic_section_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AnalyticSection',
+                'foreign_object'    => \finance\accounting\AnalyticSection::getType(),
                 'description'       => "Related analytic section, if any."
             ],
 
             'signature' => [
                 'type'              => 'string',
-                'usage'             => 'markup/html',
+                'usage'             => 'text/html',
                 'description'       => 'Establishment signature to append to communications.',
                 'multilang'         => true
-            ]            
+            ]
 
         ];
     }
