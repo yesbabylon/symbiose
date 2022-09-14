@@ -1,0 +1,48 @@
+{
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant unique de l'objet.",
+            "help": ""
+        },
+        "name": {
+            "label": "Libellé",
+            "description": "Nom de l'objet.",
+            "help": ""
+        },
+        "creator": {
+            "label": "Créé par",
+            "description": "Utilisateur ayant créé l'objet.",
+            "help": ""
+        },
+        "created": {
+            "label": "Créé",
+            "description": "Date de création de l'objet.",
+            "help": ""
+        },
+        "modifier": {
+            "label": "Modifié par",
+            "description": "Dernier utilisateur a avoir modifié l'objet.",
+            "help": ""
+        },
+        "modified": {
+            "label": "Modifié",
+            "description": "Date de dernière modification.",
+            "help": ""
+        },
+        "deleted": {
+            "label": "Supprimé",
+            "description": "Indicateur pour les objets supprimés.",
+            "help": ""
+        },
+        "state": {
+            "label": "Statut",
+            "description": "Etat de l'objet (brouillon, instance, archive).",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

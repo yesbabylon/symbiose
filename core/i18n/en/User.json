@@ -1,0 +1,22 @@
+{
+	"name": "User",
+	"plural": "Users",
+	"description": "Users can log in, joing groups and be granted specific persmissions.",
+	"model": {
+		"login":{
+			"label":"Username", 
+			"description": "",
+			"help":"Your username is your email address."
+		},
+		"password":{"label":"Password", "description": "", "help": ""},
+		"firstname":{"label":"Given name", "description": "", "help": ""},
+		"lastname":{"label":"Family name", "description": "", "help": ""}
+	},
+	"view": {
+		"identification":{"label":"Identification"},
+		"ok":{"label":"Connect"},
+		"subscribe":{"label":"Create an account"},
+		"invalid_login":{"label":"Incorrect login format: not a valid e-mail address"},
+		"invalid_password":{"label":"Incorrect password format: not an md5 value"}			
+	}
+}

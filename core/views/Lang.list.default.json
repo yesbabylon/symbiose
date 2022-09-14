@@ -1,0 +1,18 @@
+{
+    "name": "Languages listing",
+    "description": "Full list of available languages.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",            
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",            
+                "value": "code",
+                "width": "20%"
+            }
+        ]
+    }
+}
