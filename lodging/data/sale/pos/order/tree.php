@@ -167,6 +167,7 @@ switch($params['variant']) {
                     ],
                     'center_office_id' => [
                         'name',
+                        'legal_name',
                         'address_street',
                         'address_city',
                         'address_zip'

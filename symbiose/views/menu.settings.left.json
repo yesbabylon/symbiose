@@ -183,7 +183,6 @@
                     }
                 ]
             },
-
             {
                 "id": "sales",
                 "label": "Sales",
@@ -736,6 +735,26 @@
                                 }
                             }
                         ]
+                    }
+                ]
+            },
+            {
+                "id": "pos",
+                "label": "PoS",
+                "description": "",
+                "icon": "point_of_sale",
+                "type": "parent",
+                "route": "/settings/sale",
+                "children": [
+                    {
+                        "id": "pos.cashdesks",
+                        "label": "Cashdesks",
+                        "description": "",
+                        "type": "entry",
+                        "context": {
+                            "entity": "lodging\\sale\\pos\\Cashdesk",
+                            "view": "list.default"
+                        }
                     }
                 ]
             },

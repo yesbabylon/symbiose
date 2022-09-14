@@ -32,6 +32,12 @@ class Establishment extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Details about the property for inner communications.'
+            ],
+
             /* parent organisation */
             'organisation_id' => [
                 'type'              => 'many2one',

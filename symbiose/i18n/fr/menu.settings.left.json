@@ -246,6 +246,14 @@
             "label": "Conditions de paiement",
             "help": ""
         },
+        "pos": {
+            "label": "Points de vente",
+            "help": ""
+        },
+        "pos.cashdesks": {
+            "label": "Caisses",
+            "help": ""
+        },
         "finance": {
             "label": "Finances",
             "help": ""

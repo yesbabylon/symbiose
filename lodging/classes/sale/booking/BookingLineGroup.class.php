@@ -278,7 +278,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         if($groups > 0 && count($groups)) {
             foreach($groups as $gid => $group) {
 
-                $price_adapters_ids = $om->search('lodging\sale\booking\BookingPriceAdapter', [
+                $price_adapters_ids = $om->search(BookingPriceAdapter::getType(), [
                     ['booking_line_group_id', '=', $gid],
                     ['booking_line_id','=', 0],
                     ['is_manual_discount', '=', false]
@@ -288,7 +288,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 $disc_percent = 0.0;
 
                 if($price_adapters_ids > 0) {
-                    $adapters = $om->read('lodging\sale\booking\BookingPriceAdapter', $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
+                    $adapters = $om->read(BookingPriceAdapter::getType(), $price_adapters_ids, ['type', 'value', 'discount_id.discount_list_id.rate_max']);
 
                     if($adapters > 0) {
                         foreach($adapters as $aid => $adata) {
@@ -584,7 +584,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // recompute sojourn prices
         $om->callonce('sale\booking\BookingLineGroup', '_resetPrices', $oids, [], $lang);
         // reset rental units assignments
-        $om->callonce(self::getType(), '_createRentalUnitsAssignments', $oids, [], $lang);
+        $om->callonce(self::getType(), 'createRentalUnitsAssignments', $oids, [], $lang);
         // force parent booking to recompute times and prices
         $groups = $om->read(self::getType(), $oids, ['booking_id'], $lang);
         if($groups > 0) {
@@ -650,7 +650,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         }
 
         // 4) update dependencies
-        $om->callonce(self::getType(), '_createRentalUnitsAssignments', $oids, [], $lang);
+        $om->callonce(self::getType(), 'createRentalUnitsAssignments', $oids, [], $lang);
         $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
@@ -1388,7 +1388,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         }
 
         // update dependencies
-        $om->callonce(self::getType(), '_createRentalUnitsAssignments', $oids, [], $lang);
+        $om->callonce(self::getType(), 'createRentalUnitsAssignments', $oids, [], $lang);
         $om->callonce(self::getType(), 'updatePriceAdapters', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateAutosaleProducts', $oids, [], $lang);
         $om->callonce(self::getType(), '_updateMealPreferences', $oids, [], $lang);
@@ -1406,7 +1406,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      *    1) find a free accomodation  (capacity >= product_model.capacity)
      *    2) create assignment @capacity
      *
-     * qty_accounting_method = 'person'
+     *  qty_accounting_method = 'person'
      *  if is_accomodation
      *      1) find a free accomodation
      *      2) create assignment @nb_pers
@@ -1419,7 +1419,30 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      *  1) find a free rental unit
      *  2) create assignment @group.nb_pers
      */
-    public static function _createRentalUnitsAssignments($om, $oids, $values, $lang) {
+    public static function createRentalUnitsAssignments($om, $oids, $values, $lang) {
+        /*
+            Mise à jour des assignations des unités locatives
+
+
+            ## lorsqu'on "ajoute" une booking line (onupdateProductId)
+            * on crée des nouvelles assignations de rental unit en fonction du product_model de la ligne
+
+            ## lorsqu'on supprime une booking line (onupdateBookingLinesIds)
+            * on fait un reset des assignations rental unit
+
+
+            ## lorsqu'on modifie le nb_pers (onupdateNbPers) ou les qty des tranches d'âge
+            * on fait un reset des assignations rental unit
+
+
+            ## lorsqu'on modifie le pack (onupdatePackId)
+
+            * on fait un reset des assignations rental unit
+            * on fait une assignation pour toutes les lignes en même temps (_createRentalUnitsAssignements)
+
+            ## lorsqu'on supprime une tranche d'âge (ondelete)
+            * on supprime toutes les lignes dont le product_id se rapporte à cette tranche d'âge
+        */
 
         // remove all previous SPM and rental_unit assignements
         $groups = $om->read(self::getType(), $oids, [

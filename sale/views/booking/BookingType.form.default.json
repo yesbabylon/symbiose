@@ -34,7 +34,21 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    }                                                                        
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_categories_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
                                 ]
                             }
                         ]

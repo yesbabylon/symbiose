@@ -88,7 +88,7 @@
                 },
                 "action.import-contats": {
                     "label": "Importer les contacts",
-                    "description": "Les contacts du client sélectionné seront (ré)importés dans les contcats de la réservations."
+                    "description": "Les contacts du client sélectionné seront (ré)importés dans les contacts de la réservations."
                 }
             },
             "routes": {

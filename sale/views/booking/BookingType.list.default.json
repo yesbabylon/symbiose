@@ -3,7 +3,7 @@
     "description": "This view is intended for displaying the list of booking types.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "items": [
             {
@@ -13,8 +13,8 @@
             },
             {
                 "type": "field",
-                "label": "Product Category",
-                "value": "product_categories_ids",
+                "label": "Code",
+                "value": "code",
                 "width": "20%"
             }
         ]

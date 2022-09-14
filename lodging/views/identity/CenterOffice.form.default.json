@@ -57,6 +57,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "legal_name",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "code",
                                                 "width": "25%"
                                             },

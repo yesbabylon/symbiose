@@ -16,7 +16,7 @@ class BookingType extends Model {
     public static function getDescription() {
         return "Booking types are used to associate a reason to a given booking (ex. 'individual', 'group', ...) for statistics purpose.";
     }
-    
+
 
     public static function getColumns() {
         /**
@@ -34,7 +34,7 @@ class BookingType extends Model {
                 'description'       => 'Mnemo for the type.'
             ],
 
-/*            
+/*
             'stat_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
@@ -44,11 +44,11 @@ class BookingType extends Model {
             ],
 */
 
-            'product_categories_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'sale\catalog\Category', 
-                'foreign_field'     => 'booking_types_ids', 
-                'rel_table'         => 'sale_rel_productcategory_bookingtype', 
+            'product_categories_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'sale\catalog\Category',
+                'foreign_field'     => 'booking_types_ids',
+                'rel_table'         => 'sale_rel_productcategory_bookingtype',
                 'rel_foreign_key'   => 'productcategory_id',
                 'rel_local_key'     => 'bookingtype_id',
                 'description'       => "Categories of products that the type relates to."
