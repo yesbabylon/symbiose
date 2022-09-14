@@ -1,15 +1,10 @@
 <?php
 
-use lodging\sale\booking\Booking;
 use lodging\sale\booking\Consumption;
 
 list($params, $providers)    =  announce([
     'description'            => 'Retrieves all booked dates for a specific center and shows their availability/non-availability in a calendar.',
     'params'                 => [
-        //  'center_id'      => [
-        //     'description' => 'Identifier of the Booking.',
-        //     'type'        => 'integer'
-        // ],
         'date_from'          => [
             'description'    => 'Starting date of the booking.',
             'type'           => 'string',
@@ -117,6 +112,7 @@ foreach ($mergedArray as $mappedMergedArray) {
     if (!isset($mappedMergedArray["date"])) {
 
         // other option to iterate all the selected dates
+
         // $dates = [strtotime($mappedMergedArray['date_from'])];
         // $date = strtotime($mappedMergedArray['date_from']);
 
@@ -124,7 +120,8 @@ foreach ($mergedArray as $mappedMergedArray) {
         //     $discopeMap[Date('Y-m-d', $date)] = true;
         //     $date += 86400;
         // }
-
+        
+        // format dates
         $date_from = Date('Y-m-d', strtotime($mappedMergedArray['date_from']));
         $date_to = Date('Y-m-d', strtotime($mappedMergedArray['date_to']));
 
