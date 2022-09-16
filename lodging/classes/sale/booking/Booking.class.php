@@ -113,7 +113,7 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\SojournProductModel',
                 'foreign_field'     => 'booking_line_group_id',
-                'description'       => "The product models groups assigned to the sojourn (from lines).",
+                'description'       => "The product models groups assigned to the booking (from groups).",
                 'ondetach'          => 'delete'
             ],
 

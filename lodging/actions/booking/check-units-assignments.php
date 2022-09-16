@@ -113,26 +113,34 @@ if($booking_line_groups) {
             $spms_max[$product_model_id] = max($days_nb_pers);
         }
 
-        foreach($group['sojourn_product_models_ids'] as $oid => $spm) {
-            $product_model_id = $spm['product_model_id'];
-            if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
-                continue;
-            }
-            $assignments = SojournProductModelRentalUnitAssignement::ids($spm['rental_unit_assignments_ids'])
-                ->read([
-                    'is_accomodation', 'qty', 'rental_unit_id' => ['capacity']
-                ])
-                ->get();
-
-            $total_capacity = array_reduce($assignments, function($c, $a) {return $c + $a['rental_unit_id']['capacity'];}, 0);
-
-            if($spms_max[$product_model_id] > $total_capacity) {
-                trigger_error("QN_DEBUG_ORM::max {$spms_max[$product_model_id]} for $product_model_id is greater than total capacity $total_capacity", QN_REPORT_DEBUG);
-                $mismatch = true;
-                break 2;
-            }
-
+        // we don't allow sojourns without accomodations
+        if(!count($group['sojourn_product_models_ids'])) {
+            $mismatch = true;
+            break;
         }
+        else {
+            foreach($group['sojourn_product_models_ids'] as $oid => $spm) {
+                $product_model_id = $spm['product_model_id'];
+                if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
+                    continue;
+                }
+                $assignments = SojournProductModelRentalUnitAssignement::ids($spm['rental_unit_assignments_ids'])
+                    ->read([
+                        'is_accomodation', 'qty', 'rental_unit_id' => ['capacity']
+                    ])
+                    ->get();
+
+                $total_capacity = array_reduce($assignments, function($c, $a) {return $c + $a['rental_unit_id']['capacity'];}, 0);
+
+                if($spms_max[$product_model_id] > $total_capacity) {
+                    trigger_error("QN_DEBUG_ORM::max {$spms_max[$product_model_id]} for $product_model_id is greater than total capacity $total_capacity", QN_REPORT_DEBUG);
+                    $mismatch = true;
+                    break 2;
+                }
+
+            }
+        }
+
     }
 }
 

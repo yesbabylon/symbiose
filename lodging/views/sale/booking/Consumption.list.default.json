@@ -4,7 +4,10 @@
     "access": {
         "groups": ["booking.default.user"]
     },
-    "group_by": ["date"],
+    "group_by": ["date",  {
+        "field": "product_model_id",
+        "operation": ["SUM", "object.qty"]
+    }],
     "domain": ["type", "=", "book"],
     "limit": 100,
     "filters": false,

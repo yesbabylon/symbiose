@@ -326,8 +326,8 @@ class BookingLine extends \sale\booking\BookingLine {
             // retrieve all impacted product_models
             $olines = $om->read(self::getType(), $lines_ids, ['product_id.product_model_id'], $lang);
             $product_models_ids = array_map(function($a) { return $a['product_id.product_model_id'];}, $olines);
-            // remove all assignments relating to found product_model
-            $spm_ids = $om->search(SojournProductModel::getType(), ['product_model_id', 'in', $product_models_ids]);
+            // remove all assignments from the group that relate to found product_model
+            $spm_ids = $om->search(SojournProductModel::getType(), [['booking_line_group_id', '=', $gid], ['product_model_id', 'in', $product_models_ids]]);
             $om->remove(SojournProductModel::getType(), $spm_ids, true);
             // retrieve all lines from parent group that need to be reassigned
             // #memo - we need to handle these all at a time to avoid assigning a same rental unit twice

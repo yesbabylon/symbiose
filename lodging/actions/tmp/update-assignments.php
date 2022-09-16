@@ -31,8 +31,8 @@ list($context) = [ $providers['context'] ];
 
 
 /*
-Mises à jour SQL préalables : 
-SQL : 
+Mises à jour SQL préalables :
+SQL :
 
 
 * bookinglinerentalunitassignment
@@ -45,7 +45,7 @@ UPDATE `lodging_sale_booking_bookinglinerentalunitassignement` SET `product_mode
 * supprimer les clés d'unités
 
 
-dans lodging_sale_booking_sojournproductmodel 
+dans lodging_sale_booking_sojournproductmodel
 * supprimer colonne booking_line_id
 
 dans lodging_sale_booking_sojournproductmodelrentalunitassignement

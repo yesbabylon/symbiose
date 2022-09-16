@@ -64,19 +64,21 @@ if($sojourn) {
     $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $sojourn['booking_id']['center_id'], $params['product_model_id'], $date_from, $date_to);
 
     // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
-    // #memo - this leads to an edge case: quote -> option -> quote, update nb_pers or time_from (list is not accurate and might return units that are not free)
+
+    // #memo - this leads to an edge case: quote -> option -> quote (without releasing the consumptions)
+    // 1) update nb_pers or time_from (list is not accurate and might return units that are not free)
+    // 2) if another booking has booked the units in the meanwhile
     $booking = Booking::id($sojourn['booking_id']['id'])
         ->read(['consumptions_ids' => ['rental_unit_id']])
         ->first();
 
     if($booking) {
         foreach($booking['consumptions_ids'] as $consumption) {
-            $rental_units_ids[] = $consumption['rental_unit_id'];
+            // $rental_units_ids[] = $consumption['rental_unit_id'];
         }
     }
 
-    // remove units already assigned in same booking (to prevent providing wrong choices)
-    // #memo - we cannot do that since the allocation of an accomodation might be splitted on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
+    // #memo - we cannot remove units already assigned in same booking since the allocation of an accomodation might be split on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
 
     $rental_units = RentalUnit::ids($rental_units_ids)
         ->read(['id', 'name', 'capacity'])

@@ -694,7 +694,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra', 'age_range_assignments_ids'], $lang);
+        $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra', 'age_range_assignments_ids', 'sojourn_product_models_ids'], $lang);
 
         if($groups > 0) {
             foreach($groups as $group) {
@@ -715,6 +715,12 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         return ['nb_pers' => ['count_mismatch' => 'Number of persons does not match the age ranges.']];
                     }
                 }
+                if(isset($values['has_locked_rental_units']) && $values['has_locked_rental_units']) {
+                    if(!count($group['sojourn_product_models_ids'])) {
+                        return ['has_locked_rental_units' => ['invalid_status' => 'Cannot lock an empty assignment.']];
+                    }
+                }
+
             }
         }
 
@@ -1601,7 +1607,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                     // append rental units from consumptions of own booking (use case: come and go between 'quote' and 'option')
                     foreach($consumptions as $consumption) {
                         if($is_accomodation == $consumption['product_model_id.is_accomodation']) {
-                            $rental_units_ids[] = $consumption['rental_unit_id'];
+                            // #memo - this leads to an edge case
+                            // $rental_units_ids[] = $consumption['rental_unit_id'];
                         }
                     }
 

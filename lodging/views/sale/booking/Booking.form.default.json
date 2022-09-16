@@ -93,8 +93,15 @@
                 "id": "object.id"
             },
             "confirm": true
+        },
+        {
+            "id": "action.release-rentalunits",
+            "label": "Release rental units",
+            "description": "Rental units will be released if they haven't been yet.",
+            "controller": "lodging_booking_release-rentalunits",
+            "confirm": true,
+            "visible": ["status", "=", "quote"]
         }
-
     ],
     "routes": [
         {
