@@ -45,6 +45,11 @@ list($params, $providers) = announce([
             'usage'         => 'email',
             'required'      => true
         ],
+        'recipients_emails' => [
+            'description'   => 'CC email addresses.',
+            'type'          => 'array',
+            'usage'         => 'email'
+        ],
         'attachments_ids' => [
             'description'   => 'List of identitiers of attachments to join.',
             'type'          => 'array',
@@ -141,7 +146,14 @@ $message->setTo($params['recipient_email'])
         ->setContentType("text/html")
         ->setBody($params['message']);
 
-// append attachments message
+if(isset($params['recipients_emails'])) {
+    $recipients_emails = array_diff($params['recipients_emails'], $params['recipient_email']);
+    foreach($recipients_emails as $address) {
+        $message->addCc($address);
+    }
+}
+
+// append attachments to message
 foreach($attachments as $attachment) {
     $message->addAttachment($attachment);
 }

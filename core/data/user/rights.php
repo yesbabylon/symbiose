@@ -19,12 +19,6 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'required'      => true
         ],
-        'right' =>  [
-            'description'   => 'Operation to be granted.',
-            'type'          => 'string',
-            'in'            => ['create','read','update','delete','manage'],
-            'required'      => true
-        ],
         'entity' =>  [
             'description'   => 'Entity on which operation is to be granted.',
             'type'          => 'string',
@@ -38,23 +32,16 @@ list($context, $orm, $am, $ac) = [ $providers['context'], $providers['orm'], $pr
 
 
 $operations = [
-    'create'    =>  QN_R_CREATE,
-    'read'      =>  QN_R_READ,
-    'update'    =>  QN_R_WRITE,
-    'delete'    =>  QN_R_DELETE,
-    'manage'    =>  QN_R_MANAGE
+    QN_R_CREATE => 'create',
+    QN_R_READ   => 'read',
+    QN_R_WRITE  => 'update',
+    QN_R_DELETE => 'delete',
+    QN_R_MANAGE => 'manage'
 ];
 
-if(!$ac->isAllowed(QN_R_MANAGE, $operation, $params['entity'])) {
-    throw new \Exception('MANAGE,'.$params['entity'], QN_ERROR_NOT_ALLOWED);
-}
-
 // retrieve targeted user
-
 if(is_numeric($params['user'])) {
-    $user_id = $params['user'];
-
-    $ids = User::search(['id', '=', $user_id])->ids();
+    $ids = User::search(['id', '=', $params['user']])->ids();
     if(!count($ids)) {
         throw new \Exception("unknown_user_id", QN_ERROR_UNKNOWN_OBJECT);
     }
@@ -62,24 +49,24 @@ if(is_numeric($params['user'])) {
 else {
     // retrieve by login
     $ids = User::search(['login', '=', $params['user']])->ids();
-
     if(!count($ids)) {
         throw new \Exception("unknown_username", QN_ERROR_UNKNOWN_OBJECT);
     }
-
-    $user_id = array_shift($ids);
 }
 
-$ac->grantUsers($user_id, $operations[$params['right']], $params['entity']);
+$user_id = array_shift($ids);
 
-$acl_ids = $orm->search('core\Permission', [ ['class_name', '=', $params['entity']], ['user_id', '=', $user_id] ]);
-if(!count($acl_ids)) {
-    throw new \Exception("acl_creation_failed", QN_ERROR_UNKNOWN);
+$rights = $ac->rights($user_id, $params['entity']);
+
+$rights_txt = [];
+
+foreach($operations as $id => $name) {
+    if($rights & $id) {
+        $rights_txt[] = $name;
+    }
 }
-
-$acls = $orm->read('core\Permission', $acl_ids, ['user_id', 'class_name', 'rights', 'rights_txt']);
 
 $context->httpResponse()
         ->status(200)
-        ->body(['result' => array_shift($acls)])
+        ->body(['result' => implode(', ', $rights_txt)])
         ->send();

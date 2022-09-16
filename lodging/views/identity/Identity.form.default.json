@@ -73,7 +73,8 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions":{
-                                                            "ACTION.CREATE": false
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.OPEN": false
                                                         }
                                                     }
                                                 }

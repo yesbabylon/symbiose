@@ -40,10 +40,32 @@ $tree = [
         'id', 'name', 'sojourn_type_id', 'product_groups_ids'
     ],
     'booking_lines_groups_ids' => [
-        'id', 'name', 'order', 'has_pack', 'total', 'price', 'fare_benefit', 'is_locked', 'is_autosale', 'is_extra', 'date_from', 'date_to', 'time_from', 'time_to', 'nb_pers', 'nb_nights',
-        'is_sojourn', 'is_event', 'has_locked_rental_units',
+        'id',
+        'name',
+        'order',
+        'has_pack',
+        'total',
+        'price',
+        'fare_benefit',
+        'is_locked',
+        'is_autosale',
+        'is_extra',
+        'has_schedulable_services',
+        'date_from',
+        'date_to',
+        'time_from',
+        'time_to',
+        'nb_pers',
+        'nb_nights',
+        'is_sojourn',
+        'is_event',
+        'has_locked_rental_units',
+        'booking_id',
         'sojourn_type_id',
-        'pack_id' => ['id', 'name'],
+        'pack_id' => [
+            'id',
+            'name'
+        ],
         'rate_class_id' => [
             'id',
             'name',
@@ -65,7 +87,9 @@ $tree = [
                 'qty',
                 'booking_line_group_id',
                 'rental_unit_id' => [
-                    'id', 'name', 'capacity'
+                    'id',
+                    'name',
+                    'capacity'
                 ]
             ]
         ],
@@ -77,8 +101,22 @@ $tree = [
         ],
         'booking_lines_ids' => [
             'id',
-            'name', 'description',
-            'order', 'qty', 'vat_rate', 'unit_price', 'total', 'price', 'free_qty', 'discount', 'fare_benefit', 'qty_vars', 'qty_accounting_method', 'is_rental_unit', 'is_accomodation', 'is_meal',
+            'name',
+            'description',
+            'order',
+            'qty',
+            'vat_rate',
+            'unit_price',
+            'total',
+            'price',
+            'free_qty',
+            'discount',
+            'fare_benefit',
+            'qty_vars',
+            'qty_accounting_method',
+            'is_rental_unit',
+            'is_accomodation',
+            'is_meal',
             'price_id',
             'product_id' => [
                 'name',
@@ -86,16 +124,24 @@ $tree = [
                 'has_age_range',
                 'age_range_id',
                 'product_model_id' => [
-                    'schedule_offset', 'has_duration', 'duration'
+                    'schedule_offset',
+                    'has_duration',
+                    'duration'
                 ]
             ],
             'auto_discounts_ids' => [
                 'id', 'type', 'value',
                 'discount_id' => ['name'],
-                'discount_list_id' => ['name', 'rate_min', 'rate_max']
+                'discount_list_id' => [
+                    'name',
+                    'rate_min',
+                    'rate_max'
+                ]
             ],
             'manual_discounts_ids' => [
-                'id', 'type', 'value',
+                'id',
+                'type',
+                'value',
                 'discount_id' => ['name']
             ]
         ]
@@ -103,7 +149,10 @@ $tree = [
 ];
 
 
-$bookings = Booking::id($params['id'])->read($tree)->adapt('txt')->get(true);
+$bookings = Booking::id($params['id'])
+    ->read($tree)
+    ->adapt('txt')
+    ->get(true);
 
 if(!$bookings || !count($bookings)) {
     throw new Exception('unknown_booking', QN_ERROR_UNKNOWN_OBJECT);

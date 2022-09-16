@@ -9,7 +9,7 @@ use lodging\realestate\RentalUnit;
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Update the status of accomodation rental-units based on their current occupation. This script is meant to be run on a daily basis.",
+    'description'	=>	"Update the status of accomodation rental-units based on their current occupation. This script is meant to be run by CRON on a daily basis.",
     'params' 		=>	[
     ],
     'access' => [
@@ -35,7 +35,7 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 */
 // #memo - no log, no permission check
 $rental_units_ids = $orm->search('lodging\realestate\RentalUnit', ['is_accomodation', '=', true]);
-$orm->write('lodging\realestate\RentalUnit', $rental_units_ids, ['status' => 'ready', 'action_required' => 'none']);
+$orm->update('lodging\realestate\RentalUnit', $rental_units_ids, ['status' => 'ready', 'action_required' => 'none']);
 
 /*
     adapt status for rental_units targeted by consumptions
@@ -44,15 +44,17 @@ $orm->write('lodging\realestate\RentalUnit', $rental_units_ids, ['status' => 're
 $today = time();
 
 // fetch all consumptions & repairs for current day
-$consumptions = Consumption::search([['date', '=', $today], ['is_rental_unit', '=', true]])->read(['type', 'schedule_to', 'rental_unit_id'])->get();
+$consumptions = Consumption::search([['date', '=', $today], ['is_rental_unit', '=', true]])
+    ->read(['type', 'schedule_to', 'rental_unit_id'])
+    ->get();
 
 foreach($consumptions as $cid => $consumption) {
     if($consumption['type'] == 'ooo') {
-        $orm->write('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => 'ooo', 'action_required' => 'repair']);
+        $orm->update('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => 'ooo', 'action_required' => 'repair']);
     }
     else {
         $rental_unit = RentalUnit::id($consumption['rental_unit_id'])->read(['is_accomodation'])->first();
-        
+
         if($rental_unit['is_accomodation']) {
             $action_required = 'cleanup_daily';
             $status = 'busy_full';
@@ -62,7 +64,7 @@ foreach($consumptions as $cid => $consumption) {
             if($consumption['type'] == 'part') {
                 $status = 'busy_part';
             }
-            $orm->write('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => $status, 'action_required' => $action_required]);
+            $orm->update('lodging\realestate\RentalUnit', $consumption['rental_unit_id'], ['status' => $status, 'action_required' => $action_required]);
         }
     }
 }

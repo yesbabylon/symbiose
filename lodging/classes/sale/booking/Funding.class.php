@@ -40,7 +40,19 @@ class Funding extends \lodging\sale\pay\Funding {
                 'usage'             => 'amount/money:2',
                 'description'       => 'Amount expected for the funding (computed based on VAT incl. price).',
                 'required'          => true,
-                'onupdate'          => 'onupdateDueAmount'
+                'onupdate'          => 'onupdateDueAmount',
+                'dependencies'      => ['name', 'amount_share']
+            ],
+
+            // override to reference booking.paid_amount
+            'paid_amount' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => "Total amount that has been received (can be greater than due_amount).",
+                'function'          => 'calcPaidAmount',
+                'store'             => true,
+                'dependencies'      => ['booking_id.paid_amount']
             ],
 
             'amount_share' => [

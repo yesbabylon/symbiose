@@ -458,7 +458,7 @@ class BookingLine extends \sale\booking\BookingLine {
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
 
-        // handle execptions for fields that can always be updated
+        // handle exceptions for fields that can always be updated
         $allowed = ['is_contractual', 'is_invoiced'];
         $count_non_allowed = 0;
 
@@ -472,12 +472,15 @@ class BookingLine extends \sale\booking\BookingLine {
             $lines = $om->read(self::getType(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);
             if($lines > 0) {
                 foreach($lines as $line) {
-                    if(
-                        in_array($line['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                        ||
-                        ($line['booking_id.status'] != 'quote' && !$line['booking_line_group_id.is_extra'])
-                    ) {
-                        return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                    if($line['booking_line_group_id.is_extra']) {
+                        if(!in_array($line['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                            return ['booking_id' => ['non_editable' => 'Extra Services can only be updated after confirmation and before invoicing.']];
+                        }
+                    }
+                    else {
+                        if($line['booking_id.status'] != 'quote') {
+                            return ['booking_id' => ['non_editable' => 'Services cannot be updated for non-quote bookings.']];
+                        }
                     }
                 }
             }
@@ -499,12 +502,15 @@ class BookingLine extends \sale\booking\BookingLine {
 
         if($lines > 0) {
             foreach($lines as $line) {
-                if(
-                    in_array($line['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                    ||
-                    ($line['booking_id.status'] != 'quote' && !$line['booking_line_group_id.is_extra'])
-                ) {
-                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                if($line['booking_line_group_id.is_extra']) {
+                    if(!in_array($line['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                        return ['booking_id' => ['non_editable' => 'Extra Services can only be updated after confirmation and before invoicing.']];
+                    }
+                }
+                else {
+                    if($line['booking_id.status'] != 'quote') {
+                        return ['booking_id' => ['non_editable' => 'Services cannot be updated for non-quote bookings.']];
+                    }
                 }
             }
         }

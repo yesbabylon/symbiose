@@ -88,6 +88,34 @@ class SojournProductModelRentalUnitAssignement extends Model {
     }
 
     /**
+     * Check wether an object can be created.
+     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  ObjectManager    $om         ObjectManager instance.
+     * @param  array            $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
+     * @param  string           $lang       Language in which multilang fields are being updated.
+     * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be created.
+     */
+    public static function cancreate($om, $values, $lang) {
+        if(isset($values['booking_line_group_id'])) {
+            $groups = $om->read(BookingLineGroup::getType(), $values['booking_line_group_id'], ['booking_id.status', 'is_extra'], $lang);
+            $group = reset($groups);
+            if($group['is_extra']) {
+                if(!in_array($group['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                }
+            }
+            else {
+                if($group['booking_id.status'] != 'quote') {
+                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                }
+            }
+        }
+        return parent::cancreate($om, $values, $lang);
+    }
+
+    /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
      * This method can be overriden to define a more precise set of tests.
      * It prevents updating if the parent booking is not in quote.
@@ -99,16 +127,53 @@ class SojournProductModelRentalUnitAssignement extends Model {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $lines = $om->read(get_called_class(), $oids, ['booking_id.status'], $lang);
-        if($lines > 0) {
-            foreach($lines as $line) {
-                if(!in_array($line['booking_id.status'], ['quote', 'checkedout'])) {
-                    return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+        // fields that can always be changed
+        $allowed_fields = ['status', 'action_required'];
+
+        if(count(array_diff(array_keys($values), $allowed_fields))) {
+            $assignments = $om->read(self::getType(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra'], $lang);
+            if($assignments > 0) {
+                foreach($assignments as $assignment) {
+                    if($assignment['booking_line_group_id.is_extra']) {
+                        if(!in_array($assignment['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                            return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                        }
+                    }
+                    else {
+                        if($assignment['booking_id.status'] != 'quote') {
+                            return ['booking_id' => ['non_editable' => 'Rental units assignments cannot be updated for non-quote bookings.']];
+                        }
+                    }
                 }
             }
         }
-
         return parent::canupdate($om, $oids, $values, $lang);
     }
 
+    /**
+     * Check wether an object can be deleted, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  object   $om         ObjectManager instance.
+     * @param  array    $oids       List of objects identifiers.
+     * @return boolean  Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $oids) {
+        $assignments = $om->read(self::getType(), $oids, ['booking_id.status', 'booking_line_group_id.is_extra']);
+        if($assignments > 0) {
+            foreach($assignments as $assignment) {
+                if($assignment['booking_line_group_id.is_extra']) {
+                    if(!in_array($assignment['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                        return ['booking_id' => ['non_editable' => 'Assignments can only be updated after confirmation and before invoicing.']];
+                    }
+                }
+                else {
+                    if($assignment['booking_id.status'] != 'quote') {
+                        return ['booking_id' => ['non_editable' => 'Assignments cannot be updated for non-quote bookings.']];
+                    }
+                }
+            }
+        }
+        return parent::candelete($om, $oids);
+    }
 }

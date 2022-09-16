@@ -73,11 +73,18 @@ class BookingLineGroup extends Model {
                 'default'           => false
             ],
 
+            'has_schedulable_services' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'Flag marking the group as holding at least one schedulable service.',
+                'function'          => 'calcHasSchedulableServices'
+            ],
+
             'nb_nights' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'description'       => 'Amount of nights of the sojourn.',
-                'function'          => 'sale\booking\BookingLineGroup::calcNbNights',
+                'function'          => 'calcNbNights',
                 'store'             => true
             ],
 
@@ -190,9 +197,25 @@ class BookingLineGroup extends Model {
         }
     }
 
+    public static function calcHasSchedulableServices($om, $oids, $lang) {
+        $result = [];
+        $groups = $om->read(self::gettype(), $oids, ['booking_lines_ids']);
+        foreach($groups as $gid => $group) {
+            $result[$gid] = false;
+            $lines = $om->read(BookingLine::gettype(), $group['booking_lines_ids'], ['product_id.product_model_id.type', 'product_id.product_model_id.service_type']);
+            foreach($lines as $lid => $line) {
+                if($line['product_id.product_model_id.type'] == 'service' && $line['product_id.product_model_id.service_type'] == 'schedulable') {
+                    $result[$gid] = true;
+                    break;
+                }
+            }
+        }
+        return $result;
+    }
+
     public static function calcNbNights($om, $oids, $lang) {
         $result = [];
-        $groups = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
+        $groups = $om->read(self::gettype(), $oids, ['date_from', 'date_to']);
         foreach($groups as $gid => $group) {
             $result[$gid] = floor( ($group['date_to'] - $group['date_from']) / (60*60*24) );
         }

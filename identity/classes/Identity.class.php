@@ -370,8 +370,8 @@ class Identity extends Model {
     }
 
     public static function onupdateName($om, $oids, $values, $lang) {
-        $om->update(__CLASS__, $oids, [ 'display_name' => null ], $lang);
-        $res = $om->read(__CLASS__, $oids, ['partners_ids']);
+        $om->update(self::getType(), $oids, [ 'display_name' => null ], $lang);
+        $res = $om->read(self::getType(), $oids, ['partners_ids']);
         $partners_ids = [];
         foreach($res as $oid => $odata) {
             $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
@@ -383,7 +383,7 @@ class Identity extends Model {
 
 
     public static function onupdateTypeId($om, $oids, $values, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['type_id', 'type_id.code', 'partners_ids']);
+        $res = $om->read(self::getType(), $oids, ['type_id', 'type_id.code', 'partners_ids']);
         if($res > 0) {
             $partners_ids = [];
             foreach($res as $oid => $odata) {
@@ -396,9 +396,9 @@ class Identity extends Model {
                     $values['lastname'] = '';
                 }
                 $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
-                $om->update(__CLASS__, $oid, $values, $lang);
+                $om->update(self::getType(), $oid, $values, $lang);
             }
-            $om->read(__CLASS__, $oids, ['display_name'], $lang);
+            $om->read(self::getType(), $oids, ['display_name'], $lang);
             // force re-computing of related partners names
             $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
             $om->read('identity\Partner', $partners_ids, ['name'], $lang);

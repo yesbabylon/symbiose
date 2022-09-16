@@ -31,6 +31,7 @@ class Funding extends \sale\pay\Funding {
                 'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'funding_id'
             ]
+
         ];
     }
 

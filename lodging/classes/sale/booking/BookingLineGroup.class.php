@@ -669,16 +669,13 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be created.
      */
     public static function cancreate($om, $values, $lang) {
-        $bookings = $om->read('lodging\sale\booking\Booking', $values['booking_id'], ['status'], $lang);
+        $bookings = $om->read(Booking::getType(), $values['booking_id'], ['status'], $lang);
 
         if($bookings) {
             $booking = reset($bookings);
 
-            if(
-                in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                ||
-                ($booking['status'] != 'quote' && (!isset($values['is_extra']) ||!$values['is_extra']))
-            ) {
+            if( in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
+                || ($booking['status'] != 'quote' && (!isset($values['is_extra']) ||!$values['is_extra'])) ) {
                 return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
             }
         }
@@ -701,9 +698,15 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
         if($groups > 0) {
             foreach($groups as $group) {
-                if( in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                    || ($group['booking_id.status'] != 'quote' && !$group['is_extra']) ) {
-                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                if($group['is_extra']) {
+                    if(!in_array($group['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                        return ['status' => ['non_editable' => 'Extra services can only be changed after confirmation and before invoicing.']];
+                    }
+                }
+                else {
+                    if($group['booking_id.status'] != 'quote') {
+                        return ['status' => ['non_editable' => 'Non-extra services can only be changed for quote bookings.']];
+                    }
                 }
                 if(isset($values['nb_pers']) && count($group['age_range_assignments_ids']) > 1 ) {
                     $assignments = $om->read(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], ['qty'], $lang);
@@ -727,16 +730,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @return boolean  Returns true if the object can be deleted, or false otherwise.
      */
     public static function candelete($om, $oids) {
-        $groups = $om->read(get_called_class(), $oids, ['booking_id', 'booking_id.status', 'is_extra']);
+        $groups = $om->read(self::getType(), $oids, ['booking_id.status', 'is_extra']);
 
         if($groups > 0) {
             foreach($groups as $group) {
-                if(
-                    in_array($group['booking_id.status'], ['invoiced', 'debit_balance', 'credit_balance', 'balanced'])
-                    ||
-                    ($group['booking_id.status'] != 'quote' && !$group['is_extra'])
-                ) {
-                    return ['status' => ['non_editable' => 'Non-extra service lines cannot be changed for non-quote bookings.']];
+                if($group['is_extra']) {
+                    if(!in_array($group['booking_id.status'], ['confirmed', 'validated', 'checkedin', 'checkedout'])) {
+                        return ['status' => ['non_editable' => 'Extra services can only be changed after confirmation and before invoicing.']];
+                    }
+                }
+                else {
+                    if($group['booking_id.status'] != 'quote') {
+                        return ['status' => ['non_editable' => 'Non-extra services can only be changed for quote bookings.']];
+                    }
                 }
             }
         }

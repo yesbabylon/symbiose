@@ -441,7 +441,7 @@ class Booking extends Model {
 
     // #todo - this should be part of the onupdate() hook
     public static function _resetPrices($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, ['total' => null, 'price' => null]);
+        $om->update(__CLASS__, $oids, ['total' => null, 'price' => null]);
     }
 
     public static function onupdateBookingLinesGroupsIds($om, $oids, $values, $lang) {
@@ -453,7 +453,7 @@ class Booking extends Model {
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 if($booking['status'] == 'confirmed') {
-                    $om->write(get_called_class(), $bid, ['has_contract' => true], $lang);
+                    $om->update(get_called_class(), $bid, ['has_contract' => true], $lang);
                 }
             }
         }
@@ -466,7 +466,7 @@ class Booking extends Model {
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 if(!$booking['customer_identity_id']) {
-                    $om->write(__CLASS__, $bid, ['customer_identity_id' => $booking['customer_id.partner_identity_id']], $lang);
+                    $om->update(__CLASS__, $bid, ['customer_identity_id' => $booking['customer_id.partner_identity_id']], $lang);
                 }
 
                 if(!in_array($booking['customer_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $booking['contacts_ids.partner_identity_id']))) {
@@ -509,7 +509,7 @@ class Booking extends Model {
                         }
                     }
                     if($partner_id) {
-                        $om->write(__CLASS__, $oid, ['customer_id' => $partner_id]);
+                        $om->update(__CLASS__, $oid, ['customer_id' => $partner_id]);
                     }
                 }
             }

@@ -26,7 +26,7 @@ class CustomerType extends \identity\IdentityType {
                 'description'       => "Short description of the customer type.",
                 "multilang"         => true
             ],
-            
+
             'rate_class_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
