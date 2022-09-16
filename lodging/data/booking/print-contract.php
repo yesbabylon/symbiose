@@ -612,6 +612,12 @@ $consumptions = Consumption::search([ ['booking_id', '=', $booking['id']], ['typ
 
 $days_names = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 $consumptions_map = [];
+
+// sort consumptions on dates
+usort($consumptions, function ($a, $b) {
+    return strcmp($a['date'], $b['date']);
+});
+
 foreach($consumptions as $cid => $consumption) {
     // #memo - we only count overnight accomodations (a sojourn always has nb_nights+1 days)
     // ignore accomodation consumptions that do not end at midnight (24:00:00)
