@@ -71,7 +71,7 @@ $booking = Booking::id($params['id'])
                             'date_to',
                             'has_pack',
                             'is_locked',
-                            'pack_id' => ['id', 'display_name'],
+                            'pack_id' => ['id', 'name'],
                             'price_id',
                             'vat_rate',
                             'unit_price',

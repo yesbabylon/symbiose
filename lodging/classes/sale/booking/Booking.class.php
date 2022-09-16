@@ -889,7 +889,6 @@ class Booking extends \sale\booking\Booking {
                             $lang);
 
                         if($lines > 0 && count($lines)) {
-                            $is_first = true;
 
                             // read all related product models at once
                             $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
@@ -991,14 +990,6 @@ class Booking extends \sale\booking\Booking {
                                     $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
                                     $c_schedule_from = $schedule_from;
                                     $c_schedule_to = $schedule_to;
-
-                                    // first consumption has to match the checkin time of the sojourn (from group), unless it does not occur on the day of arrival
-                                    if($is_first && $offset == 0) {
-                                        $is_first = false;
-                                        $diff = $c_schedule_to - $schedule_from;
-                                        $c_schedule_from = $group['time_from'];
-                                        $c_schedule_to = $c_schedule_from + $diff;
-                                    }
 
                                     // create a single consumption with the quantity set accordingly (may vary from one day to another)
 
