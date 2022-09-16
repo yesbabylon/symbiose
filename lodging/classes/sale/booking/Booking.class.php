@@ -992,8 +992,8 @@ class Booking extends \sale\booking\Booking {
                                     $c_schedule_from = $schedule_from;
                                     $c_schedule_to = $schedule_to;
 
-                                    // first consumption has to match the checkin time of the sojourn (from group)
-                                    if($is_first) {
+                                    // first consumption has to match the checkin time of the sojourn (from group), unless it does not occur on the day of arrival
+                                    if($is_first && $offset == 0) {
                                         $is_first = false;
                                         $diff = $c_schedule_to - $schedule_from;
                                         $c_schedule_from = $group['time_from'];
