@@ -43,13 +43,16 @@ if($user_id <= 0) {
 // parse the CODA data
 $data = eQual::run('get', 'lodging_payments_coda-parse', ['data' => $params['data']]);
 
-$result = [];
+if(empty($data)) {
+    throw new Exception('invalid_file', QN_ERROR_INVALID_PARAM);
+}
 
+$result = [];
 $statements = $data;
 
 foreach($statements as $statement) {
 
-    $iban = BankStatement::_convert_to_iban($statement['account']['number']);
+    $iban = BankStatement::convertBbanToIban($statement['account']['number']);
 
     $center_office = CenterOffice::search(['bank_account_iban', '=', $iban])->read(['id'])->first();
 

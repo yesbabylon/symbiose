@@ -109,7 +109,7 @@ class BankStatement extends Model {
         $statements = $om->read(get_called_class(), $oids, ['bank_account_number', 'bank_account_bic']);
 
         foreach($statements as $oid => $statement) {
-            $result[$oid] = self::_convert_to_iban($statement['bank_account_number']);
+            $result[$oid] = self::convertBbanToIban($statement['bank_account_number']);
         }
         return $result;
     }
@@ -133,7 +133,7 @@ class BankStatement extends Model {
         return $result;
     }
 
-    public static function _convert_to_iban($account_number) {
+    public static function convertBbanToIban($account_number) {
 
         /*
             account number already has IBAN format
@@ -162,7 +162,7 @@ class BankStatement extends Model {
         $check_digits = substr($account_number, -2);
         $dummy = intval($check_digits.$check_digits.$code_num.'00');
         $control = 98 - ($dummy % 97);
-        return trim(sprintf("BE%s%s", $control, $account_number));
+        return trim(sprintf("BE%02d%s", $control, $account_number));
     }
 
 

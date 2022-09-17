@@ -785,6 +785,7 @@ class Booking extends \sale\booking\Booking {
 
                             // fetch the offset, in days, for the scheduling
                             $offset = $spm['product_model_id.schedule_offset'];
+                            $is_accomodation = $spm['product_model_id.is_accomodation'];
 
                             $is_first = true;
                             for($i = 0; $i < $nb_nights; ++$i) {
@@ -792,8 +793,8 @@ class Booking extends \sale\booking\Booking {
                                 $c_schedule_from = $schedule_from;
                                 $c_schedule_to = $schedule_to;
 
-                                // first consumption has to match the checkin time of the sojourn (from group)
-                                if($is_first) {
+                                // first accomodation has to match the checkin time of the sojourn (from group)
+                                if($is_first && $is_accomodation) {
                                     $is_first = false;
                                     $diff = $c_schedule_to - $schedule_from;
                                     $c_schedule_from = $group['time_from'];
