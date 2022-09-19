@@ -6,7 +6,6 @@
 */
 namespace identity;
 use equal\orm\Model;
-use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 /**
  * This class is meant to be used as an interface for other entities (organisation and partner).
@@ -74,12 +73,14 @@ class Identity extends Model {
             'bank_account_iban' => [
                 'type'              => 'string',
                 'usage'             => 'uri/urn:iban',
-                'description'       => "Number of the bank account of the Identity, if any."
+                'description'       => "Number of the bank account of the Identity, if any.",
+                'visible'           => [ ['has_parent', '=', false] ]
             ],
 
             'bank_account_bic' => [
                 'type'              => 'string',
-                'description'       => "Identitifer of the Bank related to the Identity's bank account, when set."
+                'description'       => "Identitifer of the Bank related to the Identity's bank account, when set.",
+                'visible'           => [ ['has_parent', '=', false] ]
             ],
 
             'signature' => [
@@ -106,14 +107,14 @@ class Identity extends Model {
             ],
             'has_vat' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the this organisation have a VAT number?',
-                'visible'           => [ ['type', '<>', 'I'] ],
+                'description'       => 'Does the organisation have a VAT number?',
+                'visible'           => [ ['type', '<>', 'I'], ['has_parent', '=', false] ],
                 'default'           => false
             ],
             'vat_number' => [
                 'type'              => 'string',
                 'description'       => 'Value Added Tax identification number, if any.',
-                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'] ]
+                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'], ['has_parent', '=', false] ]
             ],
             'registration_number' => [
                 'type'              => 'string',
@@ -145,16 +146,23 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',
                 'domain'            => ['type', '<>', 'I'],
-                'description'       => 'Children organisations owned by the company, if any.',
+                'description'       => 'Children departments of the organisation, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
+            ],
+
+            'has_parent' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the identity have a parent organisation?',
+                'visible'           => [ ['type', '<>', 'I'] ],
+                'default'           => false
             ],
 
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'domain'            => ['type', '<>', 'I'],
-                'description'       => 'Parent company of which the organisation is a branch, if any.',
-                'visible'           => [ ['type', '<>', 'I'] ]
+                'description'       => 'Parent company of which the organisation is a branch (department), if any.',
+                'visible'           => [ ['has_parent', '=', true] ]
             ],
 
             'employees_ids' => [

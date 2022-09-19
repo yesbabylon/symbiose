@@ -131,6 +131,16 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "has_parent",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "parent_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "has_vat",
                                                 "width": "100%",
                                                 "label": "Subject to VAT",

@@ -45,6 +45,11 @@
             "description": "Court contexte pour aider à identifier l'organisation.",
             "help": "Court contexte pour aider à identifier l'organisation ou remémorer des infos spécifiques."
         },
+        "has_parent": {
+            "label": "Département ou filiale",
+            "description": "Cette identité est un département d'une organisation.",
+            "help": ""
+        },
         "has_vat": {
             "label": "Assujetti TVA",
             "description": "Cette organisation a-t-elle un numéro de TVA ?",
