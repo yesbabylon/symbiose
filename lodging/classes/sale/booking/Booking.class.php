@@ -595,7 +595,7 @@ class Booking extends \sale\booking\Booking {
      */
     public static function canupdate($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(get_called_class(), $oids, ['status', 'booking_lines_ids'], $lang);
+        $bookings = $om->read(self::getType(), $oids, ['status', 'booking_lines_ids'], $lang);
 
 
         if(isset($values['center_id'])) {

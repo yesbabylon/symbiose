@@ -27,7 +27,7 @@ list($params, $providers) = announce([
                 'other',                    // customer cancelled for a non-listed reason or without mentionning the reason (cancellation fees might apply)
                 'overbooking',              // the booking was cancelled due to failure in delivery of the service
                 'duplicate',                // several contacts of the same group made distinct bookings for the same sojourn
-                "internal_impediment",      // cancellation due to an incident impacting the rental units
+                'internal_impediment',      // cancellation due to an incident impacting the rental units
                 'external_impediment',      // cancellation due to external delivery failure (organisation, means of transport, ...)
                 'health_impediment'         // cancellation for medical or mourning reason
             ],
@@ -42,7 +42,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']     
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 /**
@@ -56,7 +56,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 $booking = Booking::id($params['id'])
                   ->read(['id', 'name', 'is_cancelled', 'status', 'contracts_ids', 'booking_lines_ids' => 'consumptions_ids', 'fundings_ids' => ['id', 'is_paid']])
                   ->first();
-                  
+
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
@@ -66,7 +66,7 @@ if($booking['is_cancelled']) {
     throw new Exception("incompatible_status", QN_ERROR_INVALID_PARAM);
 }
 
-// revert booking to quote 
+// revert booking to quote
 $json = run('do', 'lodging_booking_do-quote', ['id' => $params['id']]);
 $data = json_decode($json, true);
 if(isset($data['errors'])) {
@@ -76,20 +76,25 @@ if(isset($data['errors'])) {
     }
 }
 
-// release rental units (remove consumptions, if any) 
+// release rental units (remove consumptions, if any)
 Consumption::search(['booking_id', '=', $params['id']])->delete(true);
 
 // mark the booking as cancelled
 Booking::id($params['id'])->update(['is_cancelled' => true, 'cancellation_reason' => $params['reason']]);
 
+// if booking is balanced, set status to balanced and archive booking
+$booking = Booking::id($params['id'])->read(['fundings_ids'])->first();
+
 // #todo : if cancellation fees are applicable, set status to 'debit_balance'
 
-
-// if booking is balanced, set status to balanced and archive booking
-Booking::id($params['id'])->update(['status' => 'balanced', 'state' => 'archive']);
+if(count($booking['fundings_ids'])) {
+    Booking::id($params['id'])->update(['status' => 'credit_balance']);
+}
+else {
+    Booking::id($params['id'])->update(['status' => 'balanced'])->update(['state' => 'archive']);
+}
 
 
 $context->httpResponse()
         ->status(200)
-        ->body([])
         ->send();

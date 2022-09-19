@@ -210,7 +210,7 @@ class Consumption extends Model {
                             $cleanup_type = 'full';
                         }
                     }
-                    $om->write(__CLASS__, $oids, ['is_rental_unit' => true, 'is_accomodation' => $consumption['rental_unit_id.is_accomodation'], 'cleanup_type' => $cleanup_type]);
+                    $om->update(self::getType(), $oids, ['is_rental_unit' => true, 'is_accomodation' => $consumption['rental_unit_id.is_accomodation'], 'cleanup_type' => $cleanup_type]);
                 }
             }
         }
