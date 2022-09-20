@@ -595,13 +595,13 @@ class Booking extends \sale\booking\Booking {
      */
     public static function canupdate($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(self::getType(), $oids, ['status', 'booking_lines_ids'], $lang);
+        $bookings = $om->read(self::getType(), $oids, ['status', 'center_id', 'booking_lines_ids'], $lang);
 
 
         if(isset($values['center_id'])) {
             $has_booking_lines = false;
             foreach($bookings as $bid => $booking) {
-                if(count($booking['booking_lines_ids'])) {
+                if($booking['center_id'] && count($booking['booking_lines_ids'])) {
                     $has_booking_lines = true;
                     break;
                 }
