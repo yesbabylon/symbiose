@@ -75,6 +75,18 @@
                             "view": "list.default",
                             "domain": ["status", "=", "checkedin"]
                         }
+                    },
+                    {
+                        "id": "item.bookings.archives",
+                        "type": "entry",
+                        "label": "Archived Bookings",
+                        "description": "",
+                        "route": "/bookings",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Booking",
+                            "view": "list.default",
+                            "domain": ["state", "=", "archive"]
+                        }
                     }
                 ]
             },

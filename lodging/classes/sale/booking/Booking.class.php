@@ -189,7 +189,7 @@ class Booking extends \sale\booking\Booking {
     public static function calcName($om, $oids, $lang) {
         $result = [];
 
-        $bookings = $om->read(__CLASS__, $oids, ['center_id.center_office_id.code'], $lang);
+        $bookings = $om->read(self::getType(), $oids, ['center_id.center_office_id.code'], $lang);
         $format = Setting::get_value('sale', 'booking', 'booking.sequence_format', '%05d{sequence}');
 
         foreach($bookings as $oid => $booking) {

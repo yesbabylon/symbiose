@@ -54,7 +54,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read(['id', 'name', 'is_cancelled', 'status', 'contracts_ids', 'booking_lines_ids' => 'consumptions_ids', 'fundings_ids' => ['id', 'is_paid']])
+                  ->read(['id', 'name', 'is_cancelled', 'status', 'contracts_ids', 'fundings_ids' => ['id', 'is_paid']])
                   ->first();
 
 if(!$booking) {
@@ -93,7 +93,6 @@ if(count($booking['fundings_ids'])) {
 else {
     Booking::id($params['id'])->update(['status' => 'balanced'])->update(['state' => 'archive']);
 }
-
 
 $context->httpResponse()
         ->status(200)
