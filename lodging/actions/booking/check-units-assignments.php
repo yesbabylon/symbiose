@@ -78,14 +78,17 @@ if($booking_line_groups) {
         $product_models_ids = array_map(function($a) {return $a['product_model_id'];}, $lines);
         $product_models = ProductModel::ids($product_models_ids)
             ->read([
-                'is_accomodation', 'qty_accounting_method', 'rental_unit_assignement', 'capacity'
+                'is_accomodation',
+                'qty_accounting_method',
+                'rental_unit_assignement',
+                'capacity'
             ])
             ->get();
 
         $spms = [];
 
         // pass-1 : withdraw persons assigned to units accounted by 'accomodation' from nb_pers
-        foreach($group['booking_lines_ids'] as $lid => $line) {
+        foreach($lines as $lid => $line) {
             $product_model_id = $line['product_model_id'];
             if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
                 $nb_pers -= $product_models[$product_model_id]['capacity'];
