@@ -63,7 +63,10 @@ foreach($consumptions as $consumption) {
     $rental_unit_id = $consumption['rental_unit_id'];
     $booking_line_group_id = $consumption['booking_line_group_id'];
 
-    if($rental_unit_id <= 0) continue;
+    if($rental_unit_id <= 0) {
+        continue;
+    }
+
     if(!isset($consumptions_map[$booking_line_group_id])) {
         $consumptions_map[$booking_line_group_id] = [];
     }
@@ -71,6 +74,7 @@ foreach($consumptions as $consumption) {
     if(!isset($consumptions_map[$booking_line_group_id][$rental_unit_id])) {
         $consumptions_map[$booking_line_group_id][$rental_unit_id] = [];
     }
+
     $consumptions_map[$booking_line_group_id][$rental_unit_id][] = $consumption;
 }
 
@@ -95,12 +99,13 @@ foreach($consumptions_map as $booking_line_group_id => $rental_units) {
 
         // look for other consumptionS (not in booking_line_group_id) assigned to the same rental_unit with date >= date_from AND date <= date_to
         $colliding_ids = Consumption::search([
-            ['booking_line_group_id', '<>', $booking_line_group_id],
-            ['rental_unit_id', '=', $rental_unit_id],
-            ['type', '<>', 'part'],
-            ['date', '>=', $date_from],
-            ['date', '<=', $date_to]
-        ])->ids();
+                ['booking_line_group_id', '<>', $booking_line_group_id],
+                ['rental_unit_id', '=', $rental_unit_id],
+                ['type', '<>', 'part'],
+                ['date', '>=', $date_from],
+                ['date', '<=', $date_to]
+            ])
+            ->ids();
 
         if($colliding_ids && count($colliding_ids)) {
             // filter resulting collisions
@@ -143,7 +148,7 @@ $httpResponse = $context->httpResponse()->status(200);
 
 $is_colliding_bookings = (bool) count($colliding_bookings_ids);
 
-// ignore self-collision
+// ignore self-collision (come and go between quote and option)
 if(count($colliding_bookings_ids) == 1 && $colliding_bookings_ids[0] == $params['id']) {
     $is_colliding_bookings = false;
 }

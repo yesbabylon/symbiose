@@ -9,7 +9,7 @@
             "help": ""
         },
         "owner_identity_id": {
-            "label": "Identité Origine",
+            "label": "Organisation",
             "description": "L'organisation dont l'identité ciblée est partenaire.",
             "help": ""
         },

@@ -129,7 +129,8 @@ class Booking extends \sale\booking\Booking {
                 'type'              => 'one2many',
                 'foreign_object'    => 'lodging\sale\booking\Invoice',
                 'foreign_field'     => 'booking_id',
-                'description'       => 'Invoices that relate to the booking.'
+                'description'       => 'Invoices that relate to the booking.',
+                'ondetach'          => 'delete'
             ],
 
             'nb_pers' => [
@@ -177,6 +178,13 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => 'core\Mail',
                 'foreign_field'     => 'object_id',
                 'domain'            => ['object_class', '=', self::getType()]
+            ],
+
+            'rental_unit_assignments_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\booking\SojournProductModelRentalUnitAssignement',
+                'foreign_field'     => 'booking_id',
+                'description'       => "The rental units assigned to the group (from lines)."
             ]
 
         ];
@@ -601,6 +609,7 @@ class Booking extends \sale\booking\Booking {
         if(isset($values['center_id'])) {
             $has_booking_lines = false;
             foreach($bookings as $bid => $booking) {
+                // if there are services and the center is already defined (otherwise this is the first assignation and some auto-services might just have been created)
                 if($booking['center_id'] && count($booking['booking_lines_ids'])) {
                     $has_booking_lines = true;
                     break;

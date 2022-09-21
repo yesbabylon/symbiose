@@ -110,6 +110,15 @@ if(is_array($data) && count($data)) {
     $errors[] = 'overbooking_detected';
 }
 
+// check sojourns accomodations
+/*
+$data = eQual::run('do', 'lodging_booking_check-sojourns-accomodations', ['id' => $params['id']]);
+if(is_array($data) && count($data)) {
+    $errors[] = 'overlapse_detected';
+}
+*/
+
+
 // raise an exception with first error (alerts should have been issued in the check controllers)
 foreach($errors as $error) {
     throw new Exception($error, QN_ERROR_INVALID_PARAM);

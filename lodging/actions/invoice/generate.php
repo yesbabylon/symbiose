@@ -14,7 +14,7 @@ use lodging\sale\booking\Funding;
 use lodging\sale\catalog\Product;
 
 list($params, $providers) = announce([
-    'description'   => "Generate the proforma final invoice of a booking with remaining due balance.",
+    'description'   => "Generate a proforma invoice for a booking remaining due balance.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the invoice has to be generated.',
@@ -57,40 +57,42 @@ if($invoice) {
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read([
-                        'status',
-                        'type',
-                        'date_from',
-                        'date_to',
-                        'price',
-                        'center_office_id' => ['id', 'organisation_id'],
-                        'customer_id' => ['id', 'rate_class_id', 'lang_id' => ['code']],
-                        'booking_lines_groups_ids' => [
-                            'name',
-                            'date_from',
-                            'date_to',
-                            'has_pack',
-                            'is_locked',
-                            'pack_id' => ['id', 'name'],
-                            'price_id',
-                            'vat_rate',
-                            'unit_price',
-                            'qty',
-                            'nb_nights',
-                            'nb_pers',
-                            'booking_lines_ids' => [
-                                'product_id',
-                                'description',
-                                'price_id',
-                                'unit_price',
-                                'vat_rate',
-                                'qty',
-                                'free_qty',
-                                'discount'
-                            ]
-                        ]
-                  ])
-                  ->first();
+    ->read([
+        'status',
+        'type',
+        'date_from',
+        'date_to',
+        'price',
+        'center_office_id' => ['id', 'organisation_id'],
+        'customer_id' => ['id', 'rate_class_id', 'lang_id' => ['code']],
+        'booking_lines_groups_ids' => [
+            'name',
+            'date_from',
+            'date_to',
+            'has_pack',
+            'is_locked',
+            'pack_id' => ['id', 'name'],
+            'price_id',
+            'vat_rate',
+            'unit_price',
+            'qty',
+            'nb_nights',
+            'nb_pers',
+            'booking_lines_ids' => [
+                'product_id',
+                'description',
+                'price_id',
+                'unit_price',
+                'vat_rate',
+                'qty',
+                'free_qty',
+                'discount',
+                'price',
+                'total'
+            ]
+        ]
+    ])
+    ->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -159,11 +161,11 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
     $group_label .= ' - '.$group['nb_pers'].'p.';
 
     $invoice_line_group = InvoiceLineGroup::create([
-        'name'              => $group_label,
-        'invoice_id'        => $invoice['id']
-    ])
-    ->read(['id'])
-    ->first();
+            'name'              => $group_label,
+            'invoice_id'        => $invoice['id']
+        ])
+        ->read(['id'])
+        ->first();
 
     if($group['has_pack'] && $group['is_locked'] ) {
         // invoice group with a single line
@@ -186,8 +188,8 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         foreach($group['booking_lines_ids'] as $lid => $line) {
             $booking_lines_ids[] = $lid;
 
-            // create line in two steps (not to overwrite details from the line)
-            InvoiceLine::create( [
+            // create line in several steps (not to overwrite final values from the line)
+            InvoiceLine::create([
                     'invoice_id'                => $invoice['id'],
                     'invoice_line_group_id'     => $invoice_line_group['id'],
                     'product_id'                => $line['product_id'],
@@ -200,6 +202,12 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                     'qty'                       => $line['qty'],
                     'free_qty'                  => $line['free_qty'],
                     'discount'                  => $line['discount']
+                ])
+                ->update([
+                    'total'                     => $line['total'],
+                ])
+                ->update([
+                    'price'                     => $line['price'],
                 ]);
         }
 

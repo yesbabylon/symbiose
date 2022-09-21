@@ -125,16 +125,9 @@ class Funding extends \sale\pay\Funding {
         $orm->update(self::getType(), $oids, ['name' => null, 'amount_share' => null], $lang);
     }
 
-
-    public function getUnique() {
-        return [
-            ['booking_id', 'due_date']
-        ];
-    }
-
     /**
      * Check wether an object can be created.
-     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * These tests come in addition to the unique constraints returned by method `getUnique()`.
      * Checks wheter the sum of the fundings of a booking remains lower than the price of the booking itself.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
@@ -162,7 +155,7 @@ class Funding extends \sale\pay\Funding {
 
     /**
      * Check wether an object can be updated.
-     * These tests come in addition to the unique constraints return by method `getUnique()`.
+     * These tests come in addition to the unique constraints returned by method `getUnique()`.
      * Checks wheter the sum of the fundings of each booking remains lower than the price of the booking itself.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.

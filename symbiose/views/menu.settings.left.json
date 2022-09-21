@@ -1028,6 +1028,64 @@
                 ]
             },
             {
+                "id": "hr",
+                "label": "Human resources",
+                "description": "",
+                "icon": "groups",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "hr.employee",
+                        "label": "Employees",
+                        "description": "",
+                        "icon": "person",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "hr.employee.all",
+                                "type": "entry",
+                                "label": "All employees",
+                                "description": "",
+                                "context": {
+                                    "entity": "hr\\employee\\Employee",
+                                    "view": "list.default",
+                                    "domain": ["relationship", "=", "employee"]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "hr.absences",
+                        "label": "Absences",
+                        "description": "",
+                        "icon": "schedule",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "hr.absences.all",
+                                "type": "entry",
+                                "label": "All absences",
+                                "description": "",
+                                "context": {
+                                    "entity": "hr\\absence\\Absence",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "hr.absences.all",
+                                "type": "entry",
+                                "label": "Absence codes",
+                                "description": "",
+                                "context": {
+                                    "entity": "hr\\absence\\Code",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 "id": "settings",
                 "label": "Configuration",
                 "description": "",

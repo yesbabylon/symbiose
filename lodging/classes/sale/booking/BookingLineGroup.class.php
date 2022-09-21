@@ -1503,12 +1503,19 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 continue;
             }
 
-            // retrieve rental units involved in booking consumptions, if any
-            $consumptions = [];
-            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['consumptions_ids'], $lang);
+            // retrieve rental units that are already assigned by other groups, if any
+            // (we need to withdraw those from available units)
+            $booking_assigned_rental_units_ids = [];
+            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['rental_unit_assignments_ids'], $lang);
             if($bookings > 0 && count($bookings)) {
                 $booking = reset($bookings);
-                $consumptions = $om->read(Consumption::getType(), $booking['consumptions_ids'], ['rental_unit_id', 'product_model_id.is_accomodation'], $lang);
+                $assignments = $om->read(SojournProductModelRentalUnitAssignement::getType(), $booking['rental_unit_assignments_ids'], ['rental_unit_id', 'booking_line_group_id'], $lang);
+                foreach($assignments as $oid => $assignment) {
+                    // process rental units from other groups
+                    if($assignment['booking_line_group_id'] != $gid) {
+                        $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id'];
+                    }
+                }
             }
 
             // create a map with all product_model_id within the group
@@ -1604,16 +1611,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
                     // find available rental units (sorted by capacity, desc; filtered on product model category)
                     $rental_units_ids = Consumption::getAvailableRentalUnits($om, $center_id, $line['product_id.product_model_id'], $date_from, $date_to);
-                    // append rental units from consumptions of own booking (use case: come and go between 'quote' and 'option')
-                    foreach($consumptions as $consumption) {
-                        if($is_accomodation == $consumption['product_model_id.is_accomodation']) {
-                            // #memo - this leads to an edge case
-                            // $rental_units_ids[] = $consumption['rental_unit_id'];
-                        }
-                    }
 
-                    // remove rental units that have been just assigned
-                    $rental_units_ids = array_diff($rental_units_ids, $group_assigned_rental_units_ids);
+                    // #memo - we cannot append rental units from consumptions of own booking :this leads to an edge case
+                    // (use case "come and go between 'quote' and 'option'" is handled with 'realease-rentalunits' action)
+
+                    // remove rental units that are no longer unavailable
+                    $rental_units_ids = array_diff($rental_units_ids,
+                            $group_assigned_rental_units_ids,               // assigned to other lines (current loop)
+                            $booking_assigned_rental_units_ids              // assigned within other groups
+                        );
+
                     // retrieve rental units with matching capacities (best match first)
                     $rental_units = self::_getRentalUnitsMatches($om, $rental_units_ids, $nb_pers_to_assign);
 

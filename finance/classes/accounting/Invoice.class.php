@@ -197,9 +197,11 @@ class Invoice extends Model {
             foreach($invoices as $oid => $invoice) {
                 $result[$oid] = false;
                 $count_paid = 0;
-                foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
-                    if($funding['is_paid']) {
-                        ++$count_paid;
+                if($invoice['fundings_ids.is_paid'] && count($invoice['fundings_ids.is_paid'])) {
+                    foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
+                        if($funding['is_paid']) {
+                            ++$count_paid;
+                        }
                     }
                 }
                 if($count_paid > 0 && count($invoice['fundings_ids.is_paid']) == $count_paid) {

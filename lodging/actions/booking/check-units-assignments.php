@@ -9,7 +9,7 @@ use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 use lodging\sale\catalog\ProductModel;
 
 list($params, $providers) = announce([
-    'description'   => "Checks the consistency of rental units assignments for a given booking.",
+    'description'   => "Checks the consistency of rental units assignments for a given booking (number of persons).",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the booking for which the assignments are checked.',

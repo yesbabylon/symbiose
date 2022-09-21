@@ -14,7 +14,7 @@ class Holiday extends Model {
     }
 
     public static function getDescription() {
-        return "Holidays allow to list the school vacations and public holidays within a given year.";
+        return "Holidays allow to list public holidays and school vacations occuring within a given year.";
     }
 
     public static function getColumns() {
@@ -82,7 +82,7 @@ class Holiday extends Model {
     }
 
     public static function onupdateHolidayYearId($orm, $oids, $values, $lang) {
-        $orm->write(__CLASS__, $oids, ['year' => null]);
+        $orm->update(__CLASS__, $oids, ['year' => null]);
     }
 
     public static function onupdateDateFrom($orm, $oids, $values, $lang) {
@@ -95,10 +95,9 @@ class Holiday extends Model {
                     $fields['date_to'] = $odata['date_from'];
                 }
                 $fields['year'] = date('Y', $odata['date_from']);
-                $orm->write(__CLASS__, $oid, $fields);
+                $orm->update(__CLASS__, $oid, $fields);
             }
         }
-
     }
 
 }

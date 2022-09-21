@@ -10,7 +10,7 @@ class InvoiceLine extends \lodging\finance\accounting\InvoiceLine {
 
     public static function getColumns() {
         return [
-            
+
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => Invoice::getType(),

@@ -4,11 +4,13 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+use equal\orm\Domain;
 use lodging\sale\booking\Consumption;
 use lodging\sale\booking\Booking;
 use lodging\realestate\RentalUnit;
-use equal\orm\Domain;
 use lodging\sale\booking\BookingLineGroup;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
+
 
 list($params, $providers) = announce([
     'description'   => "Retrieve the list of available rental units for a given sojourn, during a specific timerange.",
@@ -60,25 +62,36 @@ $sojourn = BookingLineGroup::id($params['booking_line_group_id'])
 if($sojourn) {
     $date_from = $sojourn['date_from'] + $sojourn['time_from'];
     $date_to = $sojourn['date_to'] + $sojourn['time_to'];
-    // retrieve available rental units based on schedule and product_id
-    $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $sojourn['booking_id']['center_id'], $params['product_model_id'], $date_from, $date_to);
 
-    // append rental units from own booking consumptions (use case: come and go between 'draft' and 'option', where units are already attached to consumptions)
-
-    // #memo - this leads to an edge case: quote -> option -> quote (without releasing the consumptions)
-    // 1) update nb_pers or time_from (list is not accurate and might return units that are not free)
-    // 2) if another booking has booked the units in the meanwhile
-    $booking = Booking::id($sojourn['booking_id']['id'])
-        ->read(['consumptions_ids' => ['rental_unit_id']])
-        ->first();
-
+    // retrieve rental units that are already assigned by other groups, if any
+    // (we need to withdraw those from available units)
+    $booking_assigned_rental_units_ids = [];
+    $booking = Booking::id($sojourn['booking_id']['id'])->read(['rental_unit_assignments_ids'])->first();
     if($booking) {
-        foreach($booking['consumptions_ids'] as $consumption) {
-            // $rental_units_ids[] = $consumption['rental_unit_id'];
+        $assignments = SojournProductModelRentalUnitAssignement::ids($booking['rental_unit_assignments_ids'])->read(['rental_unit_id', 'booking_line_group_id'])->get();
+        foreach($assignments as $oid => $assignment) {
+            // process rental units from other groups
+            if($assignment['booking_line_group_id'] != $params['booking_line_group_id']) {
+                $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id'];
+            }
         }
     }
 
-    // #memo - we cannot remove units already assigned in same booking since the allocation of an accomodation might be split on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
+    // retrieve available rental units based on schedule and product_id
+    $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $sojourn['booking_id']['center_id'], $params['product_model_id'], $date_from, $date_to);
+
+    // remove rental units from other groups of same booking
+    $rental_units_ids = array_diff($rental_units_ids, $booking_assigned_rental_units_ids);
+
+    // #memo - we cannot remove units already assigned in same group, since the allocation of an accomodation might be split on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
+
+    // #memo - we cannot append rental units from own booking consumptions :
+    // It was first implemented to cover the use case: "come and go between 'draft' and 'option'", where units are already attached to consumptions
+    // but this leads to an edge case: quote -> option -> quote (without releasing the consumptions)
+    // 1) update nb_pers or time_from (list is not accurate and might return units that are not free)
+    // 2) if another booking has booked the units in the meanwhile
+    // In order to resolve that situation, user has to manually release the rental units (through action release-rentalunits.php)
+
 
     $rental_units = RentalUnit::ids($rental_units_ids)
         ->read(['id', 'name', 'capacity'])
