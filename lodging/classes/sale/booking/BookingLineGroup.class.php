@@ -1503,17 +1503,29 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 continue;
             }
 
-            // retrieve rental units that are already assigned by other groups, if any
+            $nb_pers = $group['nb_pers'];
+            $date_from = $group['date_from'] + $group['time_from'];
+            $date_to = $group['date_to'] + $group['time_to'];
+
+            // retrieve rental units that are already assigned by other groups within the same time range, if any
             // (we need to withdraw those from available units)
             $booking_assigned_rental_units_ids = [];
-            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['rental_unit_assignments_ids'], $lang);
+            $bookings = $om->read(Booking::getType(), $group['booking_id'], ['booking_lines_groups_ids', 'rental_unit_assignments_ids'], $lang);
             if($bookings > 0 && count($bookings)) {
                 $booking = reset($bookings);
+                $groups = $om->read(self::getType(), $booking['booking_lines_groups_ids'], ['id', 'date_from', 'date_to', 'time_from', 'time_to'], $lang);
                 $assignments = $om->read(SojournProductModelRentalUnitAssignement::getType(), $booking['rental_unit_assignments_ids'], ['rental_unit_id', 'booking_line_group_id'], $lang);
                 foreach($assignments as $oid => $assignment) {
                     // process rental units from other groups
                     if($assignment['booking_line_group_id'] != $gid) {
-                        $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id'];
+                        $group_id = $assignment['booking_line_group_id'];
+                        $group_date_from = $groups[$group_id]['date_from'] + $groups[$group_id]['time_from'];
+                        $group_date_to = $groups[$group_id]['date_to'] + $groups[$group_id]['time_to'];
+                        // if groups have a time range intersection, mark the rental unit as assigned
+                        if($group_date_from >= $date_from && $group_date_from <= $date_to
+                        || $group_date_to >= $date_from && $group_date_to <= $date_to) {
+                            $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id'];
+                        }
                     }
                 }
             }
@@ -1544,10 +1556,6 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 // read all related product models at once
                 $product_models_ids = array_map(function($oid) use($lines) {return $lines[$oid]['product_id.product_model_id'];}, array_keys($lines));
                 $product_models = $om->read('lodging\sale\catalog\ProductModel', $product_models_ids, ['is_accomodation', 'qty_accounting_method', 'rental_unit_assignement', 'capacity'], $lang);
-
-                $nb_pers = $group['nb_pers'];
-                $date_from = $group['date_from'] + $group['time_from'];
-                $date_to = $group['date_to'] + $group['time_to'];
 
                 // pass-1 : withdraw persons assigned to units accounted by 'accomodation' from nb_pers, and create SPMs
                 foreach($lines as $lid => $line) {

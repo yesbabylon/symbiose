@@ -66,7 +66,7 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
                 continue;
             }
             if(isset($rental_units_map[$assignment['rental_unit_id']][$date_index])) {
-                $collision =  true;
+                $collision = true;
                 break 3;
             }
             else {
