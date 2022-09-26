@@ -58,6 +58,11 @@
                                                         }
                                                     }
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "visible": false
                                             }
                                         ]
                                     }

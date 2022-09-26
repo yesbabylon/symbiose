@@ -369,10 +369,28 @@ class Identity extends Model {
      */
     public static function calcDisplayName($om, $oids, $lang) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['type_id', 'firstname', 'lastname', 'legal_name', 'short_name']);
+        $res = $om->read(self::getType(), $oids, ['type_id', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($res as $oid => $odata) {
-            $display_name = self::_computeDisplayName($odata, $lang);
-            $result[$oid] = $display_name;
+            $parts = [];
+            if( isset($odata['type_id'])  ) {
+                if( $odata['type_id'] == 1  ) {
+                    if( isset($odata['lastname']) && strlen($odata['lastname'])) {
+                        $parts[] = $odata['lastname'];
+                    }
+                    if( isset($odata['firstname']) && strlen($odata['firstname']) ) {
+                        $parts[] = $odata['firstname'];
+                    }
+                }
+                else {
+                    if( isset($odata['short_name']) && strlen($odata['short_name'])) {
+                        $parts[] = $odata['short_name'];
+                    }
+                    else if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
+                        $parts[] = $odata['legal_name'];
+                    }
+                }
+            }
+            $result[$oid] = implode(' ', $parts);
         }
         return $result;
     }
@@ -468,30 +486,6 @@ class Identity extends Model {
         }
 
         return $result;
-    }
-
-    protected static function _computeDisplayName($fields, $lang) {
-        $parts = [];
-        if( isset($fields['type_id'])  ) {
-            if( $fields['type_id'] == 1  ) {
-                if( isset($fields['firstname']) && strlen($fields['firstname']) ) {
-                    $parts[] = $fields['firstname'];
-                }
-                if( isset($fields['lastname']) && strlen($fields['lastname'])) {
-                    $parts[] = $fields['lastname'];
-                }
-            }
-            else {
-                if( isset($fields['short_name']) && strlen($fields['short_name'])) {
-                    $parts[] = $fields['short_name'];
-                }
-                else if( isset($fields['legal_name']) && strlen($fields['legal_name'])) {
-                    $parts[] = $fields['legal_name'];
-                }
-            }
-
-        }
-        return implode(' ', $parts);
     }
 
     /**

@@ -16,7 +16,7 @@ list($params, $providers) = announce([
             'type'              => 'string',
             'default'           => 'lodging\sale\booking\Consumption'
         ],
-    
+
         'date_from' => [
             'type'              => 'date',
             'description'       => "Date interval lower limit.",

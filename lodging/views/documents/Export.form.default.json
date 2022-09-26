@@ -52,6 +52,11 @@
                                                 "widget": {
                                                     "readonly": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_exported",
+                                                "width": "33%"
                                             }
                                         ]
                                     }

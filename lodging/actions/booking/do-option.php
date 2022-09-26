@@ -59,6 +59,7 @@ list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm
 */
 
 // read booking object
+/** @var Booking */
 $booking = Booking::id($params['id'])
                   ->read([
                       'status',
