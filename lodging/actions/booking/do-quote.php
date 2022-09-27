@@ -73,6 +73,7 @@ if($booking['status'] != 'quote') {
     // set booking status to quote
     Booking::id($params['id'])->update(['status' => 'quote']);
 
+    // remove non-invoiced fundings, if any
     $fundings_ids_to_remove = [];
     foreach($booking['fundings_ids'] as $fid => $funding) {
         if($funding['type'] == 'invoice') {

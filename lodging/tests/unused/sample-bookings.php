@@ -12,11 +12,15 @@ use lodging\sale\booking\BookingLineGroupAgeRangeAssignment;
 
 $providers = eQual::inject(['context', 'orm', 'auth', 'access']);
 
+/*
+    This is a file for filling in the DB with sample bookings.
+    No tests are actually performed.
+*/
 
 $tests = [
 
     '0101' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
 
@@ -25,7 +29,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-04'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 164,
+                'customer_identity_id' => 15002557,
                 'customer_nature_id' => 5
               ])->first();
 
@@ -51,13 +55,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -68,7 +72,7 @@ $tests = [
         }
     ),
     '0102' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -76,7 +80,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-04'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 165,
+                'customer_identity_id' => 12118,
                 'customer_nature_id' => 5
            ])->first();
 
@@ -99,16 +103,16 @@ $tests = [
             $groups->update([
                 'nb_pers'       => 2
             ]);
-            
+
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
                run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -119,7 +123,7 @@ $tests = [
         }
     ),
     '0103' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -127,7 +131,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-04'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 162,
+                'customer_identity_id' => 12118,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -153,13 +157,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
                run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -170,7 +174,7 @@ $tests = [
         }
     ),
     '0104' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -178,7 +182,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-15'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 169,
+                'customer_identity_id' => 15002566,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -204,13 +208,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
            run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -221,7 +225,7 @@ $tests = [
         }
     ),
     '0105' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -229,7 +233,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-04'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 170,
+                'customer_identity_id' => 15002569,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -255,13 +259,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
                run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -272,7 +276,7 @@ $tests = [
         }
     ),
     '0106' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -280,7 +284,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 160,
+                'customer__identity_id' => 15002549,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -306,13 +310,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
                run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -323,7 +327,7 @@ $tests = [
         }
     ),
     '0106' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -331,7 +335,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 4,
                 'center_id'   => 25,
-                'customer_id' => 160,
+                'customer_identity_id' => 15002549,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -357,13 +361,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
                run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -374,7 +378,7 @@ $tests = [
         }
     ),
     '0107' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -382,7 +386,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 4,
                 'center_id'   => 26,
-                'customer_id' => 160,
+                'customer_identity_id' => 15002549,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -408,13 +412,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -428,7 +432,7 @@ $tests = [
 
     // Rochefort
     '0108' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -436,7 +440,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 4,
                 'center_id'   => 29,
-                'customer_id' => 176,
+                'customer_identity_id' => 15030033,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -463,13 +467,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -480,7 +484,7 @@ $tests = [
         }
     ),
     '0109' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -488,7 +492,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 175,
+                'customer_identity_id' => 15001667,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -514,13 +518,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -531,7 +535,7 @@ $tests = [
         }
     ),
     '0110' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -539,7 +543,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 174,
+                'customer_identity_id' => 15002586,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -565,13 +569,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -582,7 +586,7 @@ $tests = [
         }
     ),
     '0111' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -590,7 +594,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 173,
+                'customer_identity_id' => 15002574,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -616,13 +620,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -633,7 +637,7 @@ $tests = [
         }
     ),
     '0112' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -641,7 +645,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-22'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 172,
+                'customer_identity_id' => 15002573,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -667,13 +671,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -684,7 +688,7 @@ $tests = [
         }
     ),
     '0113' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -692,7 +696,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 175,
+                'customer_identity_id' => 15001667,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -718,13 +722,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -735,7 +739,7 @@ $tests = [
         }
     ),
     '0114' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -743,7 +747,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 177,
+                'customer_identity_id' => 15002597,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -769,13 +773,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -786,7 +790,7 @@ $tests = [
         }
     ),
     '0115' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -794,7 +798,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-18'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 179,
+                'customer_identity_id' => 8234,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -820,13 +824,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -838,7 +842,7 @@ $tests = [
     ),
 
     '0116' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -846,7 +850,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-20'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 160,
+                'customer_identity_id' => 15002549,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -873,13 +877,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -891,7 +895,7 @@ $tests = [
     ),
 
     '0117' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -899,7 +903,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-25'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 150,
+                'customer_identity_id' => 15002511,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -925,13 +929,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -943,7 +947,7 @@ $tests = [
     ),
 
     '0118' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -951,7 +955,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 151,
+                'customer_identity_id' => 15002517,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -977,13 +981,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -995,7 +999,7 @@ $tests = [
     ),
 
     '0119' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1003,7 +1007,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-23'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 152,
+                'customer_identity_id' => 12505,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1029,13 +1033,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1046,7 +1050,7 @@ $tests = [
         }
     ),
     '0120' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1054,7 +1058,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-23'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 138,
+                'customer_identity_id' => 15002468,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1080,13 +1084,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1097,7 +1101,7 @@ $tests = [
         }
     ),
     '0121' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1105,7 +1109,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-23'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 140,
+                'customer_identity_id' => 4190,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1132,13 +1136,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1150,7 +1154,7 @@ $tests = [
     ),
 
     '0122' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1158,7 +1162,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-25'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 141,
+                'customer_identity_id' => 15030026,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1184,13 +1188,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1202,7 +1206,7 @@ $tests = [
     ),
 
     '0123' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1210,7 +1214,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-28'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 143,
+                'customer_identity_id' => 15030027,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1236,13 +1240,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1254,7 +1258,7 @@ $tests = [
     ),
 
     '0124' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1262,7 +1266,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 144,
+                'customer_identity_id' => 251,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1288,13 +1292,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1306,7 +1310,7 @@ $tests = [
     ),
 
     '0125' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1314,7 +1318,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-18'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 138,
+                'customer_identity_id' => 15002468,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1340,13 +1344,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1361,7 +1365,7 @@ $tests = [
     ),
 
     '0126' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1369,7 +1373,7 @@ $tests = [
                 'date_to'     => strtotime('2022-03-30'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 137,
+                'customer_identity_id' => 15001911,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1395,13 +1399,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1416,7 +1420,7 @@ $tests = [
     ),
 
     '0127' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1424,7 +1428,7 @@ $tests = [
                 'date_to'     => strtotime('2022-05-25'),
                 'type_id'     => 1,
                 'center_id'   => 30,
-                'customer_id' => 125,
+                'customer_identity_id' => 15030021,
                 'customer_nature_id' => 5,
             ])->first();
 
@@ -1450,13 +1454,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
 
@@ -1474,7 +1478,7 @@ $tests = [
     ),
 
     '0128' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1482,7 +1486,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 126,
+                'customer_identity_id' => 15002427,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1508,13 +1512,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1528,7 +1532,7 @@ $tests = [
     ),
 
     '0129' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1536,7 +1540,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 127,
+                'customer_identity_id' => 12615,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1562,13 +1566,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1583,7 +1587,7 @@ $tests = [
     ),
 
     '0130' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1591,7 +1595,7 @@ $tests = [
                 'date_to'     => strtotime('2022-05-25'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 128,
+                'customer_identity_id' => 15002448,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1617,13 +1621,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1638,7 +1642,7 @@ $tests = [
     ),
 
     '0132' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1646,7 +1650,7 @@ $tests = [
                 'date_to'     => strtotime('2022-05-30'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 107,
+                'customer_identity_id' => 15030014,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1672,13 +1676,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1692,7 +1696,7 @@ $tests = [
         }
     ),
     '0133' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1700,7 +1704,7 @@ $tests = [
                 'date_to'     => strtotime('2023-05-30'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 106,
+                'customer_identity_id' => 15002118,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1726,13 +1730,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /* BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1746,7 +1750,7 @@ $tests = [
         }
     ),
     '0134' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1754,7 +1758,7 @@ $tests = [
                 'date_to'     => strtotime('2021-05-30'),
                 'type_id'     => 1,
                 'center_id'   => 25,
-                'customer_id' => 110,
+                'customer_identity_id' => 15000737,
                 'customer_nature_id' => 5
             ])->first();
 
@@ -1769,7 +1773,6 @@ $tests = [
                 'is_sojourn'    => true
             ]);
 
-
             $groups->update([
                 'date_from'     => strtotime('2021-05-20'),
                 'date_to'       => strtotime('2021-05-30'),
@@ -1781,13 +1784,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1801,7 +1804,7 @@ $tests = [
         }
     ),
     '0135' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1809,7 +1812,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-30'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 162,
+                'customer_identity_id' => 12567,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -1835,13 +1838,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1853,7 +1856,7 @@ $tests = [
         }
     ),
     '0136' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1861,7 +1864,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-17'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 138,
+                'customer_identity_id' => 15002468,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -1887,13 +1890,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1905,7 +1908,7 @@ $tests = [
         }
     ),
     '0137' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1913,7 +1916,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-13'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 138,
+                'customer_identity_id' => 15002468,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -1939,13 +1942,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -1957,7 +1960,7 @@ $tests = [
         }
     ),
     '0138' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -1965,7 +1968,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-25'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 202,
+                'customer_identity_id' => 15002645,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -1991,13 +1994,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -2009,7 +2012,7 @@ $tests = [
         }
     ),
     '0139' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -2017,7 +2020,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-07'),
                 'type_id'     => 1,
                 'center_id'   => 29,
-                'customer_id' => 201,
+                'customer_identity_id' => 15002644,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -2043,13 +2046,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -2061,7 +2064,7 @@ $tests = [
         }
     ),
     '0140' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -2069,7 +2072,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-20'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 99,
+                'customer_identity_id' => 15002043,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -2095,13 +2098,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -2113,7 +2116,7 @@ $tests = [
         }
     ),
     '0141' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -2121,7 +2124,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-20'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 99,
+                'customer_identity_id' => 15002043,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -2147,13 +2150,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -2165,7 +2168,7 @@ $tests = [
         }
     ),
     '0142' => array(
-        'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+        'description'       =>  'Creating sample booking',
         'return'            =>  array('double'),
         'test'              =>  function () {
             $booking = Booking::create([
@@ -2173,7 +2176,7 @@ $tests = [
                 'date_to'     => strtotime('2022-04-29'),
                 'type_id'     => 1,
                 'center_id'   => 26,
-                'customer_id' => 98,
+                'customer_identity_id' => 11605,
                 'customer_nature_id' => 4
             ])->first();
 
@@ -2199,13 +2202,13 @@ $tests = [
 
             $group = $groups->first();
 
-            BookingLineGroupAgeRangeAssignment::create([
+            /*BookingLineGroupAgeRangeAssignment::create([
                 'booking_id'            => $booking['id'],
                 'booking_line_group_id' => $group['id'],
                 'age_range_id'          => 1,
                 'qty'                   => 3,
                 'is_active'             => true
-            ]);
+            ]);*/
 
             $booking = Booking::id($booking['id'])->read(['price'])->first();
             run('do', 'lodging_booking_do-option', ['id' => $booking['id']]);
@@ -2218,7 +2221,7 @@ $tests = [
     ),
 
     // '0135' => array(
-    //     'description'       =>  'Creating bookings and looking out for matching TOTAL PRICES',
+    //     'description'       =>  'Creating sample booking',
     //     'return'            =>  array('double'),
     //     'test'              =>  function () {
 
@@ -2228,7 +2231,7 @@ $tests = [
     //             'date_to'     => strtotime('2021-05-13'),
     //             'type_id'     => 1,
     //             'center_id'   => 25,
-    //             'customer_id' => 112,
+    //             'customer_identity_id' => 4670,
     //             'customer_nature_id' => 5
     //         ])->first();
 

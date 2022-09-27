@@ -135,12 +135,32 @@ class Payment extends \lodging\sale\pay\Payment {
                 else {
                     $result['partner_id'] = [ 'id' => $funding['booking_id.customer_id.id'], 'name' => $funding['booking_id.customer_id.name'] ];
                 }
-                if(isset($values['amount']) && $values['amount'] > $funding['due_amount']) {
-                    $result['amount'] = $funding['due_amount'];
-                }
+                // set the amount according to the funding due_amount (the maximum assignable)
+                $result['amount'] = $funding['due_amount'];
             }
         }
 
         return $result;
+    }
+
+
+    /**
+     * Check wether the payment can be updated, and perform some additional operations if necessary.
+     * This method can be overriden to define a more precise set of tests.
+     *
+     * @param  Object   $om         ObjectManager instance.
+     * @param  Array    $oids       List of objects identifiers.
+     * @param  Array    $values     Associative array holding the new values to be assigned.
+     * @param  String   $lang       Language in which multilang fields are being updated.
+     * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
+     */
+    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+        $payments = $om->read(self::getType(), $oids, ['amount', 'funding_id', 'funding_id.due_amount'], $lang);
+        foreach($payments as $pid => $payment) {
+            if($payment['funding_id'] && $payment['amount'] > $payment['funding_id.due_amount']) {
+                return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding.']];
+            }
+        }
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 }
