@@ -161,8 +161,8 @@ class Payment extends \lodging\sale\pay\Payment {
             $fundings = $om->read(Funding::getType(), $values['funding_id'], ['due_amount'], $lang);
             if($fundings > 0 && count(($fundings))) {
                 $funding = reset($fundings);
-                if(isset($payment['amount'])) {
-                    if($payment['amount'] > $funding['due_amount']) {
+                if(isset($values['amount'])) {
+                    if($values['amount'] > $funding['due_amount']) {
                         return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
                     }
                 }
