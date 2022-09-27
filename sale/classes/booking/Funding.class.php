@@ -140,11 +140,11 @@ class Funding extends \sale\pay\Funding {
             $bookings = $om->read(Booking::getType(), $values['booking_id'], ['price', 'fundings_ids.due_amount'], $lang);
             if($bookings > 0 && count($bookings)) {
                 $booking = reset($bookings);
-                $fundings_price = $values['due_amount'];
+                $fundings_price = (float) $values['due_amount'];
                 foreach($booking['fundings_ids.due_amount'] as $fid => $funding) {
-                    $fundings_price += $funding['due_amount'];
+                    $fundings_price += (float) $funding['due_amount'];
                 }
-                if(abs($fundings_price-$booking['price']) >= 0.0001) {
+                if(($booking['price'] - $fundings_price) <= 0.0001) {
                     return ['status' => ['exceded_price' => 'Sum of the fundings cannot be higher than the booking total.']];
                 }
             }
@@ -173,13 +173,13 @@ class Funding extends \sale\pay\Funding {
                     $bookings = $om->read(Booking::getType(), $funding['booking_id'], ['price', 'fundings_ids.due_amount'], $lang);
                     if($bookings > 0 && count($bookings)) {
                         $booking = reset($bookings);
-                        $fundings_price = $values['due_amount'];
+                        $fundings_price = (float) $values['due_amount'];
                         foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
                             if($oid != $fid) {
-                                $fundings_price += $odata['due_amount'];
+                                $fundings_price += (float) $odata['due_amount'];
                             }
                         }
-                        if(abs($fundings_price-$booking['price']) >= 0.0001) {
+                        if(($booking['price'] - $fundings_price) <= 0.0001) {
                             return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total."]];
                         }
                     }
