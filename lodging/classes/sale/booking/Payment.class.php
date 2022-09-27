@@ -155,7 +155,6 @@ class Payment extends \lodging\sale\pay\Payment {
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-
         if(isset($values['funding_id'])) {
             $fundings = $om->read(Funding::getType(), $values['funding_id'], ['due_amount'], $lang);
             if($fundings > 0 && count(($fundings))) {
@@ -169,6 +168,7 @@ class Payment extends \lodging\sale\pay\Payment {
                     $payments = $om->read(self::getType(), $oids, ['amount'], $lang);
                     foreach($payments as $pid => $payment) {
                         if($payment['amount'] > $funding['due_amount']) {
+                            return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
                         }
                     }
                 }
@@ -183,7 +183,6 @@ class Payment extends \lodging\sale\pay\Payment {
             }
 
         }
-
         return parent::canupdate($om, $oids, $values, $lang);
     }
 }

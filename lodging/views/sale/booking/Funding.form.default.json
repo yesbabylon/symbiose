@@ -32,7 +32,7 @@
             "route": "/booking/object.booking_id/funding/object.id/invoice",
             "visible": ["type", "=", "installment"]
         }
-    ],    
+    ],
     "layout": {
         "groups": [
             {
@@ -86,18 +86,22 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_paid",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "paid_amount",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "center_office_id",
-                                                "visible": false,
-                                                "width": "0%"
+                                                "visible": false
                                             }
                                         ]
                                     },
@@ -133,7 +137,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]

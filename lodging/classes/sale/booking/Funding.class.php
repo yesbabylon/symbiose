@@ -179,7 +179,10 @@ class Funding extends \lodging\sale\pay\Funding {
                 $bookings = $om->read(Booking::getType(), $funding['booking_id'], ['price', 'fundings_ids.due_amount'], $lang);
                 if($bookings > 0 && count($bookings)) {
                     $booking = reset($bookings);
-                    $fundings_price = $values['due_amount'];
+                    $fundings_price = 0.0;
+                    if(isset($values['due_amount'])) {
+                        $fundings_price = $values['due_amount'];
+                    }
                     foreach($booking['fundings_ids.due_amount'] as $oid => $odata) {
                         if($oid != $fid) {
                             $fundings_price += $odata['due_amount'];
