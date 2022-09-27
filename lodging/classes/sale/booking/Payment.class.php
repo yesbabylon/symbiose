@@ -156,11 +156,31 @@ class Payment extends \lodging\sale\pay\Payment {
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
         $payments = $om->read(self::getType(), $oids, ['amount', 'funding_id', 'funding_id.due_amount'], $lang);
-        foreach($payments as $pid => $payment) {
-            if($payment['funding_id'] && $payment['amount'] > $payment['funding_id.due_amount']) {
-                return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding.']];
+
+        if(isset($values['funding_id'])) {
+            $fundings = $om->read(Funding::getType(), $values['funding_id'], ['due_amount'], $lang);
+            if($fundings > 0 && count(($fundings))) {
+                $funding = reset($fundings);
+                if(isset($payment['amount'])) {
+                    if($payment['amount'] > $funding['due_amount']) {
+                        return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
+                    }
+                }
+            }
+            foreach($payments as $pid => $payment) {
+                $due_amount = PHP_FLOAT_MAX;
+                if($payment['funding_id']) {
+                    $due_amount = $payment['funding_id.due_amount'];
+                }
+                if($funding) {
+                    $due_amount = $funding['due_amount'];
+                }
+                if($payment['amount'] > $due_amount) {
+                    return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
+                }
             }
         }
+
         return parent::canupdate($om, $oids, $values, $lang);
     }
 }
