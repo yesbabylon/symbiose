@@ -155,7 +155,6 @@ class Payment extends \lodging\sale\pay\Payment {
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
-        $payments = $om->read(self::getType(), $oids, ['amount', 'funding_id', 'funding_id.due_amount'], $lang);
 
         if(isset($values['funding_id'])) {
             $fundings = $om->read(Funding::getType(), $values['funding_id'], ['due_amount'], $lang);
@@ -166,19 +165,23 @@ class Payment extends \lodging\sale\pay\Payment {
                         return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
                     }
                 }
+                else {
+                    $payments = $om->read(self::getType(), $oids, ['amount'], $lang);
+                    foreach($payments as $pid => $payment) {
+                        if($payment['amount'] > $funding['due_amount']) {
+                        }
+                    }
+                }
             }
+        }
+        else if(isset($values['amount'])) {
+            $payments = $om->read(self::getType(), $oids, ['amount', 'funding_id', 'funding_id.due_amount'], $lang);
             foreach($payments as $pid => $payment) {
-                $due_amount = PHP_FLOAT_MAX;
-                if($payment['funding_id']) {
-                    $due_amount = $payment['funding_id.due_amount'];
-                }
-                if($funding) {
-                    $due_amount = $funding['due_amount'];
-                }
-                if($payment['amount'] > $due_amount) {
+                if($payment['funding_id'] && $payment['amount'] > $payment['funding_id.due_amount']) {
                     return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than selected funding\'s amount.']];
                 }
             }
+
         }
 
         return parent::canupdate($om, $oids, $values, $lang);
