@@ -188,7 +188,7 @@ class Funding extends \lodging\sale\pay\Funding {
                             $fundings_price += $odata['due_amount'];
                         }
                     }
-                    if($fundings_price > $booking['price']) {
+                    if(abs($fundings_price-$booking['price']) > PHP_FLOAT_EPSILON) {
                         return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total ({$fundings_price})."]];
                     }
                 }

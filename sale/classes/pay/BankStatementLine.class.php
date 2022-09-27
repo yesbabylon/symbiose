@@ -138,7 +138,7 @@ class BankStatementLine extends Model {
             $bank_statements_ids = [];
             foreach($lines as $lid => $line) {
                 // mark related statement for re-computing
-                $bank_statements_ids[$line['bank_statement_id']] = true;
+                $bank_statements_ids[] = $line['bank_statement_id'];
                 if($line['status'] == 'reconciled') {
                     // resolve customer_id: retrieve first payment
                     if(isset($line['payments_ids.partner_id']) && count($line['payments_ids.partner_id'])) {
@@ -147,7 +147,6 @@ class BankStatementLine extends Model {
                     }
                 }
             }
-            $bank_statements_ids = array_keys($bank_statements_ids);
             $om->update('sale\pay\BankStatement', $bank_statements_ids, ['status' => null]);
             // force immediate re-computing
             $om->read('sale\pay\BankStatement', $bank_statements_ids, ['status']);
