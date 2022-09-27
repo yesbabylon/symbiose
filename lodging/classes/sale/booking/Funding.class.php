@@ -189,6 +189,11 @@ class Funding extends \lodging\sale\pay\Funding {
                         }
                     }
                     if($fundings_price > $booking['price'] && abs($booking['price']-$fundings_price) >= 0.0001) {
+                        ob_start();
+                        $delta = abs($booking['price']-$fundings_price);
+                        echo "$fundings_price {$booking['price']} $delta";
+                        $out = ob_get_clean();
+                        trigger_error("QN_DEBUG_ORM::#### $out", QN_REPORT_DEBUG);
                         return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total ({$fundings_price}, {$booking['price']})."]];
                     }
                 }
