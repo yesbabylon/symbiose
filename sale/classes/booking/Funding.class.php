@@ -144,7 +144,7 @@ class Funding extends \sale\pay\Funding {
                 foreach($booking['fundings_ids.due_amount'] as $fid => $funding) {
                     $fundings_price += $funding['due_amount'];
                 }
-                if($fundings_price > $booking['price']) {
+                if(abs($fundings_price-$booking['price']) >= 0.0001) {
                     return ['status' => ['exceded_price' => 'Sum of the fundings cannot be higher than the booking total.']];
                 }
             }
@@ -179,7 +179,7 @@ class Funding extends \sale\pay\Funding {
                                 $fundings_price += $odata['due_amount'];
                             }
                         }
-                        if($fundings_price > $booking['price']) {
+                        if(abs($fundings_price-$booking['price']) >= 0.0001) {
                             return ['status' => ['exceded_price' => "Sum of the fundings cannot be higher than the booking total."]];
                         }
                     }
