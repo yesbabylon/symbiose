@@ -242,11 +242,16 @@ class Booking extends \sale\booking\Booking {
      * Maintain sync with Customer
      */
     public static function onupdateCustomerNatureId($om, $oids, $values, $lang) {
-        $bookings = $om->read(__CLASS__, $oids, ['customer_id', 'customer_nature_id', 'customer_nature_id.rate_class_id'], $lang);
+        $bookings = $om->read(self::getType(), $oids, ['customer_id', 'customer_nature_id', 'customer_nature_id.rate_class_id'], $lang);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $odata) {
-                $om->write('sale\customer\Customer', $odata['customer_id'], ['customer_nature_id' => $odata['customer_nature_id'], 'rate_class_id' => $odata['customer_nature_id.rate_class_id']]);
+                if($odata['customer_nature_id.rate_class_id']) {
+                    $om->update('sale\customer\Customer', $odata['customer_id'], [
+                            'customer_nature_id'    => $odata['customer_nature_id'],
+                            'rate_class_id'         => $odata['customer_nature_id.rate_class_id']
+                        ]);
+                }
             }
         }
     }
@@ -257,7 +262,7 @@ class Booking extends \sale\booking\Booking {
      */
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
+        $bookings = $om->read(self::getType(), $oids, ['customer_identity_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $booking) {
@@ -285,7 +290,7 @@ class Booking extends \sale\booking\Booking {
                     }
                 }
                 if($partner_id) {
-                    $om->update(__CLASS__, $oid, ['customer_id' => $partner_id]);
+                    $om->update(self::getType(), $oid, ['customer_id' => $partner_id]);
                 }
             }
         }
@@ -355,7 +360,9 @@ class Booking extends \sale\booking\Booking {
             foreach($bookings as $bid => $booking) {
                 // update bookingline group rate_class_id   (triggers _resetPrices and _updatePriceAdapters)
                 if($booking['booking_lines_groups_ids'] && count($booking['booking_lines_groups_ids'])) {
-                    $om->update(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
+                    if($booking['customer_id.rate_class_id']) {
+                        $om->update(BookingLineGroup::getType(), $booking['booking_lines_groups_ids'], ['rate_class_id' => $booking['customer_id.rate_class_id']], $lang);
+                    }
                 }
             }
         }
@@ -368,7 +375,7 @@ class Booking extends \sale\booking\Booking {
     }
 
     public static function onupdateCenterId($om, $oids, $values, $lang) {
-        $bookings = $om->read(__CLASS__, $oids, ['booking_lines_ids', 'center_id.center_office_id']);
+        $bookings = $om->read(self::getType(), $oids, ['booking_lines_ids', 'center_id.center_office_id']);
 
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
@@ -376,7 +383,7 @@ class Booking extends \sale\booking\Booking {
                 if($booking_lines_ids > 0 && count($booking_lines_ids)) {
                     $om->callonce('lodging\sale\booking\BookingLine', '_updatePriceId', $booking_lines_ids, [], $lang);
                 }
-                $om->update(__CLASS__, $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
+                $om->update(self::getType(), $bid, ['center_office_id' => $booking['center_id.center_office_id']]);
             }
         }
     }
@@ -412,7 +419,10 @@ class Booking extends \sale\booking\Booking {
                     $partner = reset($partners);
                     $result['customer_id'] = ['id' => $partner['id'], 'name' => $partner['name']];
                     if(isset($partner['customer_nature_id.id']) && $partner['customer_nature_id.id']) {
-                        $result['customer_nature_id'] = ['id' => $partner['customer_nature_id.id'], 'name' => $partner['customer_nature_id.name'] ];
+                        $result['customer_nature_id'] = [
+                                'id'    => $partner['customer_nature_id.id'],
+                                'name'  => $partner['customer_nature_id.name']
+                            ];
                     }
                 }
             }
@@ -432,15 +442,15 @@ class Booking extends \sale\booking\Booking {
             remove groups related to autosales that already exist
         */
 
-        $bookings = $om->read(__CLASS__, $oids, [
-                                                    'id',
-                                                    'customer_id.rate_class_id',
-                                                    'customer_id.count_booking_12',
-                                                    'booking_lines_groups_ids',
-                                                    'date_from',
-                                                    'date_to',
-                                                    'center_id.autosale_list_category_id'
-                                                ], $lang);
+        $bookings = $om->read(self::getType(), $oids, [
+                'id',
+                'customer_id.rate_class_id',
+                'customer_id.count_booking_12',
+                'booking_lines_groups_ids',
+                'date_from',
+                'date_to',
+                'center_id.autosale_list_category_id'
+            ], $lang);
 
         // loop through bookings and create groups for autosale products, if any
         foreach($bookings as $booking_id => $booking) {
@@ -453,7 +463,7 @@ class Booking extends \sale\booking\Booking {
                         $groups_ids_to_delete[] = -$gid;
                     }
                 }
-                $om->write(__CLASS__, $booking_id, ['booking_lines_groups_ids' => $groups_ids_to_delete], $lang);
+                $om->update(self::getType(), $booking_id, ['booking_lines_groups_ids' => $groups_ids_to_delete], $lang);
             }
 
             /*
@@ -548,7 +558,7 @@ class Booking extends \sale\booking\Booking {
                     $group = [
                         'name'          => 'Suppléments obligatoires',
                         'booking_id'    => $booking_id,
-                        'rate_class_id' => $booking['customer_id.rate_class_id'],
+                        'rate_class_id' => ($booking['customer_id.rate_class_id'])?$booking['customer_id.rate_class_id']:4,
                         'date_from'     => $booking['date_from'],
                         'date_to'       => $booking['date_to'],
                         'is_autosale'   => true

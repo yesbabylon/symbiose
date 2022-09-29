@@ -199,7 +199,7 @@ class BankStatementLine extends Model {
 
             if($lines > 0) {
                 foreach($lines as $lid => $line) {
-                    if($new_payments_sum > $line['remaining_amount']) {
+                    if($new_payments_sum > $line['remaining_amount'] && abs($line['remaining_amount']-$new_payments_sum) >= 0.0001) {
                         return ['amount' => ['exceded_price' => "Sum of the payments cannot be higher than the line total."]];
                     }
                 }

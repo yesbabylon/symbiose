@@ -43,7 +43,7 @@
             "help": ""
         },
         "has_parent": {
-            "label": "Parent",
+            "label": "A parent",
             "description": "Drapeau indiquant que l'unité a des sous-unités.",
             "help": ""
         },
