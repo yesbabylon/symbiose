@@ -431,7 +431,7 @@ class Consumption extends \sale\booking\Consumption {
                 $consumption_from = $consumption['date_from'] + $consumption['schedule_from'];
                 $consumption_to = $consumption['date_to'] + $consumption['schedule_to'];
                 // #memo - we don't allow instant transition (i.e. checkin time of a booking equals checkout time of a previous booking)
-                if( ($consumption_from >= $date_from && $consumption_from <= $date_to) || ($consumption_to >= $date_from && $consumption_to <= $date_to) ) {
+                if(max($date_from, $consumption_from) < min($date_to, $consumption_to)) {
                     $booked_rental_units_ids[] = $rental_unit_id;
                     continue 2;
                 }

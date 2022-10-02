@@ -34,7 +34,7 @@ list($params, $providers) = announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_groups_ids' => ['nb_pers', 'meal_preferences_ids' => ['qty']]])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_groups_ids' => ['is_sojourn', 'is_event', 'nb_pers', 'meal_preferences_ids' => ['qty']]])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -45,6 +45,9 @@ $mismatch = false;
 
 if($booking_line_groups) {
     foreach($booking_line_groups as $gid => $group) {
+        if(!$group['is_sojourn'] && !$group['is_event']) {
+            continue;
+        }
         if(!$group['meal_preferences_ids'] || !count($group['meal_preferences_ids'])) {
             continue;
         }
@@ -53,7 +56,6 @@ if($booking_line_groups) {
         foreach($group['meal_preferences_ids'] as $aid => $assignment) {
             $assigned_count += $assignment['qty'];
         }
-
         if($nb_pers != $assigned_count) {
             $mismatch = true;
             break;

@@ -382,18 +382,20 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         $groups = $om->read(self::getType(), $oids, ['booking_id', 'nb_pers', 'is_sojourn', 'age_range_assignments_ids'], $lang);
         if($groups > 0) {
             foreach($groups as $gid => $group) {
-                // remove any previously set assignments
-                $om->delete(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], true);
-
                 if($group['is_sojourn']) {
-                    // create default age_range assignment
-                    $assignment = [
-                        'age_range_id'          => 1,                       // adults
-                        'booking_line_group_id' => $gid,
-                        'booking_id'            => $group['booking_id'],
-                        'qty'                   => $group['nb_pers']
-                    ];
-                    $om->create(BookingLineGroupAgeRangeAssignment::getType(), $assignment, $lang);
+                    // remove any previously set assignments
+                    $om->delete(BookingLineGroupAgeRangeAssignment::getType(), $group['age_range_assignments_ids'], true);
+
+                    if($group['is_sojourn']) {
+                        // create default age_range assignment
+                        $assignment = [
+                            'age_range_id'          => 1,                       // adults
+                            'booking_line_group_id' => $gid,
+                            'booking_id'            => $group['booking_id'],
+                            'qty'                   => $group['nb_pers']
+                        ];
+                        $om->create(BookingLineGroupAgeRangeAssignment::getType(), $assignment, $lang);
+                    }
                 }
             }
         }
@@ -1667,13 +1669,10 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         if($qty_accounting_method == 'person' && $is_accomodation) {
                             $has_processed_accomodation_by_person = true;
                         }
-
                     }
                 }
             }
-
         }
-
     }
 
 

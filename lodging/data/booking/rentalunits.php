@@ -77,13 +77,36 @@ if($sojourn) {
                 $group_date_from = $groups[$group_id]['date_from'] + $groups[$group_id]['time_from'];
                 $group_date_to = $groups[$group_id]['date_to'] + $groups[$group_id]['time_to'];
                 // if groups have a time range intersection, mark the rental unit as assigned
-                if($group_date_from >= $date_from && $group_date_from <= $date_to
-                || $group_date_to >= $date_from && $group_date_to <= $date_to) {
+                if(max($date_from, $group_date_from) < min($date_to, $group_date_to)) {
                     $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id'];
                 }
             }
         }
     }
+
+    /* remove parent and children units of assigned rental units */
+
+    // fetch 2 levels of rental units identifiers
+    for($i = 0; $i < 2; ++$i) {
+        $units = RentalUnit::ids($booking_assigned_rental_units_ids)->read(['parent_id', 'children_ids', 'can_partial_rent'])->get();
+        if($units > 0) {
+            foreach($units as $uid => $unit) {
+                if($unit['parent_id'] > 0) {
+                    if(!in_array($unit['parent_id'], $booking_assigned_rental_units_ids)) {
+                        $booking_assigned_rental_units_ids[] = $unit['parent_id'];
+                    }
+                }
+                if(count($unit['children_ids'])) {
+                    foreach($unit['children_ids'] as $uid) {
+                        if(!in_array($uid, $booking_assigned_rental_units_ids)) {
+                            $booking_assigned_rental_units_ids[] = $uid;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     // retrieve available rental units based on schedule and product_id
     $rental_units_ids = Consumption::getAvailableRentalUnits($orm, $sojourn['booking_id']['center_id'], $params['product_model_id'], $date_from, $date_to);

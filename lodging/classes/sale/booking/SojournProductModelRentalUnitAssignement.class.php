@@ -46,7 +46,8 @@ class SojournProductModelRentalUnitAssignement extends Model {
             'qty' => [
                 'type'              => 'integer',
                 'description'       => 'Number of persons assigned to the rental unit for related booking line.',
-                'default'           => 1
+                'default'           => 1,
+                'onupdate'          => 'onupdateQty'
             ],
 
             'rental_unit_id' => [
@@ -77,8 +78,22 @@ class SojournProductModelRentalUnitAssignement extends Model {
         return $result;
     }
 
-    public static function onupdateRentalUnitId($om, $oids, $values, $lang) {
-        $om->update(self::getType(), $oids, ['is_accomodation' => null], $lang);
+    public static function onupdateRentalUnitId($om, $ids, $values, $lang) {
+        $assignments = $om->read(self::getType(), $ids, ['qty', 'rental_unit_id.capacity'], $lang);
+        foreach($assignments as $oid => $assignment) {
+            if($assignment['qty'] == 0 || $assignment['qty'] > $assignment['rental_unit_id.capacity']) {
+                $om->update(self::getType(), $oid, ['qty' => $assignment['rental_unit_id.capacity']], $lang);
+            }
+        }
+        $om->update(self::getType(), $ids, ['is_accomodation' => null], $lang);
+    }
+
+    public static function onupdateQty($om, $oids, $values, $lang) {
+        $assignments = $om->read(self::getType(), $oids, ['sojourn_product_model_id'], $lang);
+        if($assignments > 0 && count($assignments)) {
+            $spm_ids = array_map(function($a) {return $a['sojourn_product_model_id'];}, $assignments);
+            $om->update(SojournProductModel::getType(), $spm_ids, ['qty' => null], $lang);
+        }
     }
 
     public function getUnique() {
