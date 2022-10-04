@@ -329,7 +329,7 @@ foreach($invoices as $invoice) {
     $result[] = implode('', $values);
 }
 
-$customers_data = implode("\r\n", $result);
+$customers_data = implode("\r\n", $result)."\r\n";
 
 
 /*
@@ -370,7 +370,7 @@ foreach($invoices as $invoice) {
     $result[] = implode('', $values);
 }
 
-$invoices_header_data = implode("\r\n", $result);
+$invoices_header_data = implode("\r\n", $result)."\r\n";
 
 
 
@@ -415,7 +415,7 @@ foreach($invoices as $invoice) {
             }
             else {
                 // #memo - this should not occur ! - we should raise an Exception and products shouldn't be embedded to booking/invoices if there is no price found
-                throw new Exception("No related price found for non-null amount for line {$line['name']} of invoice {$invoice['name']}", QN_ERROR_UNKNOWN);
+                throw new Exception("No related price found for non-null amount for line {$line['name']}/{$line['product_id']} of invoice {$invoice['name']}", QN_ERROR_UNKNOWN);
                 continue;
             }
         }
@@ -472,7 +472,7 @@ foreach($invoices as $invoice) {
     }
 }
 
-$invoices_lines_data = implode("\r\n", $result);
+$invoices_lines_data = implode("\r\n", $result)."\r\n";
 
 
 // generate the zip archive

@@ -7,16 +7,20 @@
 namespace lodging\sale\booking;
 use core\setting\Setting;
 
+/**
+ * Virtual properties based on fields descriptors returned by getColumns()
+ *
+ * @property string                                    $name
+ * @property \lodging\sale\customer\Customer           $customer_id
+ * @property \lodging\identity\Identity                $customer_identity_id
+ * @property \sale\customer\CustomerNature             $customer_nature_id
+ * @property \lodging\identity\Center                  $center_id
+ * @property \lodging\identity\CenterOffice            $center_office_id
+ * @property \lodging\sale\booking\Contact             $contacts_ids
+ * @property \lodging\sale\booking\Contract            $contracts_ids
+ *
+ */
 class Booking extends \sale\booking\Booking {
-
-    /** @property string                                    name                        */
-    /** @property \lodging\sale\customer\Customer           customer_id                 */
-    /** @property \lodging\identity\Identity                customer_identity_id        */
-    /** @property \sale\customer\CustomerNature             customer_nature_id          */
-    /** @property \lodging\identity\Center                  center_id                   */
-    /** @property \lodging\identity\CenterOffice            center_office_id            */
-    /** @property \lodging\sale\booking\Contact             contacts_ids                */
-    /** @property \lodging\sale\booking\Contract            contracts_ids               */
 
     public static function getColumns() {
         return [

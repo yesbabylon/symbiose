@@ -32,16 +32,19 @@ if(!count($ids)) {
 }
 // user has allways READ right on its own object
 $user = User::ids($ids)
-            ->read([
-                'id',
-                'login',
-                'groups_ids' => ['name', 'display_name'],
-                'identity_id' => ['firstname', 'lastname'],
-                'language',
-                'organisation_id'
-            ])
-            ->adapt('txt')
-            ->first();
+    ->read([
+        'id',
+        'login',
+        'groups_ids'  => ['name', 'display_name'],
+        'identity_id' => ['firstname', 'lastname'],
+        'language',
+        'organisation_id'
+    ])
+    ->adapt('txt')
+    ->first();
+
+$user['groups'] = array_values(array_map(function ($a) {return $a['name'];}, $user['groups_ids']));
+
 // send back basic info of the User object
 $context->httpResponse()
         ->body($user)

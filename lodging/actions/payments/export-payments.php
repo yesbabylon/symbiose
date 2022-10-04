@@ -340,7 +340,7 @@ foreach($payments as $payment) {
     $result[] = implode('', $values);
 }
 
-$customers_data = implode("\r\n", $result);
+$customers_data = implode("\r\n", $result)."\r\n";
 
 /*
     Generate headers: HOPDIV_REGL.txt
@@ -376,7 +376,7 @@ foreach($payments as $payment) {
     ++$offset;
 }
 
-$payments_header_data = implode("\r\n", $result);
+$payments_header_data = implode("\r\n", $result)."\r\n";
 
 
 
@@ -472,7 +472,7 @@ foreach($payments as $payment) {
     ++$offset;
 }
 
-$payments_lines_data = implode("\r\n", $result);
+$payments_lines_data = implode("\r\n", $result)."\r\n";
 
 
 // generate the zip archive
