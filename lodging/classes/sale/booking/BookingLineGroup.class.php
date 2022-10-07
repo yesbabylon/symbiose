@@ -767,8 +767,23 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      */
     public static function ondelete($om, $oids) {
         // trigger an update of parent booking nb_pers + sibling groups prices adapters
-        $om->update(self::getType(), $oids, ['nb_pers' => 0]);
+        $groups = $om->read(self::getType(), $oids, ['booking_id']);
+        $bookings_ids = array_map(function($a) {return $a['booking_id'];}, $groups);
+        $om->update(Booking::getType(), $bookings_ids, ['nb_pers' => null]);
         return parent::ondelete($om, $oids);
+    }
+
+    /**
+     * Hook invoked after object deletion for performing object-specific additional operations.
+     *
+     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
+     * @param  array                        $oids       List of objects identifiers.
+     * @return void
+     */
+    public static function onafterdelete($om, $oids) {
+        // #memo - we do this to handle case where auto products are re-created during the delete cycle
+        $lines_ids = $om->search(BookingLine::getType(), ['booking_line_group_id', 'in', $oids]);
+        $om->delete(BookingLine::getType(), $lines_ids, true);
     }
 
     public static function ondetachAgeRange($om, $oids, $detached_ids, $lang) {
