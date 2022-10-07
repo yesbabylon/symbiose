@@ -117,7 +117,17 @@ class Payment extends Model {
                 if($payment['funding_id']) {
                     // make sure a partner_id is assigned to the payment
                     if(!$payment['partner_id']) {
-                        $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], ['type', 'due_amount', 'booking_id.customer_id.id', 'booking_id.customer_id.name', 'invoice_id', 'invoice_id.partner_id.id', 'invoice_id.partner_id.name'], $lang);
+                        $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], [
+                                'type',
+                                'due_amount',
+                                'booking_id.customer_id.id',
+                                'booking_id.customer_id.name',
+                                'invoice_id',
+                                'invoice_id.partner_id.id',
+                                'invoice_id.partner_id.name'
+                            ],
+                            $lang);
+
                         if($fundings > 0) {
                             $funding = reset($fundings);
                             $values = [

@@ -10,7 +10,7 @@
         },
         "customer_ref": {
             "label": "Référence client",
-            "description": "Référence à indiquer sur la facture (demandé par le client).",
+            "description": "Référence à indiquer sur la facture (si renseignée par le client).",
             "help": ""
         },
         "status": {

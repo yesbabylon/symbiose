@@ -142,16 +142,16 @@ hr {
             {% endif %}
         </div>
     </div>
-    <div style="position: absolute; top: 50px; right: 0px; width: 280px; height: 103px; font-size: 13px;">
+    <div style="position: absolute; top: 20px; right: 0px; width: 280px; height: 103px; font-size: 13px; text-align: left;">
         {{ customer_name }}<br />
-        <!-- {{ contact_name }}<br /> -->
         {{ customer_address1 }}<br />
         {{ customer_address2 }}<br />
-        {% if customer_country != 'BE' %}
-            {{ customer_country }}<nr />
-        {% endif %}
         {% if customer_has_vat > 0 %}
-            TVA {{ customer_vat }}
+            TVA {{ customer_vat }}<br />
+        {% endif %}
+        {% if attn_name|length > 0 %}
+            <br /><b>À l'attention de:</b><br />
+            {{ attn_name }}
         {% endif %}
     </div>
 

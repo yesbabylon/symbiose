@@ -29,6 +29,10 @@
             "label": "Réservations en cours",
             "help": ""
         },
+        "item.bookings.invoiced": {
+            "label": "Réservations facturées",
+            "help": ""
+        },
         "item.bookings.archives": {
             "label": "Réservations archivées",
             "help": ""

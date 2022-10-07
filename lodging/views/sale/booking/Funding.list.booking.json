@@ -10,6 +10,10 @@
                 "operation": "SUM",
                 "usage": "amount/percent"
             },
+            "paid_amount": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            },
             "due_amount": {
                 "operation": "SUM",
                 "usage": "amount/money:2"

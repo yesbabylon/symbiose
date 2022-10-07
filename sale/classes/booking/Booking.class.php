@@ -93,7 +93,7 @@ class Booking extends Model {
                 'foreign_object'    => 'sale\booking\Contact',
                 'foreign_field'     => 'booking_id',
                 'description'       => 'List of contacts related to the booking, if any.',
-                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id']
+                'ondetach'          => 'delete'
             ],
 
             'has_contract' => [
@@ -439,6 +439,38 @@ class Booking extends Model {
         return $result;
     }
 
+    /**
+     * #memo - fundings can be partially paid.
+     */
+    public static function _updateStatusFromFundings($om, $oids, $values, $lang) {
+        $bookings = $om->read(self::getType(), $oids, ['status', 'fundings_ids'], $lang);
+        if($bookings > 0) {
+            foreach($bookings as $bid => $booking) {
+                $diff = 0.0;
+                $fundings = $om->read(Funding::gettype(), $booking['fundings_ids'], ['due_amount', 'paid_amount'], $lang);
+                foreach($fundings as $fid => $funding) {
+                    $diff += $funding['due_amount'] - $funding['paid_amount'];
+                }
+                // discard bookings that are not yet closed (no checkout or remaining services to invoice)
+                if(!in_array($booking['status'], ['invoiced', 'debit_balance', 'credit_balance'])) {
+                    continue;
+                }
+                if($diff > 0.0001 ) {
+                    // an unpaid amount remains
+                    $om->update(self::getType(), $bid, ['status' => 'debit_balance']);
+                }
+                elseif($diff < 0) {
+                    // a reimbursement is due
+                    $om->update(self::getType(), $bid, ['status' => 'credit_balance']);
+                }
+                else {
+                    // everything has been paid : booking can be archived
+                    $om->update(self::getType(), $bid, ['status' => 'balanced']);
+                }
+            }
+        }
+    }
+
     // #todo - this should be part of the onupdate() hook
     public static function _resetPrices($om, $oids, $values, $lang) {
         $om->update(__CLASS__, $oids, ['total' => null, 'price' => null]);
@@ -550,7 +582,7 @@ class Booking extends Model {
                     ];
                     foreach($values as $field => $value) {
                         if(!in_array($field, $accepted_fields)) {
-                            return ['status' => ['non_editable' => 'Invoiced bookings edition is limited .']];
+                            return ['status' => ['non_editable' => 'Invoiced bookings edition is limited.']];
                         }
                     }
                 }

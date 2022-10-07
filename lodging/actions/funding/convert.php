@@ -77,9 +77,7 @@ if($funding['type'] == 'invoice') {
 }
 
 // convert the installment to an invoice
-$orm->call(Funding::getType(), '_convertToInvoice', $params['id']);
-
-// #todo - create scheduled tasks for setting payment_status
+$orm->call(Funding::getType(), '_convertToInvoice', $params['id'], $params);
 
 
 $context->httpResponse()

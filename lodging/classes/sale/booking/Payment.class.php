@@ -85,9 +85,11 @@ class Payment extends \lodging\sale\pay\Payment {
         $payments = $om->read(self::getType(), $ids, ['funding_id', 'funding_id.booking_id', 'funding_id.booking_id.date_from', 'funding_id.type']);
 
         if($payments > 0) {
+            $bookings_ids_map = [];
             foreach($payments as $pid => $payment) {
                 // if payment relates to a funding attached to a booking that will occur after the 31th of december of current year, convert the funding to an invoice
                 if($payment['funding_id'] && $payment['funding_id.booking_id']) {
+                    $bookings_ids_map[$payment['funding_id.booking_id']] = true;
                     $current_year_last_day = mktime(0, 0, 0, 12, 31, date('Y'));
                     if($payment['funding_id.type'] != 'invoice' && $payment['funding_id.booking_id.date_from'] > $current_year_last_day) {
                         // convert the funding to an invoice
@@ -95,6 +97,8 @@ class Payment extends \lodging\sale\pay\Payment {
                     }
                 }
             }
+            $bookings_ids = array_keys($bookings_ids_map);
+            $om->call(Booking::getType(), '_updateStatusFromFundings', $bookings_ids, [], $lang);
         }
         // reset booking_id
         $om->update(self::getType(), $ids, ['booking_id' => null]);

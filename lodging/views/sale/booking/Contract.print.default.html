@@ -137,16 +137,16 @@ hr {
             Numéro d'entreprise: {{ company_reg_number }}
         </div>
     </div>
-    <div style="position: absolute; top: 50px; right: 0px; width: 280px; height: 103px; font-size: 13px;">
+    <div style="position: absolute; top: 20px; right: 0px; width: 280px; height: 103px; font-size: 13px; text-align: left;">
         {{ customer_name }}<br />
-        <!--{{ contact_name }}<br />-->
         {{ customer_address1 }}<br />
         {{ customer_address2 }}<br />
-        {% if customer_country != 'BE' %}
-            {{ customer_country }}<nr />
-        {% endif %}
         {% if customer_has_vat > 0 %}
-        TVA {{ customer_vat }}
+            TVA {{ customer_vat }}
+        {% endif %}
+        {% if attn_name|length > 0 %}
+            <br /><b>À l'attention de:</b><br />
+            {{ attn_name }}
         {% endif %}
     </div>
 
@@ -176,13 +176,16 @@ hr {
             </td>
             <td style="width: 50%; padding: 5px; background-color: rgb(204, 204, 204); ">
                 <div style="margin-bottom: 5px; margin-top: 5px;">
-                    <div style="display: inline-block; width: 100px;"><b>Membre</b></div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ member }}</div>
+                    <div style="display: inline-block; width: 100px;"><b>Membre</b></div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px; padding: 0 5px; overflow: hidden;">{{ member }}</div>
                 </div>
                 <div style="margin-bottom: 5px;">
-                    <div style="display: inline-block; width: 100px;"><b>Tél</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ contact_phone }}</div>
+                    <div style="display: inline-block; width: 100px;"><b>Contact</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px; padding: 0 5px; overflow: hidden;">{{ contact_name }}</div>
                 </div>
                 <div style="margin-bottom: 5px;">
-                    <div style="display: inline-block; width: 100px;"><b>email</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px;">{{ contact_email }}</div>
+                    <div style="display: inline-block; width: 100px;"><b>Tél</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px; padding: 0 5px; overflow: hidden;">{{ contact_phone }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Email</b> </div> <div style="display: inline-block; width: 230px; background-color: white; height: 15px; padding: 0 5px; overflow: hidden;">{{ contact_email }}</div>
                 </div>
             </td>
         </tr>

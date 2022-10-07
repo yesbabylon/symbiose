@@ -87,6 +87,12 @@ $fields = [
     'created',
     'booking_id' => [
         'id', 'name', 'modified', 'date_from', 'date_to', 'price',
+        'customer_identity_id' => [
+                'id',
+                'display_name',
+                'phone',
+                'email'
+        ],
         'customer_id' => [
             'partner_identity_id' => [
                 'id',
@@ -225,12 +231,13 @@ $values = [
     'header_img_url'        => $img_url,
     'contract_header_html'  => '',
     'contract_notice_html'  => '',
-    'customer_name'         => $booking['customer_id']['partner_identity_id']['display_name'],
+    'customer_name'         => substr($booking['customer_id']['partner_identity_id']['display_name'], 0,  66),
+    'attn_name'             => ($booking['customer_id']['partner_identity_id']['id'] == $booking['customer_identity_id']['id'])?'':substr($booking['customer_identity_id']['display_name'], 0, 33),
     'contact_name'          => '',
     'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
     'contact_email'         => $booking['customer_id']['partner_identity_id']['email'],
     'customer_address1'     => $booking['customer_id']['partner_identity_id']['address_street'],
-    'customer_address2'     => $booking['customer_id']['partner_identity_id']['address_zip'].' '.$booking['customer_id']['partner_identity_id']['address_city'],
+    'customer_address2'     => $booking['customer_id']['partner_identity_id']['address_zip'].' '.$booking['customer_id']['partner_identity_id']['address_city'].(($booking['customer_id']['partner_identity_id']['address_country'] != 'BE')?(' - '.$booking['customer_id']['partner_identity_id']['address_country']):''),
     'customer_country'      => $booking['customer_id']['partner_identity_id']['address_country'],
     'customer_has_vat'      => (int) $booking['customer_id']['partner_identity_id']['has_vat'],
     'customer_vat'          => $booking['customer_id']['partner_identity_id']['vat_number'],

@@ -229,12 +229,14 @@ class Funding extends \lodging\sale\pay\Funding {
                     }
                 }
 
+                $partner_id = (isset($values['partner_id']))?$values['partner_id']:$funding['booking_id.customer_id'];
+
                 // create a new invoice
                 $invoice_id = $om->create(Invoice::getType(), [
                     'organisation_id'   => $funding['booking_id.center_id.organisation_id'],
                     'center_office_id'  => $funding['booking_id.center_id.center_office_id'],
                     'booking_id'        => $funding['booking_id'],
-                    'partner_id'        => $funding['booking_id.customer_id'],
+                    'partner_id'        => $partner_id,
                     'funding_id'        => $fid
                 ], $lang);
 

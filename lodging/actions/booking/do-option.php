@@ -81,6 +81,9 @@ if($booking['status'] != 'quote') {
 
 $errors = [];
 
+// check customer's previsous bookings for remaining unpaid amount
+eQual::run('do', 'lodging_booking_check-customer-debtor', ['id' => $params['id']]);
+
 // check age ranges assignments
 $data = eQual::run('do', 'lodging_booking_check-ages-assignments', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {

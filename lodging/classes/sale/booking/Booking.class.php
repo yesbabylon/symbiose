@@ -37,7 +37,7 @@ class Booking extends \sale\booking\Booking {
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\customer\Customer',
-                'description'       => "The customer whom the booking relates to (from selected identity).",
+                'description'       => "The customer whom the booking relates to (depends on selected identity).",
                 'onupdate'          => 'onupdateCustomerId'
             ],
 
@@ -76,7 +76,6 @@ class Booking extends \sale\booking\Booking {
                 'foreign_object'    => 'lodging\sale\booking\Contact',
                 'foreign_field'     => 'booking_id',
                 'description'       => 'List of contacts related to the booking, if any.',
-                'domain'            => ['owner_identity_id', '=', 'object.customer_identity_id'],
                 'ondetach'          => 'delete'
             ],
 
@@ -262,38 +261,55 @@ class Booking extends \sale\booking\Booking {
 
     /**
      * Maintain sync with Customer when assigning a new customer by selecting a customer_identity_id
-     * Customer is always selected by picking up an identity (there should be only one 'customer' partner for a given identity for current organisation).
+     * Customer is always selected by picking up an identity (there should always be only one 'customer' partner for a given identity for current organisation).
+     * If the identity has a parent identity (department or subsidiary), the customer is based on that parent identity.
+     *
+     * @param  \equal\orm\ObjectManager     $om        Object Manager instance.
+     * @param  Array                        $oids      List of objects identifiers.
+     * @param  Array                        $values    Associative array mapping fields names with new values tha thave been assigned.
+     * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
      */
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
 
-        $bookings = $om->read(self::getType(), $oids, ['customer_identity_id', 'customer_nature_id', 'customer_nature_id.rate_class_id']);
+        $bookings = $om->read(self::getType(), $oids, [
+                'customer_identity_id',
+                'customer_identity_id.has_parent',
+                'customer_identity_id.parent_id',
+                'customer_nature_id',
+                'customer_nature_id.rate_class_id'
+            ]);
 
         if($bookings > 0) {
             foreach($bookings as $oid => $booking) {
                 $partner_id = null;
-                // find the partner that relates to this identity, if any
+                $identity_id = $booking['customer_identity_id'];
+                if($booking['customer_identity_id.has_parent'] && $booking['customer_identity_id.parent_id']) {
+                    $identity_id = $booking['customer_identity_id.parent_id'];
+                }
+                // find the partner that relates to the target identity, if any
                 $partners_ids = $om->search('sale\customer\Customer', [
                     ['relationship', '=', 'customer'],
                     ['owner_identity_id', '=', 1],
-                    ['partner_identity_id', '=', $booking['customer_identity_id']]
+                    ['partner_identity_id', '=', $identity_id]
                 ]);
                 if(count($partners_ids)) {
                     $partner_id = reset($partners_ids);
                 }
                 else {
                     // create a new customer for the selected identity
-                    $identities = $om->read('lodging\identity\Identity', $booking['customer_identity_id'], ['type_id']);
+                    $identities = $om->read('lodging\identity\Identity', $identity_id, ['type_id']);
                     if($identities > 0) {
                         $identity = reset($identities);
                         $partner_id = $om->create('sale\customer\Customer', [
-                            'partner_identity_id'   => $booking['customer_identity_id'],
-                            'customer_type_id'      => $identity['type_id'],
-                            'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
-                            'customer_nature_id'    => $booking['customer_nature_id']
-                        ]);
+                                'partner_identity_id'   => $booking['customer_identity_id'],
+                                'customer_type_id'      => $identity['type_id'],
+                                'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
+                                'customer_nature_id'    => $booking['customer_nature_id']
+                            ]);
                     }
                 }
                 if($partner_id) {
+                    // will trigger an update of the rate_class for existing booking_lines
                     $om->update(self::getType(), $oid, ['customer_id' => $partner_id]);
                 }
             }
@@ -312,7 +328,9 @@ class Booking extends \sale\booking\Booking {
                 $existing_partners_ids = [];
                 // read all contacts (to prevent importing contacts twice)
                 if($booking['contacts_ids'] && count($booking['contacts_ids'] )) {
-                    $contacts = $om->read(\lodging\sale\booking\Contact::getType(), $booking['contacts_ids'], ['partner_identity_id']);
+                    // #todo - should we remove previously assigned contacts ?
+                    // $om->delete(Contact::getType(), $booking['contacts_ids'], true);
+                    $contacts = $om->read(Contact::getType(), $booking['contacts_ids'], ['partner_identity_id']);
                     $existing_partners_ids = array_map(function($a) { return $a['partner_identity_id'];}, $contacts);
                 }
                 // if customer has contacts assigned to its identity, import those
@@ -332,7 +350,7 @@ class Booking extends \sale\booking\Booking {
                 $partners_ids = array_diff($partners_ids, $existing_partners_ids);
                 // create booking contacts
                 foreach($partners_ids as $partner_id) {
-                    $om->create(\lodging\sale\booking\Contact::getType(), [
+                    $om->create(Contact::getType(), [
                         'booking_id'            => $bid,
                         'owner_identity_id'     => $booking['customer_identity_id'],
                         'partner_identity_id'   => $partner_id

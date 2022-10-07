@@ -382,11 +382,11 @@ class Identity extends Model {
                     }
                 }
                 else {
-                    if( isset($odata['short_name']) && strlen($odata['short_name'])) {
-                        $parts[] = $odata['short_name'];
-                    }
-                    else if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
+                    if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
                         $parts[] = $odata['legal_name'];
+                    }
+                    else if( isset($odata['short_name']) && strlen($odata['short_name'])) {
+                        $parts[] = $odata['short_name'];
                     }
                 }
             }

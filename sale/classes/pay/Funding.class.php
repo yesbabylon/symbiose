@@ -122,7 +122,7 @@ class Funding extends Model {
 
     public static function calcPaidAmount($om, $oids, $lang) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['payments_ids.amount'], $lang);
+        $fundings = $om->read(self::getType(), $oids, ['payments_ids.amount'], $lang);
         if($fundings > 0) {
             foreach($fundings as $fid => $funding) {
                 $result[$fid] = array_reduce($funding['payments_ids.amount'], function ($c, $funding) {
@@ -135,15 +135,11 @@ class Funding extends Model {
 
     public static function calcIsPaid($om, $oids, $lang) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['due_amount', 'payments_ids.amount'], $lang);
+        $fundings = $om->read(self::getType(), $oids, ['due_amount', 'paid_amount'], $lang);
         if($fundings > 0) {
             foreach($fundings as $fid => $funding) {
                 $result[$fid] = false;
-                $sum = array_reduce($funding['payments_ids.amount'], function ($c, $a) {
-                    return $c + $a['amount'];
-                }, 0.0);
-
-                if($sum >= $funding['due_amount'] && $funding['due_amount'] > 0) {
+                if($funding['paid_amount'] >= $funding['due_amount'] && $funding['due_amount'] > 0) {
                     $result[$fid] = true;
                 }
             }

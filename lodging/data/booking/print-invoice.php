@@ -121,13 +121,19 @@ $fields = [
         'signature',
         'bank_account_iban',
         'bank_account_bic'
-    ],    
+    ],
     'booking_id' => [
         'name',
         'modified',
         'date_from',
         'date_to',
         'price',
+        'customer_identity_id' => [
+                'id',
+                'display_name',
+                'phone',
+                'email'
+        ],
         'center_id' => [
             'name',
             'manager_id' => ['name'],
@@ -225,13 +231,13 @@ $values = [
     'header_img_url'        => $img_url,
     'invoice_header_html'  => '',
     'invoice_notice_html'  => '',
-
-    'customer_name'         => $invoice['partner_id']['partner_identity_id']['display_name'],
+    'customer_name'         => substr($invoice['partner_id']['partner_identity_id']['display_name'], 0, 66),
+    'attn_name'             => ($invoice['partner_id']['partner_identity_id']['id'] == $booking['customer_identity_id']['id'])?'':substr($booking['customer_identity_id']['display_name'], 0, 33),
     'contact_name'          => '',
     'contact_phone'         => $invoice['partner_id']['partner_identity_id']['phone'],
     'contact_email'         => $invoice['partner_id']['partner_identity_id']['email'],
     'customer_address1'     => $invoice['partner_id']['partner_identity_id']['address_street'],
-    'customer_address2'     => $invoice['partner_id']['partner_identity_id']['address_zip'].' '.$invoice['partner_id']['partner_identity_id']['address_city'],
+    'customer_address2'     => $invoice['partner_id']['partner_identity_id']['address_zip'].' '.$invoice['partner_id']['partner_identity_id']['address_city'].(($invoice['partner_id']['partner_identity_id']['address_country'] != 'BE')?(' - '.$invoice['partner_id']['partner_identity_id']['address_country']):''),
     'customer_country'      => $invoice['partner_id']['partner_identity_id']['address_country'],
     'customer_has_vat'      => (int) $invoice['partner_id']['partner_identity_id']['has_vat'],
     'customer_vat'          => $invoice['partner_id']['partner_identity_id']['vat_number'],

@@ -150,6 +150,7 @@ if(count($params['documents_ids'])) {
 // create message
 $message = new Email();
 $message->setTo($params['recipient_email'])
+        // ->setReplyTo($params['sender_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
         ->setBody($params['message']);

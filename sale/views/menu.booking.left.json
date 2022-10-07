@@ -77,6 +77,18 @@
                         }
                     },
                     {
+                        "id": "item.bookings.invoiced",
+                        "type": "entry",
+                        "label": "Bookings in progress",
+                        "description": "",
+                        "route": "/bookings",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Booking",
+                            "view": "list.default",
+                            "domain": ["status", "in", ["invoiced", "debit_balanced", "credit_balanced"]]
+                        }
+                    },
+                    {
                         "id": "item.bookings.archives",
                         "type": "entry",
                         "label": "Archived Bookings",
