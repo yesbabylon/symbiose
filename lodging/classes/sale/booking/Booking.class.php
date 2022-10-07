@@ -301,7 +301,7 @@ class Booking extends \sale\booking\Booking {
                     if($identities > 0) {
                         $identity = reset($identities);
                         $partner_id = $om->create('sale\customer\Customer', [
-                                'partner_identity_id'   => $booking['customer_identity_id'],
+                                'partner_identity_id'   => $identity_id,
                                 'customer_type_id'      => $identity['type_id'],
                                 'rate_class_id'         => $booking['customer_nature_id.rate_class_id'],
                                 'customer_nature_id'    => $booking['customer_nature_id']
