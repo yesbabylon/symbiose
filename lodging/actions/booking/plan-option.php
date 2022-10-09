@@ -8,6 +8,8 @@
 use lodging\sale\booking\Booking;
 use lodging\sale\booking\BookingLine;
 use lodging\sale\booking\BookingLineGroup;
+use lodging\sale\booking\SojournProductModel;
+use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 
 use lodging\realestate\RentalUnit;
 use lodging\sale\catalog\Product;
@@ -63,7 +65,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch'] 
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
 /**
@@ -75,21 +77,23 @@ list($params, $providers) = announce([
 list($context, $orm, $cron, $dispatch) = [$providers['context'], $providers['orm'], $providers['cron'], $providers['dispatch']];
 
 
-/* 
-    Check consistency of parameters  
+/*
+    Check consistency of parameters
 */
 
 // retrieve rental unit and related center
 $rental_unit = RentalUnit::id($params['rental_unit_id'])
-                  ->read(['id', 'name', 'capacity', 'center_id' => ['id', 'name', 'sojourn_type_id', 'product_groups_ids']])
-                  ->first();
-                  
+    ->read(['id', 'name', 'capacity', 'center_id' => ['id', 'name', 'sojourn_type_id', 'product_groups_ids']])
+    ->first();
+
 if(!$rental_unit) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
 }
 
 // look for an existing customer for given identity
-$customer = Customer::search([ ['relationship', '=', 'customer'], ['owner_identity_id', '=', 1], ['partner_identity_id', '=', $params['customer_identity_id']] ])->read(['rate_class_id', 'customer_nature_id'])->first();
+$customer = Customer::search([ ['relationship', '=', 'customer'], ['owner_identity_id', '=', 1], ['partner_identity_id', '=', $params['customer_identity_id']] ])
+    ->read(['rate_class_id', 'customer_nature_id'])
+    ->first();
 
 // default nature (individual)
 $customer_nature_id = 30;
@@ -109,35 +113,36 @@ if(!count($product_models_ids)) {
     if($rental_unit['center_id']['product_groups_ids']) {
         $domain = [
             ["groups_ids", "contains", $rental_unit['center_id']['product_groups_ids'][0]],
-            ['can_sell', '=', true], 
+            ['can_sell', '=', true],
             ['is_accomodation', '=', true]
         ];
-        $product_models_ids = ProductModel::search($domain)->ids();                
+        $product_models_ids = ProductModel::search($domain)->ids();
     }
     if(!count($product_models_ids)) {
         throw new Exception("no_product_match", QN_ERROR_UNKNOWN_OBJECT);
     }
 }
 
-$products_ids = Product::search([ ['can_sell', '=', true], ['product_model_id', 'in', $product_models_ids] ])->ids();
+$product = Product::search([ ['can_sell', '=', true], ['product_model_id', 'in', $product_models_ids] ])
+    ->read(['id', 'product_model_id'])
+    ->first();
 
-if(!count($products_ids)) {
+if(!$product) {
     throw new Exception("no_product_match", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$product_id = reset($products_ids);
-
-
 /*
 	If a match has been found, create a booking
+    #memo - some product models are not bound to specific rental units, so another RU matching the specifics might be selected
 */
 $booking = Booking::create([
-    'date_from'             => $params['date_from'],
-    'date_to'               => $params['date_to'],
-    'center_id'             => $rental_unit['center_id']['id'],
-    'customer_identity_id'  => $params['customer_identity_id'],
-    'customer_nature_id'    => $customer_nature_id
-])->first();
+        'date_from'             => $params['date_from'],
+        'date_to'               => $params['date_to'],
+        'center_id'             => $rental_unit['center_id']['id'],
+        'customer_identity_id'  => $params['customer_identity_id'],
+        'customer_nature_id'    => $customer_nature_id
+    ])
+    ->first();
 
 $groups = BookingLineGroup::create([
     'booking_id'            => $booking['id'],
@@ -152,19 +157,44 @@ $groups = BookingLineGroup::create([
 $group = $groups->first();
 
 BookingLine::create([
-    'booking_id'            => $booking['id'],
-    'booking_line_group_id' => $group['id']    
-])->update([
-    'product_id' => $product_id
-]);
+        'booking_id'            => $booking['id'],
+        'booking_line_group_id' => $group['id']
+    ])
+    ->update([
+        'product_id'            => $product['id']
+    ]);
 
 $groups->update([
-    'nb_pers'               => $rental_unit['capacity']
+    'nb_pers'                   => $rental_unit['capacity']
 ]);
+
 
 
 // make sure computed fields are available
 Booking::id($booking['id'])->read(['name', 'status', 'date_from', 'date_to', 'total', 'price']);
+
+$group = $groups->read(['id', 'sojourn_product_models_ids'])->first();
+
+// reset auto assigned rental units (if any)
+SojournProductModel::ids($group['sojourn_product_models_ids'])->delete(true);
+
+// force assigning selected rental unit (we know current product matches the received rental unit)
+$spm = SojournProductModel::create([
+        'booking_id'            => $booking['id'],
+        'booking_line_group_id' => $group['id'],
+        'product_model_id'      => $product['product_model_id']
+    ])
+    ->first();
+
+SojournProductModelRentalUnitAssignement::create([
+        'booking_id'                => $booking['id'],
+        'booking_line_group_id'     => $group['id'],
+        'sojourn_product_model_id'  => $spm['id'],
+        'rental_unit_id'            => $rental_unit['id'],
+        'qty'                       => $rental_unit['capacity']
+    ]);
+
+
 
 /*
     Try to set the booking status to 'option'
