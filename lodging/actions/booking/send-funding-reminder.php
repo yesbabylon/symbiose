@@ -129,7 +129,7 @@ $attachments[] = new EmailAttachment($main_attachment_name.'.pdf', (string) $att
 // create message
 $message = new Email();
 $message->setTo($params['recipient_email'])
-        // ->setReplyTo($params['sender_email'])
+        ->setReplyTo($params['sender_email'])
         ->setSubject($params['title'])
         ->setContentType("text/html")
         ->setBody($params['message']);
