@@ -244,18 +244,21 @@ class Identity extends Model {
             'email' => [
                 'type'              => 'string',
                 'usage'             => 'email',
+                'onupdate'          => 'onupdateEmail',
                 'description'       => "Identity main email address."
             ],
 
             'phone' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
+                'onupdate'          => 'onupdatePhone',
                 'description'       => "Identity main phone number (mobile or landline)."
             ],
 
             'mobile' => [
                 'type'              => 'string',
                 'usage'             => 'phone',
+                'onupdate'          => 'onupdateMobile',
                 'description'       => "Identity mobile phone number."
             ],
 
@@ -382,17 +385,38 @@ class Identity extends Model {
                     }
                 }
                 else {
-                    if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
-                        $parts[] = $odata['legal_name'];
-                    }
-                    else if( isset($odata['short_name']) && strlen($odata['short_name'])) {
+                    if( isset($odata['short_name']) && strlen($odata['short_name'])) {
                         $parts[] = $odata['short_name'];
+                    }
+                    else if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
+                        $parts[] = $odata['legal_name'];
                     }
                 }
             }
             $result[$oid] = implode(' ', $parts);
         }
         return $result;
+    }
+
+    public static function onupdatePhone($om, $oids, $values, $lang) {
+        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
+        foreach($identities as $oid => $odata) {
+            $om->update('identity\Partner', $odata['partners_ids'], [ 'phone' => null ], $lang);
+        }
+    }
+
+    public static function onupdateMobile($om, $oids, $values, $lang) {
+        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
+        foreach($identities as $oid => $odata) {
+            $om->update('identity\Partner', $odata['partners_ids'], [ 'mobile' => null ], $lang);
+        }
+    }
+
+    public static function onupdateEmail($om, $oids, $values, $lang) {
+        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
+        foreach($identities as $oid => $odata) {
+            $om->update('identity\Partner', $odata['partners_ids'], [ 'email' => null ], $lang);
+        }
     }
 
     public static function onupdateName($om, $oids, $values, $lang) {
