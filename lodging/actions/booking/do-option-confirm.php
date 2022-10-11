@@ -29,7 +29,7 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'cron', 'dispatch'] 
+    'providers'     => ['context', 'orm', 'cron', 'dispatch']
 ]);
 
 /**
