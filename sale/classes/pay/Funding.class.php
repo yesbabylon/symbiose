@@ -244,6 +244,26 @@ class Funding extends Model {
     }
 
     /**
+     * Signature for single object change from views.
+     *
+     * @param  \equal\orm\ObjectManager     $om        Object Manager instance.
+     * @param  Array                        $event     Associative array holding changed fields as keys, and their related new values.
+     * @param  Array                        $values    Copy of the current (partial) state of the object (fields depend on the view).
+     * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
+     * @return Array    Associative array mapping fields with their resulting values.
+     */
+    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+        $result = [];
+
+        // if 'is_paid' is set manually, adapt 'paid_mount' consequently
+        if(isset($event['is_paid'])) {
+            $result['paid_amount'] = $values['due_amount'];
+        }
+
+        return $result;
+    }
+
+    /**
      * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
      *
      * Note:
