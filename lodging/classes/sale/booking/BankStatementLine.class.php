@@ -138,7 +138,7 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                     }
                 }
 
-                if($remaining_amount > 0) {
+                if($remaining_amount > 0.0001) {
                     // at least one funding has been (partly) credited
                     if(count($processed_fundings_ids)) {
                         // error: a part or all of the amount has already been paid
@@ -150,6 +150,11 @@ class BankStatementLine extends \sale\booking\BankStatementLine {
                         // reconciliation must be done manually, could be necessary to refund
                         // #todo - notify user about this
                     }
+                }
+                elseif($remaining_amount < 0) {
+                    // the amount is negative : can be either a payment to a provider; a misc. purchase; or a reimbursement to a customer
+                    // #todo - what is the convention for reimbursements (@see invoice department) ?
+                    $om->update(self::getType(), $lid, ['status' => 'pending']);
                 }
                 else {
                     // mark the line as successfully reconciled
