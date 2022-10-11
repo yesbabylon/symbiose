@@ -38,16 +38,21 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-
 $content = $params['data'];
-$size = strlen($content);
 
 $content = str_replace("\r\n", "\n", $content);
 $lines = explode("\n", $content);
 
+// #memo - parser expects ASCII-compatible chars
+// latin chars from non ASCII/UTF-8 charsets (e.g. ISO-8859-1) make the parser to return an empty set of statements)
+$lines = array_map( function($line) {
+            return mb_convert_encoding($line, "UTF-8", "ISO-8859-1");
+        },
+        $lines
+    );
+
 $parser = new Parser();
 $statements = $parser->parse($lines);
-
 
 $result = [];
 
