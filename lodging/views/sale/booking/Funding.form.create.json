@@ -3,9 +3,40 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-    }, 
+    },
     "layout": {
         "groups": [
+        {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
             {
                 "sections": [
                     {
@@ -26,12 +57,17 @@
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_paid",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "paid_amount",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
@@ -48,7 +84,7 @@
                                                 "type": "field",
                                                 "value": "issue_date",
                                                 "width": "50%"
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "due_amount",
@@ -66,7 +102,7 @@
                                                 "width": "50%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]
