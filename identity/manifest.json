@@ -1,0 +1,11 @@
+{
+    "name": "identity",
+    "depends_on": [
+        "core"
+    ],
+    "apps": {
+        "identity": {
+            "show_in_apps": false
+        }
+    }
+}

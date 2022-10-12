@@ -1,0 +1,30 @@
+:host {
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+
+
+    .container {
+        display: flex;
+
+        padding: 24px 24px;
+
+        .card {
+            flex: 1;
+            max-width: 350px;
+            height: 210px;
+            box-sizing: border-box;
+            
+            margin-right: 20px;
+
+            z-index: 1;
+
+            .mat-card {
+                border-left: solid 3px #3f51b5;
+            }
+
+        }
+    }
+}

@@ -1,0 +1,94 @@
+<div class="container">
+
+    <div [class.hidden]="!loading" class="loader"><mat-spinner></mat-spinner></div>
+
+    <div class="header">
+        <div class="header-inner"><a href="#/bookings">Réservations</a><span> › </span> <a href="#/booking/{{booking.id}}">Réservation <small>[{{booking.name}} - {{booking.id}}]</small></a> <span> › </span> Financement <small>[{{funding.id}}]</small> <span> › </span> Conversion en facture</div>
+    </div>
+
+    <div class="body">
+
+        <div class="body-actions" style="display: flex;">
+            <div class="actions-std"></div>
+
+            <div class="actions-view">
+                <button *ngIf="funding.type == 'installment'" mat-flat-button color="accent" (click)="onSubmit()" [disabled]="is_converted">Convertir en facture</button>
+                <button *ngIf="funding.type == 'invoice'" mat-flat-button disabled="disabled">Convertir en facture</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="cell full"><strong>Conversion du financement en facture</strong></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="cell title">Réservation</div>
+                <div class="cell">
+                    <sb-m2o-select
+                        [entity]="'lodging\\sale\\booking\\Booking'"
+                        [id]="booking_id"
+                        [placeholder]="'Commencez à taper le nom'"
+                        [hint]="'Code de réservation'"
+                        [noResult]="'rien trouvé'"
+                        [disabled]="true"
+                        (itemSelected)="selectBooking($event)">Réservation</sb-m2o-select>
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <sb-m2o-select
+                        [entity]="'sale\\customer\\Customer'"
+                        [id]="booking?.customer_id"
+                        [hint]="'Client de la réservation'"
+                        [disabled]="true">Client</sb-m2o-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="cell title">Financement</div>
+                <div class="cell">
+                    <sb-m2o-select
+                        [entity]="'lodging\\sale\\booking\\Funding'"
+                        [id]="funding_id"
+                        [placeholder]="'Commencez à taper le nom'"
+                        [hint]="'Financement'"
+                        [noResult]="'rien trouvé'"
+                        [disabled]="true"
+                        (itemSelected)="selectFunding($event)">Financement</sb-m2o-select>
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell full">
+                    <mat-slide-toggle [formControl]="hasPayerControl">Facturer à un payeur distinct du client</mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <div class="cell title">Type actuel</div>
+                <div class="cell full"><div><strong>{{ displayFundingType()  }}</strong>&nbsp;<ng-container *ngIf="funding.type != 'invoice'">(sera converti en facture)</ng-container></div></div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <ng-container *ngIf="hasPayerControl.value">
+                        <sb-m2o-select
+                            [entity]="'identity\\Partner'"
+                            [id]="booking.payer_organisation_id"
+                            [placeholder]="'Commencez à taper le nom'"
+                            [hint]="'Organisation à qui envoyer la facture'"
+                            [noResult]="'rien trouvé'"
+                            [disabled]="funding.type == 'invoice'"
+                            (itemSelected)="selectPayer($event)">Payeur</sb-m2o-select>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

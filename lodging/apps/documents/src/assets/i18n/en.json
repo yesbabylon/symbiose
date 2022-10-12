@@ -1,0 +1,25 @@
+{
+    "DOCS_LIST_DOCUMENT": "Documents",
+    "DOCS_LIST_IMPORT": "Import",
+
+    "DOCS_ERRORS_FAILED_UPLOAD": "Download of the file failed",
+    "DOCS_ERROR_BAD_FORMAT": "isn't an allowed format. The accepted formats are: JPEG, JPG, PNG, GIF, DOCX, PDF, AI, XLS, PSD.",
+    "DOCS_DROP_TITLE": "Choose or Drop your files here !",
+    "DOCS_DROP_NAME": "Name",
+    "DOCS_DROP_TYPE": "Type",
+    "DOCS_DROP_SIZE": "Size",
+
+
+    "DOCS_DROP_ACTION_VIEWDOC": "Display the document",
+    "DOCS_DROP_ACTION_DELETEDOC": "Delete the document",
+    "DOCS_DROP_ACTION_CONFIRMATION": "Are you sure you want to delete the document?",
+    "DOCS_DROP_ACTION_RENAMEDOC": "Renommer le document",
+
+
+    "DOCS_DIALOG_CONTENT_RENAME": "This assistant allows you to modify the name of your document",
+    "DOCS_DIALOG_ACTION_BUTTON_RENAME": "Rename",
+    "DOCS_DIALOG_ACTION_BUTTON_CANCEL": "Cancel",
+    "DOCS_DIALOG_ACTION_BUTTON_VALIDATE": "Delete",
+    "DOCS_DIALOG_CONTENT_DELETE":"Are you sure you want to delete the document ?"
+
+}

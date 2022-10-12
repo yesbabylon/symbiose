@@ -1,0 +1,37 @@
+<div class="header">
+    <span [class.accent]="calcDueRemaining() > 0">Restant: {{ calcDueRemaining() | number : '1.2-2'}}€</span>
+    <span [class.accent]="calcReturnedAmount() > 0">Rendu: {{ calcReturnedAmount() | number : '1.2-2'}}€</span>
+    <div>
+        <button mat-icon-button color="primary" (click)="onDisplayProducts()"><mat-icon>list</mat-icon></button>
+        <button mat-mini-fab color="accent" *ngIf="instance.status != 'paid'" (click)="onclickDelete()"><mat-icon>delete</mat-icon></button>
+    </div>
+</div>
+<div class="body">
+    <!-- show payment parts -->
+    <div class="row-parts" *ngIf="display !='products'">
+        <div style="display: flex; margin: 0.25rem; display: flex; align-items: center;">
+            <h3 style="max-height: fit-content;">Encaissements</h3>
+            <button *ngIf="canAddPart()" mat-mini-fab color="accent" (click)="onclickCreateNewPart()" style="transform: scale(0.75);">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button *ngIf="canValidate()" mat-mini-fab color="accent" (click)="onConfirmOrderPayment()" style="margin-left: auto;">
+                <mat-icon>check</mat-icon>
+            </button>
+        </div>
+        <session-order-payments-payment-part
+            *ngFor="let part of instance.order_payment_parts_ids; index as i"
+            [model]="part"
+            [payment]="instance"
+            [customer]="customer"
+            (updated)="onupdatePart(part.id)"
+            (deleted)="ondeletePart(part.id)"
+            (click)="onSelectedPaymentPart(i)">
+        </session-order-payments-payment-part>
+    </div>
+    <!-- show selected products -->
+    <div class="row-products" *ngIf="display =='products'">
+        <div>
+            <session-order-payments-order-line *ngFor="let line of instance.order_lines_ids" [model]="line" (deleted)="ondeleteLine(line.id)"></session-order-payments-order-line>
+        </div>
+    </div>
+</div>

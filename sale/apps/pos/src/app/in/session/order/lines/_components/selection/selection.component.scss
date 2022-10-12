@@ -1,0 +1,90 @@
+:host {
+
+
+ 
+    mat-tab-group {
+
+    
+    .tab-product-pane-body {
+        width: 100%;
+        height: calc(100vh - 270px);
+        overflow: auto;                
+        cursor: pointer;
+        user-select: none;
+        
+        &::-webkit-scrollbar {
+            width: 6px;
+            overflow-y: scroll;
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--mdc-theme-primary, #6200ee);
+            border-radius: 10px;
+        }
+
+        ::ng-deep thead {
+            display: none;
+        }
+
+    }
+
+    .tab-product-pane-header {
+        display: flex;     
+        align-items: center;
+        border-bottom: 1px solid lightgrey;
+
+        mat-form-field {
+            margin-left: 24px;
+        }
+        
+        mat-paginator{
+            margin-left: auto;
+        }
+    }
+
+        ::ng-deep .mat-tab-labels {
+            height: 72px;
+            font-size: 1.5rem;
+        }
+
+        ::ng-deep .mat-tab-label {
+            font-size: 1.5rem;
+            font-weight: 100;
+            height: 100%;
+        }
+
+        ::ng-deep .mat-tab-label-active {
+            opacity: 1;
+        }
+
+        .filter-input {
+            font-size: 16px !important;
+            height: 69px;
+
+            ::ng-deep .mat-form-field-wrapper {
+                padding-bottom: 15px !important;
+            }
+        }
+
+        .mat-table {
+            ::ng-deep thead {
+                height: 70px;
+            }
+
+            .mat-header-cell {
+                font-size: 24px;
+            }
+
+            .mat-cell {
+                font-size: 24px;
+            }
+
+            .mat-row.highlight {
+                background: #E0E0E0;
+            }
+
+        }
+
+    }
+}

@@ -13,9 +13,9 @@ $packages = json_decode($json, true);
 
 
 list($params, $providers) = announce([
-    'description'	=>	"Returns the schema of the specified package in standard SQL ('CREATE' statements with 'IF NOT EXISTS' clauses).",
-    'params' 		=>	[
-        'package'	=> [
+    'description'	=> "Returns the schema of the specified package in standard SQL ('CREATE' statements with 'IF NOT EXISTS' clauses).",
+    'params'        => [
+        'package'   => [
             'description'   => 'Package for which we want SQL schema.',
             'type'          => 'string',
             'selection'     => array_combine(array_values($packages), array_values($packages)),
@@ -71,8 +71,8 @@ $m2m_tables = array();
 $parent_tables = [];
 
 foreach($classes as $class) {
-	// get the full class name
-	$class_name = $params['package'].'\\'.$class;
+    // get the full class name
+    $class_name = $params['package'].'\\'.$class;
     $model = $orm->getModel($class_name);
     if(!is_object($model)) throw new Exception("unknown class '{$class_name}'", QN_ERROR_UNKNOWN_OBJECT);
 
@@ -88,9 +88,9 @@ foreach($classes as $class) {
     // get the complete schema of the object (including special fields)
     $schema = $model->getSchema();
 
-	// init result array
+    // init result array
 
-// #todo : deleting tables prevents keeping data across inherited classes
+    // #memo - deleting tables prevents keeping data across inherited classes
     // $result[] = "DROP TABLE IF EXISTS `{$table_name}`;";
 
     // fetch existing column
@@ -114,9 +114,15 @@ foreach($classes as $class) {
                 if( isset($description['usage']) && isset(ObjectManager::$usages_associations[$description['usage']]) ) {
                     $type = ObjectManager::$usages_associations[$description['usage']];
                 }
-                if($field == 'id') $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type} NOT NULL AUTO_INCREMENT;";
-                elseif(in_array($field, array('creator','modifier','published','deleted'))) $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type} NOT NULL DEFAULT '0';";
-                else $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type};";
+                if($field == 'id') {
+                    $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type} NOT NULL AUTO_INCREMENT;";
+                }
+                elseif(in_array($field, array('creator','modifier','published','deleted'))) {
+                    $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type} NOT NULL DEFAULT '0';";
+                }
+                else {
+                    $result[] = "ALTER TABLE `{$table_name}` ADD `{$field}` {$type};";
+                }
             }
             else if( $description['type'] == 'computed' && isset($description['store']) && $description['store'] ) {
                 $type = ObjectManager::$types_associations[$description['result_type']];
@@ -146,9 +152,15 @@ foreach($classes as $class) {
                     $type = ObjectManager::$usages_associations[$description['usage']];
                 }
 
-                if($field == 'id') $result[] = "`{$field}` {$type} NOT NULL AUTO_INCREMENT,";
-                elseif(in_array($field, array('creator','modifier','published','deleted'))) $result[] = "`{$field}` {$type} NOT NULL DEFAULT '0',";
-                else $result[] = "`{$field}` {$type},";
+                if($field == 'id') {
+                    $result[] = "`{$field}` {$type} NOT NULL AUTO_INCREMENT,";
+                }
+                elseif(in_array($field, array('creator','modifier','published','deleted'))) {
+                    $result[] = "`{$field}` {$type} NOT NULL DEFAULT '0',";
+                }
+                else {
+                    $result[] = "`{$field}` {$type} DEFAULT NULL,";
+                }
             }
             else if( $description['type'] == 'computed' && isset($description['store']) && $description['store'] ) {
                 $type = ObjectManager::$types_associations[$description['result_type']];
@@ -173,7 +185,7 @@ foreach($classes as $class) {
                     $parts[] = $part;
                 }
                 // #todo - deprecate
-                // Classes are allowed to override the getUnique method. Therefore, we cannot apply parent unicity constraints to parent table (which also applies on all inherited classes)
+                // #memo - Classes are allowed to override the getUnique method. Therefore, we cannot apply parent unicity constraints to parent table (which also applies on all inherited classes)
                 // $result[] = ",UNIQUE KEY `".implode('_', $unique)."` (".implode(',', $parts).")";
             }
         }
@@ -184,18 +196,18 @@ foreach($classes as $class) {
 }
 
 foreach($m2m_tables as $table => $columns) {
-	$result[] = "CREATE TABLE IF NOT EXISTS `{$table}` (";
-	$key = '';
-	foreach($columns as $column) {
-		$result[] = "`{$column}` int(11) NOT NULL,";
-		$key .= "`$column`,";
-	}
-	$key = rtrim($key, ",");
-	$result[] = "PRIMARY KEY ({$key})";
-	$result[] = ");";
-	// add an empty records (mandatory for JOIN conditions on empty tables)
-	$result[] = "INSERT IGNORE INTO `{$table}` (".implode(',', array_map(function($col) {return "`{$col}`";}, $columns)).') VALUES ';
-	$result[]= '('.implode(',', array_fill(0, count($columns), 0)).");";
+    $result[] = "CREATE TABLE IF NOT EXISTS `{$table}` (";
+    $key = '';
+    foreach($columns as $column) {
+        $result[] = "`{$column}` int(11) NOT NULL,";
+        $key .= "`$column`,";
+    }
+    $key = rtrim($key, ",");
+    $result[] = "PRIMARY KEY ({$key})";
+    $result[] = ");";
+    // add an empty record (required for JOIN conditions on empty tables)
+    $result[] = "INSERT IGNORE INTO `{$table}` (".implode(',', array_map(function($col) {return "`{$col}`";}, $columns)).') VALUES ';
+    $result[]= '('.implode(',', array_fill(0, count($columns), 0)).");";
 }
 
 // send json result

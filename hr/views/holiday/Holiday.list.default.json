@@ -1,0 +1,28 @@
+{
+    "name": "Holiday",
+    "description": "List of official Holidays (legal days-off).",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "year",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "extref_AT_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

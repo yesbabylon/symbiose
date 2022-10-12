@@ -1,0 +1,10 @@
+{
+    "name": "communication",
+    "depends_on": [
+    ],
+    "apps":{
+        "communication":{
+            "show_in_apps": false
+        }
+    }
+}

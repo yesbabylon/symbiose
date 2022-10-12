@@ -1,0 +1,110 @@
+.pos-pad {
+
+    padding: 5px 5px 24px 5px;
+    height: max-content;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    .customer {
+        display: flex; 
+        justify-content: space-between;
+        align-items: center;        
+        background-color: lightgray;
+        border-radius: 4px;
+        width: 382px;
+        height: 65px;
+        font-weight: bold;
+
+        .customer-display {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%;
+            padding: 0.4rem;
+        }
+
+        .customer-select {
+            width: 100%;
+        }
+
+        .mat-mini-fab {
+            &::ng-deep .mat-button-wrapper{
+                padding: 0;
+            }
+        }
+        @media only screen and (max-width: 1500px) {
+            width: 297px;
+        }
+        @media only screen and (max-width: 1350px) {
+            width: 247px; 
+        }
+    }
+
+    .pos-lowerPart {
+        display: flex;
+        justify-content: center;
+        width: max-content;
+
+        .details-payment{              
+            display: grid;
+            grid-template-columns: repeat(1, 100px);
+            grid-template-rows: max-content; 
+            @media only screen and (max-width: 1500px) {
+                grid-template-columns: repeat(1, 75px);
+            }
+            @media only screen and (max-width: 1350px) {
+                grid-template-columns: repeat(1, 75px);
+                grid-template-rows: 60px; 
+            }
+
+            .selected {
+                color: white;
+                background-color: var(--mdc-theme-secondary) !important;
+            }
+
+            p {
+                margin: 0;
+            }
+
+            mat-button-toggle {            
+                ::ng-deep .mat-button-toggle-focus-overlay {
+                    border: 0;
+                }
+            }
+
+            .details {
+                display: flex;
+                justify-content: space-evenly;
+                flex-direction: column;
+                align-items: center;
+                padding: 0.35rem;
+                padding-top: 0.7rem;
+                padding-bottom: 0.7rem;
+                background-color: lightblue;
+                border-radius: 4px;
+                #fade{
+                    @media only screen and (max-width: 1500px) {
+                        display: none;
+                    }
+                }
+
+            }
+
+            .payment {
+                display: flex;
+                justify-content: space-evenly;
+                flex-direction: column;
+                align-items: center;
+                background-color: lightgray;
+            }
+
+            .payment.payment-button {
+                height: calc(100% - 2px);
+            }
+        }
+    } 
+}

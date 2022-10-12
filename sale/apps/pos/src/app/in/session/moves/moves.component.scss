@@ -1,0 +1,35 @@
+:host {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .container {
+        height: 100%;
+        width: 100%;
+
+        .planning-header {
+            width: 100%;
+            padding-left: 12px;
+            height: 48px;
+            line-height: 48px;
+            border-bottom: solid 1px lightgrey;
+            font-size: 22px;
+        }
+    
+        .planning-body {
+            height: calc(100vh - 123px);
+            width: 100%;
+            overflow: hidden;
+        }
+     
+    }
+
+    .container.hidden {
+        display: none;
+    }
+
+    
+}

@@ -1,0 +1,12 @@
+<div class="product-name">{{instance.name}}</div> 
+
+<div class="product-details" [class.selectedLine]="selected">
+    <div class="product-price">
+        <span style="font-weight: bold;">{{instance.qty}}</span> 
+        <span> unité(s) @ </span>
+        <span style="font-weight: bold;">{{instance.unit_price | number : '1.2-2'}}€</span>
+    </div>
+    <div class="product-actions" style="margin-left: auto">
+        <button style="margin-left: 12px" mat-mini-fab color="accent" (click)="ondelete()"><mat-icon>delete</mat-icon></button>
+    </div>
+</div>

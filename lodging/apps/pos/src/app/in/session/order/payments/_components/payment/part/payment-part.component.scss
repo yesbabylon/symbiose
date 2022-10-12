@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    width: 100%;
+    user-select: none;
+
+    mat-accordion {
+        width: 100%;
+
+        ::ng-deep .mat-expansion-panel-body {
+            display: flex;
+            padding: 0 10px;
+        }
+
+        mat-expansion-panel-header {
+            padding: 0;
+
+            mat-panel-description {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: 10px;
+                margin-right: 0;
+            }
+        }
+
+        ::ng-deep .mat-button-toggle {
+            border-left: 0;
+        }
+    }
+
+
+    .selected {
+        background-color: var(--mdc-theme-primary, #6200ee);
+        color: white;
+    }
+
+}

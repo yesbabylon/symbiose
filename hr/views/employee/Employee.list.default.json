@@ -1,0 +1,55 @@
+{
+    "name": "Employees list",
+    "description": "List of all employees.",
+    "domain": ["relationship", "=", "employee"],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "label": "Name",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Role",
+                "value": "role_id",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Identity",
+                "value": "partner_identity_id",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Active",
+                "value": "is_active",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "email",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "mobile",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

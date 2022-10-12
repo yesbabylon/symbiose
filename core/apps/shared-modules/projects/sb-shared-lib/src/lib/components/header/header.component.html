@@ -1,0 +1,24 @@
+
+<a class="navbar-brand" href="/apps"><img class="navbar-brand-full" src="/assets/img/brand/logo.svg" /></a>
+<button type="button" class="navbar-toggler" (click)="toggleSideBar()"><span class="navbar-toggler-icon"></span></button>
+<div class="navbar-app-section">{{section}}</div>
+<ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3" *ngFor="let item of items"><a class="nav-link" (click)="onSelectItem(item)">{{(i18n && i18n[item.id])?i18n[item.id].label:item.label}}</a></li>
+</ul>
+<button class="navbar-action" mat-raised-button color="accent" (click)="doAction()">{{action}}</button>
+<div class="nav navbar-date">{{date | date: 'fullDate' }}</div>
+<ul class="nav navbar-nav">
+    <!--
+    <li class="nav-item d-md-down-none"><a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a></li>
+    <li class="nav-item d-md-down-none"><a class="nav-link" href="#"><i class="icon-list"></i></a></li>
+    <li class="nav-item d-md-down-none"><a class="nav-link" href="#"><i class="icon-location-pin"></i></a></li>
+    -->
+    <li *ngIf="ready" class="nav-item dropdown"
+        dropdown=""
+        placement="bottom right"
+        ><a aria-haspopup="true"
+            class="nav-link"
+            data-toggle="dropdown"
+            dropdowntoggle=""><!-- <img class="img-avatar" src="/assets/img/avatar.png">--><span class="user-btn" [style.background]="calcUserBackground()">{{calcUserInitials()}}</span></a></li>
+</ul>
+<button type="button" class="navbar-toggler" (click)="toggleSideMenu()"><span class="navbar-toggler-icon"></span></button>

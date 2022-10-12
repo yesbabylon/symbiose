@@ -1,0 +1,82 @@
+<div class="overlay-container" *ngIf="!ready">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="ready">
+    <div class="header-wrap">
+        <div class="header">Session › {{session.name}} <small>[{{session.id}}]</small> › Clôture</div>
+    </div>
+    <div class="body">
+        <div class="actions">
+            <div class="actions-std"></div>
+            <div class="actions-view"></div>
+        </div>
+
+        <div class="view">
+
+            <h2 style="text-align:center">Contrôle de fermeture</h2>
+            <div style="background-color:#F5F5F5; padding: 3rem">
+                <div style="display: flex; justify-content: space-between; align-items:center; border-bottom: 1px solid lightgrey; margin-bottom: 20px;">
+                    <div style="display: flex; flex-direction:column">
+                        <p>Total {{session.orders_ids.length}} commande(s) <span>: {{total_orders | number : '1.2-2'}}€ </span></p>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:flex; flex-direction: row; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column; text-align:left; flex: 0 30%;">
+
+                            <div style="display: flex;">
+                                <h4 style="flex: 1">Moyen de Paiement</h4>
+                                <h4 styme="margin-left: auto">Attendu</h4>
+                            </div>
+                            <div style="display: flex;">
+                                <div style="flex: 1">Ouverture</div>
+                                <div>{{session.amount_opening | number : '1.2-2'}}€</div>
+                            </div>
+                            <div style="display: flex;">
+                                <div style="flex: 1">Paiements en espèces</div>
+                                <div>{{total_sales | number : '1.2-2'}}€</div>
+                            </div>
+                            <div style="display: flex;">
+                                <div style="flex: 1">Mouvements</div>
+                                <div>{{total_moves | number : '1.2-2'}}€</div>
+                            </div>
+                            <div style="display: flex; border-top: solid 1px lightgrey; margin-top: 10px; padding-top: 10px;">
+                                <div style="flex: 1">TOTAL</div>
+                                <div>{{calcExpected() | number : '1.2-2'}}€</div>
+                            </div>
+                        </div>
+
+                        <div style="text-align:center; flex: 0 35%;">
+                            <h4>Compté</h4>
+                            <div style="display: flex; border-bottom: 1px solid black; align-items: center; justify-content: space-between;">
+                                <p style="padding-right: 0.4rem;">{{total_inventory | number : '1.2-2'}}€</p>
+                                <button (click)="onInventoryClick()"><mat-icon>tablet_android</mat-icon></button>
+                            </div>
+                        </div>
+                        <div style="text-align:center; flex: 0 15%;">
+                            <h4>Différence</h4>
+                            <div [class.difference]="calcDifference() < 0">{{calcDifference() | number : '1.2-2'}}€</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content:center;">
+                        <textarea [(ngModel)]="closing_note"
+                            style="background-color: white; border: 1px solid black; margin: 0.2rem; margin-top: 20px; padding: 0.2rem; width:100%; min-height: 100px;font-size: 15px;">
+                        </textarea>
+                    </div>
+                </div>
+                <div mat-dialog-actions style="display: flex; align-items: center; margin-top: 20px;">
+                    <div *ngIf="calcDifference() != 0" style="flex: 1; height: 75px;">
+                        <div style="display: flex; margin-top: 20px; align-items: center;">
+                            <mat-checkbox [(ngModel)]="checked" class="example-margin"></mat-checkbox>
+                            <div style="margin-top: 3px; margin-left: 16px;">Accepter la différence de paiement et l'enregistrer au journal des pertes et profits</div>
+                        </div>
+                        <mat-error *ngIf="calcDifference() != 0 && !checked && submitted" style="font-size: 14px;">Cocher pour fermer la session</mat-error>
+                    </div>
+                    <button mat-raised-button color="primary" (click)="onSessionCloseClick()" style="margin-left: auto;">Fermer la Session</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

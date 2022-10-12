@@ -1,0 +1,16 @@
+<div class="pad">
+    <div class="pad-numbers">
+        <button mat-raised-button value="1" (click)="onKeypress(1)">1</button>
+        <button mat-raised-button value="2" (click)="onKeypress(2)">2</button>
+        <button mat-raised-button value="3" (click)="onKeypress(3)">3</button>
+        <button mat-raised-button value="4" (click)="onKeypress(4)">4</button>
+        <button mat-raised-button value="5" (click)="onKeypress(5)">5</button>
+        <button mat-raised-button value="6" (click)="onKeypress(6)">6</button>
+        <button mat-raised-button value="7" (click)="onKeypress(7)">7</button>
+        <button mat-raised-button value="8" (click)="onKeypress(8)">8</button>
+        <button mat-raised-button value="9" (click)="onKeypress(9)">9</button>
+        <button [disabled]="disabledKeys?.indexOf('+') >= 0" mat-raised-button value="+/-" (click)="onKeypress(this.operator)" (dblclick)="onDoubleClick()">{{this.operator}}</button>
+        <button mat-raised-button value="0" (click)="onKeypress(0)">0</button>
+        <button [disabled]="disabledKeys?.indexOf(',') >= 0" mat-raised-button value=","   (click)="onKeypress(',')">,</button>
+    </div>
+</div>

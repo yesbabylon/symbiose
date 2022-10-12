@@ -1,0 +1,26 @@
+<div class="overlay-container" *ngIf="loading"><mat-spinner></mat-spinner></div>
+<div class="container">
+    <div class="outer-wrapper" style="width: 100%">
+        <div class="header">
+            <div *ngIf="['quote','checkedin','checkedout'].indexOf(instance.status) >= 0" style="flex: 1;">Ajouter un groupe de services <button mat-mini-fab color="primary" style="transform: scale(0.66);" (click)="oncreateGroup()"> <mat-icon>add</mat-icon></button></div>
+            <div style="margin-left: auto; font-size: 20px;">Total TTC {{instance.price | number: '1.2-2'}} €</div>
+        </div>
+        <div class="inner-wrapper" *ngIf="instance.booking_lines_groups_ids.length">
+            <div class="groups-list" cdkDropList (cdkDropListDropped)="ondropGroup($event)">
+
+                <!-- groups -->
+                <div class="group-item" cdkDrag [cdkDragData]="group" *ngFor="let group of instance.booking_lines_groups_ids;" >
+                    <div class="group-handle" cdkDragHandle ><mat-icon style="font-size: 16px;">drag_indicator</mat-icon></div>
+                    <div class="group-remove"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
+                    <booking-services-booking-group
+                        [model]="group"
+                        [booking]="instance"
+                        (updated)="onupdateGroup()"
+                        (deleted)="ondeleteGroup(group.id)"
+                    ></booking-services-booking-group>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

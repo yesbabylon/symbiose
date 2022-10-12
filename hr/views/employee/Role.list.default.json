@@ -1,0 +1,25 @@
+{
+    "name": "Roles list",
+    "description": "List of all HR Roles.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "85%"
+            }
+        ]
+    }
+}

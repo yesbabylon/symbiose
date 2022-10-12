@@ -1,0 +1,8 @@
+<div class="pad">
+    <mat-button-toggle-group [(ngModel)]="mode" (change)="onchangeMode(mode)">
+        <mat-button-toggle mat-raised-button value="qty" [class.selected]="mode == 'qty'"> <mat-icon>add_shopping_cart</mat-icon></mat-button-toggle>
+        <mat-button-toggle mat-raised-button value="unit_price" [class.selected]="mode == 'unit_price'"><mat-icon> attach_money</mat-icon></mat-button-toggle>
+        <button (click)="onpressKey('%')" mat-raised-button><mat-icon>%</mat-icon></button>
+        <button (click)="onpressKey('backspace')" mat-raised-button class="backspace"><mat-icon>backspace</mat-icon></button>
+    </mat-button-toggle-group>
+</div>

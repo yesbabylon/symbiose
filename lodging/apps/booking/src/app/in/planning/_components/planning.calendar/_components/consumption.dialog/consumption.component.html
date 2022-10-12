@@ -1,0 +1,54 @@
+
+<div style="display: flex; align-items: baseline;"><h1 mat-dialog-title>Assignation {{data.rental_unit}}</h1> <div style="margin-left: auto; display: flex;">{{ data.date_from | date:'shortDate'}} <i class="material-icons">arrow_right_alt</i> {{ data.date_to | date:'shortDate'}}</div></div>
+
+<div>
+
+
+    <div style="display: flex; align-items: baseline; justify-content: flex-start; gap: 20px">
+        <div class="reason-selector">
+            <mat-form-field appearance="standard">
+                <mat-label>Motif</mat-label>
+                <mat-select disableOptionCentering [formControl]="vm.type.formControl">
+                    <mat-option value="book">Réservation (option)</mat-option>
+                    <mat-option value="ooo">Hors-service (maintenance & réparation)</mat-option>                
+                </mat-select>
+                <mat-hint>Le motif auquel l'unité locative doit être assignée à ces dates.</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="customer-selector" *ngIf="vm.type.formControl.value == 'book'">
+            <sb-m2o-select
+                [entity]="'identity\\Identity'"
+                [placeholder]="'Commencez à taper le nom'"
+                [hint]="'Client pour cette réservation'"
+                [noResult]="'rien trouvé'"
+                [required]="true"
+                (itemSelected)="selectIdentity($event)">Client</sb-m2o-select>
+        </div>
+    </div>
+
+
+    <div style="display: flex; align-items: baseline; justify-content: flex-start; gap: 20px;">
+        <div class="cell-option" [class.hidden]="vm.type.formControl.value != 'book'">            
+            <mat-slide-toggle [formControl]="vm.no_expiry.formControl">Pas d'expiration</mat-slide-toggle>
+            <mat-hint>Laisser l'option active indéfiniment.</mat-hint>
+        </div>
+        <div class="cell-option" [class.hidden]="vm.type.formControl.value != 'book'">
+            <mat-slide-toggle [formControl]="vm.free_rental_units.formControl">Libérer les unités locatives</mat-slide-toggle>
+            <mat-hint>Si oui, à l'expiration, les unités locatives seront libérées.</mat-hint>
+        </div>
+        <div class="cell-option" [class.hidden]="vm.type.formControl.value != 'ooo'">
+            <mat-form-field appearance="standard" style="width: 100%;">
+                <mat-label>Description</mat-label>
+                <input matInput [formControl]="vm.description.formControl">
+                <mat-hint>Raison du blocage de l'unité locative.</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+
+</div>
+
+<div mat-dialog-actions>
+    <button style="margin-left: auto;" mat-button [mat-dialog-close]="false" cdkFocusInitial>Annuler</button>
+    <button mat-button (click)="onsubmit()">Confirmer</button>
+</div>

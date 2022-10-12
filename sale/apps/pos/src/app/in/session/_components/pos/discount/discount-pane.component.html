@@ -1,0 +1,18 @@
+<div class="listHeader">
+    <p style="font-weight: bolder;">Détails du prix</p>
+    <button style="margin-left: auto;" mat-mini-fab color="primary" (click)="onClose()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div><hr>
+<mat-selection-list style="overflow: auto;" #lines [multiple]="false"
+    (click)="onSelectField(lines.selectedOptions.selected)">
+    <mat-list-option *ngFor="let line of liners; index as i"
+                    [value]="i"
+                    [disabled]="line.disabled"
+                    [class.disabled]="line.disabled">
+        <div class="optionDetails">
+            <p class="lineName">{{line.name}}</p>
+            <p> <span>{{line.value}} </span> <span class="lineUnit">{{line.unit}}</span></p>
+        </div><hr>
+    </mat-list-option>
+</mat-selection-list>

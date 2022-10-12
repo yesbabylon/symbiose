@@ -1,0 +1,26 @@
+<div [class.with-border]="item.children && item.children.length" [class.hidden]="item.hidden">
+    <a mat-list-item 
+        (click)="onItemSelected(item)"
+        [class.expanded]="item.expanded"
+        [title]="(i18n && i18n[item.id])?i18n[item.id].label:item.label"
+        class="menu-list-item">
+        <mat-icon *ngIf="item.icon" class="item-icon">{{item.icon}}</mat-icon>
+        <span class="item-title" [class.has-icon]="item.icon">{{(i18n && i18n[item.id])?i18n[item.id].label:item.label}}</span>
+        <span class="item-children" *ngIf="item.children && item.children.length">
+            <mat-icon [@indicatorRotate]="item.expanded ? 'expanded': 'collapsed'">
+            expand_more
+            </mat-icon>
+        </span>
+    </a>
+    <div *ngIf="item.expanded">
+        <app-menu-list-item 
+            *ngFor="let child of item.children" 
+            [item]="child" 
+            [i18n]="i18n" 
+            [depth]="depth+1" 
+            [style]="{visibility:(item.expanded)?'visible':'hidden', opacity:(item.expanded)?1:0}"
+            (select)="onItemSelected($event)"
+            (toggle)="onItemToggle($event)">
+        </app-menu-list-item>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div #vGroup="var" [var]="{rental_units: {folded: false}}"></div>
+
+<div class="part">
+
+    <div class="part-toggle">
+        <button mat-icon-button *ngIf="!vGroup.rental_units.folded" (click)="vGroup.rental_units.folded = !vGroup.rental_units.folded">
+            <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="vGroup.rental_units.folded" (click)="vGroup.rental_units.folded = !vGroup.rental_units.folded">
+            <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+
+    <div class="part-container" *ngIf="vGroup.rental_units.folded">
+        <div class="row">
+            <div class="row-products-title">{{instance.product_model_id?.name}} <small>[{{instance.product_model_id?.id}}]</small> : <b>{{instance.qty}} p.</b></div>
+        </div>
+    </div>
+
+    <div class="part-container" *ngIf="!vGroup.rental_units.folded">
+        <div class="row">
+            <div class="row-products-title">{{instance.product_model_id?.name}} : <b>{{instance.qty}} p.</b>
+                <button mat-mini-fab color="primary" style="transform: scale(0.65);" (click)="oncreateAssignment()"><mat-icon>add</mat-icon></button>
+            </div>
+        </div>
+
+        <div class="row" *ngFor="let assignment of instance.rental_unit_assignments_ids; let index = index;">
+            <div class="row-line">
+                <booking-services-booking-group-accomodation-assignment
+                    [model]="assignment"
+                    [accomodation]="instance"
+                    [booking]="booking"
+                    [group]="group"
+                    (updated)="onupdateAssignement(assignment.id)"
+                ></booking-services-booking-group-accomodation-assignment>
+            </div>
+            <div class="row-remove"><button mat-icon-button (click)="ondeleteAssignment(assignment.id)"> <mat-icon>delete</mat-icon></button></div>
+        </div>
+
+    </div>
+
+</div>

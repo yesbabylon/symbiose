@@ -1,0 +1,49 @@
+{
+    "name": "Absences",
+    "description": "List of employees absences.",
+    "order": "date",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "date",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "day_part",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "label": "code",
+                "value": "code_id",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "label": "employee",
+                "value": "employee_id",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "measure_unit",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "duration",
+                "width": "10%"
+            }
+        ]
+    }
+}

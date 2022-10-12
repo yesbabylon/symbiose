@@ -1,0 +1,164 @@
+<div class="container">
+
+    <div [class.hidden]="!loading" class="loader"><mat-spinner></mat-spinner></div>
+
+    <div class="header">
+        <div class="header-inner">Réservation <small>[{{booking.name}} - {{booking.id}}]</small> <span> › </span> Envoi du Contrat</div>
+
+        <div class="lang-selector">
+            <mat-form-field appearance="fill">
+                <mat-label>Langue</mat-label>
+                <mat-select disableOptionCentering [formControl]="vm.lang.formControl">
+                    <mat-option *ngFor="let lang of languages" [value]="lang.code">{{lang.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="body">
+
+        <div class="body-actions" style="display: flex;">
+            <div class="actions-std">
+            </div>
+            <div class="actions-view">
+                <mat-form-field class="print-mode-selector">
+                    <mat-label>Présentation des lignes</mat-label>
+                    <mat-select [formControl]="vm.mode.formControl" disableOptionCentering required>
+                        <mat-option value="simple">Simple</mat-option>
+                        <mat-option value="grouped">Groupé</mat-option>
+                        <mat-option value="detailed">Détaillé</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="mode=='simple'">Groupes seuls, prix / groupe</mat-hint>
+                    <mat-hint *ngIf="mode=='grouped'">Groupes + lignes, prix / groupe</mat-hint>
+                    <mat-hint *ngIf="mode=='detailed'">Groupes + lignes, prix / ligne</mat-hint>
+                </mat-form-field>
+                <a target="_blank" [attr.href]="'/?get=lodging_booking_print-contract&view_id=print.default&lang=' + lang + '&mode=' + mode + '&id=' + contract_id">
+                    <button mat-stroked-button>Voir le contrat</button>
+                </a>
+                <button mat-flat-button color="accent" (click)="onSend()" [disabled]="is_sent">Envoyer</button>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <div class="cell title">Réservation</div>
+                <div class="cell">
+                    <a (click)="onclickBooking()">{{ booking.name }}</a>
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell title">Client</div>
+                <div class="cell" style="max-width: 300px;">
+                    <a (click)="onclickCustomer()">{{ customer.name }}</a> &nbsp; &nbsp;<small>({{getLangName(customer.lang_id)}})</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+        </div>
+
+        <div class="row">
+
+            <div class="column">
+                <div class="cell title">Expéditeur</div>
+                <div class="cell">
+                    <mat-form-field>
+                        <mat-label>Adresses d'expédition</mat-label>
+                        <mat-select [formControl]="vm.sender.formControl" required>
+                            <mat-option *ngFor="let address of vm.sender.addresses" [value]="address">{{address}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vm.sender.formControl.invalid">
+                        Ne peut être vide.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="cell title">Destinataire</div>
+                <div class="cell">
+                    <mat-form-field>
+                        <mat-label>Adressses de destination</mat-label>
+                        <mat-select [formControl]="vm.recipient.formControl" required>
+                            <mat-option *ngFor="let address of vm.recipient.addresses" [value]="address">{{address}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vm.sender.formControl.invalid">Ne peut être vide.</mat-error>
+                        <mat-hint>Adresse email principale (champ À)</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="cell" style="margin-left: 20px;">
+                    <mat-form-field>
+                        <mat-label>Secondaires</mat-label>
+                        <mat-select  multiple [formControl]="vm.recipients.formControl" >
+                            <mat-option *ngFor="let address of vm.recipients.addresses" [value]="address">{{address}}</mat-option>
+                        </mat-select>
+                        <mat-hint>Adresses email en copie (champ CC)</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column" style="width: 100%">
+                <mat-form-field>
+                    <input  type="text"
+                            autocomplete="off"
+                            placeholder="Titre"
+                            matInput
+                            [formControl]="vm.title.formControl" >
+                    <mat-error *ngIf="vm.title.formControl.hasError('required')">
+                    Ne peut être vide.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column" style="display: block; width: 100%; margin-top: 10px;">
+                <quill-editor
+                    [formControl]="vm.message.formControl"
+                    theme="snow"
+                    [placeholder]="'Corps du message'">
+                </quill-editor>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="column" style="width: 100%; flex-direction: column;">
+
+                <div style="display: flex;"><mat-icon>attach_file</mat-icon> Pièces jointes ({{center.name}})</div>
+                <div *ngFor="let attachment of vm.attachments.items" style="margin-left: 10px; display: flex; align-items: center;">
+
+                    <div><b>{{attachment.name}}</b> ({{attachment.document_id.name}})</div>
+                    <button mat-icon-button (click)="onRemoveAttachment(attachment)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <a target="_blank" [attr.href]="'/?get=documents_document&hash='+attachment.document_id.hash">
+                        <button mat-icon-button>
+                            <mat-icon>open_in_new</mat-icon>
+                        </button>
+                    </a>
+                </div>
+                <div style="margin-left: 10px;">
+                    <div *ngFor="let document of documents; let index = index" style="display: flex; width: 100%;">
+                        <sb-m2o-select style="min-width: 70%" [entity]="'documents\\Document'" [placeholder]="'Commencez à taper le nom'"
+                            [noResult]="'rien trouvé'" [required]="true"
+                            (itemSelected)="onselectDocuments($event)">
+                            Document
+                        </sb-m2o-select>
+                        <button mat-icon-button (click)="onRemoveDocument(index)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                    <button mat-mini-fab color="primary" (click)="addDocument()" style="margin-top: 3px;">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

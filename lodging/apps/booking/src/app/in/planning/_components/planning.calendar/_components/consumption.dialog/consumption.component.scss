@@ -1,0 +1,34 @@
+:host {
+    h1 {
+        margin: 0;
+
+    }
+
+    .reason-selector {
+        position: relative;
+        flex: 0 1 50%;
+        mat-form-field {
+            width: 100%;;
+        }
+    }
+
+    .customer-selector {
+        position: relative;
+        top: 1px;
+        flex: 0 1 50%;
+    }
+
+    .cell-option {
+        display: block;
+        flex: 1; 
+        margin: 10px 0;
+        mat-hint {
+            display: block;
+            font-size: 75%;
+        }
+
+        &.hidden {
+            display: none;
+        }
+    }
+}

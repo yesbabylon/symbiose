@@ -1,0 +1,124 @@
+:host {
+
+    a {
+        cursor: pointer;
+    }
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .overlay-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: white;
+
+        mat-spinner {
+            position: absolute;
+            left: calc(50% - 50px);
+            top: 33%;
+        }
+    }
+
+    .container {
+        height: 100%;
+        width: 100%;
+
+        .header-wrap{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: solid 1px lightgrey;
+            height: 48px;
+            
+            .header {
+                padding-left: 12px;
+                height: 48px;
+                line-height: 48px;
+                font-size: 22px;
+            }
+        }
+        .body {
+            height: calc(100vh - 123px);
+            width: 100%;
+            overflow-y: scroll;
+            padding: 12px;
+            
+            .actions {
+                display: flex;
+
+                button {
+                    text-transform: uppercase;
+                }
+
+                .actions-std {
+                    flex: 0 1 30%;
+                }
+
+                .actions-view {
+                    margin-left: auto;
+                    
+                    button:not(:last-child) {
+                        margin-right: 12px;
+                    }
+                }
+        
+            }
+
+            .view {
+                margin-top: 30px;
+                
+                .customer-row {
+                    display: flex;
+                    max-width: 830px;
+                    align-items: center;
+
+                    .customer-select {
+                        flex: 1 1 30%;
+                        sb-m2o-select {
+                            font-size: 28px;
+                            line-height: 32px;
+                            font-weight: 400;
+                        }
+                    }
+
+                    .order-create {
+                        margin-left: auto;
+                        min-width: 100px;
+                        margin-left: 32px;
+
+                        button {
+                            transform: scale(1.5);
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+
+        }
+    
+        .body::-webkit-scrollbar {
+            width: 6px;
+            overflow-y: scroll;
+            background: transparent;
+        
+        }
+        
+        .body::-webkit-scrollbar-thumb {
+            background: var(--mdc-theme-primary, #6200ee);
+            border-radius: 10px;
+        }        
+
+        
+    }
+
+    .container.hidden {
+        display: none;
+    }      
+    
+}

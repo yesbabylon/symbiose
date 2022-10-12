@@ -1,0 +1,41 @@
+<div class="pos-pad">
+
+    <div class="customer">
+        <div *ngIf="!select_customer" class="customer-display">
+            <span>{{customer.name}}</span>
+            <button mat-icon-button (click)="select_customer = true" color="primary"><mat-icon>cancel</mat-icon></button>
+        </div>
+        <div *ngIf="select_customer" class="customer-select">
+            <sb-m2o-select
+                [entity]="'sale\\customer\\Customer'"
+                [placeholder]="'Commencez à taper le nom'"
+                [hint]="'Client pour la commande'"
+                [noResult]="'rien trouvé'"
+                (itemSelected)="onselectCustomer($event)">Client</sb-m2o-select>
+        </div>
+    </div>
+    <div class="pos-lowerPart">
+
+        <div class="details-payment">
+             
+            <mat-button-toggle-group [(ngModel)]="hasInvoice" class="payment">
+                <mat-button-toggle mat-raised-button style="width: 100%; height: 100%; display: flex; align-items: center;" 
+                    [class.selected]="hasInvoice == true" 
+                    (click)="onclickInvoice()" 
+                    [value]="hasInvoice"> <p style="height: 100%;"><span>Facture</span></p> </mat-button-toggle>
+            </mat-button-toggle-group>
+            
+            <button  mat-raised-button class="payment payment-button" (click)="onclickNext()">
+                <mat-icon>play_circle_filled</mat-icon>
+                <p>Commande</p>
+            </button>
+        </div>
+
+        <div style="display: flex;">
+            <app-pad-generic (keyPress)="onclickKey($event)"  [disabledKeys]="disabledKeys"></app-pad-generic>
+            <app-pad-value-increments #incrementsPad
+                (incrementClick)="onclickKey($event)" 
+                (keyPress)="onclickKey($event)"></app-pad-value-increments>
+        </div>
+    </div>  
+</div>

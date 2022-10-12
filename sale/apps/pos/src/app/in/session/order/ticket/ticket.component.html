@@ -1,0 +1,93 @@
+<div class="overlay-container" *ngIf="!ready">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="ready">
+    <div class="header-wrap">
+        <div class="header">Session › {{instance.session_id.name}} <small>[{{instance.session_id.id}}]</small> › <a [attr.href]="'#/session/'+instance.session_id.id+'/orders'">Commandes en cours</a></div>
+        <div style="display: flex; align-items: center;"></div>
+    </div>
+    <div class="body" style="background-color: #e1e1e1;">
+        <div class="actions">
+            <div class="actions-std"></div>
+            <div class="actions-view">
+                <a *ngIf="instance.has_invoice" target="_blank" [attr.href]="'/?get=lodging_booking_print-invoice&view_id=print.default&id='+instance.invoice_id+'&lang=fr'" style="margin-right: 10px;">
+                    <button mat-stroked-button color="primary">Voir la facture</button>
+                </a>
+                <button mat-flat-button color="accent" (click)="onPrint()">Imprimer le ticket</button>
+            </div>
+        </div>
+
+
+        <div class="view" style="margin: auto;">
+
+            <div class="ticket-details">
+                <p class="company-name">{{instance.session_id.center_id?.center_office_id?.legal_name}}</p>
+                <small>
+                    <p class="company-name">{{instance.session_id.center_id?.organisation_id?.legal_name}}</p>
+                    <p>{{instance.session_id.center_id?.organisation_id?.address_street}}</p>
+                    <p>{{instance.session_id.center_id?.organisation_id?.address_zip}} {{instance.session_id.center_id?.organisation_id?.address_city}}</p>
+                    <p *ngIf="instance.session_id.center_id?.organisation_id?.has_vat">{{instance.session_id.center_id?.organisation_id?.vat_number}}</p>
+                    <p>{{instance.session_id.center_id?.organisation_id?.phone}}</p>
+                </small>
+            </div>
+            <hr>
+            <div class="customer-details" *ngIf="instance.has_invoice">
+                <p>{{instance?.customer_id?.name}}</p>
+                <p>{{instance?.customer_id?.partner_identity_id?.address_street}}</p>
+                <p>{{instance?.customer_id?.partner_identity_id?.address_zip}} {{instance?.customer_id?.partner_identity_id?.address_city}}</p>
+                <p>{{instance?.customer_id?.partner_identity_id?.vat_number}}</p>
+            </div>
+
+            <ul>
+                <li *ngFor="let orderLines of instance?.order_lines_ids; index as i" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="flex: 0 0 15%">{{orderLines?.qty}}</div> <div style="flex: 1;">{{orderLines?.name}}</div> <div>{{orderLines?.price | number : '1.2-2'}} €</div>
+                </li>
+                <span class="dotts">------</span>
+            </ul>
+
+            <div class="total">
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span><b>TOTAL</b></span>
+                    <span><b>{{instance?.price | number : '1.2-2'}} € </b></span>
+                </div>
+            </div>
+            <hr>
+            <ul>
+                <ng-container *ngFor="let part of getPaymentModesMap() | keyvalue">
+                    <li *ngIf="part.key !== 'booking'">
+                        <span>{{part.key}}</span>
+                        <span>{{part.value | number : '1.2-2'}} €</span>
+                    </li>
+                </ng-container>
+                <span class="dotts">------</span>
+            </ul>
+            <div>
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <span style="font-weight: bolder; font-size: 1.1rem;"> RENDU</span>
+                    <span>{{(instance?.total_paid - instance?.price) | number : '1.2-2' }} €</span>
+                </div>
+            </div>
+
+            <ul>
+                <li *ngFor="let line of getVatMap() | keyvalue">
+                    <span>{{line.key}}%</span>
+                    <span>{{line.value | number : '1.2-2'}} €</span>
+                </li>
+                <li>
+                    <span>TOTAL TAXES:</span>
+                    <span>{{instance.price - instance.total | number : '1.2-2'}} €</span>
+                </li>
+            </ul>
+
+            <hr>
+
+            <div class="order-details">
+                <p>Commande {{instance.name}}</p>
+                <p>{{instance.created | date : 'medium'}}</p>
+                <small><p>Imprimé par {{user.name}}</p></small>
+            </div>
+
+        </div>
+    </div>
+</div>

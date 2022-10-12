@@ -1,0 +1,131 @@
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+
+    .hidden {
+        visibility: hidden;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    .part {
+        display: flex;
+
+        .part-toggle {
+            flex: 0 1;
+            display: inline-block;
+            vertical-align: top;
+            padding: 2px 0px 0px 20px;
+        }
+
+        .part-container {
+            flex: 1;
+            display: inline-block;
+            width: 100%;
+            min-height: 45px;
+
+            .row {
+                width: 100%;
+                display: flex;
+                padding: 5px 0;
+                flex: 1;
+
+
+                .cell {
+                    position: relative;
+                    padding: 0 10px;
+                    margin-right: 15px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+
+                }
+
+                .cell.cell-text {
+                    line-height: 45px;
+                }
+
+                .cell.cell-right {
+                    text-align: right;
+                }
+
+                .cell.cell-actions {
+                    max-width: 35px;
+                }
+
+                .cell:first-child {
+                    flex: 0 0 calc((100% + 60px)*0.40 - 60px);
+                }
+
+                .cell:not(:first-child) {
+                    flex: 1 0 calc((100% + 60px)*0.08);
+                }
+            }
+
+            .row.row-first {
+                // max-height: 55px;
+
+                ::ng-deep .mat-form-field-wrapper {
+                    padding-bottom: 15px
+                }
+            }
+
+            .row.row-title {
+                height: 45px;
+                line-height: 45px;
+            }
+
+            .row.row-thin {
+                padding: 0;
+            }
+        }
+    }
+
+    mat-form-field {
+        width: 100%;
+        padding: 0px;
+    }
+
+    mat-form-field.header {
+        margin-top: -5px;
+
+        input {
+            font-size: 22px;
+        }
+    }
+
+    mat-form-field.invisible {
+        ::ng-deep.mat-form-field-underline {
+            display: none !important;
+        }
+    }
+
+    p {
+        font-size: 14px;
+        padding: 0px 12px;
+    }
+
+    .discounts-list {
+        position: relative;
+        padding: 0 12px 0 0;
+        width: 100%;
+
+        .discount-item {
+            position: relative;
+            background-color: white;
+
+            .discount-remove {
+                position: absolute;
+                right: -5px;
+                top: 10px;
+                z-index: 2;
+            }
+
+        }
+
+    }
+}

@@ -1,0 +1,36 @@
+<div>
+  
+    <mat-form-field appearance="legacy" class="participant-age-day">
+        <mat-label>Jour</mat-label>
+        <input type="text"
+                matInput
+                [formControl]="daysformControl" 
+                [matAutocomplete]="day">
+        <mat-autocomplete autoActiveFirstOption #day="matAutocomplete" (optionSelected)="onSelectDay($event.option.value)">
+            <mat-option *ngFor="let day of daysfiltered | async" [value]="day">{{day}}</mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" class="participant-age-month" >
+      <mat-label>Mois</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="monthsformControl" 
+             [matAutocomplete]="month">
+      <mat-autocomplete class="ui-scroll" [classList]="'ui-scroll'" autoActiveFirstOption #month="matAutocomplete" (optionSelected)="onSelectMonth($event.option.value)">
+        <mat-option *ngFor="let month of monthsfiltered | async" [value]="month">{{month}}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    
+    <mat-form-field appearance="legacy" class="participant-age-year">
+      <mat-label>Année</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="yearsformControl" 
+             [matAutocomplete]="year">
+      <mat-autocomplete autoActiveFirstOption #year="matAutocomplete" (optionSelected)="onSelectYear($event.option.value)">
+        <mat-option *ngFor="let year of yearsfiltered | async" [value]="year">{{year}}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+</div>

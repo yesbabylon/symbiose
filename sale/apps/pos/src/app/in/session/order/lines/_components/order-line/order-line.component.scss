@@ -1,0 +1,48 @@
+:host {
+    position: relative;
+    width: 100%;
+
+
+    .product-name {
+        position: absolute;
+        top: 5px;
+        display: flex;
+        font-weight: bold;
+        margin: 0 0 0 2px;
+        overflow: hidden;
+        text-align: left;
+        align-items: center;
+        height: 24px;
+        font-size: 20px;
+        margin-left: 5px;
+    }
+
+    .product-details {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        padding: 0 12px 12px 12px;
+        height: 70px;
+        border-bottom: 1px solid lightgrey;
+
+        .product-price {
+            flex: 1 1 10%;
+            overflow: hidden;
+            width: 60%;
+            text-align: start;
+        }
+
+        .product-actions {
+            button {
+                margin-right: 4px;
+            }
+        }
+    }
+
+    .selectedLine {
+        background-color: #E0E0E0;
+        color: black;
+        // border: 1px solid white;
+    }
+
+}

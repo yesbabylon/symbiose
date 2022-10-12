@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="app-header">
+        <app-header [section]="'Point de Vente'"
+                    [i18n]="translationsMenuTop"
+                    [items]="topMenuItems"
+                    [action]="'Nouvelle session'"
+                    (toggleMenu)="toggleSideMenu()"
+                    (toggleBar)="toggleSideBar()"
+                    (select)="onSelectItem($event)"
+                    (onAction)="onAction()">
+        </app-header>
+    </div>
+    <div class="app-body">
+
+        <div class="app-sidebar"  [class.show]="show_side_bar">
+            <!-- app-sidebar -->
+            <div class="side-inner">
+                <!--
+                <div style="height: 48px; display: flex; align-items: center; position: relative; background-color: white; border-bottom: solid 1px lightgrey; border-right: solid 1px lightgrey;">
+                    <input matInput placeholder="enter keyword" value="" (change)="onchangeFilter($event)" style="border: 0; outline: 0; padding: 0 30px 0 10px; width: 100%;;">
+                    <button mat-icon-button color="primary" style="position: absolute; right: 10px"><mat-icon>search</mat-icon></button>
+                </div>
+                -->
+                <mat-nav-list>
+                    <app-menu-list-item *ngFor="let item of navMenuItems"
+                        [i18n]="translationsMenuLeft"
+                        [class.hidden]="item.hidden"
+                        [item]="item"
+                        (select)="onSelectItem($event)"
+                        (toggle)="onToggleItem($event)"></app-menu-list-item>
+                </mat-nav-list>
+            </div>
+        </div>
+
+        <div class="app-main">
+            <router-outlet></router-outlet>
+            <app-footer></app-footer>
+        </div>
+
+        <div class="app-asidemenu" [class.show]="show_side_menu">
+            <app-sidemenu (updated)="showSideMenu()"
+            ></app-sidemenu>
+        </div>
+
+    </div>
+</div>

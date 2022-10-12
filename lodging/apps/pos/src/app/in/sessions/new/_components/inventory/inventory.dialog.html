@@ -1,0 +1,36 @@
+<div mat-dialog-content>
+    <div>
+      <div>
+        <h2 style="text-align: center; text-decoration:underline; margin:2rem">Caisse : Pièces/Billets</h2>
+      </div>
+      <div style="display: flex; justify-content: space-evenly; align-items: center; width: 75rem">
+        <div style="display: grid;
+                    grid-auto-flow: column;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(8, 1fr); height: 100%">
+            <div *ngFor="let coin of coins; index as i" style="margin: 0.2rem;">
+              <input (input)="onKeyboardInput($event)" style="font-size: 1.2rem" type="number" [value]="coin.number" (focus)="onGetFocusedInput(i)"> <mat-label style="font-size: 1.2rem; font-weight: bold; padding: 0.2rem">{{coin.value}}€</mat-label>
+            </div>
+        </div>
+
+        <div style="display: flex; border: 0; background-color: #ededed; padding: 10px;">
+          <app-pad-generic [disabledKeys]="['+', ',']" (keyPress)="onPadInput($event)"></app-pad-generic>
+          <app-pad-value-increments style="margin-bottom: 0.25px;" (incrementClick)="onIncrementPadInput($event)" (keyPress)="onPadInput('backspace')"></app-pad-value-increments>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <div>
+    <p style="background-color: white; border: 2px solid lightgreen; margin: 0.2rem; margin-top: 20px; padding: 0.2rem; width:100%; min-height: 50px" name="" id="" cols="30" rows="10" placeholder="Espèces" >
+      <span> <b>  Montant : </b> <br></span>
+      <span *ngFor="let coin of coins"> 
+        <span  *ngIf="coin.number != ''">{{coin.value}} x {{coin.number}} € <br></span>
+      </span>
+    </p>
+  
+    <h3 style="margin-top: 0.5rem; margin-left:6rem; font-weight: bold">TOTAL: {{total | number : '1.2-2'}}€</h3>
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end">
+    <button mat-raised-button color="primary" style="float:right" mat-raised-button (click)="onclickOk()">Ouvrir</button>
+    <button mat-raised-button color="primary" style="float:right" mat-raised-button (click)="onclickCancel()">Annuler</button>
+  </div>

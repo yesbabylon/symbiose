@@ -1,0 +1,123 @@
+<div class="panelFilters">
+
+    <!--
+    <div>
+        <mat-form-field>
+        <mat-select name="capacity" [ngModel]="capacity" (selectionChange)="onCapacityChange($event)">
+            <mat-option value="0">-- All room --</mat-option>
+            <mat-option value="1">Single</mat-option>
+            <mat-option value="2">Double</mat-option>
+            <mat-option value="3">Triple</mat-option>
+        </mat-select>
+        </mat-form-field>
+    </div>
+    -->
+    <div class="centers-selector">
+        <mat-form-field>
+            <mat-select #centerSelector multiple
+                        [(ngModel)]="selected_centers_ids"
+                        panelClass="centers-selector"
+                        [disableOptionCentering]="true"
+                        (closed)="onchangeSelectedCenters()"
+                        (selectionChange)="onchangeSelectedCenters()">
+                <mat-optgroup [label]="'Sélection'">&nbsp;<a style="cursor: pointer;" (click)="onclickSelectAllCenters()">Tous</a> &nbsp; <a style="cursor: pointer;" (click)="onclickUnselectAllCenters()">Aucun</a> &nbsp; <a style="cursor: pointer;" (click)="onclickSelectGA()">GA</a> &nbsp; <a style="cursor: pointer;" (click)="onclickSelectGG()">GG</a></mat-optgroup>
+                <mat-option *ngFor="let center of centers" [value]="center.id" >{{center.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+</div>
+
+<div class="panelStatus">
+
+    <!-- <div class="date-display">{{dateFrom | date : 'd MMM y' }} - {{dateTo | date : 'd MMM y'}}</div> -->
+
+    <div class="date-selector">
+        <mat-form-field [floatLabel]="'never'">
+
+            <mat-date-range-picker #picker (closed)="onchangeDateRange()"></mat-date-range-picker>
+
+            <mat-date-range-input [rangePicker]="picker" [formGroup]="vm.date_range">
+                <input matStartDate placeholder="dd/mm/yyyy" formControlName="date_from">
+                <input matEndDate placeholder="dd/mm/yyyy" formControlName="date_to" (blur)="onchangeDateRange()">
+            </mat-date-range-input>
+
+        </mat-form-field>
+
+        <button mat-icon-button (click)="picker.open()">
+            <mat-icon>calendar_today</mat-icon>
+        </button>
+    </div>
+
+    <div class="date-counter">{{duration}} jours</div>
+
+    <div class="date-range-selector">
+        <mat-form-field>
+            <mat-select disableOptionCentering [value]="vm.duration" (selectionChange)="onDurationChange($event)">
+                <mat-option value="7">1 semaine</mat-option>
+                <mat-option value="15">2 semaines</mat-option>
+                <mat-option value="31">1 mois</mat-option>
+                <mat-option value="62">2 mois</mat-option>
+                <mat-option value="93">3 mois</mat-option>
+                <!-- <mat-option value="186">3 mois</mat-option>-->
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <button mat-icon-button (click)="onRefresh()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+
+</div>
+
+<div class="panelNavigation">
+    <button mat-icon-button (click)="onPrev(31)">
+        <mat-icon>keyboard_double_arrow_left</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="onPrev(7)">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-button (click)="onToday()">{{ 'BOOKING_PLANNING_HEADER_TODAY' |  translate}}</button>
+    <button mat-icon-button (click)="onNext(7)">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onNext(31)">
+        <mat-icon>keyboard_double_arrow_right</mat-icon>
+    </button>
+
+</div>
+
+
+<div class="overlay">
+    <div class="rental-unit-details">
+        <span *ngIf="rental_unit">{{rental_unit.name}} ({{rental_unit.capacity}})</span>
+    </div>
+    <div class="consumption-details">
+        <span *ngIf="consumption">
+            <div>{{consumption.booking_id?.name}}</div>
+            <div style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{consumption.booking_id?.customer_id?.name}}</div>
+            <div>{{consumption.date_from | date : 'fullDate' }} @ {{consumption.schedule_from}} → {{consumption.date_to | date : 'fullDate'}} @ {{consumption.schedule_to}}</div>
+            <div>{{consumption.qty}} p.</div>
+        </span>
+    </div>
+    <div class="date-details">
+        <span *ngIf="holidays">{{calcHolidays()}}</span>
+    </div>
+
+    <!--
+    <div class="rental-unit-details">
+        <span>rental_unit.name</span>
+    </div>
+    <div class="consumption-details">
+        <span >
+            consumption.booking_id.name - consumption.booking_id.customer_id.name - consumption.date_from | date : 'fullDate'  @ consumption.schedule_from → consumption.date_to | date : 'fullDate' @ consumption.schedule_to
+        </span>
+    </div>
+    <div class="date-details">
+        <span >holiday.name</span>
+    </div>
+    -->
+</div>

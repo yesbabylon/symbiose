@@ -1,0 +1,69 @@
+
+  <div class="container" >
+    <div class="import-header">{{ 'DOCS_LIST_DOCUMENT' | translate }} <span> › </span> {{ 'DOCS_LIST_IMPORT' | translate }} </div>
+    <div class="import-body">
+
+      <div class="body-actions" style="display: flex;">
+
+  <!-- ngx-dropzone  -->
+          <div style="width: 70%; margin: auto;" color="accent">
+            <ngx-dropzone (change)="onSelect($event)" color="warm" accept="{{accepted_formats}}">
+              <ngx-dropzone-label *ngIf="!loading"> {{ 'DOCS_DROP_TITLE' | translate }}</ngx-dropzone-label>
+              <mat-spinner  *ngIf="loading" style="margin: auto"></mat-spinner>
+            </ngx-dropzone>
+
+          </div>
+      </div>
+        <div class="formatError"  *ngFor = "let file of rejectedFiles">
+         <p><b>"{{file.name}}"</b> {{'DOCS_ERROR_BAD_FORMAT' | translate}} </p> 
+        </div>
+        <div style="width: 100%;">
+          <table mat-table class="mat-elevation-z8" [dataSource]="files">
+            ID Column
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_NAME' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_TYPE' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="size">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_SIZE' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="rename">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_ACTION_RENAMEDOC' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon style="color: rgb(12, 27, 36); cursor: pointer;" (click)="onRename(element)">create</mat-icon>
+            </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="viewImg">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_ACTION_VIEWDOC' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon style="color: rgb(42, 120, 165); cursor: pointer;" (click)="onDisplay(element.hash)">pageview</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> {{'DOCS_DROP_ACTION_DELETEDOC' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon style="color: red; cursor: pointer;" (click)="onDelete(element)">delete</mat-icon>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef=" ['name', 'type', 'size', 'rename', 'viewImg', 'delete']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'size', 'rename', 'viewImg', 'delete'];"></tr>
+          </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="sb-composition-container" class="sb-container"></div>

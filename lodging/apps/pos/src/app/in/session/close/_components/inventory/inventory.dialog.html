@@ -1,0 +1,37 @@
+<div mat-dialog-content>
+    <div>
+        <div>
+            <h2 style="text-align: center; text-decoration:underline; margin:2rem">Caisse : Pièces/Billets</h2>
+        </div>
+        <div style="display: flex; justify-content: space-evenly; align-items: center;">
+            <div class="cash-inventory" style="display: grid;
+                        grid-auto-flow: column;
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-rows: repeat(8, 1fr); height: 100%">
+                <div *ngFor="let item of inventory; index as i" style="margin: 0.2rem;">
+                    <input type="number" style="font-size: 1.2rem"
+                        (input)="onKeyboardInput($event);"   
+                        [value]="item.number" 
+                        (focus)="onGetFocusedInput(i)"> <mat-label style="font-size: 1.2rem; font-weight: bold; padding: 0.2rem">{{item.value}}€</mat-label>
+                </div>
+            </div>
+            <div style="display: flex; border: 0; background-color: #ededed; padding: 10px;">
+                <app-pad-generic [disabledKeys]="disabledKeys" (keyPress)="onPadInput($event)"></app-pad-generic>
+                <app-pad-value-increments style="margin-bottom: 0.25px;" (incrementClick)="onIncrementPadInput($event)" (keyPress)="onPadInput('backspace')"></app-pad-value-increments>
+            </div>
+        </div>    
+    </div>
+</div>
+<div>
+    <span> <b>  Montant : </b></span>
+    <div style="columns: 5; background-color: white; border: 2px solid lightgrey; margin: 10px; padding: 10px; width:100%; min-height: 96px; ">
+        <span *ngFor="let item of inventory"> 
+        <span  *ngIf="item.number != ''">{{item.value}} x {{item.number}} € <br></span>  
+        </span>
+    </div>  
+    
+</div>
+<div mat-dialog-actions style="display: flex; align-items: center;">
+    <h3 style="flex: 1; font-weight: 600;">TOTAL: {{calcTotal() | number : '1.2-2'}}€</h3>
+    <button mat-raised-button color="primary" style="margin-left: auto;" mat-raised-button (click)="closeDialog()" >Valider</button>
+</div>

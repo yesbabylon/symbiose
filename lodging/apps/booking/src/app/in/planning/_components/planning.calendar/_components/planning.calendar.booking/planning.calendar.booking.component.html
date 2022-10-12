@@ -1,0 +1,38 @@
+<div class="reservedBox">
+
+    <div class="booking-details"
+        [class.not-first]="consumption.date != consumption.date_from"
+        [class.part]="consumption.type == 'part'"
+        [style.background-color]="getColor()"
+        (mouseenter)="onEnterConsumption(consumption)"
+        (mouseleave)="onLeaveConsumption(consumption)">
+
+        <div *ngIf="consumption.type != 'ooo'" (click)="onShowBooking(consumption)" >
+            <div style="display: flex;">
+                <div style="flex: 0 1 20%;">{{consumption.booking_id.name}}</div>
+                <div style="margin-left: auto">
+                    <span *ngIf="consumption.booking_id.status == 'option'" class="material-icons">question_mark</span>
+                    <span *ngIf="consumption.booking_id.status != 'option'" class="material-icons">check</span>
+                    <ng-container *ngIf="consumption.booking_id.status != 'option'">
+                        <span *ngIf="consumption.booking_id.payment_status == 'paid'" class="material-icons">money_off</span>
+                        <span *ngIf="consumption.booking_id.payment_status == 'due'" class="material-icons">attach_money</span>
+                    </ng-container>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div style="flex: 0 1 20%; margin-top: -4px;">{{consumption.customer_id?.name}}</div>
+            </div>
+        </div>
+
+        <div *ngIf="consumption.type == 'ooo'" (click)="onShowBooking(consumption)">
+            <div style="display: flex;">
+                <div style="flex: 0 1 20%;">bloqué</div>
+                <div style="margin-left: auto">
+                    <span class="material-icons">block</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

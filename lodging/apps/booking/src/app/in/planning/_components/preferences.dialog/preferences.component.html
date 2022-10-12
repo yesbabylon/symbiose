@@ -1,0 +1,25 @@
+<h3 style="display: flex; justify-content: center; border-bottom: solid 1px lightgrey; margin-bottom: 0;" mat-dialog-title>Préférences</h3>
+<div mat-dialog-content>
+    <div style="display: flex;">
+        <div style="flex: 0 1 150px; line-height: 60px;">Hauteur des lignes</div>
+        <div style="margin-left: auto;">
+          <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Hauteur en pixels</mat-label>
+                <input matInput type="number" apparence="standard" [(ngModel)]="rows_height" [value]="rows_height" min="10" max="50">
+            </mat-form-field>
+        </div>
+    </div>
+    <div style="display: flex; height: 48px; padding-top: 12px;">
+        <mat-slide-toggle [checked]="show_parents" [(ngModel)]="show_parents">Afficher les unités parentes</mat-slide-toggle>
+    </div>
+    <div style="display: flex; height: 48px; padding-top: 12px;">
+        <mat-slide-toggle [checked]="show_children" [(ngModel)]="show_children">Afficher les unités enfants</mat-slide-toggle>
+    </div>
+    <div style="display: flex; height: 48px; padding-top: 12px;">
+        <mat-slide-toggle [checked]="show_accomodations_only" [(ngModel)]="show_accomodations_only">Afficher uniquement les logements</mat-slide-toggle>
+    </div>
+</div>
+<div mat-dialog-actions style="justify-content: flex-end; border-top: solid 1px lightgrey;">
+    <button  mat-raised-button color="primary" style="float: right;" (click)="onClose()">ANNULER</button>
+    <button  mat-raised-button color="primary" style="float: right;" (click)="onSave()">SAUVER</button>
+</div>

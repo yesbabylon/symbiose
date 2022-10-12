@@ -1,0 +1,35 @@
+<div class="cell">
+    <mat-form-field >
+        <mat-label>Type</mat-label>
+        <mat-select [formControl]="vm.type.formControl">
+            <mat-option [value]="'2_courses'">2 services</mat-option>
+            <mat-option [value]="'3_courses'">3 services</mat-option>            
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div class="cell">
+    <mat-form-field >
+        <mat-label>Préférence</mat-label>
+        <mat-select [formControl]="vm.pref.formControl">
+            <mat-option [value]="'regular'">normal</mat-option>
+            <mat-option [value]="'veggie'">végétarien</mat-option>            
+            <mat-option [value]="'allergen_free'">sans allergène</mat-option>                        
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div class="cell">
+    <mat-form-field style="max-width: 100px;">
+        <mat-label>Quantité</mat-label>
+        <input type="number" min="1" matInput [formControl]="vm.qty.formControl">
+        <mat-error *ngIf="vm.qty.formControl.errors">
+            <ng-container *ngIf="vm.qty.formControl.hasError('valid')">
+                Quantité incompatible.
+            </ng-container>
+            <ng-container *ngIf="vm.qty.formControl.hasError('required')">
+                Ne peut être vide.                
+            </ng-container>            
+        </mat-error>
+    </mat-form-field>
+</div>

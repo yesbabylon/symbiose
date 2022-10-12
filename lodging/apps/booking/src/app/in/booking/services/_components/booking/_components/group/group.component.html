@@ -1,0 +1,615 @@
+<!-- template vars -->
+<div #vGroup="var" [var]="{identification: {folded: true}, products: {folded: true}, accomodations: {folded: false}, meals: {folded: false}}"></div>
+
+<div [class.hidden]="!ready">
+
+    <div class="group-expand" style="position: absolute;right: 50px;" *ngIf="folded">
+        <button mat-icon-button
+            (click)="toggleFold()">
+            <mat-icon>expand_more</mat-icon>
+        </button>
+    </div>
+    <div class="group-collapse" style="position: absolute;right: 50px;" *ngIf="!folded">
+        <button mat-icon-button
+            (click)="toggleFold()">
+            <mat-icon>expand_less</mat-icon>
+        </button>
+    </div>
+
+    <!-- one liner : summarized group / sojourn -->
+    <!-- #memo - blocks are hidden instead of ngIf-ied to allow dynamic DOM updates -->
+    <div [class.hidden]="!folded" style="height: 35px; padding: 8px 125px 0 35px; cursor: pointer;" (click)="toggleFold()">
+        <div style="display: flex;">
+            <div style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px;">
+                {{instance.name}}
+            </div>
+            <div *ngIf="instance.is_sojourn" style="flex: 0 1 30%; white-space: nowrap; overflow: hidden; display: flex;">
+                <ng-container *ngIf="instance.nb_nights > 0">
+                    {{instance.date_from | date: 'dd/MM/YY'}}
+                    <i class="material-icons">arrow_right_alt</i>
+                    {{instance.date_to | date: 'dd/MM/YY'}}&nbsp;
+                    ({{instance.nb_nights}} nuit<span *ngIf="instance.nb_nights > 1">s</span>)
+                </ng-container>
+                <ng-container *ngIf="instance.nb_nights == 0">
+                    {{instance.date_from | date: 'dd/MM/YY'}}
+                </ng-container>
+            </div>
+            <div style="flex: 0 1 15%; white-space: nowrap; overflow: hidden;">{{instance.nb_pers}} pers.</div>
+            <div style="margin-left: auto; white-space: nowrap; overflow: hidden;">{{instance.price | number : '1.2-2'}}€</div>
+        </div>
+    </div>
+
+    <div [class.hidden]="folded">
+
+        <!-- identification-->
+        <div class="part">
+
+            <div class="part-toggle">
+                <button mat-icon-button *ngIf="!vGroup.identification.folded"
+                    (click)="vGroup.identification.folded = !vGroup.identification.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="vGroup.identification.folded"
+                    (click)="vGroup.identification.folded = !vGroup.identification.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+
+            <div class="part-container" >
+
+                <!-- sojourn details -->
+                <div class="row row-identification" style="width: calc(100% - 92px);">
+
+                    <!-- sojourn name -->
+                    <div class="cell" style="flex: 2 1 0; max-width: 500px; min-width: 100px;">
+                        <mat-form-field class="header">
+                            <mat-label>Intitulé</mat-label>
+                            <input type="text" matInput (blur)="onchangeName()" [formControl]="vm.name.formControl">
+                            <mat-hint>Libellé du regroupement.</mat-hint>
+                            <mat-error *ngIf="vm.name.formControl.hasError('required')">
+                                Ne peut être vide.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- is sojourn -->
+                    <div class="cell" style="flex: 0.5 1 0; max-width: 150px; min-width: 50px;">
+                        <mat-form-field floatLabel="always" class="invisible-label">
+                            <mat-slide-toggle
+                                color="accent"
+                                [disabled]="instance.is_event"
+                                [ngModel]="instance.is_sojourn"
+                                (change)="onchangeIsSojourn($event.checked)">Séjour
+                            </mat-slide-toggle>
+                            <textarea matInput hidden></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- is event -->
+                    <div class="cell" style="flex: 0.5 1 0; max-width: 185px; min-width: 60px;" >
+                        <mat-form-field floatLabel="always" class="invisible-label">
+                            <mat-slide-toggle
+                                color="accent"
+                                [disabled]="instance.is_sojourn"
+                                [ngModel]="instance.is_event"
+                                (change)="onchangeIsEvent($event.checked)">Événement
+                            </mat-slide-toggle>
+                            <textarea matInput hidden></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- participants -->
+                    <div class="cell" style="flex: 0.5 1 0; max-width: 155px; min-width: 60px;">
+                        <mat-form-field>
+                            <mat-label>Participants</mat-label>
+                            <input
+                                type="number"
+                                matInput
+                                (blur)="onchangeNbPers()"
+                                [value]="instance.nb_pers"
+                                [formControl]="vm.participants_count.formControl">
+                            <mat-hint>Nombre de personnes</mat-hint>
+                            <mat-error *ngIf="vm.participants_count.formControl.hasError('required')">
+                                Doit être supérieur à 0.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <!-- sojourn specifics -->
+                <div class="row row-identification" *ngIf="instance.is_sojourn" >
+
+                    <!-- sojourn dates -->
+                    <div class="cell" style="flex: 1.5 1 0; max-width: 260px; min-width: 100px;">
+                        <mat-form-field>
+                            <mat-label>Dates</mat-label>
+                            <mat-date-range-input [rangePicker]="sojournDateRangePicker">
+                                <input matStartDate placeholder="dd/mm/yyyy" [formControl]="vm.daterange.start.formControl">
+                                <input matEndDate placeholder="dd/mm/yyyy" [formControl]="vm.daterange.end.formControl" (blur)="onchangeDateRange()">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="sojournDateRangePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #sojournDateRangePicker (closed)="onchangeDateRange()"></mat-date-range-picker>
+                            <mat-hint [align]="'end'"><strong>{{vm.daterange.nights_count}} {{(vm.daterange.nights_count > 1)?'nuitées':'nuitée'}}</strong></mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- checkin time -->
+                    <div class="cell" style="max-width: 125px;">
+                        <mat-form-field>
+                            <mat-label>Checkin</mat-label>
+                            <mat-select [formControl]="vm.timerange.checkin.formControl">
+                                <mat-option value="07:00">07:00</mat-option>
+                                <mat-option value="07:30">07:30</mat-option>
+                                <mat-option value="08:00">08:00</mat-option>
+                                <mat-option value="08:30">08:30</mat-option>
+                                <mat-option value="09:00">09:00</mat-option>
+                                <mat-option value="09:30">09:30</mat-option>
+                                <mat-option value="10:00">10:00</mat-option>
+                                <mat-option value="10:30">10:30</mat-option>
+                                <mat-option value="11:00">11:00</mat-option>
+                                <mat-option value="11:30">11:30</mat-option>
+                                <mat-option value="12:00">12:00</mat-option>
+                                <mat-option value="12:30">12:30</mat-option>
+                                <mat-option value="13:00">13:00</mat-option>
+                                <mat-option value="13:30">13:30</mat-option>
+                                <mat-option value="14:00">14:00</mat-option>
+                                <mat-option value="14:30">14:30</mat-option>
+                                <mat-option value="15:00">15:00</mat-option>
+                                <mat-option value="15:30">15:30</mat-option>
+                                <mat-option value="16:00">16:00</mat-option>
+                                <mat-option value="16:30">16:30</mat-option>
+                                <mat-option value="17:00">17:00</mat-option>
+                                <mat-option value="17:30">17:30</mat-option>
+                                <mat-option value="18:00">18:00</mat-option>
+                                <mat-option value="18:30">18:30</mat-option>
+                            </mat-select>
+
+                            <mat-hint [align]="'start'" style="opacity: 1">
+                                <span>Heure d'arrivée</span>
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- checkout time -->
+                    <div class="cell" style="max-width: 125px;">
+
+                        <mat-form-field>
+                            <mat-label>Checkout</mat-label>
+                            <mat-select [formControl]="vm.timerange.checkout.formControl">
+                                <mat-option value="07:00">07:00</mat-option>
+                                <mat-option value="07:30">07:30</mat-option>
+                                <mat-option value="08:00">08:00</mat-option>
+                                <mat-option value="08:30">08:30</mat-option>
+                                <mat-option value="09:00">09:00</mat-option>
+                                <mat-option value="09:30">09:30</mat-option>
+                                <mat-option value="10:00">10:00</mat-option>
+                                <mat-option value="10:30">10:30</mat-option>
+                                <mat-option value="11:00">11:00</mat-option>
+                                <mat-option value="11:30">11:30</mat-option>
+                                <mat-option value="12:00">12:00</mat-option>
+                                <mat-option value="12:30">12:30</mat-option>
+                                <mat-option value="13:00">13:00</mat-option>
+                                <mat-option value="13:30">13:30</mat-option>
+                                <mat-option value="14:00">14:00</mat-option>
+                                <mat-option value="14:30">14:30</mat-option>
+                                <mat-option value="15:00">15:00</mat-option>
+                                <mat-option value="15:30">15:30</mat-option>
+                                <mat-option value="16:00">16:00</mat-option>
+                                <mat-option value="16:30">16:30</mat-option>
+                                <mat-option value="17:00">17:00</mat-option>
+                                <mat-option value="17:30">17:30</mat-option>
+                                <mat-option value="18:00">18:00</mat-option>
+                                <mat-option value="18:30">18:30</mat-option>
+                            </mat-select>
+
+                            <mat-hint [align]="'start'" style="opacity: 1">
+                                <span>Heure de départ</span>
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <!-- event specifics -->
+                <div class="row row-identification" *ngIf="instance.is_event" >
+
+                    <!-- event date -->
+                    <div *ngIf="instance.is_event" class="cell" style="flex: 0.5 1 0; max-width: 170px; min-width: 100px;">
+
+                        <mat-form-field>
+                            <mat-label>Date</mat-label>
+                            <input matInput [matDatepicker]="eventDatepicker" [formControl]="vm.daterange.single.formControl">
+                            <mat-hint  [align]="'end'"><strong>début &amp; fin le même jour</strong></mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="eventDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #eventDatepicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- checkin time -->
+                    <div class="cell" style="max-width: 125px;">
+                        <mat-form-field>
+                            <mat-label>Checkin</mat-label>
+                            <mat-select [formControl]="vm.timerange.checkin.formControl">
+                                <mat-option value="07:00">07:00</mat-option>
+                                <mat-option value="07:30">07:30</mat-option>
+                                <mat-option value="08:00">08:00</mat-option>
+                                <mat-option value="08:30">08:30</mat-option>
+                                <mat-option value="09:00">09:00</mat-option>
+                                <mat-option value="09:30">09:30</mat-option>
+                                <mat-option value="10:00">10:00</mat-option>
+                                <mat-option value="10:30">10:30</mat-option>
+                                <mat-option value="11:00">11:00</mat-option>
+                                <mat-option value="11:30">11:30</mat-option>
+                                <mat-option value="12:00">12:00</mat-option>
+                                <mat-option value="12:30">12:30</mat-option>
+                                <mat-option value="13:00">13:00</mat-option>
+                                <mat-option value="13:30">13:30</mat-option>
+                                <mat-option value="14:00">14:00</mat-option>
+                                <mat-option value="14:30">14:30</mat-option>
+                                <mat-option value="15:00">15:00</mat-option>
+                                <mat-option value="15:30">15:30</mat-option>
+                                <mat-option value="16:00">16:00</mat-option>
+                                <mat-option value="16:30">16:30</mat-option>
+                                <mat-option value="17:00">17:00</mat-option>
+                                <mat-option value="17:30">17:30</mat-option>
+                                <mat-option value="18:00">18:00</mat-option>
+                                <mat-option value="18:30">18:30</mat-option>
+                            </mat-select>
+
+                            <mat-hint [align]="'start'" style="opacity: 1">
+                                <span>Heure d'arrivée</span>
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- checkout time -->
+                    <div class="cell" style="max-width: 125px;">
+
+                        <mat-form-field>
+                            <mat-label>Checkout</mat-label>
+                            <mat-select [formControl]="vm.timerange.checkout.formControl">
+                                <mat-option value="07:00">07:00</mat-option>
+                                <mat-option value="07:30">07:30</mat-option>
+                                <mat-option value="08:00">08:00</mat-option>
+                                <mat-option value="08:30">08:30</mat-option>
+                                <mat-option value="09:00">09:00</mat-option>
+                                <mat-option value="09:30">09:30</mat-option>
+                                <mat-option value="10:00">10:00</mat-option>
+                                <mat-option value="10:30">10:30</mat-option>
+                                <mat-option value="11:00">11:00</mat-option>
+                                <mat-option value="11:30">11:30</mat-option>
+                                <mat-option value="12:00">12:00</mat-option>
+                                <mat-option value="12:30">12:30</mat-option>
+                                <mat-option value="13:00">13:00</mat-option>
+                                <mat-option value="13:30">13:30</mat-option>
+                                <mat-option value="14:00">14:00</mat-option>
+                                <mat-option value="14:30">14:30</mat-option>
+                                <mat-option value="15:00">15:00</mat-option>
+                                <mat-option value="15:30">15:30</mat-option>
+                                <mat-option value="16:00">16:00</mat-option>
+                                <mat-option value="16:30">16:30</mat-option>
+                                <mat-option value="17:00">17:00</mat-option>
+                                <mat-option value="17:30">17:30</mat-option>
+                                <mat-option value="18:00">18:00</mat-option>
+                                <mat-option value="18:30">18:30</mat-option>
+                            </mat-select>
+
+                            <mat-hint [align]="'start'" style="opacity: 1">
+                                <span>Heure de départ</span>
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <!-- additional (optional) details about the group (can be folded) -->
+                <div class="row row-identification" [class.hidden]="vGroup.identification.folded">
+                    <!-- fare class / rateClass -->
+                    <div class="cell" style="max-width: 350px;">
+                        <mat-form-field>
+                            <mat-label>Catégorie tarifaire</mat-label>
+                            <input matInput type="text" [matAutocomplete]="rateClassAutocomplete"
+                                [value]="calcRateClass()" (keyup)="vm.rate_class.inputChange($event)"
+                                (focus)="vm.rate_class.focus()" (blur)="vm.rate_class.restore()"
+                                placeholder="Commencez à taper le nom" />
+
+                            <button mat-button *ngIf="vm.rate_class.name?.length" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="vm.rate_class.reset()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+
+                            <mat-autocomplete #rateClassAutocomplete="matAutocomplete"
+                                [displayWith]="vm.rate_class.display" (optionSelected)="onchangeRateClass($event)">
+                                <div *ngIf="vm.rate_class.filteredList | async; let list">
+                                    <mat-option *ngFor="let rate_class of list" [value]="rate_class">
+                                        {{rate_class.name}} - {{rate_class.description}}
+                                    </mat-option>
+                                    <mat-option *ngIf="list.length == 0"><i>pas de résultat</i></mat-option>
+                                </div>
+                            </mat-autocomplete>
+
+                            <mat-hint [align]="'start'" style="opacity: 1">
+                                <span>Classe de tarifs à appliquer</span>
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- sojourn type -->
+                    <div *ngIf="instance.is_sojourn" class="cell" style="flex: 0.5 1 0; max-width: 120px; min-width: 60px;">
+                        <mat-form-field>
+                            <mat-label>Type de séjour</mat-label>
+                            <mat-select [ngModel]="vm.sojourn_type.value"
+                                (selectionChange)="onchangeSojournType($event)">
+                                <mat-option value="GG">GG</mat-option>
+                                <mat-option value="GA">GA</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- participants ages details (can be folded)-->
+                <div class="row" [class.hidden]="vGroup.identification.folded">
+                    <div>
+                        <div style="padding-left: 12px;">
+                            Âges des participants
+                            <button mat-mini-fab
+                                color="primary"
+                                style="transform: scale(0.66);"
+                                (click)="oncreateAgeRange();"
+                                title="Ajouter une tranche d'âge">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div style="padding-left: 12px;">
+                            <div *ngFor="let agerange of instance.age_range_assignments_ids; let index = index;" style="display: flex;">
+                                <booking-services-booking-group-agerangeassignment
+                                    [model]="agerange"
+                                    [group]="instance"
+                                    [booking]="booking"
+                                    (updated)="onupdateAgeRange()"
+                                ></booking-services-booking-group-agerangeassignment>
+
+                                <div class="product-remove">
+                                    <button mat-icon-button
+                                        (click)="ondeleteAgeRange(agerange.id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- products -->
+        <div class="part">
+            <div class="part-toggle">
+                <button mat-icon-button *ngIf="!vGroup.products.folded" (click)="vGroup.products.folded = !vGroup.products.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="vGroup.products.folded" (click)="vGroup.products.folded = !vGroup.products.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+
+            <div class="part-container">
+                <div class="row">
+                    <div class="row-products-title">
+                            <span>Produits ({{instance.booking_lines_ids.length}})</span>
+                            <button *ngIf="!vm.pack.is_locked" mat-mini-fab
+                                    color="primary"
+                                    style="transform: scale(0.66);"
+                                    (click)="oncreateLine()"><mat-icon>add</mat-icon>
+                            </button>
+                            <button
+                                *ngIf="instance.is_extra && instance.has_schedulable_services"
+                                mat-button
+                                color="accent">Services planifiables détectés
+                            </button>
+
+                    </div>
+                    <div class="row-products-price" [class.hidden]="!vGroup.products.folded">TOTAL TTC &nbsp;:&nbsp; {{instance.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}} <br />AVANTAGE ({{instance.fare_benefit/(instance.price+instance.fare_benefit) | percent}})&nbsp;:&nbsp; {{instance.fare_benefit | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}}</div>
+                </div>
+                <div class="row" [class.hidden]="vGroup.products.folded">
+                    <!-- pack selector -->
+                    <div class="row" >
+
+                        <!-- has pack -->
+                        <div class="cell" style="max-width: 200px;">
+                            <mat-form-field floatLabel="always" class="invisible-label">
+                                <mat-slide-toggle
+                                    color="primary"
+                                    [ngModel]="instance.has_pack"
+                                    (change)="onchangeHasPack($event.checked)">Utiliser un pack</mat-slide-toggle>
+                                <textarea matInput hidden></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- ref pack-->
+                        <div class="cell" style="max-width: 450px;" *ngIf="instance.has_pack">
+                            <mat-form-field>
+                                <mat-label>Pack de référence</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    [matAutocomplete]="packAutocomplete"
+                                    [value]="vm.pack.name"
+                                    (keyup)="vm.pack.inputChange($event)"
+                                    (focus)="vm.pack.focus()"
+                                    (blur)="vm.pack.restore()"
+                                    placeholder="Commencez à taper le nom" />
+                                <button mat-button *ngIf="vm.pack.name.length" matSuffix mat-icon-button aria-label="Clear" (click)="vm.pack.reset()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+
+                                <mat-autocomplete
+                                    #packAutocomplete="matAutocomplete"
+                                    [displayWith]="calcPack"
+                                    (optionSelected)="onchangePackId($event.option.value)">
+                                    <div *ngIf="vm.pack.filteredList | async; let list">
+                                        <mat-option *ngFor="let pack of list" [value]="pack">
+                                            {{pack.name}}
+                                        </mat-option>
+                                        <mat-option *ngIf="list.length == 0"><i>pas de résultat</i></mat-option>
+                                    </div>
+                                </mat-autocomplete>
+
+                                <mat-hint [align]="'start'" style="opacity: 1">
+                                    <span>Type de séjour de la réservation</span>
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- locked pack -->
+                        <div class="cell" *ngIf="instance.has_pack">
+                            <mat-form-field floatLabel="always" class="invisible-label">
+                                <mat-slide-toggle [ngModel]="vm.pack.is_locked"
+                                    (change)="onchangeIsLocked($event.checked)" title="Liste des produits du pack non-modifiable">Liste verrouillée
+                                </mat-slide-toggle>
+                                <textarea matInput hidden></textarea>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                    <div class="row-products-price">TOTAL TTC &nbsp;:&nbsp; {{instance.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}} <br />AVANTAGE ({{instance.fare_benefit/(instance.price+instance.fare_benefit) | percent}})&nbsp;:&nbsp; {{instance.fare_benefit | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}}</div>                    
+                </div>
+
+                <div class="row" [class.hidden]="vGroup.products.folded">
+                    <div style="width: 100%;">
+                        <div class="products-header">
+                            <div style="display: flex; width: 100%; margin-bottom: 6px; padding-left: 1px;">
+                                <div class="product-cell" style="text-align: left;">SKU</div>
+                                <div class="product-cell">QTÉ</div>
+                                <div class="product-cell">GTÉ</div>
+                                <div class="product-cell">P.U.</div>
+                                <div class="product-cell">RÉDUC</div>
+                                <div class="product-cell">TVA</div>
+                                <div class="product-cell">PRIX</div>
+                                <!-- actions -->
+                                <div class="product-cell" style="max-width: 35px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="products-list" cdkDropList (cdkDropListDropped)="vm.lines.drop($event)">
+                            <!-- products -->
+                            <div class="product-item" cdkDrag [cdkDragData]="line" *ngFor="let line of instance.booking_lines_ids; let index = index;">
+                                <div class="product-handle" cdkDragHandle>
+                                    <mat-icon style="font-size: 16px;">drag_indicator</mat-icon>
+                                </div>
+                                <div class="product-remove">
+                                    <button *ngIf="!vm.pack.is_locked" mat-icon-button
+                                        (click)="ondeleteLine(line.id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                                <booking-services-booking-group-line
+                                    [model]="line"
+                                    [group]="instance"
+                                    [booking]="booking"
+                                    (updated)="onupdateLine()"
+                                    (deleted)="ondeleteLine(line.id)"
+                                ></booking-services-booking-group-line>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- accomodations -->
+        <div class="part">
+
+            <div class="part-toggle" style="padding: 20px 0px 0px 20px;">
+                <button mat-icon-button *ngIf="!vGroup.accomodations.folded" (click)="vGroup.accomodations.folded = !vGroup.accomodations.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="vGroup.accomodations.folded" (click)="vGroup.accomodations.folded = !vGroup.accomodations.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+
+            <div class="part-container" *ngIf="vGroup.accomodations.folded">
+                <div class="row" style="align-items: center;">
+                    <div style="height: 72px; line-height: 72px;">Unités locatives </div>
+                </div>
+            </div>
+
+            <div class="part-container" *ngIf="!vGroup.accomodations.folded">
+                <div class="row" style="align-items: center;">
+                    <div style="flex: 0 1 200px;">Unités locatives </div>
+                    <mat-form-field
+                        style="flex: 0 1 400px;"
+                        floatLabel="always"
+                        class="invisible-label">
+                        <mat-slide-toggle color="accent"
+                                          [checked]="instance.has_locked_rental_units"
+                                          (change)="onchangeHasLockedRentalUnits($event)">Verrouiller la répartition des unités locatives
+                        </mat-slide-toggle>
+                        <textarea matInput hidden></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="row" style="display: block;">
+                    <div class="accomodation-item" *ngFor="let accomodation of instance.sojourn_product_models_ids; let index = index;">
+                        <booking-services-booking-group-rentalunitassignment
+                            [model]="accomodation"
+                            [group]="instance"
+                            [booking]="booking"
+                            (updated)="onupdateAccomodation()"
+                        ></booking-services-booking-group-rentalunitassignment>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- meals preferences (for hostels only / 'GA')-->
+        <div class="part" *ngIf="(instance.is_sojourn && instance.sojourn_type_id == 1) || instance.is_event">
+
+            <div class="part-toggle">
+                <button mat-icon-button *ngIf="!vGroup.meals.folded" (click)="vGroup.meals.folded = !vGroup.meals.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="vGroup.meals.folded" (click)="vGroup.meals.folded = !vGroup.meals.folded">
+                    <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+
+            <div class="part-container">
+                <div class="row">
+                    <div style="margin-top: 8px;">
+                            <span>Restrictions et Préférences repas ({{instance.meal_preferences_ids.length}})</span>
+                            <button mat-mini-fab
+                                    color="primary"
+                                    style="transform: scale(0.66);"
+                                    (click)="oncreateMealPref()">
+                                <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!vGroup.meals.folded" style="display: block;">
+                    <div *ngFor="let preference of instance.meal_preferences_ids; let index = index;" style="display: flex;">
+                        <div class="mealpref-item">
+                            <booking-services-booking-group-mealpref
+                                [model]="preference"
+                                [group]="instance"
+                                [booking]="booking"
+                                (updated)="onupdateMealPref()"
+                            ></booking-services-booking-group-mealpref>
+                        </div>
+                        <div class="row-remove"><button mat-icon-button (click)="ondeleteMealPref(preference.id)"> <mat-icon>delete</mat-icon></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</div>

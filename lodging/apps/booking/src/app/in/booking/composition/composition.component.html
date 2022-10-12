@@ -1,0 +1,46 @@
+<div class="container" [ngClass]="{'hidden': showSbContainer}">
+  <div class="booking-header">Composition <span> › </span> Réservation {{booking.name}}</div>
+  <div class="booking-body">
+
+    <div class="body-actions" style="display: flex;">
+      <div style="flex: 0 1 20%">
+        <input
+              type="file"
+              class="file-input"
+              [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+              (change)="onFileSelected($event)"
+              #fileUpload>
+      </div>
+      <div style="margin-left: auto;">
+        <button mat-stroked-button (click)="onGenerate()" color="primary">Générer la composition</button>
+        <button mat-stroked-button (click)="fileUpload.click()" color="primary">Importer</button>
+      </div>
+    </div>
+
+    <mat-tab-group [selectedIndex]="selectedTabIndex">
+      <mat-tab label="Listing par Unité locative">
+
+        <div style="margin-top: 20px;">
+
+          <mat-spinner *ngIf="loading"></mat-spinner>
+
+          <booking-composition-lines *ngIf="!loading"
+            [composition_id]="booking.composition_id"
+          ></booking-composition-lines>
+        </div>
+
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span (click)="viewFullList()">Listing complet</span>
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
+</div>
+<div class="overlay-container" *ngIf="!ready"><mat-spinner></mat-spinner></div>
+
+<div id="sb-composition-container" class="sb-container"></div>

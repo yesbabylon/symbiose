@@ -1,0 +1,18 @@
+:host {
+
+    .tasks-container {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .card-task {
+        display: flex;
+        padding: 15px 12px;
+        background: white;
+        border-bottom: solid 1px #ddd;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 5px -3px rgb(0 0 0 / 5%), 0 3px 14px 2px rgb(0 0 0 / 5%);
+    }   
+    
+}

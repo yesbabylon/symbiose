@@ -1,0 +1,20 @@
+{
+    "name": "Absence code",
+    "description": "List of absence codes.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "code",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "75%"
+            }
+
+        ]
+    }
+}

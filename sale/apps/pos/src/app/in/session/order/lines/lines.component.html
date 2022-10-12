@@ -1,0 +1,68 @@
+<div class="overlay-container" *ngIf="!ready">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="ready">
+    <div class="header-wrap">
+        <div class="header">Session › {{instance.session_id?.name}} <small>[{{instance.session_id?.id}}]</small> › <a [attr.href]="'#/session/'+instance.session_id?.id+'/orders'">Commandes en cours</a></div>
+        <div style="display: flex; align-items: center;">
+            <a [attr.href]="'#/session/'+instance.session_id?.id+'/close'"><button mat-raised-button color="accent" style="margin-right: 10px;">Fermer la session</button></a>
+            <button mat-icon-button class="screen" (click)="onclickFullscreen()"><mat-icon>open_in_full</mat-icon></button>
+        </div>
+    </div>
+    <div class="pos-body" #fullScreen>
+        <div style="display: flex;">
+            <div class="body">
+                <div class="view">
+                    <div class="order">
+                        <h2>Commande</h2>
+                        <div class="total">
+                            <span class="total"> Total : {{ instance.price | number : '1.2-2' }}€ </span>
+                            <span class="taxes"> Taxes : {{ taxes | number : '1.2-2'}}€ </span>
+                        </div>
+                    </div>
+                    <div *ngIf="instance.session_id?.status != 'pending'">Cette session n'est plus active.</div>
+                    <ng-container *ngIf="instance.session_id?.status == 'pending'">
+                        <div class="products">
+                            <div [class.hidden]="current_pane !='discount'">
+                                <session-order-lines-discount-pane
+                                    [model]="selectedLine"
+                                    (selectField)="onSelectField($event)"
+                                    (closePane)="switchPane('main')">
+                                </session-order-lines-discount-pane>
+                            </div>
+                            <div [class.hidden]="current_pane !='main'">
+                                <session-order-lines-orderline *ngFor="let line of instance.order_lines_ids; index as i"
+                                    [model]="line"
+                                    [selected]="line.id == selectedLine?.id"
+                                    (updated)="onupdateLine()"
+                                    (deleted)="ondeleteLine()"
+                                    (click)="onSelectLine(line)">
+                                </session-order-lines-orderline>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- keypad -->
+                <div class="pad">
+                    <app-keypad-lines #keypad
+                        [customer]="instance.customer_id"
+                        [hasInvoice]="instance.has_invoice"
+                        (nextClick)="onclickNext($event)"
+                        (keyPress)="onPadPressed($event)"
+                        (requestInvoiceChange)="onRequestInvoiceChange($event)"
+                        (onTypeMode)="onSelectField($event)"
+                        (customerChange)="onchangeCustomer($event)">
+                    </app-keypad-lines>
+                </div>
+            </div>
+            <div style="width: 100%; height: 100vh;">
+                <session-order-lines-selection #selection
+                    [order]="instance"
+                    (addedFunding)="onAddFunding($event)"
+                    (addedProduct)="onAddProduct($event)"></session-order-lines-selection>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,24 @@
+:host {
+  mat-form-field {
+    width: 100%;
+
+    button.suffix-action {
+        &.hidden {
+            visibility: hidden;
+        }
+    
+    }
+
+  }
+}
+
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar {
+  width: 6px;
+  overflow-y: scroll;
+  background: transparent;
+}
+
+::ng-deep .mat-autocomplete-panel::-webkit-scrollbar-thumb {
+  background: var(--mdc-theme-primary, #6200ee);
+  border-radius: 10px;
+}

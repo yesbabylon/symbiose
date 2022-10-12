@@ -1,0 +1,26 @@
+<div class="cell" style="width: 420px;">
+    <sb-m2o-select
+        [entity]="'lodging\\realestate\\RentalUnit'"
+        [id]="instance.rental_unit_id?.id"
+        [fields]="['capacity']"
+        [controller]="'lodging_booking_rentalunits'"
+        [params]="params"
+        [placeholder]="'Commencez à taper le nom'"
+        [noResult]="'rien trouvé'"
+        [required]="true"
+        [displayWith]="displayRentalUnit"
+        (itemSelected)="onchangeRentalUnit($event)">Unité locative
+    </sb-m2o-select>
+</div>
+<div class="cell">
+    <mat-form-field style="max-width: 100px;">
+        <mat-label>Quantité</mat-label>
+        <input type="number" min="1" matInput (blur)="onchangeQty($event)" [formControl]="vm.qty.formControl">
+        <mat-error *ngIf="vm.qty.formControl.hasError('valid')">
+            Quantité incompatible.
+        </mat-error>
+        <mat-error *ngIf="vm.qty.formControl.hasError('required')">
+            Ne peut être vide.
+        </mat-error>
+    </mat-form-field>
+</div>

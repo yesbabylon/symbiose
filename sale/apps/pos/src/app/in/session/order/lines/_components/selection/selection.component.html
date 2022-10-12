@@ -1,0 +1,126 @@
+<div style="width: 100%;">
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="onSelectedTab($event)" mat-align-tabs="end" [backgroundColor]="'primary'">
+
+        <!-- Products -->
+        <mat-tab label="Produits"> 
+            <div class="tab-product-pane-header">
+                <mat-form-field appearance="standard" class="filter-input">
+                    <mat-label>Filtrer</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. café" #input>
+                </mat-form-field> 
+                <mat-paginator #paginator
+                    [length]="100"
+                    [pageSize]="25"
+                    [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </div>
+            <div class="tab-product-pane-body">
+                <table style="width: 100%;" mat-table [dataSource]="productsDataSource" class="mat-elevation-z8" *ngIf="!funding">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">{{element.product_model_id.name}} - {{element.label}} </td>
+                    </ng-container>    
+                    <tr mat-header-row *matHeaderRowDef="['name']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['name'];" (click)="selectProduct(row); selected_product_id = row.id;" [ngClass]="{'highlight': selected_product_id == row.id}"></tr>
+                </table>
+            </div>                
+        </mat-tab>
+
+        <!-- Bookings -->
+        <mat-tab class="tab-bookings" label="Réservations"> 
+
+            <!-- Level 1 - Bookings  -->
+
+            <table style="width: 100%;" mat-table [dataSource]="bookingsDataSource" class="mat-elevation-z8" *ngIf="!funding">
+                
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> 
+                    <mat-form-field appearance="standard" class="filter-input">
+                        <mat-label>Filtrer</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. 501309" #input>
+                    </mat-form-field> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="customer_id">
+                    <th mat-header-cell *matHeaderCellDef> Client </th>
+                    <td mat-cell *matCellDef="let element"> {{element.customer_id.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date_from">
+                    <th mat-header-cell *matHeaderCellDef> Début </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_from | date:'shortDate'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date_to">
+                    <th mat-header-cell *matHeaderCellDef> Fin </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_to | date:'shortDate'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef> Total </th>
+                    <td mat-cell *matCellDef="let element"> {{element.price | number : '1.2-2'}}€ </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="['name', 'customer_id', 'date_from', 'date_to','total']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['name', 'customer_id', 'date_from', 'date_to','total'];" (click)="selectBooking(row)"></tr>
+            </table>
+
+            <mat-paginator [length]="100"
+                    [pageSize]="25"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page"
+                    *ngIf="!funding"
+                    #paginatorBooking="matPaginator">
+            </mat-paginator>
+
+
+            <!-- Level 2 - Fundings -->
+
+            <table style="width: 100%;" mat-table [dataSource]="fundingsDataSource" class="mat-elevation-z8" *ngIf="funding">
+                <ng-container matColumnDef="name" >
+                    <th mat-header-cell *matHeaderCellDef> 
+                        <mat-form-field appearance="standard" class="filter-input">
+                            <mat-label>Filtrer</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                        </mat-form-field> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef > Description </th>
+                    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="due_date">
+                    <th mat-header-cell *matHeaderCellDef > Échéance </th>
+                    <td mat-cell *matCellDef="let element"> {{element.due_date | date:'shortDate'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="due_amount">
+                    <th mat-header-cell *matHeaderCellDef> Montant </th>
+                    <td mat-cell *matCellDef="let element"> {{element.due_amount | number : '1.2-2'}} €</td>
+                </ng-container>
+
+                <ng-container matColumnDef="back">
+                    <th mat-header-cell *matHeaderCellDef><button style="float:right;" mat-mini-fab color="primary" (click)="funding = false"><mat-icon>arrow_back</mat-icon></button></th>
+                    <td mat-cell *matCellDef="let row"> </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="['name', 'description', 'due_date', 'due_amount', 'back']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['name', 'description', 'due_date', 'due_amount', 'back'];" (click)="selectFunding(row); selected_funding_id = row.id;" [ngClass]="{'highlight': selected_funding_id == row.id}"></tr>
+            </table>
+
+            <mat-paginator 
+                *ngIf="funding"
+                [length]="100"
+                [pageSize]="5"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page"
+                #paginatorFunding="matPaginator">
+            </mat-paginator>
+
+        </mat-tab>
+
+    </mat-tab-group>
+</div>

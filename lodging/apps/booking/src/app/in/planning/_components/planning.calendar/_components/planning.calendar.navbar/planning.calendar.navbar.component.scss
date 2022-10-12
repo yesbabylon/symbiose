@@ -1,0 +1,180 @@
+::ng-deep.cdk-overlay-pane .centers-selector .mat-optgroup-label {
+    height: 38px !important;
+    line-height: 38px !important;
+}
+
+::ng-deep.cdk-overlay-pane .mat-select-panel.centers-selector {
+    height: auto;
+    max-height: calc(100vh - 150px) !important;
+}
+
+
+::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #ff4081 !important;
+}
+
+::ng-deep.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #ff4081 !important;
+}
+
+:host {
+
+    position: relative;
+    user-select: none;
+    display: flex;
+    height: 95px;
+    padding: 0 15px;
+
+
+    .panelFilters {
+        flex: 0 1 33%;
+        display: flex;
+
+        .centers-selector {
+            width: 80%;
+
+            mat-form-field {
+                width: 100%;
+
+    
+            }
+
+        }
+    }
+
+    .panelStatus {
+        display: flex;
+        line-height: 65px;
+        flex: 1 0 33%;
+        text-align: center;
+
+        .date-display {
+            line-height: 70px;
+            font-size: 20px;
+            font-weight: 400;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .date-selector {
+            min-width: 240px;
+            
+            .mat-datepicker-popup {
+                position: relative;
+                top: 110px
+            }         
+        }
+
+        .date-counter {
+            line-height: 70px; 
+            font-size: 14px; 
+            font-weight: 400;
+        }
+
+        .date-range-selector {
+            margin-left: 30px;
+            width: 100px;
+            mat-form-field {
+                width: 100%;
+            }
+        }
+        
+    }
+
+    .panelNavigation {
+        line-height: 65px;
+        flex: 1 0 33%;
+        text-align: right;
+    }
+
+    .panelSearch {
+        line-height: 65px;
+        display: inline-block;
+    }
+
+    .panelDatePicker {
+        display: inline-block;
+    }
+
+    .mat-datepicker-popup {
+        position: relative;
+        top: 110px
+    } 
+
+    .containerStatusbar {
+        height: 20px;
+    }
+
+    .panelStatusbar {
+        display: inline-block;
+    }
+
+    .overlay {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: calc(100% - 35px);
+        height: 30px;
+        left: 15px;
+        bottom: 7px;
+        
+        border-radius: 5px;
+
+        .rental-unit-details {
+            display: flex;
+            height: 100%;
+            flex: 1 1 15%;
+
+            span {
+                min-width: 20%;
+                border-bottom: solid 1px var(--mdc-theme-secondary);
+                text-align: left;
+                font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .consumption-details{
+            display: flex;
+            height: 100%;
+            flex: 1 0 60%;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;            
+
+            span {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+                text-align: center;
+                border-bottom: solid 1px var(--mdc-theme-secondary);
+                font-weight: 500;
+            }            
+
+        }
+
+        .date-details {
+            height: 100%;
+            display: flex;
+            flex: 1 0 25%;
+
+            span {
+                min-width: 15%;
+                border-bottom: solid 1px var(--mdc-theme-secondary);
+                margin-left: auto;
+                text-align: right;
+                font-weight: 500;
+            }
+
+        }
+    }
+
+}
+

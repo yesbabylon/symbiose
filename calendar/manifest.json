@@ -1,0 +1,10 @@
+{
+    "name": "calendar",
+    "depends_on": [
+    ],
+    "apps": {
+        "calendar": {
+            "show_in_apps": false
+        }
+    }
+}

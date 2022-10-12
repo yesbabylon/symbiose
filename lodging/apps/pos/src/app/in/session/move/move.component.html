@@ -1,0 +1,55 @@
+<div class="overlay-container" *ngIf="!ready">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="ready">
+    <div class="header-wrap">
+        <div class="header">Session › {{session.name}} <small>[{{session.id}}]</small> › Mouvement</div>
+    </div>
+    <div class="body">
+        <div class="actions">
+            <div class="actions-std"></div>
+            <div class="actions-view"></div>
+        </div>
+
+        <div class="view">
+
+            <h2 style="text-align:center; margin-bottom: 30px;">Mouvement de caisse</h2>
+            <div style="background-color:#F5F5F5; padding: 20px; max-width: 800px; margin: auto;">
+                <div>
+                    <div style="position: relative; display:flex; flex-direction: row; align-items: center;">
+                        <mat-button-toggle-group [(ngModel)]="type" style="display: flex; flex-direction: row;">
+                            <mat-button-toggle mat-raised-button
+                                style="min-width: 150px;"
+                                [value]="'in'"
+                                [checked]="type == 'in'">Entrée
+                            </mat-button-toggle>
+                            <mat-button-toggle mat-raised-button
+                                style="min-width: 150px;"
+                                [value]="'out'"
+                                [checked]="type == 'out'">Sortie
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                        <div style="position: absolute; right: 35px; max-width: 100px; transform: scale(1.5);">
+                            <mat-form-field class="example-full-width" appearance="standard">
+                                <mat-label>Montant</mat-label>
+                                <input type="number" matInput placeholder="" [(ngModel)]="amount" value="0">
+                                <mat-icon matSuffix>euro</mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content:center;">
+                        <textarea [(ngModel)]="move_note"
+                            style="background-color: white; border: 1px solid black; margin: 0.2rem; margin-top: 20px; padding: 0.2rem; width:100%; min-height: 100px;font-size: 15px;">
+                        </textarea>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; margin-top: 20px; position: relative;">
+                    <button (click)="onclickConfirm()" mat-raised-button style="margin-left: auto; transform: scale(1.5); right: 30px;">Confirmer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

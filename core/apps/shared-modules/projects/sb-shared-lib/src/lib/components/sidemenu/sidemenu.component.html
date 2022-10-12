@@ -1,0 +1,70 @@
+<div class="side-inner">
+    <div class="header-tabs" >
+        <div class="tab-button" [class.active]="selected_tab_id == 'object-routes'">
+            <button mat-icon-button (click)="selected_tab_id = 'object-routes'"><mat-icon >play_circle_outline</mat-icon></button>
+        </div>
+        <div class="tab-button" [class.active]="selected_tab_id == 'validity-check'">
+            <button mat-icon-button (click)="selected_tab_id = 'validity-check'"><mat-icon >check_circle_outline</mat-icon></button>
+        </div>
+        <div class="tab-button" [class.active]="selected_tab_id == 'view-help'">
+            <button mat-icon-button (click)="selected_tab_id = 'view-help'" ><mat-icon >help_outline</mat-icon></button>
+        </div>
+        <div class="tab-button" [class.active]="selected_tab_id == 'object-history'">
+            <button mat-icon-button (click)="selected_tab_id = 'object-history'" ><mat-icon >history</mat-icon></button>
+        </div>
+        <div class="tab-button" [class.active]="selected_tab_id == 'user-settings'">
+            <button mat-icon-button (click)="selected_tab_id = 'user-settings'" ><mat-icon >settings</mat-icon></button>
+        </div>
+    </div>
+
+
+    <div class="tab-inner" [class.hidden]="selected_tab_id != 'object-routes'">
+        <div class="object-routes-item" *ngFor="let item of object_routes_items">
+            <button mat-stroked-button (click)="onObjectRoute(item)"><mat-icon >{{item.icon}}</mat-icon> &nbsp; {{item.label}} </button>
+        </div>
+    </div>
+
+    <div class="tab-inner" [class.hidden]="selected_tab_id != 'validity-check'">
+        <div class="validity-check-item" *ngFor="let item of object_checks_items">
+            <div style="display: flex; font-weight: 500;" [style]="'color: '+getAlertColor(item)" ><mat-icon style="margin-right: 10px;">{{getAlertIcon(item)}}</mat-icon> {{item.message_model_id.label}}</div>
+            <div style="font-size: 14px;">{{item.message_model_id.description}}</div>
+            <div *ngIf="item.parsed_links.length" style="display: flex; overflow: hidden; align-items: center;"><mat-icon style="font-size: 22px;">visibility</mat-icon><a class="alert-link" *ngFor="let link of item.parsed_links" [attr.href]="link.link" target="_self">{{link.text}}</a></div>
+            <div *ngIf="item.controller" style="margin-top: 10px;"><button mat-button (click)="onDismissAlert(item)">RÉESSAYER</button></div>
+            <div *ngIf="!item.controller" style="margin-top: 10px;"><button mat-button (click)="onDismissAlert(item)">IGNORER</button></div>
+        </div>
+        <div *ngIf="!object_checks_items.length" style="display: flex; justify-content: center;"><div style="opacity: 0.5;">Rien à signaler</div></div>
+    </div>
+
+    <div class="tab-inner" [class.hidden]="selected_tab_id != 'view-help'">
+        <div style="display: flex; width: 100%">
+            <button mat-icon-button  (click)="onHelpFullScreen()" style="margin-left: auto; transform: scale(0.8);">
+                <mat-icon>open_in_full</mat-icon>
+            </button>
+        </div>
+        <div #helpfullscreen class="context-help" [innerHTML]="view_description | markdown"></div>
+    </div>
+
+    <div class="tab-inner" [class.hidden]="selected_tab_id != 'object-history'">
+
+        <div class="object-history-item" *ngFor="let change of latest_changes; let index = index" >
+            <div><strong>{{change.user_id.name}}</strong></div>
+            <div class="item-time"><span>{{change.modified | date : 'EEE dd MMMM yyyy HH:mm'}}</span></div>
+        </div>
+
+    </div>
+
+    <div class="tab-inner" [class.hidden]="selected_tab_id != 'user-settings'">
+        <div class="user-settings-item" >
+            <strong>{{user.name}}</strong><br />
+            {{user.login}}
+        </div>
+        <div class="user-settings-item" >
+            <button mat-stroked-button (click)="onUserSettings()"><mat-icon >settings</mat-icon> Paramètres utilisateur</button>
+        </div>
+        <div class="user-settings-item" >
+            <button mat-stroked-button (click)="onDisconnect()"><mat-icon >logout</mat-icon> Se déconnecter</button>
+        </div>
+    </div>
+
+
+</div>

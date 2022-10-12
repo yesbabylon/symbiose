@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="booking-header">Paiements <span> › </span> Import en masse</div>
+  <div class="booking-body">
+
+    <div class="body-actions" style="display: flex;">
+      <div style="flex: 0 1 20%">
+        <input
+              type="file"
+              multiple
+              class="file-input"
+              [accept]="'.txt,.cod,.coda'"
+              (change)="onFilesSelected($event)"
+              #fileUpload>
+      </div>
+      <div style="margin-left: auto;">
+        <button mat-stroked-button (click)="fileUpload.click()" color="primary">Importer</button>
+      </div>
+    </div>
+
+
+    <div class="body-result" *ngIf="has_result">
+
+      <div *ngIf="bank_statements.length">
+        <p>
+          Les extraits suivants ont été importés avec succès:
+        </p>
+        <!-- header -->
+        <div class="statements-list">
+          <div class="statement-item">
+            <div style="flex: 1 0 25%; font-weight: 500;">Compte bancaire</div>
+            <div style="flex: 1 0 15%; font-weight: 500;">BIC</div>
+            <div style="flex: 1 0 15%; font-weight: 500;">Date</div>
+            <div style="flex: 1 0 15%; font-weight: 500;">Solde précédent </div>
+            <div style="flex: 1 0 15%; font-weight: 500;">Nouveau solde</div>
+          </div>
+        </div>
+
+        <div class="statements-list">
+          <div class="statement-item" *ngFor="let statement of bank_statements">
+            <div style="flex: 1 0 25%;">{{statement.bank_account_number}}</div>
+            <div style="flex: 1 0 15%;">{{statement.bank_account_bic}}</div>
+            <div style="flex: 1 0 15%;">{{statement.date | date: 'dd/MM/YYYY'}}</div>
+            <div style="flex: 1 0 15%;">{{statement.old_balance}} €</div>
+            <div style="flex: 1 0 15%;">{{statement.new_balance}} €</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="invalid_files.length">
+        <p>
+          Les fichiers extraits suivants ont été ignorés car ils sont invalides ou ne correspondent à aucun compte connu:
+        </p>
+        <ul>
+          <li *ngFor="let file of invalid_files">{{file}}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="duplicate_files.length">
+        <p>
+          Les fichiers extraits suivants ont été ignorés car ils ont déjà été importés:
+        </p>
+        <ul>
+          <li *ngFor="let file of duplicate_files">{{file}}</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

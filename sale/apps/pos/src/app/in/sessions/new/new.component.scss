@@ -1,0 +1,48 @@
+.header {
+    width: 100%;
+    padding-left: 12px;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: solid 1px lightgrey;
+    font-size: 22px;
+}
+::ng-deep .mat-form-field-infix{
+    width: 100% !important;
+}
+.title{
+    button{
+        transform: scale(1.5);
+        text-transform: uppercase;
+        margin-left: 32px;
+        margin-top: 20px;
+    }
+    h2{
+        text-align:center; 
+        text-decoration: underline;
+        margin-bottom: 15px;
+    }
+}
+
+.select-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    
+    .elements-select {
+        flex: 1 1 30%;
+        max-width: 500px;
+        sb-m2o-select {
+            font-size: 28px;
+            line-height: 32px;
+            font-weight: 400;
+        }
+        .mat-form-field{
+            width: 100% !important;
+            font-size: 28px;
+            line-height: 32px;
+            font-weight: 400; 
+              
+        }
+    }
+}

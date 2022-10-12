@@ -1,0 +1,351 @@
+:host {
+
+    &.hidden {
+        display: none;
+    }
+
+    height: 100%;
+
+    .container {
+        position: relative;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: calc(100% - 90px);
+        padding: 0 15px 15px 15px;
+
+        mat-progress-bar {
+            position: fixed;
+            width: 100%;
+            z-index: 3;
+            height: 3px;
+
+            &.hidden {
+                visibility: hidden;
+            }
+        }
+    }
+
+    .container::-webkit-scrollbar {
+        width: 6px;
+        overflow-y: scroll;
+        background: transparent;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+        background: var(--mdc-theme-primary, #6200ee);
+        border-radius: 10px;
+    }
+
+    .container::-webkit-scrollbar {
+        width: 6px;
+        overflow-y: scroll;
+        background: transparent;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+        background: var(--mdc-theme-primary, #6200ee);
+        border-radius: 10px;
+    }
+
+    table.cal-table {
+        position: relative;
+        z-index: 1;
+        table-layout: fixed;
+        border-spacing: 0;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        border-left: solid 1px #e0e0e0;
+        border-right: solid 1px #e0e0e0;
+        border-bottom: solid 1px #e0e0e0;
+
+        background-color: transparent;
+
+        tbody {
+            position: relative;
+            transform: translateZ(0);
+            background-color: transparent;
+        }
+
+        thead {
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+
+            .stat-column {
+                /* room status column header*/
+                width: 36px;
+                min-width: 36px;
+                max-width: 36px;
+            }
+
+            tr.head {
+                color: rgba(0,0,0,.54) !important;
+
+                .head-months {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    padding: 0 10px;
+                }
+
+                .head-days, .head-months {
+                    height: 46px;
+                    font-size: 16px;
+                }
+
+                .head-days {
+                    border-top: solid 1px #e0e0e0;
+
+                    .week-day {
+                        font-weight: 400;
+                    }
+
+                    .month-day {
+                        font-weight: 500;
+                    }
+                }
+
+                .head-days.small {
+                    font-weight: 400 !important;
+
+                    .week-day {
+                        text-transform: uppercase;
+                        overflow: hidden;
+                        white-space: nowrap;
+                    }
+
+                    .month-day {
+                        font-size: 10px;
+                    }
+                }
+
+                .head-days.hidden {
+
+                    .week-day {
+                        display: none
+                    }
+
+                    .month-day {
+                        display: none
+                    }
+                }
+
+                .head-days.public_holiday::before {
+                    content: '';
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    height: 2px;
+                    background-color: var(--mdc-theme-secondary);
+                }
+
+                .head-days.school_vacation::after {
+                    content: '';
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 2px;
+                    height: 2px;
+                    background-color: var(--mdc-theme-primary);
+                }
+
+                th {
+                    position: sticky;
+                    top: 0;
+                    background: white;
+                    z-index: 2;
+                    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%) !important;
+                }
+
+                th.head-days {
+                    top: 45px;
+                }
+
+                th, td {
+                    text-align: center;
+                    border-right: solid 1px #e0e0e0;
+                    border-top: solid 1px #e0e0e0;
+                }
+
+                td:last-child {
+                    border-right: 0;
+                }
+            }
+
+            tr.head:last-child {
+                box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%) !important;
+            }
+
+        }
+
+
+
+    }
+
+
+    tr.head th.head-days, tr.rows td.cell-days {
+        text-align: center;
+        border-right: solid 1px #e0e0e0;
+
+        /* overflow: hidden; */
+        /* force all cells to have the same width : will grow evenly is there is more room */
+        /*
+        max-width: 40px !important;
+        width: 40px !important;
+        min-width: 40px !important;
+        */
+    }
+
+    tr.rows td.cell-days {
+        position: relative;
+        background-color: transparent;
+
+        .cell-overlay {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .is-today {
+            position: absolute;
+            background: crimson;
+            width: 100%;
+            height: calc(100% + 4px);
+            top: -2px;
+            width: 2px;
+            left: 50%;
+            z-index: -1;
+        }
+
+        &.is-weekend {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+    }
+
+    tr td {
+        .cell-hint{
+            display: none;
+            position: fixed;
+            z-index:100;
+            transform: translateX(16px) translateY(12px);
+
+            span {
+                display: block;
+                border:1px;
+                background-color:white;
+                border-style:solid;
+                border-width:1px;
+                font-size: 15px;
+                border-color:grey;
+                box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%) !important;
+                padding: 3px 10px;
+                border-radius: 4px;
+                color:black;
+            }
+        }
+    }
+
+    tr td.cell-room {
+        /*
+        width: 40px;
+        min-width: 40px;
+        max-width: 40px;
+        */
+
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        cursor: default;
+        user-select: none;
+
+        &.rental-unit {
+            position: relative;
+            cursor: pointer;
+
+            span.rental-unit-name {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        &.status {
+            position: relative;
+            i {
+                font-size: calc(8px + (var(--rows_height) / 4));
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+            }
+            color: crimson;
+        }
+
+
+    }
+
+    tr td.cell-room:first-child {
+        text-align: left;
+        padding-left: 5px !important;
+        font-size: calc(8px + (var(--rows_height) / 4));
+    }
+
+    tr td.cell-room:hover {
+        .cell-hint {
+            display: block;
+        }
+    }
+
+    tr td.cell-days:hover {
+        .cell-hint {
+            display: block;
+        }
+    }
+
+    tr.rows {
+        height: var(--rows_height);
+    }
+
+    tr.rows.highlight {
+        background-color: #e0e0e0;
+    }
+
+
+    tr.rows td {
+        padding: 0;
+        text-align: center;
+        border-right: solid 1px #e0e0e0;
+        border-top: solid 1px #e0e0e0;
+    }
+
+    tr.rows td:last-child {
+        border-right: 0;
+    }
+
+    th:first-child, td:first-child {
+        padding-left: 2px;
+    }
+
+    th:last-child, td:last-child {
+        padding-right: 2px;
+    }
+
+    .rows {
+
+        span {
+            font-size: 13px;
+        }
+
+        span.rental-unit-name {
+            font-size: calc(8px + (var(--rows_height) / 5));
+        }
+    }
+
+
+
+}

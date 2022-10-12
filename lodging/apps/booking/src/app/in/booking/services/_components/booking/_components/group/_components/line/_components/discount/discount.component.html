@@ -1,0 +1,18 @@
+<div class="cell">
+      <mat-form-field floatLabel="always" class="invisible" style="max-width: 85px;">
+        % <mat-slide-toggle [formControl]="vm.type.formControl" (change)="onchangeType($event.checked)">€</mat-slide-toggle>
+        <textarea matInput hidden></textarea>
+      </mat-form-field>
+</div>
+<div class="cell">
+      <mat-form-field style="max-width: 90px;">
+        <input  type="number"
+                placeholder="réduction"
+                matInput
+                (blur)="onchangeValue($event)"
+                [formControl]="vm.value.formControl" >
+        <mat-error *ngIf="vm.value.formControl.hasError('required')">
+          Ne peut être vide.
+        </mat-error>
+      </mat-form-field>
+</div>

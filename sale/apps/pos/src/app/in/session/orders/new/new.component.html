@@ -1,0 +1,31 @@
+<div class="overlay-container" *ngIf="!ready">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="ready">
+    <div class="header-wrap">
+        <div class="header">Session › {{session.name}} <small>[{{session.id}}]</small> › Nouvelle commande</div>
+        <div style="display: flex; align-items: center;"></div>
+    </div>
+    <div class="body">
+        <div class="actions">
+            <div class="actions-std"></div>
+            <div class="actions-view"></div>
+        </div>
+
+        <div class="view">
+
+            <div class="customer-row">
+                <div class="customer-select">
+
+                    <sb-m2o-select [entity]="'sale\\customer\\Customer'" [placeholder]="'Commencez à taper le nom'"
+                        [hint]="'Client pour la commande'" [noResult]="'rien trouvé'"
+                        (itemSelected)="onselectCustomer($event)">Client</sb-m2o-select>
+                </div>
+                <div class="order-create">
+                    <button mat-flat-button color="accent" (click)="onclickCreateOrder()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

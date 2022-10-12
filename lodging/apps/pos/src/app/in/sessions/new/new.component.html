@@ -1,0 +1,28 @@
+<div class="header">Session › Nouvelle Session</div>
+
+<div class="title">
+    <button mat-raised-button color="accent" (click)="onclickOpenSession()">Ouvrir</button>
+</div>
+
+<div class="select-row">
+
+    <div class="elements-select">
+        <mat-form-field appearance="legacy" required style="width: min-content;">
+            <mat-label>Utilisateur</mat-label>
+            <input matInput type="text" style="width: min-content;"  [value]="user?.name" readonly>
+        </mat-form-field>
+    </div>
+
+    <div class="elements-select">
+        <sb-m2o-select [entity]="'lodging\\sale\\pos\\Cashdesk'" 
+            [placeholder]="'Commencez à taper le nom'"
+            [hint]="'Caisse sur laquelle ouvrir une session'" 
+            [noResult]="'Pas de correspondance'" 
+            [required]="true"
+            (itemSelected)="onselectCashdesk($event)" 
+            [domain]="['id', 'in', user?.centers_ids]">
+            Caisse
+        </sb-m2o-select>
+    </div>
+
+</div>
