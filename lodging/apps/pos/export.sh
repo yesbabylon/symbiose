@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf ../../pos & mkdir ../../pos & cp -a dist/symbiose/* ../../pos/
+rm -rf ../../../../public/pos && mkdir ../../../../public/pos && cp -a dist/symbiose/* ../../../../public/pos/

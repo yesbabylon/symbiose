@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf ../../apps & mkdir ../../apps & cp -a dist/symbiose/* ../../apps/
+rm -rf ../../../../public/apps && mkdir ../../../../public/apps && cp -a dist/symbiose/* ../../../../public/apps/

@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf ../../booking & mkdir ../../booking & cp -a dist/symbiose/* ../../booking/
+rm -rf ../../../../public/booking && mkdir ../../../../public/booking && cp -a dist/symbiose/* ../../../../public/booking/

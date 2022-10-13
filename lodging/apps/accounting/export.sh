@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf ../../accounting & mkdir ../../accounting & cp -a dist/symbiose/* ../../accounting/
+rm -rf ../../../../public/accounting && mkdir ../../../../public/accounting && cp -a dist/symbiose/* ../../../../public/accounting/
