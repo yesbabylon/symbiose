@@ -66,11 +66,11 @@ if(file_exists("packages/{$params['package']}/manifest.json")) {
     }
     // checking if there are dependencies
     if(isset($manifest_json['depends_on'])) {
-        foreach($dependencies as $dependency) {
+        foreach($manifest_json['depends_on'] as $dependency) {
             // initiate every dependency package before running the compile
             if(!isset($GLOBALS['QN_INIT_DEPENDENCIES'][$dependency])) {
                 // init package of sub packages
-                run('do', 'init_package', ['package' => $dependency, 'compile'=> $params['compile'], 'import' => $params['import']]);
+                eQual::run('do', 'init_package', ['package' => $dependency, 'compile'=> $params['compile'], 'import' => $params['import']], true);
             }
         }
     }
