@@ -195,6 +195,12 @@ export class PlanningCalendarComponent implements OnInit, OnChanges, AfterViewIn
                     && this.consumptions[rentalUnit.id][date_index]['booking_id'].hasOwnProperty('description')) {
                     return this.consumptions[rentalUnit.id][date_index].booking_id.description;
                 }
+                else if(this.consumptions[rentalUnit.id][date_index].hasOwnProperty('repairing_id')
+                    && this.consumptions[rentalUnit.id][date_index]['repairing_id']
+                    && this.consumptions[rentalUnit.id][date_index]['repairing_id'].hasOwnProperty('description')) {
+                    return this.consumptions[rentalUnit.id][date_index].repairing_id.description;
+                }
+
             }
         }
         return '';

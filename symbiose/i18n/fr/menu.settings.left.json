@@ -373,7 +373,7 @@
         "organisation.center_offices": {
             "label": "Équipes de gestion",
             "help": ""
-        },        
+        },
         "organisation.centers": {
             "label": "Centres",
             "help": ""
@@ -384,6 +384,10 @@
         },
         "organisation.centers.categories": {
             "label": "Catégories de centres",
+            "help": ""
+        },
+        "organisation.centers.repairings": {
+            "label": "Maintenance & Réparations",
             "help": ""
         },
         "organisation.centers.rental_units": {

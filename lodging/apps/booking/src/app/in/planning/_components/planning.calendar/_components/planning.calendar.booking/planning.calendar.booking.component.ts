@@ -122,7 +122,7 @@ export class PlanningCalendarBookingComponent implements OnInit, OnChanges  {
         }
         if(this.consumption.booking_id?.status == 'checkedin') {
             return colors['turquoise'];
-        }        
+        }
         return colors['grey'];
     }
 

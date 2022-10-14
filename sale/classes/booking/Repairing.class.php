@@ -65,7 +65,22 @@ class Repairing extends Model {
                 'type'              => 'date',
                 'description'       => "",
                 'default'           => time(),
-                'onupdate'          => 'onupdateDateTo'                
+                'onupdate'          => 'onupdateDateTo'
+            ],
+
+            // time fields are based on dates from repairs (consumptions)
+            'time_from' => [
+                'type'              => 'computed',
+                'result_type'       => 'time',
+                'function'          => 'calcTimeFrom',
+                'store'             => true
+            ],
+
+            'time_to' => [
+                'type'              => 'computed',
+                'result_type'       => 'time',
+                'function'          => 'calcTimeTo',
+                'store'             => true
             ]
 
         ];
@@ -73,7 +88,7 @@ class Repairing extends Model {
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
-        $repairings = $om->read(__CLASS__, $oids, ['description'], $lang);
+        $repairings = $om->read(self::getType(), $oids, ['description'], $lang);
         if($repairings > 0) {
             foreach($repairings as $oid => $odata) {
                 $result[$oid] = substr(HTMLToText::convert($odata['description']), 0, 25);
@@ -82,9 +97,53 @@ class Repairing extends Model {
         return $result;
     }
 
+    public static function calcTimeFrom($om, $oids, $lang) {
+        $result = [];
+        $repairings = $om->read(self::getType(), $oids, ['repairs_ids']);
+        if($repairings > 0) {
+            foreach($repairings as $oid => $repairing) {
+                $min_date = PHP_INT_MAX;
+                $time_from = 0;
+                $repairs = $om->read(Repair::getType(), $repairing['repairs_ids'], ['date', 'schedule_from']);
+                if($repairs > 0 && count($repairs)) {
+                    foreach($repairs as $rid => $repair) {
+                        if($repair['date'] < $min_date) {
+                            $min_date = $repair['date_from'];
+                            $time_from = $repair['schedule_from'];
+                        }
+                    }
+                    $result[$oid] = $time_from;
+                }
+            }
+        }
+        return $result;
+    }
+
+    public static function calcTimeTo($om, $oids, $lang) {
+        $result = [];
+        $repairings = $om->read(self::getType(), $oids, ['repairs_ids']);
+        if($repairings > 0) {
+            foreach($repairings as $oid => $repairing) {
+                $max_date = 0;
+                $time_to = 0;
+                $repairs = $om->read(Repair::getType(), $repairing['repairs_ids'], ['date', 'schedule_to']);
+                if($repairs > 0 && count($repairs)) {
+                    foreach($repairs as $rid => $repair) {
+                        if($repair['date'] > $max_date) {
+                            $max_date = $repair['date_to'];
+                            $time_to = $repair['schedule_to'];
+                        }
+                    }
+                    $result[$oid] = $time_to;
+                }
+            }
+        }
+        return $result;
+    }
+
     public static function onupdateDescription($om, $oids, $values, $lang) {
-        $om->write(get_called_class(), $oids, ['name' => null]);
-        $om->read(get_called_class(), $oids, ['name']);
+        $om->update(self::getType(), $oids, ['name' => null]);
+        $om->read(self::getType(), $oids, ['name']);
     }
 
     public static function onupdateDateFrom($om, $oids, $values, $lang) {

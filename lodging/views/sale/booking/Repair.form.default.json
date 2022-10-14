@@ -3,7 +3,7 @@
     "description": "Repair are scheduled occupation of rental units for maintenance & repair.",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
@@ -25,11 +25,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "repairing_id",
                                                 "width": "50%"
                                             },
@@ -47,6 +42,11 @@
                                                 "type": "field",
                                                 "value": "schedule_to",
                                                 "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
                                     },

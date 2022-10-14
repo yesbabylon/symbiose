@@ -17,7 +17,7 @@
             "color": "#29A1A1",
             "access": {
                 "groups": [
-                    "finance.default.user", 
+                    "finance.default.user",
                     "finance.default.administrator"
                 ]
             },
@@ -71,7 +71,7 @@
             "color": "#83C33F",
             "access": {
                 "groups": [
-                    "documents.default.user", 
+                    "documents.default.user",
                     "documents.default.administrator"
                 ]
             },
@@ -99,7 +99,7 @@
             "color": "#E95367",
             "access": {
                 "groups": [
-                    "pos.default.user", 
+                    "pos.default.user",
                     "pos.default.administrator"
                 ]
             },
@@ -113,7 +113,7 @@
             "color": "#F9BD15",
             "access": {
                 "groups": [
-                    "sale.default.user", 
+                    "sale.default.user",
                     "sale.default.administrator"
                 ]
             },
@@ -127,7 +127,7 @@
             "color": "#FF9741",
             "access": {
                 "groups": [
-                    "setting.default.user", 
+                    "setting.default.user",
                     "setting.default.administrator"
                 ]
             },
@@ -141,7 +141,7 @@
             "color": "#653BB5",
             "access": {
                 "groups": [
-                    "stats.default.user", 
+                    "stats.default.user",
                     "stats.default.administrator"
                 ]
             },

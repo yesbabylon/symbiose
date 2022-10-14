@@ -58,27 +58,29 @@ class Repairing extends \sale\booking\Repairing {
     }
 
     public static function onupdateRentalUnitsIds($om, $oids, $values, $lang) {
-        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateRepairs', $oids, [], $lang);
     }
 
     public static function onupdateDateFrom($om, $oids, $values, $lang) {
-        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateRepairs', $oids, [], $lang);
     }
 
     public static function onupdateDateTo($om, $oids, $values, $lang) {
-        $om->callonce(__CLASS__, '_updateRepairs', $oids, [], $lang);
+        $om->callonce(self::getType(), '_updateRepairs', $oids, [], $lang);
     }
 
     public static function _updateRepairs($om, $oids, $values, $lang) {
         // generate consumptions
-        $repairings = $om->read(__CLASS__, $oids, ['repairs_ids', 'center_id', 'date_from', 'date_to', 'rental_units_ids'], $lang);
+        $repairings = $om->read(self::getType(), $oids, ['repairs_ids', 'center_id', 'date_from', 'date_to', 'rental_units_ids'], $lang);
+        // reset time_from and time_to
+        $om->update(self::getType(), $oids, ['time_from' => null, 'time_to' => null], $lang);
         if($repairings > 0) {
 
             foreach($repairings as $oid => $odata) {
 
                 // remove existing repairs
                 $repairs_ids = array_map(function($a) { return "-$a";}, $odata['repairs_ids']);
-                $om->write(__CLASS__, $oid, ['repairs_ids' => $repairs_ids]);
+                $om->update(self::getType(), $oid, ['repairs_ids' => $repairs_ids]);
 
                 $nb_days = floor( ($odata['date_to'] - $odata['date_from']) / (60*60*24) ) + 1;
                 list($day, $month, $year) = [ date('j', $odata['date_from']), date('n', $odata['date_from']), date('Y', $odata['date_from']) ];

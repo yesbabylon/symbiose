@@ -32,8 +32,7 @@
                                                 "value": "name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
+                                                    "heading": true
                                                 }
                                             },
                                             {

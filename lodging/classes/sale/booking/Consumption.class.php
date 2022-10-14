@@ -244,7 +244,9 @@ class Consumption extends \sale\booking\Consumption {
                 'id', 'date','schedule_from','schedule_to',
                 'rental_unit_id',
                 'booking_line_group_id',
-                'repairing_id'
+                'repairing_id',
+                'schedule_from',
+                'schedule_to'
             ]);
 
         /*
@@ -257,19 +259,19 @@ class Consumption extends \sale\booking\Consumption {
 
         if($consumptions > 0) {
             /*
-                Join consecutive consumptions of a same booking_line_group for usingas same rental unit.
+                Join consecutive consumptions of a same booking_line_group for using as same rental unit.
                 All consumptions are enriched with additional fields `date_from`and `date_to`.
                 Field schedule_from and schedule_to are adapted consequently.
             */
 
             $booking_line_groups = $om->read(BookingLineGroup::getType(),
                     array_map(function($a) {return (int) $a['booking_line_group_id'];}, $consumptions),
-                    ['id','date_from', 'date_to','time_from', 'time_to']
+                    ['id', 'date_from', 'date_to', 'time_from', 'time_to']
                 );
 
             $repairings = $om->read(Repairing::getType(),
                     array_map(function($a) {return (int) $a['repairing_id'];}, $consumptions),
-                    ['id','date_from', 'date_to']
+                    ['id', 'date_from', 'date_to', 'time_from', 'time_to']
                 );
 
             // pass-1 : group consumptions by rental unit and booking (line group) or repairing
@@ -284,6 +286,10 @@ class Consumption extends \sale\booking\Consumption {
 
                 if(!isset($bookings_map[$rental_unit_id])) {
                     $bookings_map[$rental_unit_id] = [];
+                }
+
+                if(!isset($repairings_map[$rental_unit_id])) {
+                    $repairings_map[$rental_unit_id] = [];
                 }
 
                 if(isset($consumption['booking_line_group_id'])) {
@@ -301,7 +307,6 @@ class Consumption extends \sale\booking\Consumption {
                     }
                     $repairings_map[$rental_unit_id][$repairing_id][] = $cid;
                 }
-
             }
 
             // pass-2 : generate map
@@ -342,7 +347,6 @@ class Consumption extends \sale\booking\Consumption {
                     $consumption['date_to'] = $booking_line_groups[$booking_line_group_id]['date_to'];
                     $consumption['schedule_from'] = $booking_line_groups[$booking_line_group_id]['time_from'];
                     $consumption['schedule_to'] = $booking_line_groups[$booking_line_group_id]['time_to'];
-
                 }
                 // handle consumptions from repairings
                 elseif( isset($consumption['repairing_id']) ) {
@@ -354,6 +358,8 @@ class Consumption extends \sale\booking\Consumption {
 
                     $consumption['date_from'] = $repairings[$repairing_id]['date_from'];
                     $consumption['date_to'] = $repairings[$repairing_id]['date_to'];
+                    $consumption['schedule_from'] = $repairings[$repairing_id]['time_from'];
+                    $consumption['schedule_to'] = $repairings[$repairing_id]['time_to'];
                 }
                 $result[$rental_unit_id][$date_index] = $consumption;
             }

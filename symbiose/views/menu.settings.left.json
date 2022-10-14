@@ -109,6 +109,16 @@
                                         }
                                     },
                                     {
+                                        "id": "organisation.centers.repairings",
+                                        "type": "entry",
+                                        "label": "Repairings",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "lodging\\sale\\booking\\Repairing",
+                                            "view": "list.default"
+                                        }
+                                    },
+                                    {
                                         "id": "organisation.centers.rental_units",
                                         "type": "entry",
                                         "label": "Rental units",
