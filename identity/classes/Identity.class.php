@@ -360,8 +360,25 @@ class Identity extends Model {
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Partnerships that relate to the identity.',
                 'domain'            => ['owner_identity_id', '<>', 'object.id']
-            ]
+            ],
 
+            'flag_latepayer' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark a customer as bad payer.'
+            ],
+
+            'flag_damage' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark a customer with a damage history.'
+            ],
+
+            'flag_nuisance' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark a customer with a disturbances history.'
+            ]
 
         ];
     }
@@ -459,7 +476,7 @@ class Identity extends Model {
      * When lang_id is updated, perform cascading trought the partners to update related lang_id
      */
     public static function onupdateLangId($om, $oids, $values, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['partners_ids', 'lang_id']);
+        $res = $om->read(self::getType(), $oids, ['partners_ids', 'lang_id']);
 
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {

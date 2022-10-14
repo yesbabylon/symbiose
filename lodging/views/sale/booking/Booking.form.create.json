@@ -9,7 +9,8 @@
             "ACTION.SAVE": [
                 {
                     "id": "SAVE_AND_EDIT" ,
-                    "view": "form.default"
+                    "view": "form.default",
+                    "controller": "lodging_booking_update"
                 },
                 {
                     "id": "SAVE_AND_VIEW"

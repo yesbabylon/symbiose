@@ -115,7 +115,7 @@
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "label": "Accounting",
                         "id": "section.accounting",
@@ -148,6 +148,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "centers_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Users",
+                        "id": "section.users",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "users_ids",
                                                 "width": "100%"
                                             }
                                         ]

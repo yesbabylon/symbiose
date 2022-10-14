@@ -8,9 +8,19 @@
             "description": "Contacts liés à l'identité.",
             "help": ""
         },
-        "lang_id": {
-            "label": "Langue",
-            "description": "Langue parlée.",
+        "flag_latepayer": {
+            "label": "Mauvais payeur",
+            "description": "Le client est un payeur lent ou difficile.",
+            "help": ""
+        },
+        "flag_damage": {
+            "label": "Attention dégâts",
+            "description": "Le client a déjà occasionné des dégâts lors de ses réservations.",
+            "help": ""
+        },
+        "flag_nuisance": {
+            "label": "Attention nuisances",
+            "description": "Le client a déjà occasionné des nuisances lors de ses réservations",
             "help": ""
         }
     },
@@ -21,6 +31,9 @@
             "layout": {
                 "section.identity_info": {
                     "label": "Infos générales"
+                },
+                "section.history": {
+                    "label": "Suivi"
                 },
                 "section.settings": {
                     "label": "Paramètres"

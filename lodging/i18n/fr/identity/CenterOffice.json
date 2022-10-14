@@ -90,6 +90,9 @@
                 },
                 "section.contacts_ids": {
                     "label": "Contacts"
+                },
+                "section.users": {
+                    "label": "Utilisateurs"
                 }
             }
         },
