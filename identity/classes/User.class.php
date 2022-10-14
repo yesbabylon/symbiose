@@ -11,7 +11,7 @@ class User extends \core\User {
     public static function getName() {
         return 'User';
     }
-    
+
     public static function getColumns() {
         return [
 
@@ -26,15 +26,15 @@ class User extends \core\User {
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'domain'            => ['type', '=', 'I'],                
+                'domain'            => ['type', '=', 'I'],
                 'description'       => 'The contact related to the user.',
                 'onupdate'          => 'onupdateIdentity'
             ],
 
             'setting_values_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'core\setting\SettingValue', 
-                'foreign_field'     => 'user_id', 
+                'foreign_object'    => 'core\setting\SettingValue',
+                'foreign_field'     => 'user_id',
                 'description'       => 'List of settings that relate to the user.'
             ],
 
@@ -52,21 +52,21 @@ class User extends \core\User {
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
-        $users = $om->read(__CLASS__, $oids, ['login', 'identity_id.name']);
+        $users = $om->read(self::getType(), $oids, ['login', 'identity_id.name']);
         foreach($users as $oid => $odata) {
             if(isset($odata['identity_id.name']) && strlen($odata['identity_id.name']) ) {
                 $result[$oid] = $odata['identity_id.name'];
             }
             else {
                 $result[$oid] = $odata['login'];
-            }            
+            }
         }
-        return $result;              
+        return $result;
     }
 
 
     public static function onupdateIdentity($om, $oids, $values, $lang) {
         // force re-compute the name
-        $om->write(__CLASS__, $oids, ['name' =>  null], $lang);
-    }    
+        $om->write(self::getType(), $oids, ['name' =>  null], $lang);
+    }
 }

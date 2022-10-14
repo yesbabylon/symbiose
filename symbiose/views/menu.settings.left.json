@@ -66,7 +66,7 @@
                                 "label": "Organisations",
                                 "description": "",
                                 "context": {
-                                    "entity": "identity\\Identity",
+                                    "entity": "lodging\\identity\\Identity",
                                     "view": "list.default",
                                     "domain": ["id", "<", 4]
                                 }
@@ -155,7 +155,7 @@
                                 "label": "Identities",
                                 "description": "",
                                 "context": {
-                                    "entity": "identity\\Identity",
+                                    "entity": "lodging\\identity\\Identity",
                                     "view": "list.default"
                                 }
                             },
@@ -293,7 +293,7 @@
                                 "description": "",
                                 "icon": "add",
                                 "context": {
-                                    "entity": "sale\\customer\\Customer",
+                                    "entity": "lodging\\sale\\customer\\Customer",
                                     "view": "form.customer",
                                     "purpose": "create",
                                     "domain": ["relationship", "=", "customer"]
@@ -305,7 +305,7 @@
                                 "label": "All customers",
                                 "description": "",
                                 "context": {
-                                    "entity": "sale\\customer\\Customer",
+                                    "entity": "lodging\\sale\\customer\\Customer",
                                     "view": "list.default",
                                     "domain": ["relationship", "=", "customer"]
                                 }
