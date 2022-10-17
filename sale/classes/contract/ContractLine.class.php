@@ -77,6 +77,7 @@ class ContractLine extends Model {
             // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'discount' => [
                 'type'              => 'float',
+                'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0
             ],

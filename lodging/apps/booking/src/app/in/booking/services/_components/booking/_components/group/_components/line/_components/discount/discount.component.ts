@@ -92,10 +92,10 @@ export class BookingServicesBookingGroupLineDiscountComponent extends TreeCompon
         super.update(values);
         // assign VM values
         if(this.instance.type == 'percent' && this.instance.value < 1){
-            this.vm.value.formControl.setValue( (this.instance.value * 100) );
+            this.vm.value.formControl.setValue( parseFloat((this.instance.value * 100).toFixed(3)) );
         }
         else {
-            this.vm.value.formControl.setValue(this.instance.value);
+            this.vm.value.formControl.setValue( parseFloat(this.instance.value.toFixed(2)) );
         }
         this.vm.type.formControl.setValue(this.instance.type == 'amount');
     }
@@ -105,9 +105,15 @@ export class BookingServicesBookingGroupLineDiscountComponent extends TreeCompon
         // true is €, false, is %
         let type = (event)?"amount":"percent";
 
-        if(type == this.instance.type) return;
+        if(type == this.instance.type) {
+            return;
+        }
+        let value = this.vm.value.formControl.value;
+        if(type == 'percent' && value >= 1) {
+            value /= 100;
+        }
         try {
-            await this.api.update(this.instance.entity, [this.instance.id], {type: type});
+            await this.api.update(this.instance.entity, [this.instance.id], {type: type, value: value});
             // relay change to parent component
             this.updated.emit();
         }
@@ -126,7 +132,9 @@ export class BookingServicesBookingGroupLineDiscountComponent extends TreeCompon
             if(this.vm.type.formControl.value == false && value >= 1) {
                 value /= 100;
             }
-            if(value == this.instance.value) return;
+            if(value == this.instance.value) {
+                return;
+            }
             await this.api.update(this.instance.entity, [this.instance.id], {value: value});
             // relay change to parent component
             this.updated.emit();

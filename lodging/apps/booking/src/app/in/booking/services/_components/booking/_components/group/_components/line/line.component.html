@@ -96,14 +96,14 @@
 
             <!-- Discount -->
             <div class="cell cell-text cell-right">
-                <span *ngIf="!group.is_locked">{{instance.discount | percent}}</span>
+                <span *ngIf="!group.is_locked">{{instance.discount | percent: '1.2-2'}}</span>
             </div>
 
             <!-- Tax -->
             <div class="cell cell-right" [class.cell-text]="vProduct.vat_rate.folded"
                 (clickOut)="vProduct.vat_rate.folded = true">
                 <span [hidden]="!vProduct.vat_rate.folded || group.is_locked"
-                    (click)="vProduct.vat_rate.folded = false">{{instance.vat_rate | percent}}</span>
+                    (click)="vProduct.vat_rate.folded = false">{{instance.vat_rate | percent: '1.2-2'}}</span>
                 <mat-form-field [hidden]="vProduct.vat_rate.folded">
                     <mat-label>Taux TVA</mat-label>
                     <input #vatRateInput type="number" matInput

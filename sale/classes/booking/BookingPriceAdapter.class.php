@@ -58,16 +58,17 @@ class BookingPriceAdapter extends Model {
                 'description'       => 'Type of manual discount (fixed amount or percentage of the price).',
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 'percent',
-                'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
+                'onupdate'          => 'onupdateValue'
             ],
 
             // #memo - important: to allow the maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
             'value' => [
                 'type'              => 'float',
+                'usage'             => 'amount/rate',
                 'description'       => "Value of the discount (monetary amount or percentage).",
                 'visible'           => ['is_manual_discount', '=', true],
                 'default'           => 0.0,
-                'onupdate'          => 'sale\booking\BookingPriceAdapter::onupdateValue'
+                'onupdate'          => 'onupdateValue'
             ],
 
             'discount_id' => [

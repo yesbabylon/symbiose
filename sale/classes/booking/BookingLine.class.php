@@ -170,6 +170,7 @@ class BookingLine extends Model {
             'discount' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
+                'usage'             => 'amount/rate',
                 'description'       => 'Total amount of manual discount to apply, if any.',
                 'function'          => 'calcDiscount',
                 'store'             => true
@@ -380,7 +381,7 @@ class BookingLine extends Model {
     public static function calcDiscount($om, $oids, $lang) {
         $result = [];
 
-        $lines = $om->read(get_called_class(), $oids, ['manual_discounts_ids', 'unit_price']);
+        $lines = $om->read(self::getType(), $oids, ['manual_discounts_ids', 'unit_price']);
 
         foreach($lines as $oid => $line) {
             $result[$oid] = (float) 0.0;
@@ -392,7 +393,7 @@ class BookingLine extends Model {
                 }
                 else if($adata['type'] == 'amount') {
                     // amount discount is converted to a rate
-                    $result[$oid] += round($adata['value'] / $line['unit_price'], 2);
+                    $result[$oid] += round($adata['value'] / $line['unit_price'], 4);
                 }
             }
         }
