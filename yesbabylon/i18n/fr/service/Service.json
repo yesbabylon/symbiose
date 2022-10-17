@@ -1,0 +1,49 @@
+{
+    "name": "Service",
+    "plural": "services",
+    "description": "",
+    "model": {
+        "is_recurring": {
+            "label": "Récurrence",
+            "description": "Fréquence du service.",
+            "help": "",
+            "selection": {
+                "month" : "mois",
+                "week": "semaine",
+                "quarter": "trimestre",
+                "year": "année",
+                "none": "aucun"
+            }
+        },
+        "last_invoice": {
+            "label": "Dernière facture",
+            "description": "Dernière facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Service",
+            "description": "",
+            "layout": {
+                "actions": {
+                    "action.invoice" : {
+                        "label": "Facturer"
+                    }
+                },
+                "section.details" : {
+                    "label": "Détails"
+                },
+                "section.lines" : {
+                    "label": "Lignes de service"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Services",
+            "description": "Liste des services.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
