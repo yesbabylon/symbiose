@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<title>Devis de réservation</title>
+<style type="text/css">
+@page {
+  margin: 1cm;
+}
+body {
+    margin: 0;
+    padding: 0;
+    margin-top: 300px;
+    margin-bottom: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.7em;
+    text-align: justify;
+    width: 100%;
+}
+
+h2 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 21px;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+div, table, table tr td {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.header,
+div.footer {
+    box-sizing: border-box;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+}
+
+div.inner {
+    height: auto;
+    box-sizing: border-box;
+    border: none;
+}
+
+div.inner p {
+    margin: 0;
+}
+
+div.inner .wrapper {
+    margin: 0px;
+    margin-top: 20px;
+    padding: 0px;
+    border: none;
+}
+
+div.inner .wrapper table {
+    page-break-inside: auto;
+    border: solid 1px black;
+}
+
+div.inner .wrapper table tr td {
+    border-right: solid 1px black;
+    border-bottom: solid 1px lightgrey;
+}
+
+div.inner .wrapper table tr td:last-child {
+    border-right: none;
+}
+
+div.inner .wrapper table tr:last-child td {
+    border-bottom: none;
+    border-bottom: solid 1px black;
+}
+
+div.inner .intro {
+    margin-top: 20px;
+}
+
+div.trailer {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: visible;
+    z-index: 100;
+}
+
+div.header {
+    top: 0;
+    left: 0;
+    height: 327px;
+}
+
+div.header table {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: separate;
+    border: solid 1px rgb(204, 204, 204);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+div.footer {
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    overflow: visible;
+    z-index: 200;
+    font-size: 0.8em !important;
+}
+
+hr {
+    page-break-after: always;
+    border: 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <div style="position: absolute; height: 150px; width: 350px; z-index: -1;">
+        <img src="{{ header_img_url }}" width="350" height="100" border="0" />
+        <div style="margin-left: 8px;">
+            <h3>{{ company_name}}</h3>
+            {{ company_address }}<br />
+            Numéro d'entreprise: {{ company_reg_number }}<br />
+        </div>
+    </div>
+    <div style="position: absolute; top: 50px; right: 0px; width: 280px; height: 103px; font-size: 13px;">
+        {{ customer_name }}<br />
+        <!--{{ contact_name }}<br />-->
+        {{ customer_address1 }}<br />
+        {{ customer_address2 }}<br />
+        {% if customer_country != 'BE' %}
+            {{ customer_country }}<nr />
+        {% endif %}
+        {% if has_vat > 0 %}
+        TVA {{ customer_vat }}
+        {% endif %}
+    </div>
+
+    <!-- spacer -->
+    <div style="position: relative; height: 150px; width: 100%;">
+        <div style="position: absolute; top: 130px; right: 0; height: 19px; width: 100%; text-align: right;">Le {{ date }}</div>
+    </div>
+
+    <table cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <td colspan="2" style=" font-size: 20px; text-align: center; border-bottom: solid 1px rgb(204, 204, 204); width: 100%; height: 20px;  padding-left: 7px; overflow: hidden;">{{ status }} {{ code }}</td>
+        </tr>
+        <tr valign="top">
+            <td style="width: 50%; padding: 5px;">
+                <div style="margin-bottom: 5px; margin-top: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Votre séjour à </b></div> <div style="display: inline-block;">{{ center }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px; vertical-align: top;"></div> <div style="display: inline-block;">{{ center_address1 }} <br /> {{ center_address2 }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px; vertical-align: top;"><b>Contact</b></div> <div style="display: inline-block;">{{ center_contact1 }} <br /> {{ center_contact2 }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Période</b></div> <div style="display: inline-block;">{{ period }}</div>
+                </div>
+            </td>
+            <td style="width: 50%; padding: 5px; background-color: rgb(204, 204, 204); ">
+                <div style="margin-bottom: 5px; margin-top: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Membre</b></div> <div style="display: inline-block; width: 230px; background-color: white; padding: 0 5px; height: 15px;overflow: hidden;">{{ member }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>Tél</b> </div> <div style="display: inline-block; width: 230px; background-color: white; padding: 0 5px; height: 15px;overflow: hidden;">{{ contact_phone }}</div>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <div style="display: inline-block; width: 100px;"><b>email</b> </div> <div style="display: inline-block; width: 230px; background-color: white; padding: 0 5px; height: 15px;overflow: hidden;">{{ contact_email }}</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="footer">
+    <p style="text-align: center;">
+        {{ company_name}} - {{ company_address }}
+        <br />
+        Numéro d'entreprise: {{ company_reg_number }} - IBAN : {{ company_iban }}
+        <br />
+        Email: {{ company_email }} - Web: {{ company_website }} - Tel {{ company_phone }}
+        {% if company_fax %}
+            - {{ company_fax }}
+        {% endif %}
+    </p>
+</div>
+
+<div class="inner">
+    <div class="intro">
+        {{ quote_header_html | raw }}
+    </div>
+    <div class="wrapper">
+        <table width="100%" cellpadding="4" cellspacing="0">
+            <thead style="border: solid 1px black; border-left: 0px; border-right: 0px;">
+                <tr>
+                <th width="45%" style="padding-left: 7px; font-weight: bold; text-align: left;">
+                    Libellé produit
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: left;  border-left: solid 1px black; padding-right: 7px;">
+                    Qté
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: left;  border-left: solid 1px black; padding-right: 7px;">
+                    Gté
+                </th>
+                <th width="10%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    Prix unit.
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    Rem%
+                </th>
+                <th width="8%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Taxes
+                    {% else %}
+                        TVA
+                    {% endif %}
+                </th>
+                <th width="13%" style="font-weight: bold; text-align: right;  border-left: solid 1px black; padding-right: 7px;">
+                    {% if (company_has_vat == false) or (company_vat_number is null) or (company_vat_number == '') %}
+                        Prix
+                    {% else %}
+                        Prix HT
+                    {% endif %}
+                </th>
+            </tr>
+            </thead>
+            <!-- for each line -->
+            {% for line in lines %}
+                <tr valign="top">
+                    <td width="45%">
+                        {% if line.is_group %}
+                            <b>{{ line.name }}</b> <br />
+                            {{ line.description }}
+                        {% else %}
+                            {{ line.name }}
+                        {% endif %}
+                    </td>
+                    <td width="8%" style="text-align: center;">
+                        {{ line.qty }}
+                    </td>
+                    <td width="8%" style="text-align: center;">
+                        {{ line.free_qty }}
+                    </td>
+                    <td width="10%" style="text-align: right;">
+                        {% if line.unit_price is not null %}
+                            {{ line.unit_price | format_currency('EUR') }}
+                        {% endif %}
+                    </td>
+                    <td width="8%" style="text-align: right;">
+                        {% if line.discount is not null and line.discount > 0 %}
+                            {{ line.discount | format_number(style='percent') }}
+                        {% endif %}
+                    </td>
+                    <td width="8%" style="text-align: right;">
+                        {% if line.vat_rate is not null and company_has_vat %}
+                            {{ line.vat_rate | format_number(style='percent') }}
+                        {% endif %}
+                    </td>
+                    <td width="13%" style="text-align: right;">
+                        {% if line.total is not null %}
+                            {{ line.total | format_currency('EUR') }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="trailer">
+    <div class="wrapper" style="margin-top: -1px;">
+        <table width="100%" style="border: 0px; border-right: solid 1px black;" cellpadding="4" cellspacing="0">
+            <tr valign="top">
+                <td width="87%" style="text-align: right; padding-right: 10px;">
+                    TOTAL HT
+                </td>
+                <td width="13%" style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ total | format_currency('EUR') }}
+                </td>
+            </tr>
+            {% for tax_label, tax_total in tax_lines %}
+            {% if (tax_total > 0.0) %}
+            <tr>
+                <td style="text-align: right; padding-right: 10px;">
+                    {{tax_label}}
+                </td>
+                <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ tax_total | format_currency('EUR') }}
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            <tr>
+                <td style="text-align: right; padding-right: 10px;">
+                    TOTAL DU SÉJOUR TTC
+                </td>
+                <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
+                    {{ price | format_currency('EUR') }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    {% if is_price_tbc %}
+    <div class="important">
+        <p><b>Important: Ce document ne constitue pas une offre contractuelle, ni une garantie.</b></p>
+        <p>Le prix est renseigné à titre indicatif et est susceptible d'évoluer. Il s’agit du montant demandé pour un service équivalent à la même période, l’année la plus proche pour laquelle les tarifs ont été définis. Il pourrait donc faire l’objet d’une indexation liée à l’adaptation des prix de nos différents fournisseurs. Cette augmentation pourrait porter sur un maximum de 15% du montant total du séjour. A partir de 6 mois avant la date de début du séjour, le client peut s’attendre à recevoir un prix fixe.</p>
+    </div>
+    {% endif %}
+
+    {% if benefit_lines | length > 0  %}
+    <div class="important">
+        <p><b>Votre avantage déjà inclus:</b></p>
+        <table style="border: solid 1px black; width: 100%;">
+            <tr>
+                <td style="width: 80%;"><b>Categorie tarifaire</b></td>
+                <td style="text-align: center;"><b>Avantage</b></td>
+                <td style="text-align: center;"><b>/ Total</b></td>
+            </tr>
+            {% for benefit_line in benefit_lines %}
+            <tr>
+                <td>{{ benefit_line.name }}</td>
+                <td style="text-align: center;">{{ benefit_line.value | format_currency('EUR') }}</td>
+                <td style="text-align: center;">{{ (100*benefit_line.value/price) | round }} %</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>Veuillez noter que cet avantage est proportionnel aux spécificités de cette réservation, qu'il n'est donc pas fixe et pourra évoluer en cas de modification de votre réservation ou lors de réservations ultérieures.</p>
+    </div>
+    {% endif %}
+
+    {% if consumptions_map | length > 0  %}
+    <div>
+        <table style="border: solid 1px black; width: 100%;">
+            <tr>
+                <td style="width: 80%;"><b>Jour</b></td>
+                <td style="text-align: center;"><b>Petits déjeuners</b></td>
+                <td style="text-align: center;"><b>Repas midi</b></td>
+                <td style="text-align: center;"><b>Repas soir</b></td>
+                <td style="text-align: right;"><b>Nuitées</b></td>
+            </tr>
+            {% for date_index,map in consumptions_map %}
+            <tr>
+                <td>{{ date_index }}</td>
+                {% for part,qty in map %}
+                <td>{{ qty }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    {% endif %}
+</div>
+
+
+</body>
+</html>

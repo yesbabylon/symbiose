@@ -1,0 +1,255 @@
+{
+    "name": "Sale menu",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "id": "item.bank_statements",
+                "label": "Statements",
+                "description": "",
+                "icon": "list_alt",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.bank_statements.statements_to_process",
+                        "type": "entry",
+                        "label": "Statements to process",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc",
+                            "domain": ["status", "=", "pending"]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.all",
+                        "type": "entry",
+                        "label": "All Bank Statements",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatement",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.lines_to_review",
+                        "type": "entry",
+                        "label": "Lines to review",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc",
+                            "domain": ["status", "=", "pending"]
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.all_lines",
+                        "type": "entry",
+                        "label": "All lines",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.default",
+                            "order": "date",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.bank_statements.statements_ready",
+                        "type": "entry",
+                        "label": "Statements",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\BankStatementLine",
+                            "view": "list.reconciled",
+                            "domain": [
+                                ["status", "=", "reconciled"]
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.customers",
+                "label": "Customers",
+                "description": "",
+                "icon": "person",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.new_customer",
+                        "type": "entry",
+                        "label": "New customer",
+                        "description": "",
+                        "icon": "add",
+                        "route": "/",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "form.create",
+                            "purpose": "create",
+                            "domain": ["relationship", "=", "customer"]
+                        }
+                    },
+                    {
+                        "id": "item.all_customers",
+                        "type": "entry",
+                        "label": "All customers",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.default",
+                            "domain": ["relationship", "=", "customer"]
+                        }
+                    },
+                    {
+                        "id": "item.all_partners",
+                        "type": "entry",
+                        "label": "All partners",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "identity\\Partner",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.fundings",
+                "label": "Fundings",
+                "description": "",
+                "icon": "person",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.fundings.waiting",
+                        "type": "entry",
+                        "label": "Waiting for payment",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Funding",
+                            "view": "list.default",
+                            "domain": ["is_paid", "=", false]
+                        }
+                    },
+                    {
+                        "id": "item.fundings.overdue",
+                        "type": "entry",
+                        "label": "Overdue fundings",
+                        "description": "",
+                        "context": {
+                            "entity": "lodging\\sale\\booking\\Funding",
+                            "view": "list.default",
+                            "domain": [ ["due_date", "<=", "date.this.day"],  ["is_paid", "=", false] ]
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.services",
+                "label": "Service",
+                "description": "",
+                "icon": "room_service",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.new_service",
+                        "type": "entry",
+                        "label": "New service",
+                        "description": "",
+                        "icon": "add",
+                        "route": "/",
+                        "context": {
+                            "entity": "yesbabylon\\service\\Service",
+                            "view": "form.create",
+                            "purpose": "create",
+                            "domain": []
+                        }
+                    },
+                    {
+                        "id": "item.all_services",
+                        "type": "entry",
+                        "label": "All services",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "yesbabylon\\service\\Service",
+                            "view": "list.default",
+                            "domain": []
+                        }
+                    },
+                    {
+                        "id": "item.all_services_lines",
+                        "type": "entry",
+                        "label": "All services lines",
+                        "description": "",
+                        "route": "/",
+                        "context": {
+                            "entity": "yesbabylon\\service\\ServiceLine",
+                            "view": "list.default"
+                        }
+                    }
+
+                ]
+            },
+            {
+                "id": "item.invoices",
+                "label": "Invoices",
+                "description": "",
+                "icon": "payment",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.new_invoice",
+                        "type": "entry",
+                        "label": "New invoice",
+                        "description": "",
+                        "icon": "add",
+                        "route": "/",
+                        "context": {
+                            "entity": "yesbabylon\\accounting\\Invoice",
+                            "view": "form.create",
+                            "purpose": "create",
+                            "domain": []
+                        }
+                    },
+                    {
+                        "id": "item.invoices_all",
+                        "type": "entry",
+                        "label": "All invoices",
+                        "description": "",
+                        "context": {
+                            "entity": "yesbabylon\\accounting\\Invoice",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.invoices.incoming",
+                        "type": "entry",
+                        "label": "Upcoming invoices",
+                        "description": "",
+                        "context": {
+                            "entity": "yesbabylon\\accounting\\Invoice",
+                            "view": "list.incoming",
+                            "domain": [["date", ">=", "date.this.day.first"]]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
