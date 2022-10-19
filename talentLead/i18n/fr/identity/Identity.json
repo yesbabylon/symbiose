@@ -1,0 +1,22 @@
+{
+	"name": "Identité",
+	"plural": "Identités",
+	"description": "",
+	"model": {
+	},
+	"view": {
+		"form.default": {
+			"name": "Identité",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Identités",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+
+	}
+}

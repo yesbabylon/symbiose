@@ -1,0 +1,37 @@
+{
+	"name": "Choix de critère",
+	"plural": "Choix de critère",
+	"description": "",
+	"model": {
+		"name":{
+			"label":"Nom", 
+			"description": "Nom.",
+			"help": ""
+		},
+        "value":{
+			"label":"Valeur", 
+			"description": "Valeur.",
+			"help": ""
+		},
+        "criteria_id":{
+			"label":"Critère", 
+			"description": "Critère.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Choix de critère",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Choix de critère",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}

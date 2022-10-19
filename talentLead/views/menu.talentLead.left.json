@@ -1,0 +1,212 @@
+{
+    "name": "TalentLead menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.talentLead_identities",
+                "label": "Identities",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Talent",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\identity\\Talent",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Prospect",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\identity\\Prospect",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Customer",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\identity\\Customer",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Identity",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\identity\\Identity",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.talentLead_campaigns",
+                "label": "Campaigns",
+                "description": "",
+                "icon": "search",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Campaign",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\Campaign",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Campaign Criteria",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\CampaignCriteria",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Campaign Criteria Value",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\CampaignCriteriaValue",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Campaign Template",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\CampaignTemplate",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Campaign Template Criteria",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\CampaignTemplateCriteria",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Criteria",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\Criteria",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.",
+                        "type": "entry",
+                        "label": "Criteria Choice",
+                        "description": "",
+                        "context": {
+                            "entity": "talentLead\\campaign\\CriteriaChoice",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.talentLead_communications",
+                "label": "Communications",
+                "description": "",
+                "icon": "menu_book",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "item.talentLead_conversations",
+                        "label": "Conversations",
+                        "description": "",
+                        "icon": "list_alt",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "item.",
+                                "type": "entry",
+                                "label": "Conversation",
+                                "description": "",
+                                "context": {
+                                    "entity": "talentLead\\communication\\Conversation",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.",
+                                "type": "entry",
+                                "label": "Conversation Flow",
+                                "description": "",
+                                "context": {
+                                    "entity": "talentLead\\communication\\ConversationFlow",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.",
+                                "type": "entry",
+                                "label": "Conversation Flow Action",
+                                "description": "",
+                                "context": {
+                                    "entity": "talentLead\\communication\\ConversationFlowAction",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.talentLead_messages",
+                        "label": "Messages",
+                        "description": "",
+                        "icon": "message",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "item.",
+                                "type": "entry",
+                                "label": "Message",
+                                "description": "",
+                                "context": {
+                                    "entity": "talentLead\\communication\\Message",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.",
+                                "type": "entry",
+                                "label": "Pending sessions",
+                                "description": "",
+                                "context": {
+                                    "entity": "talentLead\\communication\\MessageTemplate",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

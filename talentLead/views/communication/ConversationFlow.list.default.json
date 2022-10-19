@@ -1,0 +1,15 @@
+{
+    "name": "Conversation Flow",
+    "description": "Conversation Flow.",
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            }
+        ]
+    }
+}

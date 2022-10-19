@@ -1,0 +1,42 @@
+{
+	"name": "Action de flux de conversation",
+	"plural": "Actions de flux de conversation",
+	"description": "",
+	"model": {
+		"name":{
+			"label":"Nom", 
+			"description": "Nom.",
+			"help": ""
+		},
+        "delay":{
+			"label":"Délai", 
+			"description": "Délai.",
+			"help": ""
+		},
+        "conversation_flow_id":{
+			"label":"Flux de conversation", 
+			"description": "Flux de conversation.",
+			"help": ""
+		},
+        "message_template_id":{
+			"label":"Modèle de message", 
+			"description": "Modèle de message.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Action de flux de conversation",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Actions de flux de conversation",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}

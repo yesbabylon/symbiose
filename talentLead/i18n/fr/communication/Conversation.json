@@ -1,0 +1,47 @@
+{
+	"name": "Conversation",
+	"plural": "Conversations",
+	"description": "",
+	"model": {
+		"prospect_id":{
+			"label":"Piste", 
+			"description": "Piste.",
+			"help": ""
+		},
+        "campaign_id":{
+			"label":"Campagne", 
+			"description": "Campagne.",
+			"help": ""
+		},
+        "conversation_flow_id":{
+			"label":"Flux de campagne", 
+			"description": "Flux de campagne.",
+			"help": ""
+		},
+        "messages_ids":{
+			"label":"Messages", 
+			"description": "Messages.",
+			"help": ""
+		},
+        "status":{
+			"label":"Statut", 
+			"description": "Statut.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Conversation",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Conversations",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}

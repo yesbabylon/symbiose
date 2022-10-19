@@ -1,0 +1,20 @@
+{
+    "name": "Campaign Template",
+    "description": "Campaign Template.",
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "20%"
+            }
+        ]
+    }
+}

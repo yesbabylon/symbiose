@@ -1,0 +1,37 @@
+{
+	"name": "Modèle de message",
+	"plural": "Modèles de message",
+	"description": "",
+	"model": {
+		"title":{
+			"label":"Titre", 
+			"description": "Titre.",
+			"help": ""
+		},
+        "message":{
+			"label":"Message", 
+			"description": "Message.",
+			"help": ""
+		},
+        "conversation_flow_id":{
+			"label":"Flux de conversation", 
+			"description": "Flux de conversation.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Modèle de message",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Modèles de message",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}

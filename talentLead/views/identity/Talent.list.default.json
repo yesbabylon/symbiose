@@ -1,0 +1,38 @@
+{
+    "name": "Talent",
+    "description": "This view is intended for displaying basic listing of the talents.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "is_active",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "linkedin_url",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "origin",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "last_contact",
+                "width": "10%"
+            }
+        ]
+    }
+}

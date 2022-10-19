@@ -1,0 +1,40 @@
+{
+    "name": "Messages",
+    "description": "Messages.",
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "title",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "message",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "conversation_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "message_template_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_request",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "is_response",
+                "width": "10%"
+            }
+        ]
+    }
+}

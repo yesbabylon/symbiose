@@ -1,0 +1,25 @@
+{
+    "description": "",
+    "view": {
+        "item.talentLead_identities": {
+            "label": "Identités",
+            "help": ""
+        },
+        "item.talentLead_campaigns": {
+            "label": "Campagnes",
+            "help": ""
+        },
+        "item.talentLead_communications": {
+            "label": "Communications",
+            "help": ""
+        },
+        "item.talentLead_conversations": {
+            "label": "Conversations",
+            "help": ""
+        },
+        "item.talentLead_messages": {
+            "label": "Messages",
+            "help": ""
+        }
+    }
+}

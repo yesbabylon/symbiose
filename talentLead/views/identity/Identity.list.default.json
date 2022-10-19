@@ -1,0 +1,38 @@
+{
+    "name": "Identity list",
+    "description": "Listing of all existing identities.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "legal_name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "phone",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "mobile",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "email",
+                "width": "20%"
+            }
+        ]
+    }
+}

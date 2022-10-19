@@ -1,0 +1,25 @@
+{
+    "name": "Criteria Choice",
+    "description": "Criteria Choice.",
+    "order": "created",
+    "sort": "desc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "criteria_id",
+                "width": "20%"
+            }
+        ]
+    }
+}

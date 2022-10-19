@@ -1,0 +1,32 @@
+{
+	"name": "Piste",
+	"plural": "Pistes",
+	"description": "",
+	"model": {
+		"campaign_id":{
+			"label":"Campagne", 
+			"description": "Campagne.",
+			"help": ""
+		},
+        "talent_id":{
+			"label":"Candidat", 
+			"description": "Candidat.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Piste",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Pistes",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}
