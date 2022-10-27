@@ -7,7 +7,7 @@
 $params = announce([
     'description'   => 'Checks current installation directories integrity',
     'params'        => [],
-    'constants'     => ['FILE_STORAGE_MODE', 'FILE_STORAGE_DIR', 'ROUTING_METHOD', 'ROUTING_CONFIG_DIR']
+    'constants'     => ['FILE_STORAGE_MODE', 'ROUTING_METHOD']
 ]);
 
 // array holding files and directories to be tested
@@ -34,21 +34,21 @@ $paths = [
     ],
     [
         'rights'    =>  QN_R_READ,
-        'path'      =>  QN_BASEDIR.'/config/default.inc.php'
+        'path'      =>  QN_BASEDIR.'/config/schema.json'
     ]
 ];
 
-if(ROUTING_METHOD == 'JSON') {
+if(constant('ROUTING_METHOD') == 'JSON') {
     $paths[] = [
         'rights'    =>  QN_R_READ,
-        'path'      =>  ROUTING_CONFIG_DIR
+        'path'      =>  QN_BASEDIR.'/config/routing'
     ];
 }
 
-if(FILE_STORAGE_MODE == 'FS') {
+if(constant('FILE_STORAGE_MODE') == 'FS') {
     $paths[] = [
         'rights'    =>  QN_R_READ | QN_R_WRITE,
-        'path'      =>  FILE_STORAGE_DIR
+        'path'      =>  QN_BASEDIR.'/bin'
     ];
 }
 
@@ -97,7 +97,7 @@ $uid = 0;
 // #todo - add HTTP_PROCESS_USERNAME
 $username = 'www-data';
 // get UID of a use by its name
-if(exec("id -u \"$username\"", $output)) {    
+if(exec("id -u \"$username\"", $output)) {
     $uid = intval(reset($output));
 }
 

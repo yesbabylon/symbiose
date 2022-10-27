@@ -22,6 +22,7 @@ list($params, $providers) = announce([
     'access' => [
         'groups'            => ['booking.default.user'],
     ],
+    'constants' => ['TEST'],
     'response' => [
         'content-type'      => 'application/json',
         'charset'           => 'utf-8',
@@ -34,6 +35,7 @@ list($params, $providers) = announce([
 // init local vars with inputs
 list($context, $cron) = [ $providers['context'], $providers['cron'] ];
 
+echo constant('TEST');
 
 
 // create message
@@ -46,7 +48,7 @@ $message->setTo('cedricfrancoys@gmail.com')
 
 
 // queue message
-Mail::queue($message);
+// Mail::queue($message);
 
 
 

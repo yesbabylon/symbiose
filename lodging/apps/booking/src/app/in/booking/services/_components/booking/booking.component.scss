@@ -24,6 +24,10 @@
         height: 100%;
         width: 100%;
 
+        ::ng-deep.mat-icon-button:hover .mat-button-focus-overlay {
+            opacity: 0.1 !important;
+        }
+
         .outer-wrapper {
             .header {
                 display: flex;
@@ -37,21 +41,27 @@
 
                 .group-item {
                     position: relative;
-                    margin: 12px;
-                    padding-bottom: 12px;
+                    display: flex;
+                    margin: 6px 12px;
+                    padding-bottom: 6px;
                     background-color: rgba(0, 0, 0, 0.04);
+                    max-height: 46px;
+                    overflow: hidden;
+
+                    &.group-selected {
+                        max-height: 2000px;
+                        transition: max-height .5s ease-in;
+                    }
 
                     .group-handle {
-                        position: absolute;
-                        top: 20px;
-                        left: 5px;
-                        z-index: 3;
+                        flex: 0 0 30px;
+                        width: 30px;
+                        transform: translateX(4px) translateY(14px);
                     }
 
                     .group-remove {
-                        position: absolute;
-                        right: 10px;
-                        top: 10px;
+                        margin-left: auto;
+                        transform: translateY(3px);
                     }
                 }
             }

@@ -1,13 +1,14 @@
 import { Component, Inject, OnInit, OnChanges, NgZone, Output, Input, ViewChildren, QueryList, AfterViewInit, SimpleChanges } from '@angular/core';
 
 import { ApiService, ContextService, TreeComponent, RootTreeComponent } from 'sb-shared-lib';
-
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Observable, ReplaySubject, BehaviorSubject, async } from 'rxjs';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { BookingServicesBookingGroupComponent } from './_components/group/group.component'
 import { Booking } from './_models/booking.model';
+import { BookingLineGroup } from './_models/booking_line_group.model';
 
 // declaration of the interface for the map associating relational Model fields with their components
 interface BookingComponentsMap {
@@ -18,14 +19,38 @@ interface BookingComponentsMap {
 @Component({
   selector: 'booking-services-booking',
   templateUrl: 'booking.component.html',
-  styleUrls: ['booking.component.scss']
+  styleUrls: ['booking.component.scss'],
+  animations: [
+    trigger(
+      'groupInOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ height: 0, opacity: 0 }),
+            animate('.15s linear', style({ height: '35px', opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave',
+          [
+            animate('.1s linear', style({ height: 0 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
-export class BookingServicesBookingComponent extends TreeComponent<Booking, BookingComponentsMap> implements RootTreeComponent, OnInit, OnChanges, AfterViewInit {
+export class BookingServicesBookingComponent
+    extends TreeComponent<Booking, BookingComponentsMap>
+    implements RootTreeComponent, OnInit, OnChanges, AfterViewInit {
+
     @ViewChildren(BookingServicesBookingGroupComponent) bookingServicesBookingGroups: QueryList<BookingServicesBookingGroupComponent>;
     @Input() booking_id: number;
 
     public ready: boolean = false;
     public loading: boolean = true;
+    public selected_group_id: number = 0;
 
     constructor(
         private api: ApiService,
@@ -139,7 +164,21 @@ export class BookingServicesBookingComponent extends TreeComponent<Booking, Book
         this.load(this.instance.id);
     }
 
-    public ondropGroup(event:any) {
+    public ondropGroup(event:CdkDragDrop<any>) {
+        moveItemInArray(this.instance.booking_lines_groups_ids, event.previousIndex, event.currentIndex);
+        for(let i = Math.min(event.previousIndex, event.currentIndex), n = Math.max(event.previousIndex, event.currentIndex); i <= n; ++i) {
+            this.api.update((new BookingLineGroup()).entity, [this.instance.booking_lines_groups_ids[i].id], {order: i+1})
+            .catch(response => this.api.errorFeedback(response));
+        }
+    }
 
+    public ontoggleGroup(group_id:number, folded: boolean) {
+        console.debug('ontoggleGroup', group_id, folded);
+        if(!folded) {
+            this.selected_group_id = group_id;
+        }
+        else {
+            this.selected_group_id = 0;
+        }
     }
 }

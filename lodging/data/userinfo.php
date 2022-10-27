@@ -30,9 +30,9 @@ list($context, $om, $auth) = [$providers['context'], $providers['orm'], $provide
 $user_id = $auth->userId();
 // make sure user is authenticated
 if($user_id <= 0) {
-    throw new Exception('user_unknown', QN_ERROR_NOT_ALLOWED);    
+    throw new Exception('user_unknown', QN_ERROR_NOT_ALLOWED);
 }
-// request directly the mapper to bypass permission check on User class 
+// request directly the mapper to bypass permission check on User class
 $ids = $om->search('identity\User', ['id', '=', $user_id]);
 // make sure the User object is available
 if(!count($ids)) {
@@ -41,18 +41,18 @@ if(!count($ids)) {
 // user has allways READ right on its own object
 $user = User::ids($ids)
             ->read([
-                'id', 
-                'login', 
-                'name', 
-                'identity_id' => ['firstname', 'lastname'], 
-                'language', 
-                'organisation_id', 
+                'id',
+                'login',
+                'name',
+                'identity_id' => ['firstname', 'lastname'],
+                'language',
+                'organisation_id',
                 'centers_ids',
                 'center_offices_ids',
-                'groups_ids' => ['name']                
+                'groups_ids' => ['name']
             ])
             ->adapt('txt')
-            ->first();
+            ->first(true);
 
 if(!$user) {
     throw new Exception('unexpected_error', QN_ERROR_INVALID_USER);

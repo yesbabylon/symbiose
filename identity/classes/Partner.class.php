@@ -118,8 +118,13 @@ class Partner extends Model {
                 'foreign_object'    => 'core\Lang',
                 'description'       => "Preferred language of the partner (relates to identity).",
                 'default'           => 1
-            ]
+            ],
 
+            'is_active' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the partner as active.',
+                'default'           => true
+            ]
         ];
     }
 

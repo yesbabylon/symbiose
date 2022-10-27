@@ -1,169 +1,168 @@
 :host {
-  display: block;
-  width: 100%;
-  height: 100%;
+    flex: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
 
-  padding-top: 10px;
+    padding-top: 4px;
 
-  .hidden {
-    display: none !important;
-  }
-
-  .part {
-    display: flex;
-
-    .part-toggle {
-      flex: 0 1;
-      display: inline-block;
-      vertical-align: top;
-      padding: 5px 0px 0px 20px;
+    .hidden {
+        display: none !important;
     }
 
-    .part-container {
-      flex: 1;
-      display: inline-block;
-      width: calc(100% - 60px);
-      min-height: 45px;
-
-      .row {
-        width: 100%;
+    .part {
         display: flex;
-        padding: 5px 0;
-        flex: 1;
-        overflow: hidden;
 
-        &.row-identification {
-            height: 80px;
-            max-height: 80px;
+        .part-toggle {
+            flex: 0 1;
+            display: inline-block;
+            vertical-align: top;
+            padding: 5px 0px 0px 5px;
         }
 
-        .row-products-title {
-          flex: 0 1 50%;
-          height: 40px;
-          line-height: 40px;
-        }
-
-        .row-products-price {
-          flex: 0 1 20%;
-          margin-left: auto;
-          text-align: right;
-          margin-right: 65px;
-          white-space: nowrap;
-        }
-
-        .cell {
+        .part-container {
             flex: 1;
+            display: inline-block;
+            width: calc(100% - 60px);
+            min-height: 45px;
+
+            .row {
+                width: 100%;
+                display: flex;
+                padding: 5px 0;
+                flex: 1;
+                overflow: hidden;
+
+                &.row-identification {
+                    height: 80px;
+                    max-height: 80px;
+                }
+
+                .row-products-title {
+                    flex: 0 1 50%;
+                    height: 40px;
+                    line-height: 40px;
+                }
+
+                .row-products-price {
+                    flex: 0 1 20%;
+                    margin-left: auto;
+                    text-align: right;
+                    margin-right: 65px;
+                    white-space: nowrap;
+                }
+
+                .cell {
+                    flex: 1;
+                }
+            }
         }
-     }
-    }
-  }
-
-  mat-form-field {
-    width: 100%;
-    padding: 0px 12px;
-    mat-hint {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-  }
-
-  mat-form-field.header {
-    margin-top: -5px;
-
-    input {
-      font-size: 22px;
-    }
-  }
-
-  mat-form-field.invisible-label {
-    ::ng-deep.mat-form-field-underline {
-      display: none !important;
-    }
-  }
-
-  p {
-    font-size: 14px;
-    padding: 0px 12px;
-  }
-
-  .products-header {
-    padding: 0 12px 0 0;
-    width: 100%;
-    margin-bottom: 1px;
-
-    .product-cell {
-      font-weight: 600;
-      outline: solid 1px rgba(0,0,0,0.2);
-      line-height: 34px;
-      position: relative;
-      flex: 1 0 8%;
-      text-align: right;
-      padding: 0 10px;
-      margin-right: 15px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
     }
 
-    .product-cell:last-child {
-      outline: none;
+    mat-form-field {
+        width: 100%;
+        padding: 0px 12px;
+
+        mat-hint {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
 
-    .product-cell:first-child {
-      flex: 1 0 40%;
-    }
-  }
+    mat-form-field.header {
+        margin-top: -5px;
 
-  .products-list {
-    position: relative;
-    padding: 0 12px 0 0;
-    width: 100%;
-
-
-    .product-item {
-      position: relative;
-      background-color: white;
-
-      .product-handle {
-        position: absolute;
-        top: 10px;
-        left: 5px;
-        z-index: 3;
-      }
-
-      .product-remove {
-        position: absolute;
-        right: -5px;
-        top: 10px;
-        z-index: 2;
-      }
-
+        input {
+            font-size: 22px;
+        }
     }
 
-  }
+    mat-form-field.invisible-label {
+        ::ng-deep.mat-form-field-underline {
+            display: none !important;
+        }
+    }
 
+    p {
+        font-size: 14px;
+        padding: 0px 12px;
+    }
 
+    .products-header {
+        padding: 0 12px 0 0;
+        width: 100%;
+        margin-bottom: 1px;
+
+        .product-cell {
+            font-weight: 600;
+            outline: solid 1px rgba(0, 0, 0, 0.2);
+            line-height: 34px;
+            position: relative;
+            flex: 1 0 8%;
+            text-align: right;
+            padding: 0 10px;
+            margin-right: 15px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .product-cell:last-child {
+            outline: none;
+        }
+
+        .product-cell:first-child {
+            flex: 1 0 40%;
+        }
+    }
+
+    .products-list {
+        position: relative;
+        padding: 0 12px 0 0;
+        width: 100%;
+
+        .product-item {
+            position: relative;
+            background-color: white;
+
+            .product-handle {
+                position: absolute;
+                top: 10px;
+                left: 5px;
+                z-index: 3;
+            }
+
+            .product-remove {
+                position: absolute;
+                right: -5px;
+                top: 10px;
+                z-index: 2;
+            }
+
+        }
+
+    }
 
 }
 
 .cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  background-color: lightgrey !important;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    background-color: lightgrey !important;
 
-  .product-handle {
-    display: none;
-  }
+    .product-handle {
+        display: none;
+    }
 
-  .product-remove {
-    display: none;
-  }
+    .product-remove {
+        display: none;
+    }
 }
 
 .cdk-drag-placeholder {
-  opacity: 0;
+    opacity: 0;
 }

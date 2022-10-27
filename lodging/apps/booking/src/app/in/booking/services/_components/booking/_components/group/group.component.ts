@@ -99,6 +99,7 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     @Input() booking: Booking;
     @Output() updated = new EventEmitter();
     @Output() deleted = new EventEmitter();
+    @Output() toggle  = new EventEmitter();
 
     public folded:boolean = true;
 
@@ -330,6 +331,7 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
 
     public toggleFold() {
         this.folded = !this.folded;
+        this.toggle.emit(this.folded);
     }
 
     private async filterRateClasses(name: string) {
@@ -639,14 +641,11 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         }
     }
 
-    private async lineDrop(event:CdkDragDrop<any>) {
-        try {
-            await this.api.update((new BookingLine()).entity, [this.instance.booking_lines_ids[event.currentIndex]], {order: event.previousIndex+1});
-            await this.api.update((new BookingLine()).entity, [this.instance.booking_lines_ids[event.previousIndex]], {order: event.currentIndex+1});
-            moveItemInArray(this.instance.booking_lines_ids, event.previousIndex, event.currentIndex);
-        }
-        catch(response) {
-            this.api.errorFeedback(response);
+    private lineDrop(event:CdkDragDrop<any>) {
+        moveItemInArray(this.instance.booking_lines_ids, event.previousIndex, event.currentIndex);
+        for(let i = Math.min(event.previousIndex, event.currentIndex), n = Math.max(event.previousIndex, event.currentIndex); i <= n; ++i) {
+            this.api.update((new BookingLine()).entity, [this.instance.booking_lines_ids[i].id], {order: i+1})
+            .catch(response => this.api.errorFeedback(response));
         }
     }
 

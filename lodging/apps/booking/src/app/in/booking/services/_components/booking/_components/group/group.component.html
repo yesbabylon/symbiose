@@ -1,5 +1,5 @@
 <!-- template vars -->
-<div #vGroup="var" [var]="{identification: {folded: true}, products: {folded: true}, accomodations: {folded: false}, meals: {folded: false}}"></div>
+<div #vGroup="var" [var]="{identification: {folded: true}, products: {folded: true}, accomodations: {folded: false}, meals: {folded: true}}"></div>
 
 <div [class.hidden]="!ready">
 
@@ -9,7 +9,7 @@
             <mat-icon>expand_more</mat-icon>
         </button>
     </div>
-    <div class="group-collapse" style="position: absolute;right: 50px;" *ngIf="!folded">
+    <div class="group-collapse" style="position: absolute;right: 10px;" *ngIf="!folded">
         <button mat-icon-button
             (click)="toggleFold()">
             <mat-icon>expand_less</mat-icon>
@@ -18,7 +18,7 @@
 
     <!-- one liner : summarized group / sojourn -->
     <!-- #memo - blocks are hidden instead of ngIf-ied to allow dynamic DOM updates -->
-    <div [class.hidden]="!folded" style="height: 35px; padding: 8px 125px 0 35px; cursor: pointer;" (click)="toggleFold()">
+    <div [class.hidden]="!folded" style="height: 35px; padding: 8px 125px 0 15px; cursor: pointer;">
         <div style="display: flex;">
             <div style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px;">
                 {{instance.name}}
@@ -525,7 +525,7 @@
         <!-- accomodations -->
         <div class="part">
 
-            <div class="part-toggle" style="padding: 20px 0px 0px 20px;">
+            <div class="part-toggle" style="padding-top: 20px;">
                 <button mat-icon-button *ngIf="!vGroup.accomodations.folded" (click)="vGroup.accomodations.folded = !vGroup.accomodations.folded">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
                 </button>

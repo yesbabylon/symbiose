@@ -7,19 +7,25 @@
         </div>
         <div class="inner-wrapper" *ngIf="instance.booking_lines_groups_ids.length">
             <div class="groups-list" cdkDropList (cdkDropListDropped)="ondropGroup($event)">
-
                 <!-- groups -->
-                <div class="group-item" cdkDrag [cdkDragData]="group" *ngFor="let group of instance.booking_lines_groups_ids;" >
-                    <div class="group-handle" cdkDragHandle ><mat-icon style="font-size: 16px;">drag_indicator</mat-icon></div>
-                    <div class="group-remove"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
-                    <booking-services-booking-group
-                        [model]="group"
-                        [booking]="instance"
-                        (updated)="onupdateGroup()"
-                        (deleted)="ondeleteGroup(group.id)"
-                    ></booking-services-booking-group>
-                </div>
-
+                <ng-container *ngFor="let group of instance.booking_lines_groups_ids;">
+                    <div class="group-item"
+                        cdkDrag
+                        [cdkDragData]="group"
+                        [class.group-selected]="selected_group_id == group.id"
+                        *ngIf="selected_group_id == 0 || selected_group_id == group.id"
+                        [@groupInOutAnimation]>
+                        <div class="group-handle" cdkDragHandle *ngIf="selected_group_id == 0"><mat-icon style="font-size: 16px;">drag_indicator</mat-icon></div>
+                        <booking-services-booking-group
+                            [model]="group"
+                            [booking]="instance"
+                            (updated)="onupdateGroup()"
+                            (deleted)="ondeleteGroup(group.id)"
+                            (toggle)="ontoggleGroup(group.id, $event)"
+                        ></booking-services-booking-group>
+                        <div class="group-remove" *ngIf="selected_group_id == 0"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>
