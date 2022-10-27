@@ -1,0 +1,23 @@
+[
+    {
+        "name": "talentlead\\campaign\\CriteriaChoice",
+        "lang": "fr",
+        "data": [
+            {
+                "name": "Criteria Choice 1",
+                "value": "Value 1",
+                "criteria_id": 1
+            },
+            {
+                "name": "Criteria Choice 1",
+                "value": "Value 1",
+                "criteria_id": 2
+            },
+            {
+                "name": "Criteria Choice 1",
+                "value": "Value 1",
+                "criteria_id": 3
+            }
+        ]
+    }
+]

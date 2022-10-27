@@ -1,0 +1,20 @@
+[
+    {
+        "name": "talentlead\\communication\\MessageTemplate",
+        "lang": "fr",
+        "data": [
+            {
+                "title": "Message Template 1",
+                "message": "Lorem Ipsum Message Template 1"
+            },
+            {
+                "title": "Message Template 2",
+                "message": "Lorem Ipsum Message Template 2"
+            },
+            {
+                "title": "Message Template 3",
+                "message": "Lorem Ipsum Message Template 3"
+            }
+        ]
+    }
+]

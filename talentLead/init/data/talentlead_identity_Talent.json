@@ -1,0 +1,24 @@
+[
+    {
+        "name": "talentlead\\identity\\Talent",
+        "lang": "fr",
+        "data": [
+            {
+                "is_active": 1,
+                "linkedin_url": "https://www.linkedin.com/home/?originalSubdomain=fr",
+                "status": "open_to_work",
+                "prospects_ids": [1,2],
+                "last_contact": "2021-10-11T13:34:54+02:00",
+                "origin": "Linkedin"
+            },
+            {
+                "is_active": 1,
+                "linkedin_url": "https://www.linkedin.com/home/?originalSubdomain=fr",
+                "status": "open_to_strong_opportunity",
+                "prospects_ids": [3],
+                "last_contact": "2022-10-11T13:34:54+02:00",
+                "origin": "Linkedin"
+            }
+        ]
+    }
+]

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "talentlead\\campaign\\Campaign",
+        "lang": "fr",
+        "data": [
+            {
+                "customer_id": 1,
+                "job_title": "Junior Web Developer",
+                "job_description": "lorem ipsum",
+                "code": 1,
+                "campaign_template_id": 1,
+                "campaign_criterias_ids": [1,3],
+                "prospects_ids": [1,3],
+                "status": "open",
+                "conversations_ids" : [1]
+            },
+            {
+                "customer_id": 1,
+                "job_title": "Junior legal advisor",
+                "job_description": "lorem ipsum ipsum lorem",
+                "code": 2,
+                "campaign_template_id": 2,
+                "campaign_criterias_ids": [2],
+                "prospects_ids": [2],
+                "status": "open",
+                "conversations_ids" : [2]
+            }
+        ]
+    }
+]

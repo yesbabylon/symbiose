@@ -1,0 +1,23 @@
+[
+    {
+        "name": "talentlead\\campaign\\CampaignTemplate",
+        "lang": "fr",
+        "data": [
+            {
+                "name": "Template 1",
+                "description": "Lorem ipsum Template 1",
+                "campaign_template_criterias_ids": [1]
+            },
+            {
+                "name": "Template 2",
+                "description": "Lorem ipsum Template 2",
+                "campaign_template_criterias_ids": [2]
+            },
+            {
+                "name": "Template 3",
+                "description": "Lorem ipsum Template 3",
+                "campaign_template_criterias_ids": [3]
+            }
+        ]
+    }
+]
