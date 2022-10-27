@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\communication;
+namespace talentlead\communication;
 
 use equal\orm\Model;
 
@@ -20,7 +20,7 @@ class ConversationFlow extends \communication\Template {
 
             'conversation_flow_actions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\ConversationFlowAction',
+                'foreign_object'    => 'talentlead\ConversationFlowAction',
                 'foreign_field'     => 'message_id',
                 'description'       => 'Messages associated to a conversation.'
             ]

@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\communication;
+namespace talentlead\communication;
 
 use equal\orm\Model;
 
@@ -15,19 +15,19 @@ class Conversation extends Model {
 
             'prospect_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\Prospect',
+                'foreign_object'    => 'talentlead\Prospect',
                 'description'       => "Prospect related to a conversation."
             ],
 
             'campaign_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\Campaign',
+                'foreign_object'    => 'talentlead\Campaign',
                 'description'       => "Campaign associated to the prospect."
             ],
 
             'conversation_flow_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\ConversationFlow',
+                'foreign_object'    => 'talentlead\ConversationFlow',
                 'description'       => "Conversation Flow associated to the prospect."
             ],
 
@@ -38,7 +38,7 @@ class Conversation extends Model {
 
             'messages_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\Message',
+                'foreign_object'    => 'talentlead\Message',
                 'foreign_field'     => 'message_id',
                 'description'       => 'Messages associated to a conversation.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']

@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\identity;
+namespace talentlead\identity;
 
 class Talent extends \identity\Partner {
 
@@ -37,7 +37,7 @@ class Talent extends \identity\Partner {
             // field for retrieving all partners related to the identity
             'prospects_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\Prospect',
+                'foreign_object'    => 'talentlead\Prospect',
                 'foreign_field'     => 'talent_id',
                 'description'       => 'Prospects associated to a Talent.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']

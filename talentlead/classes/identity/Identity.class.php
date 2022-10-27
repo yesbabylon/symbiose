@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\identity;
+namespace talentlead\identity;
 
 class Identity extends \identity\Identity {
 

@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\communication;
+namespace talentlead\communication;
 
 use equal\orm\Model;
 
@@ -25,13 +25,13 @@ class ConversationFlowAction extends Model{
 
             'conversation_flow_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\ConversationFlow',
+                'foreign_object'    => 'talentlead\ConversationFlow',
                 'description'       => "Conversation Flow associated to the Conversation Flow Action."
             ],
 
             'message_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\MessageTemplate',
+                'foreign_object'    => 'talentlead\MessageTemplate',
                 'description'       => "Message template associated to the conversation flow action."
             ]
 

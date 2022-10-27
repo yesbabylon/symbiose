@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\campaign;
+namespace talentlead\campaign;
 
 use equal\orm\Model;
 
@@ -15,7 +15,7 @@ class CampaignCriteriaValue extends Model {
 
             'campaign_criteria_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\CampaignCriteria',
+                'foreign_object'    => 'talentlead\CampaignCriteria',
                 'description'       => ""
             ],
 

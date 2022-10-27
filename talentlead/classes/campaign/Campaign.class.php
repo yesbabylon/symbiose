@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\campaign;
+namespace talentlead\campaign;
 
 use equal\orm\Model;
 
@@ -15,7 +15,7 @@ class Campaign extends Model {
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\Customer',
+                'foreign_object'    => 'talentlead\Customer',
                 // 'onupdate'          => 'onupdateTypeId',
                 // 'default'           => 1,                                    // default is 'I' individual
                 'description'       => 'Customer touched by the campaign.'
@@ -40,13 +40,13 @@ class Campaign extends Model {
 
             'campaign_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\CampaignTemplate',
+                'foreign_object'    => 'talentlead\CampaignTemplate',
                 'description'       => "Template associated to a Campaign."
             ],
 
             'campaign_criterias_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\CampaignCriteria',
+                'foreign_object'    => 'talentlead\CampaignCriteria',
                 'foreign_field'     => 'campaign_id',
                 'description'       => 'Criterias related to a campaign.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
@@ -54,7 +54,7 @@ class Campaign extends Model {
 
             'prospects_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentLead\Prospect',
+                'foreign_object'    => 'talentlead\Prospect',
                 'foreign_field'     => 'campaign_id',
                 'description'       => 'Pespectives de campagne.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']

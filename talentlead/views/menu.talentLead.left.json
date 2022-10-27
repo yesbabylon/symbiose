@@ -15,7 +15,7 @@
                         "label": "Talent",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\identity\\Talent",
+                            "entity": "talentlead\\identity\\Talent",
                             "view": "list.default"
                         }
                     },
@@ -25,7 +25,7 @@
                         "label": "Prospect",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\identity\\Prospect",
+                            "entity": "talentlead\\identity\\Prospect",
                             "view": "list.default"
                         }
                     },
@@ -35,7 +35,7 @@
                         "label": "Customer",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\identity\\Customer",
+                            "entity": "talentlead\\identity\\Customer",
                             "view": "list.default"
                         }
                     },
@@ -45,7 +45,7 @@
                         "label": "Identity",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\identity\\Identity",
+                            "entity": "talentlead\\identity\\Identity",
                             "view": "list.default"
                         }
                     }
@@ -64,7 +64,7 @@
                         "label": "Campaign",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\Campaign",
+                            "entity": "talentlead\\campaign\\Campaign",
                             "view": "list.default"
                         }
                     },
@@ -74,7 +74,7 @@
                         "label": "Campaign Criteria",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\CampaignCriteria",
+                            "entity": "talentlead\\campaign\\CampaignCriteria",
                             "view": "list.default"
                         }
                     },
@@ -84,7 +84,7 @@
                         "label": "Campaign Criteria Value",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\CampaignCriteriaValue",
+                            "entity": "talentlead\\campaign\\CampaignCriteriaValue",
                             "view": "list.default"
                         }
                     },
@@ -94,7 +94,7 @@
                         "label": "Campaign Template",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\CampaignTemplate",
+                            "entity": "talentlead\\campaign\\CampaignTemplate",
                             "view": "list.default"
                         }
                     },
@@ -104,7 +104,7 @@
                         "label": "Campaign Template Criteria",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\CampaignTemplateCriteria",
+                            "entity": "talentlead\\campaign\\CampaignTemplateCriteria",
                             "view": "list.default"
                         }
                     },
@@ -114,7 +114,7 @@
                         "label": "Criteria",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\Criteria",
+                            "entity": "talentlead\\campaign\\Criteria",
                             "view": "list.default"
                         }
                     },
@@ -124,7 +124,7 @@
                         "label": "Criteria Choice",
                         "description": "",
                         "context": {
-                            "entity": "talentLead\\campaign\\CriteriaChoice",
+                            "entity": "talentlead\\campaign\\CriteriaChoice",
                             "view": "list.default"
                         }
                     }
@@ -150,7 +150,7 @@
                                 "label": "Conversation",
                                 "description": "",
                                 "context": {
-                                    "entity": "talentLead\\communication\\Conversation",
+                                    "entity": "talentlead\\communication\\Conversation",
                                     "view": "list.default"
                                 }
                             },
@@ -160,7 +160,7 @@
                                 "label": "Conversation Flow",
                                 "description": "",
                                 "context": {
-                                    "entity": "talentLead\\communication\\ConversationFlow",
+                                    "entity": "talentlead\\communication\\ConversationFlow",
                                     "view": "list.default"
                                 }
                             },
@@ -170,7 +170,7 @@
                                 "label": "Conversation Flow Action",
                                 "description": "",
                                 "context": {
-                                    "entity": "talentLead\\communication\\ConversationFlowAction",
+                                    "entity": "talentlead\\communication\\ConversationFlowAction",
                                     "view": "list.default"
                                 }
                             }
@@ -189,7 +189,7 @@
                                 "label": "Message",
                                 "description": "",
                                 "context": {
-                                    "entity": "talentLead\\communication\\Message",
+                                    "entity": "talentlead\\communication\\Message",
                                     "view": "list.default"
                                 }
                             },
@@ -199,7 +199,7 @@
                                 "label": "Pending sessions",
                                 "description": "",
                                 "context": {
-                                    "entity": "talentLead\\communication\\MessageTemplate",
+                                    "entity": "talentlead\\communication\\MessageTemplate",
                                     "view": "list.default"
                                 }
                             }

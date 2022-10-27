@@ -4,7 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace talentLead\communication;
+namespace talentlead\communication;
 
 use equal\orm\Model;
 
@@ -20,7 +20,7 @@ class Message extends \core\Mail{
 
             'conversation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\Conversation',
+                'foreign_object'    => 'talentlead\Conversation',
                 'description'       => "Conversation to which the message is associated."
             ],
 
@@ -43,7 +43,7 @@ class Message extends \core\Mail{
 
             'message_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentLead\MessageTemplate',
+                'foreign_object'    => 'talentlead\MessageTemplate',
                 'description'       => "Message template associated to the message."
             ]
 
