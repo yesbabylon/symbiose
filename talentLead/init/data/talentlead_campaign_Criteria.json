@@ -1,0 +1,35 @@
+[
+    {
+        "name": "talentlead\\campaign\\Criteria",
+        "lang": "fr",
+        "data": [
+            {
+                "name": "Critère 1",
+                "description": "Lorem ipsum critère 1",
+                "type": "type 1",
+                "form_control": "",
+                "is_multiple": false,
+                "criteria_choices_ids": [1],
+                "campaign_criterias_ids": [1]
+            },
+            {
+                "name": "Critère 2",
+                "description": "Lorem ipsum critère 2",
+                "type": "type 2",
+                "form_control": "",
+                "is_multiple": false,
+                "criteria_choices_ids": [2],
+                "campaign_criterias_ids": [2]
+            },
+            {
+                "name": "Critère 3",
+                "description": "Lorem ipsum critère 3",
+                "type": "type 3",
+                "form_control": "",
+                "is_multiple": false,
+                "criteria_choices_ids": [3],
+                "campaign_criterias_ids": [3]
+            }
+        ]
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "talentlead\\campaign\\CampaignCriteriaValue",
+        "lang": "fr",
+        "data": [
+            {
+                "campaign_criteria_id": 1,
+                "value": "Criteria 1"
+            },
+            {
+                "campaign_criteria_id": 2,
+                "value": "Criteria 2"
+            },
+            {
+                "campaign_criteria_id": 2,
+                "value": "Criteria 3"
+            }
+        ]
+    }
+]

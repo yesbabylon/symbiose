@@ -1,0 +1,32 @@
+{
+	"name": "Client",
+	"plural": "Clients",
+	"description": "",
+	"model": {
+		"is_active":{
+			"label":"Actif", 
+			"description": "Actif.",
+			"help": ""
+		},
+        "campaigns_ids":{
+			"label":"Campagnes", 
+			"description": "Campagne.",
+			"help": ""
+		}
+	},
+	"view": {
+		"form.default": {
+			"name": "Campagne",
+			"description": "",
+			"layout": {}
+		},
+		"list.default": {
+			"name": "Campagnes",
+			"description": "",
+			"layout": {}
+		}
+	},
+	"error": {
+		
+	}
+}

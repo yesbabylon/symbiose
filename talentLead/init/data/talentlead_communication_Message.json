@@ -1,0 +1,32 @@
+[
+    {
+        "name": "talentlead\\communication\\Message",
+        "lang": "fr",
+        "data": [
+            {
+                "title": "Message 1",
+                "conversation_id": 1,
+                "message": "Lorem Ipsum Message 1",
+                "is_request": false,
+                "is_response": true,
+                "message_template_id": 1
+            },
+            {
+                "title": "Message 2",
+                "conversation_id": 2,
+                "message": "Lorem Ipsum Message 2",
+                "is_request": false,
+                "is_response": true,
+                "message_template_id": 1
+            },
+            {
+                "title": "Message 3",
+                "conversation_id": 3,
+                "message": "Lorem Ipsum Message 3",
+                "is_request": false,
+                "is_response": true,
+                "message_template_id": 1
+            }
+        ]
+    }
+]

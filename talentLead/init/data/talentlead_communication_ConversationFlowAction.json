@@ -1,0 +1,26 @@
+[
+    {
+        "name": "talentlead\\communication\\ConversationFlowAction",
+        "lang": "fr",
+        "data": [
+            {
+                "name": "Conversation Flow Action 1",
+                "delay": 1,
+                "conversation_flow_id": 1,
+                "message_template_id": 1
+            },
+            {
+                "name": "Conversation Flow Action 2",
+                "delay": 1,
+                "conversation_flow_id": 2,
+                "message_template_id": 1
+            },
+            {
+                "name": "Conversation Flow Action 3",
+                "delay": 1,
+                "conversation_flow_id": 3,
+                "message_template_id": 1
+            }
+        ]
+    }
+]
