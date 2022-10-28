@@ -49,7 +49,7 @@ if(strlen($json)) {
     exit(1);
 }
 // retrieve connection object
-$db = DBConnection::getInstance(DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, DB_DBMS)->connect();
+$db = DBConnection::getInstance(constant('DB_HOST'), constant('DB_PORT'), constant('DB_NAME'), constant('DB_USER'), constant('DB_PASSWORD'), constant('DB_DBMS'))->connect();
 
 
 // 1) Checks in the manifest.json, if it needs to instantiate other packages before
@@ -352,5 +352,5 @@ foreach($manifest_json['apps'] as $app => $value){
 }
 
 $context->httpResponse()
-    ->status(201)
-    ->send();
+        ->status(201)
+        ->send();
