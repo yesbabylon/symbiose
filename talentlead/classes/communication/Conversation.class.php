@@ -15,19 +15,19 @@ class Conversation extends Model {
 
             'prospect_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Prospect',
+                'foreign_object'    => 'talentlead\identity\Prospect',
                 'description'       => "Prospect related to a conversation."
             ],
 
             'campaign_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Campaign',
+                'foreign_object'    => 'talentlead\campaign\Campaign',
                 'description'       => "Campaign associated to the prospect."
             ],
 
             'conversation_flow_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\ConversationFlow',
+                'foreign_object'    => 'talentlead\communication\ConversationFlow',
                 'description'       => "Conversation Flow associated to the prospect."
             ],
 
@@ -38,8 +38,8 @@ class Conversation extends Model {
 
             'messages_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\Message',
-                'foreign_field'     => 'message_id',
+                'foreign_object'    => 'talentlead\communication\Message',
+                'foreign_field'     => 'conversation_id',
                 'description'       => 'Messages associated to a conversation.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ],

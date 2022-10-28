@@ -25,6 +25,19 @@ class CampaignTemplate extends Model {
                 'description'       => 'Description of the Template.'
             ],
 
+            'campaign_template_criterias_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentlead\campaign\CampaignTemplateCriteria',
+                'foreign_field'     => 'campaign_template_id',
+                'description'       => 'Values of the campaign template.',
+            ],
+
+            'campaigns_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentlead\campaign\Campaign',
+                'foreign_field'     => 'campaign_template_id',
+                'description'       => 'Campaigns using the template.',
+            ]
         ];
     }
 

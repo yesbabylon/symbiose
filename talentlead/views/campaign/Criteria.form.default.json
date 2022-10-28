@@ -16,11 +16,6 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -34,6 +29,7 @@
                 "sections": [
                     {
                         "id": "sections.criteria.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
@@ -52,6 +48,11 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "description",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "is_multiple",
                                                 "width": "25%"
                                             }
@@ -60,13 +61,10 @@
                                 ]
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                "sections": [
+                    },
                     {
                         "id": "sections.criteria.choices",
+                        "label": "Criteria Choices",
                         "rows": [
                             {
                                 "columns": [

@@ -4,12 +4,12 @@
 	"description": "",
 	"model": {
 		"campaign_criteria_id":{
-			"label":"Critère de campagne", 
+			"label":"Critère de campagne",
 			"description": "Critère.",
 			"help": ""
 		},
         "value":{
-			"label":"Valeur", 
+			"label":"Valeur",
 			"description": "Valeur.",
 			"help": ""
 		}
@@ -23,10 +23,14 @@
 		"list.default": {
 			"name": "Valeurs de critère de campagne",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"sections_campaign.campaignCriteriaValues":{
+					"label": "Valeur des Critères"
+				}
+			}
 		}
 	},
 	"error": {
-		
+
 	}
 }

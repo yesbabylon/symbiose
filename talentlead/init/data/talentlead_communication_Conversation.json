@@ -19,7 +19,7 @@
             },
             {
                 "prospect_id": 3,
-                "campaign_id": 3,
+                "campaign_id": 2,
                 "conversation_flow_id": 3,
                 "status": "status 3",
                 "messages_ids": [3]

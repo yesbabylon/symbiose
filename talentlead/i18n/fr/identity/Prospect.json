@@ -1,6 +1,6 @@
 {
-	"name": "Piste",
-	"plural": "Pistes",
+	"name": "Prospect",
+	"plural": "Prospect",
 	"description": "",
 	"model": {
 		"campaign_id":{
@@ -16,17 +16,17 @@
 	},
 	"view": {
 		"form.default": {
-			"name": "Piste",
+			"name": "Prospect",
 			"description": "",
 			"layout": {}
 		},
 		"list.default": {
-			"name": "Pistes",
+			"name": "Prospects",
 			"description": "",
 			"layout": {}
 		}
 	},
 	"error": {
-		
+
 	}
 }

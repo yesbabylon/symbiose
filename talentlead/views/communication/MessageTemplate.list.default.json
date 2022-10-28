@@ -7,13 +7,13 @@
         "items": [
             {
                 "type": "field",
-                "value": "title",
-                "width": "25%"
+                "value": "subject",
+                "width": "10%"
             },
             {
                 "type": "field",
-                "value": "message",
-                "width": "20%"
+                "value": "body",
+                "width": "75%"
             }
         ]
     }

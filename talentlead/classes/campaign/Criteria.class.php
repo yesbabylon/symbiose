@@ -15,13 +15,15 @@ class Criteria extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the Criteria."
+                'description'       => "Name of the Criteria.",
+                'multilang'         => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'Description of the Criteria.'
+                'description'       => 'Description of the Criteria.',
+                'multilang'         => true
             ],
 
             'type' => [
@@ -42,18 +44,18 @@ class Criteria extends Model {
 
             'criteria_choices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\CriteriaChoice',
+                'foreign_object'    => 'talentlead\campaign\CriteriaChoice',
                 'foreign_field'     => 'criteria_id',
                 'description'       => 'Criteria choices.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ],
 
             // field for retrieving all partners related to the identity
-            'campaigns_ids' => [
+            'campaign_criterias_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\Campaign',
-                'foreign_field'     => 'customer_identity_id',
-                'description'       => 'Customers related to a campaign.',
+                'foreign_object'    => 'talentlead\campaign\CampaignCriteria',
+                'foreign_field'     => 'criteria_id',
+                'description'       => '',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ]
 

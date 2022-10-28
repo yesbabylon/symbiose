@@ -16,12 +16,12 @@
 	},
 	"view": {
 		"form.default": {
-			"name": "Campagne",
+			"name": "Client",
 			"description": "",
 			"layout": {}
 		},
 		"list.default": {
-			"name": "Campagnes",
+			"name": "Clients",
 			"description": "",
 			"layout": {}
 		}

@@ -7,12 +7,12 @@
         "items": [
             {
                 "type": "field",
-                "value": "criteria_id",
+                "value": "campaign_template_id",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "campaign_template_id",
+                "value": "criteria_id",
                 "width": "20%"
             },
             {

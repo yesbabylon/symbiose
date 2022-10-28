@@ -35,24 +35,34 @@
                                         ]
                                     }
                                 ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "messages_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
                             }
                         ]
                     }
                 ]
+            },
+            {
+                "sections": [
+                    {
+                            "id": "sections_communication.messages",
+                            "label": "Messages",
+                            "rows": [
+                                {
+                                    "columns": [
+                                        {
+                                            "width": "100%",
+                                            "items": [
+                                                {
+                                                    "type": "field",
+                                                    "value": "messages_ids",
+                                                    "width": "100%"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
             }
         ]
     }

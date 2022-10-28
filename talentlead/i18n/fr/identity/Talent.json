@@ -4,37 +4,37 @@
 	"description": "",
 	"model": {
 		"is_active":{
-			"label":"Actif", 
+			"label":"Actif",
 			"description": "Actif.",
 			"help": ""
 		},
         "linkedin_url":{
-			"label":"Url Linkedin", 
+			"label":"Linkedin",
 			"description": "Url Linkedin.",
 			"help": ""
 		},
         "origin":{
-			"label":"Origine", 
+			"label":"Origine",
 			"description": "Origine.",
 			"help": ""
 		},
         "last_contact":{
-			"label":"Dernier contact", 
+			"label":"Dernier contact",
 			"description": "Dernier contact.",
 			"help": ""
 		},
         "prospects_ids":{
-			"label":"Pistes", 
+			"label":"Pistes",
 			"description": "Pistes.",
 			"help": ""
 		},
         "status":{
-			"label":"Statut", 
+			"label":"Statut",
 			"description": "Statut.",
 			"help": "",
             "selection": {
                 "open_to_work": "Ouvert au travail",
-                "open_to_string_opportunity": "Ouvert aux opportunités",
+                "open_to_strong_opportunity": "Ouvert aux opportunités",
                 "not_now": "Pas maintenant",
                 "not_interested": "Pas intéressé"
             }
@@ -44,7 +44,14 @@
 		"form.default": {
 			"name": "Candidat",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.talent_details": {
+                    "label": "Détails"
+                },
+				"section.talent_prospects": {
+                    "label": "Prospects"
+                }
+			}
 		},
 		"list.default": {
 			"name": "Candidats",
@@ -53,6 +60,6 @@
 		}
 	},
 	"error": {
-		
+
 	}
 }

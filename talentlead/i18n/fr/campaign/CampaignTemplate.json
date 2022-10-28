@@ -18,7 +18,14 @@
 		"form.default": {
 			"name": "Modèle de campagne",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section_campaign.campaignTemplateCriteria":{
+					"label": "Critères de Modèle"
+				},
+				"section_campaign.campaigns": {
+					"label": "Campagnes"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Modèles de campagne",

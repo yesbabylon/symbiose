@@ -4,16 +4,22 @@
         "lang": "fr",
         "data": [
             {
-                "title": "Message Template 1",
-                "message": "Lorem Ipsum Message Template 1"
+                "name": "Template 1",
+                "subject": "Prise de contact",
+                "body": "Bonjour,\n Votre profil montre une grande expérience dans un domaine qui m'intéresse.\nJe suis à la rechercher de talents avec des qualités similaires.",
+                "conversation_flow_actions_ids": [1]
             },
             {
-                "title": "Message Template 2",
-                "message": "Lorem Ipsum Message Template 2"
+                "name": "Template 2",
+                "subject": "Relance - Prise de contact",
+                "body": "Bonjour,\n Avez-vous reçu mon précédent message ? \nNous pouvons discuter directement par email si vous préférez.",
+                "conversation_flow_actions_ids":[2]
             },
             {
-                "title": "Message Template 3",
-                "message": "Lorem Ipsum Message Template 3"
+                "name": "Template 3",
+                "subject": "Sans-nouvelles - Prise de contact",
+                "body": "Bonjour,\n Je suppose que vous êtes trop occupé pour l'instant. \nN'hésitez pas à revenir vers moi si vous le souhaitez.",
+                "conversation_flow_actions_ids": [3]
             }
         ]
     }

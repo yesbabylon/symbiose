@@ -15,13 +15,13 @@ class CampaignTemplateCriteria extends Model {
 
             'criteria_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Criteria',
+                'foreign_object'    => 'talentlead\campaign\Criteria',
                 'description'       => "The criteria of the Campaign."
             ],
 
             'campaign_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\CampaignTemplate',
+                'foreign_object'    => 'talentlead\campaign\CampaignTemplate',
                 'description'       => "The related campaign template."
             ],
 

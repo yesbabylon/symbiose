@@ -6,17 +6,17 @@
             {
                 "campaign_id": 1,
                 "talent_id": 1,
-                "conversations_ids": 1
+                "conversations_ids": [1]
             },
             {
                 "campaign_id": 2,
                 "talent_id": 1,
-                "conversations_ids": 2
+                "conversations_ids": [2]
             },
             {
                 "campaign_id": 1,
                 "talent_id": 2,
-                "conversations_ids": 3
+                "conversations_ids": [3]
             }
         ]
     }

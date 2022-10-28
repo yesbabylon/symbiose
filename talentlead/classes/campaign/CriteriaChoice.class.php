@@ -15,17 +15,19 @@ class CriteriaChoice extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the Criteria Choice."
+                'description'       => "Name of the Criteria Choice.",
+                'multilang'         => true
             ],
 
             'value' => [
                 'type'              => 'string',
-                'description'       => 'Value of the Customer Choice.'
+                'description'       => 'Value of the Customer Choice.',
+                'multilang'         => true
             ],
 
             'criteria_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Criteria',
+                'foreign_object'    => 'talentlead\campaign\Criteria',
                 'description'       => "Criteria to which the choices are related."
             ],
 

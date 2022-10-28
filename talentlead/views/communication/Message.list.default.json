@@ -7,33 +7,58 @@
         "items": [
             {
                 "type": "field",
-                "value": "title",
-                "width": "25%"
+                "value": "subject",
+                "width": "25%",
+                "widget": {
+                    "sortable": true
+                }
             },
             {
                 "type": "field",
-                "value": "message",
+                "value": "creator",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "conversation_id",
+                "value": "created",
+                "width": "15%",
+                "widget": {
+                    "usage": "datetime/short"
+                }
+            },
+            {
+                "type": "field",
+                "label": "Sent",
+                "value": "modified",
+                "width": "15%",
+                "widget": {
+                    "usage": "datetime/short"
+                }
+            },
+            {
+                "type": "field",
+                "value": "to",
                 "width": "20%"
             },
             {
                 "type": "field",
-                "value": "message_template_id",
-                "width": "20%"
+                "value": "status",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "response_status",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "is_request",
-                "width": "10%"
+                "width": "5%"
             },
             {
                 "type": "field",
                 "value": "is_response",
-                "width": "10%"
+                "width": "5%"
             }
         ]
     }

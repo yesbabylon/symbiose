@@ -15,12 +15,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "title",
+                                                "value": "subject",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "message",
+                                                "value": "body",
                                                 "width": "50%"
                                             }
                                         ]

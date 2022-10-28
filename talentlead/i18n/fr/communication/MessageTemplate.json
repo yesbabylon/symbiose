@@ -3,19 +3,14 @@
 	"plural": "Modèles de message",
 	"description": "",
 	"model": {
-		"title":{
+		"subject":{
 			"label":"Titre", 
 			"description": "Titre.",
 			"help": ""
 		},
-        "message":{
+        "body":{
 			"label":"Message", 
 			"description": "Message.",
-			"help": ""
-		},
-        "conversation_flow_id":{
-			"label":"Flux de conversation", 
-			"description": "Flux de conversation.",
 			"help": ""
 		}
 	},
@@ -32,6 +27,6 @@
 		}
 	},
 	"error": {
-		
+
 	}
 }

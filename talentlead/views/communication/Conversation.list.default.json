@@ -7,11 +7,6 @@
         "items": [
             {
                 "type": "field",
-                "value": "prospect_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "value": "campaign_id",
                 "width": "20%"
             },

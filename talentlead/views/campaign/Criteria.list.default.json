@@ -19,16 +19,6 @@
                 "type": "field",
                 "value": "type",
                 "width": "20%"
-            },
-            {
-                "type": "form_control",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "is_multiple",
-                "value": "name",
-                "width": "20%"
             }
         ]
     }

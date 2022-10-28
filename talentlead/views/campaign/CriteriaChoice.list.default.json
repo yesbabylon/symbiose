@@ -7,17 +7,12 @@
         "items": [
             {
                 "type": "field",
-                "value": "name",
+                "value": "criteria_id",
                 "width": "20%"
             },
             {
                 "type": "field",
                 "value": "value",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "criteria_id",
                 "width": "20%"
             }
         ]

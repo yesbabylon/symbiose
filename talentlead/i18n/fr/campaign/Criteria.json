@@ -33,9 +33,9 @@
 			"description": "Choix de critère.",
 			"help": ""
 		},
-        "campaigns_ids":{
-			"label":"Campagnes", 
-			"description": "Campagne.",
+        "campaign_criterias_ids":{
+			"label":"Critères de campagnes", 
+			"description": "Critères de Campagne.",
 			"help": ""
 		}
 	},
@@ -43,7 +43,14 @@
 		"form.default": {
 			"name": "Critère",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"sections.criteria.details":{
+					"label": "Détails"
+				},
+				"sections.criteria.choices":{
+					"label": "Choix de critère"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Critères",

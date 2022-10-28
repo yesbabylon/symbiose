@@ -11,12 +11,6 @@ class Customer extends \sale\customer\Customer {
     public static function getColumns() {
         return [
 
-            'is_active' => [
-                'type'              => 'boolean',
-                "description"       => 'Is the customer active ?',
-                'default'           => false
-            ],
-
             // field for retrieving all partners related to the identity
             'campaigns_ids' => [
                 'type'              => 'one2many',

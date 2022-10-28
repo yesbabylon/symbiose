@@ -12,10 +12,14 @@ class Campaign extends Model {
 
     public static function getColumns() {
         return [
+            'name'=> [
+                'type'              => 'string',
+                "description"       => 'Name of the campaign'
+            ],
 
             'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Customer',
+                'foreign_object'    => 'talentlead\sale\customer\Customer',
                 // 'onupdate'          => 'onupdateTypeId',
                 // 'default'           => 1,                                    // default is 'I' individual
                 'description'       => 'Customer touched by the campaign.'
@@ -28,6 +32,7 @@ class Campaign extends Model {
 
             'job_description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 "description"       => 'Description of a job'
             ],
 
@@ -40,13 +45,13 @@ class Campaign extends Model {
 
             'campaign_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\CampaignTemplate',
+                'foreign_object'    => 'talentlead\campaign\CampaignTemplate',
                 'description'       => "Template associated to a Campaign."
             ],
 
             'campaign_criterias_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\CampaignCriteria',
+                'foreign_object'    => 'talentlead\campaign\CampaignCriteria',
                 'foreign_field'     => 'campaign_id',
                 'description'       => 'Criterias related to a campaign.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
@@ -54,7 +59,7 @@ class Campaign extends Model {
 
             'prospects_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\Prospect',
+                'foreign_object'    => 'talentlead\identity\Prospect',
                 'foreign_field'     => 'campaign_id',
                 'description'       => 'Pespectives de campagne.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
@@ -68,6 +73,14 @@ class Campaign extends Model {
                     "canceled",
                     "closed"
                 ]
+            ],
+
+            'conversations_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentlead\communication\Conversation',
+                'foreign_field'     => 'campaign_id',
+                'description'       => '',
+                // 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ],
 
         ];

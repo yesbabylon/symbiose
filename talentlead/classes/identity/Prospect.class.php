@@ -13,16 +13,29 @@ class Prospect extends Model {
     public static function getColumns() {
         return [
 
+            'name' => [
+                'type'              => 'alias',
+                'alias'             => 'id'
+            ],
+
             'campaign_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Campaign',
+                'foreign_object'    => 'talentlead\campaign\Campaign',
                 'description'       => "Campaign associated to the Prospect."
             ],
 
             'talent_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Talent',
+                'foreign_object'    => 'talentlead\identity\Talent',
                 'description'       => "Talent associated to the prospect."
+            ],
+
+            'conversations_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentlead\communication\Conversation',
+                'foreign_field'     => 'prospect_id',
+                'description'       => '',
+                // 'domain'            => ['owner_identity_id', '<>', 'object.id']
             ]
 
         ];

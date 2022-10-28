@@ -4,17 +4,17 @@
 	"description": "",
 	"model": {
 		"criteria_id":{
-			"label":"Critère", 
+			"label":"Critère",
 			"description": "Critère.",
 			"help": ""
 		},
         "campaign_template_id":{
-			"label":"Critère de modèle", 
+			"label":"Modèle de campagne",
 			"description": "Critère de modèle.",
 			"help": ""
 		},
         "order":{
-			"label":"Ordre", 
+			"label":"Ordre",
 			"description": "Ordre.",
 			"help": ""
 		}
@@ -32,6 +32,6 @@
 		}
 	},
 	"error": {
-		
+
 	}
 }

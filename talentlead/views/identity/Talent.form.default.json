@@ -56,17 +56,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "origin",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "linkedin_url",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "origin",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "origin",
                                                 "width": "50%"
                                             },
                                             {
@@ -79,11 +74,7 @@
                                 ]
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                "sections": [
+                    },
                     {
                         "label": "Prospects",
                         "id": "section.prospects",

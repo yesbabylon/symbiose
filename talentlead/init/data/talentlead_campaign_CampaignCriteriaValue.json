@@ -4,16 +4,50 @@
         "lang": "fr",
         "data": [
             {
+                "id": 1,
+                "value": "BE",
                 "campaign_criteria_id": 1,
-                "value": "Criteria 1"
+                "criteria_id": 1
             },
             {
+                "id": 5,
+                "value": "bachelier",
                 "campaign_criteria_id": 2,
-                "value": "Criteria 2"
+                "criteria_id": 2
             },
             {
-                "campaign_criteria_id": 2,
-                "value": "Criteria 3"
+                "id": 8,
+                "value": "sur site",
+                "campaign_criteria_id": 3,
+                "criteria_id": 3
+            },
+            {
+                "id": 12,
+                "campaign_criteria_id": 4,
+                "criteria_id": 4,
+                "value": "mois prochain"
+            }
+        ]
+    },
+    {
+        "name": "talentlead\\campaign\\CampaignCriteriaValue",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "value": "BE"
+            },
+            {
+                "id": 5,
+                "value": "bachelor degree"
+            },
+            {
+                "id": 8,
+                "value": "on site"
+            },
+            {
+                "id": 12,
+                "value": "next month"
             }
         ]
     }

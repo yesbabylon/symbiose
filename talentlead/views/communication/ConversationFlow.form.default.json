@@ -20,7 +20,17 @@
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.communication.actions",
+                        "label": "Actions",
+                        "rows": [
                             {
                                 "columns": [
                                     {

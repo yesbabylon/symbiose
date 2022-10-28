@@ -13,20 +13,10 @@ class Message extends \core\Mail{
     public static function getColumns() {
         return [
 
-            'title' => [
-                'type'              => 'string',
-                'description'       => "Title of the message."
-            ],
-
             'conversation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Conversation',
+                'foreign_object'    => 'talentlead\communication\Conversation',
                 'description'       => "Conversation to which the message is associated."
-            ],
-
-            'message' => [
-                'type'              => 'string',
-                'description'       => "Content of the message."
             ],
 
             'is_request' => [
@@ -43,7 +33,7 @@ class Message extends \core\Mail{
 
             'message_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\MessageTemplate',
+                'foreign_object'    => 'talentlead\communication\MessageTemplate',
                 'description'       => "Message template associated to the message."
             ]
 

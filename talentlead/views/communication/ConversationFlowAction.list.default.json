@@ -12,11 +12,6 @@
             },
             {
                 "type": "field",
-                "value": "delay",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "value": "conversation_flow_id",
                 "width": "20%"
             },
@@ -24,6 +19,11 @@
                 "type": "field",
                 "value": "message_template_id",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "delay",
+                "width": "5%"
             }
         ]
     }

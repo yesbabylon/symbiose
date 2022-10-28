@@ -13,7 +13,7 @@ class Talent extends \identity\Partner {
 
             'is_active' => [
                 'type'              => 'boolean',
-                "description"       => 'Is the customer active ?',
+                "description"       => 'Is the talent active ?',
                 'default'           => false
             ],
 
@@ -37,7 +37,7 @@ class Talent extends \identity\Partner {
             // field for retrieving all partners related to the identity
             'prospects_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\Prospect',
+                'foreign_object'    => 'talentlead\identity\Prospect',
                 'foreign_field'     => 'talent_id',
                 'description'       => 'Prospects associated to a Talent.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
@@ -47,7 +47,7 @@ class Talent extends \identity\Partner {
                 'type'      => 'string',
                 'selection' => [
                     "open_to_work",
-                    "open_to_string_opportunity",
+                    "open_to_strong_opportunity",
                     "not_now",
                     "not_interested"
                 ]

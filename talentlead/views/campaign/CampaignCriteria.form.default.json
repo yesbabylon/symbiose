@@ -30,7 +30,17 @@
                                         ]
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "sections_campaign.campaignCriteriaValues",
+                        "label": "Criteria Values",
+                        "rows": [
                             {
                                 "columns": [
                                     {

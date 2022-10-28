@@ -25,13 +25,13 @@ class ConversationFlowAction extends Model{
 
             'conversation_flow_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\ConversationFlow',
+                'foreign_object'    => 'talentlead\communication\ConversationFlow',
                 'description'       => "Conversation Flow associated to the Conversation Flow Action."
             ],
 
             'message_template_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\MessageTemplate',
+                'foreign_object'    => 'talentlead\communication\MessageTemplate',
                 'description'       => "Message template associated to the conversation flow action."
             ]
 

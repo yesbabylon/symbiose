@@ -4,33 +4,43 @@
 	"description": "",
 	"model": {
 		"title":{
-			"label":"Titre", 
+			"label":"Titre",
 			"description": "Titre.",
 			"help": ""
 		},
         "conversation_id":{
-			"label":"Conversation", 
+			"label":"Conversation",
 			"description": "Conversation.",
 			"help": ""
 		},
         "message":{
-			"label":"Message", 
+			"label":"Message",
 			"description": "Message.",
 			"help": ""
 		},
         "is_request":{
-			"label":"Requête", 
+			"label":"Requête",
 			"description": "Requête.",
 			"help": ""
 		},
         "is_response":{
-			"label":"Réponse", 
+			"label":"Réponse",
 			"description": "Réponse.",
 			"help": ""
 		},
         "message_template_id":{
-			"label":"Modèle de message", 
+			"label":"Modèle de message",
 			"description": "Modèle de message.",
+			"help": ""
+		},
+		"subject": {
+			"label": "Titre",
+			"description": "Titre du message.",
+			"help": ""
+		},
+		"body": {
+			"label": "Corps",
+			"description": "Corps du message.",
 			"help": ""
 		}
 	},
@@ -47,6 +57,6 @@
 		}
 	},
 	"error": {
-		
+
 	}
 }

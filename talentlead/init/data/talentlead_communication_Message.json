@@ -4,28 +4,31 @@
         "lang": "fr",
         "data": [
             {
-                "title": "Message 1",
+                "subject": "Prise de contact",
                 "conversation_id": 1,
-                "message": "Lorem Ipsum Message 1",
+                "body": "Bonjour,\n Votre profil montre une grande expérience dans un domaine qui m'intéresse.\nJe suis à la rechercher de talents avec des qualités similaires.",
                 "is_request": false,
                 "is_response": true,
-                "message_template_id": 1
+                "message_template_id": 1,
+                "to": "esteban@hotmail.com"
             },
             {
-                "title": "Message 2",
+                "subject": "Relance - Prise de contact",
                 "conversation_id": 2,
-                "message": "Lorem Ipsum Message 2",
+                "body": "Bonjour,\n Avez-vous reçu mon précédent message ? \nNous pouvons discuter directement par email si vous préférez.",
                 "is_request": false,
                 "is_response": true,
-                "message_template_id": 1
+                "message_template_id": 1,
+                "to": "esteban@hotmail.com"
             },
             {
-                "title": "Message 3",
+                "subject": "Sans-nouvelles - Prise de contact",
                 "conversation_id": 3,
-                "message": "Lorem Ipsum Message 3",
+                "body": "Bonjour,\n Je suppose que vous êtes trop occupé pour l'instant. \nN'hésitez pas à revenir vers moi si vous le souhaitez.",
                 "is_request": false,
                 "is_response": true,
-                "message_template_id": 1
+                "message_template_id": 1,
+                "to": "esteban@hotmail.com"
             }
         ]
     }

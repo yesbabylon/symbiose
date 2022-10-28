@@ -29,6 +29,50 @@
                         ]
                     }
                 ]
+            },
+            {
+                "sections": [
+                    {
+                        "ids": "section_campaign.campaignTemplateCriteria",
+                        "label": "Template Criteria",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "campaign_template_criterias_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "ids": "section_campaign.campaigns",
+                        "label": "Campaigns",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "campaigns_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

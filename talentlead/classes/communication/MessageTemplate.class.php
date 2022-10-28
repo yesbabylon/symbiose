@@ -13,15 +13,35 @@ class MessageTemplate extends Model{
     public static function getColumns() {
         return [
 
-            'title' => [
+            'name' => [
+                'type'              => 'alias',
+                'alias'             => 'subject'
+            ],
+
+            'subject' => [
                 'type'              => 'string',
                 'description'       => "Title of the message template."
             ],
 
-            'message' => [
+            'body' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => "Content of the message."
             ],
+
+            'conversation_flow_actions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentLead\communication\ConversationFlowAction',
+                'foreign_field'     => 'message_template_id',
+                'description'       => 'Message Templates associated to a conversation flow action.'
+            ],
+
+            'messages_id' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentLead\communication\Message',
+                'foreign_field'     => 'message_template_id',
+                'description'       => '.'
+            ]
 
         ];
     }

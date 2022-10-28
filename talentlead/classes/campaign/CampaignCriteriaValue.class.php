@@ -15,13 +15,14 @@ class CampaignCriteriaValue extends Model {
 
             'campaign_criteria_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\CampaignCriteria',
+                'foreign_object'    => 'talentlead\campaign\CampaignCriteria',
                 'description'       => ""
             ],
 
             "value"       => [
                 'type'              => 'string',
-                'description'       => "Value of the Campaign Criteria."
+                'description'       => "Value of the Campaign Criteria.",
+                'multilang'         => true
             ]
 
         ];

@@ -28,7 +28,11 @@
 		"form.default": {
 			"name": "Action de flux de conversation",
 			"description": "",
-			"layout": {}
+			"layout": {
+				"section.communication.actions": {
+					"label": "Actions"
+				}
+			}
 		},
 		"list.default": {
 			"name": "Actions de flux de conversation",
@@ -37,6 +41,5 @@
 		}
 	},
 	"error": {
-		
 	}
 }

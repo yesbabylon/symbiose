@@ -18,10 +18,17 @@ class ConversationFlow extends \communication\Template {
                 'description'       => "Name of the Conversation Flow."
             ],
 
+            'conversations_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'talentlead\communication\Conversation',
+                'foreign_field'     => 'conversation_flow_id',
+                'description'       => ''
+            ],
+
             'conversation_flow_actions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\ConversationFlowAction',
-                'foreign_field'     => 'message_id',
+                'foreign_object'    => 'talentLead\communication\ConversationFlowAction',
+                'foreign_field'     => 'conversation_flow_id',
                 'description'       => 'Messages associated to a conversation.'
             ]
 

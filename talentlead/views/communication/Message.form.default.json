@@ -15,9 +15,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "title",
+                                                "value": "subject",
                                                 "width": "100%",
-                                                "label": "Title"
+                                                "label": "Subject"
                                             }
                                         ]
                                     },
@@ -33,11 +33,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "message_template_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "message",
                                                 "width": "50%"
                                             },
                                             {

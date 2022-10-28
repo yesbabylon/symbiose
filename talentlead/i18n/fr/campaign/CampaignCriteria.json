@@ -4,22 +4,22 @@
 	"description": "",
 	"model": {
 		"criteria_id":{
-			"label":"Critère", 
+			"label":"Critère",
 			"description": "Critère.",
 			"help": ""
 		},
         "campaign_id":{
-			"label":"Campagne", 
+			"label":"Campagne",
 			"description": "Campagne.",
 			"help": ""
 		},
         "order":{
-			"label":"Ordre", 
+			"label":"Ordre",
 			"description": "Ordre.",
 			"help": ""
 		},
         "campaign_criteria_values_ids":{
-			"label":"Valeur des critères de campagne", 
+			"label":"Valeur des critères de campagne",
 			"description": "Valeur.",
 			"help": ""
 		}
@@ -37,6 +37,6 @@
 		}
 	},
 	"error": {
-		
+
 	}
 }

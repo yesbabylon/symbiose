@@ -12,16 +12,21 @@ class CampaignCriteria extends Model {
 
     public static function getColumns() {
         return [
+            'name' =>  [
+                'type'              => 'string',
+                'description'       => "name of the Criteria",
+                'multilang'         => true
+            ],
 
             'criteria_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Criteria',
+                'foreign_object'    => 'talentlead\campaign\Criteria',
                 'description'       => "The criteria of the Campaign."
             ],
 
             'campaign_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'talentlead\Campaign',
+                'foreign_object'    => 'talentlead\campaign\Campaign',
                 'description'       => "The related campaign."
             ],
 
@@ -32,7 +37,7 @@ class CampaignCriteria extends Model {
 
             'campaign_criteria_values_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'talentlead\CampaignCriteriaValue',
+                'foreign_object'    => 'talentlead\campaign\CampaignCriteriaValue',
                 'foreign_field'     => 'campaign_criteria_id',
                 'description'       => 'Values of the campaign criteria.',
                 // 'domain'            => ['owner_identity_id', '<>', 'object.id']
