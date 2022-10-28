@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'sb-shared-lib';
 import { AuthService } from 'sb-shared-lib';
 
-/* 
+/*
 This is the component that is bootstrapped by app.module.ts
 */
 
@@ -10,7 +10,7 @@ This is the component that is bootstrapped by app.module.ts
 @Component({
   selector: 'app-root',
   templateUrl: './app.root.component.html',
-  styleUrls: ['./app.root.component.scss']  
+  styleUrls: ['./app.root.component.scss']
 })
 export class AppRootComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class AppRootComponent implements OnInit {
 
   constructor(private auth: AuthService, private api: ApiService) {}
 
-  
+
   public async ngOnInit() {
 
     this.auth.getObservable().subscribe( (user:any) => {
@@ -27,8 +27,8 @@ export class AppRootComponent implements OnInit {
         this.ready = true;
       }
       else {
-        this.navigateToAuth();  
-      }      
+        this.navigateToAuth();
+      }
     });
 
     try {
@@ -36,7 +36,7 @@ export class AppRootComponent implements OnInit {
     }
     catch(error:any) {
       this.navigateToAuth();
-    }    
+    }
 
   }
 

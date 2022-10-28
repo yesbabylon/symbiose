@@ -1,47 +1,7 @@
 {
     "name": "core",
-    "depends_on": [
-    ],
-    "apps": {
-        "apps" : {
-            "name": "",
-            "description": "",
-            "url": "/apps",
-            "icon": "",
-            "color": "",
-            "access": {
-                "groups": [
-                    "users"
-                ]
-            },
-            "show_in_apps": false
-        },
-        "auth" : {
-            "name": "",
-            "description": "",
-            "url": "/auth",
-            "icon": "",
-            "color": "",
-            "access": {
-                "groups": [
-                    "users"
-                ]
-            },
-            "show_in_apps": false
-        },
-        "settings" : {
-            "name": "APPS_APP_SETTINGS",
-            "description": "",
-            "url": "/settings",
-            "icon": "settings",
-            "color": "#FF9741",
-            "access": {
-                "groups": [
-                    "setting.default.user",
-                    "setting.default.administrator"
-                ]
-            },
-            "show_in_apps": true
-        }
-    }
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": [],
+    "apps": ["apps", "auth", "settings"]
 }

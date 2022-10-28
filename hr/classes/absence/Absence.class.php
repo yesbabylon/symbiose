@@ -109,7 +109,7 @@ class Absence extends \equal\orm\Model {
 
     public function getUnique() {
         return [
-            ['employee_id', 'date', 'date_part', 'code_id']
+            ['employee_id', 'date', 'day_part', 'code_id']
         ];
     }
 }

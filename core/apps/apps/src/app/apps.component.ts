@@ -25,7 +25,7 @@ export class AppsComponent implements OnInit {
 
     public async ngOnInit() {
         try {
-            this.apps= await this.api.fetch("/?get=installed-apps");
+            this.apps = await this.api.fetch("/?get=installed-apps");
         }
         catch (response){
             console.log(response);
@@ -47,10 +47,9 @@ export class AppsComponent implements OnInit {
 
     public isGranted(app_name:string) {
         let app = this.apps[app_name];
-        if(app.access.groups && app.show_in_apps) {
+        if(app.access?.groups && app.show_in_apps) {
             for(let group of app.access.groups) {
                 if(this.auth.hasGroup(group)) {
-                    console.log(true);
                     return true;
                 }
             }
