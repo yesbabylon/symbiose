@@ -35,11 +35,7 @@
                         "label": "Customer",
                         "description": "",
                         "context": {
-<<<<<<< HEAD:talentLead/views/menu.talentLead.left.json
                             "entity": "talentlead\\sale\\customer\\Customer",
-=======
-                            "entity": "talentlead\\identity\\Customer",
->>>>>>> d3fd58acaec815493e739bc1ea9d0c7bfe823851:talentlead/views/menu.talentLead.left.json
                             "view": "list.default"
                         }
                     },
@@ -49,11 +45,7 @@
                         "label": "Identity",
                         "description": "",
                         "context": {
-<<<<<<< HEAD:talentLead/views/menu.talentLead.left.json
                             "entity": "identity\\Identity",
-=======
-                            "entity": "talentlead\\identity\\Identity",
->>>>>>> d3fd58acaec815493e739bc1ea9d0c7bfe823851:talentlead/views/menu.talentLead.left.json
                             "view": "list.default"
                         }
                     }
