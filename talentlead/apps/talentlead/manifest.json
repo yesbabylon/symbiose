@@ -1,0 +1,14 @@
+{
+    "name": "Talent Lead",
+    "description": "",
+    "url": "/talentlead",
+    "icon": "point_of_sale",
+    "color": "#E95367",
+    "access": {
+        "groups": [
+            "users",
+            "admin"
+        ]
+    },
+    "show_in_apps": true
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Apps",
+    "description": "",
+    "url": "/apps",
+    "icon": "",
+    "color": "",
+    "access": {
+        "groups": [
+            "users"
+        ]
+    },
+    "show_in_apps": false
+}

@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_ACCOUNTING",
+    "description": "",
+    "url": "/accounting",
+    "icon": "monetization_on",
+    "color": "#29A1A1",
+    "access": {
+        "groups": [
+            "finance.default.user",
+            "finance.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

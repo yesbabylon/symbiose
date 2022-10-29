@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_POS",
+    "description": "",
+    "url": "/pos",
+    "icon": "point_of_sale",
+    "color": "#E95367",
+    "access": {
+        "groups": [
+            "pos.default.user",
+            "pos.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

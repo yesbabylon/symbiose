@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_BOOKING",
+    "description": "",
+    "url": "/booking",
+    "icon": "airline_seat_individual_suite",
+    "color": "#3F52B5",
+    "access": {
+        "groups": [
+            "booking.default.user",
+            "booking.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

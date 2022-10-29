@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_STATS",
+    "description": "",
+    "url": "/stats",
+    "icon": "filter_alt",
+    "color": "#653BB5",
+    "access": {
+        "groups": [
+            "stats.default.user",
+            "stats.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_SETTINGS",
+    "description": "",
+    "url": "/settings",
+    "icon": "settings",
+    "color": "#FF9741",
+    "access": {
+        "groups": [
+            "setting.default.user",
+            "setting.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

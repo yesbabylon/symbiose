@@ -1,0 +1,14 @@
+{
+    "name": "inventory",
+    "description": "",
+    "url": "/inventory",
+    "icon": "",
+    "color": "green",
+    "access": {
+        "groups": [
+            "inventory.default.user",
+            "inventory.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}

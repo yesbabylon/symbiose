@@ -1,0 +1,14 @@
+{
+    "name": "APPS_APP_SALES",
+    "description": "",
+    "url": "/sale",
+    "icon": "import_contacts",
+    "color": "#F9BD15",
+    "access": {
+        "groups": [
+            "sale.default.user",
+            "sale.default.administrator"
+        ]
+    },
+    "show_in_apps": true
+}
