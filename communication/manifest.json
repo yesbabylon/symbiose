@@ -1,10 +1,4 @@
 {
     "name": "communication",
-    "depends_on": [
-    ],
-    "apps":{
-        "communication":{
-            "show_in_apps": false
-        }
-    }
+    "depends_on": ["core"]
 }

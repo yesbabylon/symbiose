@@ -1,10 +1,5 @@
 {
     "name": "stats",
-    "depends_on": [
-    ],
-    "apps":{
-        "stats":{
-            "show_in_apps": true
-        }
-    }
+    "depends_on": ["core"],
+    "apps": ["stats"]
 }

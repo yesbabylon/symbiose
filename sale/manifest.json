@@ -5,34 +5,5 @@
         "identity",
         "finance"
     ],
-    "apps": {
-        "sale":{
-            "name": "APPS_APP_SALES",
-            "description": "",
-            "url": "/sale",
-            "icon": "import_contacts",
-            "color": "#F9BD15",
-            "access": {
-                "groups": [
-                    "sale.default.user",
-                    "sale.default.administrator"
-                ]
-            },
-            "show_in_apps": true
-        },
-        "pos" : {
-            "name": "APPS_APP_POS",
-            "description": "",
-            "url": "/pos",
-            "icon": "point_of_sale",
-            "color": "#E95367",
-            "access": {
-                "groups": [
-                    "pos.default.user",
-                    "pos.default.administrator"
-                ]
-            },
-            "show_in_apps": true
-        }
-    }
+    "apps": ["sale", "pos"]
 }

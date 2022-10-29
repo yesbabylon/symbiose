@@ -1,20 +1,5 @@
 {
-    "name": "talentLead",
-    "depends_on": [
-        "core",
-        "identity",
-        "sale"
-    ],
-    "apps": {
-        "talentLead":{
-            "name": "APPS_APP_TALENTLEAD",
-            "description": "",
-            "url": "/talentlead",
-            "icon": "import_contacts",
-            "color": "#F9BD15",
-            "access": {
-            },
-            "show_in_apps": true
-        }
-    }
+    "name": "Talent Lead",
+    "depends_on": ["core","identity","sale"],
+    "apps": ["talentlead"]
 }

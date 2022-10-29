@@ -324,7 +324,8 @@ if(isset($package_manifest['apps']) && is_array($package_manifest['apps'])) {
         if(isset($app_manifest['checksum'])) {
             $md5 = md5_file("$app_path/web.app");
             if($md5 != $app_manifest['checksum']) {
-                throw new Exception("Invalid checksum for app {$app}: ".json_last_error_msg().'.', QN_ERROR_UNKNOWN);
+                // #todo - not required for now, would increase version identification
+                // throw new Exception("Invalid checksum for app {$app}: ".json_last_error_msg().'.', QN_ERROR_UNKNOWN);
             }
         }
 

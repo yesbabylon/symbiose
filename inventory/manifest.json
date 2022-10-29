@@ -1,22 +1,5 @@
 {
     "name": "inventory",
-    "depends_on": [
-        
-    ],
-    "apps":{
-        "inventory" : {
-            "name": "",
-            "description": "",
-            "url": "/inventory",
-            "icon": "",
-            "color": "",
-            "access": {
-                "groups": [
-                    "inventory.default.user", 
-                    "inventory.default.administrator"
-                ]
-            },
-            "show_in_apps": true
-        }
-    }
+    "depends_on": ["core"],
+    "apps": ["inventory"]
 }
