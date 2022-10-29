@@ -89,8 +89,7 @@ if($params['cascade'] && isset($package_manifest['depends_on']) && is_array($pac
             eQual::run('do', 'init_package', [
                     'package'           => $dependency,
                     'cascade'           => $params['cascade'],
-                    'import'            => $params['import'],
-                    'import_cascade'    => $params['import_cascade'],
+                    'import'            => $params['import'] && $params['import_cascade'],
                     'compile'           => $params['compile'],
                 ],
                 true);
@@ -191,7 +190,6 @@ foreach($classes as $class) {
 //    }
 }
 
-
 // 3) add missing relation tables, if any
 foreach($m2m_tables as $table => $columns) {
     $query = "CREATE TABLE IF NOT EXISTS `{$table}` DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci (";
@@ -212,7 +210,6 @@ foreach($m2m_tables as $table => $columns) {
 
 
 // #todo : make distinction between mandatory initial data and demo data
-
 
 // 4) populate tables with predefined data
 $data_folder = "packages/{$params['package']}/init/data";
@@ -268,7 +265,6 @@ if($params['import'] && file_exists($data_folder) && is_dir($data_folder)) {
     }
 }
 
-
 // 5) if a `bin` folder exists, copy its content to /bin/<package>/
 $bin_folder = "packages/{$params['package']}/init/bin";
 if(file_exists($bin_folder) && is_dir($bin_folder)) {
@@ -282,8 +278,7 @@ if(file_exists($route_folder) && is_dir($route_folder)) {
     exec("cp -r $route_folder/* config/routing");
 }
 
-// 8) Export the compiled apps to related public folders
-
+// 7) Export the compiled apps to related public folders
 if(isset($package_manifest['apps']) && is_array($package_manifest['apps'])) {
 
     foreach($package_manifest['apps'] as $app) {
