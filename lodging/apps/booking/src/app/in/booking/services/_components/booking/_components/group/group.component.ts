@@ -102,6 +102,7 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     @Output() toggle  = new EventEmitter();
 
     public folded:boolean = true;
+    public groupSummaryOpen:boolean = false;
 
     @ViewChild('packAutocomplete') packAutocomplete: MatAutocomplete;
 
@@ -681,5 +682,19 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
             console.log(response);
         }
         return filtered;
+    }
+
+    public onclickGroupSummary() {
+        this.groupSummaryOpen = true;
+    }
+
+    public selectedGroupSummaryProduct(product:any) {
+        console.log("selected", product);
+        this.groupSummaryOpen = false;
+    }
+
+    public onblurGroupSummarySelect() {
+        console.log('onblurGroupSummarySelect');
+        this.groupSummaryOpen = false;
     }
 }

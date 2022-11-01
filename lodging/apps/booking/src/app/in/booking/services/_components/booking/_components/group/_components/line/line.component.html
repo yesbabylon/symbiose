@@ -149,7 +149,8 @@
                     <div class="row row-title row-thin">
                         <span>
                             Variations des quantités
-                            <button *ngIf="!vProduct.variations.folded" mat-mini-fab color="primary"
+                            <button *ngIf="!vProduct.variations.folded"
+                                mat-mini-fab color="primary"
                                 style="transform: scale(0.66);"
                                 (click)="vm.qty_vars.reset(); vProduct.variations.folded = true"
                                 title="Réinitialiser">

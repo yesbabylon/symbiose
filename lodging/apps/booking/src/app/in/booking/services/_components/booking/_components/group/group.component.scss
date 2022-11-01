@@ -10,6 +10,12 @@
         display: none !important;
     }
 
+    sb-m2o-select.group-summary-select {
+        top: -14px;
+        position: absolute;
+        width: 100%;
+    }
+
     .part {
         display: flex;
 

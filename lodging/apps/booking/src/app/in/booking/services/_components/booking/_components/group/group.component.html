@@ -3,13 +3,13 @@
 
 <div [class.hidden]="!ready">
 
-    <div class="group-expand" style="position: absolute;right: 50px;" *ngIf="folded">
+    <div class="group-expand" style="position: absolute;right: 6px;" *ngIf="folded">
         <button mat-icon-button
             (click)="toggleFold()">
             <mat-icon>expand_more</mat-icon>
         </button>
     </div>
-    <div class="group-collapse" style="position: absolute;right: 10px;" *ngIf="!folded">
+    <div class="group-collapse" style="position: absolute;right: 6px;" *ngIf="!folded">
         <button mat-icon-button
             (click)="toggleFold()">
             <mat-icon>expand_less</mat-icon>
@@ -20,8 +20,19 @@
     <!-- #memo - blocks are hidden instead of ngIf-ied to allow dynamic DOM updates -->
     <div [class.hidden]="!folded" style="height: 35px; padding: 8px 125px 0 15px; cursor: pointer;">
         <div style="display: flex;">
-            <div style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px;">
+            <div *ngIf="!groupSummaryOpen" style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px;" (click)="onclickGroupSummary()">
                 {{instance.name}}
+            </div>
+            <div *ngIf="groupSummaryOpen" style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px; position: relative;" (click)="onclickGroupSummary()">
+                <sb-m2o-select
+                    class="group-summary-select"
+                    [entity]="'lodging\\sale\\catalog\\Product'"
+                    [fields]="['is_pack']"
+                    [placeholder]="'Commencez à taper le nom'"
+                    [noResult]="'rien trouvé'"
+                    [autofocus]="true"
+                    (itemSelected)="selectedGroupSummaryProduct($event)"
+                    (blur)="onblurGroupSummarySelect()"></sb-m2o-select>
             </div>
             <div *ngIf="instance.is_sojourn" style="flex: 0 1 30%; white-space: nowrap; overflow: hidden; display: flex;">
                 <ng-container *ngIf="instance.nb_nights > 0">
@@ -39,6 +50,7 @@
         </div>
     </div>
 
+    <!-- expanded pane : all details of group / sojourn -->
     <div [class.hidden]="folded">
 
         <!-- identification-->
