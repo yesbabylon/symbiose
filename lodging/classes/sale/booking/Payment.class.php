@@ -113,7 +113,7 @@ class Payment extends \lodging\sale\pay\Payment {
      * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+    public static function onchange($om, $event, $values, $lang='en') {
         $result = [];
 
         if(isset($event['funding_id'])) {
@@ -158,7 +158,7 @@ class Payment extends \lodging\sale\pay\Payment {
      * @param  String   $lang       Language in which multilang fields are being updated.
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang='en') {
         if(isset($values['funding_id'])) {
             $fundings = $om->read(Funding::getType(), $values['funding_id'], ['due_amount'], $lang);
             if($fundings > 0 && count(($fundings))) {

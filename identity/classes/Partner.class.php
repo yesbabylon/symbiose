@@ -214,7 +214,7 @@ class Partner extends Model {
      * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+    public static function onchange($om, $event, $values, $lang='en') {
         $result = [];
 
         if(isset($event['partner_identity_id'])) {

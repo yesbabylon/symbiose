@@ -695,7 +695,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      * @param  string                       $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang='en') {
         $groups = $om->read(get_called_class(), $oids, ['booking_id.status', 'is_extra', 'age_range_assignments_ids', 'sojourn_product_models_ids'], $lang);
 
         if($groups > 0) {

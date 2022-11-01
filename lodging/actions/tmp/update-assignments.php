@@ -75,7 +75,7 @@ foreach($booking_line_groups as $gid => $group) {
 
     assigner à un même sojourn_product_model tous les sojournProductModelRentalUnitAssignement dont le sojourn_prodct_model_id.product_model_id sont égaux
 
-    #memo : we need to temporatily disable SojournProductModelRentalUnitAssignement::canupdate($om, $oids, $values, $lang=DEFAULT_LANG)
+    #memo : we need to temporatily disable SojournProductModelRentalUnitAssignement::canupdate($om, $oids, $values, $lang='en')
 
     */
     foreach($product_models as $model) {

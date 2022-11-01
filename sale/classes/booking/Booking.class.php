@@ -548,7 +548,7 @@ class Booking extends Model {
         }
     }
 
-    public static function candelete($om, $oids, $lang=DEFAULT_LANG) {
+    public static function candelete($om, $oids, $lang='en') {
         $res = $om->read(get_called_class(), $oids, [ 'status' ]);
 
         if($res > 0) {

@@ -419,7 +419,7 @@ class Booking extends \sale\booking\Booking {
      * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+    public static function onchange($om, $event, $values, $lang='en') {
         $result = [];
 
         if(isset($event['date_from'])) {
@@ -743,6 +743,8 @@ class Booking extends \sale\booking\Booking {
                         'booking_lines_ids',
                         'nb_pers',
                         'nb_nights',
+                        'is_event',
+                        'is_sojourn',
                         'date_from',
                         'time_from',
                         'time_to',
@@ -985,8 +987,9 @@ class Booking extends \sale\booking\Booking {
                                 $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
                                 $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
-                                // number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
-                                $nb_products = $group['nb_nights'];
+                                // #memo - number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
+                                // #memo - sojourns are accounted in nights, while events are accounted in days
+                                $nb_products = ($group['is_sojourn'])?$group['nb_nights']:$group['nb_nights']+1;
                                 $nb_times = $group['nb_pers'];
 
                                 // adapt nb_pers based on if product from line has age_range
@@ -1000,7 +1003,7 @@ class Booking extends \sale\booking\Booking {
                                         }
                                     }
                                 }
-
+                                // adapt duration for products with fixed duration
                                 if($has_duration) {
                                     $nb_products = $product_models[$line['product_id.product_model_id']]['duration'];
                                 }
@@ -1063,7 +1066,6 @@ class Booking extends \sale\booking\Booking {
                                             // #todo : use translation file
                                             $type = ($preference['type'] == '3_courses')?'3 services':'2 services';
                                             $pref = ($preference['pref'] == 'veggie')?'végétarien':(($preference['pref'] == 'allergen_free')?'sans allergène':'normal');
-
                                             $description .= "<p>{$type} / {$pref} : {$preference['qty']} ; </p>";
                                         }
                                         $consumption['description'] = $description;

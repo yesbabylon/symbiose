@@ -515,7 +515,7 @@ class Identity extends Model {
      * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($om, $event, $values, $lang=DEFAULT_LANG) {
+    public static function onchange($om, $event, $values, $lang='en') {
         $result = [];
 
         if(isset($event['type_id'])) {
@@ -539,7 +539,7 @@ class Identity extends Model {
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang='en') {
         if(isset($values['type_id'])) {
             $identities = $om->read(get_called_class(), $oids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
             foreach($identities as $oid => $identity) {

@@ -160,7 +160,7 @@ class Payment extends Model {
      * @param  String   $lang       Language in which multilang fields are being updated.
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang=DEFAULT_LANG) {
+    public static function canupdate($om, $oids, $values, $lang='en') {
         $payments = $om->read(self::getType(), $oids, ['is_exported', 'payment_origin', 'statement_line_id.remaining_amount'], $lang);
         foreach($payments as $pid => $payment) {
             if($payment['is_exported']) {
