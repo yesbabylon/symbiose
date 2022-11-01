@@ -1,5 +1,7 @@
 {
     "name": "lodging",
+    "author": "Yesbabylon SRL",
+    "version": "1.0",
     "depends_on": [
         "core",
         "documents",
