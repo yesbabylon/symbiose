@@ -104,6 +104,11 @@ $fields = [
         'phone',
         'email'
     ],
+    'type_id' => ['code', 'name'],
+    'fundings_ids' => [
+        'due_amount',
+        'paid_amount'
+    ],
     'customer_id' => [
         'partner_identity_id' => [
             'id',
