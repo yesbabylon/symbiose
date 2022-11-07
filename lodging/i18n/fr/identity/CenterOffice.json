@@ -75,6 +75,11 @@
         },
         "docs_default_mode": {
             "label": "Mode par défaut des documents",
+            "selection": {
+                "simple": "simple",
+                "grouped": "groupé",
+                "detailed": "détaillé"
+            },
             "description": "Mode de précision (simple, groupé, détaillé) à utiliser par défaut.",
             "help": ""
         },
