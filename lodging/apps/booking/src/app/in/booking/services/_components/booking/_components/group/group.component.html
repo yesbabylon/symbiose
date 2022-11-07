@@ -18,35 +18,89 @@
 
     <!-- one liner : summarized group / sojourn -->
     <!-- #memo - blocks are hidden instead of ngIf-ied to allow dynamic DOM updates -->
-    <div [class.hidden]="!folded" style="height: 35px; padding: 8px 125px 0 15px; cursor: pointer;">
+    <div [class.hidden]="!folded" class="group-liner" style="height: 35px; padding: 8px 100px 0 15px; cursor: pointer;">
         <div style="display: flex;">
-            <div *ngIf="!groupSummaryOpen" style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px;" (click)="onclickGroupSummary()">
-                {{instance.name}}
+            <!-- group summary (main product) -->
+            <div class="group-liner-part" style="width: 25%; margin-right: 18px;">
+                <div *ngIf="!groupSummaryOpen" style="white-space: nowrap; overflow: hidden;" (click)="onclickGroupSummary()">
+                    {{instance.name}}
+                </div>
+                <div *ngIf="groupSummaryOpen" style="position: relative;">
+                    <sb-m2o-select style="transform: translateY(2px);"
+                        class="group-summary-select"
+                        [entity]="'lodging\\sale\\catalog\\Product'"
+                        [controller]="'lodging_sale_catalog_product_collect'"
+                        [params]="{center_id: booking.center_id.id}"
+                        [placeholder]="'Commencez à taper le nom'"
+                        [noResult]="'rien trouvé'"
+                        [autofocus]="true"
+                        (itemSelected)="selectedGroupSummaryProduct($event)"
+                        (blur)="onblurGroupSummarySelect()"></sb-m2o-select>
+                </div>
             </div>
-            <div *ngIf="groupSummaryOpen" style="flex: 0 1 40%; white-space: nowrap; overflow: hidden; margin-right: 20px; position: relative;" (click)="onclickGroupSummary()">
-                <sb-m2o-select
-                    class="group-summary-select"
-                    [entity]="'lodging\\sale\\catalog\\Product'"
-                    [fields]="['is_pack']"
-                    [placeholder]="'Commencez à taper le nom'"
-                    [noResult]="'rien trouvé'"
-                    [autofocus]="true"
-                    (itemSelected)="selectedGroupSummaryProduct($event)"
-                    (blur)="onblurGroupSummarySelect()"></sb-m2o-select>
+            <!-- group type -->
+            <div class="group-liner-part" style="width: 10%; margin-right: 18px;">
+                <div *ngIf="!groupTypeOpen" style="white-space: nowrap; overflow: hidden; " (click)="onclickGroupType()">
+                    <span *ngIf="instance.is_sojourn">séjour</span>
+                    <span *ngIf="instance.is_event">événement</span>
+                    <span *ngIf="!instance.is_sojourn && !instance.is_event">simple</span>
+                </div>
+                <div *ngIf="groupTypeOpen" style="position: relative;" (click)="onclickGroupType()">
+                    <mat-form-field appearance="standard" style="transform: translateY(-31px); padding: 0;">
+                        <mat-select [value]="(instance.is_sojourn)?'sojourn':((instance.is_event)?'event':'simple')"
+                        (closed)="onblurGroupType()"
+                        (selectionChange)="onchangeGroupType($event.value)">
+                            <mat-option value="simple">simple</mat-option>
+                            <mat-option value="event">événement</mat-option>
+                            <mat-option value="sojourn">séjour</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-            <div *ngIf="instance.is_sojourn" style="flex: 0 1 30%; white-space: nowrap; overflow: hidden; display: flex;">
-                <ng-container *ngIf="instance.nb_nights > 0">
-                    {{instance.date_from | date: 'dd/MM/YY'}}
-                    <i class="material-icons">arrow_right_alt</i>
-                    {{instance.date_to | date: 'dd/MM/YY'}}&nbsp;
-                    ({{instance.nb_nights}} nuit<span *ngIf="instance.nb_nights > 1">s</span>)
+            <!-- date(s) -->
+            <div class="group-liner-part" style="width: 35%; margin-right: 18px;">
+                <ng-container *ngIf="instance.is_event || instance.is_sojourn">
+                    <div *ngIf="!groupDatesOpen" style="white-space: nowrap; overflow: hidden;" (click)="onclickGroupDates()">
+                        {{instance.date_from | date: 'dd/MM/YY'}}
+                        -
+                        {{instance.date_to | date: 'dd/MM/YY'}}&nbsp;
+                        <small>
+                            <ng-container *ngIf="instance.is_sojourn">({{instance.nb_nights}} nuit<span *ngIf="instance.nb_nights > 1">s</span>)</ng-container>
+                            <ng-container *ngIf="instance.is_event">({{instance.nb_nights + 1}} jour<span *ngIf="instance.nb_nights+1 > 1">s</span>)</ng-container>
+                        </small>
+                    </div>
+                    <div *ngIf="groupDatesOpen" style="position: relative;">
+                        <mat-form-field style="transform: translateY(-18px); padding: 0;">
+                            <mat-date-range-input [rangePicker]="sojournDateRangePicker">
+                                <input matStartDate [formControl]="vm.daterange.start.formControl">
+                                <input matEndDate [formControl]="vm.daterange.end.formControl">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="sojournDateRangePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #sojournDateRangePicker (closed)="onchangeDateRange()"></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
                 </ng-container>
-                <ng-container *ngIf="instance.nb_nights == 0">
-                    {{instance.date_from | date: 'dd/MM/YY'}}
-                </ng-container>
             </div>
-            <div style="flex: 0 1 15%; white-space: nowrap; overflow: hidden;">{{instance.nb_pers}} pers.</div>
-            <div style="margin-left: auto; white-space: nowrap; overflow: hidden;">{{instance.price | number : '1.2-2'}}€</div>
+            <!-- nb pers -->
+            <div class="group-liner-part" style="width: 15%;">
+                <div *ngIf="!groupNbPersOpen" style="white-space: nowrap; overflow: hidden;" (click)="onclickGroupNbPers()">{{instance.nb_pers}} pers.</div>
+                <div *ngIf="groupNbPersOpen" style="position: relative;">
+                    <mat-form-field style="transform: translateY(-18px); padding: 0;">
+                        <input
+                            type="number"
+                            matInput
+                            (blur)="onblurGroupNbPers()"
+                            (keyup.enter)="onblurGroupNbPers()"
+                            (keyup.esc)="onblurGroupNbPers()"
+                            [value]="instance.nb_pers"
+                            [formControl]="vm.participants_count.formControl">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- price -->
+            <div class="group-liner-part" style="width: 10%; text-align: right;">
+                <div style="margin-left: auto; white-space: nowrap; overflow: hidden;">{{instance.price | number : '1.2-2'}}€</div>
+            </div>
         </div>
     </div>
 
@@ -130,7 +184,7 @@
                 </div>
 
                 <!-- sojourn specifics -->
-                <div class="row row-identification" *ngIf="instance.is_sojourn" >
+                <div class="row row-identification" *ngIf="instance.is_sojourn || instance.is_event" >
 
                     <!-- sojourn dates -->
                     <div class="cell" style="flex: 1.5 1 0; max-width: 260px; min-width: 100px;">
@@ -142,7 +196,12 @@
                             </mat-date-range-input>
                             <mat-datepicker-toggle matSuffix [for]="sojournDateRangePicker"></mat-datepicker-toggle>
                             <mat-date-range-picker #sojournDateRangePicker (closed)="onchangeDateRange()"></mat-date-range-picker>
-                            <mat-hint [align]="'end'"><strong>{{vm.daterange.nights_count}} {{(vm.daterange.nights_count > 1)?'nuitées':'nuitée'}}</strong></mat-hint>
+                            <mat-hint [align]="'end'">
+                                <strong>
+                                    <ng-container *ngIf="instance.is_sojourn">{{vm.daterange.nights_count}} nuitée{{(vm.daterange.nights_count > 1)?'s':''}}</ng-container>
+                                    <ng-container *ngIf="instance.is_event">{{vm.daterange.nights_count+1}} jour{{(vm.daterange.nights_count+1 > 1)?'s':''}}</ng-container>
+                                </strong>
+                                </mat-hint>
                         </mat-form-field>
                     </div>
 
@@ -223,97 +282,6 @@
 
                 </div>
 
-                <!-- event specifics -->
-                <div class="row row-identification" *ngIf="instance.is_event" >
-
-                    <!-- event date -->
-                    <div *ngIf="instance.is_event" class="cell" style="flex: 0.5 1 0; max-width: 170px; min-width: 100px;">
-
-                        <mat-form-field>
-                            <mat-label>Date</mat-label>
-                            <input matInput [matDatepicker]="eventDatepicker" [formControl]="vm.daterange.single.formControl">
-                            <mat-hint  [align]="'end'"><strong>début &amp; fin le même jour</strong></mat-hint>
-                            <mat-datepicker-toggle matSuffix [for]="eventDatepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #eventDatepicker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-
-                    <!-- checkin time -->
-                    <div class="cell" style="max-width: 125px;">
-                        <mat-form-field>
-                            <mat-label>Checkin</mat-label>
-                            <mat-select [formControl]="vm.timerange.checkin.formControl">
-                                <mat-option value="07:00">07:00</mat-option>
-                                <mat-option value="07:30">07:30</mat-option>
-                                <mat-option value="08:00">08:00</mat-option>
-                                <mat-option value="08:30">08:30</mat-option>
-                                <mat-option value="09:00">09:00</mat-option>
-                                <mat-option value="09:30">09:30</mat-option>
-                                <mat-option value="10:00">10:00</mat-option>
-                                <mat-option value="10:30">10:30</mat-option>
-                                <mat-option value="11:00">11:00</mat-option>
-                                <mat-option value="11:30">11:30</mat-option>
-                                <mat-option value="12:00">12:00</mat-option>
-                                <mat-option value="12:30">12:30</mat-option>
-                                <mat-option value="13:00">13:00</mat-option>
-                                <mat-option value="13:30">13:30</mat-option>
-                                <mat-option value="14:00">14:00</mat-option>
-                                <mat-option value="14:30">14:30</mat-option>
-                                <mat-option value="15:00">15:00</mat-option>
-                                <mat-option value="15:30">15:30</mat-option>
-                                <mat-option value="16:00">16:00</mat-option>
-                                <mat-option value="16:30">16:30</mat-option>
-                                <mat-option value="17:00">17:00</mat-option>
-                                <mat-option value="17:30">17:30</mat-option>
-                                <mat-option value="18:00">18:00</mat-option>
-                                <mat-option value="18:30">18:30</mat-option>
-                            </mat-select>
-
-                            <mat-hint [align]="'start'" style="opacity: 1">
-                                <span>Heure d'arrivée</span>
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
-
-                    <!-- checkout time -->
-                    <div class="cell" style="max-width: 125px;">
-
-                        <mat-form-field>
-                            <mat-label>Checkout</mat-label>
-                            <mat-select [formControl]="vm.timerange.checkout.formControl">
-                                <mat-option value="07:00">07:00</mat-option>
-                                <mat-option value="07:30">07:30</mat-option>
-                                <mat-option value="08:00">08:00</mat-option>
-                                <mat-option value="08:30">08:30</mat-option>
-                                <mat-option value="09:00">09:00</mat-option>
-                                <mat-option value="09:30">09:30</mat-option>
-                                <mat-option value="10:00">10:00</mat-option>
-                                <mat-option value="10:30">10:30</mat-option>
-                                <mat-option value="11:00">11:00</mat-option>
-                                <mat-option value="11:30">11:30</mat-option>
-                                <mat-option value="12:00">12:00</mat-option>
-                                <mat-option value="12:30">12:30</mat-option>
-                                <mat-option value="13:00">13:00</mat-option>
-                                <mat-option value="13:30">13:30</mat-option>
-                                <mat-option value="14:00">14:00</mat-option>
-                                <mat-option value="14:30">14:30</mat-option>
-                                <mat-option value="15:00">15:00</mat-option>
-                                <mat-option value="15:30">15:30</mat-option>
-                                <mat-option value="16:00">16:00</mat-option>
-                                <mat-option value="16:30">16:30</mat-option>
-                                <mat-option value="17:00">17:00</mat-option>
-                                <mat-option value="17:30">17:30</mat-option>
-                                <mat-option value="18:00">18:00</mat-option>
-                                <mat-option value="18:30">18:30</mat-option>
-                            </mat-select>
-
-                            <mat-hint [align]="'start'" style="opacity: 1">
-                                <span>Heure de départ</span>
-                            </mat-hint>
-                        </mat-form-field>
-                    </div>
-
-                </div>
                 <!-- additional (optional) details about the group (can be folded) -->
                 <div class="row row-identification" [class.hidden]="vGroup.identification.folded">
                     <!-- fare class / rateClass -->
@@ -486,7 +454,7 @@
                         </div>
 
                     </div>
-                    <div class="row-products-price">TOTAL TTC &nbsp;:&nbsp; {{instance.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}} <br />AVANTAGE ({{instance.fare_benefit/(instance.price+instance.fare_benefit) | percent}})&nbsp;:&nbsp; {{instance.fare_benefit | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}}</div>                    
+                    <div class="row-products-price">TOTAL TTC &nbsp;:&nbsp; {{instance.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}} <br />AVANTAGE ({{instance.fare_benefit/(instance.price+instance.fare_benefit) | percent}})&nbsp;:&nbsp; {{instance.fare_benefit | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr-FR'}}</div>
                 </div>
 
                 <div class="row" [class.hidden]="vGroup.products.folded">
@@ -582,7 +550,7 @@
         <!-- meals preferences (for hostels only / 'GA')-->
         <div class="part" *ngIf="(instance.is_sojourn && instance.sojourn_type_id == 1) || instance.is_event">
 
-            <div class="part-toggle">
+            <div class="part-toggle" style="padding-top: 12px;">
                 <button mat-icon-button *ngIf="!vGroup.meals.folded" (click)="vGroup.meals.folded = !vGroup.meals.folded">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
                 </button>
@@ -619,9 +587,6 @@
             </div>
         </div>
 
-
-
     </div>
-
 
 </div>

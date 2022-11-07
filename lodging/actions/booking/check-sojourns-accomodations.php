@@ -39,6 +39,7 @@ $booking = Booking::id($params['id'])
     ->read([
         'id',
         'name',
+        'center_office_id',
         'booking_lines_groups_ids' => [
             'date_from',
             'date_to',
@@ -91,7 +92,7 @@ $httpResponse = $context->httpResponse()->status(200);
 if($collision) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.sojourns_accomodations', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-sojourns-accomodations', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.sojourns_accomodations', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-sojourns-accomodations', ['id' => $params['id']],[],null,$booking['center_office_id']);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {

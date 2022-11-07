@@ -120,8 +120,8 @@ export class BookingCompositionLinesComponent implements OnInit, OnChanges {
         }
         }
         catch(error) {
-        console.warn(error);
-        this.snack.open('Erreur inconnue', 'Erreur');
+            console.warn(error);
+            this.snack.open('Erreur inconnue', 'Erreur');
         }
 
     }

@@ -36,7 +36,7 @@ list($params, $providers) = announce([
  */
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$orm->call(BankStatementLine::getType(), 'reconcile', (array) $params['id'], [], DEFAULT_LANG);
+$orm->call(BankStatementLine::getType(), 'reconcile', (array) $params['id']);
 
 $context->httpResponse()
         ->status(204)

@@ -441,6 +441,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         trigger_error("QN_DEBUG_ORM::calling lodging\sale\booking\BookingLineGroup:onchangePackId", QN_REPORT_DEBUG);
 
         $groups = $om->read(self::getType(), $oids, [
+            'name',
             'booking_id',
             'date_from',
             'nb_pers',
@@ -449,6 +450,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'age_range_assignments_ids',
             'pack_id.has_age_range',
             'pack_id.age_range_id',
+            'pack_id.product_model_id.name',
             'pack_id.product_model_id.qty_accounting_method',
             'pack_id.product_model_id.has_duration',
             'pack_id.product_model_id.duration',
@@ -486,6 +488,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             }
 
             $updated_fields = ['vat_rate' => null];
+
+            // if group name is empty, assign the name of the new pack
+            if(!isset($group['name']) || strlen($group['name']) <= 0) {
+                $updated_fields['name'] = $group['pack_id.product_model_id.name'];
+            }
 
             // if targeted product model has its own duration, date_to is updated accordingly
             if($group['pack_id.product_model_id.has_duration']) {
@@ -848,10 +855,22 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                 'booking_id.nb_pers',
                 'booking_id.customer_id.count_booking_24',
                 'booking_id.center_id.season_category_id',
-                'booking_id.center_id.discount_list_category_id'
+                'booking_id.center_id.discount_list_category_id',
+                'booking_id.center_office_id'
             ]);
 
         foreach($line_groups as $group_id => $group) {
+
+            /*
+                Read required preferences from the Center Office
+            */
+            $freebies_manual_assignment = false;
+            $offices_preferences = $om->read(\lodging\identity\CenterOffice::getType(), $group['booking_id.center_office_id'], ['freebies_manual_assignment']);
+            if($offices_preferences > 0 && count($offices_preferences)) {
+                $prefs = reset($offices_preferences);
+                $freebies_manual_assignment = (bool) $prefs['freebies_manual_assignment'];
+            }
+
             /*
                 Find the first Discount List that matches the booking dates
             */
@@ -1017,9 +1036,17 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
                     foreach($lines as $line_id => $line) {
                         // do not apply discount on lines that cannot have a price
-                        if($group['is_locked']) continue;
+                        if($group['is_locked']) {
+                            continue;
+                        }
                         // do not apply freebies on accomodations for groups
-                        if($discount['type'] == 'freebie' && $line['qty_accounting_method'] == 'accomodation') continue;
+                        if($discount['type'] == 'freebie' && $line['qty_accounting_method'] == 'accomodation') {
+                            continue;
+                        }
+                        // do not apply freebies if manual assignment is requested
+                        if($discount['type'] == 'freebie' && $freebies_manual_assignment) {
+                            continue;
+                        }
                         if(
                             // for GG: apply discounts only on accomodations
                             (
@@ -1403,7 +1430,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         $line['has_own_duration'] = true;
                         $line['own_duration'] = $pack_line['own_duration'];
                     }
-                    // qty is auto assigned upon line assignation to a product
+                    // #memo - qty is auto assigned upon line assignation to a product
                     $lid = $om->create('lodging\sale\booking\BookingLine', $line, $lang);
                     if($lid > 0) {
                         $om->update(self::getType(), $gid, ['booking_lines_ids' => ["+$lid"] ]);
@@ -1450,30 +1477,28 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
      */
     public static function createRentalUnitsAssignments($om, $oids, $values, $lang) {
         /*
-            Mise à jour des assignations des unités locatives
+            Update of the rental-units assignments
 
+            ## when we "add" a booking line (onupdateProductId)
+            * we create new rental-unit assignments depending on the product_model of the line
 
-            ## lorsqu'on "ajoute" une booking line (onupdateProductId)
-            * on crée des nouvelles assignations de rental unit en fonction du product_model de la ligne
+            ## when we remove a booking line (onupdateBookingLinesIds)
+            * we do a reset of the rental-unit assignments
 
-            ## lorsqu'on supprime une booking line (onupdateBookingLinesIds)
-            * on fait un reset des assignations rental unit
+            ## when we update nb_pers (onupdateNbPers) ou les qty des tranches d'âge
+            * we do a reset of the rental-unit assignments
 
+            ## when we update a pack (onupdatePackId)
 
-            ## lorsqu'on modifie le nb_pers (onupdateNbPers) ou les qty des tranches d'âge
-            * on fait un reset des assignations rental unit
+            * we reset rental-unit assignments
+            * we create an assignment for all line at once (_createRentalUnitsAssignements)
 
-
-            ## lorsqu'on modifie le pack (onupdatePackId)
-
-            * on fait un reset des assignations rental unit
-            * on fait une assignation pour toutes les lignes en même temps (_createRentalUnitsAssignements)
-
-            ## lorsqu'on supprime une tranche d'âge (ondelete)
-            * on supprime toutes les lignes dont le product_id se rapporte à cette tranche d'âge
+            ## when we remove an age-range (ondelete)
+            * we remove all lines whose product_id relates to that age-range
         */
 
-        // remove all previous SPM and rental_unit assignements
+        /* find existing SPM (for resetting) */
+
         $groups = $om->read(self::getType(), $oids, [
             'has_locked_rental_units',
             'booking_lines_ids',
@@ -1503,6 +1528,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // Attempt to auto-assign rental units.
         $groups = $om->read(self::getType(), $oids, [
             'booking_id',
+            'booking_id.center_office_id',
             'nb_pers',
             'has_locked_rental_units',
             'booking_lines_ids',
@@ -1518,6 +1544,16 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             if($group['has_locked_rental_units']) {
                 continue;
+            }
+
+            /*
+                Read required preferences from the Center Office
+            */
+            $rentalunits_manual_assignment = false;
+            $offices_preferences = $om->read(\lodging\identity\CenterOffice::getType(), $group['booking_id.center_office_id'], ['rentalunits_manual_assignment']);
+            if($offices_preferences > 0 && count($offices_preferences)) {
+                $prefs = reset($offices_preferences);
+                $rentalunits_manual_assignment = (bool) $prefs['rentalunits_manual_assignment'];
             }
 
             $nb_pers = $group['nb_pers'];
@@ -1589,6 +1625,11 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
                         $group_product_models_ids[$product_model_id] = $sojourn_product_model_id;
                     }
                 }
+            }
+
+            // do not auto-assign rental units if manual assignment is set in prefs
+            if($rentalunits_manual_assignment) {
+                continue;
             }
 
             // read targeted booking lines (received as method param)
@@ -1753,8 +1794,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
     }
 
     /**
-     * Generate one or more groups for products saled automatically.
-     * We generate services groups related to autosales when the  is updated
+     * Generate one or more lines for products sold automatically.
+     * We generate services groups related to autosales when the following fields are updated:
      * customer, date_from, date_to, center_id
      *
      */
@@ -1766,6 +1807,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         */
         $groups = $om->read(self::getType(), $oids, [
                 'is_autosale',
+                'is_sojourn',
                 'nb_pers',
                 'nb_nights',
                 'date_from',
@@ -1779,7 +1821,14 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         // loop through groups and create lines for autosale products, if any
         foreach($groups as $group_id => $group) {
 
-            if($group['is_autosale']) continue;
+            // autosale groups are handled at the Booking level
+            if($group['is_autosale']) {
+                continue;
+            }
+            // autosales only apply on sojourns
+            if(!$group['is_sojourn']) {
+                continue;
+            }
 
             $lines_ids_to_delete = [];
             $booking_lines = $om->read('lodging\sale\booking\BookingLine', $group['booking_lines_ids'], ['is_autosale'], $lang);

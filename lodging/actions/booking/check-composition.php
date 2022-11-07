@@ -38,7 +38,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'composition_items_ids'])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'center_office_id', 'composition_items_ids'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -81,7 +81,7 @@ $httpResponse = $context->httpResponse()->status(200);
 if(count($booking['composition_items_ids']) < $nb_pers) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.composition', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-composition', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.composition', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-composition', ['id' => $params['id']],[],null,$booking['center_office_id']);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {

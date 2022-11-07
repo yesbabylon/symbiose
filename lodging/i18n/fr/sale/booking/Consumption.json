@@ -42,7 +42,7 @@
         },
         "list.occupancies": {
             "name": "Planning des occupations de chambres",
-            "description": "Liste des occupations sur base des nuitées.",
+            "description": "Listing des check-in / occupations sur base des nuitées.",
             "layout": {}
         }
     },

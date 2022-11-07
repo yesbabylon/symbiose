@@ -49,8 +49,8 @@
             "help": ""
         },
         "template_category_id": {
-            "label": "Catégorie de modèle",
-            "description": "Catégorie de modèle utilisée par le centre.",
+            "label": "Catégorie de modèles de documents",
+            "description": "Catégorie de modèles (templates) utilisée par le centre.",
             "help": ""
         },
         "categories_ids": {

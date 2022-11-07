@@ -1,4 +1,4 @@
-import { Component, Renderer2, ChangeDetectorRef, OnInit, AfterViewInit, NgZone, ViewChild, ElementRef, HostListener, Inject } from '@angular/core';
+import { Component, Renderer2, ChangeDetectorRef, OnInit, AfterViewInit, NgZone, ViewChild, ElementRef, HostListener, Inject, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,7 @@ interface DateRange {
     templateUrl: './planning.component.html',
     styleUrls: ['./planning.component.scss']
 })
-export class PlanningComponent implements OnInit, AfterViewInit {
+export class PlanningComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('planningBody') planningBody: ElementRef;
     @ViewChild('planningCalendar') planningCalendar: PlanningCalendarComponent;
 
@@ -46,7 +46,13 @@ export class PlanningComponent implements OnInit, AfterViewInit {
         this.centers_ids = [];
     }
 
+    ngOnDestroy() {
+    }
+
     ngOnInit() {
+        // (re)init params service
+        this.params.init();
+
         if (screenfull.isEnabled) {
             screenfull.on('change', () => {
                 this.fullscreen = screenfull.isFullscreen;
@@ -127,7 +133,6 @@ export class PlanningComponent implements OnInit, AfterViewInit {
      * Set up callbacks when component DOM is ready.
      */
     public ngAfterViewInit() {
-
     }
 
     public async onFullScreen() {

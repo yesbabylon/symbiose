@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, OnChanges, NgZone, Output, Input, ViewChildren, QueryList, AfterViewInit, SimpleChanges } from '@angular/core';
 
-import { ApiService, ContextService, TreeComponent, RootTreeComponent } from 'sb-shared-lib';
+import { ApiService, ContextService, TreeComponent, RootTreeComponent, SbDialogConfirmDialog } from 'sb-shared-lib';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, ReplaySubject, BehaviorSubject, async } from 'rxjs';
 
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -53,6 +54,7 @@ export class BookingServicesBookingComponent
     public selected_group_id: number = 0;
 
     constructor(
+        private dialog: MatDialog,
         private api: ApiService,
         private context: ContextService
     ) {
@@ -124,7 +126,7 @@ export class BookingServicesBookingComponent
             let sojourn_type_id = this.instance.center_id.sojourn_type_id;
 
             let values:any = {
-                name: "Séjour " + this.instance.center_id.name,
+                name: "Services " + this.instance.center_id.name,
                 order: this.instance.booking_lines_groups_ids.length + 1,
                 booking_id: this.instance.id,
                 rate_class_id: rate_class_id,
@@ -149,14 +151,35 @@ export class BookingServicesBookingComponent
     }
 
     public async ondeleteGroup(group_id:number) {
+
+        const dialog = this.dialog.open(SbDialogConfirmDialog, {
+                width: '33vw',
+                data: {
+                    title: "Suppression d'un groupe de services",
+                    message: 'Cette action supprimera définitivement le groupe de service visé.<br /><br />Confirmer cette action ?',
+                    yes: 'Oui',
+                    no: 'Non'
+                }
+            });
+
         try {
-            await this.api.remove("lodging\\sale\\booking\\BookingLineGroup", [group_id], true);
-            // reload booking tree
-            this.load(this.instance.id);
+            await new Promise( async(resolve, reject) => {
+                dialog.afterClosed().subscribe( async (result) => (result)?resolve(true):reject() );
+            });
+            try {
+                await this.api.remove("lodging\\sale\\booking\\BookingLineGroup", [group_id], true);
+                // reload booking tree
+                this.load(this.instance.id);
+            }
+            catch(response) {
+                this.api.errorFeedback(response);
+            }
         }
         catch(response) {
-            this.api.errorFeedback(response);
+            // user discarded the dialog (selected 'no')
+            return;
         }
+
     }
 
     public onupdateGroup() {

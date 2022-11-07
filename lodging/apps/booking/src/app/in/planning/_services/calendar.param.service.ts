@@ -26,7 +26,6 @@ export class CalendarParamService {
 
     constructor(private translate:TranslateService, private snack: MatSnackBar) {
         this.observable = new Subject();
-        this.init();
     }
 
     /**
@@ -59,7 +58,10 @@ export class CalendarParamService {
         }, 150);
     }
 
-    private init() {
+    /**
+     * Allow init request from other components
+    */
+    public init() {
         this._duration = 31;
         this._date_from = new Date();
         this._date_to = new Date(this._date_from.getTime());

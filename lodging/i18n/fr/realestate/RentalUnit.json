@@ -8,6 +8,11 @@
             "description": "Le centre auquel appartient le logement.",
             "help": ""
         },
+        "color": {
+            "label": "Couleur",
+            "description": "Couleur pour l'affichage dans le planning.",
+            "help": ""
+        },
         "sojourn_type_id": {
             "label": "Type de séjour",
             "description": "Type de séjour par défaut auquel se rapporte le logement.",

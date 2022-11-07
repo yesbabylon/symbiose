@@ -33,7 +33,7 @@ list($params, $providers) = announce([
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name'])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'center_office_id'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -164,7 +164,7 @@ if($is_colliding_bookings) {
     }
 
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.overbooking', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-overbooking', ['id' => $params['id']], $links);
+    $dispatch->dispatch('lodging.booking.overbooking', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-overbooking', ['id' => $params['id']], $links,null,$booking['center_office_id']);
 
     $httpResponse->status(qn_error_http(QN_ERROR_CONFLICT_OBJECT));
 }

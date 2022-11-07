@@ -355,25 +355,20 @@ export class BookingServicesBookingGroupLineComponent extends TreeComponent<Book
      * Limit products to the ones available for currently selected center (groups of the product matches the product groups of the center)
      */
     private async filterProducts(name: string) {
-
         let filtered:any[] = [];
         try {
             let domain = [
-                ["name", "ilike", '%'+name+'%'],
-                ["can_sell", "=", true],
                 ["is_pack", "=", false]
             ];
 
-            if(Array.isArray(this.booking.center_id.product_groups_ids) && this.booking.center_id.product_groups_ids.length) {
-                domain.push(["groups_ids", "contains", this.booking.center_id.product_groups_ids[0]]);
+            if(name && name.length) {
+                domain.push(["name", "ilike", '%'+name+'%']);
             }
 
-            let data:any[] = await this.api.collect(
-                "lodging\\sale\\catalog\\Product",
-                domain,
-                ["id", "name", "sku"],
-                'name', 'asc', 0, 25
-            );
+            const data:any[] = await this.api.fetch('?get=lodging_sale_catalog_product_collect', {
+                center_id: this.booking.center_id.id,
+                domain: JSON.stringify(domain)
+            });
             filtered = data;
         }
         catch(response) {

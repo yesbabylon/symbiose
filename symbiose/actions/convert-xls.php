@@ -15,10 +15,11 @@ list($params, $providers) = announce([
     'description'   => "Convert XLS file dedicated to import to their JSON equivalent.",
     'params'        => [
     ],
+    'constants'     => ['DEFAULT_LANG'],
     'response'      => [
-        'accept-origin' => '*'        
+        'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
@@ -46,15 +47,15 @@ foreach (glob($path."*.xls") as $filename) {
     $worksheetData = $reader->listWorksheetInfo($filename);
 
     foreach ($worksheetData as $worksheet) {
-    
+
         $sheetname = $worksheet['worksheetName'];
-        
+
         $reader->setLoadSheetsOnly($sheetname);
         $spreadsheet = $reader->load($filename);
-        
+
         $worksheet = $spreadsheet->getActiveSheet();
         $data = $worksheet->toArray();
-    
+
         $header = array_shift($data);
 
         $objects = [];
@@ -65,7 +66,7 @@ foreach (glob($path."*.xls") as $filename) {
 
             // make sure the lang is define in the line map
             if(!isset($line['lang'])) {
-                $line['lang'] = DEFAULT_LANG;
+                $line['lang'] = constant('DEFAULT_LANG');
             }
 
             // clean up the line
@@ -77,7 +78,7 @@ foreach (glob($path."*.xls") as $filename) {
                     continue;
                 }
 
-                if(!in_array($schema[$field]['type'], ['boolean', 'integer', 'float']) && (empty($value) || $field == 'lang')) { 
+                if(!in_array($schema[$field]['type'], ['boolean', 'integer', 'float']) && (empty($value) || $field == 'lang')) {
                     unset($values[$field]);
                     continue;
                 }
@@ -96,7 +97,7 @@ foreach (glob($path."*.xls") as $filename) {
                 $objects[ $line['lang'] ] = [];
             }
             $objects[ $line['lang'] ][] = $values;
-            
+
         }
 
         foreach($objects as $lang => $values) {

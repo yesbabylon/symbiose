@@ -47,7 +47,8 @@ class SojournProductModel extends Model {
                 'foreign_object'    => 'lodging\sale\booking\SojournProductModelRentalUnitAssignement',
                 'foreign_field'     => 'sojourn_product_model_id',
                 'description'       => 'Rental unit assigned to booking line.',
-                'ondetach'          => 'delete'
+                'ondetach'          => 'delete',
+                'onupdate'          => 'onupdateRentalUnitAssignmentsIds'
             ],
 
             'qty' => [
@@ -84,6 +85,10 @@ class SojournProductModel extends Model {
             $result[$oid] = $model['product_model_id.is_accomodation'];
         }
         return $result;
+    }
+
+    public static function onupdateRentalUnitAssignmentsIds($om, $ids, $values, $lang) {
+        $om->update(self::getType(), $ids, ['qty' => null]);
     }
 
     public function getUnique() {

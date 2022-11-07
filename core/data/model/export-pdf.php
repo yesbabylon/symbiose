@@ -39,14 +39,16 @@ list($params, $providers) = announce([
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'          => 'string',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
-    'access' => [
+    'constants'     => ['DEFAULT_LANG'],
+    'access'        => [
         'visibility'        => 'protected'
     ],
     'response'      => [
-        'accept-origin' => '*'
+        'accept-origin'     => '*',
+        'content-type'      => 'application/pdf'
     ],
     'providers'     => ['context', 'orm']
 ]);
@@ -326,13 +328,13 @@ $options = new DompdfOptions();
 $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
 
-$dompdf->setPaper('A4', 'portrait');
+$dompdf->setPaper('A4', 'landscape');
 $dompdf->loadHtml((string) $html);
 $dompdf->render();
 
 $canvas = $dompdf->getCanvas();
 $font = $dompdf->getFontMetrics()->getFont("helvetica", "regular");
-$canvas->page_text(550, $canvas->get_height() - 35, "{PAGE_NUM} / {PAGE_COUNT}", $font, 9, array(0,0,0));
+$canvas->page_text($canvas->get_width() - 50, $canvas->get_height() - 35, "{PAGE_NUM} / {PAGE_COUNT}", $font, 9, array(0,0,0));
 $canvas->page_text(30, $canvas->get_height() - 35, "Export - ".$view_legend, $font, 9, array(0,0,0));
 
 $canvas->page_text(30, 30, $view_title, $font, 14, array(0,0,0));
@@ -345,8 +347,6 @@ $canvas->page_text(30, 30, $view_title, $font, 14, array(0,0,0));
 $output = $dompdf->output();
 
 $context->httpResponse()
-        ->header('Content-Type', 'application/pdf')
-        // ->header('Content-Disposition', 'attachment; filename="document.pdf"')
         ->header('Content-Disposition', 'inline; filename="document.pdf"')
         ->body($output)
         ->send();

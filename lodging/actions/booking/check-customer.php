@@ -29,13 +29,13 @@ list($params, $providers) = announce([
 /**
  * @var \equal\php\Context                  $context
  * @var \equal\orm\ObjectManager            $orm
- * @var \equal\auth\AuthenticationManager   $auth 
+ * @var \equal\auth\AuthenticationManager   $auth
  * @var \equal\dispatch\Dispatcher          $dispatch
  */
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'customer_identity_id' => ['id', 'display_name', 'address_street', 'address_city', 'address_zip'] ])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'center_office_id', 'customer_identity_id' => ['id', 'display_name', 'address_street', 'address_city', 'address_zip'] ])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -52,7 +52,7 @@ if( !strlen($booking['customer_identity_id']['address_street']) || !strlen($book
     $links = [];
     $links[] = "[{$booking['customer_identity_id']['display_name']}](/booking/#/identity/{$booking['customer_identity_id']['id']})";
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.customer.uncomplete', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-customer', ['id' => $params['id']], $links);
+    $dispatch->dispatch('lodging.booking.customer.uncomplete', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-customer', ['id' => $params['id']], $links,null,$booking['center_office_id']);
 
     $httpResponse->status(qn_error_http(QN_ERROR_MISSING_PARAM));
 }

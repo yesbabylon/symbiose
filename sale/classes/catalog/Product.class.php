@@ -213,7 +213,7 @@ class Product extends Model {
     }
 
     public static function onupdateLabel($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, ['name' => null], $lang);
+        $om->update(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     public static function onupdateSku($om, $oids, $values, $lang) {
@@ -223,9 +223,9 @@ class Product extends Model {
             foreach($products as $product) {
                 $prices_ids = array_merge($prices_ids, $product['prices_ids']);
             }
-            $om->write('sale\price\Price', $prices_ids, ['name' => null], $lang);
+            $om->update('sale\price\Price', $prices_ids, ['name' => null], $lang);
         }
-        $om->write(__CLASS__, $oids, ['name' => null], $lang);
+        $om->update(__CLASS__, $oids, ['name' => null], $lang);
     }
 
     public static function onupdateProductModelId($om, $oids, $values, $lang) {

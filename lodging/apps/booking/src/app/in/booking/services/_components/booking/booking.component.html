@@ -12,6 +12,7 @@
                     <div class="group-item"
                         cdkDrag
                         [cdkDragData]="group"
+                        [cdkDragDisabled]="selected_group_id == group.id"
                         [class.group-selected]="selected_group_id == group.id"
                         *ngIf="selected_group_id == 0 || selected_group_id == group.id"
                         [@groupInOutAnimation]>

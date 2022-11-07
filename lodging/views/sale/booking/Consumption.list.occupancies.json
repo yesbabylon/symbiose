@@ -23,17 +23,17 @@
             {
                 "type": "field",
                 "value": "date",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "rental_unit_id",
-                "width": "25%"
+                "width": "20%"
             },
             {
                 "type": "field",
                 "value": "booking_id",
-                "width": "15%"
+                "width": "8%"
             },
             {
                 "type": "field",

@@ -30,9 +30,14 @@
                 <mat-form-field>
                     <mat-label>Produit</mat-label>
 
-                    <input *ngIf="!group.is_locked" matInput type="text" [matAutocomplete]="productAutocomplete"
-                        [value]="vm.product.name" (keyup)="vm.product.inputChange($event)" (focus)="vm.product.focus()"
-                        (blur)="vm.product.restore()" placeholder="Commencez à taper le nom" />
+                    <input *ngIf="!group.is_locked"
+                        matInput type="text"
+                        [matAutocomplete]="productAutocomplete"
+                        [value]="vm.product.name"
+                        (keyup)="vm.product.inputChange($event)"
+                        (focus)="vm.product.focus()"
+                        (blur)="vm.product.restore()"
+                        placeholder="Commencez à taper le nom" />
 
                     <input *ngIf="group.is_locked" matInput disabled type="text" [value]="vm.product.name" />
 

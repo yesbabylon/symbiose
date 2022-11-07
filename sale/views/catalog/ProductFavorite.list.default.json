@@ -1,0 +1,42 @@
+{
+    "name": "Product favorites",
+    "description": "List of product favorites.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+    },
+    "order": "order",
+    "sort": "asc",
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for product creation"
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "30%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Product Model",
+                "value": "product_id",
+                "width": "25%",
+                "sortable": true
+            }
+        ]
+    }
+}

@@ -225,6 +225,10 @@ export class BookingInvoiceComponent implements OnInit, AfterContentInit {
         this.auth.getObservable().subscribe( async (user: UserClass) => {
             this.user = user;
             this.refreshSenderAddresses();
+            if(user.center_office) {
+                // #memo - this does not cover all situations. We consider that the users for whom the default mode is important, only relate to one Center Office.
+                this.vm.mode.formControl.setValue(user.center_office?.docs_default_mode);
+            }
         });
 
         // fetch the booking ID from the route

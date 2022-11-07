@@ -39,8 +39,10 @@ $booking = Booking::id($params['id'])
     ->read([
         'id',
         'name',
+        'center_office_id',
         'booking_lines_groups_ids' => [
             'is_sojourn',
+            'is_event',
             'nb_pers',
             'nb_nights',
             'booking_lines_ids' => [
@@ -88,16 +90,19 @@ if($booking_line_groups) {
         $spms = [];
 
         // pass-1 : withdraw persons assigned to units accounted by 'accomodation' from nb_pers
+
         foreach($lines as $lid => $line) {
             $product_model_id = $line['product_model_id'];
             if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
-                $nb_pers -= $product_models[$product_model_id]['capacity'];
+                // this doesn't seem to be correct: only real assignment should be considered
+                // $nb_pers -= $product_models[$product_model_id]['capacity'];
             }
             if(!isset($spms[$product_model_id])) {
                 $spms[$product_model_id] = [];
             }
             $spms[$product_model_id][] = $line;
         }
+
 
         // pass-2 : find max pers by product_model
         $spms_max = [];
@@ -125,7 +130,8 @@ if($booking_line_groups) {
             foreach($group['sojourn_product_models_ids'] as $oid => $spm) {
                 $product_model_id = $spm['product_model_id'];
                 if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
-                    continue;
+                    // this doesn't seem to be correct: only real assignment should be considered
+                    // continue;
                 }
                 $assignments = SojournProductModelRentalUnitAssignement::ids($spm['rental_unit_assignments_ids'])
                     ->read([
@@ -161,7 +167,7 @@ $httpResponse = $context->httpResponse()->status(200);
 if($mismatch) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.rental_units_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-units-assignments', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.rental_units_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-units-assignments', ['id' => $params['id']],[],null,$booking['center_office_id']);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {

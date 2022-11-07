@@ -9,6 +9,7 @@ use lodging\sale\booking\Consumption;
 use lodging\sale\booking\Booking;
 use lodging\realestate\RentalUnit;
 use lodging\sale\booking\BookingLineGroup;
+use lodging\sale\booking\SojournProductModel;
 use lodging\sale\booking\SojournProductModelRentalUnitAssignement;
 
 
@@ -63,9 +64,39 @@ if($sojourn) {
     $date_from = $sojourn['date_from'] + $sojourn['time_from'];
     $date_to = $sojourn['date_to'] + $sojourn['time_to'];
 
-    // retrieve rental units that are already assigned by other groups within same time range, if any (independant from consumptions)
-    // (we need to withdraw those from available units)
+
     $booking_assigned_rental_units_ids = [];
+
+    // look for existing SPMs defined within the targeted group, and:
+    // * exclude targeted rental-units from the same SPM
+    // * exclude fully assigned rental-units from other SPM
+    $spms = SojournProductModel::search([
+            ['booking_line_group_id', '=', $params['booking_line_group_id']]
+        ])
+        ->read(['product_model_id', 'rental_unit_assignments_ids' => ['qty', 'rental_unit_id' => ['id', 'capacity']]])
+        ->get();
+
+    foreach($spms as $spm) {
+        if($spm['rental_unit_assignments_ids'] > 0) {
+            if($spm['product_model_id'] == $params['product_model_id']) {
+                foreach($spm['rental_unit_assignments_ids'] as $assignment) {
+                    if(isset($assignment['rental_unit_id']) && $assignment['rental_unit_id']['id'] > 0) {
+                        $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id']['id'];
+                    }
+                }
+            }
+            else {
+                foreach($spm['rental_unit_assignments_ids'] as $assignment) {
+                    if(isset($assignment['rental_unit_id']) && $assignment['rental_unit_id']['capacity'] <= $assignment['qty']) {
+                        $booking_assigned_rental_units_ids[] = $assignment['rental_unit_id']['id'];
+                    }
+                }
+            }
+        }
+    }
+
+    // retrieve rental units that are already assigned by other groups within same time range, if any (independantly from consumptions)
+    // (we need to withdraw those from available units)
     $booking = Booking::id($sojourn['booking_id']['id'])->read(['booking_lines_groups_ids', 'rental_unit_assignments_ids'])->first();
     if($booking) {
         $groups = BookingLineGroup::ids($booking['booking_lines_groups_ids'])->read(['id', 'date_from', 'date_to', 'time_from', 'time_to'])->get();
@@ -114,7 +145,7 @@ if($sojourn) {
     // remove rental units from other groups of same booking
     $rental_units_ids = array_diff($rental_units_ids, $booking_assigned_rental_units_ids);
 
-    // #memo - we cannot remove units already assigned in same group, since the allocation of an accomodation might be split on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
+    // #memo - we cannot remove units already assigned in same group in other SPM, since the allocation of an accomodation might be split on several age ranges (ex: room for 5 pers. with 2 adults and 3 children)
 
     // #memo - we cannot append rental units from own booking consumptions :
     // It was first implemented to cover the use case: "come and go between 'draft' and 'option'", where units are already attached to consumptions
@@ -125,7 +156,7 @@ if($sojourn) {
 
 
     $rental_units = RentalUnit::ids($rental_units_ids)
-        ->read(['id', 'name', 'capacity'])
+        ->read(['id', 'name', 'capacity', 'order'])
         ->adapt('txt')
         ->get(true);
 
@@ -137,6 +168,7 @@ if($sojourn) {
             $result[] = $rental_unit;
         }
     }
+    usort($result, function($a, $b) {return $a['order'] > $b['order'];});
 }
 
 $context->httpResponse()

@@ -20,9 +20,9 @@
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\Message",
+                                                "entity": "lodging\\core\\alert\\Message",
                                                 "view": "list.dashboard",
-                                                "domain":  ["object_class", "=", "lodging\\sale\\booking\\Booking"]
+                                                "domain":  [ ["object_class", "=", "lodging\\sale\\booking\\Booking"], ["group_id", "in", "user.center_offices_ids"] ]
                                             },
                                             {
                                                 "id": "item.bookings2",

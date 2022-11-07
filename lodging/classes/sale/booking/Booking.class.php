@@ -455,7 +455,7 @@ class Booking extends \sale\booking\Booking {
 
     /**
      * Generate one or more groups for products sold automatically.
-     * We generate services groups related to autosales when the  is updated
+     * We generate services groups related to autosales when the following fields are updated:
      * customer, date_from, date_to, center_id
      *
      */
@@ -826,8 +826,8 @@ class Booking extends \sale\booking\Booking {
                             $schedule_from  = $hour_from * 3600 + $minute_from * 60;
                             $schedule_to    = $hour_to * 3600 + $minute_to * 60;
 
-                            // fetch the offset, in days, for the scheduling
-                            $offset = $spm['product_model_id.schedule_offset'];
+                            // fetch the offset, in days, for the scheduling (applies only on sojourns)
+                            $offset = ($group['is_sojourn'])?$spm['product_model_id.schedule_offset']:0;
                             $is_accomodation = $spm['product_model_id.is_accomodation'];
 
                             $is_first = true;
@@ -987,9 +987,9 @@ class Booking extends \sale\booking\Booking {
                                 $is_meal = $product_models[$line['product_id.product_model_id']]['is_meal'];
                                 $qty_accounting_method = $product_models[$line['product_id.product_model_id']]['qty_accounting_method'];
 
-                                // #memo - number of consumptions differs for accomodations (rooms are occupied nb_nights + 1 until sometime in the morning)
+                                // #memo - number of consumptions differs for accomodations (rooms are occupied nb_nights + 1, until sometime in the morning)
                                 // #memo - sojourns are accounted in nights, while events are accounted in days
-                                $nb_products = ($group['is_sojourn'])?$group['nb_nights']:$group['nb_nights']+1;
+                                $nb_products = ($group['is_sojourn'])?$group['nb_nights']:(($group['is_event'])?$group['nb_nights']+1:1);
                                 $nb_times = $group['nb_pers'];
 
                                 // adapt nb_pers based on if product from line has age_range
@@ -1009,8 +1009,8 @@ class Booking extends \sale\booking\Booking {
                                 }
 
                                 list($day, $month, $year) = [ date('j', $group['date_from']), date('n', $group['date_from']), date('Y', $group['date_from']) ];
-                                // fetch the offset, in days, for the scheduling
-                                $offset = $product_models[$line['product_id.product_model_id']]['schedule_offset'];
+                                // fetch the offset, in days, for the scheduling (only applies on sojourns)
+                                $offset = ($group['is_sojourn'])?$product_models[$line['product_id.product_model_id']]['schedule_offset']:0;
 
                                 $days_nb_times = array_fill(0, $nb_products, $nb_times);
 

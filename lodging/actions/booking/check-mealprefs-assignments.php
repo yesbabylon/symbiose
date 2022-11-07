@@ -34,7 +34,7 @@ list($params, $providers) = announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'booking_lines_groups_ids' => ['is_sojourn', 'is_event', 'nb_pers', 'meal_preferences_ids' => ['qty']]])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'center_office_id', 'booking_lines_groups_ids' => ['is_sojourn', 'is_event', 'nb_pers', 'meal_preferences_ids' => ['qty']]])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -75,7 +75,7 @@ $httpResponse = $context->httpResponse()->status(200);
 if($mismatch) {
     $result[] = $params['id'];
     // by convention we dispatch an alert that relates to the controller itself.
-    $dispatch->dispatch('lodging.booking.mealprefs_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-mealprefs-assignments', ['id' => $params['id']]);
+    $dispatch->dispatch('lodging.booking.mealprefs_assignment', 'lodging\sale\booking\Booking', $params['id'], 'important', 'lodging_booking_check-mealprefs-assignments', ['id' => $params['id']],[],null,$booking['center_office_id']);
     $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
 }
 else {

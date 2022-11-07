@@ -1,0 +1,50 @@
+{
+    "name": "Product",
+    "description": "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.",
+    "access": {
+        "groups": ["pos.default.user", "sale.default.user"]
+    },
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "General info",
+                        "id": "section.products_Section",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Product",
+                                                "value": "product_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

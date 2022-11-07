@@ -72,6 +72,31 @@
             "label": "Pays",
             "description": "Pays dans lequel se situe le centre de gestion.",
             "help": ""
+        },
+        "docs_default_mode": {
+            "label": "Mode par défaut des documents",
+            "description": "Mode de précision (simple, groupé, détaillé) à utiliser par défaut.",
+            "help": ""
+        },
+        "rentalunits_manual_assignment": {
+            "label": "Assignation manuelle des unités locatives",
+            "description": "Force l'assignation manuelle des unités locatives.",
+            "help": ""
+        },
+        "freebies_manual_assignment": {
+            "label": "Gratuités manuelles",
+            "description": "Force l'assignation manuelle des gratuités.",
+            "help": ""
+        },
+        "accounting_journals_ids": {
+            "label": "Journaux comptables",
+            "description": "Journaux comptables du centre de gestion.",
+            "help": ""
+        },
+        "product_favorites_ids": {
+            "label": "Produits favoris",
+            "description": "Liste des produits favoris du centre de gestion.",
+            "help": ""
         }
     },
     "view": {
@@ -93,6 +118,9 @@
                 },
                 "section.users": {
                     "label": "Utilisateurs"
+                },
+                "section.accounting": {
+                    "label": "Comptabilité"
                 }
             }
         },

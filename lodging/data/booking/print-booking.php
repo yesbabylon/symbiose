@@ -40,9 +40,10 @@ list($params, $providers) = announce([
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'          => 'string',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
+    'constants'             => ['DEFAULT_LANG'],
     'access' => [
         'visibility'        => 'protected',
         'groups'            => ['booking.default.user'],
@@ -315,24 +316,25 @@ $lines = [];
 // all lines are stored in groups
 foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
-    // generate group label
-    $group_label = (strlen($booking_line_group['name']))?$booking_line_group['name'].' : ':'';
+    // generate group details
+    $group_details = '';
 
     if($booking_line_group['date_from'] == $booking_line_group['date_to']) {
-        $group_label .= date('d/m/y', $booking_line_group['date_from']);
+        $group_details .= date('d/m/y', $booking_line_group['date_from']);
     }
     else {
-        $group_label .= date('d/m/y', $booking_line_group['date_from']).' - '.date('d/m/y', $booking_line_group['date_to']);
+        $group_details .= date('d/m/y', $booking_line_group['date_from']).' - '.date('d/m/y', $booking_line_group['date_to']);
     }
 
-    $group_label .= ' - '.$booking_line_group['nb_pers'].'p.';
+    $group_details .= ' - '.$booking_line_group['nb_pers'].'p.';
 
     if($booking_line_group['has_pack'] && $booking_line_group['is_locked']) {
         // group is a product pack (bundle) with own price
         $group_is_pack = true;
 
         $line = [
-            'name'          => $group_label,
+            'name'          => $booking_line_group['name'],
+            'details'       => $group_details,
             'description'   => $booking_line_group['pack_id']['label'],
             'price'         => $booking_line_group['price'],
             'total'         => $booking_line_group['total'],
@@ -371,7 +373,8 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
 
         if($params['mode'] == 'grouped') {
             $line = [
-                'name'          => $group_label,
+                'name'          => $booking_line_group['name'],
+                'details'       => $group_details,
                 'price'         => $booking_line_group['price'],
                 'total'         => $booking_line_group['total'],
                 'unit_price'    => $booking_line_group['total'],
@@ -385,7 +388,8 @@ foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
         }
         else {
             $line = [
-                'name'          => $group_label,
+                'name'          => $booking_line_group['name'],
+                'details'       => $group_details,
                 'price'         => null,
                 'total'         => null,
                 'unit_price'    => null,

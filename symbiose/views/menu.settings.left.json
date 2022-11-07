@@ -117,9 +117,18 @@
                                             "entity": "lodging\\sale\\booking\\Repairing",
                                             "view": "list.default"
                                         }
-                                    },
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "organisation.rental_units",
+                                "label": "Centers",
+                                "description": "",
+                                "icon": "hotel",
+                                "type": "parent",
+                                "children": [
                                     {
-                                        "id": "organisation.centers.rental_units",
+                                        "id": "organisation.rental_units.all",
                                         "type": "entry",
                                         "label": "Rental units",
                                         "description": "",
@@ -129,7 +138,7 @@
                                         }
                                     },
                                     {
-                                        "id": "organisation.centers.rental_units_categories",
+                                        "id": "organisation.rental_units.categories",
                                         "type": "entry",
                                         "label": "Rental units categories",
                                         "description": "",

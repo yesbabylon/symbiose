@@ -8,6 +8,11 @@
             "description": "Nom de l'untié.",
             "help": ""
         },
+        "order": {
+            "label": "Ordre",
+            "description": "Valeur arbitraire pour odonner les unités locatives.",
+            "help": ""
+        },
         "type": {
             "label": "Type",
             "description": "Type d'unité locative (en lien avec la capacité).",

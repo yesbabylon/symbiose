@@ -27,6 +27,7 @@ list($params, $providers) = announce([
             'type'          => 'integer'
         ]
     ],
+    'constants'             => ['DEFAULT_LANG'],
     'access' => [
         'visibility'        => 'protected',
         'groups'            => ['booking.default.user']
@@ -215,7 +216,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
 
 }
 
-$customer_lang = DEFAULT_LANG;
+$customer_lang = constant('DEFAULT_LANG');
 if(isset($booking['customer_id']['lang_id']['code'])) {
     $customer_lang = $booking['customer_id']['lang_id']['code'];
 }

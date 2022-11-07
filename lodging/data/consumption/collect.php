@@ -16,19 +16,16 @@ list($params, $providers) = announce([
             'type'              => 'string',
             'default'           => 'lodging\sale\booking\Consumption'
         ],
-
         'date_from' => [
             'type'              => 'date',
             'description'       => "Date interval lower limit.",
             'default'           => strtotime('first day of previous week')
         ],
-
         'date_to' => [
             'type'              => 'date',
             'description'       => 'Date interval Upper limit.',
             'default'           => strtotime('last day of next week')
         ],
-
         'center_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'lodging\identity\Center',

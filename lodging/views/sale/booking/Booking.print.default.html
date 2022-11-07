@@ -94,6 +94,10 @@ div.trailer {
     z-index: 100;
 }
 
+div.trailer .wrapper table {
+    page-break-inside: avoid;
+}
+
 div.header {
     top: 0;
     left: 0;
@@ -251,8 +255,13 @@ hr {
                 <tr valign="top">
                     <td width="45%">
                         {% if line.is_group %}
-                            <b>{{ line.name }}</b> <br />
-                            {{ line.description }}
+                            <b>{{ line.name }}</b>
+                            {% if line.details|length > 0 %}
+                                <br />{{ line.details }}
+                            {% endif %}
+                            {% if line.description|length > 0 %}
+                                <br />{{ line.description }}
+                            {% endif %}
                         {% else %}
                             {{ line.name }}
                         {% endif %}

@@ -32,8 +32,7 @@
                     "entity": "lodging\\sale\\booking\\Booking",
                     "view": "list.default",
                     "order": "id",
-                    "sort": "desc",
-                    "domain": ["status", "=", "quote"]
+                    "sort": "desc"
                 }
             }
         ]

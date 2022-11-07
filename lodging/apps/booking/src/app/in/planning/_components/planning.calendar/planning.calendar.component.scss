@@ -36,16 +36,6 @@
         border-radius: 10px;
     }
 
-    .container::-webkit-scrollbar {
-        width: 6px;
-        overflow-y: scroll;
-        background: transparent;
-    }
-
-    .container::-webkit-scrollbar-thumb {
-        background: var(--mdc-theme-primary, #6200ee);
-        border-radius: 10px;
-    }
 
     table.cal-table {
         position: relative;

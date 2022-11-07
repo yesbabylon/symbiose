@@ -390,11 +390,15 @@
             "label": "Maintenance & Réparations",
             "help": ""
         },
-        "organisation.centers.rental_units": {
+        "organisation.rental_units": {
             "label": "Unités locatives",
             "help": ""
         },
-        "organisation.centers.rental_units_categories": {
+        "organisation.rental_units.all": {
+            "label": "Toutes les Unités",
+            "help": ""
+        },
+        "organisation.rental_units.categories": {
             "label": "Catégories d'unités",
             "help": ""
         },

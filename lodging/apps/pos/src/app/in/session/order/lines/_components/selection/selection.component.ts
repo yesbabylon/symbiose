@@ -16,23 +16,23 @@ export class SessionOrderLinesSelectionComponent implements OnInit {
 
     @Output() addedFunding = new EventEmitter();
     @Output() addedProduct = new EventEmitter();
-    
+
     @Input() order: Order;
 
     @ViewChild('productspaginator') productsPaginator: MatPaginator;
     @ViewChild('bookingsPaginator') bookingsPaginator: MatPaginator;
     @ViewChild('fundingsPaginator') fundingsPaginator: MatPaginator;
 
-    
+
     public ready: boolean = false;
-    
+
     public bookings: any;
     public fundings: any;
     public products : any;
-    
+
 
     public funding: boolean = false;
-    
+
     public productsDataSource: MatTableDataSource<any>;
     public bookingsDataSource: MatTableDataSource<any>;
     public fundingsDataSource: MatTableDataSource<any>;
@@ -58,10 +58,10 @@ export class SessionOrderLinesSelectionComponent implements OnInit {
         this.update();
     }
 
-    public update() {        
+    public update() {
         // load products tab pane content
         this.loadProducts();
-        // load bookings 
+        // load bookings
         this.loadBookings();
     }
 
@@ -89,12 +89,12 @@ export class SessionOrderLinesSelectionComponent implements OnInit {
 
     /**
      * Loads the products using dedicated controller to feed only with products having a price for current center.
-     * 
-     * @param filter 
+     *
+     * @param filter
      */
     private async loadProducts(filter: string = '') {
         try {
-            this.products = await this.api.fetch('/?get=lodging_sale_catalog_product_collect', { center_id: this.order.session_id.center_id.id, filter: filter });
+            this.products = await this.api.fetch('/?get=lodging_sale_catalog_product_pos-collect', { center_id: this.order.session_id.center_id.id, filter: filter });
             this.productsDataSource = new MatTableDataSource(this.products);
             this.productsDataSource.paginator = this.productsPaginator;
         }
@@ -104,13 +104,13 @@ export class SessionOrderLinesSelectionComponent implements OnInit {
     }
 
     private async loadBookings(filter: string = '') {
-        
+
         let domain: any[] = [
             ['name', 'ilike', '%'+filter+'%'],
             ['status', 'not in', ['quote', 'credit_balance', 'balanced']],
             ['center_id', '=', this.order.session_id.center_id.id]
         ];
-        
+
         // if current customer is the default customer of the cashdesk center, then display all bookings
         // otherwise, display only bookings related to selected customer
         if(this.order.customer_id.id != this.order.session_id.center_id.pos_default_customer_id) {
@@ -154,7 +154,7 @@ export class SessionOrderLinesSelectionComponent implements OnInit {
         }
 
         if(this.selected_tab_index == 0) {
-            this.loadProducts(filter);            
+            this.loadProducts(filter);
         }
         else if(this.selected_tab_index == 1) {
             this.loadBookings(filter);

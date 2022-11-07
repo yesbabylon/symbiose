@@ -4,6 +4,8 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
+use lodging\identity\CenterOffice;
 use lodging\identity\User;
 
 list($params, $providers) = announce([
@@ -58,6 +60,11 @@ if(!$user) {
     throw new Exception('unexpected_error', QN_ERROR_INVALID_USER);
 }
 
+// append info about user's Center Office
+$preferred_cente_office_id = reset($user['center_offices_ids']);
+$user['center_office'] = CenterOffice::id($preferred_cente_office_id)->read(['id', 'name', 'docs_default_mode'])->first();
+
+// append list of user' groups
 $user['groups'] = array_values(array_map(function ($a) {return $a['name'];}, $user['groups_ids']));
 unset($user['groups_ids']);
 

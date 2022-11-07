@@ -28,7 +28,7 @@ class RentalUnit extends \realestate\RentalUnit {
             'center_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\identity\Center',
-                'description'       => 'The center to which belongs the rental unit.' 
+                'description'       => 'The center to which belongs the rental unit.'
             ],
 
             'sojourn_type_id' => [
@@ -37,7 +37,22 @@ class RentalUnit extends \realestate\RentalUnit {
                 'description'       => 'Default sojourn type of the rental unit.',
                 'default'           => 1,
                 'visible'           => ['is_accomodation', '=', true]
-            ]            
+            ],
+
+            'color' => [
+                'type'              => 'string',
+                'usage'             => 'color',
+                // #todo - will no longer be necessary when usage 'color' will be supported
+                'selection' => [
+                    'lavender',
+                    'antiquewhite',
+                    'moccasin',
+                    'lightpink',
+                    'lightgreen',
+                    'paleturquoise'
+                ],
+                'description'       => 'Arbitrary color to use for the rental unit when rendering the calendar.'
+            ]
 
         ];
     }

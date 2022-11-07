@@ -269,7 +269,8 @@ class BookingLine extends Model {
         $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'booking_line_group_id'], $lang);
 
         if($lines > 0) {
-            $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
+            // #memo - vat rate is only reset in cas of product change (which triggers a price_id update)
+            $new_values = [/*'vat_rate' => null, */'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
 
             // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the update !
             if(count($values)) {
@@ -288,7 +289,7 @@ class BookingLine extends Model {
                 if($line['price_id.price'] == 0.0) {
                     unset($assigned_values['unit_price']);
                 }
-                $om->update(__CLASS__, $lid, $assigned_values);
+                $om->update(self::getType(), $lid, $assigned_values);
             }
 
             // update parent objects

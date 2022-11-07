@@ -227,6 +227,7 @@ class BookingLine extends \sale\booking\BookingLine {
                 'booking_id',
                 'booking_line_group_id',
                 'booking_line_group_id.has_locked_rental_units',
+                'booking_line_group_id.is_event',
                 'booking_line_group_id.nb_pers',
                 'booking_line_group_id.nb_nights',
                 'booking_line_group_id.nb_pers',
@@ -290,6 +291,9 @@ class BookingLine extends \sale\booking\BookingLine {
                         // which should have been stored in the nb_pers field
                         if($line['is_meal'] || $line['is_accomodation']) {
                             $qty = $nb_pers * max(1, $line['booking_line_group_id.nb_nights']);
+                        }
+                        elseif($line['booking_line_group_id.is_event']) {
+                            $qty = $nb_pers * ($line['booking_line_group_id.nb_nights'] + 1);
                         }
                         else {
                             $qty = $nb_pers;
@@ -530,6 +534,8 @@ class BookingLine extends \sale\booking\BookingLine {
                 'has_own_qty',
                 'qty_vars',
                 'booking_line_group_id.has_locked_rental_units',
+                'booking_line_group_id.is_sojourn',
+                'booking_line_group_id.is_event',
                 'booking_line_group_id.nb_pers',
                 'booking_line_group_id.nb_nights',
                 'booking_line_group_id.age_range_assignments_ids',
@@ -561,8 +567,12 @@ class BookingLine extends \sale\booking\BookingLine {
                             if($line['product_id.product_model_id.has_duration']) {
                                 $factor = $line['product_id.product_model_id.duration'];
                             }
-                            else if($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
+                            elseif($line['product_id.product_model_id.is_rental_unit'] || $line['product_id.product_model_id.is_meal'] ) {
                                 $factor = max(1, $line['booking_line_group_id.nb_nights']);
+                            }
+                            elseif($line['booking_line_group_id.is_event']) {
+                                // regular products are repeated in case the group is an 'event'
+                                $factor = $line['booking_line_group_id.nb_nights'] + 1;
                             }
                             // nb_pers is either nb_pers or age_range.qty
                             $nb_pers = $line['booking_line_group_id.nb_pers'];
@@ -582,7 +592,13 @@ class BookingLine extends \sale\booking\BookingLine {
                         }
                         // qty_vars is set and valid
                         else {
-                            $factor = $line['booking_line_group_id.nb_nights'];
+                            $factor = 1;
+                            if($line['booking_line_group_id.is_sojourn']) {
+                                $factor = $line['booking_line_group_id.nb_nights'];
+                            }
+                            elseif($line['booking_line_group_id.is_event']) {
+                                $factor = $line['booking_line_group_id.nb_nights'] + 1;
+                            }
                             if($line['product_id.product_model_id.has_duration']) {
                                 $factor = $line['product_id.product_model_id.duration'];
                             }

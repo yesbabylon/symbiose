@@ -70,9 +70,10 @@ list($params, $providers) = announce([
             'description'   => 'Language to use for multilang contents.',
             'type'          => 'string',
             'usage'         => 'language/iso-639',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
+    'constants'             => ['DEFAULT_LANG'],
     'access' => [
         'groups'            => ['booking.default.user'],
     ],

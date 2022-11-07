@@ -21,6 +21,12 @@ class RentalUnit extends Model {
                 'required'          => true
             ],
 
+            'order' => [
+                'type'              => 'integer',
+                'description'       => 'Arbitrary value for ordering the rental units.',
+                'default'           => 1
+            ],
+
             'code' => [
                 'type'              => 'string',
                 'description'       => 'Short code for identification.'

@@ -166,7 +166,7 @@
                         "route": "/consumptions",
                         "context": {
                             "entity": "lodging\\sale\\booking\\Consumption",
-                            "view": "list.occupancies",
+                            "view": "list.checkins",
                             "domain": ["schedule_from", "<>", "00:00:00"]
                         }
                     },

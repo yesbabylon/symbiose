@@ -3,7 +3,7 @@
     "description": "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.",
     "access": {
         "groups": ["pos.default.user", "sale.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {

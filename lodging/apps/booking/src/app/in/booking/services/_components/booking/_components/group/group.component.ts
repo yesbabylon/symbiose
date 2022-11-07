@@ -44,9 +44,6 @@ interface vmModel {
         end: {
             formControl: FormControl
         },
-        single: {
-            formControl: FormControl
-        },
         nights_count: number
     },
     timerange: {
@@ -103,6 +100,9 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
 
     public folded:boolean = true;
     public groupSummaryOpen:boolean = false;
+    public groupTypeOpen:boolean = false;
+    public groupNbPersOpen: boolean = false;
+    public groupDatesOpen: boolean = false;
 
     @ViewChild('packAutocomplete') packAutocomplete: MatAutocomplete;
 
@@ -136,9 +136,6 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
                     formControl: new FormControl()
                 },
                 end: {
-                    formControl: new FormControl()
-                },
-                single: {
                     formControl: new FormControl()
                 },
                 nights_count: 0
@@ -213,13 +210,6 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
             this.vm.name.value = value;
         });
 
-        this.vm.daterange.single.formControl.valueChanges.subscribe( () => {
-            if(this.instance.is_event) {
-                this.vm.daterange.start.formControl.setValue(this.vm.daterange.single.formControl.value);
-                this.vm.daterange.end.formControl.setValue(this.vm.daterange.single.formControl.value);
-                this.onchangeDateRange();
-            }
-        });
 
         this.vm.timerange.checkin.formControl.valueChanges.subscribe( () => {
             this.onchangeTimeFrom();
@@ -242,7 +232,6 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         this.vm.rate_class.name = this.instance.rate_class_id.name;
         this.vm.daterange.start.formControl.setValue(this.instance.date_from);
         this.vm.daterange.end.formControl.setValue(this.instance.date_to);
-        this.vm.daterange.single.formControl.setValue(this.instance.date_from);
         this.vm.daterange.nights_count = this.instance.nb_nights;
         this.vm.timerange.checkin.formControl.setValue(this.instance.time_from.substring(0, 5));
         this.vm.timerange.checkout.formControl.setValue(this.instance.time_to.substring(0, 5));
@@ -328,6 +317,10 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     public async onupdateAccomodation() {
         // relay to parent
         this.updated.emit();
+        // we also need to refresh the lists of available rental units for all SPM
+        for(let spm of this.bookingServicesBookingGroupAccomodationComponents) {
+            spm.refreshAvailableRentalUnits();
+        }
     }
 
     public toggleFold() {
@@ -346,8 +339,6 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         }
         return filtered;
     }
-
-
 
     public async onchangeTimeFrom() {
         if(this.instance.time_from.substring(0, 5) != this.vm.timerange.checkin.formControl.value) {
@@ -399,14 +390,16 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
             // update group
             await this.api.update(this.instance.entity, [this.instance.id], {name: this.vm.name.value});
             // do not relay change to parent component
-
+            this.instance.name = this.vm.name.value;
         }
         catch(response) {
             this.api.errorFeedback(response);
         }
     }
 
-    public async onchangeDateRange() {
+    public onchangeDateRange() {
+        this.groupDatesOpen = false;
+
         let start = this.vm.daterange.start.formControl.value;
         let end = this.vm.daterange.end.formControl.value;
 
@@ -423,19 +416,23 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         if(start <= end) {
             let diff = Math.floor((Date.parse(end.toString()) - Date.parse(start.toString())) / (60*60*24*1000));
             this.vm.daterange.nights_count = (diff < 0)?0:diff;
-
             // relay change to parent component
             if((start.getTime() != this.instance.date_from.getTime() || end.getTime() != this.instance.date_to.getTime())) {
-                try {
-                    await this.api.update(this.instance.entity, [this.instance.id], {date_from: start.toISOString(), date_to: end.toISOString()});
-                    this.updated.emit();
-                }
-                catch(response) {
-                    this.api.errorFeedback(response);
-                }
-            }
-        }
+                setTimeout( async () => {
+                    try {
+                        await this.api.update(this.instance.entity, [this.instance.id], {date_from: start.toISOString(), date_to: end.toISOString()});
+                        this.updated.emit();
+                    }
+                    catch(response) {
+                        this.api.errorFeedback(response);
+                    }
 
+                });
+            }
+            // update VM values until refresh
+            this.instance.date_from = start;
+            this.instance.date_to = end;
+        }
     }
 
     public async onchangeIsSojourn(is_sojourn:any) {
@@ -651,31 +648,20 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     }
 
     private async filterPacks(name: string) {
-        /*
-        #todo - limit packages to the ones available for currently selected center
-        $families_ids = center.product_families_ids
-        $products = sale\catalog\Product::search(['family_id', 'in', $families_ids])
-        */
         let filtered:any[] = [];
         try {
-
             let domain = [
-                ["name", "ilike", '%'+name+'%'],
-                ["is_pack", "=", "true"],
-                ["can_sell", "=", true]
+                ["is_pack", "=", true]
             ];
 
-            if(Array.isArray(this.booking.center_id.product_groups_ids) && this.booking.center_id.product_groups_ids.length) {
-                domain.push(["groups_ids", "contains", this.booking.center_id.product_groups_ids[0]]);
+            if(name && name.length) {
+                domain.push(["name", "ilike", '%'+name+'%']);
             }
 
-            let data:any[] = await this.api.collect(
-                "lodging\\sale\\catalog\\Product",
-                domain,
-                ["id", "name", "sku"],
-                'name', 'asc', 0, 25
-            );
-
+            const data:any[] = await this.api.fetch('?get=lodging_sale_catalog_product_collect', {
+                center_id: this.booking.center_id.id,
+                domain: JSON.stringify(domain)
+            });
             filtered = data;
         }
         catch(response) {
@@ -688,13 +674,75 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         this.groupSummaryOpen = true;
     }
 
-    public selectedGroupSummaryProduct(product:any) {
-        console.log("selected", product);
+    public onclickGroupDates() {
+        this.groupDatesOpen = true;
+    }
+
+    public async selectedGroupSummaryProduct(product:any) {
+        // immediate view update (before refresh)
         this.groupSummaryOpen = false;
+        this.instance.name = product.name;
+        try {
+            await this.api.fetch('/?do=lodging_booking_update-sojourn-product', {
+                id: this.instance.id,
+                product_id: product.id
+            });
+            // relay change to parent component
+            this.updated.emit();
+        }
+        catch(response) {
+            this.api.errorFeedback(response);
+        }
     }
 
     public onblurGroupSummarySelect() {
-        console.log('onblurGroupSummarySelect');
         this.groupSummaryOpen = false;
+    }
+
+    public onclickGroupType() {
+        this.groupTypeOpen = true;
+    }
+
+    public onblurGroupType() {
+        this.groupTypeOpen = false;
+    }
+
+    public onchangeGroupType(value: any) {
+        this.groupTypeOpen = false;
+        switch(value) {
+            case 'simple':
+                this.instance.is_event = false;
+                this.instance.is_sojourn = false;
+                break;
+            case 'event':
+                this.instance.is_event = true;
+                this.instance.is_sojourn = false;
+                break;
+            case 'sojourn':
+                this.instance.is_event = false;
+                this.instance.is_sojourn = true;
+                break;
+        }
+        setTimeout( async () => {
+            try {
+                await this.api.update(this.instance.entity, [this.instance.id], {is_event: this.instance.is_event, is_sojourn: this.instance.is_sojourn});
+                // relay change to parent component
+                this.updated.emit();
+            }
+            catch(response) {
+                this.api.errorFeedback(response);
+            }
+        });
+    }
+
+    public onclickGroupNbPers() {
+        this.groupNbPersOpen = true;
+    }
+
+    public onblurGroupNbPers() {
+        this.groupNbPersOpen = false;
+        this.onchangeNbPers();
+        // queue view update before refresh
+        setTimeout( () => {this.instance.nb_pers = this.vm.participants_count.formControl.value;} );
     }
 }

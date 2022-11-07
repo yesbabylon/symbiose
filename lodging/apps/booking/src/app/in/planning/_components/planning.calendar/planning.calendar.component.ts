@@ -17,7 +17,9 @@ class RentalUnit {
         public capacity: number = 0,
         public code: string = '',
         public status: string = '',
-        public action_required: string = ''
+        public action_required: string = '',
+        public order: number = 0,
+        public color: string = ''
     ) {}
 }
 
@@ -232,7 +234,7 @@ export class PlanningCalendarComponent implements OnInit, OnChanges, AfterViewIn
                 "lodging\\realestate\\RentalUnit",
                 domain,
                 Object.getOwnPropertyNames(new RentalUnit()),
-                'name', 'asc', 0, 500
+                'center_id,order', 'asc', 0, 500
             );
             if(rental_units) {
                 this.rental_units = rental_units;

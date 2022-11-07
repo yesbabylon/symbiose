@@ -66,11 +66,42 @@ class CenterOffice extends \identity\Establishment {
                 'multilang'         => true
             ],
 
+            'docs_default_mode' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'simple',
+                    'grouped',
+                    'detailed'
+                ],
+                'description'       => 'Default mode to use when rendering official documents.',
+                'default'           => 'simple'
+            ],
+
+            'rentalunits_manual_assignment' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag for forcing manual assignment of the rental units during booking.',
+                'default'           => false
+            ],
+
+            'freebies_manual_assignment' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag for forcing manual assignment of the freebies during booking.',
+                'default'           => false
+            ],
+
             'accounting_journals_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => \lodging\finance\accounting\AccountingJournal::getType(),
+                'foreign_object'    => 'lodging\finance\accounting\AccountingJournal',
                 'foreign_field'     => 'center_office_id',
                 'description'       => 'List of accounting journals of the office.'
+            ],
+
+            'product_favorites_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'lodging\sale\catalog\ProductFavorite',
+                'foreign_field'     => 'center_office_id',
+                'order'             => 'order',
+                'description'       => 'List of product favorites of the office.'
             ]
 
         ];

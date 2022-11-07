@@ -14,18 +14,8 @@ import { Booking } from '../../../../../_models/booking.model';
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-import { Observable, ReplaySubject, BehaviorSubject } from 'rxjs';
-
-import { find, map, mergeMap, startWith, debounceTime } from 'rxjs/operators';
-
 
 interface BookingGroupAccomodationAssignmentComponentsMap {
-};
-
-interface vmModel {
-    qty: {
-        formControl: FormControl
-    }
 };
 
 @Component({
@@ -46,7 +36,9 @@ export class BookingServicesBookingGroupAccomodationAssignmentComponent extends 
 
     public params:any = {};
 
-    public vm: vmModel;
+    public qtyFormControl: FormControl;
+    public assignmentQtyOpen: boolean = false;
+
 
     constructor(
         private api: ApiService,
@@ -56,23 +48,22 @@ export class BookingServicesBookingGroupAccomodationAssignmentComponent extends 
         private snack: MatSnackBar
     ) {
         super( new BookingAccomodationAssignment() );
-
-        this.vm = {
-            qty: {
-                formControl:    new FormControl('', [Validators.required, this.validateQty.bind(this)]),
-            }
-        };
+        this.qtyFormControl = new FormControl('', [Validators.required, this.validateQty.bind(this)]);
     }
 
     private validateQty(c: FormControl) {
         // qty cannot be bigger than the rental unit capacity
         // qty cannot be bigger than the number of persons
-        return (this.instance && this.group &&
-            c.value <= this.instance.rental_unit_id.capacity && c.value <= this.group.nb_pers ) ? null : {
-            validateQty: {
-                valid: false
-            }
-        };
+        return (
+                this.instance &&
+                this.group &&
+                c.value <= this.instance.rental_unit_id.capacity &&
+                c.value <= this.group.nb_pers
+            ) ? null : {
+                validateQty: {
+                    valid: false
+                }
+            };
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -85,8 +76,7 @@ export class BookingServicesBookingGroupAccomodationAssignmentComponent extends 
 
     public ngAfterViewInit() {
         // init local componentsMap
-        let map:BookingGroupAccomodationAssignmentComponentsMap = {
-        };
+        let map:BookingGroupAccomodationAssignmentComponentsMap = {};
         this.componentsMap = map;
 
         this.params = {
@@ -103,53 +93,41 @@ export class BookingServicesBookingGroupAccomodationAssignmentComponent extends 
     public async update(values:any) {
         console.log('assignment update', values);
         super.update(values);
-
         // assign VM values
-
-        this.vm.qty.formControl.setValue(this.instance.qty);
-
+        this.qtyFormControl.setValue(this.instance.qty);
     }
 
-
-    public displayRentalUnit(rental_unit: any): string {
-        return rental_unit.name + ' (' + rental_unit.capacity + ')';
-    }
-
-    public async onchangeRentalUnit(rental_unit:any) {
-        if(rental_unit.id != this.instance.rental_unit_id.id) {
-            let qty = (this.instance.qty > 0)?Math.min(rental_unit.capacity, this.instance.qty):rental_unit.capacity;
-
-            this.vm.qty.formControl.setValue(qty);
-
-            // notify back-end about the change
-            try {
-                await this.api.update(this.instance.entity, [this.instance.id], {rental_unit_id: rental_unit.id});
-                // relay change to parent component
-                this.updated.emit();
-                // this.instance.rental_unit_id = {...rental_unit};
-            }
-            catch(response) {
-                this.api.errorFeedback(response);
-            }
-        }
+    public ondelete() {
+        this.deleted.emit();
     }
 
     public async onchangeQty(event:any) {
-        if(this.vm.qty.formControl.invalid) {
-            this.vm.qty.formControl.markAsTouched();
+        if(this.qtyFormControl.invalid) {
+            this.qtyFormControl.markAsTouched();
+            this.snack.open("Quantité supérieure à la capacité de l'unité ou à la taille du groupe.");
             return;
         }
         let qty = event.srcElement.value;
-        this.vm.qty.formControl.setValue(qty);
+        this.qtyFormControl.setValue(qty);
+        this.assignmentQtyOpen = false;
+        let prev_qty = this.instance.qty;
+        this.instance.qty = this.qtyFormControl.value;
         // notify back-end about the change
         try {
-            await this.api.update(this.instance.entity, [this.instance.id], {qty: this.vm.qty.formControl.value});
+            await this.api.update(this.instance.entity, [this.instance.id], {qty: this.qtyFormControl.value});
             // relay change to parent component
             this.updated.emit();
         }
         catch(response) {
+            this.instance.qty = prev_qty;
+            this.qtyFormControl.setValue(prev_qty);
             this.api.errorFeedback(response);
         }
     }
+
+    public onclickAssignmentQty() {
+        this.assignmentQtyOpen = true;
+    }
+
 
 }

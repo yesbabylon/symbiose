@@ -1,6 +1,6 @@
 import { Component, AfterContentInit, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ApiService, EnvService, AuthService, ContextService, SbDialogConfirmDialog } from 'sb-shared-lib';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -72,7 +72,7 @@ export class BookingFundingComponent implements OnInit, AfterContentInit {
     private context:ContextService,
     private snack: MatSnackBar,
   ) {
-        
+
       this.bookingControl = new FormControl();
       this.fundingControl = new FormControl();
       this.hasPayerControl = new FormControl();
@@ -189,7 +189,7 @@ export class BookingFundingComponent implements OnInit, AfterContentInit {
       case 'installment': return 'acompte';
       case 'invoice': return 'facture';
       default: return '';
-    }    
+    }
   }
 
   public selectBooking(event:any) {
@@ -205,49 +205,49 @@ export class BookingFundingComponent implements OnInit, AfterContentInit {
     this.payer = event;
   }
 
-  public async onSubmit() {
-    let partner_id = this.customer.id;
-    let partner_name = this.customer.name;
+    public async onSubmit() {
+        let partner_id = this.customer.id;
+        let partner_name = this.customer.name;
 
-    if(this.hasPayerControl.value) {
-      partner_id = this.payer.id;
-      partner_name = this.payer.name;      
-    }
-    
-    const dialog = this.dialog.open(SbDialogConfirmDialog, {
-      width: '33vw',
-      data: {
-        title: "Création d'une facture", 
-        message: 'Cette action générera une nouvelle facture, qui sera émise au nom de <br/ ><strong>'+partner_name+'</strong>.<br /><br />Confirmer cette opération ?', 
-        yes: 'Oui', 
-        no: 'Non'
-      }
-    });
+        if(this.hasPayerControl.value) {
+            partner_id = this.payer.id;
+            partner_name = this.payer.name;
+        }
+
+        const dialog = this.dialog.open(SbDialogConfirmDialog, {
+                width: '33vw',
+                data: {
+                    title: "Création d'une facture",
+                    message: 'Cette action générera une nouvelle facture, qui sera émise au nom de <br/ ><strong>'+partner_name+'</strong>.<br /><br />Confirmer cette opération ?',
+                    yes: 'Oui',
+                    no: 'Non'
+                }
+            });
 
 
-    try {
-      await new Promise( async(resolve, reject) => {
-        dialog.afterClosed().subscribe( async (result) => (result)?resolve(true):reject() );    
-      });
+        try {
+            await new Promise( async(resolve, reject) => {
+                dialog.afterClosed().subscribe( async (result) => (result)?resolve(true):reject() );
+            });
 
-      this.loading = true;
-      this.is_converted = true;
+            this.loading = true;
+            this.is_converted = true;
 
-      try {
-        await this.api.fetch('/?do=lodging_funding_convert', {
-          id: this.funding.id,
-          partner_id: partner_id
-        });  
-      }
-      catch(error) {
-        // something went wrong while saving
-      }
-      this.loading = false;
-    }
-    catch(error) {
-      // user discarded the dialog (selected 'no')
-      return;
-    }
+            try {
+                await this.api.fetch('/?do=lodging_funding_convert', {
+                    id: this.funding.id,
+                    partner_id: partner_id
+                });
+            }
+            catch(error) {
+                // something went wrong while saving
+            }
+            this.loading = false;
+        }
+        catch(error) {
+            // user discarded the dialog (selected 'no')
+            return;
+        }
 
     /*
       Validate values (otherwise mark fields as invalid)
@@ -311,5 +311,5 @@ export class BookingFundingComponent implements OnInit, AfterContentInit {
       }, 500);
     }
 */
-  }
+    }
 }

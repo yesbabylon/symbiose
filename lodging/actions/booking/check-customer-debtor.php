@@ -34,7 +34,7 @@ list($params, $providers) = announce([
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
 // ensure booking object exists and is readable
-$booking = Booking::id($params['id'])->read(['id', 'name', 'customer_id'])->first();
+$booking = Booking::id($params['id'])->read(['id', 'name', 'center_office_id', 'customer_id'])->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -60,7 +60,7 @@ if(count($bookings_ids)) {
         $result[] = $booking_id;
     }
     // raise a notice
-    $dispatch->dispatch('lodging.booking.debtor_customer', 'lodging\sale\booking\Booking', $params['id'], 'notice', null, [], $links);
+    $dispatch->dispatch('lodging.booking.debtor_customer', 'lodging\sale\booking\Booking', $params['id'], 'notice', null, [], $links,null,$booking['center_office_id']);
 }
 else {
     // symetrical removal of the alert (if any)

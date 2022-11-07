@@ -10,10 +10,21 @@
         display: none !important;
     }
 
-    sb-m2o-select.group-summary-select {
-        top: -14px;
-        position: absolute;
-        width: 100%;
+    .group-liner {
+        height: 35px;
+        padding: 8px 125px 0 15px;
+        cursor: pointer;
+
+        .group-liner-part {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        sb-m2o-select.group-summary-select {
+            top: -18px;
+            position: absolute;
+            width: 100%;
+        }
     }
 
     .part {

@@ -36,6 +36,7 @@
                 <td class="cell-room rental-unit"
                     (mouseenter)="onhoverRentalUnit(rental_unit); hover_row_index = index"
                     (mouseleave)="onhoverRentalUnit(null); hover_row_index = -1"
+                    [style.background]="rental_unit.color"
                     (click)="onSelectedRentalUnit(rental_unit)"><span class="rental-unit-name">{{ rental_unit.code }} ({{ rental_unit.capacity }})</span><span class="cell-hint"><span>{{ rental_unit.name }} ({{ rental_unit.capacity }})</span></span>
                 </td>
                 <td class="cell-room status">

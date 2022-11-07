@@ -102,12 +102,42 @@
                                         "items": [
                                             {
                                                 "type": "label",
-                                                "value": "Communications",
+                                                "value": "Préférences pour les réservations",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "rentalunits_manual_assignment",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "freebies_manual_assignment",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "docs_default_mode",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "signature",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "Produits Favoris",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_favorites_ids",
                                                 "width": "100%"
                                             }
                                         ]
