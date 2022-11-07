@@ -61,8 +61,8 @@ if(!$user) {
 }
 
 // append info about user's Center Office
-$preferred_cente_office_id = reset($user['center_offices_ids']);
-$user['center_office'] = CenterOffice::id($preferred_cente_office_id)->read(['id', 'name', 'docs_default_mode'])->first();
+$preferred_center_office_id = reset($user['center_offices_ids']);
+$user['center_office'] = CenterOffice::id($preferred_center_office_id)->read(['id', 'name', 'docs_default_mode'])->adapt('txt')->first(true);
 
 // append list of user' groups
 $user['groups'] = array_values(array_map(function ($a) {return $a['name'];}, $user['groups_ids']));
