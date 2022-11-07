@@ -305,7 +305,7 @@ while(true) {
     }
 }
 
-// 3) handle 'operations' propoerty, if set
+// 3) handle 'operations' property, if set
 // #todo
 
 $html = $doc->saveHTML();
@@ -334,7 +334,7 @@ $dompdf->render();
 
 $canvas = $dompdf->getCanvas();
 $font = $dompdf->getFontMetrics()->getFont("helvetica", "regular");
-$canvas->page_text($canvas->get_width() - 50, $canvas->get_height() - 35, "{PAGE_NUM} / {PAGE_COUNT}", $font, 9, array(0,0,0));
+$canvas->page_text($canvas->get_width() - 70, $canvas->get_height() - 35, "{PAGE_NUM} / {PAGE_COUNT}", $font, 9, array(0,0,0));
 $canvas->page_text(30, $canvas->get_height() - 35, "Export - ".$view_legend, $font, 9, array(0,0,0));
 
 $canvas->page_text(30, 30, $view_title, $font, 14, array(0,0,0));

@@ -16,6 +16,12 @@
             },
             {
                 "type": "field",
+                "value": "order",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "code",
                 "width": "15%",
                 "sortable": true
