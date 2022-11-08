@@ -260,7 +260,7 @@ $values = [
     'center_email'          => $booking['center_id']['email'],
     'center_signature'      => $invoice['organisation_id']['signature'],
 
-    'period'                => 'du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
+    'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
     'price'                 => $invoice['price'],
     'total'                 => $invoice['total'],
 
