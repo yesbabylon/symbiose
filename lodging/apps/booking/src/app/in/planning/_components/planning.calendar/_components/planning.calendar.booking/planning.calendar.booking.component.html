@@ -11,11 +11,11 @@
             <div style="display: flex;">
                 <div style="flex: 0 1 20%;">{{consumption.booking_id?.name}}</div>
                 <div style="margin-left: auto">
-                    <span *ngIf="consumption.booking_id.status == 'option'" class="material-icons">question_mark</span>
-                    <span *ngIf="consumption.booking_id.status != 'option'" class="material-icons">check</span>
-                    <ng-container *ngIf="consumption.booking_id.status != 'option'">
-                        <span *ngIf="consumption.booking_id.payment_status == 'paid'" class="material-icons">money_off</span>
-                        <span *ngIf="consumption.booking_id.payment_status == 'due'" class="material-icons">attach_money</span>
+                    <span *ngIf="consumption.booking_id?.status == 'option'" class="material-icons">question_mark</span>
+                    <span *ngIf="consumption.booking_id?.status != 'option'" class="material-icons">check</span>
+                    <ng-container *ngIf="consumption.booking_id?.status != 'option'">
+                        <span *ngIf="consumption.booking_id?.payment_status == 'paid'" class="material-icons">money_off</span>
+                        <span *ngIf="consumption.booking_id?.payment_status == 'due'" class="material-icons">attach_money</span>
                     </ng-container>
                 </div>
             </div>
