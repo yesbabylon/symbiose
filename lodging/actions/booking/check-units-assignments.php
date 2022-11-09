@@ -67,13 +67,11 @@ $mismatch = false;
 
 if($booking_line_groups) {
     foreach($booking_line_groups as $gid => $group) {
-        if(!$group['is_sojourn']) {
-            continue;
-        }
+
         $nb_pers = $group['nb_pers'];
         $assigned_count = 0;
 
-        // drop lines that do not relate to rental units
+        // keep only lines relating to rental units
         $lines = array_filter($group['booking_lines_ids'], function($a) { return $a['is_rental_unit']; });
 
         // read all related product models at once
@@ -103,7 +101,6 @@ if($booking_line_groups) {
             $spms[$product_model_id][] = $line;
         }
 
-
         // pass-2 : find max pers by product_model
         $spms_max = [];
         $factor = max(1, $group['nb_nights']);
@@ -121,33 +118,34 @@ if($booking_line_groups) {
             $spms_max[$product_model_id] = max($days_nb_pers);
         }
 
-        // we don't allow sojourns without accomodations
-        if(!count($group['sojourn_product_models_ids'])) {
-            $mismatch = true;
-            break;
-        }
-        else {
-            foreach($group['sojourn_product_models_ids'] as $oid => $spm) {
-                $product_model_id = $spm['product_model_id'];
-                if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
-                    // this doesn't seem to be correct: only real assignment should be considered
-                    // continue;
-                }
-                $assignments = SojournProductModelRentalUnitAssignement::ids($spm['rental_unit_assignments_ids'])
-                    ->read([
-                        'is_accomodation', 'qty', 'rental_unit_id' => ['capacity']
-                    ])
-                    ->get();
-
-                $total_capacity = array_reduce($assignments, function($c, $a) {return $c + $a['rental_unit_id']['capacity'];}, 0);
-
-                if($spms_max[$product_model_id] > $total_capacity) {
-                    trigger_error("QN_DEBUG_ORM::max {$spms_max[$product_model_id]} for $product_model_id is greater than total capacity $total_capacity", QN_REPORT_DEBUG);
-                    $mismatch = true;
-                    break 2;
-                }
-
+        foreach($group['sojourn_product_models_ids'] as $oid => $spm) {
+            $product_model_id = $spm['product_model_id'];
+            if($product_models[$product_model_id]['qty_accounting_method'] == 'accomodation') {
+                // this doesn't seem to be correct: only real assignment should be considered
+                // continue;
             }
+            // there must be at least one assignment (one rental unit)
+            if(!count($spm['rental_unit_assignments_ids'])) {
+                $mismatch = true;
+                break;
+            }
+            // we dont set quantity restrictions on non-accomodation rental units (meeting rooms, furniture, ...)
+            if(!$product_models[$product_model_id]['is_accomodation']) {
+                continue;
+            }
+            $assignments = SojournProductModelRentalUnitAssignement::ids($spm['rental_unit_assignments_ids'])
+                ->read([
+                    'is_accomodation', 'qty', 'rental_unit_id' => ['capacity']
+                ])
+                ->get();
+            // check the total assigned persons against the group nb_pers
+            $total_capacity = array_reduce($assignments, function($c, $a) {return $c + $a['rental_unit_id']['capacity'];}, 0);
+            if($spms_max[$product_model_id] > $total_capacity) {
+                trigger_error("QN_DEBUG_ORM::max {$spms_max[$product_model_id]} for $product_model_id is greater than total capacity $total_capacity", QN_REPORT_DEBUG);
+                $mismatch = true;
+                break 2;
+            }
+
         }
 
     }
