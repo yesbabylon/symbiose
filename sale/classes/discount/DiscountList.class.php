@@ -32,7 +32,7 @@ class DiscountList extends Model {
             'valid_until' => [
                 'type'              => 'date',
                 'description'       => "Moment until when the list is valid (included).",
-                'default'           => time()                
+                'default'           => time()
             ],
 
             'discounts_ids' => [
@@ -77,7 +77,7 @@ class DiscountList extends Model {
         $om->write(__CLASS__, $oids, ['rate_class_id' => null]);
         // force immediate re-computing
         $om->read(__CLASS__, $oids, ['rate_class_id']);
-    }    
+    }
 
     public static function calcRateClassId($om, $oids, $lang) {
         $result = [];

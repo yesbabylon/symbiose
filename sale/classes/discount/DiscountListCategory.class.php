@@ -16,19 +16,15 @@ class DiscountListCategory extends Model {
     public static function getDescription() {
         return "Discount lists can be arranged by categories.";
     }
-    
 
     public static function getColumns() {
-        /**
-         */
-
         return [
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Short name of the category.',
                 'required'          => true
             ],
-            
+
             'description' => [
                 'type'              => 'string',
                 'description'       => "Criterias that need to be addressed by children lists.",

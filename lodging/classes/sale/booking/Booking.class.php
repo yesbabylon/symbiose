@@ -657,6 +657,15 @@ class Booking extends \sale\booking\Booking {
             }
         }
 
+        // identity cannot be changed once the contract has been emitted
+        if(isset($values['customer_identity_id'])) {
+            foreach($bookings as $bid => $booking) {
+                if(!in_array($booking['status'], ['quote', 'option'])) {
+                    return ['customer_identity_id' => ['non_editable' => 'Customer cannot be changed once a contract has been emitted.']];
+                }
+            }
+        }
+
         // if customer nature is missing, make sure the selected customer has one already
         if(isset($values['customer_id']) && !isset($values['customer_nature_id'])) {
             // if we received a customer id, its customer_nature_id must be set
@@ -671,7 +680,7 @@ class Booking extends \sale\booking\Booking {
 
         if(isset($values['booking_lines_ids'])) {
             // trying to add or remove booking lines
-            // lines cannot be assigned to more than one booking
+            // (lines cannot be assigned to more than one booking)
             $booking = reset($bookings);
             if(!in_array($booking['status'], ['quote'])) {
                 $lines = $om->read('lodging\sale\booking\BookingLine', $values['booking_lines_ids'], [ 'booking_line_group_id.is_extra']);

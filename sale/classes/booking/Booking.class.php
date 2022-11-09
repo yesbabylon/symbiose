@@ -574,22 +574,33 @@ class Booking extends Model {
     public static function canupdate($om, $oids, $values, $lang) {
         $res = $om->read(get_called_class(), $oids, [ 'status', 'customer_id', 'customer_identity_id' ]);
 
+        // fields that can always be updated
+        $authorized_fields = ['description'];
+
         if($res > 0) {
-            foreach($res as $oids => $odata) {
-                if(in_array($odata['status'], ['invoiced','debit_balance','credit_balance','balanced'])) {
-                    $accepted_fields = [
-                        'status'
-                    ];
-                    foreach($values as $field => $value) {
-                        if(!in_array($field, $accepted_fields)) {
-                            return ['status' => ['non_editable' => 'Invoiced bookings edition is limited.']];
+            $fields = array_keys($values);
+            if(count($values) == 1 && in_array($fields[0], $authorized_fields))  {
+                // allowed update
+            }
+            else {
+                // check for accepted changes based on status
+                foreach($res as $oids => $odata) {
+                    if(in_array($odata['status'], ['invoiced','debit_balance','credit_balance','balanced'])) {
+                        // fields that can be updated when the status has those values
+                        $authorized_fields = ['status'];
+                        foreach($values as $field => $value) {
+                            if(!in_array($field, $authorized_fields)) {
+                                return ['status' => ['non_editable' => 'Invoiced bookings edition is limited.']];
+                            }
                         }
                     }
+                    if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
+                        return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
+                    }
                 }
-                if( !$odata['customer_id'] && !$odata['customer_identity_id'] && !isset($values['customer_id']) && !isset($values['customer_identity_id']) ) {
-                    return ['customer_id' => ['missing_mandatory' => 'Customer is mandatory.']];
-                }
+
             }
+
         }
 
         return parent::canupdate($om, $oids, $values, $lang);
