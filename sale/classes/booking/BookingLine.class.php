@@ -269,9 +269,7 @@ class BookingLine extends Model {
         $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'booking_line_group_id'], $lang);
 
         if($lines > 0) {
-            // #memo - vat rate is only reset in cas of product change (which triggers a price_id update)
-            $new_values = [/*'vat_rate' => null, */'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
-
+            $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
             // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the update !
             if(count($values)) {
                 $fields = array_keys($new_values);

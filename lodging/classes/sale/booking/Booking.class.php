@@ -273,6 +273,7 @@ class Booking extends \sale\booking\Booking {
 
         $bookings = $om->read(self::getType(), $oids, [
                 'customer_identity_id',
+                'customer_identity_id.description',
                 'customer_identity_id.has_parent',
                 'customer_identity_id.parent_id',
                 'customer_nature_id',
@@ -308,10 +309,14 @@ class Booking extends \sale\booking\Booking {
                             ]);
                     }
                 }
+                $values = [
+                    'description' => $booking['customer_identity_id.description']
+                ];
                 if($partner_id) {
                     // will trigger an update of the rate_class for existing booking_lines
-                    $om->update(self::getType(), $oid, ['customer_id' => $partner_id]);
+                    $values['customer_id'] = $partner_id;
                 }
+                $om->update(self::getType(), $oid, $values);
             }
         }
     }

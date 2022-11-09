@@ -116,6 +116,7 @@ if(is_array($data) && count($data)) {
 
 // check sojourns accomodations
 /*
+// #memo - this checks covers a situation that is no longer possible
 $data = eQual::run('do', 'lodging_booking_check-sojourns-accomodations', ['id' => $params['id']]);
 if(is_array($data) && count($data)) {
     $errors[] = 'overlapse_detected';

@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ChangeDetectorRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService, ContextService, TreeComponent } from 'sb-shared-lib';
+import { ApiService, AuthService, ContextService, TreeComponent } from 'sb-shared-lib';
 import { BookingLineGroup } from '../../_models/booking_line_group.model';
 import { BookingLine } from '../../_models/booking_line.model';
 import { Booking } from '../../_models/booking.model';
+import { UserClass } from 'sb-shared-lib/lib/classes/user.class';
 
 import { BookingServicesBookingGroupLineComponent } from './_components/line/line.component';
 import { BookingServicesBookingGroupAccomodationComponent } from './_components/accomodation/accomodation.component';
@@ -98,6 +99,8 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     @Output() deleted = new EventEmitter();
     @Output() toggle  = new EventEmitter();
 
+    public user: UserClass = null;
+
     public folded:boolean = true;
     public groupSummaryOpen:boolean = false;
     public groupTypeOpen:boolean = false;
@@ -118,6 +121,7 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     constructor(
         private cd: ChangeDetectorRef,
         private api: ApiService,
+        private auth: AuthService,
         private context: ContextService
     ) {
         super( new BookingLineGroup() );
@@ -194,6 +198,11 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
 
 
     public ngOnInit() {
+
+        this.auth.getObservable().subscribe( async (user: UserClass) => {
+            this.user = user;
+        });
+
         this.vm.pack.filteredList = this.vm.pack.inputClue.pipe(
             debounceTime(300),
             map( (value:any) => (typeof value === 'string' ? value : (value == null)?'':value.name) ),

@@ -446,8 +446,10 @@
                         <!-- locked pack -->
                         <div class="cell" *ngIf="instance.has_pack">
                             <mat-form-field floatLabel="always" class="invisible-label">
-                                <mat-slide-toggle [ngModel]="vm.pack.is_locked"
-                                    (change)="onchangeIsLocked($event.checked)" title="Liste des produits du pack non-modifiable">Liste verrouillée
+                                <mat-slide-toggle
+                                    [ngModel]="vm.pack.is_locked"
+                                    (change)="onchangeIsLocked($event.checked)"
+                                    title="Liste des produits du pack non-modifiable">Liste verrouillée
                                 </mat-slide-toggle>
                                 <textarea matInput hidden></textarea>
                             </mat-form-field>
@@ -522,8 +524,9 @@
 
             <div class="part-container" *ngIf="!vGroup.accomodations.folded">
                 <div class="row" style="align-items: center;">
-                    <div style="flex: 0 1 200px;">Unités locatives </div>
+                    <div style="flex: 0 1 200px; height: 62px; line-height: 62px;">Unités locatives </div>
                     <mat-form-field
+                        *ngIf="!user?.center_office?.rentalunits_manual_assignment"
                         style="flex: 0 1 400px;"
                         floatLabel="always"
                         class="invisible-label">

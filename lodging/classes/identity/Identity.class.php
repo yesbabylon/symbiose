@@ -6,6 +6,8 @@
 */
 namespace lodging\identity;
 
+use lodging\sale\booking\Booking;
+
 class Identity extends \identity\Identity {
 
     public static function getColumns() {
@@ -17,6 +19,13 @@ class Identity extends \identity\Identity {
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['partner_identity_id', '<>', 'object.id'],
                 'description'       => 'List of contacts relating to the organisation (not necessarily employees), if any.'
+            ],
+
+           'bookings_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => Booking::getType(),
+                'foreign_field'     => 'customer_identity_id',
+                'description'       => 'List of bookings relating to the identity.'
             ],
 
             'lang_id' => [

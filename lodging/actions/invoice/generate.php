@@ -53,7 +53,8 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 $invoice = Invoice::search([['booking_id', '=', $params['id']], ['status', '=', 'invoice'], ['funding_id', '=', null]])->read(['id'])->first();
 
 if($invoice) {
-    throw new Exception("invoice_already_exists", QN_ERROR_NOT_ALLOWED);
+    // throw new Exception("invoice_already_exists", QN_ERROR_NOT_ALLOWED);
+    // #memo - the invoice can have been emitted already, in that case we create another proforma invoice
 }
 
 // read booking object
@@ -123,7 +124,7 @@ foreach($errors as $error) {
 
 
 // if a 'proforma' balance invoice exists, delete it
-Invoice::search([['booking_id', '=', $params['id']], ['funding_id', '=', null]])->delete(true);
+Invoice::search([['booking_id', '=', $params['id']], ['status', '=', 'proforma'], ['funding_id', '=', null]])->delete(true);
 
 
 /*
@@ -267,7 +268,7 @@ if($fundings) {
             $new_line = InvoiceLine::create($i_line)->read(['id'])->first();
             $i_lines_ids[] = $new_line['id'];
         }
-        else if($funding['type'] == 'invoice') {
+        elseif($funding['type'] == 'invoice') {
             $funding_invoice = Invoice::id($funding['invoice_id'])->read(['id', 'created', 'name', 'partner_id', 'total', 'invoice_lines_ids' => ['vat_rate', 'product_id', 'total']])->first();
 
             if(!$funding_invoice) {
@@ -280,6 +281,10 @@ if($fundings) {
             if($funding_invoice['partner_id'] == $booking['customer_id']['id']) {
                 // there should be only one line
                 foreach($funding_invoice['invoice_lines_ids'] as $lid => $line) {
+                    if($line['total'] == 0.0) {
+                        // ignore lines with nul amount
+                        continue;
+                    }
                     $i_line = [
                         'invoice_id'                => $invoice['id'],
                         'name'                      => $installment_label.' '.$funding_invoice['name'],
