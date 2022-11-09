@@ -237,27 +237,27 @@ class BookingLine extends Model {
 
     public static function onupdateQty($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdatePriceId($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
     public static function onupdatePriceAdaptersIds($om, $oids, $values, $lang) {
         // reset computed fields related to price
-        $om->callonce(__CLASS__, '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
     /**
@@ -266,11 +266,11 @@ class BookingLine extends Model {
     public static function _resetPrices($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
 
-        $lines = $om->read(__CLASS__, $oids, ['price_id.price', 'booking_line_group_id'], $lang);
+        $lines = $om->read(self::getType(), $oids, ['price_id.price', 'price_id.vat_rate', 'booking_line_group_id'], $lang);
 
         if($lines > 0) {
             $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
-            // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the update !
+            // #memo - computed fields (eg. vat_rate and unit_price) can also be set manually, in such case we don't want to overwrite the assigned value
             if(count($values)) {
                 $fields = array_keys($new_values);
                 foreach($values as $field => $value) {
@@ -283,9 +283,13 @@ class BookingLine extends Model {
             // update lines
             foreach($lines as $lid => $line) {
                 $assigned_values = $new_values;
-                // we dont want to reset unit_price for products that have a price_id with a value of 0.0 ()
+                // don't reset unit_price for products that have a price with a value of 0.0
                 if($line['price_id.price'] == 0.0) {
                     unset($assigned_values['unit_price']);
+                }
+                // don't reset vat_rate for products that have a rate with a value of 0.0
+                if($line['price_id.vat_rate'] == 0.0) {
+                    unset($assigned_values['vat_rate']);
                 }
                 $om->update(self::getType(), $lid, $assigned_values);
             }
