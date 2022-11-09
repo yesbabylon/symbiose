@@ -68,7 +68,7 @@
                         (selected)="onSelectedBooking($event)">
                     </planning-calendar-booking>
                     <span *ngIf="hasConsumption(rental_unit, day)" class="cell-hint" #vDescription="var" [var]="{value: getDescription(rental_unit, day)}">
-                        <span *ngIf="vDescription.value.length" [innerHTML]="vDescription.value"></span>
+                        <span *ngIf="vDescription?.value?.length" [innerHTML]="vDescription.value"></span>
                     </span>
                 </td>
 
