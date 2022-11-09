@@ -448,6 +448,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             'is_locked',
             'booking_lines_ids',
             'age_range_assignments_ids',
+            'pack_id',
             'pack_id.has_age_range',
             'pack_id.age_range_id',
             'pack_id.product_model_id.name',
@@ -489,8 +490,8 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
 
             $updated_fields = ['vat_rate' => null];
 
-            // if group name is empty, assign the name of the new pack
-            if(!isset($group['name']) || strlen($group['name']) <= 0) {
+            // assign the name of the selected pack as group name
+            if($group['pack_id'] && isset($group['pack_id.product_model_id.name'])) {
                 $updated_fields['name'] = $group['pack_id.product_model_id.name'];
             }
 
