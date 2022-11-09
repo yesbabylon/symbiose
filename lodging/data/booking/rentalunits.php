@@ -156,7 +156,7 @@ if($sojourn) {
 
 
     $rental_units = RentalUnit::ids($rental_units_ids)
-        ->read(['id', 'name', 'capacity', 'order'])
+        ->read(['id', 'name', 'capacity', 'order', 'is_accomodation'])
         ->adapt('txt')
         ->get(true);
 
