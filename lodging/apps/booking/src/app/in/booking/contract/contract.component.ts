@@ -230,6 +230,7 @@ export class BookingContractComponent implements OnInit, AfterContentInit {
             if(user.center_office) {
                 // #memo - this does not cover all situations. We consider that the users for whom the default mode is important, only relate to one Center Office.
                 this.vm.mode.formControl.setValue(user.center_office?.docs_default_mode);
+                this.mode = user.center_office?.docs_default_mode;
             }
         });
 

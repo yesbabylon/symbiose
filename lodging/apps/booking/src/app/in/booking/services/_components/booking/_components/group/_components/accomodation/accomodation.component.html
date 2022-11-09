@@ -23,10 +23,9 @@
         <div class="row">
             <div class="row-products-title" style="display: flex;">
                 <div style="flex: 1;">{{instance.product_model_id?.name}}</div>
-                <div style="margin-left: auto; margin-right: 20px;"><b>Total: {{instance.qty}} p.</b></div>
+                <div style="margin-left: auto; margin-right: 20px;"><b [class.error]="(instance.qty < group.nb_pers)">Total: {{instance.qty}} p.</b></div>
             </div>
         </div>
-
 
         <div class="row row-lists" cdkDropListGroup style="display: flex; width: calc(100% - 20px); height: 200px; justify-content: space-between;">
 
@@ -48,7 +47,7 @@
                             (change)="leftSelectRentalUnit($event.checked, unit.id)">
                         </mat-checkbox>
                     </div>
-                    <div style="padding: 0 5px;" (mousedown)="leftSelectRentalUnit(true, unit.id)">{{unit.name}} <small>({{unit.capacity}})</small></div>
+                    <div style="padding: 0 5px;" (mousedown)="leftSelectRentalUnit(true, unit.id)">{{unit.name}} <small *ngIf="unit.is_accomodation">({{unit.capacity}})</small></div>
                 </div>
             </div>
             <!-- action area -->

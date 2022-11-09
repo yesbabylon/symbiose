@@ -12,11 +12,11 @@
                     <div class="group-item"
                         cdkDrag
                         [cdkDragData]="group"
-                        [cdkDragDisabled]="selected_group_id == group.id"
-                        [class.group-selected]="selected_group_id == group.id"
-                        *ngIf="selected_group_id == 0 || selected_group_id == group.id"
+                        [cdkDragDisabled]="maximized_group_id == group.id"
+                        [class.group-selected]="maximized_group_id == group.id"
+                        [class.hidden]="maximized_group_id != 0 && maximized_group_id != group.id"
                         [@groupInOutAnimation]>
-                        <div class="group-handle" cdkDragHandle *ngIf="selected_group_id == 0"><mat-icon style="font-size: 16px;">drag_indicator</mat-icon></div>
+                        <div class="group-handle" cdkDragHandle *ngIf="maximized_group_id == 0"><mat-icon style="font-size: 16px;">drag_indicator</mat-icon></div>
                         <booking-services-booking-group
                             [model]="group"
                             [booking]="instance"
@@ -24,7 +24,7 @@
                             (deleted)="ondeleteGroup(group.id)"
                             (toggle)="ontoggleGroup(group.id, $event)"
                         ></booking-services-booking-group>
-                        <div class="group-remove" *ngIf="selected_group_id == 0"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
+                        <div class="group-remove" *ngIf="maximized_group_id == 0"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
                     </div>
                 </ng-container>
             </div>

@@ -28,6 +28,10 @@
                 padding: 5px 0;
                 flex: 1;
 
+                .error {
+                    color: var(--mdc-theme-error, #b00020);
+                }
+
                 .row-products-title {
                     flex: 1 1 auto;
                     height: 40px;

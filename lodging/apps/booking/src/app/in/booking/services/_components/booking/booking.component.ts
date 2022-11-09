@@ -51,7 +51,7 @@ export class BookingServicesBookingComponent
 
     public ready: boolean = false;
     public loading: boolean = true;
-    public selected_group_id: number = 0;
+    public maximized_group_id: number = 0;
 
     constructor(
         private dialog: MatDialog,
@@ -198,10 +198,10 @@ export class BookingServicesBookingComponent
     public ontoggleGroup(group_id:number, folded: boolean) {
         console.debug('ontoggleGroup', group_id, folded);
         if(!folded) {
-            this.selected_group_id = group_id;
+            this.maximized_group_id = group_id;
         }
         else {
-            this.selected_group_id = 0;
+            this.maximized_group_id = 0;
         }
     }
 }

@@ -367,10 +367,10 @@
         <!-- products -->
         <div class="part">
             <div class="part-toggle">
-                <button mat-icon-button *ngIf="!vGroup.products.folded" (click)="vGroup.products.folded = !vGroup.products.folded">
+                <button mat-icon-button *ngIf="!vGroup.products.folded" (click)="vGroup.products.folded = true">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="vGroup.products.folded" (click)="vGroup.products.folded = !vGroup.products.folded">
+                <button mat-icon-button *ngIf="vGroup.products.folded" (click)="vGroup.products.folded = false">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
                 </button>
             </div>
@@ -382,7 +382,7 @@
                             <button *ngIf="!vm.pack.is_locked" mat-mini-fab
                                     color="primary"
                                     style="transform: scale(0.66);"
-                                    (click)="oncreateLine()"><mat-icon>add</mat-icon>
+                                    (click)="vGroup.products.folded = false; oncreateLine()"><mat-icon>add</mat-icon>
                             </button>
                             <button
                                 *ngIf="instance.is_extra && instance.has_schedulable_services"
@@ -554,10 +554,10 @@
         <div class="part" *ngIf="(instance.is_sojourn && instance.sojourn_type_id == 1) || instance.is_event">
 
             <div class="part-toggle" style="padding-top: 12px;">
-                <button mat-icon-button *ngIf="!vGroup.meals.folded" (click)="vGroup.meals.folded = !vGroup.meals.folded">
+                <button mat-icon-button *ngIf="!vGroup.meals.folded" (click)="vGroup.meals.folded = true">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_up</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="vGroup.meals.folded" (click)="vGroup.meals.folded = !vGroup.meals.folded">
+                <button mat-icon-button *ngIf="vGroup.meals.folded" (click)="vGroup.meals.folded = false">
                     <mat-icon style="font-size: 15px;">keyboard_arrow_right</mat-icon>
                 </button>
             </div>
@@ -569,7 +569,7 @@
                             <button mat-mini-fab
                                     color="primary"
                                     style="transform: scale(0.66);"
-                                    (click)="oncreateMealPref()">
+                                    (click)="vGroup.meals.folded = false; oncreateMealPref()">
                                 <mat-icon>add</mat-icon>
                         </button>
                     </div>
