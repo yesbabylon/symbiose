@@ -49,6 +49,12 @@ class ContractLine extends Model {
                 'required'          => true
             ],
 
+            'price_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'description'       => 'The price the line relates to, if any.'
+            ],
+
             'unit_price' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:4',
