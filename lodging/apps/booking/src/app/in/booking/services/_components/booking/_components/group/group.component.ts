@@ -334,6 +334,10 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         }
     }
 
+    public fold() {
+        this.folded = true;
+    }
+
     public toggleFold() {
         this.folded = !this.folded;
         this.toggle.emit(this.folded);

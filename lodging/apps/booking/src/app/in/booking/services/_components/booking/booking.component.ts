@@ -142,9 +142,11 @@ export class BookingServicesBookingComponent
                 values.date_to =  new Date().toISOString();
             }
             const group = await this.api.create("lodging\\sale\\booking\\BookingLineGroup", values);
+            // unfold all groups
+            this.maximized_group_id = 0;
+            this.bookingServicesBookingGroups.forEach( (item:BookingServicesBookingGroupComponent) => item.fold() );
             // reload booking tree
             this.load(this.instance.id);
-            this.maximized_group_id = 0;
         }
         catch(response) {
             this.api.errorFeedback(response);
