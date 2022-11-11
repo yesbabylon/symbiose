@@ -26,7 +26,12 @@ class ContractLine extends \sale\contract\ContractLine {
     }
 
     public static function canupdate($om, $oids, $values, $lang='en') {
-        return ['contract_id' => ['not_allowed' => 'Contract cannot be manually updated.']];
+        $allowed_fields = ['total', 'price'];
+        foreach($values as $field => $value) {
+            if(!in_array($field, $allowed_fields)) {
+                return ['contract_id' => ['not_allowed' => 'Contract cannot be manually updated.']];
+            }
+        }
     }
 
 }
