@@ -98,6 +98,8 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     @Output() updated = new EventEmitter();
     @Output() deleted = new EventEmitter();
     @Output() toggle  = new EventEmitter();
+    @Output() loadStart = new EventEmitter();
+    @Output() loadEnd   = new EventEmitter();
 
     public user: UserClass = null;
 
@@ -688,20 +690,27 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     }
 
     public async selectedGroupSummaryProduct(product:any) {
+        let prev_product_name = this.instance.name;
         // immediate view update (before refresh)
         this.groupSummaryOpen = false;
         this.instance.name = product.name;
-        try {
-            await this.api.fetch('/?do=lodging_booking_update-sojourn-product', {
-                id: this.instance.id,
-                product_id: product.id
-            });
+        this.loadStart.emit();
+
+        this.api.fetch('/?do=lodging_booking_update-sojourn-product', {
+            id: this.instance.id,
+            product_id: product.id
+        })
+        .then( () => {
+            this.loadEnd.emit();
             // relay change to parent component
             this.updated.emit();
-        }
-        catch(response) {
+        })
+        .catch(response => {
+            // rollback
+            this.instance.name = prev_product_name;
+            this.loadEnd.emit();
             this.api.errorFeedback(response);
-        }
+        });
     }
 
     public onblurGroupSummarySelect() {

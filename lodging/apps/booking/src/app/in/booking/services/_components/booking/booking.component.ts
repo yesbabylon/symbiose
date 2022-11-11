@@ -144,6 +144,7 @@ export class BookingServicesBookingComponent
             const group = await this.api.create("lodging\\sale\\booking\\BookingLineGroup", values);
             // reload booking tree
             this.load(this.instance.id);
+            this.maximized_group_id = 0;
         }
         catch(response) {
             this.api.errorFeedback(response);
@@ -203,5 +204,13 @@ export class BookingServicesBookingComponent
         else {
             this.maximized_group_id = 0;
         }
+    }
+
+    public onLoadStartGroup() {
+        this.loading = true;
+    }
+
+    public onLoadEndGroup() {
+        this.loading = false;
     }
 }

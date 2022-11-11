@@ -23,6 +23,8 @@
                             (updated)="onupdateGroup()"
                             (deleted)="ondeleteGroup(group.id)"
                             (toggle)="ontoggleGroup(group.id, $event)"
+                            (loadStart)="onLoadStartGroup()"
+                            (loadEnd)="onLoadEndGroup()"
                         ></booking-services-booking-group>
                         <div class="group-remove" *ngIf="maximized_group_id == 0"><button mat-icon-button (click)="ondeleteGroup(group.id)"> <mat-icon>delete</mat-icon></button></div>
                     </div>
