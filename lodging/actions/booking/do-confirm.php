@@ -47,48 +47,51 @@ list($context, $orm, $cron, $dispatch, $reporter) = [$providers['context'], $pro
 
 // read booking object
 $booking = Booking::id($params['id'])
-                  ->read([
-                        'status',
-                        'is_price_tbc',
-                        'type_id',
-                        'date_from',
-                        'date_to',
-                        'price',                                  // total price VAT incl.
-                        'contracts_ids',
-                        'center_id' => [
-                            'center_office_id',
-                            'sojourn_type_id'
-                        ],
-                        'customer_id' => [
-                            'id',
-                            'rate_class_id'
-                        ],
-                        'booking_lines_groups_ids' => [
-                            'name',
-                            'date_from',
-                            'date_to',
-                            'has_pack',
-                            'is_locked',
-                            'pack_id' => ['id', 'name'],
-                            'vat_rate',
-                            'unit_price',
-                            'fare_benefit',
-                            'rate_class_id',
-                            'qty',
-                            'nb_nights',
-                            'nb_pers',
-                            'booking_lines_ids' => [
-                                'product_id',
-                                'description',
-                                'unit_price',
-                                'vat_rate',
-                                'qty',
-                                'free_qty',
-                                'discount'
-                            ]
-                        ]
-                  ])
-                  ->first();
+    ->read([
+        'status',
+        'is_price_tbc',
+        'type_id',
+        'date_from',
+        'date_to',
+        'price',                                  // total price VAT incl.
+        'contracts_ids',
+        'center_id' => [
+            'center_office_id',
+            'sojourn_type_id'
+        ],
+        'customer_id' => [
+            'id',
+            'rate_class_id'
+        ],
+        'booking_lines_groups_ids' => [
+            'name',
+            'date_from',
+            'date_to',
+            'has_pack',
+            'is_locked',
+            'pack_id' => ['id', 'name'],
+            'vat_rate',
+            'unit_price',
+            'fare_benefit',
+            'rate_class_id',
+            'qty',
+            'nb_nights',
+            'nb_pers',
+            'booking_lines_ids' => [
+                'product_id',
+                'description',
+                'price_id',
+                'unit_price',
+                'vat_rate',
+                'qty',
+                'free_qty',
+                'discount',
+                'price',
+                'total'
+            ]
+        ]
+    ])
+    ->first();
 
 if(!$booking) {
     throw new Exception("unknown_booking", QN_ERROR_UNKNOWN_OBJECT);
@@ -199,19 +202,27 @@ if(!$booking['is_price_tbc']) {
         foreach($group['booking_lines_ids'] as $lid => $line) {
             $booking_lines_ids[] = $lid;
 
-            $c_line = [
-                'contract_id'               => $contract['id'],
-                'contract_line_group_id'    => $contract_line_group['id'],
-                'product_id'                => $line['product_id'],
-                'description'               => $line['description'],
-                'vat_rate'                  => $line['vat_rate'],
-                'unit_price'                => $line['unit_price'],
-                'qty'                       => $line['qty'],
-                'free_qty'                  => $line['free_qty'],
-                'discount'                  => $line['discount']
-            ];
-
-            ContractLine::create($c_line);
+            // create line in two steps (not to overwrite price details from the line - that might have been manually adapted)
+            ContractLine::create([
+                    'contract_id'               => $contract['id'],
+                    'contract_line_group_id'    => $contract_line_group['id'],
+                    'product_id'                => $line['product_id'],
+                    'description'               => $line['description'],
+                    'price_id'                  => $line['price_id']
+                ])
+                ->update([
+                    'vat_rate'                  => $line['vat_rate'],
+                    'unit_price'                => $line['unit_price'],
+                    'qty'                       => $line['qty'],
+                    'free_qty'                  => $line['free_qty'],
+                    'discount'                  => $line['discount']
+                ])
+                ->update([
+                    'total'                     => $line['total']
+                ])
+                ->update([
+                    'price'                     => $line['price']
+                ]);
         }
 
     }
