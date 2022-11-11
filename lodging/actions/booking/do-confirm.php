@@ -208,9 +208,8 @@ if(!$booking['is_price_tbc']) {
                     'contract_line_group_id'    => $contract_line_group['id'],
                     'product_id'                => $line['product_id'],
                     'description'               => $line['description'],
-                    'price_id'                  => $line['price_id']
-                ])
-                ->update([
+                    // #memo - for now, there is no onupdate handler for price_id (if so we should mind the alteration of vat_rate and unit_price)
+                    'price_id'                  => $line['price_id'],
                     'vat_rate'                  => $line['vat_rate'],
                     'unit_price'                => $line['unit_price'],
                     'qty'                       => $line['qty'],
