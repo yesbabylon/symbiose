@@ -240,9 +240,21 @@ class BookingLine extends Model {
         $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
 
+    /**
+     * Handler for unit_price field update.
+     * Resets computed fields related to price.
+     */
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
-        // reset computed fields related to price
-        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        // #memo this lead to unwanted behavior : unit price reset
+        // $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        $lines = $om->read(self::getType(), $oids, ['booking_line_group_id', 'booking_id'], $lang);
+        $om->update(self::getType(), $oids, ['price' => null, 'total' => null], $lang);
+        if($lines > 0) {
+            $bids = array_map(function ($a) { return $a['booking_id'];}, $lines);
+            $gids = array_map(function ($a) { return $a['booking_line_group_id'];}, $lines);
+            $om->update(BookingLineGroup::getType(), $gids, ['price' => null, 'total' => null], $lang);
+            $om->update(Booking::getType(), $bids, ['price' => null, 'total' => null], $lang);
+        }
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
@@ -275,7 +287,7 @@ class BookingLine extends Model {
                 $fields = array_keys($new_values);
                 foreach($values as $field => $value) {
                     if(in_array($field, $fields) && !is_null($value)) {
-                        unset($new_values[$field]);
+                        $new_values[$field] = $value;
                     }
                 }
             }
@@ -284,11 +296,11 @@ class BookingLine extends Model {
             foreach($lines as $lid => $line) {
                 $assigned_values = $new_values;
                 // don't reset unit_price for products that have a price with a value of 0.0
-                if($line['price_id.price'] == 0.0) {
+                if($line['price_id.price'] == 0.0 && is_null($assigned_values['unit_price'])) {
                     unset($assigned_values['unit_price']);
                 }
                 // don't reset vat_rate for products that have a rate with a value of 0.0
-                if($line['price_id.vat_rate'] == 0.0) {
+                if($line['price_id.vat_rate'] == 0.0 && is_null($assigned_values['vat_rate'])) {
                     unset($assigned_values['vat_rate']);
                 }
                 $om->update(self::getType(), $lid, $assigned_values);
@@ -464,7 +476,7 @@ class BookingLine extends Model {
 
     public static function calcVatRate($om, $oids, $lang) {
         $result = [];
-        $lines = $om->read(get_called_class(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
+        $lines = $om->read(self::getType(), $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
         foreach($lines as $oid => $odata) {
             $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
         }

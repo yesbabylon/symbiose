@@ -42,8 +42,8 @@ list($params, $providers) = announce([
 list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 
 $collection = $params['entity']::ids($params['ids'])
-    ->clone($params['lang'])
-    ->get(true);
+            ->clone($params['lang'])
+            ->get(true);
 
 $context->httpResponse()
         ->status(201)
