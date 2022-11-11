@@ -177,7 +177,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                 'invoice_id'                => $invoice['id'],
                 'invoice_line_group_id'     => $invoice_line_group['id'],
                 'product_id'                => $group['pack_id']['id'],
-                'price_id'                  => $group['price_id'],
+                'price_id'                  => $group['price_id']
             ])
             ->update([
                 'vat_rate'                  => $group['vat_rate'],
@@ -190,7 +190,7 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
         foreach($group['booking_lines_ids'] as $lid => $line) {
             $booking_lines_ids[] = $lid;
 
-            // create line in several steps (not to overwrite final values from the line)
+            // create line in several steps (not to overwrite final values from the line - that might have been manually adapted)
             InvoiceLine::create([
                     'invoice_id'                => $invoice['id'],
                     'invoice_line_group_id'     => $invoice_line_group['id'],
@@ -206,10 +206,10 @@ foreach($booking['booking_lines_groups_ids'] as $group_id => $group) {
                     'discount'                  => $line['discount']
                 ])
                 ->update([
-                    'total'                     => $line['total'],
+                    'total'                     => $line['total']
                 ])
                 ->update([
-                    'price'                     => $line['price'],
+                    'price'                     => $line['price']
                 ]);
         }
 
