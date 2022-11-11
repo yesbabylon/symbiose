@@ -180,10 +180,10 @@ class Funding extends Model {
      */
     public static function canupdate($om, $oids, $values, $lang) {
         if(count($values) > 1 || !isset($values['is_paid'])) {
-            $fundings = $om->read(self::getType(), $oids, ['is_paid'], $lang);
+            $fundings = $om->read(self::getType(), $oids, ['is_paid', 'due_amount', 'paid_amount'], $lang);
             if($fundings > 0) {
                 foreach($fundings as $funding) {
-                    if( $funding['is_paid'] ) {
+                    if($funding['is_paid'] && $funding['due_amount'] == $funding['paid_amount']) {
                         return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been paid.']];
                     }
                 }
