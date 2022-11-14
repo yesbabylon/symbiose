@@ -25,7 +25,7 @@
                 "action.cancelled": {
                     "label": "Annuler",
                     "description": "Le contrat sera marqué comme annulé. Toutes les ressources réservées seront libérées, et des frais d'annulation éventuels seront appliqués."
-                }                
+                }
             },
             "layout": {
                 "section.details" : {

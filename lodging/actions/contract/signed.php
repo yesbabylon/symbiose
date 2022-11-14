@@ -20,14 +20,14 @@ list($params, $providers) = announce([
     ],
     'access' => [
         'visibility'        => 'public',		// 'public' (default) or 'private' (can be invoked by CLI only)
-        'groups'            => ['booking.default.user'],// list of groups ids or names granted 
+        'groups'            => ['booking.default.user'],// list of groups ids or names granted
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth']     
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
@@ -36,7 +36,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
 $contract = Contract::id($params['id'])
                   ->read(['id', 'name', 'status', 'valid_until'])
                   ->first();
-                  
+
 if(!$contract) {
     throw new Exception("unknown_contract", QN_ERROR_UNKNOWN_OBJECT);
 }

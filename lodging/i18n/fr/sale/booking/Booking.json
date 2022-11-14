@@ -93,6 +93,10 @@
                 "action.release-rentalunits": {
                     "label": "Libérer les unités loc.",
                     "description": "Ceci supprimera les consommations précédemment créés. Les éventuelles unités locatives bloquées seront libérées."
+                },
+                "action.reimbursed": {
+                    "label": "Marquer comme remboursé",
+                    "description": "La réservation sera cloturée et marquée comme balancée (le montant déjà payé par le client a été remboursé)."
                 }
             },
             "routes": {

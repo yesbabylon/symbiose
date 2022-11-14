@@ -3,7 +3,7 @@
     "description": "",
     "access": {
         "groups": ["booking.default.user"]
-     },
+    },
     "actions": [
         {
             "id": "action.sent",
@@ -29,8 +29,8 @@
             "description": "",
             "icon": "drive_file_rename_outline",
             "route": "/booking/object.booking_id/contract/object.id"
-        }              
-    ],    
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -67,9 +67,9 @@
                             }
                         ]
                     }
-                                       
+
                 ]
-            },            
+            },
             {
                 "sections": [
                     {
@@ -120,7 +120,7 @@
                         "label": "Contract Lines",
                         "rows": [
                             {
-                                "columns": [                                    
+                                "columns": [
                                     {
                                         "width": "100%",
                                         "items": [
@@ -134,7 +134,7 @@
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]
