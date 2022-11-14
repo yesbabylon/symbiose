@@ -69,6 +69,7 @@ $auth->su($user_id);
 
 foreach($booking['booking_lines_groups_ids'] as $group) {
     $nb_pers = $group['nb_pers'];
+    // #memo - we dont limit the assigment (a total capacity bigger thant the number of persons can be valid)
     $remainder = $nb_pers;
 
     /*
@@ -80,7 +81,7 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
     foreach($group['rental_unit_assignments_ids'] as $assignment) {
 
         $rental_unit_id = $assignment['rental_unit_id'];
-        $rental_unit = RentalUnit::id($rental_unit_id)->read(['capacity', 'has_children', 'children_ids'])->first();
+        $rental_unit = RentalUnit::id($rental_unit_id)->read(['capacity', 'has_children', 'children_ids'])->first(true);
         if($rental_unit) {
             if($rental_unit['has_children'] && $rental_unit['capacity'] > 10) {
                 foreach($rental_unit['children_ids'] as $child_id) {
@@ -110,27 +111,17 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
     */
 
     $total_capacity = array_reduce($rental_units, function($total, $unit) {return $total + $unit['capacity'];});
-    $last_index = count($rental_units) - 1;
 
     // to be used is data was received
     $item_index = 0;
     $is_first = true;
 
     foreach($rental_units as $index => $unit) {
-        // to each UL, assign ceil(nb_pers*cap/cap_total)
-        if($index < $last_index) {
-            $capacity = $unit['capacity'];
-            $assigned = ceil($nb_pers*$capacity/$total_capacity);
-            if($assigned > $remainder) {
-                $assigned = $remainder;
-            }
-            $remainder -= $assigned;
-        }
-        //and assign the remainder to the last UL
-        else {
-            $assigned = $remainder;
-        }
-        for($i = 0; $i < $assigned; ++$i) {
+        // to each UL, assign the (theorical) capacity
+        $capacity = $unit['capacity'];
+        $remainder -= $capacity;
+
+        for($i = 0; $i < $capacity; ++$i) {
 
             $item = [
                 'composition_id' => $composition_id,
@@ -158,7 +149,6 @@ foreach($booking['booking_lines_groups_ids'] as $group) {
             }
             CompositionItem::create($item);
         }
-        if($remainder <= 0) break;
     }
 }
 
