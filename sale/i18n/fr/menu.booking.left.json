@@ -33,6 +33,10 @@
             "label": "Réservations facturées",
             "help": ""
         },
+        "item.bookings.balanced": {
+            "label": "Réservations cloturées",
+            "help": ""
+        },
         "item.bookings.archives": {
             "label": "Réservations archivées",
             "help": ""
