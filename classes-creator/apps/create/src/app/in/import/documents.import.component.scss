@@ -1,0 +1,72 @@
+:host {
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .container {
+      height: 100%;
+      width: 100%;
+
+
+      .import-header {
+          width: 100%;
+          padding-left: 12px;
+          height: 48px;
+          line-height: 48px;
+          border-bottom: solid 1px lightgrey;
+          font-size: 22px;
+      }
+
+      .import-body {
+          height: calc(100vh - 123px);
+          width: 100%;
+          overflow-y: scroll;
+          padding: 12px;
+          table {
+            width: 70%;
+            margin: auto;
+            margin-bottom: 20px;
+            .mat-column-name{
+              width: 9%;
+              text-align: center;
+            }
+            .mat-column-type, .mat-column-size{
+              width: 7.5%;
+              text-align: center;
+            }
+            .mat-column-rename, .mat-column-viewImg, .mat-column-delete{
+              width: 10%;
+              text-align: center;
+            }
+          }
+         .formatError{
+            width: 70%;
+            margin:auto; 
+            text-align: center; 
+            background-color: brown; 
+            color: white; 
+            padding: 0.2rem;
+         }
+      }
+      .booking-body::-webkit-scrollbar {
+          width: 6px;
+          overflow-y: scroll;
+          background: transparent;
+      }
+      .booking-body::-webkit-scrollbar-thumb {
+          background: var(--mdc-theme-primary, #6200ee);
+          border-radius: 10px;
+      }
+  }
+  .container,.hidden {
+  }
+  .container.hidden {
+  }
+  .container .hidden {
+      display: none;
+  }
+  .container > .hidden {
+  }
+}

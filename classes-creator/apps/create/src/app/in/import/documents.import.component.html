@@ -1,0 +1,230 @@
+
+  <div class="container" >
+
+    <!-- // package -->
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Package</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Package"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+
+    <!-- subpackage -->
+    <form class="example-form" *ngIf="myControl.value != '' && this.subpackageoptions?.length>=1">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Sub-Package</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Sub-Package"
+               matInput
+               [formControl]="myControlSubPackage"
+               [matAutocomplete]="auto1">
+        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+          <mat-option *ngFor="let option of filteredSubPackages | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+
+    <!-- // added elements -->
+
+    <div *ngIf="this.classesoptions?.length>=1" style="overflow:visible">
+        <!-- *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''" -->
+        <form class="example-form">
+          <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+            <mat-label>Class Name</mat-label>
+            <input matInput
+                  type="text"
+                  placeholder="edit"
+                  aria-label="Class Name"
+                  [formControl]="myControlClasses"
+                  [matAutocomplete]="auto2">
+                  <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="onClassSelect()">
+                    <mat-option *ngFor="let option of classesoptions" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+            </mat-form-field>
+        </form>
+
+
+
+        <!-- fields -->
+        <div style="display: flex;" *ngFor="let item of compteur | keyvalue">
+
+
+          <form class="example-form">
+            <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-label>Field Name</mat-label>
+              <input matInput
+                    type="text"
+                    placeholder="edit"
+                    aria-label=" Field Name"
+                    [(ngModel)]="classe.essentials.field_name[item.key]"
+                    name="field name">
+            </mat-form-field>
+          </form>
+
+          <form class="example-form">
+            <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-label>Description</mat-label>
+              <textarea
+              matInput
+              type="text"
+              placeholder="edit"
+              aria-label="Class description"
+              [(ngModel)]="classe.essentials.description[item.key]"
+              name="description"  cols="30" rows="10"></textarea>
+            </mat-form-field>
+          </form>
+
+          <form class="example-form">
+            <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-label>Types</mat-label>
+              <input matInput
+                    type="text"
+                    placeholder="edit"
+                    aria-label="Class type"
+                    [(ngModel)]="classe.essentials.types[item.key]"
+                    name="types"
+                    [matAutocomplete]="auto3"
+                    >
+                    <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" >
+                      <mat-option *ngFor="let ess of classe.essentials.types" [value]="ess">
+                        {{ess}}
+                      </mat-option>
+                    </mat-autocomplete>
+            </mat-form-field>
+          </form>
+
+
+          <form class="example-form">
+            <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-label>MultiLang</mat-label>
+              <input matInput
+                    type="text"
+                    placeholder="edit"
+                    aria-label="Class multilang"
+                    [(ngModel)]="classe.essentials.multilang[item.key]"
+                    name="multilang">
+            </mat-form-field>
+          </form>
+
+
+          <form class="example-form">
+            <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-label>Unique</mat-label>
+              <input matInput
+                    type="text"
+                    placeholder="edit"
+                    aria-label="Class unique"
+                    [(ngModel)]="classe.essentials.unique[item.key]"
+                    name="unique">
+            </mat-form-field>
+          </form>
+
+
+          <div>
+
+            <form class="example-form"  *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+              <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill">
+                <mat-label>foreign object</mat-label>
+                <input matInput
+                      type="text"
+                      placeholder="edit"
+                      aria-label="Class foreign object"
+                      [(ngModel)]="classe.essentials.foreign_object[item.key]"
+                      name="foreign object"
+                      >
+              </mat-form-field>
+            </form>
+
+            <form class="example-form" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''" [hidden]="">
+              <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" >
+                <mat-label>foreign field</mat-label>
+                <input matInput
+                      type="text"
+                      placeholder="edit"
+                      aria-label="Class foreign field"
+                      [(ngModel)]="classe.essentials.foreign_field[item.key]"
+                      name="foreign field">
+              </mat-form-field>
+            </form>
+
+          </div>
+
+
+
+
+
+          <div>
+                  <form class="example-form">
+                    <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                      <mat-label>rel table</mat-label>
+                      <input matInput
+                            type="text"
+                            placeholder="edit"
+                            aria-label="Class rel table"
+                            [(ngModel)]="classe.essentials.rel_table[item.key]"
+                            name="rel table">
+                    </mat-form-field>
+                  </form>
+
+                  <form class="example-form">
+                    <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                      <mat-label>rel foreign key</mat-label>
+                      <input matInput
+                            type="text"
+                            placeholder="edit"
+                            aria-label="Class rel foreign key"
+                            [(ngModel)]="classe.essentials.rel_foreign_key[item.key]"
+                            name="rel foreign key">
+                    </mat-form-field>
+                  </form>
+
+                  <form class="example-form">
+                    <mat-form-field style="margin: 5px;" class="example-full-width" appearance="fill" *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                      <mat-label>rel local key</mat-label>
+                      <input matInput
+                            type="text"
+                            placeholder="edit"
+                            aria-label="Class rel local key"
+                            [(ngModel)]="classe.essentials.rel_local_key[item.key]"
+                            name="rel local key">
+                    </mat-form-field>
+                  </form>
+          </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+    <!-- Types -->
+
+
+
+    <button mat-raised-button (click)="addField()">Add</button>
+
+    <button (click)="createClass()" color=primary mat-raised-button>Create</button>
+
+
+
+  </div>
