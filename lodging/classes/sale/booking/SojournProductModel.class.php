@@ -62,7 +62,7 @@ class SojournProductModel extends Model {
             'is_accomodation' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Total persons assigned to this model.',
+                'description'       => 'Flag marking the SPM as an accomodation (from targeted product).',
                 'function'          => 'calcIsAccomodation',
                 'store'             => true
             ]

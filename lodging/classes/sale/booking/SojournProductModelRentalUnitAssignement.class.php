@@ -61,7 +61,7 @@ class SojournProductModelRentalUnitAssignement extends Model {
             'is_accomodation' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'Total persons assigned to this model.',
+                'description'       => 'Flag marking the assignment as an accomodation (from rental unit)).',
                 'function'          => 'calcIsAccomodation',
                 'store'             => true
             ]

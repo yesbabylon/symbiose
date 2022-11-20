@@ -16,7 +16,7 @@ use equal\data\DataFormatter;
 
 use lodging\sale\booking\Booking;
 use communication\Template;
-
+use lodging\identity\Center;
 
 list($params, $providers) = announce([
     'description'   => "Generates a list of arrival data as a PDF document, given a center and a date range.",
@@ -24,7 +24,7 @@ list($params, $providers) = announce([
         'view_id' =>  [
             'description'   => 'The identifier of the view <type.name>.',
             'type'          => 'string',
-            'default'       => 'print.default'
+            'default'       => 'print.arrivals'
         ],
         'date_from' => [
             'type'              => 'date',
@@ -66,7 +66,6 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
 // retrieve the listing of confirmed Booking within the date range
-
 $bookings_ids = Booking::search([ ['center_id', '=', $params['center_id']], ['status', 'in', ['confirmed', 'validated']], ['date_from', '>=', $params['date_from']], ['date_to', '<=', $params['date_to']] ])->ids();
 
 
@@ -94,62 +93,60 @@ if(!file_exists($file)) {
 // read booking
 $fields = [
     'name',
+    'description',
     'modified',
     'status',
     'date_from',
     'date_to',
+    'time_from',
+    'time_to',
+    'price',
     'customer_identity_id' => [
         'id',
-        'display_name',
+        'name',
+        'type',
+        'address_street', 'address_dispatch', 'address_city', 'address_zip', 'address_country',
+        'type',
         'phone',
-        'email'
+        'email',
+        'has_vat',
+        'vat_number'
     ],
     'type_id' => ['code', 'name'],
     'fundings_ids' => [
         'due_amount',
-        'paid_amount'
-    ],
-    'customer_id' => [
-        'partner_identity_id' => [
-            'id',
-            'display_name',
-            'type',
-            'address_street', 'address_dispatch', 'address_city', 'address_zip', 'address_country',
-            'type',
-            'phone',
-            'email',
-            'has_vat',
-            'vat_number'
-        ]
-    ],
-    'center_id' => [
-        'name',
-        'manager_id' => ['name']
+        'paid_amount',
+        'due_date'
     ],
     'contacts_ids' => [
         'type',
         'partner_identity_id' => [
-            'display_name',
+            'name',
             'phone',
+            'mobile',
             'email',
             'title'
         ]
     ],
     'booking_lines_groups_ids' => [
         'name',
-        'qty',
+        'nb_pers',
+        'is_sojourn',
         'date_from',
         'date_to',
-        'nb_pers',
-        'booking_lines_ids' => [
-            'name',
-            'product_id' => ['label'],
-            'description',
-            'qty',
+        'sojourn_product_models_ids' => [
+            'is_accomodation',
+            'rental_unit_assignments_ids' => [
+                'rental_unit_id' => [
+                    'name',
+                    'code',
+                    'description'
+                ],
+                'qty'
+            ]
         ]
     ]
 ];
-
 
 $bookings = Booking::ids($bookings_ids)->read($fields)->get(true);
 
@@ -157,346 +154,122 @@ if(!$bookings) {
     throw new Exception("unknown_contract", QN_ERROR_UNKNOWN_OBJECT);
 }
 
-print_r($bookings);
-die();
 
-$img_path = 'public/assets/img/brand/Kaleo.png';
-$img_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
+// retrieve Center details
+$center = Center::id($params['center_id'])->read([
+        'name',
+        'manager_id' => ['name'],
+        'address_street',
+        'address_city',
+        'address_zip',
+        'phone',
+        'email',
+        'bank_account_iban',
+        'template_category_id',
+        'use_office_details',
+        'center_office_id' => [
+            'name',
+            'code',
+            'address_street',
+            'address_city',
+            'address_zip',
+            'phone',
+            'email',
+            'signature',
+            'bank_account_iban',
+            'bank_account_bic'
+        ],
+        'organisation_id' => [
+            'id',
+            'legal_name',
+            'address_street',
+            'address_zip',
+            'address_city',
+            'email',
+            'phone',
+            'fax',
+            'website',
+            'registration_number',
+            'has_vat',
+            'vat_number',
+            'bank_account_iban',
+            'bank_account_bic',
+            'signature'
+        ]
+    ])
+    ->first(true);
 
-if($booking['center_id']['organisation_id']['id'] == 2) {
-    $img_path = 'public/assets/img/brand/Villers.png';
-}
-else if($booking['center_id']['organisation_id']['id'] == 3) {
-    $img_path = 'public/assets/img/brand/Mozaik.png';
-}
-
-if(file_exists($img_path)) {
-    $img = file_get_contents($img_path);
-    $img_url = "data:image/png;base64, ".base64_encode($img);
-}
 
 $values = [
-    'header_img_url'        => $img_url,
-    'quote_header_html'     => '',
-    'quote_notice_html'     => '',
-    'status'                => ($booking['status'] == 'quote')?'Devis':'Option',
-
-    'is_price_tbc'          => $booking['is_price_tbc'],
-    'customer_name'         => substr($booking['customer_id']['partner_identity_id']['display_name'], 0, 66),
-    'attn_name'             => ($booking['customer_id']['partner_identity_id']['id'] == $booking['customer_identity_id']['id'])?'':substr($booking['customer_identity_id']['display_name'], 0, 33),
-    'contact_name'          => '',
-    'contact_phone'         => $booking['customer_id']['partner_identity_id']['phone'],
-    'contact_email'         => $booking['customer_id']['partner_identity_id']['email'],
-    'customer_address1'     => $booking['customer_id']['partner_identity_id']['address_street'],
-    'customer_address2'     => $booking['customer_id']['partner_identity_id']['address_zip'].' '.$booking['customer_id']['partner_identity_id']['address_city'].(($booking['customer_id']['partner_identity_id']['address_country'] != 'BE')?(' - '.$booking['customer_id']['partner_identity_id']['address_country']):''),    
-    'customer_country'      => $booking['customer_id']['partner_identity_id']['address_country'],
-    'customer_has_vat'      => (int) $booking['customer_id']['partner_identity_id']['has_vat'],
-    'customer_vat'          => $booking['customer_id']['partner_identity_id']['vat_number'],
-    'member'                => lodging_booking_print_booking_formatMember($booking),
-    'date'                  => date('d/m/Y', $booking['modified']),
-    'code'                  => sprintf("%03d.%03d", intval($booking['name']) / 1000, intval($booking['name']) % 1000),
-    'center'                => $booking['center_id']['name'],
-    'center_address1'       => $booking['center_id']['address_street'],
-    'center_address2'       => $booking['center_id']['address_zip'].' '.$booking['center_id']['address_city'],
-    'center_contact1'       => (isset($booking['center_id']['manager_id']['name']))?$booking['center_id']['manager_id']['name']:'',
-    'center_contact2'       => DataFormatter::format($booking['center_id']['phone'], 'phone').' - '.$booking['center_id']['email'],
-
-    // by default, we use center contact details (overridden in case Center has a management Office, see below)
-    'center_phone'          => DataFormatter::format($booking['center_id']['phone'], 'phone'),
-    'center_email'          => $booking['center_id']['email'],
-    'center_signature'      => $booking['center_id']['organisation_id']['signature'],
-
-    'period'                => 'Du '.date('d/m/Y', $booking['date_from']).' au '.date('d/m/Y', $booking['date_to']),
-    'price'                 => $booking['price'],
-    'total'                 => $booking['total'],
-
-    'company_name'          => $booking['center_id']['organisation_id']['legal_name'],
-    'company_address'       => sprintf("%s %s %s", $booking['center_id']['organisation_id']['address_street'], $booking['center_id']['organisation_id']['address_zip'], $booking['center_id']['organisation_id']['address_city']),
-    'company_email'         => $booking['center_id']['organisation_id']['email'],
-    'company_phone'         => DataFormatter::format($booking['center_id']['organisation_id']['phone'], 'phone'),
-    'company_fax'           => DataFormatter::format($booking['center_id']['organisation_id']['fax'], 'phone'),
-    'company_website'       => $booking['center_id']['organisation_id']['website'],
-    'company_reg_number'    => $booking['center_id']['organisation_id']['registration_number'],
-    'company_has_vat'       => $booking['center_id']['organisation_id']['has_vat'],
-    'company_vat_number'    => $booking['center_id']['organisation_id']['vat_number'],
-
-
-    // by default, we use organisation payment details (overridden in case Center has a management Office, see below)
-    'company_iban'          => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_iban'], 'iban'),
-    'company_bic'           => DataFormatter::format($booking['center_id']['organisation_id']['bank_account_bic'], 'bic'),
-
-    'lines'                 => [],
-    'tax_lines'             => [],
-
-    'benefit_lines'         => []
+    'date'          => time(),
+    'from'          => $params['date_from'],
+    'to'            => $params['date_to'],
+    'center'        => $center,
+    'bookings'      => []
 ];
 
-
-
-/*
-    override contact and payment details with center's office, if set
-*/
-if($booking['center_id']['use_office_details']) {
-    $office = $booking['center_id']['center_office_id'];
-    $values['company_iban'] = DataFormatter::format($office['bank_account_iban'], 'iban');
-    $values['company_bic'] = DataFormatter::format($office['bank_account_bic'], 'bic');
-    $values['center_phone'] = DataFormatter::format($office['phone'], 'phone');
-    $values['center_email'] = $office['email'];
-    $values['center_signature'] = $booking['center_id']['organisation_id']['signature'];
-}
-
-
-/*
-    retrieve templates
-*/
-if($booking['center_id']['template_category_id']) {
-
-    $template = Template::search([
-                            ['category_id', '=', $booking['center_id']['template_category_id']],
-                            ['code', '=', $booking['status']],
-                            ['type', '=', $booking['status']]
-                        ])
-                        ->read(['parts_ids' => ['name', 'value']], $params['lang'])
-                        ->first();
-
-    foreach($template['parts_ids'] as $part_id => $part) {
-        if($part['name'] == 'header') {
-            $value = $part['value'].$values['center_signature'];
-            $value = str_replace('{center}', $booking['center_id']['name'], $value);
-            $value = str_replace('{date_from}', date('d/m/Y', $booking['date_from']), $value);
-            $value = str_replace('{date_to}', date('d/m/Y', $booking['date_to']), $value);
-            $values['quote_header_html'] = $value;
-        }
-        else if($part['name'] == 'notice') {
-            $values['invoice_notice_html'] = $part['value'];
-        }
-    }
-
-}
-
-
-/*
-    feed lines
-*/
-$lines = [];
-
-// all lines are stored in groups
-foreach($booking['booking_lines_groups_ids'] as $booking_line_group) {
-
-    // generate group details
-    $group_details = '';
-
-    if($booking_line_group['date_from'] == $booking_line_group['date_to']) {
-        $group_details .= date('d/m/y', $booking_line_group['date_from']);
-    }
-    else {
-        $group_details .= date('d/m/y', $booking_line_group['date_from']).' - '.date('d/m/y', $booking_line_group['date_to']);
-    }
-
-    $group_details .= ' - '.$booking_line_group['nb_pers'].'p.';
-
-    if($booking_line_group['has_pack'] && $booking_line_group['is_locked']) {
-        // group is a product pack (bundle) with own price
-        $group_is_pack = true;
-
-        $line = [
-            'name'          => $booking_line_group['name'],
-            'details'       => $group_details,
-            'description'   => $booking_line_group['pack_id']['label'],
-            'price'         => $booking_line_group['price'],
-            'total'         => $booking_line_group['total'],
-            'unit_price'    => $booking_line_group['unit_price'],
-            'vat_rate'      => $booking_line_group['vat_rate'],
-            'qty'           => $booking_line_group['qty'],
-            'free_qty'      => $booking_line_group['free_qty'],
-            'discount'      => $booking_line_group['discount'],
-            'is_group'      => true,
-            'is_pack'       => true
-        ];
-        $lines[] = $line;
-
-        if($params['mode'] == 'detailed') {
-            foreach($booking_line_group['booking_lines_ids'] as $booking_line) {
-                $line = [
-                    'name'          => $booking_line['name'],
-                    'qty'           => $booking_line['qty'],
-                    'price'         => null,
-                    'total'         => null,
-                    'unit_price'    => null,
-                    'vat_rate'      => null,
-                    'discount'      => null,
-                    'free_qty'      => null,
-                    'is_group'      => false,
-                    'is_pack'       => false
-                ];
-                $lines[] = $line;
-            }
-        }
-    }
-    else {
-
-        // group is a pack with no own price
-        $group_is_pack = false;
-
-        if($params['mode'] == 'grouped') {
-            $line = [
-                'name'          => $booking_line_group['name'],
-                'details'       => $group_details,
-                'price'         => $booking_line_group['price'],
-                'total'         => $booking_line_group['total'],
-                'unit_price'    => $booking_line_group['total'],
-                'vat_rate'      => (floatval($booking_line_group['price'])/floatval($booking_line_group['total']) - 1.0),
-                'qty'           => 1,
-                'free_qty'      => 0,
-                'discount'      => 0,
-                'is_group'      => true,
-                'is_pack'       => false
-            ];
-        }
-        else {
-            $line = [
-                'name'          => $booking_line_group['name'],
-                'details'       => $group_details,
-                'price'         => null,
-                'total'         => null,
-                'unit_price'    => null,
-                'vat_rate'      => null,
-                'qty'           => null,
-                'free_qty'      => null,
-                'discount'      => null,
-                'is_group'      => true,
-                'is_pack'       => false
-            ];
-        }
-        $lines[] = $line;
-
-
-        $group_lines = [];
-
-        foreach($booking_line_group['booking_lines_ids'] as $booking_line) {
-
-            if($params['mode'] == 'grouped') {
-                $line = [
-                    'name'          => (strlen($booking_line['description']) > 0)?$booking_line['description']:$booking_line['name'],
-                    'price'         => null,
-                    'total'         => null,
-                    'unit_price'    => null,
-                    'vat_rate'      => null,
-                    'qty'           => $booking_line['qty'],
-                    'discount'      => null,
-                    'free_qty'      => null,
-                    'is_group'      => false,
-                    'is_pack'       => false
-                ];
-            }
-            else {
-                $line = [
-                    'name'          => (strlen($booking_line['description']) > 0)?$booking_line['description']:$booking_line['name'],
-                    'price'         => $booking_line['price'],
-                    'total'         => $booking_line['total'],
-                    'unit_price'    => $booking_line['unit_price'],
-                    'vat_rate'      => $booking_line['vat_rate'],
-                    'qty'           => $booking_line['qty'],
-                    'discount'      => $booking_line['discount'],
-                    'free_qty'      => $booking_line['free_qty'],
-                    'is_group'      => false,
-                    'is_pack'       => false
-                ];
-            }
-
-            $group_lines[] = $line;
-        }
-        if($params['mode'] == 'detailed' || $params['mode'] == 'grouped') {
-            foreach($group_lines as $line) {
-                $lines[] = $line;
-            }
-        }
-        // mode is 'simple' : group lines by VAT rate
-        else {
-            $group_tax_lines = [];
-            foreach($group_lines as $line) {
-                $vat_rate = strval($line['vat_rate']);
-                if(!isset($group_tax_lines[$vat_rate])) {
-                    $group_tax_lines[$vat_rate] = 0;
-                }
-                $group_tax_lines[$vat_rate] += $line['total'];
-            }
-
-            if(count(array_keys($group_tax_lines)) <= 1) {
-                $pos = count($lines)-1;
-                foreach($group_tax_lines as $vat_rate => $total) {
-                    $lines[$pos]['qty'] = 1;
-                    $lines[$pos]['vat_rate'] = $vat_rate;
-                    $lines[$pos]['total'] = $total;
-                    $lines[$pos]['price'] = $total * (1 + $vat_rate);
-                }
-            }
-            else {
-                foreach($group_tax_lines as $vat_rate => $total) {
-                    $line = [
-                        'name'      => 'Services avec TVA '.($vat_rate*100).'%',
-                        'qty'       => 1,
-                        'vat_rate'  => $vat_rate,
-                        'total'     => $total,
-                        'price'     => $total * (1 + $vat_rate)
-                    ];
-                    $lines[] = $line;
-                }
-            }
-        }
-    }
-}
-
-$values['lines'] = $lines;
-
-
-/*
-    compute fare benefit detail
-*/
-$values['benefit_lines'] = [];
-
-foreach($booking['booking_lines_groups_ids'] as $group) {
-    if($group['fare_benefit'] == 0) {
-        continue;
-    }
-    $index = $group['rate_class_id']['description'];
-    if(!isset($values['benefit_lines'][$index])) {
-        $values['benefit_lines'][$index] = [
-            'name'  => $index,
-            'value' => $group['fare_benefit']
-        ];
-    }
-    else {
-        $values['benefit_lines'][$index]['value'] += $group['fare_benefit'];
-    }
-}
-
-
-
-/*
-    retrieve final VAT and group by rate
-*/
-foreach($lines as $line) {
-    $vat_rate = $line['vat_rate'];
-    $tax_label = 'TVA '.strval( intval($vat_rate * 100) ).'%';
-    $vat = $line['price'] - $line['total'];
-    if(!isset($values['tax_lines'][$tax_label])) {
-        $values['tax_lines'][$tax_label] = 0;
-    }
-    $values['tax_lines'][$tax_label] += $vat;
-}
-
-
 // retrieve contact details
-foreach($booking['contacts_ids'] as $contact) {
-    if(strlen($values['contact_name']) == 0 || $contact['type'] == 'booking') {
-        // overwrite data of customer with contact info
-        $values['contact_name'] = str_replace(["Dr", "Ms", "Mrs", "Mr","Pr"], ["Dr","Melle", "Mme","Mr","Pr"], $contact['partner_identity_id']['title']).' '.$contact['partner_identity_id']['name'];
-        $values['contact_phone'] = $contact['partner_identity_id']['phone'];
-        $values['contact_email'] = $contact['partner_identity_id']['email'];
-    }
-}
+foreach($bookings as $booking) {
+    $item = [
+        'name'              => lodging_booking_print_booking_formatName($booking),
+        'description'       => str_replace(['<p><br></p>', '<p>', '</p>'], ['<br />', '<span>', '</span><br />'], $booking['description']),
+        'from'              => date('d/m/Y @ H:i', $booking['date_from'] + $booking['time_from']),
+        'to'                => date('d/m/Y @ H:i', $booking['date_to'] + $booking['time_to']),
+        'member'            => lodging_booking_print_booking_formatMember($booking),
+        'contacts'          => [],
+        'sojourns'          => [],
+        'customer'          => $booking['customer_identity_id'],
+        'price'             => $booking['price'],
+        'paid_amount'       => 0.0,
+        'due_amount'        => 0.0
+    ];
 
+    // retrieve paid amount based on fundings
+    foreach($booking['fundings_ids'] as $funding) {
+        $item['paid_amount'] += $funding['paid_amount'];
+        if($funding['due_date'] <= time()) {
+            $item['due_amount'] += ($funding['due_amount'] - $funding['paid_amount']);
+        }
+    }
+
+    // gather relevant contact details
+    foreach($booking['contacts_ids'] as $contact) {
+        if($contact['type'] == 'booking') {
+            // overwrite data of customer with contact info
+            $item['contacts'][] = [
+                'name'  => str_replace(["Dr", "Ms", "Mrs", "Mr","Pr"], ["Dr","Melle", "Mme","Mr","Pr"], $contact['partner_identity_id']['title']).' '.$contact['partner_identity_id']['name'],
+                'phone' => (strlen($contact['partner_identity_id']['mobile']))?$contact['partner_identity_id']['mobile']:$contact['partner_identity_id']['phone'],
+                'email' => $contact['partner_identity_id']['email']
+            ];
+        }
+    }
+
+    foreach($booking['booking_lines_groups_ids'] as $group) {
+        if($group['is_sojourn']) {
+            $sojourn = [
+                'name'          => $group['name'],
+                'date_from'     => $group['date_from'],
+                'date_to'       => $group['date_to'],
+                'nb_pers'       => $group['nb_pers'],
+                'rental_units'  => []
+            ];
+
+            foreach($group['sojourn_product_models_ids'] as $spm) {
+                if($spm['is_accomodation']) {
+                    foreach($spm['rental_unit_assignments_ids'] as $assignment) {
+                        $sojourn['rental_units'][] = [
+                            'name'   => $assignment['rental_unit_id']['code'],
+                            'qty'    => $assignment['qty']
+                        ];
+                    }
+                }
+            }
+            $item['sojourns'][] = $sojourn;
+        }
+    }
+
+    $values['bookings'][] = $item;
+}
 
 /*
     Inject all values into the template
@@ -565,7 +338,11 @@ $context->httpResponse()
 
 
 function lodging_booking_print_booking_formatMember($booking) {
-    $id = $booking['customer_id']['partner_identity_id']['id'];
-    $code = ltrim(sprintf("%3d.%03d.%03d", intval($id) / 1000000, (intval($id) / 1000) % 1000, intval($id)% 1000), '0');
-    return $code.' - '.$booking['customer_id']['partner_identity_id']['display_name'];
+    $id = $booking['customer_identity_id']['id'];
+    return ltrim(sprintf("%3d.%03d.%03d", intval($id) / 1000000, (intval($id) / 1000) % 1000, intval($id)% 1000), '0');
+}
+
+function lodging_booking_print_booking_formatName($booking) {
+    $code = (string) $booking['name'];
+    return substr($code, 0, 3).'.'.substr($code, 3, 3);
 }
