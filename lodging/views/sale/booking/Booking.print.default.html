@@ -274,7 +274,7 @@ hr {
                     </td>
                     <td width="10%" style="text-align: right;">
                         {% if line.unit_price is not null %}
-                            {{ line.unit_price | format_currency('EUR') }}
+                            {{ line.unit_price | format_money() }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
@@ -289,7 +289,7 @@ hr {
                     </td>
                     <td width="13%" style="text-align: right;">
                         {% if line.total is not null %}
-                            {{ line.total | format_currency('EUR') }}
+                            {{ line.total | format_money() }}
                         {% endif %}
                     </td>
                 </tr>
@@ -306,7 +306,7 @@ hr {
                     TOTAL HT
                 </td>
                 <td width="13%" style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ total | format_currency('EUR') }}
+                    {{ total | format_money() }}
                 </td>
             </tr>
             {% for tax_label, tax_total in tax_lines %}
@@ -316,7 +316,7 @@ hr {
                     {{tax_label}}
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ tax_total | format_currency('EUR') }}
+                    {{ tax_total | format_money() }}
                 </td>
             </tr>
             {% endif %}
@@ -326,7 +326,7 @@ hr {
                     TOTAL DU SÉJOUR TTC
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ price | format_currency('EUR') }}
+                    {{ price | format_money() }}
                 </td>
             </tr>
         </table>
@@ -351,7 +351,7 @@ hr {
             {% for benefit_line in benefit_lines %}
             <tr>
                 <td>{{ benefit_line.name }}</td>
-                <td style="text-align: center;">{{ benefit_line.value | format_currency('EUR') }}</td>
+                <td style="text-align: center;">{{ benefit_line.value | format_money() }}</td>
                 <td style="text-align: center;">{{ (100*benefit_line.value/price) | round }} %</td>
             </tr>
             {% endfor %}

@@ -296,7 +296,7 @@ hr {
                     </td>
                     <td width="10%" style="text-align: right;">
                         {% if line.unit_price is not null %}
-                            {{ line.unit_price | format_currency('EUR') }}
+                            {{ line.unit_price | format_money() }}
                         {% endif %}
                     </td>
                     <td width="8%" style="text-align: right;">
@@ -311,7 +311,7 @@ hr {
                     </td>
                     <td width="13%" style="text-align: right;">
                         {% if line.total is not null %}
-                            {{ line.total | format_currency('EUR') }}
+                            {{ line.total | format_money() }}
                         {% endif %}
                     </td>
                 </tr>
@@ -328,7 +328,7 @@ hr {
                     TOTAL HT
                 </td>
                 <td width="13%" style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ total | format_currency('EUR') }}
+                    {{ total | format_money() }}
                 </td>
             </tr>
             {% for tax_label, tax_total in tax_lines %}
@@ -338,7 +338,7 @@ hr {
                     {{tax_label}}
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    {{ tax_total | format_currency('EUR') }}
+                    {{ tax_total | format_money() }}
                 </td>
             </tr>
             {% endif %}
@@ -348,7 +348,7 @@ hr {
                     <strong>TOTAL TTC</strong>
                 </td>
                 <td style="text-align: right; border-left: solid 1px black; border-bottom: solid 1px black;">
-                    <strong>{{ price | format_currency('EUR') }}</strong>
+                    <strong>{{ price | format_money() }}</strong>
                 </td>
             </tr>
         </table>
@@ -366,7 +366,7 @@ hr {
 {% if (price > 0.0) and (status != 'proforma') and (type != 'credit_note') %}
 <div style="position: relative; margin-top: 40px; border: solid 2px black; height: 180px; page-break-inside: avoid;">
     <div style="font-size: 15px; padding-left: 15px; padding-top: 15px;">
-        Solde de <b>{{ price | format_currency('EUR') }}</b> à payer avant le <b>{{payment_deadline}}</b>
+        Solde de <b>{{ price | format_money() }}</b> à payer avant le <b>{{payment_deadline}}</b>
     </div>
     <div style="padding-top: 20px; padding-left: 15px; font-size: 15px;">
         <b>COMMUNICATION : {{ payment_reference }}</b><br />
@@ -393,7 +393,7 @@ hr {
 
 
 {% if (price < 0.0) %}
-<div style="width: 100%; text-align: center;">Un montant de {{ (-price) | format_currency('EUR') }} vous sera remboursé prochainement.</div>
+<div style="width: 100%; text-align: center;">Un montant de {{ (-price) | format_money() }} vous sera remboursé prochainement.</div>
 {% endif %}
 
 <div style="margin-top: 50px;">
