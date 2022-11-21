@@ -48,7 +48,7 @@ list($params, $providers) = announce([
             'default'       => constant('DEFAULT_LANG')
         ]
     ],
-    'constants'             => ['DEFAULT_LANG'],
+    'constants'             => ['DEFAULT_LANG', 'L10N_LOCALE'],
     'access' => [
         'visibility'        => 'protected',
         'groups'            => ['booking.default.user'],

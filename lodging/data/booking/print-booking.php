@@ -536,17 +536,6 @@ foreach($booking['contacts_ids'] as $contact) {
 */
 
 try {
-    // use localisation prefs for rendering
-    if(defined('L10N_LOCALE')) {
-        $res = setlocale(LC_ALL, constant('L10N_LOCALE'));
-        if($res) {
-            trigger_error("QN_DEBUG_PHP::set locale to ".constant('L10N_LOCALE'), QN_REPORT_DEBUG);
-        }
-        else {
-            trigger_error("QN_DEBUG_PHP::unknown locale ".constant('L10N_LOCALE'), QN_REPORT_WARNING);
-        }
-    }
-
     $loader = new TwigFilesystemLoader(QN_BASEDIR."/packages/{$package}/views/");
 
     $twig = new TwigEnvironment($loader);
@@ -556,6 +545,9 @@ try {
 
     $template = $twig->load("{$class_path}.{$params['view_id']}.html");
 
+    // use localisation prefs for rendering
+    setlocale(LC_ALL, constant('L10N_LOCALE'));
+    // render template
     $html = $template->render($values);
     // restore original locale
     setlocale(LC_ALL, 0);
