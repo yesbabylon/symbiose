@@ -677,6 +677,11 @@ try {
     /**  @var ExtensionInterface **/
     $extension  = new IntlExtension();
     $twig->addExtension($extension);
+    // #todo - temp workaround against LOCALE mixups
+    $filter = new \Twig\TwigFilter('format_money', function ($value) {
+        return number_format((float)($value),2,",",".");
+    });
+    $twig->addFilter($filter);
 
     $template = $twig->load("{$class_path}.{$params['view_id']}.html");
 
