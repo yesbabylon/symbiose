@@ -516,7 +516,7 @@ try {
     $twig->addExtension($extension);
     // #todo - temp workaround against LOCALE mixups
     $filter = new \Twig\TwigFilter('format_money', function ($value) {
-        return number_format((float)($value),2,",",".");
+        return number_format((float)($value),2,",",".").' €';
     });
     $twig->addFilter($filter);
 

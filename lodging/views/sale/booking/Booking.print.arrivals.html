@@ -90,7 +90,7 @@ blockquote {
                                 <div><h3>Réservation <span class="highlight">{{booking.name}}</h2></div>
                                 <div><h3>Client {{booking.member}} - <span class="highlight">{{booking.customer.name}}</span></h3></div>
                             </td>
-                            <td style="text-align: right; vertical-align: top;">TOTAL:&nbsp; {{booking.price | format_currency('EUR')}}</td>
+                            <td style="text-align: right; vertical-align: top;">TOTAL:&nbsp; {{booking.price | format_money()}}</td>
                         </tr>
                     </table>
                 </td>
@@ -116,8 +116,8 @@ blockquote {
                                 <div>Acompte restant dû:</div>
                             </td>
                             <td style="text-align: right;">
-                                <div>{{booking.paid_amount | format_currency('EUR')}}</div>
-                                <div><b>{{booking.due_amount | format_currency('EUR')}}</b></div>
+                                <div>{{booking.paid_amount | format_money()}}</div>
+                                <div><b>{{booking.due_amount | format_money()}}</b></div>
                             </td>
                         </tr>
                     </table>
