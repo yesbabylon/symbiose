@@ -51,21 +51,18 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 */
 $domain = $params['domain'];
 
-/*
-    center : trivial booking::center_id
-*/
 if(isset($params['center_id'])) {
     // add contraint on center_id
     $domain = Domain::conditionAdd($domain, ['center_id', '=', $params['center_id']]);
 }
 
 if(isset($params['date_from'])) {
-    // add contraint on center_id
+    // add contraint on date_from
     $domain = Domain::conditionAdd($domain, ['date', '>=', $params['date_from']]);
 }
 
 if(isset($params['date_to'])) {
-    // add contraint on center_id
+    // add contraint on date_to
     $domain = Domain::conditionAdd($domain, ['date', '<=', $params['date_to']]);
 }
 
