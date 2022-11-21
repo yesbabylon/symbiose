@@ -75,9 +75,8 @@ blockquote {
     <table>
         <tr>
             <td style="width: 50%;"><h2>Centre: {{center.name}}</h2></td>
-            <td style="width: 50%;text-align: right;"><h2>Arrivées du {{from|date("m/d/Y")}} au {{to|date("d/m/Y")}}</h2></td>
+            <td style="width: 50%;text-align: right;"><h2>Arrivées du {{from|date("d/m/Y")}} au {{to|date("d/m/Y")}}</h2></td>
         </tr>
-
     </table>
 
     {% for booking in bookings %}

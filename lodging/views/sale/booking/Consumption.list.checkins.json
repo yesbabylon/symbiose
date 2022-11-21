@@ -18,6 +18,16 @@
     "limit": 100,
     "order": ["date"],
     "controller": "lodging_consumption_collect",
+    "exports": [
+        {
+            "id": "export.print.arrivals",
+            "label": "Print Arrival listing",
+            "icon": "print",
+            "description": "Print arrivals for given dates and center.",
+            "controller": "lodging_booking_print-arrivals",
+            "view": "print.arrivals"
+        }
+    ],
     "layout": {
         "items": [
             {

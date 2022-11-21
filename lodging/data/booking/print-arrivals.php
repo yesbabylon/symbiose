@@ -12,12 +12,14 @@ use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
 use Twig\Extension\ExtensionInterface;
 
-use equal\data\DataFormatter;
-
 use lodging\sale\booking\Booking;
-use communication\Template;
 use lodging\identity\Center;
+use lodging\identity\User;
 
+/*
+    We use this controller as a "print" controller, for printing the result of a "Checkin" Consumption search.
+    We ignore domain, ids and controller and entity : we deal with Bookin entity and fetch relevant booking without additional "data" controller.
+*/
 list($params, $providers) = announce([
     'description'   => "Generates a list of arrival data as a PDF document, given a center and a date range.",
     'params'        => [
@@ -26,6 +28,7 @@ list($params, $providers) = announce([
             'type'          => 'string',
             'default'       => 'print.arrivals'
         ],
+        /*
         'date_from' => [
             'type'              => 'date',
             'description'       => "Date interval lower limit.",
@@ -42,6 +45,12 @@ list($params, $providers) = announce([
             'description'       => "The center to which the booking relates to.",
             'required'      => true
         ],
+        */
+        'params' => [
+            'description'   => 'Additional params to use for rerieving data.',
+            'type'          => 'array',
+            'default'       => []
+        ],
         'lang' =>  [
             'description'   => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'          => 'string',
@@ -57,13 +66,38 @@ list($params, $providers) = announce([
         'content-type'      => 'application/pdf',
         'accept-origin'     => '*'
     ],
-    'providers'     => ['context', 'orm']
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $providers['auth']];
 
 
+// check query consistency
+if(!isset($params['params']['date_from'])) {
+    $params['params']['date_from'] = time();
+    if(date('N') == 1) {
+        $params['params']['date_from'] = strtotime('last Monday');
+    }
+}
+
+if(!isset($params['params']['date_to'])) {
+    $params['params']['date_to'] = strtotime('+7 days');
+}
+
+// if no center is provided, fallback to curent users' default
+if(!isset($params['params']['center_id']) || $params['params']['center_id'] == 0) {
+    $user = User::id($auth->userId())->read(['centers_ids'])->first(true);
+    if(count($user['centers_ids']) <= 0) {
+        throw new Exception("center_id", QN_ERROR_MISSING_PARAM);
+    }
+    $params['params']['center_id'] = reset($user['centers_ids']);
+}
+
+// inject retrieved vars as regular params
+$params['center_id'] = $params['params']['center_id'];
+$params['date_from'] = $params['params']['date_from'];
+$params['date_to'] = $params['params']['date_to'];
 
 // retrieve the listing of confirmed Booking within the date range
 $bookings_ids = Booking::search([ ['center_id', '=', $params['center_id']], ['status', 'in', ['confirmed', 'validated']], ['date_from', '>=', $params['date_from']], ['date_to', '<=', $params['date_to']] ])->ids();

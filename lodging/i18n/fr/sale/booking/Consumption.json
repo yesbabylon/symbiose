@@ -30,6 +30,16 @@
             "description": "Liste des consommations.",
             "layout": {}
         },
+        "list.checkins": {
+            "name": "Planning des arrivées / Check-ins",
+            "description": "Liste des arrivées attendues.",
+            "exports": {
+                "export.print.arrivals": {
+                    "label": "Imprimer le listing des arrivées"
+                }
+            },
+            "layout": {}
+        },
         "list.meals": {
             "name": "Planning des repas",
             "description": "Liste des consommations de type repas.",

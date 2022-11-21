@@ -19,12 +19,12 @@ list($params, $providers) = announce([
         'date_from' => [
             'type'              => 'date',
             'description'       => "Date interval lower limit.",
-            'default'           => strtotime('first day of previous week')
+            'default'           => strtotime('-7 days')
         ],
         'date_to' => [
             'type'              => 'date',
             'description'       => 'Date interval Upper limit.',
-            'default'           => strtotime('last day of next week')
+            'default'           => strtotime('+7 days')
         ],
         'center_id' => [
             'type'              => 'many2one',
