@@ -536,7 +536,6 @@ foreach($booking['contacts_ids'] as $contact) {
 */
 
 try {
-    $current_locale = setlocale(LC_ALL, 0);
     // use localisation prefs for rendering
     if(defined('L10N_LOCALE')) {
         $res = setlocale(LC_ALL, constant('L10N_LOCALE'));
@@ -559,7 +558,7 @@ try {
 
     $html = $template->render($values);
     // restore original locale
-    setlocale(LC_ALL, $current_locale);
+    setlocale(LC_ALL, 0);
 }
 catch(Exception $e) {
     trigger_error("QN_DEBUG_ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
