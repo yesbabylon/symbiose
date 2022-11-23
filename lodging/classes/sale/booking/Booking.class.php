@@ -816,7 +816,8 @@ class Booking extends \sale\booking\Booking {
                                 $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
                             }
 
-                            $nb_nights  = $group['nb_nights'];
+                            // events are accounted in days, and sojourns in nights
+                            $nb_nights = ($group['is_event'])?$group['nb_nights']+1:$group['nb_nights'];
 
                             if($spm['product_model_id.qty_accounting_method'] == 'person') {
                                 // #todo - we don't check (yet) for daily variations (from booking lines)
@@ -933,7 +934,7 @@ class Booking extends \sale\booking\Booking {
                         }
                     }
 
-                    // pass-2 : create consumptions for booking lines targeting non-rental_unit products (any other schedulable product)
+                    // pass-2 : create consumptions for booking lines targeting non-rental_unit products (any other schedulable product, e.g. meals)
                     foreach($groups as $gid => $group) {
 
                         $lines = $om->read(BookingLine::getType(), $group['booking_lines_ids'], [
