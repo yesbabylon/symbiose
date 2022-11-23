@@ -845,6 +845,12 @@ class Booking extends \sale\booking\Booking {
                             $offset = ($group['is_sojourn'])?$spm['product_model_id.schedule_offset']:0;
                             $is_accomodation = $spm['product_model_id.is_accomodation'];
 
+                            // for events, non-accomodations are scheduled according to the event (group)
+                            if($group['is_event'] && !$is_accomodation) {
+                                $schedule_from = $group['time_from'];
+                                $schedule_to = $group['time_to'];
+                            }
+
                             $is_first = true;
                             for($i = 0; $i < $nb_nights; ++$i) {
                                 $c_date = mktime(0, 0, 0, $month, $day+$i+$offset, $year);
