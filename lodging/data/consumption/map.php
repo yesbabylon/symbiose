@@ -40,6 +40,11 @@ list($params, $providers) = announce([
 
 list($context, $orm, $auth, $adapter) = [$providers['context'], $providers['orm'], $providers['auth'], $providers['adapt']];
 
+// #memo - we need this since the timezone is set to Europe/Brussels (even if shouldn't)
+// this is to prevent PHP from trying to set daylight saving offset (which is not accurate)
+date_default_timezone_set('UTC');
+
+
 // get associative array mapping rental units and dates with consumptions
 $result = Consumption::getExistingConsumptions($orm, $params['centers_ids'], $params['date_from'], $params['date_to']);
 
