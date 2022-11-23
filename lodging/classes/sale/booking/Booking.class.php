@@ -816,8 +816,8 @@ class Booking extends \sale\booking\Booking {
                                 $rental_units = $om->read('lodging\realestate\RentalUnit', $rental_units_ids, ['parent_id', 'children_ids', 'can_partial_rent']);
                             }
 
-                            // events are accounted in days, and sojourns in nights
-                            $nb_nights = ($group['is_event'])?$group['nb_nights']+1:$group['nb_nights'];
+                            // being an accomodation or not, the rental unit will be (partially) occupied on range of nb_night+1 day(s)
+                            $nb_nights = $group['nb_nights']+1;
 
                             if($spm['product_model_id.qty_accounting_method'] == 'person') {
                                 // #todo - we don't check (yet) for daily variations (from booking lines)
@@ -870,7 +870,7 @@ class Booking extends \sale\booking\Booking {
                                     $c_schedule_from = 0;                       // midnight same day
                                 }
 
-                                if($i == $nb_nights || !$is_accomodation) {     // last day
+                                if($i == ($nb_nights-1) || !$is_accomodation) { // last day
                                     $c_schedule_to = $group['time_to'];
                                 }
                                 else {
