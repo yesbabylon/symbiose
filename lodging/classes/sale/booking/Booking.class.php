@@ -867,14 +867,14 @@ class Booking extends \sale\booking\Booking {
 
                                 // if day is not the arrival day
                                 if($i > 0) {
-                                    $c_schedule_from = 0;               // midnight same day
+                                    $c_schedule_from = 0;                       // midnight same day
                                 }
 
-                                if($i == $nb_nights) {                  // last day
+                                if($i == $nb_nights || !$is_accomodation) {     // last day
                                     $c_schedule_to = $group['time_to'];
                                 }
                                 else {
-                                    $c_schedule_to = 24 * 3600;         // midnight next day
+                                    $c_schedule_to = 24 * 3600;                 // midnight next day
                                 }
 
                                 if($rental_units_assignments > 0) {
