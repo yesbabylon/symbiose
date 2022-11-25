@@ -126,7 +126,8 @@ $tree = [
                 'product_model_id' => [
                     'schedule_offset',
                     'has_duration',
-                    'duration'
+                    'duration',
+                    'capacity'
                 ]
             ],
             'auto_discounts_ids' => [

@@ -234,7 +234,6 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
     }
 
     public update(values:any) {
-        console.log('group update', values);
         super.update(values);
         // assign VM values
         this.vm.name.formControl.setValue(this.instance.name);
@@ -249,6 +248,9 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
         this.vm.participants_count.formControl.setValue(this.instance.nb_pers);
         this.vm.price.value = this.instance.price;
         this.vm.sojourn_type.value = (this.instance.sojourn_type_id == 1)?'GA':'GG';
+
+        // #workaround - force age_ranges update (since it cannot be done in update())
+        this.instance.age_range_assignments_ids = values.age_range_assignments_ids;
     }
 
     public calcRateClass() {
@@ -390,11 +392,12 @@ export class BookingServicesBookingGroupComponent extends TreeComponent<BookingL
                 this.updated.emit();
             }
             catch(response) {
+                console.log(response);
                 // restore value
                 this.vm.participants_count.formControl.setValue(this.instance.nb_pers);
                 // display error
-                this.api.errorSnack('nb_pers', "Le nombre de personnes ne correspond pas aux tranches d'âge");
-                // this.api.errorFeedback(response);
+                // this.api.errorSnack('nb_pers', "Le nombre de personnes ne correspond pas aux tranches d'âge");
+                this.api.errorFeedback(response);
             }
         }
     }

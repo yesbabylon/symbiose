@@ -7,7 +7,7 @@
     "controller": "core_model_chart",
     "layout": {
         "entity": "lodging\\sale\\booking\\Booking",
-        "stacked": true,
+        "stacked": false,
         "group_by": "range",
         "range_interval": "month",
         "range_from": "date.this.year.first",

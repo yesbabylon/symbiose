@@ -40,7 +40,11 @@ export class PlanningCalendarBookingComponent implements OnInit, OnChanges  {
     }
 
     private calcDiff(date1: Date, date2: Date) : number {
-        let diff = Math.abs(date1.getTime() - date2.getTime());
+        let start = new Date(date1.getTime());
+        start.setMinutes(start.getMinutes() - start.getTimezoneOffset());
+        let end = new Date(date2.getTime());
+        end.setMinutes(end.getMinutes() - end.getTimezoneOffset());
+        let diff = Math.abs(start.getTime() - end.getTime());
         return Math.ceil(diff / (1000 * 3600 * 24));
     }
 

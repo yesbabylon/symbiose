@@ -126,17 +126,22 @@ export class BookingServicesBookingGroupLineComponent extends TreeComponent<Book
     public ngOnChanges(changes: SimpleChanges) {
         if(changes.model) {
             if(!this.instance.qty_vars || !this.instance.qty_vars.length) {
-                let factor:number = this.group.nb_nights;
+                let factor:number = 1;
                 if(this.instance.product_id?.product_model_id?.has_duration) {
                     factor = this.instance.product_id.product_model_id.duration;
                 }
+                else if(this.instance.is_rental_unit || this.instance.is_meal ) {
+                    factor = Math.max(1, this.group.nb_nights);
+                }
+                else if(this.group.is_event) {
+                    // regular products are repeated in case the group is an 'event'
+                    factor = this.group.nb_nights + 1;
+                }
                 let values = new Array(factor);
                 values.fill(0);
-                let i = 0;
                 this.vm.qty_vars.values = [];
                 for(let val of values) {
-                    this.vm.qty_vars.values[i] = val;
-                    ++i;
+                    this.vm.qty_vars.values.push(val);
                 }
             }
         }
@@ -183,8 +188,8 @@ export class BookingServicesBookingGroupLineComponent extends TreeComponent<Book
     }
 
     /**
-     * Retrieves the number of persons that
-     * If the group has a matching age_range, the related qty is given. Otherwise, the method returns nb_pers from the group.
+     * Retrieves the number of persons to whom the service of the line will be delivered.
+     * If the parent group has a matching age_range, the related qty is given. Otherwise, the method returns nb_pers from the group.
      */
     private getNbPers(): number {
         let nb_pers = this.group.nb_pers;

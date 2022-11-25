@@ -1501,18 +1501,28 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
         /* find existing SPM (for resetting) */
 
         $groups = $om->read(self::getType(), $oids, [
+            'booking_id.center_office_id',
             'has_locked_rental_units',
             'booking_lines_ids',
             'sojourn_product_models_ids'
         ]);
 
         foreach($groups as $gid => $group) {
+            // retrieve rental unit assignment preference
+            $rentalunits_manual_assignment = false;
+            $offices_preferences = $om->read(\lodging\identity\CenterOffice::getType(), $group['booking_id.center_office_id'], ['rentalunits_manual_assignment']);
+            if($offices_preferences > 0 && count($offices_preferences)) {
+                $prefs = reset($offices_preferences);
+                $rentalunits_manual_assignment = (bool) $prefs['rentalunits_manual_assignment'];
+            }
             // ignore groups with explicitly locked rental unit assignments
             if($group['has_locked_rental_units']) {
                 continue;
             }
-            // remove all previous SPM and rental_unit assignements
-            $om->update(self::getType(), $gid, ['sojourn_product_models_ids' => array_map(function($a) { return "-$a";}, $group['sojourn_product_models_ids'])]);
+            if(!$rentalunits_manual_assignment) {
+                // remove all previous SPM and rental_unit assignements
+                $om->update(self::getType(), $gid, ['sojourn_product_models_ids' => array_map(function($a) { return "-$a";}, $group['sojourn_product_models_ids'])]);
+            }
             // attempt to auto-assign rental units
             $om->callonce(self::getType(), 'createRentalUnitsAssignmentsFromLines', $gid, $group['booking_lines_ids'], $lang);
         }

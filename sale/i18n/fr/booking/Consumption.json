@@ -72,21 +72,26 @@
             "description": "Le client a explicitement renoncé au service.",
             "help": ""
         },
-		"is_rental_unit": {
-			"label": "Unité locative",
-			"description": "Le service correspond à une unité locative.",
-			"help": ""
-		},
-		"is_meal": {
-			"label": "Repas",
-			"description": "Le service est un repas.",
-			"help": ""
-		},
-		"is_accomodation": {
-			"label": "Logement",
-			"description": "Le service est un logement.",
-			"help": ""
-		},
+        "is_rental_unit": {
+            "label": "Location",
+            "description": "Le service est lié à une unité locative.",
+            "help": ""
+        },
+        "is_meal": {
+            "label": "Repas",
+            "description": "Le service est un repas.",
+            "help": ""
+        },
+        "is_accomodation": {
+            "label": "Logement",
+            "description": "Le service est un logement.",
+            "help": ""
+        },
+        "age_range_id": {
+            "label": "Tranche d'âge",
+            "description": "Tranche d'âge pour laquelle le service est souscrit.",
+            "help": ""
+        },
         "cleanup_type": {
             "label": "Nettoyage",
             "description": "Le type de nettoyage a réaliser.",

@@ -138,7 +138,7 @@
 
         <!-- 2) quantity variations -->
         <div class="row row-first"
-            *ngIf="!vProduct.identification.folded && !group.is_locked && instance.qty_accounting_method == 'person'">
+            *ngIf="!vProduct.identification.folded && !group.is_locked && instance.qty_accounting_method == 'person' && (!instance.is_accomodation || instance.product_id.product_model_id.capacity == 1)">
             <div class="part cell" [class.hidden]="!ready">
                 <div class="part-toggle">
                     <button mat-icon-button *ngIf="!vProduct.variations.folded"
@@ -175,7 +175,7 @@
                                 <div style="width: 65px; margin-left: 24px;">
                                     <mat-form-field>
                                         <input style="text-align: right;" matInput type="number" min="0"
-                                            [value]="calcQtyVar(index)"
+                                            [ngModel]="calcQtyVar(index)"
                                             (blur)="vm.qty_vars.change(index, $event)">
                                     </mat-form-field>
                                 </div>
@@ -188,7 +188,7 @@
 
         <!-- 3) auto-discounts (price adapters) -->
         <div class="row row-first" *ngIf="!vProduct.identification.folded && !group.is_locked && instance.auto_discounts_ids.length">
-            <div class="part cell" [class.hidden]="!ready">
+            <div class="part cell" style="flex: none; min-width: 38%;" [class.hidden]="!ready">
                 <div class="part-toggle">
                     <button mat-icon-button *ngIf="!vProduct.adapters.folded"
                         (click)="vProduct.adapters.folded = !vProduct.adapters.folded">
@@ -212,7 +212,7 @@
                     <!-- price adapters details -->
                     <div class="row row-thin" *ngIf="!vProduct.adapters.folded">
                         <div style="width: 100%;">
-                            <div *ngFor="let adapter of instance.auto_discounts_ids; let index = index;" style="display: flex;">
+                            <div *ngFor="let adapter of instance.auto_discounts_ids; let index = index;" style="display: flex; padding-right: 25px;">
                                 <booking-services-booking-group-line-priceadapter
                                     [model]="adapter"
                                     [parent]="instance">
@@ -226,7 +226,7 @@
 
         <!-- 4) manual discounts -->
         <div class="row row-first" *ngIf="!vProduct.identification.folded && !group.is_locked">
-            <div class="part cell" [class.hidden]="!ready">
+            <div class="part cell" style="flex: none; min-width: 38%;" [class.hidden]="!ready">
                 <div class="part-toggle">
                     <button mat-icon-button *ngIf="!vProduct.discounts.folded"
                         (click)="vProduct.discounts.folded = !vProduct.discounts.folded">
