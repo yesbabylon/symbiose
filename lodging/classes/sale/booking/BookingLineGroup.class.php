@@ -504,7 +504,7 @@ class BookingLineGroup extends \sale\booking\BookingLineGroup {
             // always update nb_pers
             // to make sure to trigger self::updatePriceAdapters and BookingLine::_updateQty
             $updated_fields['nb_pers'] = $group['nb_pers'];
-            if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation' && $group['pack_id.product_model_id.capacity'] > 0) {
+            if($group['pack_id.product_model_id.qty_accounting_method'] == 'accomodation' && $group['pack_id.product_model_id.capacity'] > $group['nb_pers']) {
                 $updated_fields['nb_pers'] = $group['pack_id.product_model_id.capacity'];
             }
 

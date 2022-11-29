@@ -150,7 +150,7 @@ class Booking extends \sale\booking\Booking {
                 'description'       => 'Default sojourn type of the booking (set according to booking center).'
             ],
 
-            "is_invoiced" => [
+            'is_invoiced' => [
                 "type"              => "boolean",
                 "description"       => "Flag for handling special case where invoice is emitted at confirmation.",
                 "default"           => false
