@@ -338,7 +338,7 @@ hr {
             <tr>
                 <td>{{ benefit_line.name }}</td>
                 <td style="text-align: center;">{{ benefit_line.value | format_money() }}</td>
-                <td style="text-align: center;">{{ (100*benefit_line.value/price) | round }} %</td>
+                <td style="text-align: center;">{{ (100*benefit_line.value/(price+benefit_line.value)) | round }} %</td>
             </tr>
             {% endfor %}
         </table>
