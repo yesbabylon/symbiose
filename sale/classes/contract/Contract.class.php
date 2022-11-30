@@ -46,6 +46,12 @@ class Contract extends Model {
                 'default'           => 'pending'
             ],
 
+            'is_active' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the contract as being active or not.',
+                'default'           => true
+            ],
+
             'date' => [
                 'type'              => 'date',
                 'description'       => 'Date at which the contract has been officially released.'
