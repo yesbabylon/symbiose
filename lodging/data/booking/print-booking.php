@@ -550,12 +550,12 @@ try {
 
     $template = $twig->load("{$class_path}.{$params['view_id']}.html");
 
-    // use localisation prefs for rendering
-    setlocale(LC_ALL, constant('L10N_LOCALE'));
+    // #todo - use localization prefs for rendering (independent from locale)
+    // setlocale(LC_ALL, constant('L10N_LOCALE'));
     // render template
     $html = $template->render($values);
     // restore original locale
-    setlocale(LC_ALL, 0);
+    // setlocale(LC_ALL, 0);
 }
 catch(Exception $e) {
     trigger_error("QN_DEBUG_ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
