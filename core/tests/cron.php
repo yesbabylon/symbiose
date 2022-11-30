@@ -18,11 +18,10 @@ $tests = [
                 'return'            =>  array('boolean'),
                 'expected'          =>  true,
                 'test'              =>  function () {
-                                            
                                             list($params, $providers) = announce([
                                                 'providers' => ['cron']
                                             ]);
-                                            /** 
+                                            /**
                                              * @var \equal\cron\Scheduler $cron
                                             */
                                             $cron = $providers['cron'];
