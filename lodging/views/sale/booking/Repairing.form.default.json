@@ -91,14 +91,14 @@
                                                             "ACTION.CREATE": false
                                                         }
                                                     }
-                                                }                                                
+                                                }
                                             }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    },                    
+                    },
                     {
                         "id": "section.repairs_ids",
                         "label": "repairs",

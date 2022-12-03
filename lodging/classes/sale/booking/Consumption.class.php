@@ -31,7 +31,7 @@ class Consumption extends \sale\booking\Consumption {
                 'onupdate'          => 'onupdateBookingId'
             ],
 
-            // #todo - deprecate : relation bewteen consumptions and lines might be indirect
+            // #todo - deprecate : relation between consumptions and lines might be indirect
             'booking_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'lodging\sale\booking\BookingLine',
@@ -103,7 +103,7 @@ class Consumption extends \sale\booking\Consumption {
                 'description'       => 'Moment of the day at which the event stops, if applicable.',
                 'default'           => 24 * 3600,
                 'onupdate'          => 'onupdateScheduleTo'
-            ],
+            ]
 
         ];
     }

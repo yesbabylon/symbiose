@@ -175,7 +175,7 @@ export class PlanningComponent implements OnInit, AfterViewInit, OnDestroy {
             descriptor = {
                 context_silent: true, // do not update sidebar
                 context: {
-                    entity: 'sale\\booking\\Repairing',
+                    entity: 'lodging\\sale\\booking\\Repairing',
                     type: 'form',
                     name: 'default',
                     domain: ['id', '=', consumption.repairing_id.id],
