@@ -201,6 +201,7 @@ class Mail extends Model {
         // setup SMTP settings
         $mailer = new \Swift_Mailer($transport);
 
+        // #todo - store as setting
         $max = 10;
         $i = 0;
         // loop through messages
@@ -245,7 +246,7 @@ class Mail extends Model {
                     }
                     // send email
                     $mailer->send($envelope);
-                    // upon sucessful sending, remove the mail from the outbox
+                    // upon successful sending, remove the mail from the outbox
                     $filename = self::MESSAGE_FOLDER.'/'.$file;
                     unlink($filename);
                     // if the message is linked to a core\Mail object, update the latter's status

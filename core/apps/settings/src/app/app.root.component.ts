@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { ContextService, ApiService, AuthService } from 'sb-shared-lib';
+import { ContextService, ApiService, AuthService, EnvService } from 'sb-shared-lib';
 
 import * as $ from 'jquery';
 import { type } from 'jquery';
@@ -37,11 +37,14 @@ export class AppRootComponent implements OnInit {
     public translationsMenuLeft: any = {};
     public translationsMenuTop: any = {};
 
+    private app_settings_root_package: string = '';
+
     constructor(
         private router: Router,
         private context:ContextService,
         private api:ApiService,
-        private auth:AuthService
+        private auth:AuthService,
+        private env:EnvService
     ) {}
 
 
@@ -51,26 +54,24 @@ export class AppRootComponent implements OnInit {
             await this.auth.authenticate();
         }
         catch(err) {
-            window.location.href = '/apps';
+            window.location.href = '/auth';
             return;
         }
 
         // load menus from server
-        try {
-            const data = await this.api.getMenu('symbiose', 'settings.left');
+        this.env.getEnv().then( async (environment:any) => {
+            this.app_settings_root_package = (environment.app_settings_root_package)?environment.app_settings_root_package:'core';
+            const data = await this.api.getMenu(this.app_settings_root_package, 'settings.left');
             // store full translated menu
             this.leftMenu = this.translateMenu(data.items, data.translation);
             // fill left pane with unfiltered menu
             this.navMenuItems = this.leftMenu;
             // this.translationsMenuLeft = this.leftMenu.translation;
 
-            const top_menu:any = await this.api.getMenu('symbiose', 'settings.top');
+            const top_menu:any = await this.api.getMenu(this.app_settings_root_package, 'settings.top');
             this.topMenuItems = top_menu.items;
             this.translationsMenuTop = top_menu.translation;
-        }
-        catch(response) {
-            console.log('unable to load menu', response);
-        }
+        });
 
     }
 

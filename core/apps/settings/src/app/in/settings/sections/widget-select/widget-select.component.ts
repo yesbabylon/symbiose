@@ -16,7 +16,7 @@ export class WidgetSelectComponent implements OnInit {
 
   public settingValue: any;
   public settingName: any;
-  
+
   public control = new FormControl();
   public focusState: any;
   public previousValue: any;
@@ -36,7 +36,6 @@ export class WidgetSelectComponent implements OnInit {
       }
     )
     this.control.setValue(this.settingValue);
-
   }
 
   public onChange(eventValue: any) {

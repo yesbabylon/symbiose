@@ -1,17 +1,17 @@
 [
-{
+    {
         "name": "core\\setting\\Setting",
         "lang": "en",
         "data": [
             {
                 "id": 1,
                 "code": "numbers.thousands_separator",
-                "title": "Séparateur de milliers",
+                "title": "Thousands separator",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Caract\u00e8re de s\u00e9paration de milliers",
-                "help": "Caract\u00e8re de s\u00e9paration de milliers (e.g. '.', ',', ' ').",
+                "description":"Character to use as thousands separator",
+                "help": "Thousands separator char (e.g. '.', ',', ' ').",
                 "type": "string"
             },
             {
@@ -21,58 +21,58 @@
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Position du symbole de monnaie par rapport \u00e0 sa valeur",
-                "help": "Position du symbole de monnaie par rapport \u00e0 sa valeur ('before', 'after', 'decimal_separator').",
+                "description":"Position of the currency symbol relative to its value.",
+                "help": "Position of the currency symbol relative to its value ('before', 'after', 'decimal_separator').",
                 "type": "string"
             },
             {
                 "id": 3,
                 "code": "currency.decimal_precision",
-                "title": "Nombre de d\u00e9cimales (Prix)",
+                "title": "Number of decimal digits (Price)",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Nombre de d\u00e9cimales pour les prix",
-                "help": "Nombre de d\u00e9cimales \u00e0 conserver pour les champs \u00e0 usage 'Price'.",
+                "description":"Number of decimal digits for prices.",
+                "help": "Number of decimal digits to store for fields of usage 'Price'.",
                 "type": "integer"
             },
             {
                 "id": 4,
                 "code": "numbers.decimal_separator",
-                "title": "Type de d\u00e9cimales",
+                "title": "Decimal separator",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Type de d\u00e9cimales (e.g. '.', ',')",
-                "help": "Caract\u00e8re de s\u00e9paration entre les parties enti\u00e8re et d\u00e9cimale (e.g. '.', ',').",
+                "description":"Decimal separator (e.g. '.', ',')",
+                "help": "Character to use for separating integer and decimal parts of floating numbers (e.g. '.', ',').",
                 "type": "string"
             },
             {
                 "id": 5,
                 "code": "numbers.decimal_precision",
-                "title": "Nombre de d\u00e9cimales",
+                "title": "Number of decimal digits",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Nombre de d\u00e9cimales",
-                "help": "Nombre de d\u00e9cimales \u00e0 conserver pour les champs de type 'float'.",
+                "description":"Number of decimal digits",
+                "help": "Number of decimal digits to store for fields of type 'float'.",
                 "type": "integer"
             },
             {
                 "id": 6,
                 "code": "date_format",
-                "title": "Format de date",
+                "title": "Date format",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
-                "description":"Format de date",
-                "help": "Format pour l'affichage des dates.",
+                "description":"Date format",
+                "help": "Format to use for displaying dates.",
                 "type": "string"
             },
             {
                 "id": 7,
                 "code": "time_format",
-                "title": "Format des heures",
+                "title": "Hours format",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 1,
@@ -83,89 +83,89 @@
             {
                 "id": 8,
                 "code": "company.id",
-                "title": "Entreprise",
+                "title": "Company",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 2,
-                "description":"Nom de l'entreprise",
-                "help": "Identifiant de l'entreprise principale de l'installation courante.",
+                "description":"Installation main company",
+                "help": "Identifier of the main company of the current installation.",
                 "type": "integer"
             },
             {
                 "id": 9,
                 "code": "formats.paper",
-                "title": "Format du papier",
+                "title": "Paper format",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 2,
-                "description":"Taille papier par d\u00e9faut",
-                "help": "Taille papier par d\u00e9faut (e.g. 'A4', 'legal_US', 'letter_US').",
+                "description":"Default size for paper documents",
+                "help": "Default size for paper documents (e.g. 'A4', 'legal_US', 'letter_US').",
                 "type": "string"
             },
             {
                 "id": 10,
                 "code": "account_creation",
-                "title": "Création de compte",
+                "title": "Account creation",
                 "package": "core",
                 "form_control": "toggle",
                 "section_id": 3,
-                "description":"Autoriser la création de compte",
-                "help": "Autoriser les visiteurs \u00e0 cr\u00e9er un compte utilisateur.",
+                "description":"Allow accounts creation",
+                "help": "Allow visitors to create a user account.",
                 "type": "boolean"
             },
             {
                 "id": 11,
                 "code": "import",
-                "title": "Importer",
+                "title": "Import",
                 "package": "core",
                 "form_control": "toggle",
                 "section_id": 3,
-                "description":"Autoriser l'importation",
-                "help": "Autoriser les utilisateurs \u00e0 importer des donn\u00e9es depuis des fichiers  (CSV\/XLS\/XLSX\/ODS).",
+                "description":"Allow import",
+                "help": "Allow users to import data from files (CSV\/XLS\/XLSX\/ODS).",
                 "type": "boolean"
             },
             {
                 "id": 12,
                 "code": "export",
-                "title": "Exporter",
+                "title": "Export",
                 "package": "core",
                 "form_control": "toggle",
                 "section_id": 3,
-                "description":"Autoriser l'exportation",
-                "help": "Autoriser les utilisateurs \u00e0 exporter des donn\u00e9es vers des fichiers (CSV\/XLS\/PDF).",
+                "description":"Allow export",
+                "help": "Allow users to export data by downloading files (CSV\/XLS\/PDF).",
                 "type": "boolean"
             },
             {
                 "id": 13,
                 "code": "currency",
-                "title": "Devise",
+                "title": "Currency",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 4,
-                "description":"Devise des prix",
-                "help": "Devise \u00e0 utiliser pour les champs \u00e0 usage 'Price' (ISO 4217).",
+                "description":"Prices currency",
+                "help": "Currency to use for fields of usage 'Price' (ISO 4217).",
                 "type": "string"
             },
             {
                 "id": 14,
                 "code": "length",
-                "title": "Longueur",
+                "title": "Length",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 4,
-                "description":"Unité de longueur",
-                "help": "Unit\u00e9 par d\u00e9faut pour les mesures de longueur.",
+                "description":"Length unit",
+                "help": "Default unit for length measures.",
                 "type": "string"
             },
             {
                 "id": 15,
                 "code": "weight",
-                "title": "Poids",
+                "title": "Weight",
                 "package": "core",
                 "form_control": "select",
                 "section_id": 4,
-                "description":"Unité de poids",
-                "help": "Unit\u00e9 par d\u00e9faut pour les mesures de poids (e.g. 'kg' kilogram, 'lb' pound).",
+                "description":"Weight unit",
+                "help": "Default unit for weight measures (e.g. 'kg' kilogram, 'lb' pound).",
                 "type": "string"
             },
             {
@@ -175,8 +175,8 @@
                 "package": "core",
                 "form_control": "select",
                 "section_id": 4,
-                "description":"Unité de volume",
-                "help": "Unit\u00e9 par d\u00e9faut pour les unit\u00e9s de volume (e.g. 'm3' cubic meter, 'ft3' cubic foot).",
+                "description":"Volume unit",
+                "help": "Default unit for volume measures (e.g. 'm3' cubic meter, 'ft3' cubic foot).",
                 "type": "string"
             },
             {
@@ -186,10 +186,10 @@
                 "package": "core",
                 "form_control": "select",
                 "section_id": 4,
-                "description":"Unité de surface",
-                "help": "Unit\u00e9 par d\u00e9faut pour les unit\u00e9s de surface (e.g. 'm2' square meter, 'ft2' square foot).",
+                "description":"Surface unit",
+                "help": "Default unit for surface measures (e.g. 'm2' square meter, 'ft2' square foot).",
                 "type": "string"
-            }            
+            }
         ]
     },
     {
@@ -216,8 +216,8 @@
             },
             {
                 "id": 4,
-                "title": "Type de d\u00e9cimales",
-                "description":"Type de d\u00e9cimales (e.g. '.', ',')",
+                "title": "Séparateur de de d\u00e9cimales",
+                "description":"Séparateur de d\u00e9cimales (e.g. '.', ',')",
                 "help": "Caract\u00e8re de s\u00e9paration entre les parties enti\u00e8re et d\u00e9cimale (e.g. '.', ',')."
             },
             {
@@ -241,8 +241,8 @@
             {
                 "id": 8,
                 "title": "Entreprise",
-                "description":"Nom de l'entreprise",
-                "help": "Identifiant de l'entreprise principale de l'installation courante."
+                "description":"Entreprise de l'installation",
+                "help": "Identifiant de l'entreprise principale pour l'installation courante."
             },
             {
                 "id": 9,
@@ -297,7 +297,7 @@
                 "title": "Surface",
                 "description":"Unité de surface",
                 "help": "Unit\u00e9 par d\u00e9faut pour les unit\u00e9s de surface (e.g. 'm2' square meter, 'ft2' square foot)."
-            }            
+            }
         ]
     }
 ]

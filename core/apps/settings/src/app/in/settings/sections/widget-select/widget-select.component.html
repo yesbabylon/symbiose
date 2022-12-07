@@ -11,7 +11,7 @@
       <mat-select [(value)]="settingValue" [formControl]="control" (selectionChange)="onChange($event)"
         disableOptionCentering>
         <mat-option *ngFor="let choice of choices" value="{{choice.value}}">
-          <ng-container *ngIf="choice.name != ''">{{choice.value}} <b>({{choice.name}})</b> </ng-container>
+          <ng-container *ngIf="choice.name != ''">{{choice.value}} <b *ngIf="choice.name?.length">({{choice.name}})</b> </ng-container>
           <ng-container *ngIf="choice.name == ''">{{choice.value}}</ng-container>
         </mat-option>
       </mat-select>

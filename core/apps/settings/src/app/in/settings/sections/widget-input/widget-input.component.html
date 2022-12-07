@@ -5,7 +5,7 @@
     <mat-card-subtitle>{{setting.help}}</mat-card-subtitle>
     <div class="settingName">{{settingName}}</div>
   </div>
-  
+
   <form (mouseenter)="focusState = true" (mouseleave)="focusState = false">
 
     <mat-form-field appearance="standard">
@@ -15,7 +15,7 @@
       <input matInput autocomplete="off"
             [formControl]="formControl"
             (input)="onChange()"
-            (blur)="onBlur()" 
+            (blur)="onBlur()"
             (focus)="onFocus()" />
 
       <mat-hint *ngIf="focusState">{{setting.description}}</mat-hint>
@@ -31,7 +31,7 @@
     <button mat-fab color="primary" (mousedown)="onSubmit($event)" [class]="{hidden: !showSubmitButton}">
       <mat-icon>check</mat-icon>
     </button>
-    
+
   </form>
 
 </mat-card>

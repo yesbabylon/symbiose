@@ -53,9 +53,9 @@ export class WidgetInputComponent implements OnInit, AfterViewInit {
    * Input has been modified : show submit button.
    */
   public onChange() {
-    console.log('WidgetFormComponent::onChange');    
+    console.log('WidgetFormComponent::onChange');
     this.showSubmitButton = true;
-    this.showResetButton = true;    
+    this.showResetButton = true;
   }
 
   public onFocus(){
@@ -84,7 +84,7 @@ export class WidgetInputComponent implements OnInit, AfterViewInit {
     if (newValue != oldValue) {
       this.settingValue = newValue;
       this.showSubmitButton = false;
-      this.showResetButton = false;  
+      this.showResetButton = false;
       this.save.toQueue(this.setting.setting_values_ids[0].id, { newValue: newValue, oldValue: oldValue }).subscribe( (action) => {
         if (action == 'undo') {
           this.formControl.setValue(oldValue);
