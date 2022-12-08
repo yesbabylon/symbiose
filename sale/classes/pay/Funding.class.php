@@ -42,6 +42,12 @@ class Funding extends Model {
                 'description'       => "Deadlines are installment except for last one: final invoice."
             ],
 
+            'order' => [
+                'type'              => 'integer',
+                'description'       => 'Order by which the funding have to be sorted when presented.',
+                'default'           => 0
+            ],
+
             'due_amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
