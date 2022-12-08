@@ -406,7 +406,7 @@ class BookingLine extends Model {
                 if($adata['type'] == 'percent') {
                     $result[$oid] += $adata['value'];
                 }
-                else if($adata['type'] == 'amount') {
+                else if($adata['type'] == 'amount' && $line['unit_price'] != 0) {
                     // amount discount is converted to a rate
                     $result[$oid] += round($adata['value'] / $line['unit_price'], 4);
                 }
@@ -459,15 +459,16 @@ class BookingLine extends Model {
                     'discount',
                     'payment_mode'
                 ]);
+        if($lines > 0) {
+            foreach($lines as $oid => $line) {
 
-        foreach($lines as $oid => $line) {
+                if($line['payment_mode'] == 'free') {
+                    $result[$oid] = 0.0;
+                    continue;
+                }
 
-            if($line['payment_mode'] == 'free') {
-                $result[$oid] = 0.0;
-                continue;
+                $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
             }
-
-            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
 
         return $result;
