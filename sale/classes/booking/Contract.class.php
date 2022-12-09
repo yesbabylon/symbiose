@@ -32,7 +32,7 @@ class Contract extends \sale\contract\Contract {
                 'foreign_field'     => 'contract_id',
                 'description'       => 'Contract lines that belong to the contract.',
                 'ondetach'          => 'delete'
-            ]            
+            ]
 
         ];
     }
