@@ -186,6 +186,18 @@ class BookingLine extends Model {
                 'onupdate'          => 'onupdateUnitPrice'
             ],
 
+            'has_manual_unit_price' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag indicating that the unit price has been set manually and must not be reset in case of price reset.',
+                'default'           => false
+            ],
+
+            'has_manual_vat_rate' => [
+                'type'              => 'boolean',
+                'description'       => 'Flag indicating that the vat rate price has been set manually and must not be reset in case of price reset.',
+                'default'           => false
+            ],
+
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
@@ -245,8 +257,10 @@ class BookingLine extends Model {
      * Resets computed fields related to price.
      */
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
+        $om->update(self::getType(), $oids, ['has_manual_unit_price' => true], $lang);
         // #memo this lead to unwanted behavior : unit price reset
-        // $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
+        /*
         $lines = $om->read(self::getType(), $oids, ['booking_line_group_id', 'booking_id'], $lang);
         $om->update(self::getType(), $oids, ['price' => null, 'total' => null], $lang);
         if($lines > 0) {
@@ -255,9 +269,12 @@ class BookingLine extends Model {
             $om->update(BookingLineGroup::getType(), $gids, ['price' => null, 'total' => null], $lang);
             $om->update(Booking::getType(), $bids, ['price' => null, 'total' => null], $lang);
         }
+        */
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
+        // mark line with manual vat_rate
+        $om->update(self::getType(), $oids, ['has_manual_vat_rate' => true], $lang);
         // reset computed fields related to price
         $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
     }
@@ -278,7 +295,7 @@ class BookingLine extends Model {
     public static function _resetPrices($om, $oids, $values, $lang) {
         trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
 
-        $lines = $om->read(self::getType(), $oids, ['price_id.price', 'price_id.vat_rate', 'booking_line_group_id'], $lang);
+        $lines = $om->read(self::getType(), $oids, ['has_manual_unit_price', 'has_manual_vat_rate', 'booking_line_group_id'], $lang);
 
         if($lines > 0) {
             $new_values = ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null, 'fare_benefit' => null, 'discount' => null, 'free_qty' => null];
@@ -296,11 +313,11 @@ class BookingLine extends Model {
             foreach($lines as $lid => $line) {
                 $assigned_values = $new_values;
                 // don't reset unit_price for products that have a price with a value of 0.0
-                if($line['price_id.price'] == 0.0 && is_null($assigned_values['unit_price'])) {
+                if($line['has_manual_unit_price']) {
                     unset($assigned_values['unit_price']);
                 }
                 // don't reset vat_rate for products that have a rate with a value of 0.0
-                if($line['price_id.vat_rate'] == 0.0 && is_null($assigned_values['vat_rate'])) {
+                if($line['has_manual_vat_rate']) {
                     unset($assigned_values['vat_rate']);
                 }
                 $om->update(self::getType(), $lid, $assigned_values);
