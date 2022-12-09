@@ -15,10 +15,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "legal_name",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": false
-                                                }
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -28,18 +25,12 @@
                                             {
                                                 "type": "field",
                                                 "value": "firstname",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": false
-                                                }
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "lastname",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "header": false
-                                                }
+                                                "width": "50%"
                                             }
                                         ]
                                     },
