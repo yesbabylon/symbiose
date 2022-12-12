@@ -23,13 +23,13 @@ class TemplateCategory extends Model {
                 'description'       => "Short description of category and intended usage.",
                 'multilang'         => true
             ],
-                        
+
             'templates_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'communication\Template',
                 'foreign_field'     => 'category_id',
                 'description'       => "Templates that are related to this category, if any."
-            ]            
+            ]
         ];
     }
 }
