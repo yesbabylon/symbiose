@@ -108,7 +108,7 @@ class PriceList extends Model {
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
-                $result[$lid] = boolval( ($list['date_to'] > $now) && (in_array($list['status'], ['pending', 'published'])) );
+                $result[$lid] = boolval( ($list['date_from'] <= $now) && ($list['date_to'] > $now) && $list['status'] == 'published' );
             }
         }
         return $result;
