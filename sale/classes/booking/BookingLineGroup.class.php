@@ -217,7 +217,7 @@ class BookingLineGroup extends Model {
         $result = [];
         $groups = $om->read(self::gettype(), $oids, ['date_from', 'date_to']);
         foreach($groups as $gid => $group) {
-            $result[$gid] = floor( ($group['date_to'] - $group['date_from']) / (60*60*24) );
+            $result[$gid] = round( ($group['date_to'] - $group['date_from']) / (60*60*24) );
         }
         return $result;
     }
