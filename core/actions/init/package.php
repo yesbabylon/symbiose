@@ -18,7 +18,7 @@ list($params, $providers) = announce([
             'description'   => 'Package for which we want SQL schema.',
             'type'          => 'string',
             'in'            => array_values($packages),
-            'default'       => 'core'
+            'required'       => true
         ],
         'cascade' => [
             'description'   => 'Cascade initialisation of the packages marked as dependencies.',
@@ -133,7 +133,7 @@ $processed_columns = [];
 foreach($classes as $class) {
     // get the full class name
     $entity = $params['package'].'\\'.$class;
-    // retrieve the static instance of the entityt
+    // retrieve the static instance of the entity
     $model = $orm->getModel($entity);
 
     if(!is_object($model)) {
