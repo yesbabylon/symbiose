@@ -1,6 +1,6 @@
 {
-    "name": "Parameter value",
-    "plural": "Parameters values",
+    "name": "Setting value",
+    "plural": "Settings values",
     "description": "",
     "model": {
         "name": {
@@ -15,23 +15,23 @@
         },
         "user_id": {
             "label": "User",
-            "description": "User to which the parameter belongs.",
+            "description": "User the setting is specific to, if any.",
             "help": ""
         },
         "value": {
             "label": "Value",
-            "description": "Parameter Value.",
+            "description": "Setting Value.",
             "help": ""
         }
     },
     "view": {
         "form.default": {
-            "name": "Parameter Value",
-            "description": "Displays the value of a setting."
+            "name": "Setting Value",
+            "description": "Specific value for a given setting."
         },
         "list.default": {
-            "name": "List of parameters values.",
-            "description": "Displays the value of settings."
+            "name": "List of settings current values.",
+            "description": "Currently applied values for the instance settings."
         }
     },
     "error": {
