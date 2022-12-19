@@ -18,7 +18,7 @@ list($params, $providers) = announce([
             'description'   => 'Package for which we want SQL schema.',
             'type'          => 'string',
             'in'            => array_values($packages),
-            'required'       => true
+            'default'       => 'core'
         ],
         'cascade' => [
             'description'   => 'Cascade initialisation of the packages marked as dependencies.',
@@ -120,6 +120,8 @@ foreach($queries as $query) {
 }
 
 // check for missing columns (for classes with inheritance, we must check against non-yet created fields)
+
+/*
 $queries = [];
 $m2m_tables = [];
 
@@ -222,7 +224,7 @@ foreach($m2m_tables as $table => $columns) {
 foreach($queries as $query) {
     $db->sendQuery($query);
 }
-
+*/
 
 /*  end-tables_init */
 
