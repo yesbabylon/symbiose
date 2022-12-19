@@ -56,12 +56,13 @@ class Identity extends Model {
                     'I'  => 'Individual (natural person)',
                     'SE' => 'Self-employed',
                     'C'  => 'Company',
-                    'NP' => 'Non-profit organisation',
+                    'NP' => 'Non-profit organization',
                     'PA' => 'Public administration'
                 ],
                 'default'           => 'I',
                 'readonly'          => true,                                // has to be changed through type_id
-                'description'       => 'Code of the type of identity.'
+                'description'       => 'Code of the type of identity.',
+                'visible'           => [ ['has_parent', '=', false] ]
             ],
 
             'description' => [
@@ -79,7 +80,7 @@ class Identity extends Model {
 
             'bank_account_bic' => [
                 'type'              => 'string',
-                'description'       => "Identitifer of the Bank related to the Identity's bank account, when set.",
+                'description'       => "Identifier of the Bank related to the Identity's bank account, when set.",
                 'visible'           => [ ['has_parent', '=', false] ]
             ],
 
@@ -91,7 +92,7 @@ class Identity extends Model {
             ],
 
             /*
-                Fields specific to organisations
+                Fields specific to organizations
             */
             'legal_name' => [
                 'type'              => 'string',
@@ -101,13 +102,13 @@ class Identity extends Model {
             ],
             'short_name' => [
                 'type'          => 'string',
-                'description'   => 'Usual name to be used as a memo for identifying the organisation (acronym or short name).',
+                'description'   => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
                 'visible'           => [ ['type', '<>', 'I'] ],
                 'onupdate'          => 'onupdateName'
             ],
             'has_vat' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the organisation have a VAT number?',
+                'description'       => 'Does the organization have a VAT number?',
                 'visible'           => [ ['type', '<>', 'I'], ['has_parent', '=', false] ],
                 'default'           => false
             ],
@@ -118,12 +119,12 @@ class Identity extends Model {
             ],
             'registration_number' => [
                 'type'              => 'string',
-                'description'       => 'Organisation registration number (company number).',
+                'description'       => 'Organization registration number (company number).',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
             /*
-                Fields specific to citizen: children organisations and parent company, if any
+                Fields specific to citizen: children organizations and parent company, if any
             */
             'citizen_identification' => [
                 'type'              => 'string',
@@ -139,20 +140,20 @@ class Identity extends Model {
             ],
 
             /*
-                Relational fields specific to organisations: children organisations and parent company, if any
+                Relational fields specific to organizations: children organizations and parent company, if any
             */
             'children_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Identity',
                 'foreign_field'     => 'parent_id',
                 'domain'            => ['type', '<>', 'I'],
-                'description'       => 'Children departments of the organisation, if any.',
+                'description'       => 'Children departments of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
             'has_parent' => [
                 'type'              => 'boolean',
-                'description'       => 'Does the identity have a parent organisation?',
+                'description'       => 'Does the identity have a parent organization?',
                 'visible'           => [ ['type', '<>', 'I'] ],
                 'default'           => false
             ],
@@ -161,7 +162,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'domain'            => ['type', '<>', 'I'],
-                'description'       => 'Parent company of which the organisation is a branch (department), if any.',
+                'description'       => 'Parent company of which the organization is a branch (department), if any.',
                 'visible'           => [ ['has_parent', '=', true] ]
             ],
 
@@ -170,7 +171,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'employee'],
-                'description'       => 'List of employees of the organisation, if any.' ,
+                'description'       => 'List of employees of the organization, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
@@ -179,7 +180,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'customer'],
-                'description'       => 'List of customers of the organisation, if any.',
+                'description'       => 'List of customers of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
@@ -188,7 +189,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'provider'],
-                'description'       => 'List of providers of the organisation, if any.',
+                'description'       => 'List of providers of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
@@ -198,12 +199,12 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Partner',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => [ ['partner_identity_id', '<>', 'object.id'], ['relationship', '=', 'contact'] ],
-                'description'       => 'List of contacts related to the organisation (not necessarily employees), if any.'
+                'description'       => 'List of contacts related to the organization (not necessarily employees), if any.'
             ],
 
             /*
                 Description of the Identity address.
-                For organisations this is the official (legal) address (typically headquarters, but not necessarily)
+                For organizations this is the official (legal) address (typically headquarters, but not necessarily)
             */
             'address_street' => [
                 'type'              => 'string',
@@ -212,7 +213,7 @@ class Identity extends Model {
 
             'address_dispatch' => [
                 'type'              => 'string',
-                'description'       => 'Optional info for mail dispatch (appartment, box, floor, ...).'
+                'description'       => 'Optional info for mail dispatch (apartment, box, floor, ...).'
             ],
 
             'address_city' => [
@@ -239,7 +240,7 @@ class Identity extends Model {
 
             /*
                 Additional official contact details.
-                For individuals these are personnal contact details, whereas for companies these are official (registered) details.
+                For individuals these are personal contact details, whereas for companies these are official (registered) details.
             */
             'email' => [
                 'type'              => 'string',
@@ -272,7 +273,7 @@ class Identity extends Model {
             'website' => [
                 'type'              => 'string',
                 'usage'             => 'url',
-                'description'       => 'Organisation main official website URL, if any.',
+                'description'       => 'Organization main official website URL, if any.',
                 'visible'           => ['type', '<>', 'I']
             ],
 
@@ -285,14 +286,14 @@ class Identity extends Model {
             ],
 
             /*
-                For organisations, there might be a reference person: a person who is entitled to legally represent the organisation (typically the director, the manager, the CEO, ...).
-                These contact details are commonly requested by service providers for validating the identity of an organisation.
+                For organizations, there might be a reference person: a person who is entitled to legally represent the organization (typically the director, the manager, the CEO, ...).
+                These contact details are commonly requested by service providers for validating the identity of an organization.
             */
             'reference_partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
                 'domain'            => ['relationship', '=', 'contact'],
-                'description'       => 'Contact (natural person) that can legally represent the organisation.',
+                'description'       => 'Contact (natural person) that can legally represent the organization.',
                 'onupdate'          => 'onupdateReferencePartnerId',
                 'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
             ],
@@ -365,19 +366,19 @@ class Identity extends Model {
             'flag_latepayer' => [
                 'type'              => 'boolean',
                 'default'           => false,
-                'description'       => 'Mark a customer as bad payer.'
+                'description'       => 'Mark the customer as bad payer.'
             ],
 
             'flag_damage' => [
                 'type'              => 'boolean',
                 'default'           => false,
-                'description'       => 'Mark a customer with a damage history.'
+                'description'       => 'Mark the customer with a damage history.'
             ],
 
             'flag_nuisance' => [
                 'type'              => 'boolean',
                 'default'           => false,
-                'description'       => 'Mark a customer with a disturbances history.'
+                'description'       => 'Mark the customer with a disturbances history.'
             ]
 
         ];
