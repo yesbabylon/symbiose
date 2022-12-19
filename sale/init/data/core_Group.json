@@ -1,0 +1,80 @@
+[
+    {
+        "name": "core\\Group",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1011,
+                "name": "sales.catalog.administrators",
+                "display_name": "Sales \/ Catalog \/ Administrators",
+                "description": "Updating products and adding new products to the catalog."
+            },
+            {
+                "id": 1012,
+                "name": "sales.catalog.users",
+                "display_name": "Sales \/ Catalog \/ Users",
+                "description": "Consulting products catalog."
+            },
+            {
+                "id": 1021,
+                "name": "sales.pricelist.users",
+                "display_name": "Sales \/ Price lists \/ Users",
+                "description": "Consulting pricelists."
+            },
+            {
+                "id": 1022,
+                "name": "sales.pricelist.administrators",
+                "display_name": "Sales \/ Price lists \/ Administrators",
+                "description": "Updating prices and fares."
+            },
+            {
+                "id": 1031,
+                "name": "sales.discounts.users",
+                "display_name": "Sales \/ Discount \/ Users",
+                "description": "Consultating discounts and discount lists."
+            },
+            {
+                "id": 1032,
+                "name": "sales.discounts.administrators",
+                "display_name": "Sales \/ Discount \/ Administrators",
+                "description": "Creating and updating discount lists."
+            }
+        ]
+    },
+	{
+        "name": "core\\Group",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1011,
+                "display_name": "Ventes \/ Catalogue \/ Administrateurs",
+                "description": "Mise à jour des produit et ajout de nouveaux produits au catalogue."
+            },
+            {
+                "id": 1012,
+                "display_name": "Ventes \/ Catalogue \/ Userrs",
+                "description": "Consultation des produits du catalogue."
+            },
+            {
+                "id": 1021,
+                "display_name": "Ventes \/ Listes de prix \/ Users",
+                "description": "Consultation des listes de prix."
+            },
+            {
+                "id": 1022,
+                "display_name": "Ventes \/ Listes de prix \/ Administrators",
+                "description": "Mises à jour des prix et tarifs."
+            },
+            {
+                "id": 1031,
+                "display_name": "Ventes \/ Réductions \/ Users",
+                "description": "Consultation des réductions et listes de réduction."
+            },
+            {
+                "id": 1032,
+                "display_name": "Ventes \/ Réductions \/ Administrators",
+                "description": "Création et mise à jour des listes de réduction."
+            }
+        ]
+    }
+]

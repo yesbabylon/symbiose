@@ -1,0 +1,65 @@
+[
+    {
+        "name": "core\\setting\\Setting",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1011,
+                "code": "booking.sequence_format",
+                "title": "Booking numbering format",
+                "package": "sale",
+                "form_control": "select",
+                "section_id": 6,
+                "description":"Sequence numbering format",
+                "help": "Format to use for generating bookings numbering.",
+                "type": "string"
+            },
+            {
+                "id": 1012,
+                "code": "booking.sequence",
+                "title": "Current sequence for booking numbering",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 6,
+                "description":"Current sequence for booking numbering.",
+                "help": "",
+                "type": "integer"
+            },
+            {
+                "id": 1013,
+                "code": "option.validity",
+                "title": "Option validity",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 6,
+                "description":"Number of days of validity of an option.",
+                "help": "",
+                "type": "integer"
+            }
+        ]
+    },
+    {
+        "name": "core\\setting\\Setting",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1011,
+                "title": "Format de réservation",
+                "description":"Format de réservation",
+                "help": "Format pour la num\u00e9rotation des r\u00e9servations."
+            },
+            {
+                "id": 1012,
+                "title": "Séquence pour les références de réservation",
+                "description":"",
+                "help": ""
+            },
+            {
+                "id": 1013,
+                "title": "Jours de validit\u00e9 d'une option",
+                "description":"Jours de validit\u00e9 d'une option",
+                "help": "Nombre de jours de validit\u00e9 d'une option."
+            }
+        ]
+    }
+]

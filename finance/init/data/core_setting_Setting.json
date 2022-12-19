@@ -1,0 +1,30 @@
+[
+    {
+        "name": "core\\setting\\Setting",
+        "lang": "en",
+        "data": [
+            {
+                "id": 2011,
+                "code": "invoice.sequence_format",
+                "title": "Invoices sequence format",
+                "package": "finance",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Format for invoices sequence (number).",
+                "help": "Format for the sequence of the invoices (according to accounting conventions).",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "core\\setting\\Setting",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 2011,
+                "description":"Format de sequence des factures",
+                "help": "Format de sequence pour les factures (selon les conventions comptables)."
+            }
+        ]
+    }
+]
