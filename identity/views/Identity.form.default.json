@@ -329,6 +329,27 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Departments & Subsidiaries",
+                        "id": "section.departments",
+                        "visible": ["has_parent", "=", false],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "children_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
