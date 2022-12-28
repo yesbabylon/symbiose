@@ -4,7 +4,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlatformModule } from '@angular/cdk/platform';
 
 import { SharedLibModule, AuthInterceptorService } from 'sb-shared-lib';
@@ -13,7 +13,6 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AppRootComponent } from './app.root.component';
 import { AppComponent } from './in/app.component';
 import { AppRoutingModule } from './app-routing.module';
-
 /* HTTP requests interception dependencies */
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -41,6 +40,8 @@ registerLocaleData(localeFr);
     NgxMaterialTimepickerModule.setLocale('fr-BE'),
     NgxDropzoneModule,
     MatTableModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     // add HTTP interceptor to inject AUTH header to any outgoing request

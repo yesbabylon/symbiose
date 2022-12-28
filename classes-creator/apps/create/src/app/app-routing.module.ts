@@ -7,10 +7,6 @@ import { AppComponent } from './in/app.component';
 const routes: Routes = [
   /* routes specific to current app */
   {
-    path: 'import',
-    loadChildren: () => import(`./in/import/documents.import.module`).then(m => m.AppInDocumentsModule)
-  },
-  {
     /*
      default route, for bootstrapping the App
       1) load necessary info

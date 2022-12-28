@@ -8,10 +8,10 @@ use documents\Document;
 use equal\data\DataAdapter;
 
 list($params, $providers) = announce([
-    'description'   => 'Return raw data (with original MIME) of a document identified by given hash.',
+    'description'   => 'Return the packages paths.',
     'params'        => [
-        'path' =>  [
-            'description'   => 'Identifier of the booking for which the composition has to be generated.',
+        'package' =>  [
+            'description'   => 'Name of package.',
             'type'          => 'string'
         ],
     ],
@@ -27,11 +27,10 @@ list($params, $providers) = announce([
 list($context, $om, $auth) = [ $providers['context'], $providers['orm'], $providers['auth'] ];
 
 $arr = [
-    "types" => ['boolean', 'integer', 'float', 'string', 'time', 'date', 'datetime', 'array', 'many2one', 'one2many', 'many2many', 'html', 'binary'],
     "packages" => []
 ];
 
-// function getsubpackage($filename, $filename_two){
+// function getsubpackage($filename, $package_name){
 //     foreach(glob($filename."/classes/*", GLOB_ONLYDIR) as $subPackage){
 //         $subPackager = basename($subPackage);
 //         $arr["packages"][$filename_two][] = $subPackager;
@@ -44,38 +43,41 @@ $arr = [
 
 $stack =  [];
 
-foreach (glob("packages/*/manifest.json") as $filename) {
+foreach (glob("packages/*", GLOB_ONLYDIR) as $filename) {
     // $filename = trim($filename, "manifest.json");
     // $filename = trim($filename, "packages");
 
-    $filename = str_replace('/manifest.json', '', $filename);
-    $filename_two = str_replace('packages/', '', $filename);
-    $arr['packages'][$filename_two]= [];
+    $package_name = str_replace('packages/', '', $filename);
+    $arr['packages'][$package_name] = [];
 
-    $stack[]= $filename."/classes/*";
+    $stack[] = $filename."/classes";
 
-    while((count($stack))>0){
-        foreach(glob($stack[0]) as $classe){
-            if(strpos($classe, 'class.php')){
-                $arr["packages"][$filename_two][] = $classe;
-            }else{
-                $stack[] = $classe;
-                // build tree
+
+
+    while(count($stack) > 0){
+        $item = array_shift($stack);
+        $files = glob($item.'/*') ;
+
+        foreach($files as $file){
+
+            if(is_file($file) && strpos($file, '.class.php') !== false) {
+                $file = str_replace(['packages/', 'classes/', '.class.php'], '', $file);
+                $arr["packages"][$package_name][] = str_replace('/', '\\', $file);
             }
+            elseif(is_dir($file)) {
+                $stack[] = $file;
+            }
+            // $parts = explode('/', str_replace('classes/', '', $class));
         }
-        array_shift($stack);
     }
 
 
-    // first option
-
-
-    // no subfolder
+    // // no subfolder
     // if(glob($filename."/classes/*", GLOB_ONLYDIR) == null){
     //     foreach(glob($filename."/classes/*") as $classe){
 
     //         $classe = basename($classe);
-    //         $arr["packages"][$filename_two][] = $classe;
+    //         $arr["packages"][$package_name][] = $classe;
     //     }
     // }
 
@@ -86,15 +88,15 @@ foreach (glob("packages/*/manifest.json") as $filename) {
     //     foreach(glob($subPackage.'/*') as $classe){
 
     //         $classe = basename($classe);
-    //         $arr["packages"][$filename_two][$subPackager][] = $classe;
+    //         $arr["packages"][$package_name][$subPackager][] = $classe;
     //     }
 
     // }
 }
 
-// getting the types from the DataAdapter
+// getting the type from the DataAdapter
 // $dataAdapter = new DataAdapter();
-// $types = $dataAdapter->config;
+// $type = $dataAdapter->config;
 
 
 

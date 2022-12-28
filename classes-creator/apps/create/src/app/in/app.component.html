@@ -1,4 +1,197 @@
 <div id="sb-container-document" class="sb-container"></div>
 
-<div class="overlay-container" *ngIf="!ready"><mat-spinner></mat-spinner></div>
 
+<div class="container" style=" overflow: scroll; height: 90vh; margin: 2px; display: flex;">
+
+
+  <!-- Select Package -->
+
+  <div style="flex:auto; max-width: max-content; margin: 8px;">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Package</mat-label>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <input type="text" placeholder="Pick one" aria-label="Package" matInput [formControl]="myControl"
+            [matAutocomplete]="auto">
+          <button mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon"
+            (click)="addPackage()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        </mat-autocomplete>
+        <!-- check if part of packages list -->
+        <div style="border: 1px solid black" *ngIf="!options.includes(myControl.value)">
+          <mat-option (click)="onselectoption(myControl,option)" *ngFor="let option of filteredOptions | async"
+            [value]="option">
+            {{option}}
+          </mat-option>
+        </div>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <!-- Select the Class-->
+
+  <div *ngIf="this.classesoptions?.length>=1"
+    style="overflow:visible; display: flex; justify-content: space-evenly; max-width: max-content; margin: 8px; border-right: 1px solid black;">
+    <form class="example-form" style="max-width: max-content;">
+      <mat-form-field style="margin: 2px; width: min-content;" class="example-full-width" appearance="fill"
+        *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != '' || this.classesoptions.length >= 1">
+        <mat-label>Class Name</mat-label>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <input matInput type="text" placeholder="edit" aria-label="Class Name" [formControl]="myControlClasses"
+            [matAutocomplete]="auto2">
+          <button mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon"
+            (click)="addClass()">
+            <!--  Adds the class to the class array, it should also create the class.php file-->
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+        </mat-autocomplete>
+        <div style="border: 1px solid black; width: min-content"
+          *ngIf="!classesoptions.includes(myControlClasses.value)">
+          <mat-option (click)="onselectoption(myControlClasses,option)" *ngFor="let option of filteredClasses | async"
+            [value]="option">
+            {{option}}
+          </mat-option>
+        </div>
+      </mat-form-field>
+    </form>
+
+
+    <div *ngIf="newClass[myControlClasses.value]" style="display: flex; flex-direction:column;  margin: 8px;">
+
+
+      <!-- added Fields names that don't exist yet -->
+      <div *ngFor="let item of newFieldCompteur | keyvalue" style="max-width: max-content;">
+        <form class="example-form">
+          <mat-form-field style="margin: 2px;" class="example-full-width" appearance="fill"
+            *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+            <mat-label>Field Name</mat-label>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <input matInput type="text" placeholder="edit" aria-label=" Field Name" name="field name"
+                [(ngModel)]="item.value">
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon"
+                (click)="addFieldName(item.value)">
+                <!-- Add new Fields -->
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </form>
+      </div>
+
+
+      <!-- fields names that already exist-->
+      <div style="display: flex; border-bottom: 1px solid red; width: 100%;"
+        *ngFor="let item of newClass[myControlClasses.value] | keyvalue">
+        <button mat-mini-fab color="primary" *ngIf="showContent(item.key) == true">
+          <mat-icon (click)="changeContent(item.key)">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" *ngIf="showContent(item.key) == false">
+          <mat-icon (click)="changeContent(item.key)">keyboard_arrow_left</mat-icon>
+        </button>
+        <form class="example-form">
+          <mat-form-field style="margin: 2px;" class="example-full-width" appearance="fill"
+            *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+            <mat-label>Field Name</mat-label>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <!-- focus keeps the old value, focusout changes the object and ngmodel keeps track -->
+              <input matInput type="text" placeholder="edit" aria-label=" Field Name"
+                (focusout)="getvalues(oldvalue, item.key, newClass[myControlClasses.value])" [(ngModel)]="item.key"
+                name="field name" (focus)="oldvalue = item.key">
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a bookmark icon"
+                (click)="addField()" *ngIf="showAddFieldButton">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </form>
+
+
+        <!-- Bug, the field_property.value should be the ngmodel value, but a bug says that we can't assign any to never -->
+        <div style="display: flex; flex-direction: column;" *ngIf="showContent(item.key) == true">
+
+          <div *ngFor="let field_property of item.value  | keyvalue " style="display: flex; flex-direction: column;">
+
+            <!-- not boolean or array fields properties-->
+            <div *ngIf="field_property.key != 'type' && !isBool(field_property.value)
+            && relationsChecker(item.value, field_property.key)">
+              <form class="example-form">
+                <mat-form-field style="margin: 2px;" class="example-full-width" appearance="fill"
+                  *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                  <mat-label>{{field_property.value}}</mat-label>
+                  <input matInput type="text" placeholder="edit" aria-label="" [(ngModel)]="field_property.key"
+                    name="ok">
+                </mat-form-field>
+              </form>
+            </div>
+
+            <!-- boolean properties-->
+            <div *ngIf="isBool(field_property.value)">
+              <mat-form-field floatLabel="always" appearance="fill">
+                <mat-label>{{field_property.key}}</mat-label>
+                <mat-slide-toggle matInput [(ngModel)]="field_property.key">
+                </mat-slide-toggle>
+                <textarea matInput hidden></textarea>
+                <!-- matInput necessary for matformfield -->
+              </mat-form-field>
+            </div>
+
+            <!-- for the type field property, we use a mat-autocomplete -->
+            <div *ngIf="field_property.key == 'type'">
+              <form class="example-form">
+                <mat-form-field style="margin: 2px;" class="example-full-width" appearance="fill"
+                  *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                  <mat-label>{{field_property.value}}</mat-label>
+                  <input matInput type="text" placeholder="edit" aria-label="" [(ngModel)]="field_property.key"
+                    name="ok" [matAutocomplete]="auto4">
+                  <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+                    <mat-option *ngFor="let option of newClass.types" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
+
+
+          <!-- this div would display the properties inherited from the parent object  -->
+
+          <!-- <div *ngFor="let field_property of schema_fields  | keyvalue "
+            style="display: flex; flex-direction: column; border: 2px solid blue;"> -->
+          <!-- inherited values, inherited visibility is temporary-->
+          <!-- <div *ngIf="inherited_visibility">
+              <form class="example-form">
+                <mat-form-field style="margin: 2px;" class="example-full-width" appearance="fill"
+                  *ngIf="(myControlSubPackage.value != '' || !(this.subpackageoptions?.length>=1)) && myControl.value != ''">
+                  <mat-label>{{field_property.key}}</mat-label>
+                  <input matInput type="text" placeholder="edit" aria-label="" [(ngModel)]="field_property.value"
+                    name="ok" [matAutocomplete]="auto4">
+                  <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+                    <mat-option *ngFor="let option of newClass.types" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </div>
+          </div> -->
+
+        </div>
+
+        <!-- hidden if responds to a specific method, checks if part of, checks if has specific content maybe ?-->
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<!-- button to add the class or new fields for good -->
+<button mat-raised-button (click)="createFields()">Add</button>

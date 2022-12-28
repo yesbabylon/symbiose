@@ -4,10 +4,6 @@ import { Router } from '@angular/router';
 
 import { ContextService, ApiService, AuthService} from 'sb-shared-lib';
 
-import * as $ from 'jquery';
-import { type } from 'jquery';
-
-
 /*
 This is the component that is bootstrapped by app.module.ts
 */
@@ -29,7 +25,6 @@ export class AppRootComponent implements OnInit {
   public translationsMenuTop: any = {};
 
   constructor(
-    private router: Router,
     private context:ContextService,
     private api:ApiService,
     private auth:AuthService
@@ -37,7 +32,6 @@ export class AppRootComponent implements OnInit {
 
 
   public async ngOnInit() {
-
     try {
       await this.auth.authenticate();
     }
@@ -46,16 +40,6 @@ export class AppRootComponent implements OnInit {
       window.location.href = '/apps';
       return;
     }
-
-    // load menus from server
-
-    const left_menu:any = await this.api.getMenu('documents', 'documents.left');
-    this.navMenuItems = left_menu.items;
-    this.translationsMenuLeft = left_menu.translation;
-
-    const top_menu:any = await this.api.getMenu('documents', 'documents.top');
-    this.topMenuItems = top_menu.items;
-    this.translationsMenuTop = top_menu.translation;
   }
 
   public onToggleItem(item:any) {
@@ -81,40 +65,6 @@ export class AppRootComponent implements OnInit {
     }
   }
 
-public onAction() {
-  let descriptor = {
-      route: '/documents',
-      context: {
-          entity:     'documents\\Document',
-          type:       'form',
-          name:       'create',
-          mode:       'edit',
-          purpose:    'create',
-          target:     '#sb-container',
-          callback:   (data:any) => {
-              if(data && data.objects && data.objects.length) {
-                  console.log('received value from create booking', data);
-                  // new_id =  data.objects[0].id
-                  let descriptor = {
-                      context: {
-                      entity:     'documents\\Document',
-                      type:       'list',
-                      name:       'default',
-                      mode:       'view',
-                      purpose:    'view',
-                      target:     '#sb-container'
-                      }
-                  };
-                  setTimeout( () => {
-                      this.context.change(descriptor);
-                  });
-              }
-          }
-      }
-  };
-
-this.context.change(descriptor);
-}
 
     /**
      * Items are handled as descriptors.
