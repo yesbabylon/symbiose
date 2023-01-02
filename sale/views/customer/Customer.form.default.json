@@ -144,7 +144,10 @@
                                             {
                                                 "type": "field",
                                                 "value": "bookings_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "domain": ["state", "in", ["instance", "archive"]]
+                                                }
                                             }
                                         ]
                                     }
