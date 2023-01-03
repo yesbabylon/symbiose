@@ -91,7 +91,7 @@ class Repairing extends Model {
         $repairings = $om->read(self::getType(), $oids, ['description'], $lang);
         if($repairings > 0) {
             foreach($repairings as $oid => $odata) {
-                $result[$oid] = substr(HTMLToText::convert($odata['description']), 0, 25);
+                $result[$oid] = mb_substr(HTMLToText::convert($odata['description']), 0, 25);
             }
         }
         return $result;
