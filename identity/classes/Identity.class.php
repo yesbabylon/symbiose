@@ -532,7 +532,7 @@ class Identity extends Model {
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * This method can be overridden to define a more precise set of tests.
      *
      * @param  object   $om         ObjectManager instance.
      * @param  array    $oids       List of objects identifiers.
