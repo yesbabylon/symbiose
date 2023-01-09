@@ -26,7 +26,7 @@ class PackLine extends Model {
             'parent_product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
-                'description'       => "The Product this line belongs to.",
+                'description'       => "The Product (pack) this line belongs to.",
                 'required'          => true
             ],
 
