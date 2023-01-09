@@ -48,7 +48,7 @@
             "help": ""
         },
         "statement_line_id": {
-            "label": "Ligne d'extrait'",
+            "label": "Ligne d'extrait",
             "description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
             "help": ""
         },
