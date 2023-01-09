@@ -258,18 +258,7 @@ class BookingLine extends Model {
      */
     public static function onupdateUnitPrice($om, $oids, $values, $lang) {
         $om->update(self::getType(), $oids, ['has_manual_unit_price' => true], $lang);
-        // #memo this lead to unwanted behavior : unit price reset
         $om->callonce(self::getType(), '_resetPrices', $oids, $values, $lang);
-        /*
-        $lines = $om->read(self::getType(), $oids, ['booking_line_group_id', 'booking_id'], $lang);
-        $om->update(self::getType(), $oids, ['price' => null, 'total' => null], $lang);
-        if($lines > 0) {
-            $bids = array_map(function ($a) { return $a['booking_id'];}, $lines);
-            $gids = array_map(function ($a) { return $a['booking_line_group_id'];}, $lines);
-            $om->update(BookingLineGroup::getType(), $gids, ['price' => null, 'total' => null], $lang);
-            $om->update(Booking::getType(), $bids, ['price' => null, 'total' => null], $lang);
-        }
-        */
     }
 
     public static function onupdateVatRate($om, $oids, $values, $lang) {
