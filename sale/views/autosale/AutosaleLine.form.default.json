@@ -35,7 +35,10 @@
                                                 "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "domain": ["can_sell", "=", true]
+                                                }
                                             },
                                             {
                                                 "type": "field",
