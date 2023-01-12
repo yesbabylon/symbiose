@@ -19,6 +19,13 @@ class PaymentPlan extends Model {
                 'required'          => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'The name of the plan.',
+                'required'          => true
+            ],
+
             'rate_class_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
