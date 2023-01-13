@@ -34,7 +34,7 @@ class Invoice extends Model {
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation that emitted the invoice.",
+                'description'       => "The organization that emitted the invoice.",
                 'default'           => 1
             ],
 
@@ -61,7 +61,7 @@ class Invoice extends Model {
             'number' => [
                 'type'              => 'computed',
                 'result_type'        => 'string',
-                'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing).",
+                'description'       => "Number of the invoice, according to organization logic (@see config/invoicing).",
                 'function'          => 'calcNumber',
                 'store'             => true
             ],
@@ -88,7 +88,7 @@ class Invoice extends Model {
                     'pending',          // non-paid, payment terms delay running
                     'overdue',          // non-paid, and payment terms delay is over
                     'debit_balance',    // partially paid: customer still has to pay something
-                    'credit_balance',   // fully paid and a reimbusrsement to customer is required
+                    'credit_balance',   // fully paid and a reimbursement to customer is required
                     'balanced'          // fully paid and balanced
                 ],
                 'visible'           => ['status', '=', 'invoice'],
@@ -112,7 +112,7 @@ class Invoice extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \identity\Partner::getType(),
-                'description'       => "The counter party organisation the invoice relates to.",
+                'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true
             ],
 
@@ -161,8 +161,9 @@ class Invoice extends Model {
             ],
 
             'fundings_ids' => [
-                'type'              => 'many2one',
+                'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Funding',
+                'foreign_field'     => 'invoice_id',
                 'description'       => 'Fundings related to the invoice (should be max. 1).'
             ],
 
