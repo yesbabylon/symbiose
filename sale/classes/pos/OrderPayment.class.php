@@ -54,7 +54,7 @@ class OrderPayment extends Model {
                 'foreign_object'    => OrderLine::getType(),
                 'foreign_field'     => 'order_payment_id',
                 'ondetach'          => 'null',
-                'description'       => 'The order lines selected for the payement.',
+                'description'       => 'The order lines selected for the payment.',
                 'onupdate'          => 'onupdateOrderLinesIds'
             ],
 
@@ -62,7 +62,8 @@ class OrderPayment extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => OrderPaymentPart::getType(),
                 'foreign_field'     => 'order_payment_id',
-                'description'       => 'The parts that relate to the payement.',
+                'description'       => 'The parts that relate to the payment.',
+                'ondetach'          => 'delete',
                 'onupdate'          => 'onupdateOrderPaymentPartsIds'
             ],
 

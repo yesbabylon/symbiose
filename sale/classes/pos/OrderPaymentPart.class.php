@@ -15,6 +15,7 @@ class OrderPaymentPart extends \sale\booking\Payment {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pos\OrderPayment',
                 'description'       => 'The order payment the part relates to.',
+                'ondelete'          => 'cascade',
                 'onupdate'          => 'onupdateOrderPaymentId'
             ],
 
