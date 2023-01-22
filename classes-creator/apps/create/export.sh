@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -rf ../../documents & mkdir ../../documents & cp -a dist/symbiose/* ../../documents/
+rm -rf ../../../../public/modeleditor && mkdir ../../../../public/modeleditor && cp -a dist/symbiose/* ../../../../public/modeleditor/
