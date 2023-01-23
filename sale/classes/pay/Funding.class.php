@@ -185,7 +185,17 @@ class Funding extends Model {
      * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $oids, $values, $lang) {
-        if(count($values) > 1 || !isset($values['is_paid'])) {
+        // handle exceptions for fields that can always be updated
+        $allowed = ['is_paid', 'invoice_id'];
+        $count_non_allowed = 0;
+
+        foreach($values as $field => $value) {
+            if(!in_array($field, $allowed)) {
+                ++$count_non_allowed;
+            }
+        }
+
+        if($count_non_allowed > 0) {
             $fundings = $om->read(self::getType(), $oids, ['is_paid', 'due_amount', 'paid_amount', 'payments_ids'], $lang);
             if($fundings > 0) {
                 foreach($fundings as $funding) {
