@@ -193,10 +193,14 @@ class Invoice extends Model {
 
     public static function calcIsPaid($om, $oids, $lang) {
         $result = [];
-        $invoices = $om->read(get_called_class(), $oids, ['fundings_ids.is_paid'], $lang);
+        $invoices = $om->read(get_called_class(), $oids, ['status', 'fundings_ids.is_paid'], $lang);
         if($invoices > 0) {
             foreach($invoices as $oid => $invoice) {
                 $result[$oid] = false;
+                if($invoice['status'] != 'invoice') {
+                    // proforma invoices cannot be marked as paid
+                    continue;
+                }
                 $count_paid = 0;
                 if($invoice['fundings_ids.is_paid'] && count($invoice['fundings_ids.is_paid'])) {
                     foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
