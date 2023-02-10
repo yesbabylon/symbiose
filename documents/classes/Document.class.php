@@ -58,7 +58,7 @@ class Document extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
-                'description'       => 'URL to visual edior of the module.',
+                'description'       => 'Direct URL to the document (uses hash).',
                 'function'          => 'calcLink',
                 'store'             => true,
                 'readonly'          => true
