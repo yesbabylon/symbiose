@@ -17,22 +17,6 @@
                                         "align": "left",
                                         "items": [
                                             {
-                                                "type": "label",
-                                                "id": "id.details",
-                                                "value": "Contact details",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "33%",
-                                        "align": "left",
-                                        "items": [
-                                            {
                                                 "type": "field",
                                                 "value": "id",
                                                 "width": "50%",
@@ -67,20 +51,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "created",
-                                                "width": "50%",
-                                                "label": "Creation date",
-                                                "help": "Creation date"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "modifier",
-                                                "width": "50%",
-                                                "label": "Modifier"
-                                            },
-
-                                            {
-                                                "type": "field",
                                                 "value": "firstname",
                                                 "width": "50%",
                                                 "label": "User given name",
@@ -90,8 +60,7 @@
                                                 "type": "field",
                                                 "value": "lastname",
                                                 "width": "50%",
-                                                "label": "User family name",
-                                                "visible": [ ["firstname", "<>", "root"], ["language", "=", "en"] ]
+                                                "label": "User family name"
                                             },
                                             {
                                                 "type": "field",
@@ -108,21 +77,19 @@
                             }
                         ]
                     },
-{
+                    {
                         "label": "Preferences",
                         "id": "section.preferences",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "33%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
-                                                "type": "label",
-                                                "id": "id.details",
-                                                "value": "Contact details",
-                                                "width": "50%"
+                                                "type": "field",
+                                                "value": "setting_values_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

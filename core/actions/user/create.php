@@ -43,6 +43,9 @@ list($params, $providers) = announce([
         ]
     ],
     'constants'     => ['DEFAULT_LANG'],
+    'access'        => [
+        'visibility'        => 'private'
+    ],
     'providers'     => ['context', 'orm']
 ]);
 
@@ -51,9 +54,9 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 // create user: resulting Collection will check for current user privilege; validate the received values; and check the `Unique` constraints
 // #memo - User class defines its own Unique constraint on `login` field, and User::onchangePassword method makes sure `password` is hashed
 $instance = User::create($params)
-            ->read(['id', 'login', 'firstname', 'lastname', 'language'])
-            ->adapt('txt')
-            ->first(true);
+    ->read(['id', 'login', 'firstname', 'lastname', 'language'])
+    ->adapt('json')
+    ->first(true);
 
 $context->httpResponse()
         ->status(201)
