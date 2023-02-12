@@ -446,10 +446,10 @@ try {
     if(defined('L10N_LOCALE')) {
         $res = setlocale(LC_ALL, constant('L10N_LOCALE'));
         if($res) {
-            trigger_error("QN_DEBUG_PHP::set locale to ".constant('L10N_LOCALE'), QN_REPORT_DEBUG);
+            trigger_error("PHP::set locale to ".constant('L10N_LOCALE'), QN_REPORT_DEBUG);
         }
         else {
-            trigger_error("QN_DEBUG_PHP::unknown locale ".constant('L10N_LOCALE'), QN_REPORT_WARNING);
+            trigger_error("PHP::unknown locale ".constant('L10N_LOCALE'), QN_REPORT_WARNING);
         }
     }
 
@@ -467,7 +467,7 @@ try {
     setlocale(LC_ALL, 0);
 }
 catch(Exception $e) {
-    trigger_error("QN_DEBUG_ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
+    trigger_error("ORM::error while parsing template - ".$e->getMessage(), QN_REPORT_DEBUG);
     throw new Exception("template_parsing_issue", QN_ERROR_INVALID_CONFIG);
 }
 

@@ -282,7 +282,7 @@ class BookingLine extends Model {
      * Reset computed fields related to price.
      */
     public static function _resetPrices($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\booking\BookingLine:_resetPrices", QN_REPORT_DEBUG);
 
         $lines = $om->read(self::getType(), $oids, ['price_id', 'has_manual_unit_price', 'has_manual_vat_rate', 'booking_line_group_id'], $lang);
 

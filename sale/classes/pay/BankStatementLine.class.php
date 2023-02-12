@@ -130,7 +130,7 @@ class BankStatementLine extends Model {
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\pay\BankStatementLine::onupdateStatus", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\pay\BankStatementLine::onupdateStatus", QN_REPORT_DEBUG);
 
         $lines = $om->read(self::getType(), $oids, ['status', 'bank_statement_id', 'payments_ids.partner_id']);
 

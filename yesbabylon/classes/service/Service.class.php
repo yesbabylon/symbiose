@@ -102,7 +102,7 @@ class Service extends \sale\contract\Contract {
             ob_start();
             var_dump($odata);
             $buff = ob_get_clean();
-            trigger_error("QN_DEBUG_ORM::{$buff}", QN_REPORT_ERROR);
+            trigger_error("ORM::{$buff}", QN_REPORT_ERROR);
 
             $result[$oid] = "{$odata['customer_id.name']} - {$odata['id']}";
         }

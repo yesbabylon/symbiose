@@ -424,7 +424,7 @@ class Invoice extends Model {
 
             if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
                 // a mandatory value could not be retrieved
-                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                trigger_error("ORM::missing mandatory account", QN_REPORT_ERROR);
                 return [];
             }
 

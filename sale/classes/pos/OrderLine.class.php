@@ -159,7 +159,7 @@ class OrderLine extends Model {
             }
             if(!$found) {
                 $date = date('Y-m-d', time());
-                trigger_error("QN_DEBUG_ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_WARNING);
+                trigger_error("ORM::no matching price list found for product {$line['product_id']} for date {$date}", QN_REPORT_WARNING);
             }
         }
     }
