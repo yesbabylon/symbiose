@@ -68,7 +68,7 @@
                                 "context": {
                                     "entity": "lodging\\identity\\Identity",
                                     "view": "list.default",
-                                    "domain": ["id", "<", 4]
+                                    "domain": ["id", "in", [1,2,3,100]]
                                 }
                             },
                             {
