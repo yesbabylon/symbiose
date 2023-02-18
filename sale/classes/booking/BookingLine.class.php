@@ -492,6 +492,9 @@ class BookingLine extends Model {
 
     public static function getConstraints() {
         return [
+            /*
+            // #memo - qty can be negative for cancelling/adapting initially booked services (typically in is_extra groups)
+
             'qty' =>  [
                 'lte_zero' => [
                     'message'       => 'Quantity must be a positive value.',
@@ -500,7 +503,7 @@ class BookingLine extends Model {
                     }
                 ]
             ]
-
+            */
         ];
     }
 }
