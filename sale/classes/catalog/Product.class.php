@@ -232,6 +232,7 @@ class Product extends Model {
         $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
         foreach($products as $pid => $product) {
             $om->write(get_called_class(), $pid, [
+                'is_pack'       => null,
                 'can_sell'      => $product['product_model_id.can_sell'],
                 'groups_ids'    => $product['product_model_id.groups_ids'],
                 'family_id'     => $product['product_model_id.family_id']
