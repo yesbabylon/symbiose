@@ -6,6 +6,36 @@
     "layout": {
         "items": [
             {
+                "id": "base",
+                "label": "Support",
+                "description": "",
+                "icon": "support",
+                "type": "parent",
+                "route": "/settings/core",
+                "children": [
+                    {
+                        "id": "tickets",
+                        "type": "entry",
+                        "label": "Tickets",
+                        "description": "",
+                        "context": {
+                            "entity": "support\\Ticket",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "ticket_entries",
+                        "type": "entry",
+                        "label": "Ticket Entries",
+                        "description": "",
+                        "context": {
+                            "entity": "support\\TicketEntry",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
 
                 "id": "base",
                 "label": "Base",
