@@ -45,9 +45,9 @@ class DocumentCategory extends Model {
 
             'documents_ids' => [
                 'type'              => 'one2many',
-                'foreign_field'     => 'categories_ids',
+                'foreign_field'     => 'category_id',
                 'foreign_object'    => 'documents\Document',
-                'description'       => 'Product models which current product belongs to the family.'
+                'description'       => 'Documents assigned to this category.'
             ]
         ];
     }
