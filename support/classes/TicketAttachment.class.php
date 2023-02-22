@@ -14,13 +14,15 @@ class TicketAttachment extends \documents\Document {
             'ticket_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\Ticket',
-                'description'       => 'Ticket of the attachment.'
+                'description'       => 'Ticket of the attachment.',
+                'ondelete'          => 'cascade'
             ],
 
             'ticket_entry_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\TicketEntry',
-                'description'       => 'Ticket of the attachment.'
+                'description'       => 'Ticket of the attachment.',
+                'ondelete'          => 'cascade'
             ]
 
         ];

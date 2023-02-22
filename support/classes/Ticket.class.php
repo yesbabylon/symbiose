@@ -76,7 +76,8 @@ class Ticket extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'support\TicketEntry',
                 'foreign_field'     => 'ticket_id',
-                'description'       => "Entries that related to this ticket."
+                'description'       => "Entries that related to this ticket.",
+                'ondetach'          => 'delete'
             ],
 
             'assignee_id' => [

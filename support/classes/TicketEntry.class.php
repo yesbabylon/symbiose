@@ -53,14 +53,16 @@ class TicketEntry extends Model {
             'ticket_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\Ticket',
-                'description'       => "Ticket the entry relates to."
+                'description'       => "Ticket the entry relates to.",
+                'ondelete'          => 'delete'
             ],
 
             'attachments_ids' => [
                 'type'              => 'one2many',
                 'foreign_field'     => 'ticket_entry_id',
                 'foreign_object'    => 'support\TicketAttachment',
-                'description'       => 'Documents assigned to the ticket.'
+                'description'       => 'Documents assigned to the ticket.',
+                'ondetach'          => 'delete'
             ]
 
         ];

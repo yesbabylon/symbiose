@@ -110,7 +110,7 @@ export class AppRootComponent implements OnInit {
 
     public onAction() {
         let descriptor = {
-            route: '/tickets',
+            route: '/',
             context: {
                 entity:     'support\\Ticket',
                 type:       'form',
