@@ -83,7 +83,8 @@ class Ticket extends Model {
             'assignee_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\User',
-                'description'       => 'Person that is handling the ticket (who will provide an answer or perform an action regarding it).'
+                'description'       => 'Person that is handling the ticket (who will provide an answer or perform an action regarding it).',
+                'onupdate'          => 'onupdateAssigneeId'
             ],
 
             'attachments_ids' => [
@@ -132,6 +133,10 @@ class Ticket extends Model {
                 }
             }
         }
+    }
+
+    public static function onupdateAssigneeId($om, $oids, $values, $lang) {
+        $om->update(self::getType(), $oids, ['status' => 'pending']);
     }
 
     /**
