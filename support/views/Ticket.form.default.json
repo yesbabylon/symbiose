@@ -24,6 +24,14 @@
             "controller": "support_ticket-submit",
             "confirm": true,
             "visible": ["status", "=", "draft"]
+        },
+        {
+            "id": "action.close",
+            "label": "Close",
+            "description": "Ticket will be submitted and marked as open.",
+            "controller": "support_ticket-close",
+            "confirm": true,
+            "visible": ["status", "=", "pending"]
         }
     ],
     "layout": {

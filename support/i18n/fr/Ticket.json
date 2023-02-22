@@ -71,6 +71,10 @@
                 "action.submit": {
                     "label": "Soumettre",
                     "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
+                },
+                "action.close": {
+                    "label": "Cloturer",
+                    "description": "Le ticket sera clôturé et placé dans l'historique."
                 }
             },
             "layout": {
