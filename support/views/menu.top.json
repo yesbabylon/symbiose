@@ -1,0 +1,25 @@
+{
+    "name": "Support menu",
+    "access": {
+      "groups": ["users"]
+   },
+    "layout": {
+        "items": [
+            {
+                "id": "item.tickets",
+                "label": "Tickets en cours",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "<>", "closed"],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "name": "Ticket Attachment",
+    "description": "Single Ticket Attachment",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label":"Data",
+                        "id": "section.data",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "preview_image",
+                                                "width": "25%",
+                                                "visible": ["state", "<>", "draft"]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "data",
+                                                "width": "75%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
