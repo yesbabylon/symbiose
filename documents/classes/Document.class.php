@@ -33,7 +33,7 @@ class Document extends Model {
                 'desription'        => 'Content type of the document (from data).'
             ],
 
-            'size'		    => [
+            'size' => [
                 'type'              => 'integer',
                 'readonly'          => true,
                 'desription'        => 'Size of the document, in octets (from data).'
@@ -150,7 +150,7 @@ class Document extends Model {
             }
         }
         // reset preview image
-        $om->update(self::getType(), $oids, ['preview_image' => null, 'readable_size' => null]);
+        $om->update(self::getType(), $oids, ['link' => null, 'preview_image' => null, 'readable_size' => null]);
     }
 
     /**
@@ -159,7 +159,7 @@ class Document extends Model {
      * @param $content_type string  The content_type found for for the file.
      * @param $name string  (optional) The name of the file, if any.
      *
-     * @return string | bool    In case of success, the extesnion is return. If no extension matches the content type, it returns false.
+     * @return string | bool    In case of success, the extension is returned. If no extension matches the content type, the method returns false.
      */
     public static function _getExtensionFromType($content_type, $name = '') {
 

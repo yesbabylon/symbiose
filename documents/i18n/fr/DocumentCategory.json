@@ -19,7 +19,7 @@
             "help":""
         },
         "children_ids":{
-            "label":"Enfants",
+            "label":"Sous-catégories",
             "description":"Les catégories enfants.",
             "help":""
         },
@@ -38,7 +38,7 @@
                     "label": "Infos catégorie"
                 },
                 "section.children": {
-                    "label": "Enfants"
+                    "label": "Sous-catégories"
                 },
                 "section.document":{
                     "label": "Documents"
