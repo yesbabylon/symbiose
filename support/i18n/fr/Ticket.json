@@ -32,7 +32,7 @@
         },
         "status": {
             "label": "Statut",
-            "description": "Niveau d'importance du ticket.",
+            "description": "Statut du ticket.",
             "selection": {
                 "draft": "Brouillon",
                 "open": "Ouvert",
@@ -69,7 +69,8 @@
             "description": "",
             "actions": {
                 "action.submit": {
-                    "label": "Soumettre"
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
                 }
             },
             "layout": {
