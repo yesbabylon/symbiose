@@ -1,0 +1,34 @@
+{
+    "name": "Support menu",
+    "access": {
+        "groups": ["users"]
+    },
+    "layout": {
+        "items": [
+            {
+                "id": "tickets",
+                "type": "entry",
+                "label": "Tickets en cours",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "<>", "closed"]
+                }
+            },
+            {
+                "id": "ticket_entries",
+                "type": "entry",
+                "label": "Historique",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "closed"]
+                }
+            }
+        ]
+    }
+}

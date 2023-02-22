@@ -1,0 +1,5 @@
+{
+    "name": "support",
+    "depends_on": ["core"],
+    "apps": ["support"]
+}
