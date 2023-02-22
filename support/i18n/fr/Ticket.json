@@ -59,10 +59,15 @@
             "description": "",
             "actions": {
                 "action.submit": {
-                    "label": "Soumettre"
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
                 }
             },
-            "layout": {}
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
         },
         "form.default": {
             "name": "Ticket",
