@@ -4,7 +4,7 @@
       "groups": ["sale.default.user"]
    },
     "layout": {
-        "items": [        
+        "items": [
             {
                 "id": "item.home",
                 "label": "Home",
@@ -16,7 +16,7 @@
                     "entity": "sale\\pay\\Payment",
                     "view": "dashboard.default"
                 }
-            },            
+            },
             {
               "id": "item.payments",
               "label": "Import bank statements",
@@ -24,7 +24,7 @@
               "icon": "person_outline",
               "type": "entry",
               "route": "/payments/import"
-            }                   
+            }
         ]
     }
 }

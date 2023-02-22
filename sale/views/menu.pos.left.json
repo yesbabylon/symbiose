@@ -30,8 +30,8 @@
                         "id": "item.pos_sessions.history",
                         "type": "entry",
                         "label": "Reconciled lines",
-                        "description": "", 
-                        "route": "/sessions",                    
+                        "description": "",
+                        "route": "/sessions",
                         "context": {
                             "entity": "lodging\\sale\\pos\\CashdeskSession",
                             "view": "list.reconciled",
@@ -44,7 +44,7 @@
                         "id": "item.pos_orders.orders",
                         "type": "entry",
                         "label": "Orders  ",
-                        "description": "", 
+                        "description": "",
                         "context": {
                             "entity": "lodging\\sale\\pos\\Order",
                             "view": "list.default",
@@ -55,7 +55,7 @@
                         "id": "item.pos_orders.operations",
                         "type": "entry",
                         "label": "Operations",
-                        "description": "", 
+                        "description": "",
                         "context": {
                             "entity": "sale\\pos\\Operation",
                             "view": "list.default"
@@ -65,7 +65,7 @@
                         "id": "item.pos_orders.payments",
                         "type": "entry",
                         "label": "Payments",
-                        "description": "", 
+                        "description": "",
                         "context": {
                             "entity": "sale\\pos\\OrderPayment",
                             "view": "list.default"
