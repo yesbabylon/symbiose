@@ -39,7 +39,8 @@
             {
                 "type": "field",
                 "value": "type",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             },
             {
                 "type": "field",
