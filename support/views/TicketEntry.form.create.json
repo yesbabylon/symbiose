@@ -20,7 +20,7 @@
             "description": "Entry will be submitted and marked as open.",
             "controller": "support_ticketentry-submit",
             "confirm": true,
-            "visible": ["status", "=", "draft"]
+            "visible": [ ["state", "<>", "draft"], ["status", "=", "draft"] ]
         }
     ],
     "layout": {
