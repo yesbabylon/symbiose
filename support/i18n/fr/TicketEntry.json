@@ -52,6 +52,21 @@
                 }
             }
         },
+        "form.create": {
+            "name": "Message",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le message sera marqué comme envoyé et visible pour tous les utilisateurs."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
         "list.default": {
             "name": "Messages",
             "description": "Liste des messages.",
