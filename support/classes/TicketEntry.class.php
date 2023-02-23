@@ -110,8 +110,13 @@ class TicketEntry extends Model {
                         }
                     }
                     else {
+                        if(!$entry['ticket_id.creator.login'] || strlen($entry['ticket_id.creator.login']) <= 0) {
+                            // ignore invalid emails
+                            continue;
+                        }
                         $address = $entry['ticket_id.creator.login'];
                         $title = 'Réponse à votre ticket de support';
+                        $body = 'Une réponse a été donnée à votre message';
                     }
                     // create message
                     $link = \config\constant('ROOT_APP_URL').str_replace('object.id', $entry['ticket_id'], Ticket::getLink());
