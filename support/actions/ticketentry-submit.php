@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 use support\TicketEntry;
+use support\Ticket;
 
 list($params, $providers) = announce([
     'description'   => 'Submit a ticket entry and mark it as \'sent\'.',
@@ -23,17 +24,20 @@ list($params, $providers) = announce([
     'access' => [
         'visibility'    => 'protected'
     ],
-    'providers'     => [ 'context', 'report' ]
+    'providers'     => [ 'context', 'report', 'auth' ]
 ]);
 
 /**
  * @var \equal\php\Context                $context
  * @var \equal\error\Reporter             $reporter
+ * @var \equal\auth\AuthenticationManager $auth
  */
-list($context, $reporter) = [ $providers['context'], $providers['report'] ];
+list($context, $reporter, $auth) = [ $providers['context'], $providers['report'], $providers['auth'] ];
 
+// retrieve the user making the submission
+$user_id = $auth->userId();
 
-$entry = TicketEntry::id($params['id'])->read(['id', 'status'])->first();
+$entry = TicketEntry::id($params['id'])->read(['id', 'status', 'ticket_id'])->first();
 
 if(!$entry) {
     throw new Exception('unknown_ticket_entry', QN_ERROR_UNKNOWN);
@@ -44,6 +48,7 @@ if($entry['status'] != 'draft') {
 }
 
 TicketEntry::id($params['id'])->update(['status' => 'sent']);
+Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
 
 $context
     ->httpResponse()
