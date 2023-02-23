@@ -49,6 +49,11 @@
                 "type": "field",
                 "value": "status",
                 "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "reference",
+                "width": "10%"
             }
         ]
     }
