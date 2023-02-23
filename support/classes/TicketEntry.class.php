@@ -6,6 +6,8 @@
 */
 namespace support;
 use equal\orm\Model;
+use equal\email\Email;
+use core\Mail;
 
 class TicketEntry extends Model {
 
@@ -84,5 +86,46 @@ class TicketEntry extends Model {
         $context = $om->getContainer()->get('context');
         $request = $context->getHttpRequest();
         $om->update(self::getType(), $oids, ['environment' => $request->getHeader('User-Agent')]);
+    }
+
+    /**
+     * Handler for field status.
+     * Used to intercept ticket submission and create a first entry.
+     */
+    public static function onupdateStatus($om, $oids, $values, $lang) {
+        $entries = $om->read(self::getType(), $oids, ['creator', 'ticket_id', 'ticket_id.name', 'ticket_id.creator', 'ticket_id.creator.login', 'ticket_id.assignee_id.login']);
+        if($entries > 0 && count($entries)) {
+            foreach($entries as $eid => $entry) {
+                // if ticket status just changed to 'open',
+                if($entry['status'] == 'sent') {
+                    $address = 'support@yesbabylon.com';
+                    $title = 'Nouveau ticket de support';
+                    $body = 'Un nouveau ticket a été soumis';
+                    if($entry['creator'] == $entry['ticket_id.creator']) {
+                        if($entry['ticket_id.assignee_id.login'] && strlen($entry['ticket_id.assignee_id.login'])) {
+                            $address = $entry['ticket_id.assignee_id.login'];
+                            $title = 'Nouvelle réponse au ticket de support';
+                            $body = 'L\'utilisateur a soumis un nouveau message sur le ticket';
+                        }
+                    }
+                    else {
+                        $address = $entry['ticket_id.creator.login'];
+                        $title = 'Réponse à votre ticket de support';
+                    }
+                    // create message
+                    $link = \config\constant('ROOT_APP_URL').str_replace('object.id', $entry['ticket_id'], self::getLink());
+                    $message = new Email();
+                    $message
+                        ->setTo($address)
+                        ->setSubject($title)
+                        ->setContentType("text/html")
+                        ->setBody(
+                            sprintf("$body : <a href=\"%s\">%s</a>", $link, $entry['ticket_id.name'].' ['.$entry['ticket_id'].']')
+                        );
+                    // send message
+                    Mail::queue($message);
+                }
+            }
+        }
     }
 }
