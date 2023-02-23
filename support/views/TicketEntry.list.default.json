@@ -6,9 +6,9 @@
     },
     "header": {
         "actions": {
-            "ACTION.CREATE": {
+            "ACTION.CREATE": [ {
                 "view": "form.create"
-            }
+            } ]
         }
     },
     "layout": {
