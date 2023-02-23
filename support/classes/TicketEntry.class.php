@@ -114,7 +114,7 @@ class TicketEntry extends Model {
                         $title = 'Réponse à votre ticket de support';
                     }
                     // create message
-                    $link = \config\constant('ROOT_APP_URL').str_replace('object.id', $entry['ticket_id'], self::getLink());
+                    $link = \config\constant('ROOT_APP_URL').str_replace('object.id', $entry['ticket_id'], Ticket::getLink());
                     $message = new Email();
                     $message
                         ->setTo($address)
