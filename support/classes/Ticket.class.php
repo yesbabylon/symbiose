@@ -24,6 +24,11 @@ class Ticket extends Model {
                 'required'          => true
             ],
 
+            'reference' => [
+                'type'              => 'string',
+                'description'       => "External reference for tracking the ticket."
+            ],
+
             'status' => [
                 'type'              => 'string',
                 'selection'         => [

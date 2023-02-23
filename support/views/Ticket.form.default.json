@@ -76,6 +76,14 @@
                                                 "widget": {
                                                     "visible": ["status", "<>", "draft"]
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reference",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "visible": ["status", "<>", "draft"]
+                                                }
                                             }
                                         ]
                                     },
