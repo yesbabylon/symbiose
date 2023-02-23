@@ -20,7 +20,8 @@ class TicketEntry extends Model {
                     'draft',
                     'sent'
                 ],
-                'default'           => 'draft'
+                'default'           => 'draft',
+                'onupdate'          => 'onupdateStatus'
             ],
 
             'description' => [
