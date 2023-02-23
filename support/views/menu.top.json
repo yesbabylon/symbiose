@@ -6,8 +6,8 @@
     "layout": {
         "items": [
             {
-                "id": "item.tickets",
-                "label": "Tickets en cours",
+                "id": "item.tickets.incidents",
+                "label": "Incidents",
                 "description": "",
                 "icon": "support",
                 "type": "entry",
@@ -15,11 +15,42 @@
                 "context": {
                     "entity": "support\\Ticket",
                     "view": "list.default",
-                    "domain": ["status", "<>", "closed"],
+                    "domain": [["type", "=", "incident"], ["status", "<>", "closed"]],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.tickets.questions",
+                "label": "Questions",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": [["type", "=", "question"], ["status", "<>", "closed"]],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.tickets.feature_requests",
+                "label": "Demandes de fonctionnalités",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": [["type", "=", "feature_request"], ["status", "<>", "closed"]],
                     "order": "id",
                     "sort": "desc"
                 }
             }
+
         ]
     }
 }
