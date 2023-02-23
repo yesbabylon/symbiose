@@ -94,7 +94,7 @@ class TicketEntry extends Model {
      * Used to intercept ticket submission and create a first entry.
      */
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        $entries = $om->read(self::getType(), $oids, ['creator', 'ticket_id', 'ticket_id.name', 'ticket_id.creator', 'ticket_id.creator.login', 'ticket_id.assignee_id.login']);
+        $entries = $om->read(self::getType(), $oids, ['status', 'creator', 'ticket_id', 'ticket_id.name', 'ticket_id.creator', 'ticket_id.creator.login', 'ticket_id.assignee_id.login']);
         if($entries > 0 && count($entries)) {
             foreach($entries as $eid => $entry) {
                 // if ticket status just changed to 'open',
