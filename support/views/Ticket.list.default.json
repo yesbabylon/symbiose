@@ -23,7 +23,8 @@
             {
                 "type": "field",
                 "value": "created",
-                "width": "15%"
+                "width": "15%",
+                "sortable": true
             },
             {
                 "type": "field",
@@ -43,17 +44,20 @@
             {
                 "type": "field",
                 "value": "priority",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
                 "value": "status",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             },
             {
                 "type": "field",
                 "value": "reference",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true
             }
         ]
     }
