@@ -36,6 +36,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "ticket_id",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "status",
                                                 "visible": false
                                             },
