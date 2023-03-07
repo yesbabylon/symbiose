@@ -26,10 +26,33 @@
         "attachments_ids": {
             "label": "Pièces jointes",
             "description": "Documents associés au ticket."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut du message.",
+            "selection": {
+                "draft": "Brouillon",
+                "sent": "envoyé"
+            }
         }
     },
     "view": {
         "form.default": {
+            "name": "Message",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le message sera marqué comme envoyé et visible pour tous les utilisateurs."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
+        "form.create": {
             "name": "Message",
             "description": "",
             "actions": {

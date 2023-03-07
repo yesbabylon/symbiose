@@ -4,15 +4,14 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-use support\TicketEntry;
 use support\Ticket;
 
 list($params, $providers) = announce([
-    'description'   => 'Submit a ticket entry and mark it as \'sent\'.',
+    'description'   => 'Close a ticket and mark it as \'closed\'.',
     'params'        => [
         'id' => [
             'type'          => 'integer',
-            'description'   => 'Identifier of the ticket entry to submit (must be \'draft\').',
+            'description'   => 'Identifier of the ticket to submit (must be \'draft\').',
             'required'      => true
         ]
     ],
@@ -24,31 +23,27 @@ list($params, $providers) = announce([
     'access' => [
         'visibility'    => 'protected'
     ],
-    'providers'     => [ 'context', 'report', 'auth' ]
+    'providers'     => [ 'context', 'report' ]
 ]);
 
 /**
  * @var \equal\php\Context                $context
  * @var \equal\error\Reporter             $reporter
- * @var \equal\auth\AuthenticationManager $auth
  */
-list($context, $reporter, $auth) = [ $providers['context'], $providers['report'], $providers['auth'] ];
+list($context, $reporter) = [ $providers['context'], $providers['report'] ];
 
-// retrieve the user making the submission
-$user_id = $auth->userId();
 
-$entry = TicketEntry::id($params['id'])->read(['id', 'status', 'ticket_id'])->first();
+$ticket = Ticket::id($params['id'])->read(['id', 'status'])->first();
 
-if(!$entry) {
-    throw new Exception('unknown_ticket_entry', QN_ERROR_UNKNOWN);
+if(!$ticket) {
+    throw new Exception('unknown_ticket', QN_ERROR_UNKNOWN);
 }
 
-if($entry['status'] != 'draft') {
+if($ticket['status'] != 'pending') {
     throw new Exception('invalid_status', QN_ERROR_INVALID_PARAM);
 }
 
-TicketEntry::id($params['id'])->update(['status' => 'sent']);
-Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
+Ticket::id($params['id'])->update(['status' => 'closed']);
 
 $context
     ->httpResponse()

@@ -12,6 +12,9 @@
             "ACTION.SAVE": [
                 {
                     "id": "SAVE_AND_CONTINUE"
+                },
+                {
+                    "id": "SAVE_AND_VIEW"
                 }
             ]
         }
@@ -37,6 +40,11 @@
                                     {
                                         "width": "100%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ticket_id",
+                                                "visible": false
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "status",

@@ -32,7 +32,7 @@
         },
         "status": {
             "label": "Statut",
-            "description": "Niveau d'importance du ticket.",
+            "description": "Statut du ticket.",
             "selection": {
                 "draft": "Brouillon",
                 "open": "Ouvert",
@@ -59,17 +59,27 @@
             "description": "",
             "actions": {
                 "action.submit": {
-                    "label": "Soumettre"
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
                 }
             },
-            "layout": {}
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
         },
         "form.default": {
             "name": "Ticket",
             "description": "",
             "actions": {
                 "action.submit": {
-                    "label": "Soumettre"
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
+                },
+                "action.close": {
+                    "label": "Cloturer",
+                    "description": "Le ticket sera clôturé et placé dans l'historique."
                 }
             },
             "layout": {

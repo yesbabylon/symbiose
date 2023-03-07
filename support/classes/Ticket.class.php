@@ -6,8 +6,6 @@
 */
 namespace support;
 use equal\orm\Model;
-use equal\email\Email;
-use core\Mail;
 
 
 class Ticket extends Model {
@@ -22,6 +20,11 @@ class Ticket extends Model {
                 'type'              => 'string',
                 'description'       => "Short description of the support request.",
                 'required'          => true
+            ],
+
+            'reference' => [
+                'type'              => 'string',
+                'description'       => "External reference for tracking the ticket."
             ],
 
             'status' => [
@@ -76,13 +79,15 @@ class Ticket extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'support\TicketEntry',
                 'foreign_field'     => 'ticket_id',
-                'description'       => "Entries that related to this ticket."
+                'description'       => "Entries that related to this ticket.",
+                'ondetach'          => 'delete'
             ],
 
             'assignee_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'core\User',
-                'description'       => 'Person that is handling the ticket (who will provide an answer or perform an action regarding it).'
+                'description'       => 'Person that is handling the ticket (who will provide an answer or perform an action regarding it).',
+                'onupdate'          => 'onupdateAssigneeId'
             ],
 
             'attachments_ids' => [
@@ -109,28 +114,21 @@ class Ticket extends Model {
                     $entry_id = $om->create(TicketEntry::getType(), [
                             'creator'       => $ticket['creator'],
                             'type'          => 'request',
-                            'status'        => 'sent',
                             'ticket_id'     => $tid,
                             'description'   => $ticket['description'],
                             'environment'   => $ticket['environment']
                         ]);
                     // link attachments to first entry
                     $om->update(TicketAttachment::getType(), $ticket['attachments_ids'], ['ticket_entry_id' => $entry_id]);
-                    // create message
-                    $link = \config\constant('ROOT_APP_URL').str_replace('object.id', $tid, self::getLink());
-                    $message = new Email();
-                    $message
-                        ->setTo('support@yesbabylon.com')
-                        ->setSubject('New Support Ticket submission')
-                        ->setContentType("text/html")
-                        ->setBody(
-                            sprintf("New request is available at <a href=\"%s\">%s</a>", $link, $link)
-                        );
-                    // send message
-                    Mail::queue($message);
+                    // mark the entry as sent (will trigger email notification)
+                    $om->update(TicketEntry::getType(), $entry_id, ['status' => 'sent']);
                 }
             }
         }
+    }
+
+    public static function onupdateAssigneeId($om, $oids, $values, $lang) {
+        $om->update(self::getType(), $oids, ['status' => 'pending']);
     }
 
     /**

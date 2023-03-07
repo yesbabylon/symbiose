@@ -11,6 +11,13 @@ class TicketAttachment extends \documents\Document {
     public static function getColumns() {
         return [
 
+            'category_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'documents\DocumentCategory',
+                'description'       => 'Category of the document (default to \'support\')',
+                'default'           =>  2
+            ],
+
             'ticket_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'support\Ticket',
@@ -27,5 +34,4 @@ class TicketAttachment extends \documents\Document {
 
         ];
     }
-
 }

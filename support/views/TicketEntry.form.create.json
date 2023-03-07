@@ -8,7 +8,7 @@
         "actions": {
             "ACTION.SAVE": [
                 {
-                    "id": "SAVE_AND_CONTINUE"
+                    "id": "SAVE_AND_VIEW"
                 }
             ]
         }
@@ -20,7 +20,7 @@
             "description": "Entry will be submitted and marked as open.",
             "controller": "support_ticketentry-submit",
             "confirm": true,
-            "visible": ["status", "=", "draft"]
+            "visible": [ ["state", "<>", "draft"], ["status", "=", "draft"] ]
         }
     ],
     "layout": {
@@ -34,6 +34,11 @@
                                     {
                                         "width": "100%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ticket_id",
+                                                "visible": false
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "status",

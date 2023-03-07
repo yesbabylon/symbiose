@@ -4,6 +4,13 @@
     "access": {
         "groups": ["users"]
     },
+    "header": {
+        "actions": {
+            "ACTION.CREATE": [ {
+                "view": "form.create"
+            } ]
+        }
+    },
     "layout": {
         "items": [
             {
