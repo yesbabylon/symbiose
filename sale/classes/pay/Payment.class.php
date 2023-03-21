@@ -168,7 +168,7 @@ class Payment extends Model {
             }
             if($payment['payment_origin'] == 'bank') {
                 if(isset($values['amount']) && $values['amount'] > $payment['statement_line_id.remaining_amount']) {
-                    return ['amount' => ['excessive_amount' => 'Payment amount cannot be higher than statement line amount.']];
+                    return ['amount' => ['excessive_amount' => 'Sum of assigned payments cannot be higher than statement line amount.']];
                 }
             }
         }
