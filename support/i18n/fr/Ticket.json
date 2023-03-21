@@ -37,6 +37,7 @@
                 "draft": "Brouillon",
                 "open": "Ouvert",
                 "pending": "En cours",
+                "waiting": "En attente",
                 "closed": "Résolu"
             }
         },
@@ -76,6 +77,10 @@
                 "action.submit": {
                     "label": "Soumettre",
                     "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
+                },
+                "action.awaiting": {
+                    "label": "En attente",
+                    "description": "Le ticket sera marqué comme en attente d'un événement ou d'une dépendance externe."
                 },
                 "action.close": {
                     "label": "Cloturer",

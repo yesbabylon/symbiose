@@ -33,6 +33,7 @@ class Ticket extends Model {
                     'draft',
                     'open',
                     'pending',
+                    'waiting',
                     'closed'
                 ],
                 'default'           => 'draft',
