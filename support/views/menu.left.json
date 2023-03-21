@@ -17,6 +17,18 @@
                     "domain": ["status", "<>", "closed"]
                 }
             },
+                        {
+                "id": "tickets",
+                "type": "entry",
+                "label": "Tickets en attente",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "waiting"]
+                }
+            },
             {
                 "id": "ticket_entries",
                 "type": "entry",
