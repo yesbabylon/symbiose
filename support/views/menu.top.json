@@ -15,7 +15,7 @@
                 "context": {
                     "entity": "support\\Ticket",
                     "view": "list.default",
-                    "domain": [["type", "=", "incident"], ["status", "<>", "closed"]],
+                    "domain": [["type", "=", "incident"], ["status", "=", "pending"]],
                     "order": "id",
                     "sort": "desc"
                 }
@@ -30,7 +30,7 @@
                 "context": {
                     "entity": "support\\Ticket",
                     "view": "list.default",
-                    "domain": [["type", "=", "question"], ["status", "<>", "closed"]],
+                    "domain": [["type", "=", "question"], ["status", "=", "pending"]],
                     "order": "id",
                     "sort": "desc"
                 }
@@ -45,7 +45,7 @@
                 "context": {
                     "entity": "support\\Ticket",
                     "view": "list.default",
-                    "domain": [["type", "=", "feature_request"], ["status", "<>", "closed"]],
+                    "domain": [["type", "=", "feature_request"], ["status", "=", "pending"]],
                     "order": "id",
                     "sort": "desc"
                 }
