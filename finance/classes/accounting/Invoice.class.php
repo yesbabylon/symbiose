@@ -286,7 +286,7 @@ class Invoice extends Model {
             $total = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
                 return $c + $a['total'];
             }, 0.0);
-            $result[$oid] = round($total, 4);
+            $result[$oid] = round($total, 2);
         }
         return $result;
     }
