@@ -473,7 +473,7 @@ class BookingLine extends Model {
                     continue;
                 }
 
-                $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+                $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 2);
             }
         }
 
