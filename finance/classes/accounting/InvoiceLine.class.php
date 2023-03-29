@@ -189,8 +189,8 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $total = (float) $odata['total'];
-            $vat = (float) $odata['vat_rate'];
+            $total = round((float) $odata['total'], 2);
+            $vat = round((float) $odata['vat_rate'], 2);
 
             $result[$oid] = round($total * (1.0 + $vat), 2);
         }
