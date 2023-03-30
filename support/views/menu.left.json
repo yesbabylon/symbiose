@@ -8,16 +8,28 @@
             {
                 "id": "tickets",
                 "type": "entry",
+                "label": "Tickets ouverts",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "open"]
+                }
+            },
+            {
+                "id": "tickets",
+                "type": "entry",
                 "label": "Tickets en cours",
                 "description": "",
                 "route": "/",
                 "context": {
                     "entity": "support\\Ticket",
                     "view": "list.default",
-                    "domain": ["status", "<>", "closed"]
+                    "domain": ["status", "=", "pending"]
                 }
             },
-                        {
+            {
                 "id": "tickets",
                 "type": "entry",
                 "label": "Tickets en attente",
