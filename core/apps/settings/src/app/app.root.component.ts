@@ -26,16 +26,18 @@ export class AppRootComponent implements OnInit {
     public show_side_menu: boolean = false;
     public show_side_bar: boolean = true;
 
-    public filter: string;
-
-    // original (full & translated) menu for left pane
-    private leftMenu: any = {};
-
     public topMenuItems = [{name: 'Dashboard'}, {name: 'Users'}, {name: 'Settings'}];
     public navMenuItems: any = [];
 
     public translationsMenuLeft: any = {};
     public translationsMenuTop: any = {};
+
+
+    // string applied as filter to limit visible items in left menu
+    public filter: string;
+
+    // original (full & translated) menu for left pane
+    private leftMenu: any = {};
 
     constructor(
         private router: Router,
@@ -72,46 +74,6 @@ export class AppRootComponent implements OnInit {
             console.log('unable to load menu', response);
         }
 
-    }
-
-    private translateMenu(menu:any, translation: any) {
-        let result: any[] = [];
-        for(let item of menu) {
-            if(item.id && translation.hasOwnProperty(item.id)) {
-                item.label = translation[item.id].label;
-            }
-            if(item.children && item.children.length) {
-                this.translateMenu(item.children, translation);
-            }
-            result.push(item);
-        }
-        return result;
-    }
-
-    private getFilteredMenu(menu:any[], filter: string = '') {
-        let result: any[] = [];
-
-        for(let item of menu) {
-            // check for a match, case and diacritic insensitive
-            if(item.label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(new RegExp(filter, 'i'))) {
-                result.push(item);
-            }
-            else if(item.children && item.children.length) {
-                let sub_result: any[] = this.getFilteredMenu(item.children, filter);
-                for(let item of sub_result) {
-                    result.push(item);
-                }
-            }
-        }
-        return result;
-    }
-
-    public onchangeFilter() {
-        this.navMenuItems = this.getFilteredMenu(
-                this.leftMenu,
-                // remove trailing space + remove diacritic marks
-                this.filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            );
     }
 
     public onToggleItem(item:any) {
@@ -199,5 +161,45 @@ export class AppRootComponent implements OnInit {
 
     public toggleSideBar() {
         this.show_side_bar = !this.show_side_bar;
+    }
+
+    private translateMenu(menu:any, translation: any) {
+        let result: any[] = [];
+        for(let item of menu) {
+            if(item.id && translation.hasOwnProperty(item.id)) {
+                item.label = translation[item.id].label;
+            }
+            if(item.children && item.children.length) {
+                this.translateMenu(item.children, translation);
+            }
+            result.push(item);
+        }
+        return result;
+    }
+
+    private getFilteredMenu(menu:any[], filter: string = '') {
+        let result: any[] = [];
+
+        for(let item of menu) {
+            // check for a match, case and diacritic insensitive
+            if(item.label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(new RegExp(filter, 'i'))) {
+                result.push(item);
+            }
+            else if(item.children && item.children.length) {
+                let sub_result: any[] = this.getFilteredMenu(item.children, filter);
+                for(let item of sub_result) {
+                    result.push(item);
+                }
+            }
+        }
+        return result;
+    }
+
+    public onchangeFilter() {
+        this.navMenuItems = this.getFilteredMenu(
+                this.leftMenu,
+                // remove trailing space + remove diacritic marks
+                this.filter.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            );
     }
 }

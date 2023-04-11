@@ -39,7 +39,7 @@ if(!$ticket) {
     throw new Exception('unknown_ticket', QN_ERROR_UNKNOWN);
 }
 
-if($ticket['status'] != 'pending') {
+if(!in_array($ticket['status'], ['pending','waiting'])) {
     throw new Exception('invalid_status', QN_ERROR_INVALID_PARAM);
 }
 
