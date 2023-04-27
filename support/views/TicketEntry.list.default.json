@@ -4,6 +4,8 @@
     "access": {
         "groups": ["users"]
     },
+    "order": "created",
+    "sort": "desc",
     "header": {
         "actions": {
             "ACTION.CREATE": [ {
