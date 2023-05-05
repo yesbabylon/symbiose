@@ -54,6 +54,8 @@ class PriceList extends Model {
             ],
 
             // needed for retrieving prices without checking the dates
+            // #memo - if several pricelists can be set for a same period (smaller period within a bigger one), this might not be relevant.
+            // besides, sales can be contract for sometime in the future, which make this field less relevant.
             'is_active' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
