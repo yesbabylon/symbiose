@@ -46,7 +46,7 @@ class PriceList extends Model {
                     'pending',              // list is "under construction" (to be confirmed)
                     'published',            // completed and ready to be used
                     'paused',               // (temporarily) on hold (not to be used)
-                    'closed'                // can no longer be used
+                    'closed'                // can no longer be used (similar to archive)
                 ],
                 'description'       => 'Status of the list.',
                 'onupdate'          => 'onupdateStatus',
@@ -54,13 +54,12 @@ class PriceList extends Model {
             ],
 
             // needed for retrieving prices without checking the dates
-            // #memo - if several pricelists can be set for a same period (smaller period within a bigger one), this might not be relevant.
-            // besides, sales can be contract for sometime in the future, which make this field less relevant.
             'is_active' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsActive',
-                'description'       => "Is the pricelist currently applicable?",
+                'description'       => "Is the pricelist currently applicable? ",
+                'help'              => "When this flag is set to true, it means the list is eligible for future bookings. i.e. with a 'date_to' in the future and 'published'.",
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -102,15 +101,13 @@ class PriceList extends Model {
         return $result;
     }
 
-    public static function calcIsActive($om, $oids, $lang) {
+    public static function calcIsActive($om, $ids, $lang) {
         $result = [];
-        $lists = $om->read(self::getType(), $oids, ['date_from', 'date_to', 'status']);
-
+        $lists = $om->read(self::getType(), $ids, ['date_from', 'date_to', 'status']);
         $now = time();
-
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
-                $result[$lid] = boolval( ($list['date_from'] <= $now) && ($list['date_to'] > $now) && $list['status'] == 'published' );
+                $result[$lid] = boolval( $list['date_to'] > $now && $list['status'] == 'published' );
             }
         }
         return $result;
