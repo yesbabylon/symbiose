@@ -450,6 +450,17 @@
                                         }
                                     },
                                     {
+                                        "id": "sales.catalog.prices.pricelists_draft",
+                                        "type": "entry",
+                                        "label": "Draft Price Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\PriceList",
+                                            "view": "list.default",
+                                            "domain": ["status", "=", "pending"]
+                                        }
+                                    },
+                                    {
                                         "id": "sales.catalog.prices.pricelists_all",
                                         "type": "entry",
                                         "label": "All Price Lists",
