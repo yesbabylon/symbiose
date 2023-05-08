@@ -208,6 +208,25 @@ class Funding extends Model {
         return parent::canupdate($om, $oids, $values, $lang);
     }
 
+    /**
+     * Check wether the identity can be deleted.
+     *
+     * @param  \equal\orm\ObjectManager    $om        ObjectManager instance.
+     * @param  array                       $ids       List of objects identifiers.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $ids) {
+        $fundings = $om->read(self::getType(), $ids, [ 'payments_ids' ]);
+
+        if($fundings > 0) {
+            foreach($fundings as $id => $funding) {
+                if($funding['payments_ids'] && count($funding['payments_ids']) > 0) {
+                    return ['payments_ids' => ['non_removable_funding' => 'Funding relating to one or more payments cannot be deleted.']];
+                }
+            }
+        }
+        return parent::candelete($om, $ids);
+    }
 
     /**
      * Hook invoked before object update for performing object-specific additional operations.
