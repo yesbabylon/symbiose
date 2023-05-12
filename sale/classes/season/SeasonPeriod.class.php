@@ -118,4 +118,16 @@ class SeasonPeriod extends Model {
         }
         return $result;
     }
+
+    /**
+     * Hook invoked after object cloning for performing object-specific additional operations.
+     *
+     * @param  ObjectManager    $om         ObjectManager instance.
+     * @param  array            $oids       List of objects identifiers.
+     * @return void
+     */
+    public static function onclone($om, $ids) {
+        $om->update(self::getType(), $ids, ['month' => null, 'year' => null, 'season_category_id' => null]);
+    }
+
 }

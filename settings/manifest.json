@@ -1,0 +1,6 @@
+{
+    "name": "settings",
+    "depends_on": [
+        "core"
+    ]
+}
