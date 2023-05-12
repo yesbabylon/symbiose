@@ -23,8 +23,8 @@ class SeasonType extends Model {
                 'description'       => "Explanation on when to use the type and its specifics.",
                 'default'           => '',
                 'multilang'         => true
-            ]            
-            
+            ]
+
         ];
     }
 

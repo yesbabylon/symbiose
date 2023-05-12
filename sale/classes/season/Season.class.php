@@ -30,7 +30,8 @@ class Season extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\season\SeasonCategory',
                 'description'       => "The category the season relates to.",
-                'required'          => true
+                'required'          => true,
+                'onupdate'          => 'onupdateSeasonCategoryId'
             ],
 
             'has_rate_class' => [
@@ -42,7 +43,7 @@ class Season extends Model {
             'rate_class_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
-                'description'       => "The rate class that applies to this Season defintion.",
+                'description'       => "The rate class that applies to this Season definition.",
                 'visible'           => ['has_rate_class', '=', true]
             ],
 
@@ -55,6 +56,13 @@ class Season extends Model {
             ]
 
         ];
+    }
+
+    public static function onupdateSeasonCategoryId($self) {
+        $self->read(['season_periods_ids']);
+        foreach($self as $season) {
+            SeasonPeriod::ids($season['season_periods_ids'])->update(['season_category_id' => null]);
+        }
     }
 
 }
