@@ -95,6 +95,16 @@ class Payment extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Mark the payment as exported (part of an export to elsewhere).',
                 'default'           => false
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'paid'
+                ],
+                'description'       => 'Current status of the payment.',
+                'default'           => 'paid'
             ]
 
         ];
@@ -152,7 +162,7 @@ class Payment extends Model {
 
     /**
      * Check wether the payment can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * This method can be overridden to define a more precise set of tests.
      *
      * @param  Object   $om         ObjectManager instance.
      * @param  Array    $oids       List of objects identifiers.
@@ -193,6 +203,26 @@ class Payment extends Model {
             }
         }
         return parent::ondelete($om, $oids);
+    }
+
+    /**
+     * Check wether the invoice can be deleted.
+     *
+     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
+     * @param  array                       $ids        List of objects identifiers.
+     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
+     */
+    public static function candelete($om, $ids) {
+        $payments = $om->read(self::getType(), $ids, [ 'status' ]);
+
+        if($payments > 0) {
+            foreach($payments as $id => $payment) {
+                if($payment['status'] == 'paid') {
+                    return ['status' => ['non_removable' => 'Paid payments cannot be removed.']];
+                }
+            }
+        }
+        return parent::candelete($om, $ids);
     }
 
 }
