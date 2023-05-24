@@ -31,6 +31,12 @@ class Invoice extends Model {
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
             ],
 
+            'is_deposit' => [
+                'type'              => 'boolean',
+                'description'       => 'Marks the invoice as a deposit one, relating to a downpayment.',
+                'default'           => false
+            ],
+
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
