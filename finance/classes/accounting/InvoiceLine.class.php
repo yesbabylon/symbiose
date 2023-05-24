@@ -121,8 +121,13 @@ class InvoiceLine extends Model {
                 'description'       => 'Final tax-included price of the line (computed).',
                 'function'          => 'calcPrice',
                 'store'             => true
-            ]
+            ],
 
+            'downpayment_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => Invoice::getType(),
+                'description'       => 'Downpayment invoice (set when the line refers to an invoiced downpayment.)'
+            ]
         ];
     }
 
