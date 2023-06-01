@@ -215,7 +215,7 @@ class Invoice extends Model {
                         }
                     }
                 }
-                if(count($invoice['fundings_ids.is_paid']) == $count_paid) {
+                if($count_paid > 0 && count($invoice['fundings_ids.is_paid']) == $count_paid) {
                     $result[$oid] = true;
                 }
             }
