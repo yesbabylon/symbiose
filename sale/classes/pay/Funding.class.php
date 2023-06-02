@@ -100,8 +100,9 @@ class Funding extends Model {
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\Invoice',
+                'ondelete'          => 'null',
                 'description'       => 'The invoice targeted by the funding, if any.',
-                'visible'           => [ ['type', '=', 'invoice'] ]
+                'help'              => 'As a convention, this field is set when a funding relates to an invoice: either because the funding has been invoiced (downpayment or balance invoice), or because it is an installment (deduced from the due amount)'
             ],
 
             'payment_reference' => [
@@ -216,12 +217,15 @@ class Funding extends Model {
      * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
      */
     public static function candelete($om, $ids) {
-        $fundings = $om->read(self::getType(), $ids, [ 'is_paid', 'paid_amount', 'payments_ids' ]);
+        $fundings = $om->read(self::getType(), $ids, [ 'is_paid', 'paid_amount', 'invoice_id', 'payments_ids' ]);
 
         if($fundings > 0) {
             foreach($fundings as $id => $funding) {
                 if( $funding['is_paid'] || $funding['paid_amount'] != 0 || ($funding['payments_ids'] && count($funding['payments_ids']) > 0) ) {
                     return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
+                }
+                if( !is_null($funding['invoice_id']) ) {
+                    return ['invoice_id' => ['non_removable_funding' => 'Funding relating to an invoice cannot be deleted.']];
                 }
             }
         }
