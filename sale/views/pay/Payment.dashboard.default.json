@@ -20,7 +20,7 @@
                                                 "label": "Alertes",
                                                 "description": "",
                                                 "width": "50%",
-                                                "entity": "core\\alert\\MessageModel",
+                                                "entity": "core\\alert\\Message",
                                                 "view": "list.default",
                                                 "domain":  ["object_class", "=", "sale\\pay\\*"]
                                             },
