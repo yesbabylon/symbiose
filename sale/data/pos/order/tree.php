@@ -60,6 +60,8 @@ switch($params['variant']) {
             'customer_id' => [
                 'name',
                 'partner_identity_id' => [
+                    'id',
+                    'has_vat',
                     'vat_number'
                 ]
             ],
@@ -96,6 +98,8 @@ switch($params['variant']) {
             'customer_id' => [
                 'name',
                 'partner_identity_id' => [
+                    'id',
+                    'has_vat',
                     'vat_number',
                     'address_city',
                     'address_zip',
@@ -169,6 +173,8 @@ switch($params['variant']) {
             'customer_id' => [
                 'name',
                 'partner_identity_id'=> [
+                    'id',
+                    'has_vat',
                     'vat_number',
                     'address_city',
                     'address_zip',
