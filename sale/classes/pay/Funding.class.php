@@ -217,14 +217,14 @@ class Funding extends Model {
      * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
      */
     public static function candelete($om, $ids) {
-        $fundings = $om->read(self::getType(), $ids, [ 'is_paid', 'paid_amount', 'invoice_id', 'payments_ids' ]);
+        $fundings = $om->read(self::getType(), $ids, [ 'is_paid', 'paid_amount', 'invoice_id', 'invoice_id.status', 'payments_ids' ]);
 
         if($fundings > 0) {
             foreach($fundings as $id => $funding) {
                 if( $funding['is_paid'] || $funding['paid_amount'] != 0 || ($funding['payments_ids'] && count($funding['payments_ids']) > 0) ) {
                     return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
                 }
-                if( !is_null($funding['invoice_id']) ) {
+                if( !is_null($funding['invoice_id']) && $funding['invoice_id.status'] == 'invoice' ) {
                     return ['invoice_id' => ['non_removable_funding' => 'Funding relating to an invoice cannot be deleted.']];
                 }
             }
