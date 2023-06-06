@@ -48,7 +48,11 @@ if($entry['status'] != 'draft') {
 }
 
 TicketEntry::id($params['id'])->update(['status' => 'sent']);
-Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
+$ticket = Ticket::id($entry['ticket_id'])->read(['assignee_id'])->first();
+
+if(!isset($ticket['assignee_id']) || is_null($ticket['assignee_id'])) {
+    Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
+}
 
 $context
     ->httpResponse()
