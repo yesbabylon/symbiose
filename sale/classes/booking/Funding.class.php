@@ -94,7 +94,8 @@ class Funding extends \sale\pay\Funding {
 
         if($fundings > 0) {
             foreach($fundings as $oid => $funding) {
-                $share = round($funding['due_amount'] / $funding['booking_id.price'], 2);
+                $total = $funding['booking_id.price'];
+                $share = ($total != 0)?round($funding['due_amount'] / $funding['booking_id.price'], 2):0;
                 $result[$oid] = min(1.0, $share);
             }
         }
