@@ -49,7 +49,7 @@
                 "route": "/",
                 "context": {
                     "entity": "support\\Ticket",
-                    "view": "list.default",
+                    "view": "list.history",
                     "domain": ["status", "=", "closed"]
                 }
             }
