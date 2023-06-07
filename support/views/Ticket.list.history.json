@@ -1,0 +1,68 @@
+{
+    "name": "Ticket",
+    "description": "",
+    "access": {
+        "groups": ["users"]
+    },
+    "order": "created",
+    "sort": "desc",
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false,
+            "ACTION.OPEN": [
+                {
+                    "view": "form.history"
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "created",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "creator",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "assignee_id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "priority",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "reference",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}
