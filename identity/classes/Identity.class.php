@@ -401,7 +401,7 @@ class Identity extends Model {
                         $parts[] = $odata['firstname'];
                     }
                 }
-                else {
+                if( $odata['type_id'] != 1 || empty($parts) ) {
                     if( isset($odata['short_name']) && strlen($odata['short_name'])) {
                         $parts[] = $odata['short_name'];
                     }
