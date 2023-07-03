@@ -10,11 +10,8 @@ namespace inventory\product;
 use equal\orm\Model;
 
 class Access extends Model {
-    public static function getColumns()
-    {
-        /**
-         *
-         */
+
+    public static function getColumns() {
         return [
             'name' => [
                 'type'              => 'string',
@@ -31,8 +28,7 @@ class Access extends Model {
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['http', 'https', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
-                'onupdate'          => 'getUrl',
-                'onupdate'          => 'getType',
+                'onupdate'          => 'onupdateType',
                 'description'       => 'Type of the access',
                 'required'          => true
             ],
@@ -40,7 +36,7 @@ class Access extends Model {
             'url' => [
                 'type'              => 'computed',
                 'description'       => 'URL to access the product element.',
-                'function'          => 'getUrl',
+                'function'          => 'calcUrl',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'store'             => true,
@@ -49,26 +45,28 @@ class Access extends Model {
 
             'host' => [
                 'type'              => 'string',
-                'onupdate'          => 'getUrl',
                 'description'       => "IP address or hostname¨of the server",
-                'required'          => true
+                'required'          => true,
+                'dependencies'      => ['url']
             ],
 
             'port' => [
                 'type'              => 'string',
-                'onupdate'          => 'getUrl',
-                'description'       => "port to connect to (default based on protocol)"
+                'description'       => "port to connect to (default based on protocol)",
+                'dependencies'      => ['url']
             ],
 
             'username' => [
                 'type'              => 'string',
-                'description'       => "username of the account related to this access"
+                'description'       => "username of the account related to this access",
+                'dependencies'      => ['url']
             ],
 
             'password' => [
                 'type'              => 'string',
                 'usage'             => 'password',
-                'description'       => "Password of the account related to this access"
+                'description'       => "Password of the account related to this access",
+                'dependencies'      => ['url']
             ],
 
             'server_id' => [
@@ -86,37 +84,39 @@ class Access extends Model {
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\product\service\Service',
-                'description'       => 'Service to which the access belongs.',
-                'description'       => "Service Access"
-            ],
+                'description'       => 'Service to which the access belongs.'
+            ]
 
-        ];    
+        ];
     }
 
 
-    public static function getUrl($om, $oids) {
-        $res = $om->read(__CLASS__, $oids, ['port', 'host', 'type', 'username', 'password']);
-        foreach($res as $oid=>$ourl) {
-            $content = $ourl['type'].'://'.$ourl['username'].':'.$ourl['password'].'@'.$ourl['host'].($ourl['port']?':'.$ourl['port']:'');
-            $om->write(__CLASS__, $oids, ['url' => $content]);
-        }      
+    public static function calcUrl($self) {
+        $self->read(['port', 'host', 'type', 'username', 'password']);
+        foreach($self as $id => $access) {
+            $url = $access['type'].'://'.$access['username'].':'.$access['password'].'@'.$access['host'].($access['port']?':'.$access['port']:'');
+            self::id($id)->update(['url' => $url]);
+        }
     }
 
-    public static function getType($om, $oids) {
-        $res = $om->read(__CLASS__, $oids, ['type']);
-        foreach($res as $oid=>$otype) {
-            $defaultPort = ['http' => '80', 
-                            'https' => '443', 
-                            'ssh' => '22', 
-                            'ftp' => '20', 
-                            'sftp' => '22', 
-                            'pop' => '110', 
-                            'smtp' => '25', 
-                            'git' => '9418', 
-                            'docker' => '2345',
-                            ];
-            $content = $defaultPort[$otype['type']];
-            $om->write(__CLASS__, $oids, ['port' => $content]);
-        }      
+    public static function onupdateType($self) {
+        $self->read(['type']);
+        foreach($self as $id => $access) {
+            $map_ports = [
+                    'http'      => '80',
+                    'https'     => '443',
+                    'ssh'       => '22',
+                    'ftp'       => '20',
+                    'sftp'      => '22',
+                    'pop'       => '110',
+                    'smtp'      => '25',
+                    'git'       => '9418',
+                    'docker'    => '2345',
+                ];
+            if(isset($map_ports[$access['type']])) {
+                $default_port = $map_ports[$access['type']];
+                $self::id($id)->update(['port' => $default_port]);
+            }
+        }
     }
 }
