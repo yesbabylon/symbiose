@@ -108,7 +108,8 @@ class RentalUnit extends Model {
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
-                'foreign_object'    => 'realestate\RentalUnit'
+                'foreign_object'    => 'realestate\RentalUnit',
+                'dependencies'      => ['has_parent']
             ],
 
             'repairs_ids' => [
