@@ -4,11 +4,7 @@
     Some Rights Reserved, Cedric Francoys, 2010-2021
     Licensed under GNU LGPL 3 license <http://www.gnu.org/licenses/>
 */
-use equal\orm\ObjectManager;
 use equal\test\Tester;
-
-use core\User;
-use core\Group;
 
 list($params, $providers) = announce([
     'description'   => 'Check presence of test units for given package and run them, if any.',
@@ -18,10 +14,15 @@ list($params, $providers) = announce([
             'type'          =>  'string',
             'default'       =>  '*'
         ],
-        'test_id'   => [
+        'test'   => [
             'description'   =>  "ID of the specific test to perform (by default all tests are performed).",
             'type'          =>  'integer',
             'default'       =>  0
+        ],
+        'set'   => [
+            'description'   =>  "ID of the specific test to perform (by default all tests are performed).",
+            'type'          =>  'string',
+            'default'       =>  null
         ],
         'logs'      => [
             'description'   =>  "Embed logs in result",
@@ -40,15 +41,20 @@ $tests_path = "packages/{$params['package']}/tests";
 
 if(is_dir($tests_path)) {
     foreach (glob($tests_path."/*.php") as $filename) {
+        $set = basename($filename, '.php');
+        if($params['set'] && $params['set'] != $set) {
+            continue;
+        }
         include($filename);
         $tester = new Tester($tests);
-        $body = $tester->test($params['test_id'])->toArray();
+        $body = $tester->test($params['test'])->toArray();
         if(isset($body['failed'])) {
             $failed = true;
         }
-        $result[basename($filename, '.php')] = $body;
+        $result[$set] = $body;
     }
 }
+
 if($params['logs']) {
     $result['logs'] = file_get_contents(QN_LOG_STORAGE_DIR.'/error.log').file_get_contents(QN_LOG_STORAGE_DIR.'/eq_error.log');
 }
@@ -57,6 +63,7 @@ $providers['context']->httpResponse()
                      ->body($result)
                      ->send();
 
+// if at least one test failed, force non-zero exit code
 if($failed) {
     exit(1);
 }

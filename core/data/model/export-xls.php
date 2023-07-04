@@ -51,7 +51,12 @@ list($params, $providers) = announce([
     'providers'     => ['context', 'orm', 'auth', 'adapt']
 ]);
 
-
+/**
+ * @var \equal\php\Context                  $context
+ * @var \equal\orm\ObjectManager            $orm
+ * @var \equal\auth\AuthenticationManager   $auth
+ * @var \equal\data\DataAdapter             $adapt
+ */
 list($context, $orm, $auth, $adapter) = [$providers['context'], $providers['orm'], $providers['auth'], $providers['adapt']];
 
 $is_controller_entity = false;
@@ -83,7 +88,10 @@ else {
 }
 
 
-// retrieve view schema
+/**
+ * Retrieve view schema
+ */
+
 $view_schema = eQual::run('get', 'model_view', [
     'entity'        => $params['entity'],
     'view_id'       => $params['view_id']
@@ -92,6 +100,8 @@ $view_schema = eQual::run('get', 'model_view', [
 if(!isset($view_schema['layout']['items'])) {
     throw new Exception('invalid_view', QN_ERROR_INVALID_CONFIG);
 }
+
+$group_by = (isset($view_schema['group_by']))?$view_schema['group_by']:[];
 
 // #todo - add support for group_by directive
 $view_fields = [];
@@ -107,7 +117,14 @@ $fields_to_read = [];
 foreach($view_fields as $item) {
     $field =  $item['value'];
     $descr = $schema[$field];
-    if($descr['type'] == 'many2one') {
+
+    $type = $descr['type'];
+    // #todo - handle 'alias'
+    if($type == 'computed') {
+        $type = $descr['result_type'];
+    }
+
+    if($type == 'many2one') {
         $fields_to_read[$field] = ['id', 'name'];
     }
     else {
@@ -171,9 +188,9 @@ else {
     }
 }
 
-/*
-    Retrieve translation data, if any
-*/
+/**
+ * Retrieve translation data, if any
+ */
 
 $translations = [];
 try {
@@ -228,7 +245,8 @@ $sheet->setTitle("export");
 $column = 'A';
 $row = 1;
 
-// generate head row
+// 1) generate head row
+
 foreach($view_fields as $item) {
     $field = $item['value'];
 
@@ -245,6 +263,7 @@ foreach($view_fields as $item) {
     ++$column;
 }
 
+// 2) generate table lines (with group_by support)
 
 foreach($values as $oid => $odata) {
     ++$row;

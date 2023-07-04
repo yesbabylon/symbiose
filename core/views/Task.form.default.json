@@ -37,6 +37,11 @@
                                                 "type": "field",
                                                 "value": "repeat_step",
                                                 "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
                                             }
                                         ]
                                     },
@@ -85,7 +90,7 @@
                                                 "value": "logs_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "height": 500
+                                                    "height": 600
                                                 }
                                             }
                                         ]

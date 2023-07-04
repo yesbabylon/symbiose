@@ -27,7 +27,7 @@
                                                 "type": "field",
                                                 "value": "login",
                                                 "width": "50%",
-                                                "label": "Username",
+                                                "label": "Login",
                                                 "help": "Email address of the user."
                                             },
                                             {
@@ -61,6 +61,11 @@
                                                 "value": "lastname",
                                                 "width": "50%",
                                                 "label": "User family name"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "fullname",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
