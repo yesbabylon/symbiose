@@ -10,7 +10,7 @@ use equal\orm\Model;
 class RentalUnit extends Model {
 
     public static function getDescription() {
-        return "A rental unit is a ressource that can be rented to a customer.";
+        return "A rental unit is a resource that can be rented to a customer.";
     }
 
     public static function getColumns() {
@@ -55,13 +55,13 @@ class RentalUnit extends Model {
             'category' => [
                 'type'              => 'string',
                 'selection'         => ['hostel', 'lodge'],         // hostel is GA, lodge is GG
-                'description'       => 'Type of rental unit (that usually comes with extra accomodations, ie meals; or rented as is).',
+                'description'       => 'Type of rental unit (that usually comes with extra accommodations, ie meals; or rented as is).',
                 'default'           => 'hostel'
             ],
 
             'is_accomodation' => [
                 'type'              => 'boolean',
-                'description'       => 'The rental unit is an accomodation (having at least one bed).',
+                'description'       => 'The rental unit is an accommodation (having at least one bed).',
                 'default'           => true
             ],
 
@@ -108,7 +108,8 @@ class RentalUnit extends Model {
             'parent_id' => [
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
-                'foreign_object'    => 'realestate\RentalUnit'
+                'foreign_object'    => 'realestate\RentalUnit',
+                'onupdate'          => 'onupdateParentId'
             ],
 
             'repairs_ids' => [
@@ -177,6 +178,10 @@ class RentalUnit extends Model {
             ]
 
         ];
+    }
+
+    public static function onupdateParentId($om, $ids, $values, $lang) {
+        $om->update(self::getType(), $ids, ['has_parent' => null]);
     }
 
     public static function calcHasParent($om, $oids, $lang) {
