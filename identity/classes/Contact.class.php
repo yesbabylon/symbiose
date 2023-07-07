@@ -8,17 +8,17 @@ namespace identity;
 
 class Contact extends Partner {
 
+    public function getTable() {
+        // force table name to use distinct tables and ID columns
+        return 'identity_contact';
+    }
+
     public static function getName() {
         return "Contact";
     }
 
     public static function getDescription() {
         return "Contacts are persons that are attached to an identity.";
-    }
-
-    public function getTable() {
-        // force table name to use distinct tables and ID columns
-        return 'identity_contact';
     }
 
     public static function getColumns() {

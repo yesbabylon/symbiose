@@ -6,7 +6,7 @@
 */
 namespace talentlead\identity;
 
-class Customer extends \identity\Partner {
+class Customer extends \sale\customer\Customer {
 
     public static function getColumns() {
         return [

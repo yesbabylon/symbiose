@@ -8,6 +8,10 @@ namespace talentlead\identity;
 
 class Talent extends \identity\Partner {
 
+    public function getTable() {
+        return 'talentlead_identity_talent';
+    }
+
     public static function getColumns() {
         return [
 
