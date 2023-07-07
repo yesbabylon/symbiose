@@ -8,6 +8,10 @@ namespace hr\employee;
 
 class Employee extends \identity\Partner {
 
+    public function getTable() {
+        return 'hr_employee_employee';
+    }
+
     public static function getName() {
         return 'Employee';
     }

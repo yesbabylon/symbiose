@@ -8,6 +8,10 @@ namespace sale\customer;
 
 class Customer extends \identity\Partner {
 
+    public function getTable() {
+        return 'sale_customer_customer';
+    }
+
     public static function getName() {
         return 'Customer';
     }

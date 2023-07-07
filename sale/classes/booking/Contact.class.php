@@ -6,7 +6,7 @@
 */
 namespace sale\booking;
 
-class Contact extends \identity\Partner {
+class Contact extends \identity\Contact {
 
     public static function getName() {
         return "Booking Contact";
