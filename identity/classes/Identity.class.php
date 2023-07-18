@@ -355,6 +355,7 @@ class Identity extends Model {
             ],
 
             // field for retrieving all partners related to the identity
+            // @deprecated - irrelevant since partner relates to distinct tables
             'partners_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'identity\Partner',

@@ -35,6 +35,12 @@ class Contact extends \identity\Contact {
                 'type'              => 'string',
                 'default'           => 'contact',
                 'description'       => "The partnership should remain 'contact'."
+            ],
+
+            'is_internal' => [
+                'type'              => 'boolean',
+                'description'       => 'The partnership relates to (one of) the organization(s) from the current installation.',
+                'default'           => false
             ]
 
         ];
