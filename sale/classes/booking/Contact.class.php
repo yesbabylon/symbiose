@@ -53,11 +53,4 @@ class Contact extends \identity\Contact {
         ];
     }
 
-    public function getUnique() {
-        return [
-            ['owner_identity_id', 'partner_identity_id', 'booking_id']
-        ];
-    }
-
-
 }
