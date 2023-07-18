@@ -58,7 +58,7 @@ class Document extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
-                'description'       => 'URL to visual edior of the module.',
+                'description'       => 'URL for visualizing the document.',
                 'function'          => 'calcLink',
                 'store'             => true,
                 'readonly'          => true
