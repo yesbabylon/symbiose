@@ -28,7 +28,7 @@ class Contact extends Partner {
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'contact',
-                'description'       => "The partnership should remain 'contact'."
+                'help'              => "The partnership should remain 'contact'."
             ]
 
         ];
