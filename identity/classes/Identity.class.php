@@ -475,7 +475,7 @@ class Identity extends Model {
     }
 
     /**
-     * When lang_id is updated, perform cascading trought the partners to update related lang_id
+     * When lang_id is updated, perform cascading through the partners to update related lang_id
      */
     public static function onupdateLangId($om, $oids, $values, $lang) {
         $res = $om->read(self::getType(), $oids, ['partners_ids', 'lang_id']);
