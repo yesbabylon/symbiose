@@ -141,7 +141,7 @@ foreach($classes as $class) {
                 $result[] = "ERROR - ORM - Class $class: Unknown attribute '$attribute' for field '$field' ({$description['type']}) - Possible attributes are : ".implode(', ', $orm::$valid_attributes[$description['type']])." ($class_filename)";
                 $is_error = true;
             }
-            if(in_array($attribute, array('store', 'multilang', 'search')) && $value !== true && $value !== false) {
+            if(in_array($attribute, array('store', 'multilang', 'readonly')) && $value !== true && $value !== false) {
                 $result[] = "ERROR - ORM - Class $class: Incompatible value for attribute $attribute in field $field of type {$description['type']} (possible attributes are : true, false)"." ($class_filename)";
                 $is_error = true;
             }
