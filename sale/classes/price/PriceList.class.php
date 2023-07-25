@@ -8,10 +8,8 @@ namespace sale\price;
 use equal\orm\Model;
 
 class PriceList extends Model {
-    public static function getColumns() {
-        /**
-         */
 
+    public static function getColumns() {
         return [
             'name' => [
                 'type'              => 'string',
@@ -22,13 +20,15 @@ class PriceList extends Model {
             'date_from' => [
                 'type'              => 'date',
                 'description'       => "Start of validity period.",
-                'required'          => true
+                'required'          => true,
+                'dependencies'      => ['duration']
             ],
 
             'date_to' => [
                 'type'              => 'date',
                 'description'       => "End of validity period.",
-                'required'          => true
+                'required'          => true,
+                'dependencies'      => ['duration']
             ],
 
             'duration' => [
