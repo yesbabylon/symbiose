@@ -1,0 +1,14 @@
+[
+    {
+        "name": "finance\\accounting\\AccountingRule",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Sale",
+                "type": "sale",
+                "description": "Default rule for sales."
+            }
+        ]
+    }
+]
