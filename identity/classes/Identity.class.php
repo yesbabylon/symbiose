@@ -24,22 +24,24 @@ class Identity extends Model {
 
     public static function getColumns() {
         return [
-            'name' => [
-                'type'             => 'alias',
-                'alias'            => 'display_name'
-            ],
 
-            'display_name' => [
+            'name' => [
                 'type'              => 'computed',
-                'function'          => 'calcDisplayName',
+                'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
                 'description'       => 'The display name of the identity.',
                 'help'              => "
                     The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
-                    For instance, 'display_name', for a company with \"My Company\" as legal name will return \"My Company\". \n
+                    For instance, 'name', for a company with \"My Company\" as legal name will return \"My Company\". \n
                     Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it returns \"John Smith\".
                 "
+            ],
+
+            // @deprecated
+            'display_name' => [
+                'type'             => 'alias',
+                'alias'            => 'name'
             ],
 
             'type_id' => [
@@ -389,7 +391,7 @@ class Identity extends Model {
      * For organisations the display name is the legal name
      * For individuals, the display name is the concatenation of first and last names
      */
-    public static function calcDisplayName($om, $oids, $lang) {
+    public static function calcName($om, $oids, $lang) {
         $result = [];
         $res = $om->read(self::getType(), $oids, ['type_id', 'firstname', 'lastname', 'legal_name', 'short_name']);
         foreach($res as $oid => $odata) {
@@ -439,7 +441,7 @@ class Identity extends Model {
     }
 
     public static function onupdateName($om, $oids, $values, $lang) {
-        $om->update(self::getType(), $oids, [ 'display_name' => null ], $lang);
+        $om->update(self::getType(), $oids, [ 'name' => null ], $lang);
         $res = $om->read(self::getType(), $oids, ['partners_ids']);
         $partners_ids = [];
         foreach($res as $oid => $odata) {
@@ -456,7 +458,7 @@ class Identity extends Model {
         if($res > 0) {
             $partners_ids = [];
             foreach($res as $oid => $odata) {
-                $values = [ 'type' => $odata['type_id.code'], 'display_name' => null];
+                $values = [ 'type' => $odata['type_id.code'], 'name' => null];
                 if($odata['type_id'] == 1 ) {
                     $values['legal_name'] = '';
                 }
@@ -467,7 +469,7 @@ class Identity extends Model {
                 $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
                 $om->update(self::getType(), $oid, $values, $lang);
             }
-            $om->read(self::getType(), $oids, ['display_name'], $lang);
+            $om->read(self::getType(), $oids, ['name'], $lang);
             // force re-computing of related partners names
             $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
             $om->read('identity\Partner', $partners_ids, ['name'], $lang);
