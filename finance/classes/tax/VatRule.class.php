@@ -37,7 +37,10 @@ class VatRule extends Model {
             'type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",
-                'selection'         => ['purchase', 'sale'],
+                'selection'         => [
+                        'purchase',
+                        'sale'
+                    ],
                 'required'          => true
             ],
 
@@ -47,7 +50,7 @@ class VatRule extends Model {
                 'description'       => "Account which the tax amount relates to.",
             ],
 
-            // #todo - if several accounting accounts are involded (distinct shares), we need to use a VatRuleLine class holding `account_id` and `share` fields
+            // #todo - if several accounting accounts are involved (distinct shares), we need to use a VatRuleLine class holding `account_id` and `share` fields
 
         ];
     }
