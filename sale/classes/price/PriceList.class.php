@@ -59,7 +59,7 @@ class PriceList extends Model {
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsActive',
                 'description'       => "Is the pricelist currently applicable? ",
-                'help'              => "When this flag is set to true, it means the list is eligible for future bookings. i.e. with a 'date_to' in the future and 'published'.",
+                'help'              => "When this flag is set to true, it means the list is eligible for future sales. i.e. with a 'date_to' in the future and 'published'.",
                 'store'             => true,
                 'readonly'          => true
             ],
@@ -89,9 +89,9 @@ class PriceList extends Model {
         ];
     }
 
-    public static function calcDuration($om, $oids, $lang) {
+    public static function calcDuration($om, $ids, $lang) {
         $result = [];
-        $lists = $om->read(self::getType(), $oids, ['date_from', 'date_to']);
+        $lists = $om->read(self::getType(), $ids, ['date_from', 'date_to']);
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
@@ -114,9 +114,9 @@ class PriceList extends Model {
     }
 
 
-    public static function calcPricesCount($om, $oids, $lang) {
+    public static function calcPricesCount($om, $ids, $lang) {
         $result = [];
-        $lists = $om->read(self::getType(), $oids, ['prices_ids']);
+        $lists = $om->read(self::getType(), $ids, ['prices_ids']);
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
@@ -129,8 +129,8 @@ class PriceList extends Model {
     /**
      * Invalidate related prices names.
      */
-    public static function onupdateName($om, $oids, $values, $lang) {
-        $lists = $om->read(self::getType(), $oids, ['prices_ids'], $lang);
+    public static function onupdateName($om, $ids, $values, $lang) {
+        $lists = $om->read(self::getType(), $ids, ['prices_ids'], $lang);
 
         if($lists > 0) {
             foreach($lists as $lid => $list) {
@@ -139,11 +139,11 @@ class PriceList extends Model {
         }
     }
 
-    public static function onupdateStatus($om, $oids, $values, $lang) {
-        $pricelists = $om->read(self::getType(), $oids, ['status', 'prices_ids']);
-        $om->update(self::getType(), $oids, ['is_active' => null]);
+    public static function onupdateStatus($om, $ids, $values, $lang) {
+        $pricelists = $om->read(self::getType(), $ids, ['status', 'prices_ids']);
+        $om->update(self::getType(), $ids, ['is_active' => null]);
         // immediate re-compute (required by subsequent re-computations of prices is_active flag)
-        $om->read(self::getType(), $oids, ['is_active']);
+        $om->read(self::getType(), $ids, ['is_active']);
 
         if($pricelists > 0) {
             $providers = \eQual::inject(['cron']);
