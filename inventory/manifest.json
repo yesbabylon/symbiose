@@ -1,5 +1,0 @@
-{
-    "name": "inventory",
-    "depends_on": ["core"],
-    "apps": ["inventory"]
-}
