@@ -4,8 +4,12 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+use sale\booking\Consumption;
+use lodging\sale\booking\BookingLine;
+use lodging\sale\booking\Booking;
+
 list($params, $providers) = announce([
-    'description'   => "Tries to dismiss a message. Should be invoked as a user request for removing the message. If the situation is still occurring an identical alert will be re-created.",
+    'description'   => "Tries to dismiss a message. Should be invoked as a user request for removing the message. If the situation is still occuring an identical alert will be re-created.",
     'params'        => [
         'id' =>  [
             'description'   => 'Identifier of the alert to dismiss.',
@@ -32,7 +36,7 @@ list($params, $providers) = announce([
  */
 list($context, $orm, $auth, $dispatch) = [ $providers['context'], $providers['orm'], $providers['auth'], $providers['dispatch']];
 
-// #todo - restrict access based on link between message model and user groups
+// #todo - restrict access based on link between messagemodel and user groups
 
 // #todo - deprecate (visibility = protected)
 $user_id = $auth->userId();
