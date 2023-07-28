@@ -23,9 +23,9 @@ class Condition extends Model {
             'operand' => [
                 'type'              => 'string',
                 'selection'         => [
-                                            'season', 
-                                            'nb_pers', 
-                                            'duration', 
+                                            'season',
+                                            'nb_pers',
+                                            'duration',
                                             'count_booking_24'
                                        ],
                 'required'          => true
@@ -59,7 +59,7 @@ class Condition extends Model {
         foreach($res as $oid => $odata) {
             $result[$oid] = "{$odata['operand']} {$odata['operator']} {$odata['value']}";
         }
-        return $result;              
+        return $result;
     }
 
 
