@@ -43,7 +43,7 @@ class AccountingRule extends Model {
 
             'accounting_rule_line_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => \finance\accounting\AccountingRuleLine::getType(),
+                'foreign_object'    => 'finance\accounting\AccountingRuleLine',
                 'foreign_field'     => 'accounting_rule_id',
                 'description'       => "Lines that are related to this rule."
             ],
@@ -56,7 +56,7 @@ class AccountingRule extends Model {
 
             'vat_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \finance\tax\VatRule::getType(),
+                'foreign_object'    => 'finance\tax\VatRule',
                 'description'       => "VAT rule the line is related to.",
                 'onupdate'          => 'onupdateVatRuleId'
             ],
@@ -72,12 +72,10 @@ class AccountingRule extends Model {
     }
 
 
-    public static function onupdateVatRuleId($om, $oids, $values, $lang) {
-        $res = $om->read(__CLASS__, $oids, ['prices_ids']);
-        if($res > 0 && count($res)) {
-            foreach($res as $oid => $odata) {
-                $om->write('sale\price\Price', $odata['prices_ids'], ['vat_rate' => null], $lang);
-            }
+    public static function onupdateVatRuleId($self) {
+        $self->read(['prices_ids']);
+        foreach($self as $id => $rule) {
+            \sale\price\Price::ids($rule['prices_ids'])->update(['vat_rate' => null]);
         }
     }
 
