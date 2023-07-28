@@ -30,7 +30,7 @@ class InvoiceLine extends Model {
 
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Complementary description of the line (independant from product).'
+                'description'       => 'Complementary description of the line (independent from product).'
             ],
 
             'invoice_line_group_id' => [
@@ -42,7 +42,7 @@ class InvoiceLine extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => Invoice::getType(),
+                'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
@@ -57,7 +57,7 @@ class InvoiceLine extends Model {
 
             'price_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \sale\price\Price::getType(),
+                'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
                 'onupdate'          => 'onupdatePriceId'
             ],
@@ -125,46 +125,38 @@ class InvoiceLine extends Model {
 
             'downpayment_invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => Invoice::getType(),
+                'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'Downpayment invoice (set when the line refers to an invoiced downpayment.)'
             ]
 
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $lines = $om->read(get_called_class(), $oids, ['product_id.name'], $lang);
-        if($lines > 0) {
-            foreach($lines as $oid => $line) {
-                $result[$oid] = $line['product_id.name'];
-            }
+        $self->read(['product_id' => ['name']]);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['product_id']['name'];
         }
         return $result;
     }
 
-    public static function calcUnitPrice($om, $oids, $lang) {
+    public static function calcUnitPrice($self) {
         $result = [];
-
-        $lines = $om->read(__CLASS__, $oids, ['price_id.price']);
-
-        if($lines > 0) {
-            foreach($lines as $oid => $line) {
-                $result[$oid] = $line['price_id.price'];
-            }
+        $self->read(['price_id' => ['price']]);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['price_id']['price'];
         }
         return $result;
     }
 
-    public static function calcVatRate($om, $oids, $lang) {
+    public static function calcVatRate($self) {
         $result = [];
-        $lines = $om->read(__CLASS__, $oids, ['price_id.accounting_rule_id.vat_rule_id.rate']);
-        if($lines > 0) {
-            foreach($lines as $oid => $odata) {
-                $result[$oid] = 0.0;
-                if(isset($odata['price_id.accounting_rule_id.vat_rule_id.rate'])) {
-                    $result[$oid] = floatval($odata['price_id.accounting_rule_id.vat_rule_id.rate']);
-                }
+        $self->read(['price_id' => ['accounting_rule_id' => ['vat_rule_id' => ['rate']]]]);
+        foreach($self as $id => $line) {
+            $result[$id] = 0.0;
+            if(isset($line['price_id']['accounting_rule_id']['vat_rule_id']['rate'])) {
+                $result[$id] = floatval($line['price_id']['accounting_rule_id']['vat_rule_id']['rate']);
             }
         }
         return $result;
@@ -174,13 +166,11 @@ class InvoiceLine extends Model {
      * Get total tax-excluded price of the line.
      *
      */
-    public static function calcTotal($om, $oids, $lang) {
+    public static function calcTotal($self) {
         $result = [];
-
-        $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
-
-        foreach($lines as $oid => $line) {
-            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+        $self->read(['qty','unit_price','free_qty','discount']);
+        foreach($self as $id => $line) {
+            $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
         }
         return $result;
     }
@@ -189,52 +179,49 @@ class InvoiceLine extends Model {
      * Get final tax-included price of the line.
      *
      */
-    public static function calcPrice($om, $oids, $lang) {
+    public static function calcPrice($self) {
         $result = [];
-
-        $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
-
-        foreach($lines as $oid => $odata) {
-            $total = (float) $odata['total'];
-            $vat = (float) $odata['vat_rate'];
-
-            $result[$oid] = round($total * (1.0 + $vat), 2);
+        $self->read(['total','vat_rate']);
+        foreach($self as $id => $line) {
+            $total = (float) $line['total'];
+            $vat = (float) $line['vat_rate'];
+            $result[$id] = round($total * (1.0 + $vat), 2);
         }
         return $result;
     }
 
-    public static function onupdatePriceId($om, $oids, $values, $lang) {
-        $om->update(get_called_class(), $oids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
+    public static function onupdatePriceId($om, $ids, $values, $lang) {
+        $om->update(get_called_class(), $ids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
         // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function onupdateVatRate($om, $oids, $values, $lang) {
-        $om->update(get_called_class(), $oids, ['price' => null]);
+    public static function onupdateVatRate($om, $ids, $values, $lang) {
+        $om->update(get_called_class(), $ids, ['price' => null]);
         // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function onupdateQty($om, $oids, $values, $lang) {
-        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+    public static function onupdateQty($om, $ids, $values, $lang) {
+        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
         // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function onupdateFreeQty($om, $oids, $values, $lang) {
-        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+    public static function onupdateFreeQty($om, $ids, $values, $lang) {
+        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
         // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function onupdateDiscount($om, $oids, $values, $lang) {
-        $om->update(get_called_class(), $oids, ['price' => null, 'total' => null]);
+    public static function onupdateDiscount($om, $ids, $values, $lang) {
+        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
         // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $oids, [], $lang);
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function _resetInvoice($om, $oids, $values, $lang) {
-        $lines = $om->read(get_called_class(), $oids, ['invoice_id']);
+    public static function _resetInvoice($om, $ids, $values, $lang) {
+        $lines = $om->read(get_called_class(), $ids, ['invoice_id']);
         if($lines > 0)  {
             $invoices_ids = array_map(function($a) {return $a['invoice_id'];}, $lines);
             $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);

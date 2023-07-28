@@ -39,7 +39,7 @@ class Invoice extends Model {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
+                'foreign_object'    => 'identity\Organization',
                 'description'       => "The organization that emitted the invoice.",
                 'default'           => 1
             ],
@@ -83,7 +83,7 @@ class Invoice extends Model {
 
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => self::getType(),
+                'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => "Credit note that was created for cancelling the invoice, if any.",
                 'visible'           => ['status', '=', 'cancelled']
             ],
@@ -117,7 +117,7 @@ class Invoice extends Model {
 
             'partner_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => \identity\Partner::getType(),
+                'foreign_object'    => 'identity\Partner',
                 'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true
             ],
@@ -160,7 +160,7 @@ class Invoice extends Model {
 
             'accounting_entries_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => AccountingEntry::getType(),
+                'foreign_object'    => 'finance\accounting\AccountingEntry',
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Accounting entries relating to the lines of the invoice.',
                 'ondetach'          => 'delete'
@@ -197,57 +197,50 @@ class Invoice extends Model {
         ];
     }
 
-    public static function calcIsPaid($om, $oids, $lang) {
+    public static function calcIsPaid($self) {
         $result = [];
-        // #memo - fundings_ids targets all fundings relating to invoice: this includes the installments
-        // we need to limit the check to the direct funding, if any
-        $invoices = $om->read(get_called_class(), $oids, ['status', 'price', 'funding_id.paid_amount'], $lang);
-        if($invoices > 0) {
-            foreach($invoices as $oid => $invoice) {
-                $result[$oid] = false;
-                if($invoice['status'] != 'invoice') {
-                    // proforma invoices cannot be marked as paid
-                    continue;
-                }
-                if($invoice['price'] == 0) {
-                    // mark the invoice as paid, whatever its funding
-                    $result[$oid] = true;
-                    continue;
-                }
-                if($invoice['funding_id.paid_amount'] && $invoice['funding_id.paid_amount'] == $invoice['price']) {
-                    $result[$oid] = true;
-                }
+        $self->read(['status', 'price', 'funding_id' => ['paid_amount']]);
+        foreach($self as $id => $invoice) {
+            $result[$id] = false;
+            if($invoice['status'] != 'invoice') {
+                // proforma invoices cannot be marked as paid
+                continue;
+            }
+            if(round($invoice['price'], 2) == 0) {
+                // mark the invoice as paid, whatever its funding
+                $result[$id] = true;
+                continue;
+            }
+            if(isset($invoice['funding_id']['paid_amount']) && round($invoice['funding_id']['paid_amount'], 2) == round($invoice['price'], 2)) {
+                $result[$id] = true;
             }
         }
         return $result;
     }
 
-    public static function calcPaymentReference($om, $oids, $lang) {
+    public static function calcPaymentReference($self) {
         $result = [];
-        $invoices = $om->read(get_called_class(), $oids, ['number']);
-        foreach($invoices as $oid => $invoice) {
+        $self->read(['number']);
+        foreach($self as $oid => $invoice) {
             $number = intval($invoice['number']);
-            // arbitrary value : 155 for balance (final) invoice
-            $code_ref = 155;
+            // arbitrary value for balance (final) invoice
+            $code_ref = 200;
             $result[$oid] = self::_get_payment_reference($code_ref, $number);
         }
         return $result;
     }
 
-    public static function calcNumber($om, $oids, $lang) {
+    public static function calcNumber($self) {
         $result = [];
-
-        $invoices = $om->read(get_called_class(), $oids, ['status', 'organisation_id'], $lang);
-
-        foreach($invoices as $oid => $invoice) {
-
+        $self->read(['status', 'organisation_id']);
+        foreach($self as $id => $invoice) {
             // no code is generated for proforma
             if($invoice['status'] == 'proforma') {
-                $result[$oid] = '[proforma]';
+                $result[$id] = '[proforma]';
                 continue;
             }
 
-            $result[$oid] = '';
+            $result[$id] = '';
 
             $organisation_id = $invoice['organisation_id'];
 
@@ -257,8 +250,7 @@ class Invoice extends Model {
 
             if($sequence) {
                 Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
-
-                $result[$oid] = Setting::parse_format($format, [
+                $result[$id] = Setting::parse_format($format, [
                     'year'      => $year,
                     'org'       => $organisation_id,
                     'sequence'  => $sequence
@@ -282,16 +274,14 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function calcTotal($om, $oids, $lang) {
+    public static function calcTotal($self) {
         $result = [];
-
-        $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.total'], $lang);
-
-        foreach($invoices as $oid => $invoice) {
-            $total = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
+        $self->read(['invoice_lines_ids' => ['total']]);
+        foreach($self as $id => $invoice) {
+            $total = array_reduce($invoice['invoice_lines_ids']->get(true), function ($c, $a) {
                 return $c + $a['total'];
             }, 0.0);
-            $result[$oid] = round($total, 2);
+            $result[$id] = round($total, 2);
         }
         return $result;
     }
@@ -347,7 +337,7 @@ class Invoice extends Model {
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * This method can be overridden to define a more precise set of tests.
      *
      * @param  \equal\orm\ObjectManager   $om         ObjectManager instance.
      * @param  array                      $oids       List of objects identifiers.
@@ -541,7 +531,7 @@ class Invoice extends Model {
                         $credit = 0.0;
                         // assign with handling of reversing entries
                         $accounting_entries[] = [
-                            'name'          => 'taxes TVA à payer',
+                            'name'          => 'VAT taxes to pay',
                             'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
@@ -555,7 +545,7 @@ class Invoice extends Model {
                     $credit = 0.0;
                     // assign with handling of reversing entries
                     $accounting_entries[] = [
-                        'name'          => 'créances commerciales',
+                        'name'          => 'commercial debts',
                         'has_invoice'   => true,
                         'invoice_id'    => $oid,
                         'account_id'    => $account_trade_debtors_id,
