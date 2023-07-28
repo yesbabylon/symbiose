@@ -233,40 +233,8 @@ class Funding extends Model {
     }
 
     /**
-     * Hook invoked before object update for performing object-specific additional operations.
-     * Update the scheduled tasks related to the fundings.
-     *
-     * @param  \equal\orm\ObjectManager    $om         ObjectManager instance.
-     * @param  array                       $oids       List of objects identifiers.
-     * @param  array                       $values     Associative array holding the new values that have been assigned.
-     * @param  string                      $lang       Language in which multilang fields are being updated.
-     * @return void
-     */
-    public static function onupdate($om, $oids, $values, $lang) {
-        $cron = $om->getContainer()->get('cron');
-
-        if(isset($values['due_date'])) {
-            foreach($oids as $fid) {
-                // remove any previsously scheduled task
-                $cron->cancel("booking.funding.overdue.{$fid}");
-                // setup a scheduled job upon funding overdue
-                $cron->schedule(
-                    // assign a reproducible unique name
-                    "booking.funding.overdue.{$fid}",
-                    // remind on day following due_date
-                    $values['due_date'] + 86400,
-                    'lodging_funding_check-payment',
-                    [ 'id' => $fid ]
-                );
-            }
-        }
-        parent::onupdate($om, $oids, $values, $lang);
-    }
-
-
-    /**
      * Hook invoked before object deletion for performing object-specific additional operations.
-     * Remove the scheduled tasks related to the deleted fundinds.
+     * Remove the scheduled tasks related to the deleted fundings.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $oids       List of objects identifiers.
