@@ -1,0 +1,85 @@
+{
+    "name": "Accès",
+    "plural": "Accès",
+    "description": "Vue par défaut pour la liste des accès.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom de l'accès.",
+            "help": "Nom de l'accès."
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description de la catégorie de fournisseur de service.",
+            "help": "Description de la catégorie de fournisseur de service."
+        },
+        "type":{
+            "label": "Type",
+            "description": "Protocols.",
+            "selection": {
+                "www": "www",
+                "ssh": "ssh",
+                "ftp": "ftp",
+                "sftp": "sftp",
+                "pop": "pop",
+                "smtp": "smtp",
+                "git": "git",
+                "docker": "docker",
+                "http" :"http",
+                "https": "https"
+            },
+            "help": "Protocols."
+        },
+        "host": {
+            "label": "Hôte",
+            "description": "Hôte de l'accès.",
+            "help": "Hôte de l'accès."
+        },
+        "port":{
+            "label": "Port",
+            "description": "Port de l'accès.",
+            "help": "Port de l'accès."
+        },
+        "username":{
+            "label": "Identifiant",
+            "description": "Identifiant de l'accès.",
+            "help": "Identifiant de l'accès."
+        },
+        "password":{
+            "label": "Mot de passe",
+            "description": "Mot de passe de l'accès.",
+            "help": "Mot de passe de l'accès."
+        },
+        "server_id":{
+            "label": "Serveur",
+            "description": "Serveur.",
+            "help": "Serveur de l'accès."
+        },
+        "instance_id":{
+            "label": "Instance",
+            "description": "Instance.",
+            "help": "Intance de l'accès."
+        },
+        "service_id":{
+            "label": "Service",
+            "description": "Service.",
+            "help": "Service de l'accès."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Accès",
+            "description": "La vue des accès. ",
+            "layout": {
+                "section.access_info": {
+                    "label": "Infos Accès"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des accès",
+            "description": "Liste des accès.",
+            "layout": {}
+            }
+    }
+}

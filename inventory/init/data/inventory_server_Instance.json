@@ -1,0 +1,38 @@
+[
+    {
+        "name": "inventory\\server\\Instance",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "YB website",
+                "version": "production",
+                "description": "",
+                "type": "prod",
+                "branch": "1.0",
+                "url": "https://yesbabylon.com",
+                "server_id": 1
+            },
+            {
+                "id": 2,
+                "name": "YB website staging",
+                "version": "staging",
+                "description": "",
+                "type": "prod",
+                "branch": "dev-1.1",
+                "url": "https://dev.yesbabylon.com",
+                "server_id": 1
+            },
+            {
+                "id": 3,
+                "name": "Calendar management ",
+                "version": "development",
+                "description": "",
+                "type": "dev",
+                "branch": "master",
+                "url": "",
+                "server_id": 2
+            }
+        ]
+    }
+]

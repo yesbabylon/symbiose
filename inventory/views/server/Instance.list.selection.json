@@ -1,0 +1,48 @@
+{
+    "name": "Instances Selected",
+    "description": "Default listing of all instances.",
+    "order": "name",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "url",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "version",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "branch",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

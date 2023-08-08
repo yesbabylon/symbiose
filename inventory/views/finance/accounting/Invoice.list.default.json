@@ -1,0 +1,60 @@
+{
+    "name": "Invoices",
+    "description": "This view is intented for displaying the invoices.",
+    "access": {
+        "groups": [
+            "finance.default.user",
+            "sale.default.user",
+            "inventory.default.user"
+        ]
+    },
+    "operations": {
+        "total": {
+            "price": {
+                "id": "operations.total.price",
+                "label": "Total price",
+                "usage": "amount/money:2",
+                "operation": "SUM"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "is_paid",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%"
+            }
+        ]
+    }
+}

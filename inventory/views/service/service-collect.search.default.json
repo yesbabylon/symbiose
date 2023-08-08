@@ -1,0 +1,119 @@
+{
+  "name": "Services search",
+  "description": "Advanced collector for services",
+  "layout": {
+    "groups": [
+      {
+        "sections": [
+          {
+            "rows": [
+              {
+                "columns": [
+                  {
+                    "width": "100%",
+                    "items": [
+                      {
+                        "type": "field",
+                        "label": "Has subscription",
+                        "value": "has_subscription",
+                        "width": "15%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "subscription_id",
+                        "label": "Subscription",
+                        "width": "20%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "is_auto_renew",
+                        "label": "Auto renew",
+                        "width": "15%"
+                      },
+                      {
+                          "type": "field",
+                          "label": "Billable",
+                          "value": "is_billable",
+                          "width": "15%"
+                      },
+                      {
+                        "type": "field",
+                        "label": "Expired",
+                        "value": "is_expired",
+                        "width": "15%"
+                      },
+                      {
+                        "type": "field",
+                        "label": "Up coming expiry",
+                        "value": "has_upcoming_expiry",
+                        "width": "15%"
+                      }
+                    ]
+                  },
+                  {
+                    "width": "100%",
+                    "items": [
+                      {
+                        "type": "field",
+                        "value": "is_internal",
+                        "label": "Is internal",
+                        "width": "15%"
+                      },
+                      {
+                          "type": "field",
+                          "value": "customer_id",
+                          "label": "Customer",
+                          "width": "20%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "has_external_provider",
+                        "label": "has external provider",
+                        "width": "15%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "service_provider_id",
+                        "label": "Service Provider",
+                        "width": "25%"
+                      }
+                    ]
+                  },
+                  {
+                    "width": "100%",
+                    "items": [
+                      {
+                        "type": "field",
+                        "value": "product_id",
+                        "label": "Product",
+                        "width": "20%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "software_id",
+                        "label": "Software",
+                        "width": "20%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "detail_id",
+                        "label": "Detail",
+                        "width": "20%"
+                      },
+                      {
+                        "type": "field",
+                        "value": "access_id",
+                        "label": "Access",
+                        "width": "20%"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

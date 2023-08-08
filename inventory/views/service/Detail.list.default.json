@@ -1,0 +1,36 @@
+{
+    "name": "Detail",
+    "description": "Default listing of all details.",
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "value",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_id",
+                "label": "Service",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "detail_category_id",
+                "label": "Detail Category",
+                "width": "25%",
+                "sortable": true
+            }
+        ]
+    }
+}

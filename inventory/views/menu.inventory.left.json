@@ -1,20 +1,298 @@
 {
-  "name": "Inventory menu",
-  "layout": {
-    "items": [
-      {
-        "id": "item.all_Product",
-        "type": "entry",
-        "label": "All Products",
-        "icon": "shopping_cart",
-        "description": "",
-        "context": {
-          "entity": "inventory\\product\\Product",
-          "view": "list.default",
-          "order": "id",
-          "sort": "asc"
-        }
-      }
-    ]
-  }
+    "name": "Inventory menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.all_Product",
+                "type": "entry",
+                "label": "Products",
+                "icon": "shopping_cart",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\Product",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.all_Customer",
+                "type": "entry",
+                "label": "Customers",
+                "icon": "face",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\sale\\customer\\Customer",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.all_Receivables",
+                "type": "parent",
+                "label": "Receivables",
+                "icon": "note",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.all_ReceivablesQueue",
+                        "type": "entry",
+                        "label": "Receivables Queue",
+                        "icon": "note",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\sale\\receivable\\ReceivablesQueue",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.all_Receivable",
+                        "type": "entry",
+                        "label": "Receivables",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\sale\\receivable\\Receivable",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.all_Invoices",
+                "type": "parent",
+                "label": "Invoices",
+                "icon": "receipt",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.all_Invoice",
+                        "type": "entry",
+                        "label": "Invoices",
+                        "icon": "receipt",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\finance\\accounting\\Invoice",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.all_InvoiceLine",
+                        "type": "entry",
+                        "label": "Invoices Lines",
+                        "icon": "fact_check",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\finance\\accounting\\InvoiceLine",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.all_Serves",
+                "type": "parent",
+                "label": "Advanced",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.all_Services",
+                        "type": "parent",
+                        "label": "All Services",
+                        "icon": "work",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "inventory.services.services",
+                                "type": "entry",
+                                "label": "Services",
+                                "icon": "support_agent",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\Service",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.all_software",
+                                "type": "entry",
+                                "label": "Softwares",
+                                "icon": "apps",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\Software",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.subscription",
+                                "type": "entry",
+                                "label": "Subscription",
+                                "icon": "subscriptions",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\Subscription",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.provider",
+                                "type": "entry",
+                                "label": "Provider",
+                                "icon": "wifi",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\ServiceProvider",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.provider.category",
+                                "type": "entry",
+                                "label": "Provider Category",
+                                "icon": "settings_remote",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\ServiceProviderCategory",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.detail",
+                                "type": "entry",
+                                "label": "Detail",
+                                "icon": "book",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\Detail",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.detail.category",
+                                "type": "entry",
+                                "label": "Detail-Category",
+                                "icon": "library_books",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\DetailCategory",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.all_Prices",
+                        "type": "parent",
+                        "label": "All Prices",
+                        "icon": "price_check",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.all_Product_Catalog",
+                                "type": "entry",
+                                "label": "Product (Catalog)",
+                                "icon": "book",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\catalog\\Product",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_Price",
+                                "type": "entry",
+                                "label": "Price",
+                                "icon": "attach_money",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\price\\Price",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_PriceList",
+                                "type": "entry",
+                                "label": "Price List",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\price\\PriceList",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.all_server",
+                        "type": "entry",
+                        "label": "Servers",
+                        "icon": "storage",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\server\\Server",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.all_access",
+                        "type": "entry",
+                        "label": "Access",
+                        "icon": "person",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\Access",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.all_instance",
+                        "type": "entry",
+                        "label": "Instances",
+                        "icon": "article",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\server\\Instance",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.all_ips",
+                        "type": "entry",
+                        "label": "Ip Address",
+                        "icon": "location_on",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\server\\IpAddress",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Servers",
+    "description": "Default listing of all servers.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "25%",
+                "sortable": true
+            }
+        ]
+    }
+}

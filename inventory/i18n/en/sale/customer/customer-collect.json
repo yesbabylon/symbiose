@@ -1,0 +1,21 @@
+{
+    "model": {
+        "type": {
+            "label": "Type",
+            "description": "Type of identity.",
+            "selection": {
+                "all": "All",
+                "I": "Individual",
+                "SE": "Self-Employed",
+                "C": "Company",
+                "NP": "Non-profit / school",
+                "PA": "Public Administration"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}
