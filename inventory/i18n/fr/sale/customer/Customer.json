@@ -1,0 +1,22 @@
+{
+    "name": "Client",
+    "plural": "Clients",
+    "description": "",
+    "model": {
+        "customer_type_id": {
+            "label": "Type de client",
+            "selection": {
+                "all": "All",
+                "I": "Particulier",
+                "SE": "Indépendant",
+                "C": "Entreprise",
+                "NP": "ASBL / école",
+                "PA": "Administration publique"
+            },
+            "description": "Type de client (en relation avec les classes tarifaires).",
+            "help": ""
+        }
+    },
+    "view": {},
+    "error": {}
+}

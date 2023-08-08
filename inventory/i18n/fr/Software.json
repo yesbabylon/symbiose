@@ -1,0 +1,58 @@
+{
+    "name": "Logiciel",
+    "plural": "Logiciels",
+    "description": "Vue par défaut pour la liste des logiciels.",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom du logiciel.",
+            "help": "Nom du logiciel."
+        },
+        "description":{
+            "label": "Description",
+            "description": "Description du logiciel.",
+            "help": "Nom du logiciel."
+        },
+        "edition":{
+            "label": "Édition",
+            "description": "Édition du logiciel.",
+            "help": "Nom du logiciel."
+        },
+        "version":{
+            "label": "Version",
+            "description": "Version du logiciel.",
+            "help": "Nom du logiciel."
+        },
+        "customer_id":{
+            "label": "Client",
+            "description": "Client du logiciel.",
+            "help": "Nom du logiciel."
+        },
+        "instance_id":{
+            "label": "Instance",
+            "description": "Instance sur laquelle le logiciel est installé.",
+            "help": "Nom du logiciel."
+        },
+        "server_id":{
+            "label": "Serveur",
+            "description": "Serveur sur lequel le logiciel est installé.",
+            "help": "Nom du logiciel."
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "logiciel",
+            "description": "Les vue des logiciels",
+            "layout": {
+                "section.software_info": {
+                    "label": "Infos Logiciel"
+                }
+        }
+        },
+        "list.default": {
+            "name": "Liste des logiciels",
+            "description": "Liste des logiciels.",
+            "layout": {}
+            }
+    }
+}

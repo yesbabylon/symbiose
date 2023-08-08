@@ -1,0 +1,13 @@
+[
+    {
+        "name": "inventory\\sale\\price\\PriceListCategory",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "state": "instance",
+                "name": "Prices services"
+            }
+        ]
+    }
+]

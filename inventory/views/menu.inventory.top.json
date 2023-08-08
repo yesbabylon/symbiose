@@ -1,15 +1,63 @@
 {
-  "name": "Documents menu",
-  "layout": {
-    "items": [
-      {
-        "id": "item.home",
-        "label": "Home",
-        "description": "",
-        "icon": "menu_book",
-        "type": "entry",
-        "route": "/"
-      }
-    ]
-  }
+    "name": "Documents menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.home",
+                "label": "Home",
+                "description": "",
+                "icon": "menu_book",
+                "type": "entry",
+                "route": "/"
+            },
+            {
+                "id": "item.all_Product",
+                "type": "entry",
+                "label": "Products",
+                "icon": "shopping_cart",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\Product",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.all_Customer",
+                "type": "entry",
+                "label": "Customers",
+                "icon": "face",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\sale\\customer\\Customer",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "inventory.services.subscription",
+                "type": "entry",
+                "label": "Subscription",
+                "icon": "subscriptions",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\Subscription",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "inventory.services.services",
+                "type": "entry",
+                "label": "Services",
+                "icon": "support_agent",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\Service",
+                    "view": "list.default"
+                }
+            }
+        ]
+    }
 }

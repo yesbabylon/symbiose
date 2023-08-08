@@ -1,0 +1,38 @@
+{
+    "name": "Products",
+    "description": "Default listing of all products.",
+    "controller": "inventory_product-collect",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "label": "identifier",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "is_internal",
+                "label": "Is Internal",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "25%"
+            }
+        ]
+    }
+}

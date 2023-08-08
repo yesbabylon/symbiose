@@ -1,17 +1,36 @@
 [
     {
-        "name": "inventory\\product\\Product",
-        "lang": "fr",
+        "name": "inventory\\Product",
+        "lang": "en",
         "data": [
-            { 
+            {
                 "id": 1,
-                "name": "product1",
-                "value": "No idea1"
+                "state": "instance",
+                "name": "yesbabylon.com",
+                "description": "",
+                "is_internal": true
             },
-            { 
+            {
                 "id": 2,
-                "name": "product2",
-                "value": "No idea2"
+                "state": "instance",
+                "name": "Inventory",
+                "description": "",
+                "is_internal": true
+            },
+            {
+                "id": 3,
+                "name": "Management drive",
+                "description": "",
+                "is_internal": false,
+                "customer_id": 2
+            },
+            {
+                "id": 4,
+                "creator": 4,
+                "name": "Calendar Birthday",
+                "description": "",
+                "is_internal": false,
+                "customer_id": 1
             }
         ]
     }

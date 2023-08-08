@@ -1,0 +1,43 @@
+[
+    {
+        "name": "inventory\\service\\ServiceProvider",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Google Analytics",
+                "description": "",
+                "login_url": "https://analytics.google.com",
+                "service_provider_category_id": 3
+            },
+            {
+                "id": 2,
+                "name": "Microsoft 365",
+                "description": "",
+                "login_url": "https://admin.microsoft.com",
+                "service_provider_category_id": 1
+            },
+            {
+                "id": 3,
+                "name": "WPML",
+                "description": "",
+                "login_url": "https://wpml.org",
+                "service_provider_category_id": 2
+            },
+            {
+                "id": 4,
+                "name": "FPDF provider",
+                "description": "",
+                "login_url": "",
+                "service_provider_category_id": 1
+            },
+            {
+                "id": 5,
+                "name": "Google drive",
+                "description": "",
+                "login_url": "",
+                "service_provider_category_id": 3
+            }
+        ]
+    }
+]

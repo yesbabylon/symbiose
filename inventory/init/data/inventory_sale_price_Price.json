@@ -1,0 +1,62 @@
+[
+    {
+        "name": "inventory\\sale\\price\\Price",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "state": "instance",
+                "price": 5,
+                "type": "direct",
+                "price_list_id": 5,
+                "accounting_rule_id": 1,
+                "product_id": 1
+            },
+            {
+                "id": 2,
+                "state": "instance",
+                "price": 10,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 1
+            },
+            {
+                "id": 3,
+                "state": "instance",
+                "price": 10,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 3
+            },
+            {
+                "id": 4,
+                "state": "instance",
+                "price": 15,
+                "type": "direct",
+                "price_list_id": 3,
+                "accounting_rule_id": 1,
+                "product_id": 2
+            },
+            {
+                "id": 5,
+                "state": "instance",
+                "price": 50,
+                "type": "direct",
+                "price_list_id": 4,
+                "accounting_rule_id": 1,
+                "product_id": 3
+            },
+            {
+                "id": 6,
+                "state": "instance",
+                "price": 100,
+                "type": "direct",
+                "price_list_id": 6,
+                "accounting_rule_id": 1,
+                "product_id": 2
+            }
+        ]
+    }
+]

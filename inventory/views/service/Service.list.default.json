@@ -1,0 +1,100 @@
+{
+    "name": "Services",
+    "description": "Default listing of all services.",
+    "order": "name",
+    "sort": "asc",
+    "controller": "inventory_service_service-collect",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "has_subscription",
+                "label": "Subscription",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_auto_renew",
+                "label": "Auto renew",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_billable",
+                "label": "Billable",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "is_internal",
+                "label": "Is internal",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "label": "Product",
+                "width": "25%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "20%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "has_external_provider",
+                "label": "External provider",
+                "width": "20%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "service_provider_id",
+                "width": "20%",
+                "label": "Provider",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "accesses_ids",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "subscriptions_ids",
+                "visible": false
+            }
+        ]
+    }
+}
