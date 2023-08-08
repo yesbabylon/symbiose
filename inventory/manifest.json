@@ -1,5 +1,31 @@
 {
     "name": "inventory",
-    "depends_on": ["core"],
-    "apps": ["inventory"]
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": [
+        "core",
+        "finance",
+        "identity"
+    ],
+    "apps": [
+        {
+            "id": "inventory",
+            "name": "inventory",
+            "extends": "app",
+            "description": "Application inventory",
+            "icon": "analytics",
+            "color": "#6C3483",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "inventory.left",
+                    "top": "inventory.top"
+                }
+            }
+        }
+    ]
 }

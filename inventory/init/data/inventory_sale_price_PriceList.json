@@ -1,0 +1,53 @@
+[
+    {
+        "name": "inventory\\sale\\price\\PriceList",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "state": "instance",
+                "name": "Price 2023",
+                "date_from": "2023-01-01T00:00:00+00:00",
+                "date_to": "2023-12-31T00:00:00+00:00",
+                "status": "published",
+                "price_list_category_id": 1
+            },
+            {
+                "id": 3,
+                "state": "instance",
+                "name": "Price 2023 semestre 1",
+                "date_from": "2023-01-01T00:00:00+00:00",
+                "date_to": "2023-06-30T00:00:00+00:00",
+                "status": "closed",
+                "price_list_category_id": 1
+            },
+            {
+                "id": 4,
+                "state": "instance",
+                "name": "price 2023 semestre 2",
+                "date_from": "2023-07-01T00:00:00+00:00",
+                "date_to": "2023-12-31T00:00:00+00:00",
+                "status": "published",
+                "price_list_category_id": 1
+            },
+            {
+                "id": 5,
+                "state": "instance",
+                "name": "price 2022",
+                "date_from": "2022-01-01T00:00:00+00:00",
+                "date_to": "2022-12-31T00:00:00+00:00",
+                "status": "closed",
+                "price_list_category_id": 1
+            },
+            {
+                "id": 6,
+                "state": "instance",
+                "name": "price 2024",
+                "date_from": "2024-01-01T00:00:00+00:00",
+                "date_to": "2024-12-31T00:00:00+00:00",
+                "status": "published",
+                "price_list_category_id": 1
+            }
+        ]
+    }
+]

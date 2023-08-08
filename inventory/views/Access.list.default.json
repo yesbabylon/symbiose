@@ -1,0 +1,81 @@
+{
+    "name": "Access",
+    "description": "Default listing of all accesses.",
+    "domain": [],
+    "controller": "inventory_access-collect",
+    "order": "name",
+    "sort": "asc",
+    "operations": {
+        "total": {
+          "name": {
+            "usage": "numeric/integer",
+            "operation": "COUNT",
+            "suffix": " total"
+          }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "readonly":true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "username",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "url",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "30%",
+                "visible": false
+            },
+            {
+                "type": "field",
+                "value": "server_id",
+                "label": "Server",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "instance_id",
+                "label": "Instance",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_id",
+                "label": "Service",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "software_id",
+                "label": "Software",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

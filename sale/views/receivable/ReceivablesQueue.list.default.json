@@ -1,0 +1,21 @@
+{
+    "name": "Receivables Queue",
+    "description": "This view is intended for displaying the Receivables Queue.",
+    "access": {
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "5%"
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "90%"
+            }
+        ]
+    }
+}

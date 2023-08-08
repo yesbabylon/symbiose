@@ -1,0 +1,15 @@
+[
+    {
+        "name": "inventory\\service\\Detail",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "referrer code ID",
+                "description": "",
+                "value": "wrdp-multi-yesbabylon",
+                "service_id": 3
+            }
+        ]
+    }
+]

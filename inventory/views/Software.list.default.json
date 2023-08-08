@@ -1,0 +1,65 @@
+{
+    "name": "Softwares",
+    "description": "Default listing of all softwares.",
+    "controller": "inventory_software-collect",
+    "order": "name",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "version",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "edition",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "server_id",
+                "label": "Server",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "service_id",
+                "label": "Service",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "instance_id",
+                "label": "Instance",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}

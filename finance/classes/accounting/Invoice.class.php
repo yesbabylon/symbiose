@@ -37,7 +37,7 @@ class Invoice extends Model {
                 'default'           => false
             ],
 
-            'organisation_id' => [
+            'organization_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organization',
                 'description'       => "The organization that emitted the invoice.",
@@ -115,9 +115,9 @@ class Invoice extends Model {
                 'default'           => time()
             ],
 
-            'partner_id' => [
+            'customer_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
+                'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true
             ],

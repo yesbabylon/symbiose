@@ -1,127 +1,82 @@
 [
     {
-        "name": "inventory\\product\\Access",
-        "lang": "fr",
+        "name": "inventory\\Access",
+        "lang": "en",
         "data": [
-            { 
+            {
                 "id": 1,
-                "name": "access1",
-                "username":"jeandeb9",
-                "password":"@Minou5310",
-                "type": "http",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "mailchimp.com"
+                "name": "server vps account",
+                "type": "ssh",
+                "host": "51.38.52.129",
+                "port": "22",
+                "username": "root",
+                "password": "sxHuTjP9l86hqRa",
+                "server_id": 1
             },
-
-            { 
+            {
                 "id": 2,
-                "name": "access2",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"@Jean5456",
+                "name": "Wordpress account",
                 "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "dropbox.com"
+                "host": "yesbabylon.com\/wp-login",
+                "port": "443",
+                "username": "admin",
+                "password": "dhSfkM5heb:",
+                "software_id": 1
             },
-
-            { 
+            {
                 "id": 3,
-                "name": "access3",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"@Jean5456",
-                "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "maxmind.com"
+                "name": " YB website account",
+                "type": "ssh",
+                "host": "51.38.52.129",
+                "port": "22",
+                "username": "yesbabylon.com",
+                "password": "hSfg5yJoldbV",
+                "instance_id": 1
             },
-
-            { 
+            {
                 "id": 4,
-                "name": "access4",
-                "username":"jeandeb9",
-                "password":"@Jean5456",
-                "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "mapbox.com"
+                "name": "Yb website stanging account",
+                "type": "ssh",
+                "host": "51.38.52.129",
+                "port": "22",
+                "username": "yesbabylon.com",
+                "password": "hSfg5yJoldbV",
+                "server_id": 1,
+                "software_id": 1,
+                "instance_id": 2
             },
-
-            { 
+            {
                 "id": 5,
-                "name": "access4",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"@Jean5456",
+                "name": "Google Analytics account",
+                "description": "",
                 "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "ovh.com"
+                "host": "analytics.google.com",
+                "port": "443",
+                "username": "analytics@yesbabylon.com",
+                "password": "HdlVdlkMeb7s",
+                "service_id": 1
             },
-
-            { 
+            {
                 "id": 6,
-                "name": "access6",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"@Jean54565456",
+                "name": "Microsoft 365 account",
+                "description": "",
                 "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "stripe.com"
+                "host": "admin.microsoft.com",
+                "port": "443",
+                "username": "secretariat@yesbabylon.com",
+                "password": " Jd7KGM2vzXvEVs",
+                "service_id": 2
             },
-
-            { 
-                "id": 8,
-                "name": "access8",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"Minou5310",
+            {
+                "id": 7,
+                "name": "multilang wordpress acoount",
+                "description": "",
                 "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "developers.facebook.com"
-            },
-
-            { 
-                "id": 10,
-                "name": "access10",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"Minou5310",
-                "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "developers.google.com"
-            },
-
-
-            { 
-                "id": 12,
-                "name": "access12",
-                "username":"jean.deborsu@hotmail.com",
-                "password":"Minou5310",
-                "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "github.com" 
-            },
-
-            { 
-                "id": 13,
-                "name": "access13",
-                "username":"jean@yesbabylon.com",
-                "password":"Minou5310",
-                "type": "https",
-                "server_id":1,
-                "instance_id":1,
-                "service_id":1,
-                "host": "start.atlassian.com" 
+                "host": "wpml.org",
+                "port": "443",
+                "username": "ced87432",
+                "password": "Jkdb7fnlkMeb1",
+                "service_id": 3
             }
         ]
     }

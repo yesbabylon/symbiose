@@ -1,0 +1,30 @@
+[
+    {
+        "name": "inventory\\sale\\customer\\Customer",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "is_internal": true,
+                "partner_identity_id": 1,
+                "relationship": "customer",
+                "partner_position": "",
+                "customer_external_ref": "",
+                "is_active": true,
+                "rate_class_id": 1,
+                "customer_type_id": 2
+            },
+            {
+                "id": 2,
+                "is_internal": true,
+                "partner_identity_id": 2,
+                "relationship": "customer",
+                "partner_position": "",
+                "customer_external_ref": "",
+                "is_active": true,
+                "rate_class_id": 1,
+                "customer_type_id": 3
+            }
+        ]
+    }
+]

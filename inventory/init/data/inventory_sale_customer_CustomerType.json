@@ -1,0 +1,28 @@
+[
+    {
+        "name": "inventory\\sale\\customer\\CustomerType",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "code": "I"
+            },
+            {
+                "id": 2,
+                "code": "SE"
+            },
+            {
+                "id": 3,
+                "code": "C"
+            },
+            {
+                "id": 4,
+                "code": "NP"
+            },
+            {
+                "id": 5,
+                "code": "PA"
+            }
+        ]
+    }
+]

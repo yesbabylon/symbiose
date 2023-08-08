@@ -1,0 +1,17 @@
+{
+    "name": "Service Provider Category",
+    "description": "Default listing of all services providers categories.",
+    "order": "name",
+    "sort": "asc",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            }
+        ]
+    }
+}
