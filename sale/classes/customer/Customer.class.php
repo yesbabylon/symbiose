@@ -68,7 +68,14 @@ class Customer extends \identity\Partner {
                 'usage'             => 'uri/urn.iban',
                 'description'       => 'Arbitrary reference account number for identifying the customer in external accounting softwares.',
                 'readonly'          => true
-            ]
+            ],
+
+            'receivables_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\receivable\Receivable',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List receivables of the customers.'
+            ],
 
         ];
     }

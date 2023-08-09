@@ -6,6 +6,9 @@
 */
 namespace sale\receivable;
 use \equal\orm\Model;
+use sale\price\Price;
+use sale\price\PriceList;
+use sale\catalog\Product;
 
 class Receivable extends Model {
 
@@ -17,16 +20,19 @@ class Receivable extends Model {
 
         return [
 
-            'receivable_queue_id' => [
+            'receivables_queue_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\receivable\ReceivablesQueue',
                 'description'       => 'The parent Queue the item is attached to.',
+                'required'          => true,
                 'dependencies'      => ['customer_id']
             ],
 
             'date' => [
                 'type'              => 'datetime',
-                'description'       => 'The entry is linked to a Receivable entry.'
+                'description'       => 'The entry is linked to a Receivable entry.',
+                'required'          => true,
+                'default'           => time()
             ],
 
             'invoice_line_id' => [
@@ -47,21 +53,27 @@ class Receivable extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'Default label of the line, based on product (computed).',
+                'description'       => 'Default label of the line, based on product.',
                 'function'          => 'calcName',
                 'store'             => true
             ],
 
+            'status' => [
+                'type'              => 'string',
+                'description'       => 'Version of the receivable.',
+                'selection'         => ['pending', 'invoiced', 'cancelled'],
+                'default'           => 'pending'
+            ],
+
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Complementary description of the line (independent from product).'
+                'description'       => 'Complementary description of the line.'
             ],
 
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'Invoice the line is related to.',
-                'required'          => true,
                 'ondelete'          => 'null'
             ],
 
@@ -74,10 +86,13 @@ class Receivable extends Model {
             ],
 
             'price_id' => [
-                'type'              => 'many2one',
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'onupdatePriceId'
+                'dependencies'      => ['unit_price'],
+                'function'          => 'calPriceId',
+                'store'             => true
             ],
 
             'unit_price' => [
@@ -139,6 +154,88 @@ class Receivable extends Model {
         ];
     }
 
+    public static function onchange($event, $values) {
+        $result = [];
+
+        if(isset($event['receivables_queue_id']) && strlen($event['receivables_queue_id']) > 0 ){
+            $receivables_queue = ReceivablesQueue::id($event['receivables_queue_id'])->read('customer_id')->first();
+            $result['customer_id'] = $receivables_queue['customer_id'];
+        }
+
+        if (isset($event['product_id'])) {
+            $product = Product::id($event['product_id'])->read('name')->first();
+            $result['name'] =$product['name'];
+        }
+        if(isset($event['product_id']) && isset($values['date'])) {
+
+            $price_lists_ids = PriceList::search([
+                    [
+                        ['date_from', '<=', $values['date']],
+                        ['date_to', '>=', $values['date']],
+                        ['status', '=', 'published'],
+                    ]
+                ] )
+                ->ids();
+
+            $price = Price::search([
+                ['product_id', '=', $event['product_id']],
+                ['price_list_id', 'in', $price_lists_ids]
+                ])->read(['id','name','price','vat_rate'])->first();
+
+                $result['price_id'] = $price;
+                $result['unit_price'] = $price['price'];
+                $result['vat_rate'] = $price['vat_rate'];
+
+        }
+
+        if (isset($event['unit_price']) || isset($event['qty']) || isset($event['free_qty']) || isset($event['discount']) || isset($event['vat_rate'])) {
+
+            $unit_price =(float) isset($event['unit_price'])?$event['unit_price']:$values['unit_price'];
+            $qty = isset($event['qty'])?$event['qty']:$values['qty'];
+            $free_qty = isset($event['free_qty'])?$event['free_qty']:$values['free_qty'];
+            $discount = isset($event['discount'])?$event['discount']:$values['discount'];
+            $vat_rate = (float) isset($event['vat_rate'])?$event['vat_rate']:$values['vat_rate'];
+            $total = $unit_price * (1.0 - $discount) * ($qty  - $free_qty);
+            $result['total'] =$total;
+            $result['price'] = round($total * (1.0 + $vat_rate), 2);
+
+        }
+
+        if(isset($event['price_id']) || strlen($event['price_id']) > 0 ){
+            $price =Price::id($event['price_id'])->read(['price','vat_rate'])->first();
+            $result['unit_price'] = $price['price'];
+            $result['vat_rate'] = $price['vat_rate'];
+        }
+
+        return $result;
+    }
+
+    public static function calcPriceId($self) {
+
+        $result = [];
+        $self->read(['date', 'product_id']);
+        foreach($self as $id => $receivables_queue) {
+
+            $price_lists_ids = PriceList::search([
+                [
+                    ['date_from', '<=', $receivables_queue['date']],
+                    ['date_to', '>=', $receivables_queue['date']],
+                    ['status', '=', 'published'],
+                ]
+            ] )
+            ->ids();
+
+            $price = Price::search([
+                ['product_id', '=', $receivables_queue['product_id']],
+                ['price_list_id', 'in', $price_lists_ids]
+                ])->read(['id'])->first();
+
+            $result[$id] = $price['id'];
+        }
+        return $result;
+    }
+
+
     public static function calcName($self) {
         $result = [];
         $self->read(['product_id' => ['name']]);
@@ -150,10 +247,10 @@ class Receivable extends Model {
 
     public static function calcCustomerId($self) {
         $result = [];
-        $self->read(['receivable_queue_id' => ['customer_id']]);
+        $self->read(['receivables_queue_id' => ['customer_id']]);
         foreach($self as $id => $receivable) {
-            if($receivable['receivable_queue_id']) {
-                $result[$id] = $receivable['receivable_queue_id']['customer_id'];
+            if($receivable['receivables_queue_id']) {
+                $result[$id] = $receivable['receivables_queue_id']['customer_id'];
             }
         }
         return $result;

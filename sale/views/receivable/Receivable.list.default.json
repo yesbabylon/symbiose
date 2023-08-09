@@ -1,0 +1,111 @@
+{
+    "name": "Receivables",
+    "description": "This view is intended for displaying the Receivables.",
+    "access": {
+    },
+    "header": {
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.add_invoice",
+                    "label": "Add invoice",
+                    "icon": "list",
+                    "controller": "sale_receivable_add-invoice",
+                    "confirm": true,
+                    "params": {
+                        "customer_id": "object.customer_id"
+                    }
+                }
+            ]
+        }
+    },
+    "operations": {
+        "total": {
+          "total": {
+            "id": "operations.total.total",
+            "label": "Total without vat",
+            "usage":"amount/money:2",
+            "operation": "SUM"
+          }
+        },
+        "price": {
+            "price": {
+              "id": "operations.total.price",
+              "label": "Total with vat",
+              "usage":"amount/money:2",
+              "operation": "SUM"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "date",
+                "width": "25%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "readonly": true,
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "unit_price",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "qty",
+                "label": "Quantity",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "total",
+                "label": "Price Ex VAT",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "vat_rate",
+                "label": "VAT",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Price total",
+                "value": "price",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "invoice_id",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "invoice_line_id",
+                "width": "10%"
+            }
+        ]
+    }
+}
