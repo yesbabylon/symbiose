@@ -36,7 +36,7 @@
                     },
                     {
                         "label": "Receivables",
-                        "id": "section.receivables_id_receivable_queue",
+                        "id": "section.receivables_id_receivables",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -50,7 +50,7 @@
                                                 "value": "receivables_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "view": "list.default"
                                                 }
                                             }
                                         ]

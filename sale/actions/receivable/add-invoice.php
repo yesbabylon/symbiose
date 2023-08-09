@@ -40,7 +40,8 @@ list($params, $providers) = announce([
         'title' =>  [
             'description'       => 'Title of the invoice line Group.',
             'type'              => 'string',
-            'visible'           => ['is_new_invoice',"=", false]
+            'visible'           => ['is_new_invoice',"=", false],
+            'default'           =>  'Additional Services ('.date('Y-m-d').')',
         ]
     ],
     'response'      => [
@@ -72,6 +73,7 @@ $receivables = Receivable::ids($params['ids'])
         'price'
 
     ]);
+
 
 foreach($receivables as $id => $receivable) {
 
