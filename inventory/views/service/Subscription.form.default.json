@@ -178,12 +178,22 @@
                                                 "value": "has_receivable",
                                                 "label": "Has Receivable",
                                                 "readonly": true,
+                                                "visible": [
+                                                    "state",
+                                                    "<>",
+                                                    "draft"
+                                                ],
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "receivable_id",
                                                 "label": "Receivable",
+                                                "visible": [
+                                                    "state",
+                                                    "<>",
+                                                    "draft"
+                                                ],
                                                 "readonly": true,
                                                 "width": "50%"
                                             }

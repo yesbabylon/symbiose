@@ -1,0 +1,66 @@
+{
+    "name": "Receivables Queue",
+    "description": "Default form for Receivables Queue",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "Receivables Queue Infos",
+                        "id": "section.receivable_queue_info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "id",
+                                                "width": "15%",
+                                                "sortable": true,
+                                                "readonly":true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "30%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Receivables",
+                        "id": "section.receivables_id_receivables",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "receivables_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.default"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
