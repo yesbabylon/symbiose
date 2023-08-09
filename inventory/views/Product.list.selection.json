@@ -1,0 +1,37 @@
+{
+    "name": "Products Selected",
+    "description": "Selected listing of all products.",
+    "order": "name",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "label": "identifier",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "25%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "is_internal",
+                "label": "Internal",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "25%"
+            }
+        ]
+    }
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "name": "inventory\\server\\IpAddress",
+        "lang": "en",
+        "data": [
+            {
+                "visibility": "public",
+                "id": 1,
+                "ip_v4": "91.121.208.27",
+                "ip_v6": "2002:5b79:d01b::",
+                "server_id": 1
+            },
+            {
+                "visibility": "protected",
+                "id": 2,
+                "ip_v4": "51.38.52.129",
+                "ip_v6": "2002:3326:3481::",
+                "server_id": 1
+            }
+        ]
+    }
+]

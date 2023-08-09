@@ -1,0 +1,77 @@
+{
+    "name": "Service Provider Category",
+    "description": "Default form for Service Provider Category",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "Infos Provider Category",
+                        "id": "section.services_provider_infos",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Services Providers",
+                        "id": "section.services_providers_ids",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "services_providers_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

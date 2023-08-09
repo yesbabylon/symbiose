@@ -1,0 +1,237 @@
+{
+    "name": "Service",
+    "description": "Default form for Service",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "label": "Service Infos",
+                        "id": "section.service_info",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_internal",
+                                                "label": "Is internal",
+                                                "readonly": true,
+                                                "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_external_provider",
+                                                "label": "Has external provider",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "label": "Provider",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_subscription",
+                                                "label": "Subscription",
+                                                "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_auto_renew",
+                                                "label": "Auto renew",
+                                                "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Billable",
+                                                "value": "is_billable",
+                                                "width": "15%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Accesses",
+                        "id": "section.service_access",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accesses_ids",
+                                                "label": "Accesses",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Details",
+                        "id": "section.service_details",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "details_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Softwares",
+                        "id": "section.server_software",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "softwares_ids",
+                                                "width": "100%",
+                                                "label": "Softwares",
+                                                "widget": {
+                                                    "view": "list.selection"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Subscriptions",
+                        "id": "section.service_subscriptions",
+                        "visible": [
+                            [
+                                "has_subscription",
+                                "=",
+                                true
+                            ],
+                            [
+                                "state",
+                                "<>",
+                                "draft"
+                            ]
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscriptions_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

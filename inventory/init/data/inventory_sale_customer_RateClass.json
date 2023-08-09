@@ -1,0 +1,12 @@
+[
+    {
+        "name": "inventory\\sale\\customer\\CustomerType",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "standard"
+            }
+        ]
+    }
+]

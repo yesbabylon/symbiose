@@ -1,0 +1,71 @@
+{
+    "model": {
+        "type": {
+            "label": "Type",
+            "description": "Type d'identité.",
+            "selection": {
+                "all": "All",
+                "I": "Particulier",
+                "SE": "Indépendant",
+                "C": "Entreprise",
+                "NP": "ASBL / école",
+                "PA": "Administration publique"
+            },
+            "help": ""
+        },
+        "registration_number": {
+            "label": "Numéro d'entreprise",
+            "description": "Numéro d'enregistrement commercial (numéro d'entreprise).",
+            "help": ""
+        },
+        "citizen_identification": {
+            "label": "Numéro de registre national",
+            "description": "Numéro de registre national (facultatif).",
+            "help": ""
+        },
+        "legal_name": {
+            "label": "Nom légal",
+            "description": "Nom complet de l'Identité.",
+            "help": ""
+        },
+        "short_name": {
+            "label": "Nom usuel",
+            "description": "Nom utilisé en interne pour identifier l'organisation.",
+            "help": "Le nom usuel n'est jamais présenté au client et peut contenir tout caractère ou mot permettant de faciliter l'identification de l'organisation (acronyme ou nom abrégé)."
+        },
+        "firstname": {
+            "label": "Prénom",
+            "description": "Nom complet du contact (doit être une personne, pas un rôle).",
+            "help": ""
+        },
+        "lastname": {
+            "label": "Nom",
+            "description": "Nom.",
+            "help": ""
+        },
+        "address": {
+			"label": "Rue d'adresse",
+			"description": "Rue et numéro.",
+			"help": ""
+		},
+        "service_id":{
+            "label": "Service",
+            "description": "Service auquel appartient le client..",
+            "help": ""
+        },
+        "software_id":{
+            "label": "Logiciel",
+            "description": "Logiciel auquel appartient le client..",
+            "help": ""
+        },
+        "product_id":{
+            "label": "Produit",
+            "description": "Produit auquel appartient le client.",
+            "help": ""
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

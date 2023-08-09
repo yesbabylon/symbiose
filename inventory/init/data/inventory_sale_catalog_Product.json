@@ -1,0 +1,46 @@
+[
+    {
+        "name": "inventory\\sale\\catalog\\Product",
+        "lang": "en",
+        "data": [
+            {
+                "label": "Calendar pluging",
+                "sku": "123.123.123",
+                "description": "",
+                "product_model_id": 1,
+                "family_id": 1,
+                "is_locked": false,
+                "can_buy": false,
+                "can_sell": true,
+                "groups_ids": [],
+                "has_age_range": false
+            },
+            {
+                "id": 2,
+                "label": "sale pluging",
+                "sku": "321.321.321",
+                "description": "",
+                "product_model_id": 1,
+                "family_id": 1,
+                "is_locked": false,
+                "can_buy": false,
+                "can_sell": true,
+                "groups_ids": [],
+                "has_age_range": false
+            },
+            {
+                "id": 3,
+                "label": "Library FPF ",
+                "sku": "321.654.312",
+                "description": "",
+                "product_model_id": 1,
+                "family_id": 1,
+                "is_locked": false,
+                "can_buy": false,
+                "can_sell": true,
+                "groups_ids": [],
+                "has_age_range": false
+            }
+        ]
+    }
+]

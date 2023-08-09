@@ -1,0 +1,43 @@
+{
+    "name": "Ip Address Selected",
+    "description": "Default listing of all Ip Addresses.",
+    "order": "name",
+    "operations": {
+        "total": {
+            "name": {
+                "usage": "numeric/integer",
+                "operation": "COUNT",
+                "suffix": " total"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "visibility",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "ip_v4",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "ip_v6",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}
