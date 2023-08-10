@@ -125,7 +125,8 @@ class Invoice extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The counter party organization the invoice relates to.",
-                'required'          => true
+                'required'          => true,
+                'dependencies'      =>['number']
             ],
 
             'price' => [
@@ -238,11 +239,11 @@ class Invoice extends Model {
 
     public static function calcNumber($self) {
         $result = [];
-        $self->read(['status', 'organisation_id']);
+        $self->read(['status', 'organisation_id','customer_id'=> 'name']);
         foreach($self as $id => $invoice) {
             // no code is generated for proforma
             if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]';
+                $result[$id] = '[proforma]'. '['.$invoice['customer_id']['name'].']'.'['.date('Y-m-d').']';
                 continue;
             }
 
