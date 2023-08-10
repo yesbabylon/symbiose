@@ -14,38 +14,6 @@ use sale\receivable\Receivable;
 list($params, $providers) = announce([
     'description'   => "Create a invoice.",
     'params'        => [
-
-        'ids' =>  [
-            'description'       => 'Identifier of the targeted reports.',
-            'type'              => 'one2many',
-            'foreign_object'    => 'sale\receivable\Receivable',
-            'required'          => true
-        ],
-
-
-        'is_new_invoice' => [
-            'type'              => 'boolean',
-            'description'       => 'Mark the invoice as new.',
-            'default'           => false
-        ],
-
-        'invoice_id' => [
-            'type'              => 'many2one',
-            'foreign_object'    => 'finance\accounting\Invoice',
-            'description'       => 'Invoice the line is related to.',
-            'domain'            => [
-                                    ['customer_id', '=', 'parent.customer_id'],
-                                    ['status', '=', 'proforma'],
-                                   ],
-            'visible'           => ['is_new_invoice',"=", false]
-        ],
-
-        'title' =>  [
-            'description'       => 'Title of the invoice line Group.',
-            'type'              => 'string',
-            'visible'           => ['is_new_invoice',"=", false],
-            'default'           =>  'Additional Services ('.date('Y-m-d').')',
-        ]
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -58,36 +26,7 @@ list($params, $providers) = announce([
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
 
-$receivable_first = Receivable::ids($params['ids'])
-    ->read([
-        'id',
-        'customer_id',
-    ])
-    ->first();
-
-
-if($params['is_new_invoice']) {
-    $invoice = Invoice::create([
-        'customer_id'            =>$receivable_first['customer_id']
-    ])
-    ->first();
-}else
-{
-    $invoice = Invoice::search(
-        [
-            ['id', '=', $params['invoice_id']],
-            ['status', '=', 'proforma']
-        ])
-        ->read(['status'])
-        ->first();
-}
-
-$invoice_line_group = InvoiceLineGroup::create([
-    'name'                  => $params['title'],
-    'invoice_id'            => $invoice['id']
-])->first();
-
-$receivables = Receivable::ids($params['ids'])
+$receivables = Receivable::search(['status','=','pending'])
     ->read([
         'id',
         'name',
@@ -106,11 +45,32 @@ $receivables = Receivable::ids($params['ids'])
 
     ]);
 
+
 foreach($receivables as $id => $receivable) {
 
     if ($receivable['status'] != 'pending') {
         continue;
     }
+
+    $invoice = Invoice::search(
+        [
+            ['customer_id','=',$receivable['customer_id']],
+            ['status','=','proforma']
+        ])
+        ->read(['status'])
+        ->first();
+        
+    if(!$invoice) {
+        $invoice = Invoice::create([
+            'customer_id'            => $receivable['customer_id']
+        ])
+        ->first();
+    }
+
+    $invoice_line_group = InvoiceLineGroup::create([
+        'name'                  =>'Additional Services ('.date('Y-m-d').')',
+        'invoice_id'            => $invoice['id']
+    ])->first();
 
     $invoiceLine = InvoiceLine::create([
             'description'                      => $receivable['description'],
@@ -135,6 +95,7 @@ foreach($receivables as $id => $receivable) {
 
 
 }
+
 
 $context->httpResponse()
         ->status(204)

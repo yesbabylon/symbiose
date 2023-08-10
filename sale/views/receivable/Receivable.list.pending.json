@@ -1,8 +1,22 @@
 {
-    "name": "Receivables",
+    "name": "Receivables Pending",
     "description": "This view is intended for displaying the Receivables.",
     "access": {
     },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
+    "domain": ["status", "=", "pending"],
+    "actions" : [
+        {
+            "id": "header.pending.actions.add_bulk_invoice",
+            "label": "Add invoice",
+            "icon": "list",
+            "controller": "sale_receivable_add-bulk-invoice"
+        }
+    ],
     "operations": {
         "total": {
           "total": {
@@ -90,7 +104,7 @@
                 "type": "field",
                 "value": "invoice_line_id",
                 "label": "Invoice Line",
-                "width": "10%"
+                "width": "25%"
             }
         ]
     }

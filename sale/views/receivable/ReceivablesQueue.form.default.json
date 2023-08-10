@@ -50,7 +50,13 @@
                                                 "value": "receivables_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.default"
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": true
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
