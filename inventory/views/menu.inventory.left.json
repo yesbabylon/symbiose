@@ -60,6 +60,19 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    },
+                    {
+                        "id": "item.all_Receivable_Pending",
+                        "type": "entry",
+                        "label": "Receivables Pending",
+                        "icon": "pending_actions",
+                        "description": "",
+                        "context": {
+                            "entity": "inventory\\sale\\receivable\\Receivable",
+                            "view": "list.pending",
+                            "order": "id",
+                            "sort": "asc"
+                        }
                     }
                 ]
             },

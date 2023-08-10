@@ -36,6 +36,7 @@ list($params, $providers) = announce([
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
+$is_receivables_pending=$params['is_receivables_pending'];
 
 $invoices = Invoice::ids($params['ids'])
     ->read([
@@ -56,25 +57,23 @@ foreach($invoices as $id => $invoice) {
 
     $receivables= Receivable::search([
         ['status', "=", "invoiced"],
-        ['customer_id', "=", $invoice['customer_id']],
-        ['invoice_id', "=", $invoice['id']]
-    ])->ids();
+        ['invoice_id', "=",$invoice['id']],
+    ])->read(['id', 'status', 'invoice_id', 'invoice_line_id']);
+
 
     if(!$receivables) {
         throw new Exception('unknown_receivable', QN_ERROR_UNKNOWN_OBJECT);
     }
-    print_r($receivables);
-    die();
 
     foreach($receivables as $id => $receivable) {
 
-        if($is_receivables_pending){
 
+        if($is_receivables_pending){
             Receivable::ids($receivable['id'])
             ->update([
                 'status'               => 'pending',
                 'invoice_id'           => null,
-                'invoice_line_id'      => null,
+                'invoice_line_id'      => 'null',
             ]);
         }else{
 
@@ -90,8 +89,6 @@ foreach($invoices as $id => $invoice) {
     ->update([
         'status'      => 'cancelled'
     ]);
-
-
 }
 
 

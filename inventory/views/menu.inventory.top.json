@@ -11,6 +11,19 @@
                 "route": "/"
             },
             {
+                "id": "item.all_Customer",
+                "type": "entry",
+                "label": "Customers",
+                "icon": "face",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\sale\\customer\\Customer",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
                 "id": "item.all_Product",
                 "type": "entry",
                 "label": "Products",
@@ -24,16 +37,14 @@
                 }
             },
             {
-                "id": "item.all_Customer",
+                "id": "inventory.services.services",
                 "type": "entry",
-                "label": "Customers",
-                "icon": "face",
+                "label": "Services",
+                "icon": "support_agent",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\sale\\customer\\Customer",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
+                    "entity": "inventory\\service\\Service",
+                    "view": "list.default"
                 }
             },
             {
@@ -48,14 +59,16 @@
                 }
             },
             {
-                "id": "inventory.services.services",
+                "id": "inventory.sale.receivables",
                 "type": "entry",
-                "label": "Services",
-                "icon": "support_agent",
+                "label": "Receivables",
+                "icon": "list",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\service\\Service",
-                    "view": "list.default"
+                    "entity": "inventory\\sale\\receivable\\Receivable",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
                 }
             }
         ]

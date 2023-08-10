@@ -6,10 +6,12 @@
 */
 namespace inventory\finance\accounting;
 
+
 class Invoice extends \finance\accounting\Invoice {
     public static function getColumns() {
 
         return [
         ];
     }
+
 }
