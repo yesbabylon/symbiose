@@ -7,6 +7,24 @@
             "sale.default.user"
         ]
     },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": [
+                "status",
+                "=",
+                "proforma"
+            ],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        }
+    ],
     "layout": {
         "groups": [
             {

@@ -7,10 +7,8 @@
 
 namespace inventory\service;
 
-use equal\orm\Model;
 use inventory\sale\price\Price;
 use inventory\sale\price\PriceList;
-use inventory\sale\receivable\Receivable;
 
 class Subscription extends \sale\SaleEntry  {
 
@@ -176,8 +174,8 @@ class Subscription extends \sale\SaleEntry  {
 
         if(isset($event['service_id']) && strlen($event['service_id']) > 0 ){
             $service = Service::search(['id', 'in', $event['service_id']])
-            ->read(['has_external_provider','is_billable','is_internal'])
-            ->first();
+                ->read(['has_external_provider','is_billable','is_internal'])
+                ->first();
             $result['has_external_provider'] = $service['has_external_provider'];
             $result['is_billable'] = $service['is_billable'];
             $result['is_internal'] = $service['is_internal'];
@@ -223,9 +221,11 @@ class Subscription extends \sale\SaleEntry  {
                 ->ids();
 
             $price = Price::search([
-                ['product_id', '=', $event['product_id']],
-                ['price_list_id', 'in', $price_lists_ids]
-                ])->read(['id','name','price'])->first();
+                    ['product_id', '=', $event['product_id']],
+                    ['price_list_id', 'in', $price_lists_ids]
+                ])
+                ->read(['id','name','price'])
+                ->first();
 
                 $result['price_id'] = $price;
                 $result['price'] = $price['price'];
@@ -266,14 +266,14 @@ class Subscription extends \sale\SaleEntry  {
             ->ids();
 
             $price = Price::search([
-                ['product_id', '=', $subscription['product_id']],
-                ['price_list_id', 'in', $price_lists_ids]
-                ])->read(['id'])->first();
+                    ['product_id', '=', $subscription['product_id']],
+                    ['price_list_id', 'in', $price_lists_ids]
+                ])
+                ->read(['id'])
+                ->first();
 
             $result[$id] = $price['id'];
         }
-
-
 
         return $result;
 

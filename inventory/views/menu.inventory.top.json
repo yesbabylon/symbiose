@@ -14,7 +14,6 @@
                 "id": "item.all_Customer",
                 "type": "entry",
                 "label": "Customers",
-                "icon": "face",
                 "description": "",
                 "context": {
                     "entity": "inventory\\sale\\customer\\Customer",
@@ -27,7 +26,6 @@
                 "id": "item.all_Product",
                 "type": "entry",
                 "label": "Products",
-                "icon": "shopping_cart",
                 "description": "",
                 "context": {
                     "entity": "inventory\\Product",
@@ -40,7 +38,6 @@
                 "id": "inventory.services.services",
                 "type": "entry",
                 "label": "Services",
-                "icon": "support_agent",
                 "description": "",
                 "context": {
                     "entity": "inventory\\service\\Service",
@@ -51,7 +48,6 @@
                 "id": "inventory.services.subscription",
                 "type": "entry",
                 "label": "Subscription",
-                "icon": "subscriptions",
                 "description": "",
                 "context": {
                     "entity": "inventory\\service\\Subscription",
@@ -62,10 +58,33 @@
                 "id": "inventory.sale.receivables",
                 "type": "entry",
                 "label": "Receivables",
-                "icon": "list",
                 "description": "",
                 "context": {
                     "entity": "inventory\\sale\\receivable\\Receivable",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "inventory.sale.receivables",
+                "type": "entry",
+                "label": "Receivables",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\sale\\receivable\\Receivable",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "inventory.finance.accounting.invoice",
+                "type": "entry",
+                "label": "Invoices",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\finance\\accounting\\Invoice",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
