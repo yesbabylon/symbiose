@@ -7,6 +7,7 @@
 namespace finance\accounting;
 use equal\orm\Model;
 use core\setting\Setting;
+use sale\customer\Customer;
 
 class Invoice extends Model {
 
@@ -202,6 +203,56 @@ class Invoice extends Model {
             ]
 
         ];
+    }
+
+    public static function getWorkflow() {
+        return [
+            'proforma' => [
+                'transitions' => [
+                    'invoice' => [
+                        'description' => 'Update the invoice status based on the `invoice` field.',
+                        'help'        => "The `invoice` field is set by a dedicated controller that manages invoice approval requests.",
+                        'onbefore'    => "onbeforeInvoice",
+                        'status'	  => 'invoice'
+                    ]
+                ]
+            ],
+            'invoice' => [
+                'transitions' => [
+                    'cancel'  => [
+                        'description' => 'Set the invoice status as cancelled.',
+                        'status'	  => 'cancelled'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public static function onbeforeInvoice($self) {
+        $result = [];
+        $self->read(['id', 'number','status']);
+        foreach($self as $id => $invoice) {
+            Invoice::ids($invoice['id'])
+                ->update([
+                    'number'      => null,
+                    'date'        => time()
+                ]);
+            // generate accounting entries
+            // create new entries objects
+
+        }
+
+    }
+
+    public static function onchange($event,$values) {
+        $result = [];
+        if(isset($event['customer_id']) && isset($values['status']) && $values['status'] == 'proforma'){
+            $customer = Customer::search(['id', '=', $event['customer_id']])
+                ->read(['name'])
+                ->first();
+            $result['number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
+        }
+        return $result;
     }
 
     public static function calcIsPaid($self) {
