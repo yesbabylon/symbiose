@@ -179,7 +179,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
 
         foreach($lines as $oid => $line) {
-            $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 2);
+            $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 4);
         }
         return $result;
     }
@@ -194,8 +194,8 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $total = round((float) $odata['total'], 2);
-            $vat = round((float) $odata['vat_rate'], 2);
+            $total = round((float) $odata['total'], 4);
+            $vat = round((float) $odata['vat_rate'], 4);
 
             $result[$oid] = round($total * (1.0 + $vat), 2);
         }
