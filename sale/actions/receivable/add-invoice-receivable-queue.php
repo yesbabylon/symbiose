@@ -42,22 +42,22 @@ if(!$receivablesQueues) {
 foreach($receivablesQueues as $id => $receivablesQueue) {
 
         $receivables = Receivable::ids($receivablesQueue['receivables_ids'])
-        ->read([
-            'id',
-            'name',
-            "description",
-            'status',
-            'customer_id',
-            'product_id',
-            'price_id',
-            'price_unit',
-            'vat_rate',
-            'qty',
-            'free_qty',
-            'discount',
-            'total',
-            'price'
-        ]);
+            ->read([
+                'id',
+                'name',
+                "description",
+                'status',
+                'customer_id',
+                'product_id',
+                'price_id',
+                'price_unit',
+                'vat_rate',
+                'qty',
+                'free_qty',
+                'discount',
+                'total',
+                'price'
+            ]);
 
         foreach($receivables as $id => $receivable) {
 
@@ -76,26 +76,25 @@ foreach($receivablesQueues as $id => $receivablesQueue) {
             if(!$invoice){
                 $invoice = Invoice::create([
                     'customer_id'      => $receivable['customer_id']
-                ])
-                ->first();
+                ])->first();
             }
 
             $invoice_line_group = InvoiceLineGroup::create([
-                'name'                  => 'Additional Services ('.date('Y-m-d').')',
-                'invoice_id'            => $invoice['id']
-            ])->first();
+                    'name'                  => 'Additional Services ('.date('Y-m-d').')',
+                    'invoice_id'            => $invoice['id']
+                ])->first();
 
             $invoiceLine = InvoiceLine::create([
-                'description'                      => $receivable['description'],
-                'invoice_line_group_id'            => $invoice_line_group['id'],
-                'invoice_id'                       => $invoice['id'],
-                'product_id'                       => $receivable['product_id'],
-                'price_id'                         => $receivable['price_id'],
-                'unit_price'                       => $receivable['price_unit'],
-                'qty'                              => $receivable['qty'],
-                'free_qty'                         => $receivable['free_qty'],
-                'discount'                         => $receivable['discount'],
-            ])->first();
+                    'description'                      => $receivable['description'],
+                    'invoice_line_group_id'            => $invoice_line_group['id'],
+                    'invoice_id'                       => $invoice['id'],
+                    'product_id'                       => $receivable['product_id'],
+                    'price_id'                         => $receivable['price_id'],
+                    'unit_price'                       => $receivable['price_unit'],
+                    'qty'                              => $receivable['qty'],
+                    'free_qty'                         => $receivable['free_qty'],
+                    'discount'                         => $receivable['discount'],
+                ])->first();
 
             Receivable::ids($receivable['id'])
                 ->update([

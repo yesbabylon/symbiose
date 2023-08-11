@@ -8,7 +8,6 @@
 use finance\accounting\Invoice;
 use finance\accounting\InvoiceLine;
 use finance\accounting\InvoiceLineGroup;
-use identity\Identity;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
@@ -24,7 +23,6 @@ list($params, $providers) = announce([
 ]);
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
-
 
 $receivables = Receivable::search(['status','=','pending'])
     ->read([
@@ -42,7 +40,6 @@ $receivables = Receivable::search(['status','=','pending'])
         'discount',
         'total',
         'price'
-
     ]);
 
 
@@ -54,23 +51,22 @@ foreach($receivables as $id => $receivable) {
 
     $invoice = Invoice::search(
         [
-            ['customer_id','=',$receivable['customer_id']],
-            ['status','=','proforma']
+            ['customer_id', '=', $receivable['customer_id']],
+            ['status', '=', 'proforma']
         ])
         ->read(['status'])
         ->first();
-        
+
     if(!$invoice) {
         $invoice = Invoice::create([
-            'customer_id'            => $receivable['customer_id']
-        ])
-        ->first();
+                'customer_id'            => $receivable['customer_id']
+            ])->first();
     }
 
     $invoice_line_group = InvoiceLineGroup::create([
-        'name'                  =>'Additional Services ('.date('Y-m-d').')',
-        'invoice_id'            => $invoice['id']
-    ])->first();
+            'name'                  =>'Additional Services ('.date('Y-m-d').')',
+            'invoice_id'            => $invoice['id']
+        ])->first();
 
     $invoiceLine = InvoiceLine::create([
             'description'                      => $receivable['description'],
@@ -81,10 +77,8 @@ foreach($receivables as $id => $receivable) {
             'unit_price'                       => $receivable['price_unit'],
             'qty'                              => $receivable['qty'],
             'free_qty'                         => $receivable['free_qty'],
-            'discount'                         => $receivable['discount'],
-
-        ])
-        ->first();
+            'discount'                         => $receivable['discount']
+        ])->first();
 
     Receivable::ids($receivable['id'])
         ->update([
@@ -92,8 +86,6 @@ foreach($receivables as $id => $receivable) {
             'invoice_line_id' => $invoiceLine['id'],
             'status'          => 'invoiced'
         ]);
-
-
 }
 
 

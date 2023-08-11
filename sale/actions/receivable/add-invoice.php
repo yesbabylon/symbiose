@@ -8,7 +8,6 @@
 use finance\accounting\Invoice;
 use finance\accounting\InvoiceLine;
 use finance\accounting\InvoiceLineGroup;
-use identity\Identity;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
@@ -57,24 +56,16 @@ list($params, $providers) = announce([
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-
-$receivable_first = Receivable::ids($params['ids'])
-    ->read([
-        'id',
-        'customer_id',
-    ])
-    ->first();
-
+$receivable_first = Receivable::ids($params['ids'])->read(['id', 'customer_id'])->first();
 
 if($params['is_new_invoice']) {
     $invoice = Invoice::create([
-        'customer_id'            =>$receivable_first['customer_id']
-    ])
-    ->first();
-}else
-{
-    $invoice = Invoice::search(
-        [
+            'customer_id'            =>$receivable_first['customer_id']
+        ])
+        ->first();
+}
+else{
+    $invoice = Invoice::search([
             ['id', '=', $params['invoice_id']],
             ['status', '=', 'proforma']
         ])
@@ -83,9 +74,9 @@ if($params['is_new_invoice']) {
 }
 
 $invoice_line_group = InvoiceLineGroup::create([
-    'name'                  => $params['title'],
-    'invoice_id'            => $invoice['id']
-])->first();
+        'name'                  => $params['title'],
+        'invoice_id'            => $invoice['id']
+    ])->first();
 
 $receivables = Receivable::ids($params['ids'])
     ->read([
@@ -121,8 +112,7 @@ foreach($receivables as $id => $receivable) {
             'unit_price'                       => $receivable['price_unit'],
             'qty'                              => $receivable['qty'],
             'free_qty'                         => $receivable['free_qty'],
-            'discount'                         => $receivable['discount'],
-
+            'discount'                         => $receivable['discount']
         ])
         ->first();
 
@@ -132,7 +122,6 @@ foreach($receivables as $id => $receivable) {
             'invoice_line_id' => $invoiceLine['id'],
             'status'          => 'invoiced'
         ]);
-
 
 }
 
