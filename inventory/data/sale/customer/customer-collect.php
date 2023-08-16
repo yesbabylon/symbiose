@@ -95,6 +95,13 @@ list($params, $providers) = eQual::announce([
             'description'       => 'Service to which the customer.'
         ],
 
+        'subscription_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'inventory\service\Subscription',
+            'description'       => 'Customer to which the subscription belongs.',
+        ],
+
+
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -193,6 +200,11 @@ if(isset($params['software_id']) && $params['software_id'] > 0) {
     $domain = Domain::conditionAdd($domain, ['id', 'in', $customers_ids]);
 }
 
+if(isset($params['subscription_id']) && $params['subscription_id'] > 0) {
+    $customers_ids = [];
+    $customers_ids = Customer::search(['subscriptions_ids', 'contains', $params['subscription_id']])->ids();
+    $domain = Domain::conditionAdd($domain, ['id', 'in', $customers_ids]);
+}
 
 $params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);

@@ -40,9 +40,9 @@
                 "duration": "Monthly",
                 "ref_order": "",
                 "license_key": "",
-                "service_id": 20,
+                "service_id": 1,
                 "product_id": 0,
-                "price": 200
+                "price": 0
             },
             {
                 "id": 4,

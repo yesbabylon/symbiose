@@ -67,18 +67,6 @@
                 }
             },
             {
-                "id": "inventory.sale.receivables",
-                "type": "entry",
-                "label": "Receivables",
-                "description": "",
-                "context": {
-                    "entity": "inventory\\sale\\receivable\\Receivable",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
-            },
-            {
                 "id": "inventory.finance.accounting.invoice",
                 "type": "entry",
                 "label": "Invoices",

@@ -29,86 +29,135 @@
                 }
             },
             {
-                "id": "item.all_Receivables",
-                "type": "parent",
-                "label": "Receivables",
-                "icon": "note",
-                "description": "",
-                "children": [
-                    {
-                        "id": "item.all_ReceivablesQueue",
-                        "type": "entry",
-                        "label": "Receivables Queue",
-                        "icon": "note",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\sale\\receivable\\ReceivablesQueue",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.all_Receivable",
-                        "type": "entry",
-                        "label": "Receivables",
-                        "icon": "list",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\sale\\receivable\\Receivable",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.all_Receivable_Pending",
-                        "type": "entry",
-                        "label": "Receivables Pending",
-                        "icon": "pending_actions",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\sale\\receivable\\Receivable",
-                            "view": "list.pending",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "item.all_Invoices",
-                "type": "parent",
+                "id": "item.all_Invoice",
+                "type": "entry",
                 "label": "Invoices",
                 "icon": "receipt",
                 "description": "",
+                "context": {
+                    "entity": "inventory\\finance\\accounting\\Invoice",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.all_sale",
+                "type": "parent",
+                "label": "Sale",
+                "icon": "calculate",
+                "description": "",
                 "children": [
                     {
-                        "id": "item.all_Invoice",
+                        "id": "item.all_sale_entry",
                         "type": "entry",
-                        "label": "Invoices",
-                        "icon": "receipt",
+                        "label": "Sale Entry",
+                        "icon": "label",
                         "description": "",
                         "context": {
-                            "entity": "inventory\\finance\\accounting\\Invoice",
+                            "entity": "inventory\\sale\\SaleEntry",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
                         }
                     },
                     {
-                        "id": "item.all_InvoiceLine",
-                        "type": "entry",
-                        "label": "Invoices Lines",
-                        "icon": "fact_check",
+                        "id": "item.all_Receivables",
+                        "type": "parent",
+                        "label": "Receivables",
+                        "icon": "note",
                         "description": "",
-                        "context": {
-                            "entity": "inventory\\finance\\accounting\\InvoiceLine",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
+                        "children": [
+                            {
+                                "id": "item.all_ReceivablesQueue",
+                                "type": "entry",
+                                "label": "Receivables Queue",
+                                "icon": "queue",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\receivable\\ReceivablesQueue",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_Receivable",
+                                "type": "entry",
+                                "label": "Receivables",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\receivable\\Receivable",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_Receivable_Pending",
+                                "type": "entry",
+                                "label": "Receivables Pending",
+                                "icon": "pending_actions",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\receivable\\Receivable",
+                                    "view": "list.pending",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.all_Prices",
+                        "type": "parent",
+                        "label": "All Prices",
+                        "icon": "price_check",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.all_Product_Catalog",
+                                "type": "entry",
+                                "label": "Product (Catalog)",
+                                "icon": "book",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\catalog\\Product",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_Price",
+                                "type": "entry",
+                                "label": "Price",
+                                "icon": "attach_money",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\price\\Price",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.all_PriceList",
+                                "type": "entry",
+                                "label": "Price List",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\sale\\price\\PriceList",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     }
+
                 ]
             },
             {
@@ -202,54 +251,6 @@
                                 "context": {
                                     "entity": "inventory\\service\\DetailCategory",
                                     "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.all_Prices",
-                        "type": "parent",
-                        "label": "All Prices",
-                        "icon": "price_check",
-                        "description": "",
-                        "children": [
-                            {
-                                "id": "item.all_Product_Catalog",
-                                "type": "entry",
-                                "label": "Product (Catalog)",
-                                "icon": "book",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\sale\\catalog\\Product",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.all_Price",
-                                "type": "entry",
-                                "label": "Price",
-                                "icon": "attach_money",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\sale\\price\\Price",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.all_PriceList",
-                                "type": "entry",
-                                "label": "Price List",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\sale\\price\\PriceList",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
                                 }
                             }
                         ]

@@ -7,6 +7,7 @@
 
 namespace inventory\service;
 
+use inventory\sale\customer\Customer;
 use inventory\sale\price\Price;
 use inventory\sale\price\PriceList;
 
@@ -96,7 +97,7 @@ class Subscription extends \sale\SaleEntry  {
                 'description'       => 'Detail attached to a service.',
                 'required'          => true,
                 'onupdate'          => 'onupdateHasSubscription',
-                'dependencies'      => ['has_external_provider','is_billable','is_internal']
+                'dependencies'      => ['has_external_provider','is_billable','is_internal','customer_id']
             ],
 
             'is_internal' => [
@@ -112,6 +113,7 @@ class Subscription extends \sale\SaleEntry  {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'description'       => 'The lines that are assigned to the statement.',
+                'default'           => false,
                 'visible'           => ['service_id','<>', null],
                 'store'             =>  true,
                 'function'          => 'calcIsBillable'
@@ -164,7 +166,24 @@ class Subscription extends \sale\SaleEntry  {
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'description'       => 'The entry is linked to a Receivable entry.',
                 'visible'           => ['service_id','<>', null]
-            ]
+            ],
+
+            'customer_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => 'The Customer to who refers the item.',
+                'store'             => true,
+                'function'          => 'calcCustomer',
+            ],
+            'qty' => [
+                'type'              => 'float',
+                'description'       => 'Quantity of product.',
+                'default'           => 1,
+                'visible'           => false
+            ],
+
+
         ];
     }
 
@@ -173,12 +192,18 @@ class Subscription extends \sale\SaleEntry  {
         $result = [];
 
         if(isset($event['service_id']) && strlen($event['service_id']) > 0 ){
-            $service = Service::search(['id', 'in', $event['service_id']])
-                ->read(['has_external_provider','is_billable','is_internal'])
+            $service = Service::search(['id', '=', $event['service_id']])
+                ->read(['has_external_provider', 'is_billable', 'is_internal', 'customer_id'])
                 ->first();
+
             $result['has_external_provider'] = $service['has_external_provider'];
             $result['is_billable'] = $service['is_billable'];
             $result['is_internal'] = $service['is_internal'];
+
+            $customer = Customer::ids([$service['customer_id']])
+                ->read(['id', 'name'])
+                ->first();
+            $result['customer_id'] = $customer;
         }
 
         if(isset($event['date_from']) || isset($event['duration'])){
@@ -332,7 +357,16 @@ class Subscription extends \sale\SaleEntry  {
             $result[$id] = $subscription['service_id']['is_billable'];
         }
         return $result;
+
     }
 
+    public static function calcCustomer($self) {
+        $result = [];
+        $self->read(['service_id' => ['customer_id']]);
+        foreach($self as $id => $subscription) {
+            $result[$id] = $subscription['service_id']['customer_id'];
+        }
+        return $result;
+    }
 
 }

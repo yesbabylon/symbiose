@@ -14,7 +14,7 @@
             "actions" : [
                 {
                     "id": "header.selection.actions.cancel_invoice",
-                    "label": "Cancel invoice",
+                    "label": "Cancel",
                     "icon": "cancel",
                     "controller": "inventory_finance_accounting_cancel-invoice",
                     "confirm": true,
@@ -45,17 +45,17 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%"
+                "width": "30%"
             },
             {
                 "type": "field",
                 "value": "date",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "status",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
@@ -66,7 +66,7 @@
             {
                 "type": "field",
                 "value": "is_paid",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",

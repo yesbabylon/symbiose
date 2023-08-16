@@ -33,6 +33,12 @@
                                                 "label": "Coming expiry",
                                                 "value": "has_upcoming_expiry",
                                                 "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "20%"
                                             }
                                         ]
                                     },

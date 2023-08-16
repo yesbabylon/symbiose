@@ -39,6 +39,20 @@ class Customer extends \sale\customer\Customer {
                 'foreign_object'    => 'inventory\finance\accounting\Invoice',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List invoices of the customers.'
+            ],
+
+            'subscriptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List subscriptions of the customers.'
+            ],
+
+            'sales_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\sale\SaleEntry',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List invoices of the customers.'
             ]
         ];
     }

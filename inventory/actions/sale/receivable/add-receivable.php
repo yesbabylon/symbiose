@@ -4,6 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2021
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 use inventory\sale\price\Price;
 use inventory\sale\receivable\Receivable;
 use inventory\sale\receivable\ReceivablesQueue;
@@ -16,8 +17,9 @@ list($params, $providers) = announce([
             'description'   => 'ID of the subscription.',
             'type'          => 'integer',
             'required'      => true
-        ],
+        ]
     ],
+
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
@@ -30,11 +32,12 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 
 $subscription = Subscription::id($params['id'])
                 ->read(
-                    ['id','service_id' => ['customer_id'],
+                    ['id','customer_id',
                     'name',
                     'product_id',
                     'price_id',
                     'price',
+                    'qty',
                     'has_receivable'
                 ])
                 ->first();
@@ -42,7 +45,7 @@ $subscription = Subscription::id($params['id'])
 if(!$subscription) {
     throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
 }
-$customer_id = $subscription['service_id']['customer_id'];
+$customer_id = $subscription['customer_id'];
 
 $receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $customer_id])->read(['id'])->first();
 
@@ -78,15 +81,15 @@ if(!$receivable) {
         'price_id'               => $price['id'],
         'unit_price'             => $subscription['price'],
         'vat_rate'               => $price['vat_rate'],
-        'qty'                    => 1,
-        'description'            => 'subscription '. $subscription['name'],
+        'qty'                    => $subscription['qty'],
+        'description'            => 'reference subscription',
     ])
     ->first();
 
     Subscription::ids($subscription['id'])
     ->update([
-        'has_receivable' =>true,
-        'receivable_id' =>$receivable['id']
+        'has_receivable' => true,
+        'receivable_id'  => $receivable['id']
     ]);
 
 }
