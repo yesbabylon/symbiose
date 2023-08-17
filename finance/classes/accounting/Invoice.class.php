@@ -52,8 +52,7 @@ class Invoice extends Model {
                     'invoice',              // final invoice (with unique number and accounting entries)
                     'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
-                'default'           => 'proforma',
-                'onupdate'          => 'onupdateStatus'
+                'default'           => 'proforma'
             ],
 
             'type' => [
@@ -67,7 +66,7 @@ class Invoice extends Model {
 
             'number' => [
                 'type'              => 'computed',
-                'result_type'        => 'string',
+                'result_type'       => 'string',
                 'description'       => "Number of the invoice, according to organization logic (@see config/invoicing).",
                 'function'          => 'calcNumber',
                 'store'             => true
@@ -113,7 +112,8 @@ class Invoice extends Model {
             'date' => [
                 'type'              => 'datetime',
                 'description'       => 'Emission date of the invoice.',
-                'default'           => time()
+                'default'           => time(),
+                'dependencies'      =>['number']
             ],
 
             /** @deprecated */
@@ -200,7 +200,7 @@ class Invoice extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
                 'default'           => false
-            ]
+            ],
 
         ];
     }
@@ -212,8 +212,9 @@ class Invoice extends Model {
                     'invoice' => [
                         'description' => 'Update the invoice status based on the `invoice` field.',
                         'help'        => "The `invoice` field is set by a dedicated controller that manages invoice approval requests.",
-                        'onbefore'    => "onbeforeInvoice",
-                        'status'	  => 'invoice'
+                        'status'	  => 'invoice',
+                        'onbefore'    => 'onbeforeInvoice',
+                        'onafter'     => 'onafterInvoice'
                     ]
                 ]
             ],
@@ -229,10 +230,9 @@ class Invoice extends Model {
     }
 
     public static function onbeforeInvoice($self) {
-        $result = [];
-        $self->read(['id', 'number','status']);
+        $self->read(['id','date', 'number','status','customer_id']);
         foreach($self as $id => $invoice) {
-            Invoice::ids($invoice['id'])
+            Invoice::ids($id)
                 ->update([
                     'number'      => null,
                     'date'        => time()
@@ -241,7 +241,10 @@ class Invoice extends Model {
             // create new entries objects
 
         }
-
+    }
+    public static function onafterInvoice($self) {
+        // force computing the invoice number
+        $self->read(['number']);
     }
 
     public static function onchange($event,$values) {
@@ -252,6 +255,7 @@ class Invoice extends Model {
                 ->first();
             $result['number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
         }
+
         return $result;
     }
 
@@ -290,7 +294,7 @@ class Invoice extends Model {
 
     public static function calcNumber($self) {
         $result = [];
-        $self->read(['status', 'organisation_id','customer_id'=> 'name']);
+        $self->read(['status', 'organisation_id','customer_id'=> ['name']]);
         foreach($self as $id => $invoice) {
             // no code is generated for proforma
             if($invoice['status'] == 'proforma') {
@@ -303,8 +307,8 @@ class Invoice extends Model {
             $organisation_id = $invoice['organisation_id'];
 
             $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
-            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');
-            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year', date('Y'));
+            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
 
             if($sequence) {
                 Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
@@ -376,6 +380,7 @@ class Invoice extends Model {
         $om->update(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
+    // #todo - move this to onbefore
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
