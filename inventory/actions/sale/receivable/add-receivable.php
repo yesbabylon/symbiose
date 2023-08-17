@@ -32,7 +32,8 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 
 $subscription = Subscription::id($params['id'])
                 ->read(
-                    ['id','customer_id',
+                    ['id',
+                    'customer_id',
                     'name',
                     'product_id',
                     'price_id',
@@ -58,19 +59,19 @@ if(!$receivablesQueue) {
 }
 
 $price =Price::id($subscription['price_id'])->read(['id','vat_rate'])->first();
+
 if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-
 $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivablesQueue['id']],
         ['product_id', '=', $subscription['product_id']],
-        ['price_id', '=', $price['id']]
+        ['price_id', '=', $price['id']],
+        ['status', '=', 'proforma'],
     ])
     ->read(['id'])
     ->first();
-
 
 if(!$receivable) {
 

@@ -56,6 +56,42 @@
                 "price_list_id": 6,
                 "accounting_rule_id": 1,
                 "product_id": 2
+            },
+            {
+                "id": 7,
+                "state": "instance",
+                "price": 40,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 4
+            },
+            {
+                "id": 8,
+                "state": "instance",
+                "price": 3,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 5
+            },
+            {
+                "id": 9,
+                "state": "instance",
+                "price": 27,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 6
+            },
+            {
+                "id": 10,
+                "state": "instance",
+                "price": 25,
+                "type": "direct",
+                "price_list_id": 1,
+                "accounting_rule_id": 1,
+                "product_id": 7
             }
         ]
     }

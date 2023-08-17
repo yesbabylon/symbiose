@@ -25,6 +25,23 @@
             }
         }
     ],
+    "header": {
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.cancel_invoice",
+                    "label": "Cancel",
+                    "icon": "cancel",
+                    "controller": "inventory_finance_accounting_cancel-invoice",
+                    "confirm": true,
+                    "params": {
+                        "customer_id": "object.customer_id"
+                    }
+                }
+            ]
+        }
+    },
     "layout": {
         "groups": [
             {

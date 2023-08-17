@@ -7,6 +7,7 @@
 
 use finance\accounting\Invoice;
 use sale\receivable\Receivable;
+use sale\customer\Customer;
 
 list($params, $providers) = announce([
     'description'   => "Create a invoice.",
@@ -48,6 +49,7 @@ if(!$invoices) {
 }
 
 foreach($invoices as $id => $invoice) {
+    
     if ($invoice['status'] != 'invoice') {
         continue;
     }
@@ -56,7 +58,7 @@ foreach($invoices as $id => $invoice) {
             ['status', "=", "invoiced"],
             ['invoice_id', "=", $invoice['id']],
         ])
-        ->read(['id', 'status', 'invoice_id', 'invoice_line_id']);
+        ->read(['id', 'status', 'invoice_id', 'invoice_line_id','receivable'=>'name']);
 
     if(!$receivables) {
         throw new Exception('unknown_receivable', QN_ERROR_UNKNOWN_OBJECT);
@@ -80,9 +82,13 @@ foreach($invoices as $id => $invoice) {
 
     }
 
+    $customer = Customer::search(['id', '=', $invoice['customer_id']])
+                ->read(['name'])
+                ->first();
+
     Invoice::ids($invoice['id'])
         ->update([
-            'status'      => 'cancelled'
+            'status'      => 'cancelled',
         ]);
 }
 
