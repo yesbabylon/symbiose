@@ -1,6 +1,7 @@
 {
     "name": "Receivables",
     "description": "This view is intended for displaying the Receivables.",
+    "controller": "sale_receivable_receivable-collect",
     "access": {
     },
     "operations": {
@@ -26,12 +27,14 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "15%"
+                "width": "15%",
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "name",
-                "width": "25%"
+                "width": "25%",
+                "readonly": true
             },
             {
                 "type": "field",
@@ -66,7 +69,8 @@
                 "type": "field",
                 "value": "total",
                 "label": "Price Ex VAT",
-                "width": "15%"
+                "width": "15%",
+                "readonly": true
             },
             {
                 "type": "field",
@@ -78,13 +82,15 @@
                 "type": "field",
                 "label": "Price total",
                 "value": "price",
-                "width": "10%"
+                "width": "10%",
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "invoice_id",
                 "label": "Invoice",
-                "width": "25%"
+                "width": "30%",
+                "readonly": true
             }
         ]
     }
