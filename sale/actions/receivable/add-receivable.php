@@ -46,7 +46,11 @@ if(!$saleEntry) {
     throw new Exception('unknown_sale_entry', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $saleEntry['customer_id']])->read(['id'])->first();
+$receivablesQueue = ReceivablesQueue::search(
+    ['customer_id', '=', $saleEntry['customer_id']
+    ])
+    ->read(['id'])
+    ->first();
 
 if(!$receivablesQueue) {
     $receivablesQueue = ReceivablesQueue::create([
@@ -55,7 +59,9 @@ if(!$receivablesQueue) {
         ->first();
 }
 
-$price =Price::id($saleEntry['price_id'])->read(['id', 'price', 'vat_rate'])->first();
+$price =Price::id($saleEntry['price_id'])
+    ->read(['id', 'price', 'vat_rate'])
+    ->first();
 
 if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
