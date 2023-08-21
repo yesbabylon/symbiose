@@ -40,13 +40,15 @@
                 "duration": "Monthly",
                 "ref_order": "",
                 "license_key": "",
-                "service_id": 20,
+                "service_id": 1,
                 "product_id": 0,
-                "price": 200
+                "price": 0
             },
             {
                 "id": 4,
                 "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 1,
                 "name": "subscription FPDF",
                 "description": "",
                 "date_from": "2023-05-12T00:00:00+00:00",
@@ -61,6 +63,8 @@
             {
                 "id": 5,
                 "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 2,
                 "name": "sub calendar",
                 "description": "",
                 "date_from": "2023-07-11T00:00:00+00:00",

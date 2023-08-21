@@ -7,6 +7,7 @@
 namespace finance\accounting;
 use equal\orm\Model;
 use core\setting\Setting;
+use sale\customer\Customer;
 
 class Invoice extends Model {
 
@@ -51,8 +52,7 @@ class Invoice extends Model {
                     'invoice',              // final invoice (with unique number and accounting entries)
                     'cancelled'             // the invoice has been cancelled (through reversing entries)
                 ],
-                'default'           => 'proforma',
-                'onupdate'          => 'onupdateStatus'
+                'default'           => 'proforma'
             ],
 
             'type' => [
@@ -66,7 +66,7 @@ class Invoice extends Model {
 
             'number' => [
                 'type'              => 'computed',
-                'result_type'        => 'string',
+                'result_type'       => 'string',
                 'description'       => "Number of the invoice, according to organization logic (@see config/invoicing).",
                 'function'          => 'calcNumber',
                 'store'             => true
@@ -112,7 +112,8 @@ class Invoice extends Model {
             'date' => [
                 'type'              => 'datetime',
                 'description'       => 'Emission date of the invoice.',
-                'default'           => time()
+                'default'           => time(),
+                'dependencies'      =>['number']
             ],
 
             /** @deprecated */
@@ -125,7 +126,8 @@ class Invoice extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The counter party organization the invoice relates to.",
-                'required'          => true
+                'required'          => true,
+                'dependencies'      =>['number']
             ],
 
             'price' => [
@@ -198,9 +200,63 @@ class Invoice extends Model {
                 'type'              => 'boolean',
                 'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
                 'default'           => false
-            ]
+            ],
 
         ];
+    }
+
+    public static function getWorkflow() {
+        return [
+            'proforma' => [
+                'transitions' => [
+                    'invoice' => [
+                        'description' => 'Update the invoice status based on the `invoice` field.',
+                        'help'        => "The `invoice` field is set by a dedicated controller that manages invoice approval requests.",
+                        'status'	  => 'invoice',
+                        'onbefore'    => 'onbeforeInvoice',
+                        'onafter'     => 'onafterInvoice'
+                    ]
+                ]
+            ],
+            'invoice' => [
+                'transitions' => [
+                    'cancel'  => [
+                        'description' => 'Set the invoice status as cancelled.',
+                        'status'	  => 'cancelled'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public static function onbeforeInvoice($self) {
+        $self->read(['id','date', 'number','status','customer_id']);
+        foreach($self as $id => $invoice) {
+            Invoice::ids($id)
+                ->update([
+                    'number'      => null,
+                    'date'        => time()
+                ]);
+            // generate accounting entries
+            // create new entries objects
+
+        }
+    }
+    public static function onafterInvoice($self) {
+        // force computing the invoice number
+        $self->read(['number']);
+    }
+
+    public static function onchange($event,$values) {
+        $result = [];
+        if(isset($event['customer_id']) && isset($values['status']) && $values['status'] == 'proforma'){
+            $customer = Customer::search(['id', '=', $event['customer_id']])
+                ->read(['name'])
+                ->first();
+            $result['number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
+        }
+
+        return $result;
     }
 
     public static function calcIsPaid($self) {
@@ -238,11 +294,11 @@ class Invoice extends Model {
 
     public static function calcNumber($self) {
         $result = [];
-        $self->read(['status', 'organisation_id']);
+        $self->read(['status', 'organisation_id','customer_id'=> ['name']]);
         foreach($self as $id => $invoice) {
             // no code is generated for proforma
             if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]';
+                $result[$id] = '[proforma]'. '['.$invoice['customer_id']['name'].']'.'['.date('Y-m-d').']';
                 continue;
             }
 
@@ -251,8 +307,8 @@ class Invoice extends Model {
             $organisation_id = $invoice['organisation_id'];
 
             $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
-            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year');
-            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id);
+            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year', date('Y'));
+            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
 
             if($sequence) {
                 Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
@@ -324,6 +380,7 @@ class Invoice extends Model {
         $om->update(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
+    // #todo - move this to onbefore
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date

@@ -1,8 +1,27 @@
 {
-    "name": "Receivables",
+    "name": "Receivables Selection",
     "description": "This view is intended for displaying the Receivables.",
-    "controller": "sale_receivable_receivable-collect",
     "access": {
+    },
+    "header": {
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.add_invoice",
+                    "label": "Add invoice",
+                    "icon": "list",
+                    "controller": "sale_receivable_add-invoice",
+                    "confirm": true,
+                    "params": {
+                        "customer_id": "object.customer_id"
+                    }
+                }
+            ]
+        },
+        "actions": {
+            "ACTION.CREATE": false
+        }
     },
     "operations": {
         "total": {
@@ -27,14 +46,12 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "15%",
-                "readonly": true
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "name",
-                "width": "25%",
-                "readonly": true
+                "width": "25%"
             },
             {
                 "type": "field",
@@ -69,8 +86,7 @@
                 "type": "field",
                 "value": "total",
                 "label": "Price Ex VAT",
-                "width": "15%",
-                "readonly": true
+                "width": "15%"
             },
             {
                 "type": "field",
@@ -82,15 +98,13 @@
                 "type": "field",
                 "label": "Price total",
                 "value": "price",
-                "width": "10%",
-                "readonly": true
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "invoice_id",
                 "label": "Invoice",
-                "width": "30%",
-                "readonly": true
+                "width": "30%"
             }
         ]
     }

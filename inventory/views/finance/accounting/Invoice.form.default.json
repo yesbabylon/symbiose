@@ -7,6 +7,40 @@
             "sale.default.user"
         ]
     },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": [
+                "status",
+                "=",
+                "proforma"
+            ],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        },
+        {
+            "id": "actions.cancel_invoice",
+            "label": "Cancel",
+            "controller": "inventory_finance_accounting_cancel-invoice",
+            "confirm": true,
+            "params": {
+                "customer_id": "object.customer_id"
+            },
+            "visible": [
+                [
+                    "status",
+                    "=",
+                    "invoice"
+                ]
+            ]
+        }
+    ],
     "layout": {
         "groups": [
             {
@@ -29,8 +63,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
+                                                "label": "Customer",
+                                                "value": "customer_id",
                                                 "width": "50%"
                                             },
                                             {
@@ -85,7 +119,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Organisation",
+                                                "label": "Organization",
                                                 "value": "organisation_id",
                                                 "width": "50%"
                                             },
@@ -111,7 +145,7 @@
                 "sections": [
                     {
                         "id": "sections.invoice.lines",
-                        "label": "Invoice Lines",
+                        "label": "Invoice Lines here ",
                         "rows": [
                             {
                                 "columns": [
@@ -124,6 +158,7 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "header": {
+                                                        "view": "list.default",
                                                         "actions": {
                                                             "ACTION.SELECT": false,
                                                             "ACTION.CREATE": false

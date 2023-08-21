@@ -1,6 +1,6 @@
 {
-    "name": "Subscriptions search",
-    "description": "Advanced collector for Subscriptions",
+    "name": "Receivables search",
+    "description": "Advanced collector for receivables",
     "layout": {
         "groups": [
             {
@@ -14,6 +14,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "status",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "date_from",
                                                 "width": "20%"
                                             },
@@ -24,20 +29,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Expired",
-                                                "value": "is_expired",
+                                                "value": "price_total_min",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Coming expiry",
-                                                "value": "has_upcoming_expiry",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
+                                                "value": "price_total_max",
                                                 "width": "20%"
                                             }
                                         ]
@@ -47,30 +44,20 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "price_min",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price_max",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_id",
-                                                "label": "Service",
+                                                "value": "customer_id",
+                                                "label": "Customer",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
-                                                "label": "Product (Customer)",
+                                                "label": "Product (Catalog)",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "catalog_product_id",
-                                                "label": "Product (Catalog)",
+                                                "value": "invoice_id",
+                                                "label": "Invoice",
                                                 "width": "20%"
                                             }
                                         ]

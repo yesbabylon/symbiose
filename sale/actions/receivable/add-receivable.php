@@ -9,6 +9,7 @@ use inventory\sale\price\Price;
 use inventory\sale\receivable\Receivable;
 use inventory\sale\receivable\ReceivablesQueue;
 use inventory\service\Subscription;
+use sale\SaleEntry;
 
 list($params, $providers) = announce([
     'description'   => "Create a receivable.",
@@ -30,35 +31,37 @@ list($params, $providers) = announce([
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$subscription = Subscription::id($params['id'])
+$saleEntry = SaleEntry::id($params['id'])
                 ->read(
                     ['id',
                     'customer_id',
-                    'name',
                     'product_id',
                     'price_id',
-                    'price',
                     'qty',
                     'has_receivable'
                 ])
                 ->first();
 
-if(!$subscription) {
-    throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
+if(!$saleEntry) {
+    throw new Exception('unknown_sale_entry', QN_ERROR_UNKNOWN_OBJECT);
 }
-$customer_id = $subscription['customer_id'];
 
-$receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $customer_id])->read(['id'])->first();
-
+$receivablesQueue = ReceivablesQueue::search(
+    ['customer_id', '=', $saleEntry['customer_id']
+    ])
+    ->read(['id'])
+    ->first();
 
 if(!$receivablesQueue) {
     $receivablesQueue = ReceivablesQueue::create([
-            'customer_id'   => $customer_id
+            'customer_id'   => $saleEntry['customer_id']
         ])
         ->first();
 }
 
-$price =Price::id($subscription['price_id'])->read(['id','vat_rate'])->first();
+$price =Price::id($saleEntry['price_id'])
+    ->read(['id', 'price', 'vat_rate'])
+    ->first();
 
 if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
@@ -66,28 +69,29 @@ if(!$price) {
 
 $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivablesQueue['id']],
-        ['product_id', '=', $subscription['product_id']],
+        ['product_id', '=', $saleEntry['product_id']],
         ['price_id', '=', $price['id']],
-        ['status', '=', 'proforma'],
+        ['status', '=', 'proforma']
     ])
     ->read(['id'])
     ->first();
+
 
 if(!$receivable) {
 
     $receivable = Receivable::create([
         'receivables_queue_id'   => $receivablesQueue['id'],
         'date'                   => time(),
-        'product_id'             => $subscription['product_id'],
+        'product_id'             => $saleEntry['product_id'],
         'price_id'               => $price['id'],
-        'unit_price'             => $subscription['price'],
+        'unit_price'             => $price['price'],
         'vat_rate'               => $price['vat_rate'],
-        'qty'                    => $subscription['qty'],
-        'description'            => 'reference subscription',
+        'qty'                    => $saleEntry['qty'],
+        'description'            => 'reference Sale entry product',
     ])
     ->first();
 
-    Subscription::ids($subscription['id'])
+    SaleEntry::ids($saleEntry['id'])
     ->update([
         'has_receivable' => true,
         'receivable_id'  => $receivable['id']

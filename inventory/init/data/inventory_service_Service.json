@@ -57,7 +57,7 @@
                 "name": "services calendar",
                 "description": "",
                 "has_subscription": true,
-                "is_billable": false,
+                "is_billable": true,
                 "is_auto_renew": true,
                 "product_id": 4,
                 "has_external_provider": false

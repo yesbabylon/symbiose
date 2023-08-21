@@ -76,26 +76,8 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "25%",
+                                        "width": "40%",
                                         "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "ref_order",
-                                                "label": "Reference",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "license_key",
-                                                "label": "License Key",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "30%",
-                                        "align": "right",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -126,11 +108,28 @@
                                                 "value": "has_upcoming_expiry",
                                                 "readonly": true,
                                                 "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "ref_order",
+                                                "label": "Reference",
+                                                "width": "80%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "license_key",
+                                                "label": "License Key",
+                                                "width": "80%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "40%",
+                                        "width": "5%",
+                                        "align": "left",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "50%",
                                         "align": "left",
                                         "items": [
                                             {
@@ -141,24 +140,31 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "is_billable",
                                                 "label": "is Billable",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "35%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_internal",
                                                 "label": "Is Internal",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "35%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_external_provider",
                                                 "label": "Has external provider",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "35%"
                                             },
                                             {
                                                 "type": "field",
@@ -200,7 +206,7 @@
                                         ]
                                     },
                                     {
-                                        "width": "100%",
+                                        "width": "80%",
                                         "align": "left",
                                         "items": [
                                             {

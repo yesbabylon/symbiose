@@ -79,6 +79,12 @@
                                                 "value": "software_id",
                                                 "label": "Software",
                                                 "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_id",
+                                                "label": "Subscription",
+                                                "width": "20%"
                                             }
                                         ]
                                     }

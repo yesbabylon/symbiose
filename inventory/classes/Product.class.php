@@ -63,12 +63,4 @@ class Product extends Model {
         ];
     }
 
-    public static function onchange($event) {
-        $result = [];
-
-        if(isset($event['is_internal'])){
-            $result['customer_id']= '';
-        }
-        return $result;
-    }
 }

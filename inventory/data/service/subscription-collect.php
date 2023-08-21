@@ -71,12 +71,18 @@ list($params, $providers) = eQual::announce([
             'type'              => 'integer',
             'description'       => 'Numeric Product identifier to which the service belongs'
         ],
+
         'catalog_product_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'inventory\sale\catalog\Product',
             'description'       => 'Product of the catalog sale.'
         ],
 
+        'customer_id'=> [
+            'type'              => 'many2one',
+            'foreign_object'    => 'inventory\sale\customer\Customer',
+            'description'       => 'Customer of the subscription.'
+        ],
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -145,6 +151,10 @@ if(isset($params['product_identifier']) && $params['product_identifier'] > 0) {
 
 if(isset($params['catalog_product_id']) && $params['catalog_product_id'] > 0) {
     $domain = Domain::conditionAdd($domain, ['product_id', '=', $params['catalog_product_id']]);
+}
+
+if(isset($params['customer_id']) && $params['customer_id'] > 0) {
+    $domain = Domain::conditionAdd($domain, ['customer_id', '=', $params['customer_id']]);
 }
 
 $params['domain'] = $domain;

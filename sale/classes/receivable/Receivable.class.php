@@ -62,8 +62,7 @@ class Receivable extends Model {
                 'type'              => 'string',
                 'description'       => 'Version of the receivable.',
                 'selection'         => ['pending', 'invoiced', 'cancelled'],
-                'default'           => 'pending',
-                'readonly'          => true
+                'default'           => 'pending'
             ],
 
             'description' => [
