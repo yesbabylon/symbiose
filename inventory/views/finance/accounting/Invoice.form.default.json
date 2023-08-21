@@ -120,7 +120,7 @@
                                             {
                                                 "type": "field",
                                                 "label": "Organization",
-                                                "value": "organiation_id",
+                                                "value": "organisation_id",
                                                 "width": "50%"
                                             },
                                             {

@@ -11,7 +11,7 @@
                 "route": "/"
             },
             {
-                "id": "item.all_Customer",
+                "id": "item.customer",
                 "type": "entry",
                 "label": "Customers",
                 "description": "",
@@ -23,7 +23,7 @@
                 }
             },
             {
-                "id": "item.all_Product",
+                "id": "item.product",
                 "type": "entry",
                 "label": "Products",
                 "description": "",
@@ -35,7 +35,7 @@
                 }
             },
             {
-                "id": "inventory.services.services",
+                "id": "item.services.services",
                 "type": "entry",
                 "label": "Services",
                 "description": "",
@@ -45,7 +45,7 @@
                 }
             },
             {
-                "id": "inventory.services.subscription",
+                "id": "item.services.subscription",
                 "type": "entry",
                 "label": "Subscription",
                 "description": "",
@@ -55,7 +55,7 @@
                 }
             },
             {
-                "id": "inventory.sale.receivables",
+                "id": "item.sale.receivables",
                 "type": "entry",
                 "label": "Receivables",
                 "description": "",
@@ -67,7 +67,7 @@
                 }
             },
             {
-                "id": "inventory.finance.accounting.invoice",
+                "id": "item..finance.accounting.invoice",
                 "type": "entry",
                 "label": "Invoices",
                 "description": "",
