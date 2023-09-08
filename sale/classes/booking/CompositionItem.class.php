@@ -97,6 +97,7 @@ class CompositionItem extends Model {
             ],
 
             // for filtering rental_unit_id field in forms
+            // #todo - this seems to be wrong (2023-09-08)
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'realestate\RentalUnit',
