@@ -186,21 +186,29 @@ class BankStatementLine extends Model {
         if(isset($values['payments_ids'])) {
             $new_payments_ids = array_map(function ($a) {return abs($a);}, $values['payments_ids']);
             $new_payments = $om->read(Payment::getType(), $new_payments_ids, ['amount'], $lang);
-            $new_payments_sum = 0.0;
-            foreach($values['payments_ids'] as $pid) {
+
+            $new_payments_diff = 0.0;
+            foreach(array_unique($values['payments_ids']) as $pid) {
                 if($pid < 0) {
-                    $new_payments_sum -= $new_payments[abs($pid)]['amount'];
+                    $new_payments_diff -= $new_payments[abs($pid)]['amount'];
                 }
                 else {
-                    $new_payments_sum += $new_payments[$pid]['amount'];
+                    $new_payments_diff += $new_payments[$pid]['amount'];
                 }
             }
+
             $lines = $om->read(self::getType(), $oids, ['payments_ids', 'amount', 'remaining_amount'], $lang);
 
             if($lines > 0) {
                 foreach($lines as $lid => $line) {
-                    if($new_payments_sum > $line['remaining_amount'] && abs($line['remaining_amount']-$new_payments_sum) >= 0.0001) {
-                        return ['amount' => ['exceded_price' => "Sum of the payments cannot be higher than the line total."]];
+                    $payments = $om->read(Payment::getType(), $line['payments_ids'], ['amount'], $lang);
+                    $payments_sum = 0;
+                    foreach($payments as $pid => $payment) {
+                        $payments_sum += $payment['amount'];
+                    }
+
+                    if(abs($payments_sum+$new_payments_diff) > abs($line['amount'])) {
+                        return ['amount' => ['exceeded_price' => "Sum of the payments cannot be higher than the line total."]];
                     }
                 }
             }
