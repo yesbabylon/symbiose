@@ -75,7 +75,7 @@
     },
     "error": {
         "amount": {
-            "exceded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
+            "exceeded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
         },
         "errors": {
             "already_imported": "Fichier déjà importé."
