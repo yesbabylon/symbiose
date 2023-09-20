@@ -61,12 +61,6 @@
                                                 "type": "field",
                                                 "value": "phone",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "rental_units_ids",
-                                                "width": "0%",
-                                                "visible": false
                                             }
                                         ]
                                     }
