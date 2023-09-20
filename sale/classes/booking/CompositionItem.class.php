@@ -78,7 +78,7 @@ class CompositionItem extends Model {
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental unit the person is assigned to.",
                 'required'          => true,
-                'domain'            => ['id', 'in', 'object.rental_units_ids']
+                /*'domain'            => ['id', 'in', 'object.rental_units_ids']*/
             ],
 
             'composition_id' => [
@@ -97,13 +97,14 @@ class CompositionItem extends Model {
             ],
 
             // for filtering rental_unit_id field in forms
-            // #todo - this seems to be wrong (2023-09-08)
+            // #todo [2023-09-08] - this seems to be wrong  (generates errors)
+            /*
             'rental_units_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'realestate\RentalUnit',
                 'description'       => "The rental units attached to the current booking."
             ]
-
+            */
 
         ];
     }
