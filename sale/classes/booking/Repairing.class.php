@@ -108,7 +108,7 @@ class Repairing extends Model {
                 if($repairs > 0 && count($repairs)) {
                     foreach($repairs as $rid => $repair) {
                         if($repair['date'] < $min_date) {
-                            $min_date = $repair['date_from'];
+                            $min_date = $repair['date'];
                             $time_from = $repair['schedule_from'];
                         }
                     }
@@ -130,7 +130,7 @@ class Repairing extends Model {
                 if($repairs > 0 && count($repairs)) {
                     foreach($repairs as $rid => $repair) {
                         if($repair['date'] > $max_date) {
-                            $max_date = $repair['date_to'];
+                            $max_date = $repair['date'];
                             $time_to = $repair['schedule_to'];
                         }
                     }
