@@ -15,7 +15,7 @@ class Invoice extends Model {
     }
 
     public static function getDescription() {
-        return "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.";
+        return "An invoice is a legal document issued by a seller and given to a buyer, that relates to a sale and is part of the accounting system.";
     }
 
     public static function getColumns() {
