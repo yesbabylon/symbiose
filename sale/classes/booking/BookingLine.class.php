@@ -447,7 +447,7 @@ class BookingLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $result[$oid] = round( round($odata['total'], 2) * (1.0 + $odata['vat_rate']), 2);
+            $result[$oid] = round($odata['total'] * (1.0 + $odata['vat_rate']), 2);
         }
         return $result;
     }
@@ -473,7 +473,7 @@ class BookingLine extends Model {
                     continue;
                 }
 
-                $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 2);
+                $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 4);
             }
         }
 
