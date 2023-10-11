@@ -1,29 +1,13 @@
 {
     "name": "Invoices",
     "description": "This view is intented for displaying the invoices.",
+    "controller": "finance_accounting_invoice-collect",
     "access": {
         "groups": [
             "finance.default.user",
             "sale.default.user",
             "inventory.default.user"
         ]
-    },
-    "header": {
-        "selection": {
-            "default" : false,
-            "actions" : [
-                {
-                    "id": "header.selection.actions.cancel_invoice",
-                    "label": "Cancel invoice",
-                    "icon": "cancel",
-                    "controller": "inventory_finance_accounting_cancel-invoice",
-                    "confirm": true,
-                    "params": {
-                        "customer_id": "object.customer_id"
-                    }
-                }
-            ]
-        }
     },
     "operations": {
         "total": {
@@ -45,27 +29,28 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "20%"
+                "width": "30%"
             },
             {
                 "type": "field",
                 "value": "date",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "status",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",
                 "value": "customer_id",
+                "label": "Customer",
                 "width": "20%"
             },
             {
                 "type": "field",
                 "value": "is_paid",
-                "width": "20%"
+                "width": "15%"
             },
             {
                 "type": "field",

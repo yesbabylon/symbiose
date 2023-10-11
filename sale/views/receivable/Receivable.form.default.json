@@ -68,7 +68,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",

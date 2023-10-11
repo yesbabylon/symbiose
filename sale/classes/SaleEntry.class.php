@@ -6,6 +6,8 @@
 */
 namespace sale;
 use \equal\orm\Model;
+use sale\price\Price;
+use sale\price\PriceList;
 
 class SaleEntry extends Model {
 
@@ -20,7 +22,7 @@ class SaleEntry extends Model {
 
             'has_receivable' => [
                 'type'              => 'boolean',
-                'description'       => 'The entry is linked to a Receivable entry.',
+                'description'       => 'The entry is linked to a receivable entry.',
                 'default'           => false
             ],
 
@@ -35,9 +37,60 @@ class SaleEntry extends Model {
                 'type'              => 'boolean',
                 'description'       => 'The lines that are assigned to the statement.',
                 'default'           => false
-            ]
+            ],
+
+            'customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => 'The Customer to who refers the item.'
+            ],
+
+            'product_id'=> [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\sale\catalog\Product',
+                'description'       => 'Product of the catalog sale.'
+            ],
+
+            'price_id'=> [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\sale\price\Price',
+                'description'       => 'Price of the sale.'
+            ],
+
+            'qty' => [
+                'type'              => 'float',
+                'description'       => 'Quantity of product.',
+                'default'           => 0
+            ],
 
         ];
+    }
+
+    public static function onchange($event, $values) {
+        $result = [];
+
+        if(isset($event['product_id'])) {
+
+            $price_lists_ids = PriceList::search([
+                    [
+                        ['date_from', '<=', time()],
+                        ['date_to', '>=', time()],
+                        ['status', '=', 'published'],
+                    ]
+                ] )
+                ->ids();
+
+            $price = Price::search([
+                ['product_id', '=', $event['product_id']],
+                ['price_list_id', 'in', $price_lists_ids]
+                ])->read(['id','name','price','vat_rate'])->first();
+
+                $result['price_id'] = $price;
+
+        }
+
+
+        return $result;
     }
 
 }

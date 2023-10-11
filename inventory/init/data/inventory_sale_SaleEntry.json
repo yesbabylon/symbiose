@@ -1,0 +1,44 @@
+[
+    {
+        "name": "inventory\\sale\\SaleEntry",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 3,
+                "is_billable": true,
+                "customer_id": 3,
+                "product_id": 3,
+                "price_id": 3,
+                "qty": 3,
+                "name": 1
+            },
+            {
+                "id": 2,
+                "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 4,
+                "is_billable": true,
+                "customer_id": 3,
+                "product_id": 6,
+                "price_id": 9,
+                "qty": 4,
+                "name": 2
+            },
+            {
+                "id": 3,
+                "state": "instance",
+                "has_receivable": true,
+                "receivable_id": 5,
+                "is_billable": true,
+                "customer_id": 3,
+                "product_id": 6,
+                "price_id": 9,
+                "qty": 3,
+                "name": 3
+            }
+        ]
+    }
+]

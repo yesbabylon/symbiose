@@ -1,6 +1,6 @@
 {
-    "name": "Subscriptions search",
-    "description": "Advanced collector for Subscriptions",
+    "name": "Invoice search",
+    "description": "Advanced collector for invoices",
     "layout": {
         "groups": [
             {
@@ -9,6 +9,27 @@
                         "rows": [
                             {
                                 "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
+                                                "width": "20%"
+                                            }
+                                        ]
+                                    },
                                     {
                                         "width": "100%",
                                         "items": [
@@ -24,53 +45,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Expired",
-                                                "value": "is_expired",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Coming expiry",
-                                                "value": "has_upcoming_expiry",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "width": "20%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
                                                 "value": "price_min",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_max",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_id",
-                                                "label": "Service",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product (Customer)",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "catalog_product_id",
-                                                "label": "Product (Catalog)",
                                                 "width": "20%"
                                             }
                                         ]

@@ -7,7 +7,7 @@
                 "sections": [
                     {
                         "label": "Infos Product",
-                        "id": "section.product_info",
+                        "id": "section.product",
                         "rows": [
                             {
                                 "columns": [
@@ -55,7 +55,7 @@
                     },
                     {
                         "label": "Servers",
-                        "id": "section.product_servers",
+                        "id": "section.product.servers",
                         "visible": [
                             "state",
                             "<>",
@@ -73,7 +73,13 @@
                                                 "value": "servers_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "header": {
+                                                        "view": "list.selection",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
@@ -84,7 +90,7 @@
                     },
                     {
                         "label": "Services",
-                        "id": "section.product_services",
+                        "id": "section.product.services",
                         "visible": [
                             "state",
                             "<>",
@@ -102,7 +108,13 @@
                                                 "value": "services_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "header": {
+                                                        "view": "list.selection",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]

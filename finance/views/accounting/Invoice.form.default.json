@@ -26,8 +26,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Partner",
-                                                "value": "partner_id",
+                                                "label": "Customer",
+                                                "value": "customer_id",
                                                 "width": "50%"
                                             },
                                             {

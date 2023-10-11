@@ -19,7 +19,7 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "10%",
+                "width": "15%",
                 "sortable": true,
                 "readonly": true
             },
@@ -55,6 +55,12 @@
                 "type": "field",
                 "value": "service_id",
                 "label": "Service",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
                 "width": "15%"
             },
             {
@@ -69,7 +75,7 @@
                 "type": "field",
                 "value": "is_billable",
                 "label": "Billable",
-                "width": "10%",
+                "width": "15%",
                 "sortable": true,
                 "readonly": true
             },

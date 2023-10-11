@@ -7,7 +7,7 @@
                 "sections": [
                     {
                         "label": "Software Infos",
-                        "id": "section.software_info",
+                        "id": "section.software",
                         "rows": [
                             {
                                 "columns": [
@@ -94,7 +94,7 @@
                     },
                     {
                         "label": "Accesses",
-                        "id": "section.software_accesses",
+                        "id": "section.software.accesses",
                         "visible": [
                             "state",
                             "<>",

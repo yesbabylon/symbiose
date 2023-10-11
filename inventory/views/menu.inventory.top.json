@@ -11,23 +11,9 @@
                 "route": "/"
             },
             {
-                "id": "item.all_Product",
-                "type": "entry",
-                "label": "Products",
-                "icon": "shopping_cart",
-                "description": "",
-                "context": {
-                    "entity": "inventory\\Product",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
-            },
-            {
-                "id": "item.all_Customer",
+                "id": "item.customer",
                 "type": "entry",
                 "label": "Customers",
-                "icon": "face",
                 "description": "",
                 "context": {
                     "entity": "inventory\\sale\\customer\\Customer",
@@ -37,10 +23,31 @@
                 }
             },
             {
-                "id": "inventory.services.subscription",
+                "id": "item.product",
+                "type": "entry",
+                "label": "Products",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\Product",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.services.services",
+                "type": "entry",
+                "label": "Services",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\service\\Service",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.services.subscription",
                 "type": "entry",
                 "label": "Subscription",
-                "icon": "subscriptions",
                 "description": "",
                 "context": {
                     "entity": "inventory\\service\\Subscription",
@@ -48,14 +55,27 @@
                 }
             },
             {
-                "id": "inventory.services.services",
+                "id": "item.sale.receivables",
                 "type": "entry",
-                "label": "Services",
-                "icon": "support_agent",
+                "label": "Receivables",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\service\\Service",
-                    "view": "list.default"
+                    "entity": "inventory\\sale\\receivable\\Receivable",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item..finance.accounting.invoice",
+                "type": "entry",
+                "label": "Invoices",
+                "description": "",
+                "context": {
+                    "entity": "inventory\\finance\\accounting\\Invoice",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
                 }
             }
         ]

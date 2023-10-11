@@ -1,0 +1,103 @@
+{
+    "name": "Sale Entry",
+    "description": "Sale entry.",
+    "actions": [
+        {
+            "id": "action.receivable",
+            "label": "receivable",
+            "controller": "sale_receivable_add-receivable",
+            "visible": [
+                [
+                    "state",
+                    "<>",
+                    "draft"
+                ],
+                [
+                    "has_receivable",
+                    "=",
+                    false
+                ],
+                [
+                    "is_billable",
+                    "=",
+                    true
+                ]
+            ]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_id",
+                                                "label": "Price",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Quantity",
+                                                "value": "qty",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_receivable",
+                                                "label": "Has Receivable",
+                                                "width": "50%",
+                                                "visible": [
+                                                    "state",
+                                                    "<>",
+                                                    "draft"
+                                                ]
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receivable_id",
+                                                "label": "Receivable",
+                                                "width": "50%",
+                                                "visible": [
+                                                    "state",
+                                                    "<>",
+                                                    "draft"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
