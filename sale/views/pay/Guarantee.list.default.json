@@ -1,0 +1,33 @@
+{
+    "name": "Guarantees",
+    "description": "Default list of guarantees.",
+    "access": {
+        "groups": ["sale.default.user"]
+     },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "holder",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "card_type",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Expire",
+                "value": "card_expire",
+                "width": "20%"
+            }
+        ]
+    }
+}
