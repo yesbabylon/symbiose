@@ -35,14 +35,13 @@ class Guarantee extends Model {
             ],
 
             'card_number' => [
-                'type'              => 'integer',
+                'type'              => 'string',
                 'description'       => 'Number of the card for \'card\' mode.',
                 'visible'           => ['mode', '=', 'card']
             ],
 
             'card_expire' => [
                 'type'              => 'string',
-                'usage'             => 'amount/money:2',
                 'description'       => 'Expiration month (mm/YY) for \'card\' mode.',
                 'visible'           => ['mode', '=', 'card']
             ],
