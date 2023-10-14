@@ -4,6 +4,7 @@
     Some Rights Reserved, Cedric Francoys, 2010-2021
     Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
 */
+// #deprecated - use `core_translation` instead
 list($params, $providers) = announce([
     'description'   => "Retrieves the translation values related to the specified entity.",
     'params'        => [
