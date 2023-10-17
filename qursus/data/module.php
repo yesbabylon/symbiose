@@ -13,7 +13,7 @@ list($params, $providers) = announce([
         'lang' =>  [
             'description'   => 'Language requested for multilang values.',
             'type'          => 'string',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
     'response'      => [
@@ -168,10 +168,10 @@ $module = $search->read([
             ]
 
         ]
-    ], 
+    ],
     $params['lang']
 )
-->adapt('txt')
+->adapt('json')
 ->first(true);
 
 if(!$module) {
