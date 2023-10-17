@@ -1,0 +1,13 @@
+{
+    "name": "Bundle",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            }
+        ]
+    }
+}

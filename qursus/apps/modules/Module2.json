@@ -1,0 +1,2240 @@
+{
+    "identifier": 2,
+    "name": "Module 2",
+    "title": "The Insider knows the organisation and still wants to harm it",
+    "description": "Explore six cases   Learn more about the prediposition, drivers and motivation of the Insider    Find out what the indicatiors for violent radicalisation are",
+    "duration": 25,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Intro",
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "The Insider knows the organisation and still wants to harm it"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Explore six cases    Learn more about the prediposition, drivers and motivation of the Insider    Find out what the indicators for violent radicalisation are"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You arrive late at work and realise that you forgot your security ID card."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "What will you most likely do?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "This happens to me all the time. I will just ask somebody to let me in.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "I do not want to go through all the trouble. I will wait until nobody is watching and sneak by the access gates.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "Of course, I turn to the reception desk to get a one-day (visitor) badge.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Have you considered the possible consequences of this scenario?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Here is an interesting fact:     **A 2016 report revealed that, at some major US airports, 5% of the SIDA (Secure Identification Display Area) badges had gone missing.**    Be aware that, on an airport where 50.000 people are employed, 5% amounts to 2.500 missing badges.    These Airport Identification Badges can end up falling into the wrong hands. Take a minute to think of what could happen if criminals or terrorists had long-term access to highly restricted areas."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.submitted",
+                                "=",
+                                true
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.submitted",
+                        "=",
+                        true
+                    ]
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Insider incidents are on the rise"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Over the past years, we have seen a steep rise in Insider incidents. The reasons vary. Here is a quick overview:  **The global economic crisis**  * Employee financial hardships. * Reduction of employer benefits (pension plans). * Foreign nations more eager to acquire new technologies and R&D results. * Mergers, acquisitions, divesitures, joint ventures."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **Digitalisation**   * Ease of stealing anything stored electronically. * Increasing exposure to foreign intelligence entities (FIE) presented by the reality of global business, joint ventures, and the growing international footprint of (multi-national) firms."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Who are the Insiders?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Some first insights**   * Insiders are hard to find and can hide in plain sight. * Insiders are trusted and are supposed to have access to sensitive assets. * Insiders know what is most valuable to the organisation and know many of the security controls."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                }
+            ]
+        },
+        {
+            "identifier": 2,
+            "title": "6 cases",
+            "pages": [            
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "6 cases",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "2.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Select an Insider attack",
+                                            "align": "center"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_section",
+                                            "section_id": 1,
+                                            "content": "A maritime catastrophe",
+                                            "image_url": "../images/module2/widget-maritime_catastrophe.png"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_section",
+                                            "section_id": 2,
+                                            "content": "A successful plot?",
+                                            "image_url": "../images/module2/widget-successful_plot.png"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_section",
+                                            "section_id": 3,
+                                            "content": "A successful failure",
+                                            "image_url": "../images/module2/widget-successful_failure.png"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector_section",
+                                            "section_id": 4,
+                                            "content": "‘Espionage’ with a global impact",
+                                            "image_url": "../images/module2/widget-espionage_global.png"
+                                        },
+                                        {
+                                            "identifier": 5,
+                                            "type": "selector_section",
+                                            "section_id": 5,
+                                            "content": "Sabotage & theft",
+                                            "image_url": "../images/module2/widget-sabotage_theft.png"
+                                        },
+                                        {
+                                            "identifier": 6,
+                                            "type": "selector_section",
+                                            "section_id": 6,
+                                            "content": "A smelly hack",
+                                            "image_url": "../images/module2/widget-smelly_hack.png"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        6
+                    ],
+                    "sections": [
+                        {
+                            "identifier": 1,
+                            "pages": [
+                                {
+                                    "identifier": 1,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 2,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "align": "left",
+                                                            "content": "A maritime catastrophe"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "Several operatives and crew members working on chemical vessels were arrested. They were suspected of planning a terrorist attack by taking control over a chemical talker carrying chlorine gas.    Investigation indicated three possible plots:    * Discharging the chloring gas in a port area to cause massive damage to local and public facilities, as well as psychological damage.  * Sabotaging the vessel and setting it on fire to shut down important commercial shipping infrastructure and cause economical damage.  * Sabotaging the vessel and setting it on fire close to a cruise ship."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-maritime_catastrophe.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**The Agency**  Review of the vessel's crew logs showed that one of the deck crew was provided by an agency, which was suspected of aiding pirates in Somali waters.    **The vessel's deck crew**  The individuals provided to the targeted vessels were of part Somali and Pakistani origin but claimed to be from The Philippines. They were holding forged seafarers certificates.    **Possible motivation**  * Political or religious beliefs."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**  * Difference between the stated identity and the true identity of the vessel crew. * Gap in security policies and procedures.  **Lessons learned**  * Policy and procedures concerning crew recruitment (pre-employment screening) were lacking. * Terrorists show an increased interest in the maritime sector. Is this perhaps because other sectors have become better protected?"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic",
+                                    "next_active": [
+                                        "$page.actions_counter",
+                                        "=",
+                                        2
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "identifier": 2,                            
+                            "pages": [
+                                {
+                                    "identifier": 2,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "align": "left",
+                                                            "content": "A successful plot?"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "On the 5th of August, 2014, a safety valve was opened in the non-nuclear part of the Doel 4 Belgium. 65.000 litres of lubricating oil drained from a storage tank to an underground reservoir. The Doel 4 power turbine had to be shut down urgently. Engie Electrabel assumed immediately that there was sabotage in the game.    The damage to the turbine was so extensive that the nuclear reactor could not be restarted until some 6 months later. A large part of Belgium's electricity production capability had become unavailable. The costs for the repairs amounted to more than €138 million."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-successful_plot.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**An unsolved mystery**  The investigation followed that path of terrorism and focused on employees who were present in the turbine hall on that day. This includes about 60 people - Engie Electrabel employees and subcontractors.    After everyone was questioned, the group of suspects was narrowed down. The aim was to test the last suspects with a lie detector. Eight employees refused this test on the recommendation of their lawyers and trade unions. The investigation was concluded in December 2016: 'No perpetrator could be found'.    **Possible motivation**   * Political or religious beliefs."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**  * Gap in security policies and procedures; there was no camera surveillance, or access registration for this restricted area.  **Stricter safety procedures**  In order to prevent a similar incident from occuring again, additional safety and security measures were imposed on all Belgian nuclear power plants:  * 150 extra security cameras were installed. * More doors were equipped with magnetic cards to register access. * Stricter screening of employees was implemented. * The 'four eyes' principle was extended, according to which workers at the nuclear power station may only enter certain areas if they are accompanied by one or more colleagues."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic",
+                                    "next_active": []
+                                }
+                            ]
+                        },
+                        {
+                            "identifier": 3,
+                            "pages": [
+                                {
+                                    "identifier": 3,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "A successful failure"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "On the 2nd of February, 2016, an explosion occured on board the Daallo Airlines Flight 159, shortly after take-off from Mogadishu. At the time of the incident, there were 74 passengers and 7 crew members on board.    The pilots warned Mogadishu tower and the aircraft returned to Mogadishu for an emergency landing. Two injuries were reported, and the burnt body of the suicide bomber fell out of the aircraft, landing in the town of Dhiiqaaley.    Initial tests on the damage to Flight 159 confirmed traces of explosive residue. A bomb, hidden in a laptop, was brought into the aircraft by an elderly wheelchair user."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-successful_failure.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Government officials and airport staff**  A CCTV camera recording from the airport shows two men, seemingly airport workers, giving a laptop to the elderly gentleman. U.S. officials said that the researchers believed the bomber had some type of connection with airline or airport staff.    At least 20 people, including government officials and airline employees, were arrested on suspicion of links with the attack.    **Possible motivation**  * Political or religious beliefs."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**  The Serbian pilot criticised the lack of security around the aircraft at the airport and described the facility as chaotic:   *'When we park there, about 20 to 30 people come to the asphalt. No one has a badge or those yellow vests. they go in and out of the plane, and no one knows who is who. they can put everything in the plane.'*    **Lessons learned**   * European aircraft operating in conflict-zone airports are more vulnerable to Insider Threats.  * Failed states with weak governments result in unreliable security systems."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_opacity": 1,
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic"
+                                }
+                            ]
+                        },
+                        {
+                            "identifier": 4,
+                            "pages": [
+                                {
+                                    "identifier": 4,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 2,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "'Espionage' with a global impact",
+                                                            "align": "left"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "In June 2013, Edward Snowden, a former CIA system administrator and National Security Agency (NSA) contractor, illegaly removed up to 1.5 million classified documents from the NSA and released them to the world press. He used download tools called scraping software that allowed large numbers of files to be downloaded over slow networks.    It is estimated that Snowden shared between 50.000 and 200.000 classified documents with reporters, of which only a very small percentage have been made public so far.    The disclosures of NSA documents to date represent the 'tip of the iceberg' of more damaging disclosures. The estimated cost of mitigating the damage could reach a roughly estimated $1 billion."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-espionage_global.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**The malicious Insider**  Snowden's actions violated the US Espionage Act, which identified the leak of state secrets as an act of treason. Edward Snowden however argued that he had a moral obligation to act. He gave a justification for his 'whistleblowing' by stating that he had a higher duty 'to inform the public'.    **The accidental Insiders**   Several unsuspecting colleagues shared their usernames and passwords with Edward Snowden, enabling him to access even more files."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**   * There were a number of warning signs to suggest Snowden could become a trusted Insider Threat, including inconsistencies on his CV. He also promoted his ideological views using social media. * The company which completed Snowden's security clearance is accused of signing off on thousands of incomplete security checks."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Lessons learned**  * NSA completely revamped their network security (€100 million). * Installed software to spot/track employee attempts to access/download classified documents without prior authorisation. * Implementation of 'two-person handling rule' when accessing or moving classified database information. * Tagging classified documents to ensure only staff with 'need-to-know' clearance can access a given document. * New guidance to never provide one's password, even to an IT System Administrator."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_opacity": 1,
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic"
+                                }
+                            ]
+                        },
+                        {
+                            "identifier": 5,
+                            "pages": [
+                                {
+                                    "identifier": 5,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Sabotage & theft",
+                                                            "align": "left"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "In June 2018, Tesla requested a court order to allow access to the computers, USBs, electronic storage devices, e-mail accounts, cloud-based storage accounts, and mobile phone call and message history of one of its employees. Tesla accused the employee of sabotage and intellectual property theft.    The Tesla complaint described several actions, including writing software to cause the production systems to fail and sending confidential code to third parties."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-sabotage_theft.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**A disgruntled employee**  Research indicates revenge as the main motivation for the Insider's actions. The disgruntled employee did not receive the promotion he believed he deserved.    **Other (accidental) Insiders**   * The ongoing investigation also focuses on the possible help the employee received from colleagues."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**   * The Insider was reportedly disgruntled over not getting a promotion. * Anderson also took 'confidential and proprietary information', and doctored and destrroyed evidence 'in an effort to cover his tracks'. * The Insider used his Tesla laptop to download 'hundreds of gigabytes' of confidential and propietary information to a hard drive. * The Insider made use of false usernames to make changes to the code used in the Tesla Manufacturing Operation System."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Lessons learned**   * Tesla's CEO Elon Musk asked employees to be alert to suspicious activities, writing in an e-mail to all staff: 'Only the paranoid survive'. * The fact that a company as technologically advanced as Tesla can become an Insider Threat attack victim proves that no single company is immune."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_opacity": 1,
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic"
+                                }
+                            ]
+                        },
+                        {
+                            "identifier": 6,
+                            "pages": [
+                                {
+                                    "identifier": 6,
+                                    "leaves": [
+                                        {
+                                            "identifier": 1,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "A smelly hack",
+                                                            "align": "left"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "In November 2017 and January 2018, a municipal sewage operator in the Netherlands was confronted with a person hacking into its systems. Thousands of files were deleted and systems were sabotaged. Remote control over the systems was disabled for days, sewage pumping stations were turned on whilst valves were closed and error messages were deleted.    The investigation led to a former employee who was using various adminitrator login details and a company laptop, which had gone missing, to actively sabotage the company's systems."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_image": "../images/module2/widget-smelly_hack.png",
+                                            "background_stretch": true,
+                                            "contrast": "dark"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "groups": [
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "The Insider(s)",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**A disgruntled employee**  Two years earlier, the employee had been taken off active duty as a result of an integrity case, only to leave the organisation six months later."
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "direction": "horizontal",
+                                                    "row_span": 1,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "page_title",
+                                                            "content": "Recommendations",
+                                                            "has_separator_right": true
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "row_span": 1
+                                                },
+                                                {
+                                                    "direction": "vertical",
+                                                    "row_span": 6,
+                                                    "widgets": [
+                                                        {
+                                                            "type": "text",
+                                                            "content": "**Missed red flags**   * The Insider was very upset about the termination of his contract. * The laptop of the Insider had been missing since the day of his termination.  **Lessons learned**   * The IT department now has a stricter return procedure to make sure ex-employees no longer have access to the system. * Accounts are deleted from the system after termination of an employee. * General passwords are to be changed periodically."
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "background_opacity": 1,
+                                            "contrast": "light"
+                                        }
+                                    ],
+                                    "type": "basic"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "identifier": 3,
+            "title": "Predisposition, drivers & motivation",
+            "pages": [            
+            
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Predisposition, drivers & motivation"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "2.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "align": "left",
+                                            "content": "The threat landscape"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "To understand more about the Insider, it is good to know what the threat landscape looks like, because Insiders can operate independently (self-motivated Insiders), but they can also work with or for others (recruited Insiders)."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click on the 4 threats:"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "Insiders",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "Criminals",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "Hacktivists",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector",
+                                            "content": "Nation states",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Insiders",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Impact**  Insiders can disrupt or harm an organisation in many ways, either to profit themselves, or to help others. Here are a few examples of their impact:  * Unfair comptetive advantage * Trade secret disclosure * Operational disruption * Damaged brand or reputation  **Motivation**  The impact they can have already indicates the motivation of Insiders:   * Personal advantage * Monetary gain * Professional revenge * Patriotism * Ego"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Criminals",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Impact**   Criminals can harm an organisation by:  * Costly regulatory inquiries and penalties * Consumer and shareholder lawsuits * Loss of consumer confidence    **Motivation**   The motivation of criminals is financial gain."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Hacktivists",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Impact**  Hacktivists can disrupt business activites. This can lead to: * Brand and reputation damage * Loss of consumer confidence    **Motivation**  Hacktivists do damage in order to:  * Negatively impact reputation * Draw attention to a cause * Exert pressure to change"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 5,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Nation states",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Impact**  Nation states can cause:  * Loss of competitve advantage * Disruption of critical infrastructure    **Motivation**   The motivation of Nation states can be one or more of the following: * Economic * Political * Military advantage"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                4
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        4
+                    ]
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'Most people find it hard to betray others.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Betrayal",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Betrayal is not easy because:**   * The Insider must overcome a natural tendency to remain loyal to an organisation. * Overcoming fears of discipline, embarrassment, loss of employment, arrest and the possibility of death is very hard for most employees. **So who betrays others?**  * Most people will remain generally loyal, but may cheat if actions do not result in criminal charges, or in being fired. * Some people will commit serious acts of betrayal under duress - work or home stressors grow to the point where the Insider can no longer handle the stress. * The highest risk are people who have little or no capacity to remain loyal to the organisation."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Remedy",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What helps against betrayal?**  * Societal norms * Personal beliefs * Moral and ethical codes"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Predisposition",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Never forget!**   *Any capacity for disloyalty is a predisposition to becoming an Insider Threat.  *Predispositions will not predict who will be an Insider Threat, but they do indicate who may be more likely to become a threat."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click to find out more about the predispositions"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "Personal- ity",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "Unstable self",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "Question- ing self",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector",
+                                            "counter": 4,
+                                            "content": "Relation- ships",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 5,
+                                            "type": "selector",
+                                            "content": "Life expe- riences",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 6,
+                                            "type": "selector",
+                                            "content": "Divided loyalities",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Personality",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Certain personality traits make individuals less likely to display loyalty to an organisation. Some people might have a sense of 'moral flexibility', whilst others have no sense of moral 'right and wrong'.    **Personality traits that pose bigger risks:**   * Not impulsive. * No single motive. * History of managing crises ineffectively. * Pattern of frustration, disappointment, and a sense of inadequacy. * Seeks validation. * Aggrandises view of one's abilities and achievements. * Strong sense of entitlement. * Views self above the rules. * Actions seek immediate gratification, validation and satisfaction."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The unstable self",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Those who have difficulty controlling moods or handling emotional situations can pose a bigger threat. They are more likely to lash out, or to make irrational and emotionally charged decisions without consideration of their impact on others.    **Some traits that indicate an unstable self:**  * Emotionally unstable * Anger management issues  * Fantisising  * Restless and impulsive  * Self-absorbed    Research has shown that a combination of 3, or more, personality disorders (like the ones shown above) presents a much higher risk for security concerns than other mental illnesses."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The questioning self",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Those who have difficulty understanding themselves can pose a bigger threat. They can be preoccupied with trying to understand their identity and as such they disregard others or the organisation. Therefore, they are less likely to consider how their actions may affect the organisation or their co-workers.    **Some traits that indicate an unstable self:**   * A low self-esteem  * An identity disturbance  * Immaturity  * Superficiality"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 5,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Relationships",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Those who have difficulty relating to or bonding with others can pose a bigger threat. They may not care about others and are less likely to consider how their actions may affect the organisation, or their co-workers.    They might lack moral values or personal integrity. They might also disregard social norms, rules and etiquette. They might also feel that rules only apply to others.    **Some traits that indicate relationship issues:**  * Disengagement * Manipulative * A lack of empathy * A lacking conscientiousness to conform * A lack of attachment  * Instability  * Envy  * Deceitfulness  * A reckless diregards of rules"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                4
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 6,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Life experiences",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Both upbringing and life experiences might influence an individual in such a way that he or she is more likely to become an Insider Threat.    Cultural and moral upbringing contribute to the loyalty an individual shows to family, country, ideals, and religious beliefs.    Life experiences can shape new loyalties, or contribute to the downturn of former loyalties.    **Examples of life experiences:**  * Marriage  * War  * Conflict  * Economic downturn  * Death  * Health  * Personal finances  * Social relationships  *Career    For further reference, those interested can look up the 'Holmes and Rahe stress scale', which is a list of stressful life events that can contribute to (mental) illness."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                5
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 7,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Divided loyalties",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Divided loyalties can be defined as: 'a feeling of wanting to be loyal to two people or groups that oppose each other'.    Divided loyalties can put employees at risk of choosing the competing loyalty:  * Host country/nationality versus employee's native country  * Political beliefs versus faith/or family  * Faith versus ethics  * Moral conflict/ethical dilemmas  * Work (travel) versus family obligations"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                6
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        6
+                    ]
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Motivation",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "As you already know, there is a distinction between accidental, negligent and malicious Insiders. Let us summarise.    **Accidental**   The employee does not understand that their actions are harmful and has no intention to cause harm.    **Negligent**  The employee knows that their actions are a security violation but 'takes a chance' to 'cut corners'.    **Malicious**  The employee takes action specifically for the purpose of damaging the organisation.    The CRIME Model helps understand what motivates the Insider."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The CRIME Model",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Compromise: An outsider coerces an employee to conduct an attack."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Revenge: The employee feels wronged by the organisation and conducts the attack to 'get even'."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Ideology: The employee supports ideals, which are contrary to those supported by the organisation, or by society in general."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Money: The employee conducts the attack for financial gain."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Ego: The employee likes the excitement of it and/or thinks (s) he can outwit the organisation's security."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Becoming a threat",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Research shows that there is a pathway the employee takes to become a threat, and progression along this pathway is a negligent action. Therefore, human factors such as motivation and intent are critical to understand how this happens.    As the employee makes individual decisions to move along this pathway, he or she will often display a number of observable behaviours.    By matching an employee's observable behaviours with phases along this pathway, investigators can start to gain a sense of how far along the pathway to an attack the employee may be.    Motivations, and the observable behaviours associated with them, will vary from person to person, and depending on the employee's individual situation."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The pathway",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The three things you should know about the Insider's pathway:    **#1**  Research shows that most employees do not join an organisation with the intent to become an Insider Threat.    **#2**  After being hired, the employee experiences some kind of significant life change.    **#3** The employee then takes a series of actions, which is lead to a threat."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                }
+            ]
+        },
+        {
+            "identifier": 4,
+            "title": "Violent radicalisation",
+            "pages": [
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Violent radicalisation"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "2.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 14,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "video",
+                                            "content": "",
+                                            "video_url": "../images/module2/video-rashad_ali.mp4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "align": "right",
+                                            "content": "Rashad Ali, a former memeber of a revolutionary religious group, speaks about his previous life, the evolution of his opinions, and his anti-radicalisation work.    05:46 (Source: Youtube)"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "next_active": [
+                        "$page.actions_counter", "=", 1
+                    ]
+                },
+                {
+                    "identifier": 15,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Violent radicalisation"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "We speak of violent radicalisation when people embrace opinions, views and ideas, which can lead to acts of (Insider Threat) terrorism.    There are different sets of indicators for both the process of radicalisation, and the process of preparing a terrorist attack, but it should be clear that these two different processes are closely linked with one another.    'The stairway to terrorism' and these indicators show some insight into this process."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_wide",
+                                            "content": "The stairway to terrorism",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_wide",
+                                            "content": "Indicator of radicalisation",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The stairway to terrorism"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click the image to view it at full size."
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module2/widget-stairway_terrorism.jpg",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Pre-incident indicators",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1,
+                                    "fixed": true
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Workplace**  *Unusual visitors.  * Office or work permises used as a suspicious meeting area.  * Unusual activities at strange hours.  * Unusual garbage disposal.    **Transport**  * Misuse of company cars.  *Cars/vans used as observation vehicles.  * Overdue parked cars in parking lots.    **Finances**  * Unusual (unaffordable) lifestyle.  * Commiting cash-related crimes (smuggling, etc.)."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Forged documents**  * Fake ID * Social security documents.  * Fake credit cards.    **Objects**  * Use of photos, maps, blue prints.  * Use of navigation * Observation tools.  * Appropriation of unauthorised uniforms.    **Preparation**  * Suspicious behaviour near critical infrastructure.  * Radicalised behaviour.  * Documenting infrastructure."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }                        
+                    ],
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        4
+                    ]
+                }
+            ]
+        },
+        {
+            "identifier": 5,
+            "title": "Summary",
+            "pages": [
+                {
+                    "identifier": 16,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "A surprising fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Half of the employees who left or lost their jobs the last 12 months kept confidential corporate data.    40% of them plan to use it at their new job!"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insiders are hard to find and can hide in plain sight. Insiders are trusted and are supposed, or entitled to have access to sensitive assets. Insiders are aware of what is most valuable to the organisation, and they know many of the security controls.    Not only is the keeping of confidential data a serious issue, but companies must also have a solid process to thoroughly check and revoke all (online) credentials after an employee leaves. This will prevent them from accessing information or areas to which they no longer have access!    Click 'Back to overview' at the top of the screen to go back to the Trainging library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                }
+            ],
+            "type": "basic",
+            "next_active": []
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "name": "Modules list",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "identifier",
+                "width": "10%",
+                "widget": {
+                    "readonly": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "title",
+                "width": "30%"
+            },
+            {
+                "type": "field",
+                "value": "duration",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "label": "Total pages",
+                "value": "page_count",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "link",
+                "width": "30%"
+            }
+        ]
+    }
+}

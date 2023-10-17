@@ -1,0 +1,61 @@
+{
+    "name": "Page",
+    "description": "",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "identifier",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "min": 1                                                    
+                                                }
+                                            },   
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "next_active_rule",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "chapter_id",
+                                                "width": "50%",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "section_id",
+                                                "width": "50%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

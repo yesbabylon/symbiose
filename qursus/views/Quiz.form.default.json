@@ -1,0 +1,35 @@
+{
+    "name": "Quiz",
+    "description": "",
+    "layout": {
+        "groups": [            
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "quiz_code",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }                                   
+                                ]
+                            }
+                        ]
+                    }                    
+                ]
+            }
+        ]
+    }
+}

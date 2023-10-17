@@ -1,0 +1,51 @@
+{
+    "name": "Section",
+    "description": "",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "identifier",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true,
+                                                    "min": 0
+                                                }
+                                            },   
+                                            {
+                                                "type": "field",
+                                                "value": "order",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Parent page",
+                                                "value": "page_id",
+                                                "width": "50%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }                    
+                ]
+            }
+        ]
+    }
+}
