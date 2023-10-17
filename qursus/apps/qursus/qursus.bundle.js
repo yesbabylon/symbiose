@@ -12,26 +12,17 @@ var Qursus;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports._ApiService = void 0;
-
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 /**
  * This service acts as an interface between client and server and caches view objects to lower the traffic
  * Contents that can be cached are :
@@ -44,7 +35,6 @@ var _ApiService = /*#__PURE__*/function () {
   function _ApiService() {
     (0, _classCallCheck2.default)(this, _ApiService);
     (0, _defineProperty2.default)(this, "last_count", void 0);
-
     _jqueryLib.$.ajaxSetup({
       cache: false,
       // prevent caching
@@ -64,10 +54,8 @@ var _ApiService = /*#__PURE__*/function () {
         withCredentials: true
       }
     });
-
     this.last_count = 0;
   }
-
   (0, _createClass2.default)(_ApiService, [{
     key: "getLastCount",
     value: function getLastCount() {
@@ -85,28 +73,23 @@ var _ApiService = /*#__PURE__*/function () {
                 _context.prev = 0;
                 _context.next = 3;
                 return _qursusServices.EnvService.getEnv();
-
               case 3:
                 environment = _context.sent;
                 _context.next = 6;
                 return _jqueryLib.$.get({
                   url: environment.rest_api_url + '/userinfo'
                 });
-
               case 6:
                 response = _context.sent;
                 result = response;
                 _context.next = 13;
                 break;
-
               case 10:
                 _context.prev = 10;
                 _context.t0 = _context["catch"](0);
                 throw _context.t0.responseJSON;
-
               case 13:
                 return _context.abrupt("return", result);
-
               case 14:
               case "end":
                 return _context.stop();
@@ -114,11 +97,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee, null, [[0, 10]]);
       }));
-
       function getUser() {
         return _getUser.apply(this, arguments);
       }
-
       return getUser;
     }()
   }, {
@@ -126,10 +107,10 @@ var _ApiService = /*#__PURE__*/function () {
     value: function () {
       var _fetch = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(route) {
         var body,
-            result,
-            environment,
-            response,
-            _args2 = arguments;
+          result,
+          environment,
+          response,
+          _args2 = arguments;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -138,7 +119,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context2.prev = 1;
                 _context2.next = 4;
                 return _qursusServices.EnvService.getEnv();
-
               case 4:
                 environment = _context2.sent;
                 _context2.next = 7;
@@ -148,21 +128,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: body,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 7:
                 response = _context2.sent;
                 result = response;
                 _context2.next = 14;
                 break;
-
               case 11:
                 _context2.prev = 11;
                 _context2.t0 = _context2["catch"](1);
                 throw _context2.t0.responseJSON;
-
               case 14:
                 return _context2.abrupt("return", result);
-
               case 15:
               case "end":
                 return _context2.stop();
@@ -170,11 +146,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee2, null, [[1, 11]]);
       }));
-
       function fetch(_x) {
         return _fetch.apply(this, arguments);
       }
-
       return fetch;
     }()
   }, {
@@ -182,11 +156,11 @@ var _ApiService = /*#__PURE__*/function () {
     value: function () {
       var _create = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(entity) {
         var fields,
-            result,
-            environment,
-            params,
-            response,
-            _args3 = arguments;
+          result,
+          environment,
+          params,
+          response,
+          _args3 = arguments;
         return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -195,7 +169,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context3.prev = 1;
                 _context3.next = 4;
                 return _qursusServices.EnvService.getEnv();
-
               case 4:
                 environment = _context3.sent;
                 params = {
@@ -210,21 +183,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 8:
                 response = _context3.sent;
                 result = response;
                 _context3.next = 15;
                 break;
-
               case 12:
                 _context3.prev = 12;
                 _context3.t0 = _context3["catch"](1);
                 throw _context3.t0.responseJSON;
-
               case 15:
                 return _context3.abrupt("return", result);
-
               case 16:
               case "end":
                 return _context3.stop();
@@ -232,11 +201,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee3, null, [[1, 12]]);
       }));
-
       function create(_x2) {
         return _create.apply(this, arguments);
       }
-
       return create;
     }()
   }, {
@@ -251,7 +218,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context4.prev = 0;
                 _context4.next = 3;
                 return _qursusServices.EnvService.getEnv();
-
               case 3:
                 environment = _context4.sent;
                 params = {
@@ -267,21 +233,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 7:
                 response = _context4.sent;
                 result = response;
                 _context4.next = 14;
                 break;
-
               case 11:
                 _context4.prev = 11;
                 _context4.t0 = _context4["catch"](0);
                 throw _context4.t0.responseJSON;
-
               case 14:
                 return _context4.abrupt("return", result);
-
               case 15:
               case "end":
                 return _context4.stop();
@@ -289,11 +251,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee4, null, [[0, 11]]);
       }));
-
       function read(_x3, _x4, _x5) {
         return _read.apply(this, arguments);
       }
-
       return read;
     }()
   }, {
@@ -301,11 +261,11 @@ var _ApiService = /*#__PURE__*/function () {
     value: function () {
       var _delete2 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5(entity, ids) {
         var permanent,
-            result,
-            environment,
-            params,
-            response,
-            _args5 = arguments;
+          result,
+          environment,
+          params,
+          response,
+          _args5 = arguments;
         return _regenerator.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
@@ -314,7 +274,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context5.prev = 1;
                 _context5.next = 4;
                 return _qursusServices.EnvService.getEnv();
-
               case 4:
                 environment = _context5.sent;
                 params = {
@@ -329,21 +288,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 8:
                 response = _context5.sent;
                 result = response;
                 _context5.next = 15;
                 break;
-
               case 12:
                 _context5.prev = 12;
                 _context5.t0 = _context5["catch"](1);
                 throw _context5.t0.responseJSON;
-
               case 15:
                 return _context5.abrupt("return", result);
-
               case 16:
               case "end":
                 return _context5.stop();
@@ -351,11 +306,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee5, null, [[1, 12]]);
       }));
-
       function _delete(_x6, _x7) {
         return _delete2.apply(this, arguments);
       }
-
       return _delete;
     }()
   }, {
@@ -370,7 +323,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context6.prev = 0;
                 _context6.next = 3;
                 return _qursusServices.EnvService.getEnv();
-
               case 3:
                 environment = _context6.sent;
                 params = {
@@ -384,21 +336,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 7:
                 response = _context6.sent;
                 result = response;
                 _context6.next = 14;
                 break;
-
               case 11:
                 _context6.prev = 11;
                 _context6.t0 = _context6["catch"](0);
                 throw _context6.t0.responseJSON;
-
               case 14:
                 return _context6.abrupt("return", result);
-
               case 15:
               case "end":
                 return _context6.stop();
@@ -406,11 +354,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee6, null, [[0, 11]]);
       }));
-
       function archive(_x8, _x9) {
         return _archive.apply(this, arguments);
       }
-
       return archive;
     }()
     /**
@@ -421,17 +367,16 @@ var _ApiService = /*#__PURE__*/function () {
      * @param ids
      * @param fields
      */
-
   }, {
     key: "update",
     value: function () {
       var _update = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee7(entity, ids, fields) {
         var force,
-            result,
-            environment,
-            params,
-            response,
-            _args7 = arguments;
+          result,
+          environment,
+          params,
+          response,
+          _args7 = arguments;
         return _regenerator.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -442,7 +387,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context7.prev = 3;
                 _context7.next = 6;
                 return _qursusServices.EnvService.getEnv();
-
               case 6:
                 environment = _context7.sent;
                 params = {
@@ -459,21 +403,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 10:
                 response = _context7.sent;
                 result = response;
                 _context7.next = 17;
                 break;
-
               case 14:
                 _context7.prev = 14;
                 _context7.t0 = _context7["catch"](3);
                 throw _context7.t0.responseJSON;
-
               case 17:
                 return _context7.abrupt("return", result);
-
               case 18:
               case "end":
                 return _context7.stop();
@@ -481,11 +421,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee7, null, [[3, 14]]);
       }));
-
       function update(_x10, _x11, _x12) {
         return _update.apply(this, arguments);
       }
-
       return update;
     }()
   }, {
@@ -500,7 +438,6 @@ var _ApiService = /*#__PURE__*/function () {
                 _context8.prev = 0;
                 _context8.next = 3;
                 return _qursusServices.EnvService.getEnv();
-
               case 3:
                 environment = _context8.sent;
                 params = {
@@ -515,21 +452,17 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 7:
                 response = _context8.sent;
                 result = response;
                 _context8.next = 14;
                 break;
-
               case 11:
                 _context8.prev = 11;
                 _context8.t0 = _context8["catch"](0);
                 throw _context8.t0.responseJSON;
-
               case 14:
                 return _context8.abrupt("return", result);
-
               case 15:
               case "end":
                 return _context8.stop();
@@ -537,11 +470,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee8, null, [[0, 11]]);
       }));
-
       function clone(_x13, _x14) {
         return _clone.apply(this, arguments);
       }
-
       return clone;
     }()
     /**
@@ -557,13 +488,11 @@ var _ApiService = /*#__PURE__*/function () {
      * @param lang
      * @returns     Promise     Upon success, the promise is resolved into an Array holding matching objects (collection).
      */
-
   }, {
     key: "collect",
     value: function () {
       var _collect = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee9(entity, domain, fields, order, sort, start, limit, lang) {
         var _this = this;
-
         var result, params, environment, response;
         return _regenerator.default.wrap(function _callee9$(_context9) {
           while (1) {
@@ -584,7 +513,6 @@ var _ApiService = /*#__PURE__*/function () {
                 };
                 _context9.next = 6;
                 return _qursusServices.EnvService.getEnv();
-
               case 6:
                 environment = _context9.sent;
                 _context9.next = 9;
@@ -596,21 +524,17 @@ var _ApiService = /*#__PURE__*/function () {
                 }).done(function (event, textStatus, jqXHR) {
                   _this.last_count = parseInt(jqXHR.getResponseHeader('X-Total-Count'));
                 });
-
               case 9:
                 response = _context9.sent;
                 result = response;
                 _context9.next = 16;
                 break;
-
               case 13:
                 _context9.prev = 13;
                 _context9.t0 = _context9["catch"](2);
                 throw _context9.t0.responseJSON;
-
               case 16:
                 return _context9.abrupt("return", result);
-
               case 17:
               case "end":
                 return _context9.stop();
@@ -618,11 +542,9 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee9, null, [[2, 13]]);
       }));
-
       function collect(_x15, _x16, _x17, _x18, _x19, _x20, _x21, _x22) {
         return _collect.apply(this, arguments);
       }
-
       return collect;
     }()
     /**
@@ -636,7 +558,6 @@ var _ApiService = /*#__PURE__*/function () {
      * @param limit
      * @returns
      */
-
   }, {
     key: "search",
     value: function () {
@@ -658,7 +579,6 @@ var _ApiService = /*#__PURE__*/function () {
                 };
                 _context10.next = 5;
                 return _qursusServices.EnvService.getEnv();
-
               case 5:
                 environment = _context10.sent;
                 _context10.next = 8;
@@ -668,22 +588,18 @@ var _ApiService = /*#__PURE__*/function () {
                   data: params,
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8'
                 });
-
               case 8:
                 response = _context10.sent;
                 // reponse should be an array of ids
                 result = response;
                 _context10.next = 15;
                 break;
-
               case 12:
                 _context10.prev = 12;
                 _context10.t0 = _context10["catch"](1);
                 throw _context10.t0.responseJSON;
-
               case 15:
                 return _context10.abrupt("return", result);
-
               case 16:
               case "end":
                 return _context10.stop();
@@ -691,17 +607,14 @@ var _ApiService = /*#__PURE__*/function () {
           }
         }, _callee10, null, [[1, 12]]);
       }));
-
       function search(_x23, _x24, _x25, _x26, _x27, _x28) {
         return _search.apply(this, arguments);
       }
-
       return search;
     }()
   }]);
   return _ApiService;
 }();
-
 exports._ApiService = _ApiService;
 var _default = _ApiService;
 exports.default = _default;
@@ -718,32 +631,20 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.ChapterClass = void 0;
-
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Page = __webpack_require__(/*! ./Page.class */ "./build/Page.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  */
@@ -776,7 +677,6 @@ var ChapterClass = /*#__PURE__*/function () {
     this.pages = pages;
     this.$container = (0, _jqueryLib.$)('<div id="chapter-container" class="chapter"></div>');
   }
-
   (0, _createClass2.default)(ChapterClass, [{
     key: "setParent",
     value: function setParent(module) {
@@ -787,7 +687,6 @@ var ChapterClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -812,17 +711,15 @@ var ChapterClass = /*#__PURE__*/function () {
     key: "render",
     value: function render(context) {
       var _this = this;
-
       this.setContext(context);
-
       if (this.pages && this.pages.length > this.context.page_index) {
         var item = this.pages[this.context.page_index];
-        var page = new _Page.PageClass(item.id, item.identifier, item.order, item.leaves, item.type, item.next_active, item.sections); // re-assign selected section, if previously set
+        var page = new _Page.PageClass(item.id, item.identifier, item.order, item.leaves, item.type, item.next_active, item.sections);
 
+        // re-assign selected section, if previously set
         if (item.section_id && item.section_id > 0) {
           page.section_id = item.section_id;
         }
-
         this.pages[this.context.page_index] = page;
         page.setParent(this);
         this.$container.empty().append(page.render(context));
@@ -831,7 +728,6 @@ var ChapterClass = /*#__PURE__*/function () {
         this.$container.empty().append('<div id="page-container" class="page"></div>');
         (0, _jqueryLib.$)('body').find('.controls.page-controls').remove();
       }
-
       if (context.mode == 'edit') {
         /*
          append controls to module container
@@ -846,6 +742,7 @@ var ChapterClass = /*#__PURE__*/function () {
         $chapter_actions.append($chapter_edit_button).append($chapter_add_button).append($chapter_delete_button);
         $chapter_controls.append($chapter_actions);
         $chapter_controls.appendTo(this.parent.getContainer());
+
         /*
          setup action handlers
         */
@@ -859,29 +756,25 @@ var ChapterClass = /*#__PURE__*/function () {
             callback: function callback(data) {
               if (data && data.objects) {
                 var _iterator = _createForOfIteratorHelper(data.objects),
-                    _step;
-
+                  _step;
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var object = _step.value;
                     if (object.id != _this.id) continue;
-
                     for (var _i2 = 0, _Object$keys2 = Object.keys(_this); _i2 < _Object$keys2.length; _i2++) {
                       var field = _Object$keys2[_i2];
-
                       if (object.hasOwnProperty(field)) {
                         var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                         _this[field] = value;
                       }
                     }
-                  } // request refresh for current context
-
+                  }
+                  // request refresh for current context
                 } catch (err) {
                   _iterator.e(err);
                 } finally {
                   _iterator.f();
                 }
-
                 _this.parent.propagateContextChange({
                   refresh: true
                 });
@@ -902,18 +795,14 @@ var ChapterClass = /*#__PURE__*/function () {
               // append new page to chapter
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var _item = _step2.value;
-
                     var _page = new _Page.PageClass(Number(_item.id), Number(_item.identifier), Number(_item.order), _item.leaves, _item.type, _item.next_active, _item.sections);
-
                     if (!_this.pages) {
                       _this.pages = new Array();
                     }
-
                     _this.pages.push(_page);
                   }
                 } catch (err) {
@@ -921,7 +810,6 @@ var ChapterClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -934,7 +822,6 @@ var ChapterClass = /*#__PURE__*/function () {
             _qursusServices.ApiService.update('qursus\\Module', [_this.parent.id], {
               'chapters_ids': [-_this.id]
             }, true);
-
             _this.parent.propagateContextChange({
               '$module.remove_chapter': _this.id,
               refresh: true
@@ -942,35 +829,30 @@ var ChapterClass = /*#__PURE__*/function () {
           }
         });
       }
-
       return this.$container;
     }
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Chapter::propagateContext', contextChange);
-
       for (var elem in contextChange) {
         if (elem.indexOf('$chapter') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
-              ++this.context[parts[1]]; // relay counter to parent leaf
-
+              ++this.context[parts[1]];
+              // relay counter to parent leaf
               contextChange['$module.actions_counter'] = value;
             } else if (parts[1] == 'remove_page') {
               // value is widget id
               var _iterator3 = _createForOfIteratorHelper(this.pages.entries()),
-                  _step3;
-
+                _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                   var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
-                      index = _step3$value[0],
-                      page = _step3$value[1];
-
+                    index = _step3$value[0],
+                    page = _step3$value[1];
                   if (page.id == value) {
                     this.pages.splice(index, 1);
                   }
@@ -986,27 +868,24 @@ var ChapterClass = /*#__PURE__*/function () {
           }
         }
       }
-
       this.parent.propagateContextChange(contextChange);
     }
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Chapter::onContextChange', contextChange, this.context);
-
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
-
         if (elem.indexOf('$module.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
       }
-
       for (var _i4 = 0, _Object$keys4 = Object.keys(this.context); _i4 < _Object$keys4.length; _i4++) {
         var _elem = _Object$keys4[_i4];
         contextChange['$chapter.' + _elem] = this.context[_elem];
-      } // relay contextChange to children
+      }
 
+      // relay contextChange to children
 
       if (this.pages && this.pages.length && typeof this.pages[this.context.page_index].onContextChange === 'function') {
         this.pages[this.context.page_index].onContextChange(contextChange);
@@ -1015,7 +894,6 @@ var ChapterClass = /*#__PURE__*/function () {
   }]);
   return ChapterClass;
 }();
-
 exports.ChapterClass = ChapterClass;
 var _default = ChapterClass;
 exports.default = _default;
@@ -1032,20 +910,16 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports._ContextService = void 0;
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _ContextService = /*#__PURE__*/function () {
   // module identifier (id field)
+
   function _ContextService() {
     (0, _classCallCheck2.default)(this, _ContextService);
     (0, _defineProperty2.default)(this, "module_id", 1);
@@ -1063,39 +937,32 @@ var _ContextService = /*#__PURE__*/function () {
 
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
-
     if (urlParams.has('module')) {
       this.module_id = parseInt(urlParams.get('module'));
     }
-
     if (urlParams.has('mode')) {
       // restrict edit mode to admin WP users (root, admin, author)
       if (urlParams.get('mode') == 'edit' && ['1', '2', '3'].includes(wp_user_id)) {
         this.mode = 'edit';
       }
     }
-
     if (urlParams.has('chapter')) {
       this.chapter_index = parseInt(urlParams.get('chapter'));
-
       if (urlParams.has('page')) {
         this.page_index = parseInt(urlParams.get('page'));
       }
     }
   }
-
   (0, _createClass2.default)(_ContextService, [{
     key: "getCookieValue",
     value: function getCookieValue(name) {
       var _document$cookie$matc;
-
       // document.cookie = "wp_lms_user=1;path=/";
       return ((_document$cookie$matc = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')) === null || _document$cookie$matc === void 0 ? void 0 : _document$cookie$matc.pop()) || undefined;
     }
   }]);
   return _ContextService;
 }();
-
 exports._ContextService = _ContextService;
 var _default = _ContextService;
 exports.default = _default;
@@ -1112,24 +979,16 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.Condition = exports.Clause = exports.DomainClass = void 0;
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  * Class Domain manipulations
  *
@@ -1141,7 +1000,6 @@ var DomainClass = /*#__PURE__*/function () {
     this.clauses = new Array();
     this.fromArray(domain);
   }
-
   (0, _createClass2.default)(DomainClass, [{
     key: "fromArray",
     value: function fromArray(domain) {
@@ -1154,20 +1012,15 @@ var DomainClass = /*#__PURE__*/function () {
           3) 1 clause only (one or more conditions) : [ [ '{operand}', '{operator}', '{value}' ], [ '{operand}', '{operator}', '{value}' ] ]
           4) multiple clauses : [ [ [ '{operand}', '{operator}', '{value}' ], [ '{operand}', '{operator}', '{value}' ] ], [ [ '{operand}', '{operator}', '{value}' ] ] ]
       */
-
       var normalized = DomainClass.normalize(domain);
-
       var _iterator = _createForOfIteratorHelper(normalized),
-          _step;
-
+        _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var d_clause = _step.value;
           var clause = new Clause();
-
           var _iterator2 = _createForOfIteratorHelper(d_clause),
-              _step2;
-
+            _step2;
           try {
             for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
               var d_condition = _step2.value;
@@ -1178,7 +1031,6 @@ var DomainClass = /*#__PURE__*/function () {
           } finally {
             _iterator2.f();
           }
-
           this.addClause(clause);
         }
       } catch (err) {
@@ -1186,17 +1038,14 @@ var DomainClass = /*#__PURE__*/function () {
       } finally {
         _iterator.f();
       }
-
       return this;
     }
   }, {
     key: "toArray",
     value: function toArray() {
       var domain = new Array();
-
       var _iterator3 = _createForOfIteratorHelper(this.clauses),
-          _step3;
-
+        _step3;
       try {
         for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
           var clause = _step3.value;
@@ -1207,7 +1056,6 @@ var DomainClass = /*#__PURE__*/function () {
       } finally {
         _iterator3.f();
       }
-
       return domain;
     }
   }, {
@@ -1221,22 +1069,18 @@ var DomainClass = /*#__PURE__*/function () {
       var res_domain = new Array();
       var domain_a = domain.toArray();
       var domain_b = this.toArray();
-
       if (domain_a.length <= 0) {
         res_domain = domain_b;
       } else if (domain_b.length <= 0) {
         res_domain = domain_a;
       } else {
         var _iterator4 = _createForOfIteratorHelper(domain_a),
-            _step4;
-
+          _step4;
         try {
           for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
             var clause_a = _step4.value;
-
             var _iterator5 = _createForOfIteratorHelper(domain_b),
-                _step5;
-
+              _step5;
             try {
               for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
                 var clause_b = _step5.value;
@@ -1254,7 +1098,6 @@ var DomainClass = /*#__PURE__*/function () {
           _iterator4.f();
         }
       }
-
       return this.fromArray(res_domain);
     }
   }, {
@@ -1266,16 +1109,15 @@ var DomainClass = /*#__PURE__*/function () {
     function addClause(clause) {
       this.clauses.push(clause);
     }
+
     /**
      * Add a condition at the Domain level : the condition is added to each clause of the Domain
      */
-
   }, {
     key: "addCondition",
     value: function addCondition(condition) {
       var _iterator6 = _createForOfIteratorHelper(this.clauses),
-          _step6;
-
+        _step6;
       try {
         for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
           var clause = _step6.value;
@@ -1287,71 +1129,62 @@ var DomainClass = /*#__PURE__*/function () {
         _iterator6.f();
       }
     }
+
     /**
      * Update domain by parsing conditions and replace any occurence of `$module.`, `$page.`, `$section.` notations with related attributes of given objects.
      *
      * @param values
      * @returns Domain  Returns current instance with updated values.
      */
-
   }, {
     key: "parse",
     value: function parse() {
       var context = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       var _iterator7 = _createForOfIteratorHelper(this.clauses),
-          _step7;
-
+        _step7;
       try {
         for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
           var clause = _step7.value;
-
           var _iterator8 = _createForOfIteratorHelper(clause.conditions),
-              _step8;
-
+            _step8;
           try {
             for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
               var condition = _step8.value;
               // adapt value according to its syntax ('user.' or 'object.')
-              var value = condition.value; // handle $module as `value` part
+              var value = condition.value;
 
+              // handle $module as `value` part
               if (typeof value === 'string' && value.indexOf('$module.') == 0) {
                 var target = value.substring('$module.'.length);
-
                 if (!context.hasOwnProperty(target)) {
                   continue;
                 }
-
                 value = context[target];
-              } // handle $chapter as `value` part
+              }
+              // handle $chapter as `value` part
               else if (typeof value === 'string' && value.indexOf('$chapter.') == 0) {
-                  var _target = value.substring('$chapter.'.length);
-
-                  if (!context.hasOwnProperty('$chapter') || !context.$chapter.hasOwnProperty(_target)) {
-                    continue;
-                  }
-
-                  value = context.$chapter[_target];
-                } // handle $page as `value` part
-                else if (typeof value === 'string' && value.indexOf('$page.') == 0) {
-                    var _target2 = value.substring('$page.'.length);
-
-                    if (!context.hasOwnProperty('$page') || !context.$page.hasOwnProperty(_target2)) {
-                      continue;
-                    }
-
-                    value = context.$page[_target2];
-                  } // handle $section as `value` part
-                  else if (typeof value === 'string' && value.indexOf('$section.') == 0) {
-                      var _target3 = value.substring('$section.'.length);
-
-                      if (!context.hasOwnProperty('$section') || !context.$section.hasOwnProperty(_target3)) {
-                        continue;
-                      }
-
-                      value = context.$section[_target3];
-                    }
-
+                var _target = value.substring('$chapter.'.length);
+                if (!context.hasOwnProperty('$chapter') || !context.$chapter.hasOwnProperty(_target)) {
+                  continue;
+                }
+                value = context.$chapter[_target];
+              }
+              // handle $page as `value` part
+              else if (typeof value === 'string' && value.indexOf('$page.') == 0) {
+                var _target2 = value.substring('$page.'.length);
+                if (!context.hasOwnProperty('$page') || !context.$page.hasOwnProperty(_target2)) {
+                  continue;
+                }
+                value = context.$page[_target2];
+              }
+              // handle $section as `value` part
+              else if (typeof value === 'string' && value.indexOf('$section.') == 0) {
+                var _target3 = value.substring('$section.'.length);
+                if (!context.hasOwnProperty('$section') || !context.$section.hasOwnProperty(_target3)) {
+                  continue;
+                }
+                value = context.$section[_target3];
+              }
               condition.value = value;
             }
           } catch (err) {
@@ -1365,9 +1198,9 @@ var DomainClass = /*#__PURE__*/function () {
       } finally {
         _iterator7.f();
       }
-
       return this;
     }
+
     /**
      * Evaluate domain for a given object.
      * Object structure has to comply with the operands mentionned in the conditions of the domain. If no, related conditions are ignored (skipped).
@@ -1375,55 +1208,47 @@ var DomainClass = /*#__PURE__*/function () {
      * @param object
      * @returns boolean Return true if the object matches the domain, false otherwise.
      */
-
   }, {
     key: "evaluate",
     value: function evaluate(context) {
       console.log('Domain::evaluate', context);
       if (!this.clauses.length) return true;
-      var res = false; // evaluate clauses (OR) and conditions (AND)
-
+      var res = false;
+      // evaluate clauses (OR) and conditions (AND)
       var _iterator9 = _createForOfIteratorHelper(this.clauses),
-          _step9;
-
+        _step9;
       try {
         for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
           var clause = _step9.value;
           var c_res = true;
-
           var _iterator10 = _createForOfIteratorHelper(clause.getConditions()),
-              _step10;
-
+            _step10;
           try {
             for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
               var condition = _step10.value;
-
               if (!context.hasOwnProperty(condition.operand)) {
                 return false;
               }
-
               var operand = context[condition.operand];
               var operator = condition.operator;
               var value = condition.value;
-              var cc_res = void 0; // handle special cases
+              var cc_res = void 0;
 
+              // handle special cases
               if (operator == '=') {
                 operator = '==';
               } else if (operator == '<>') {
                 operator = '!=';
               }
-
               if (operator == 'in') {
                 if (!Array.isArray(value)) {
                   continue;
                 }
-
                 cc_res = value.indexOf(operand) > -1;
               } else {
                 var c_condition = "( '" + operand + "' " + operator + " '" + value + "')";
                 cc_res = eval(c_condition);
               }
-
               c_res = c_res && cc_res;
             }
           } catch (err) {
@@ -1431,7 +1256,6 @@ var DomainClass = /*#__PURE__*/function () {
           } finally {
             _iterator10.f();
           }
-
           res = res || c_res;
         }
       } catch (err) {
@@ -1439,7 +1263,6 @@ var DomainClass = /*#__PURE__*/function () {
       } finally {
         _iterator9.f();
       }
-
       return res;
     }
   }], [{
@@ -1448,7 +1271,6 @@ var DomainClass = /*#__PURE__*/function () {
       if (domain.length <= 0) {
         return [];
       }
-
       if (!Array.isArray(domain[0])) {
         // single condition
         return [[domain]];
@@ -1456,34 +1278,28 @@ var DomainClass = /*#__PURE__*/function () {
         if (domain[0].length <= 0) {
           return [];
         }
-
         if (!Array.isArray(domain[0][0])) {
           // single clause
           return [domain];
         }
       }
-
       return domain;
     }
   }]);
   return DomainClass;
 }();
-
 exports.DomainClass = DomainClass;
-
 var Clause = /*#__PURE__*/function () {
   function Clause() {
     var conditions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     (0, _classCallCheck2.default)(this, Clause);
     (0, _defineProperty2.default)(this, "conditions", void 0);
-
     if (conditions.length == 0) {
       this.conditions = new Array();
     } else {
       this.conditions = conditions;
     }
   }
-
   (0, _createClass2.default)(Clause, [{
     key: "addCondition",
     value: function addCondition(condition) {
@@ -1498,10 +1314,8 @@ var Clause = /*#__PURE__*/function () {
     key: "toArray",
     value: function toArray() {
       var clause = new Array();
-
       var _iterator11 = _createForOfIteratorHelper(this.conditions),
-          _step11;
-
+        _step11;
       try {
         for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
           var condition = _step11.value;
@@ -1512,15 +1326,12 @@ var Clause = /*#__PURE__*/function () {
       } finally {
         _iterator11.f();
       }
-
       return clause;
     }
   }]);
   return Clause;
 }();
-
 exports.Clause = Clause;
-
 var Condition = /*#__PURE__*/function () {
   function Condition(operand, operator, value) {
     (0, _classCallCheck2.default)(this, Condition);
@@ -1531,7 +1342,6 @@ var Condition = /*#__PURE__*/function () {
     this.operator = operator;
     this.value = value;
   }
-
   (0, _createClass2.default)(Condition, [{
     key: "toArray",
     value: function toArray() {
@@ -1559,7 +1369,6 @@ var Condition = /*#__PURE__*/function () {
   }]);
   return Condition;
 }();
-
 exports.Condition = Condition;
 var _default = DomainClass;
 exports.default = _default;
@@ -1576,26 +1385,17 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports._EnvService = void 0;
-
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * This service centralizes environment vars
  */
@@ -1613,22 +1413,19 @@ var _EnvService = /*#__PURE__*/function () {
       locale: 'en'
     });
   }
+
   /**
    *
    * @returns Promise
    */
-
-
   (0, _createClass2.default)(_EnvService, [{
     key: "getEnv",
     value: function getEnv() {
       var _this = this;
-
       if (!this.promise) {
         this.promise = new Promise( /*#__PURE__*/function () {
           var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(resolve, reject) {
             var response, env, _response, _env;
-
             return _regenerator.default.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
@@ -1636,51 +1433,38 @@ var _EnvService = /*#__PURE__*/function () {
                     _context.prev = 0;
                     _context.next = 3;
                     return fetch('/assets/env/config.json');
-
                   case 3:
                     response = _context.sent;
                     _context.next = 6;
                     return response.json();
-
                   case 6:
                     env = _context.sent;
-
                     _this.assignEnv(_objectSpread(_objectSpread({}, _this.default), env));
-
                     resolve(_this.environment);
                     _context.next = 28;
                     break;
-
                   case 11:
                     _context.prev = 11;
                     _context.t0 = _context["catch"](0);
                     _context.prev = 13;
                     _context.next = 16;
                     return fetch('/assets/env/default.json');
-
                   case 16:
                     _response = _context.sent;
                     _context.next = 19;
                     return _response.json();
-
                   case 19:
                     _env = _context.sent;
-
                     _this.assignEnv(_objectSpread(_objectSpread({}, _this.default), _env));
-
                     resolve(_this.environment);
                     _context.next = 28;
                     break;
-
                   case 24:
                     _context.prev = 24;
                     _context.t1 = _context["catch"](13);
-
                     // default.json not found, fallback to default values
                     _this.assignEnv(_objectSpread({}, _this.default));
-
                     resolve(_this.environment);
-
                   case 28:
                   case "end":
                     return _context.stop();
@@ -1688,19 +1472,17 @@ var _EnvService = /*#__PURE__*/function () {
               }
             }, _callee, null, [[0, 11], [13, 24]]);
           }));
-
           return function (_x, _x2) {
             return _ref.apply(this, arguments);
           };
         }());
       }
-
       return this.promise;
     }
+
     /**
      * Assign and adapter to support older version of the URL syntax
      */
-
   }, {
     key: "assignEnv",
     value: function assignEnv(environment) {
@@ -1709,7 +1491,6 @@ var _EnvService = /*#__PURE__*/function () {
           environment.backend_url += '/';
         }
       }
-
       this.environment = _objectSpread({}, environment);
     }
   }, {
@@ -1725,30 +1506,23 @@ var _EnvService = /*#__PURE__*/function () {
       var scale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var thousand_sep = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ',';
       var decimal_sep = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '.';
-
       if (this.environment) {
         if (this.environment.hasOwnProperty('core.locale.numbers.decimal_precision')) {
           scale = this.environment['core.locale.numbers.decimal_precision'];
         }
-
         if (this.environment.hasOwnProperty('core.locale.numbers.decimal_separator')) {
           decimal_sep = this.environment['core.locale.numbers.decimal_separator'];
         }
-
         if (this.environment.hasOwnProperty('core.locale.numbers.thousands_separator')) {
           thousand_sep = this.environment['core.locale.numbers.thousands_separator'];
         }
-
         var parts = value.toFixed(scale).split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousand_sep);
-
         if (scale > 0 && parts.length == 1) {
           parts[1] = ''.padStart(scale, '0');
         }
-
         return parts.join(decimal_sep);
       }
-
       return value.toLocaleString();
     }
   }, {
@@ -1757,13 +1531,10 @@ var _EnvService = /*#__PURE__*/function () {
       var scale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
       var thousand_sep = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ',';
       var decimal_sep = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '.';
-
       if (this.environment && this.environment.hasOwnProperty('core.locale.currency.decimal_precision')) {
         scale = this.environment['core.locale.currency.decimal_precision'];
       }
-
       var result = this.formatNumber(value, scale, thousand_sep, decimal_sep);
-
       if (this.environment.hasOwnProperty('core.units.currency')) {
         if (this.environment.hasOwnProperty('core.locale.currency.symbol_position') && this.environment['core.locale.currency.symbol_position'] == 'before') {
           result = this.environment['core.units.currency'] + ' ' + result;
@@ -1773,13 +1544,11 @@ var _EnvService = /*#__PURE__*/function () {
       } else {
         result = '$ ' + value;
       }
-
       return result;
     }
   }]);
   return _EnvService;
 }();
-
 exports._EnvService = _EnvService;
 var _default = _EnvService;
 exports.default = _default;
@@ -1796,43 +1565,32 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.GroupClass = void 0;
-
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Widget = __webpack_require__(/*! ./Widget.class */ "./build/Widget.class.js");
-
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  */
 var GroupClass = /*#__PURE__*/function () {
-  function GroupClass(id, identifier, order, direction, // 'horizontal' (widgets are displayed inline), 'vertical' (widgets stacked one on the other)
-  row_span, // (default = 1, max = 6)
-  fixed, // (if true, must remain always visible)
-  widgets, visible) // domain (ex. [ '$page.selection', '=', 2 ])
-  {
+  function GroupClass(id, identifier, order, direction,
+  // 'horizontal' (widgets are displayed inline), 'vertical' (widgets stacked one on the other)
+  row_span,
+  // (default = 1, max = 6)
+  fixed,
+  // (if true, must remain always visible)
+  widgets, visible) {
     (0, _classCallCheck2.default)(this, GroupClass);
     (0, _defineProperty2.default)(this, "id", void 0);
     (0, _defineProperty2.default)(this, "identifier", void 0);
@@ -1856,14 +1614,11 @@ var GroupClass = /*#__PURE__*/function () {
     this.fixed = fixed;
     this.widgets = widgets;
     this.visible = visible;
-
     if (this.visible && !Array.isArray(this.visible)) {
       this.visible = JSON.parse(this.visible.replace(/'/g, '"'));
     }
-
     this.$container = (0, _jqueryLib.$)('<div />');
   }
-
   (0, _createClass2.default)(GroupClass, [{
     key: "getContext",
     value: function getContext() {
@@ -1889,7 +1644,6 @@ var GroupClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -1899,37 +1653,35 @@ var GroupClass = /*#__PURE__*/function () {
     key: "render",
     value: function render(context) {
       var _this = this;
+      console.log("GroupClass::render", this);
 
-      console.log("GroupClass::render", this); // this.setContext(context);
+      // this.setContext(context);
 
       var group_classes = 'group ';
       var row_span = 1;
       var direction = 'vertical';
-
       if (this.row_span) {
         row_span = this.row_span;
       }
-
       if (this.direction) {
         direction = this.direction;
       }
-
       group_classes += ' row_span' + row_span;
-      group_classes += ' ' + direction; // handle horizontal widget layouts (depending on the amount of widgets)
+      group_classes += ' ' + direction;
 
+      // handle horizontal widget layouts (depending on the amount of widgets)
       if (direction == 'horizontal' && this.widgets) {
         if (this.widgets.length >= 3) {
           if (this.widgets.length <= 4) {
             group_classes += " justify";
-          } // if >= 5
+          }
+          // if >= 5
           else {
-              group_classes += " line-break";
-            }
+            group_classes += " line-break";
+          }
         }
       }
-
       this.$container.addClass(group_classes);
-
       for (var index in this.widgets) {
         var item = this.widgets[index];
         var widget = new _Widget.WidgetClass(item.id, item.identifier, item.order, item.type, item.has_separator_left, item.has_separator_right, item.align, item.on_click, item.section_id, item.content, item.sound_url, item.video_url, item.image_url);
@@ -1937,7 +1689,6 @@ var GroupClass = /*#__PURE__*/function () {
         widget.setParent(this);
         this.$container.append(widget.render(context));
       }
-
       if (context.mode == 'view') {
         if (this.visible && this.visible.length) {
           this.$container.addClass('hidden');
@@ -1959,16 +1710,13 @@ var GroupClass = /*#__PURE__*/function () {
             callback: function callback(data) {
               if (data && data.objects) {
                 var _iterator = _createForOfIteratorHelper(data.objects),
-                    _step;
-
+                  _step;
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var object = _step.value;
                     if (object.id != _this.id) continue;
-
                     for (var _i2 = 0, _Object$keys2 = Object.keys(_this); _i2 < _Object$keys2.length; _i2++) {
                       var field = _Object$keys2[_i2];
-
                       if (object.hasOwnProperty(field)) {
                         _this[field] = _this[field].constructor(object[field]);
                       }
@@ -1979,7 +1727,6 @@ var GroupClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -2000,18 +1747,14 @@ var GroupClass = /*#__PURE__*/function () {
               // append new widget to group
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var _item = _step2.value;
-
                     var _widget = new _Widget.WidgetClass(Number(_item.id), Number(_item.identifier), Number(_item.order), _item.type, _item.has_separator_left, _item.has_separator_right, _item.align, _item.on_click, _item.section_id, _item.content, _item.sound_url, _item.video_url, _item.image_url);
-
                     if (!_this.widgets) {
                       _this.widgets = new Array();
                     }
-
                     _this.widgets.push(_widget);
                   }
                 } catch (err) {
@@ -2019,7 +1762,6 @@ var GroupClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -2042,7 +1784,6 @@ var GroupClass = /*#__PURE__*/function () {
         $delete_button.on('click', function () {
           if (window.confirm("Group is about to be removed. Do you confirm ?")) {
             _qursusServices.ApiService.delete('qursus\\Group', [_this.id], true);
-
             _this.parent.propagateContextChange({
               '$leaf.remove_group': _this.id,
               refresh: true
@@ -2051,37 +1792,31 @@ var GroupClass = /*#__PURE__*/function () {
         });
         this.$container.append($actions);
       }
-
       return this.$container;
     }
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Group::propagateContext', this, contextChange);
-
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
-
         if (elem.indexOf('$group') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
-              ++this.context[parts[1]]; // relay counter to parent leaf
-
+              ++this.context[parts[1]];
+              // relay counter to parent leaf
               contextChange['$leaf.actions_counter'] = value;
             } else if (parts[1] == 'remove_widget') {
               // value is widget id
               var _iterator3 = _createForOfIteratorHelper(this.widgets.entries()),
-                  _step3;
-
+                _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                   var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
-                      index = _step3$value[0],
-                      widget = _step3$value[1];
-
+                    index = _step3$value[0],
+                    widget = _step3$value[1];
                   if (widget.id == value) {
                     this.widgets.splice(index, 1);
                   }
@@ -2095,56 +1830,47 @@ var GroupClass = /*#__PURE__*/function () {
               this.context[parts[1]] = value;
             }
           }
-
           delete contextChange[elem];
         }
       }
-
       this.parent.propagateContextChange(contextChange);
     }
+
     /**
      * Changes received from parent or self
      * @param contextChange
      */
-
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Group::onContextChange', contextChange);
-
       for (var _i4 = 0, _Object$keys4 = Object.keys(contextChange); _i4 < _Object$keys4.length; _i4++) {
         var elem = _Object$keys4[_i4];
-
         if (elem.indexOf('$leaf.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
       }
-
       var visible = true;
-
       if (this.visible && Array.isArray(this.visible)) {
         var domain = new _Domain.DomainClass(this.visible);
         visible = domain.evaluate(contextChange);
       }
-
       if (!visible && this.context.mode == 'view') {
         this.$container.addClass('hidden');
       } else {
-        this.$container.removeClass('hidden'); // update contextChange object with instance context
+        this.$container.removeClass('hidden');
 
+        // update contextChange object with instance context
         for (var _i5 = 0, _Object$keys5 = Object.keys(this.context); _i5 < _Object$keys5.length; _i5++) {
           var _elem = _Object$keys5[_i5];
           contextChange['$group.' + _elem] = this.context[_elem];
         }
-
         if (this.widgets) {
           var _iterator4 = _createForOfIteratorHelper(this.widgets),
-              _step4;
-
+            _step4;
           try {
             for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
               var widget = _step4.value;
-
               if (typeof widget.onContextChange === 'function') {
                 widget.onContextChange(contextChange);
               }
@@ -2160,7 +1886,6 @@ var GroupClass = /*#__PURE__*/function () {
   }]);
   return GroupClass;
 }();
-
 exports.GroupClass = GroupClass;
 var _default = GroupClass;
 exports.default = _default;
@@ -2177,52 +1902,40 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.LeafClass = void 0;
-
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Group = __webpack_require__(/*! ./Group.class */ "./build/Group.class.js");
-
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 var _Section = _interopRequireDefault(__webpack_require__(/*! ./Section.class */ "./build/Section.class.js"));
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  */
 var LeafClass = /*#__PURE__*/function () {
-  function LeafClass() //'light', 'dark' (text color)
-  {
+  function LeafClass() {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
     var identifier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
     var order = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
     var groups = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
     var visible = arguments.length > 4 ? arguments[4] : undefined;
-    var // (ex. [ '$submitted', ''=',' true ] ; [ '$selected', ''=', 2])
+    var
+    // (ex. [ '$submitted', ''=',' true ] ; [ '$selected', ''=', 2])
     background_image = arguments.length > 5 ? arguments[5] : undefined;
-    var // image URL
+    var
+    // image URL
     background_opacity = arguments.length > 6 ? arguments[6] : undefined;
-    var // float
+    var
+    // float
     background_stretch = arguments.length > 7 ? arguments[7] : undefined;
     var contrast = arguments.length > 8 ? arguments[8] : undefined;
     (0, _classCallCheck2.default)(this, LeafClass);
@@ -2249,14 +1962,11 @@ var LeafClass = /*#__PURE__*/function () {
     this.background_opacity = background_opacity;
     this.background_stretch = background_stretch;
     this.contrast = contrast;
-
     if (this.visible && !Array.isArray(this.visible)) {
       this.visible = JSON.parse(this.visible.replace(/'/g, '"'));
     }
-
     this.$container = (0, _jqueryLib.$)('<div class="leaf-container" />');
   }
-
   (0, _createClass2.default)(LeafClass, [{
     key: "setParent",
     value: function setParent(page) {
@@ -2277,7 +1987,6 @@ var LeafClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -2287,39 +1996,35 @@ var LeafClass = /*#__PURE__*/function () {
     key: "render",
     value: function render() {
       var _this = this;
-
       var is_single = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var context = arguments.length > 1 ? arguments[1] : undefined;
-      console.log("LeafClass::render", this, context); //        this.setContext(context);
+      console.log("LeafClass::render", this, context);
+
+      //        this.setContext(context);
 
       if (is_single) {
         this.$container.addClass('full');
       }
-
       var leaf_classes = 'leaf widget';
       var background_classes = 'bg-image';
       var background_opacity = 0.4;
       var background_img_url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-
       if (this.background_image) {
         background_img_url = this.background_image;
       }
-
       if (this.background_opacity) {
         background_opacity = this.background_opacity;
       }
-
       if (this.background_stretch) {
         background_classes += ' stretch';
       }
-
       var contrast = this.contrast == 'light' ? 'light' : 'dark';
       leaf_classes += ' contrast_' + contrast;
-      var $leaf = (0, _jqueryLib.$)('<div />').addClass(leaf_classes) // background
+      var $leaf = (0, _jqueryLib.$)('<div />').addClass(leaf_classes)
+      // background
       .append((0, _jqueryLib.$)("<div style=\"background-image: url(" + background_img_url + "); opacity: " + background_opacity + ";\"></div>").addClass(background_classes));
       var total_span = 0;
       var total_slides = 1;
-
       if (this.groups && this.groups.length) {
         // first pass : create groups objects
         for (var index in this.groups) {
@@ -2328,85 +2033,72 @@ var LeafClass = /*#__PURE__*/function () {
           total_span += group.row_span;
           this.groups[index] = group;
           group.setParent(this);
-
           if (context.mode == 'edit') {
             group.setContext({
               mode: 'edit'
             });
           }
         }
+        total_slides = Math.ceil(total_span / 8);
 
-        total_slides = Math.ceil(total_span / 8); // second pass : render depending on row_span
-
+        // second pass : render depending on row_span
         var remaining_spans = 8;
-
         for (var _index in this.groups) {
           var _group = this.groups[_index];
           var spans = _group.row_span;
-
           var $groupContainer = _group.render(context);
-
           if (remaining_spans - spans < 0) {
             // hide group
             $groupContainer.hide();
           }
-
           remaining_spans -= spans;
           $leaf.append($groupContainer);
         }
       }
-
       if (this.parent.getParent() instanceof _Section.default) {
         (0, _jqueryLib.$)('body').find('.section-nav-down').show();
-      } // display paginator for slides
+      }
 
-
+      // display paginator for slides
       if (total_slides > 1) {
         if (this.parent.getParent() instanceof _Section.default) {
           (0, _jqueryLib.$)('body').find('.section-nav-down').hide();
         }
-
         var $paginator = (0, _jqueryLib.$)('<div class="slide-paginator"></div>');
         var $slidePrev = (0, _jqueryLib.$)('<div class="slide_nav_prev"></div>');
         var $slideNext = (0, _jqueryLib.$)('<div class="slide_nav_next"></div>');
         $paginator.data('slide', 0);
         $paginator.append($slidePrev);
-
         for (var i = 0; i < total_slides; ++i) {
           var $bullet = (0, _jqueryLib.$)('<div class="bullet">&bull;</div>');
           $bullet.data('slide', i);
-
           if (i == 0) {
             $bullet.addClass('active');
           }
-
           $paginator.append($bullet);
         }
-
         $paginator.append($slideNext);
         $slidePrev.on('click', function () {
           var slide = $paginator.data('slide');
-
           if (slide - 1 >= 0) {
             // new slide index
-            var target_index = slide - 1; // spans in new slide (building up)
-
-            var new_spans_count = 0; // fixed spans (independant)
-
-            var fixed_spans_count = 0; // spans parsed so far in n-th slide
-
-            var tmp_spans_count = 0; // n-th slide
-
+            var target_index = slide - 1;
+            // spans in new slide (building up)
+            var new_spans_count = 0;
+            // fixed spans (independant)
+            var fixed_spans_count = 0;
+            // spans parsed so far in n-th slide
+            var tmp_spans_count = 0;
+            // n-th slide
             var current_index = 0;
-
             for (var _index2 in _this.groups) {
-              var _group2 = _this.groups[_index2]; // fixed groups are always displayed (if possible)
+              var _group2 = _this.groups[_index2];
 
+              // fixed groups are always displayed (if possible)
               if (_group2.fixed) {
                 if (new_spans_count + _group2.row_span <= 8) {
                   // display group
                   _group2.getContainer().show();
-
                   console.log('showing fixed', tmp_spans_count, fixed_spans_count, new_spans_count);
                   fixed_spans_count += _group2.row_span;
                   new_spans_count += _group2.row_span;
@@ -2415,25 +2107,21 @@ var LeafClass = /*#__PURE__*/function () {
                 } else {
                   // ignore group and stop (no space left)
                   _group2.getContainer().hide();
-
                   break;
                 }
               }
-
               if (tmp_spans_count + _group2.row_span > 8) {
                 if (current_index > target_index) {
                   break;
                 }
-
                 tmp_spans_count = fixed_spans_count;
                 ++current_index;
-              } // check that we're on the requested slide
+              }
 
-
+              // check that we're on the requested slide
               if (current_index >= target_index) {
                 if (new_spans_count + _group2.row_span <= 8) {
                   _group2.getContainer().show();
-
                   console.log('showing regular', tmp_spans_count, fixed_spans_count, new_spans_count);
                   new_spans_count += _group2.row_span;
                   tmp_spans_count += _group2.row_span;
@@ -2441,20 +2129,16 @@ var LeafClass = /*#__PURE__*/function () {
                   for (var _i2 = parseInt(_index2); _i2 < _this.groups.length; ++_i2) {
                     _this.groups[_i2].getContainer().hide();
                   }
-
                   break;
                 }
               } else {
                 _group2.getContainer().hide();
-
                 tmp_spans_count += _group2.row_span;
               }
             }
-
             $paginator.data('slide', target_index);
             $paginator.find('.bullet').each(function (index, elem) {
               var $bullet = (0, _jqueryLib.$)(elem);
-
               if ($bullet.data('slide') == $paginator.data('slide')) {
                 $bullet.addClass('active');
               } else {
@@ -2465,7 +2149,6 @@ var LeafClass = /*#__PURE__*/function () {
         });
         $slideNext.on('click', function () {
           var slide = $paginator.data('slide');
-
           if (slide + 1 == total_slides - 1) {
             // display next down button
             if (_this.parent.getParent() instanceof _Section.default) {
@@ -2476,27 +2159,25 @@ var LeafClass = /*#__PURE__*/function () {
               });
             }
           }
-
           if (slide + 1 < total_slides) {
             // new slide index
-            var target_index = slide + 1; // spans in new slide (building up)
-
-            var new_spans_count = 0; // fixed spans (independant)
-
-            var fixed_spans_count = 0; // spans parsed so far in n-th slide
-
-            var tmp_spans_count = 0; // n-th slide
-
+            var target_index = slide + 1;
+            // spans in new slide (building up)
+            var new_spans_count = 0;
+            // fixed spans (independant)
+            var fixed_spans_count = 0;
+            // spans parsed so far in n-th slide
+            var tmp_spans_count = 0;
+            // n-th slide
             var current_index = 0;
-
             for (var _index3 in _this.groups) {
-              var _group3 = _this.groups[_index3]; // fixed groups are always displayed (if possible)
+              var _group3 = _this.groups[_index3];
 
+              // fixed groups are always displayed (if possible)
               if (_group3.fixed) {
                 if (new_spans_count + _group3.row_span <= 8) {
                   // display group
                   _group3.getContainer().show();
-
                   fixed_spans_count += _group3.row_span;
                   new_spans_count += _group3.row_span;
                   tmp_spans_count += _group3.row_span;
@@ -2504,45 +2185,37 @@ var LeafClass = /*#__PURE__*/function () {
                 } else {
                   // ignore group and stop (no space left)
                   _group3.getContainer().hide();
-
                   break;
                 }
               }
-
               if (tmp_spans_count + _group3.row_span > 8) {
                 if (current_index > target_index) {
                   break;
                 }
-
                 tmp_spans_count = fixed_spans_count;
                 ++current_index;
-              } // check that we're on the requested slide
+              }
 
-
+              // check that we're on the requested slide
               if (current_index >= target_index) {
                 if (new_spans_count + _group3.row_span <= 8) {
                   _group3.getContainer().show();
-
                   new_spans_count += _group3.row_span;
                   tmp_spans_count += _group3.row_span;
                 } else {
                   for (var _i3 = parseInt(_index3); _i3 < _this.groups.length; ++_i3) {
                     _this.groups[_i3].getContainer().hide();
                   }
-
                   break;
                 }
               } else {
                 _group3.getContainer().hide();
-
                 tmp_spans_count += _group3.row_span;
               }
             }
-
             $paginator.data('slide', target_index);
             $paginator.find('.bullet').each(function (index, elem) {
               var $bullet = (0, _jqueryLib.$)(elem);
-
               if ($bullet.data('slide') == $paginator.data('slide')) {
                 $bullet.addClass('active');
               } else {
@@ -2553,13 +2226,11 @@ var LeafClass = /*#__PURE__*/function () {
         });
         $leaf.append($paginator);
       }
-
       if (context.mode == 'view') {
         if (this.visible && this.visible.length) {
           var visible = true;
           var domain = new _Domain.DomainClass(this.visible);
           visible = domain.evaluate(context);
-
           if (!visible) {
             $leaf.addClass('hidden');
           }
@@ -2576,16 +2247,13 @@ var LeafClass = /*#__PURE__*/function () {
             callback: function callback(data) {
               if (data && data.objects) {
                 var _iterator = _createForOfIteratorHelper(data.objects),
-                    _step;
-
+                  _step;
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var object = _step.value;
                     if (object.id != _this.id) continue;
-
                     for (var _i4 = 0, _Object$keys2 = Object.keys(_this); _i4 < _Object$keys2.length; _i4++) {
                       var field = _Object$keys2[_i4];
-
                       if (object.hasOwnProperty(field)) {
                         var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                         _this[field] = value;
@@ -2597,7 +2265,6 @@ var LeafClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -2619,18 +2286,14 @@ var LeafClass = /*#__PURE__*/function () {
               // append new page to chapter
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var _item = _step2.value;
-
                     var _group4 = new _Group.GroupClass(Number(_item.id), Number(_item.identifier), Number(_item.order), _item.direction, Number(_item.row_span), _item.fixed, _item.widgets, _item.visible);
-
                     if (!_this.groups) {
                       _this.groups = new Array();
                     }
-
                     _this.groups.push(_group4);
                   }
                 } catch (err) {
@@ -2638,7 +2301,6 @@ var LeafClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -2650,7 +2312,6 @@ var LeafClass = /*#__PURE__*/function () {
         $delete_button.on('click', function () {
           if (window.confirm("Leaf is about to be removed. Do you confirm ?")) {
             _qursusServices.ApiService.delete('qursus\\Leaf', [_this.id], true);
-
             _this.parent.propagateContextChange({
               '$page.remove_leaf': _this.id,
               refresh: true
@@ -2662,7 +2323,6 @@ var LeafClass = /*#__PURE__*/function () {
         $actions.append($delete_button);
         this.$container.append($actions);
       }
-
       this.$container.append($leaf);
       return this.$container;
     }
@@ -2670,30 +2330,25 @@ var LeafClass = /*#__PURE__*/function () {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Leaf::propagateContext', contextChange);
-
       for (var _i5 = 0, _Object$keys3 = Object.keys(contextChange); _i5 < _Object$keys3.length; _i5++) {
         var elem = _Object$keys3[_i5];
-
         if (elem.indexOf('$leaf') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
-              ++this.context[parts[1]]; // relay counter to parent leaf
-
+              ++this.context[parts[1]];
+              // relay counter to parent leaf
               contextChange['$page.actions_counter'] = value;
             } else if (parts[1] == 'remove_group' && this.groups && this.groups.length) {
               // value is widget id
               var _iterator3 = _createForOfIteratorHelper(this.groups.entries()),
-                  _step3;
-
+                _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                   var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
-                      index = _step3$value[0],
-                      group = _step3$value[1];
-
+                    index = _step3$value[0],
+                    group = _step3$value[1];
                   if (group.id == value) {
                     this.groups.splice(index, 1);
                   }
@@ -2705,16 +2360,13 @@ var LeafClass = /*#__PURE__*/function () {
               }
             } else if (parts[1] == 'move_group_up' && this.groups && this.groups.length) {
               var group_index = 0;
-
               var _iterator4 = _createForOfIteratorHelper(this.groups.entries()),
-                  _step4;
-
+                _step4;
               try {
                 for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
                   var _step4$value = (0, _slicedToArray2.default)(_step4.value, 2),
-                      _index4 = _step4$value[0],
-                      _group5 = _step4$value[1];
-
+                    _index4 = _step4$value[0],
+                    _group5 = _step4$value[1];
                   if (_group5.id == value) {
                     group_index = _index4;
                     break;
@@ -2725,32 +2377,26 @@ var LeafClass = /*#__PURE__*/function () {
               } finally {
                 _iterator4.f();
               }
-
               if (group_index > 0) {
                 var temp = this.groups[group_index - 1];
                 this.groups[group_index - 1] = this.groups[group_index];
                 this.groups[group_index] = temp;
-
                 _qursusServices.ApiService.update('qursus\\Group', [this.groups[group_index - 1].id], {
                   'order': this.groups[group_index].order
                 }, true);
-
                 _qursusServices.ApiService.update('qursus\\Group', [this.groups[group_index].id], {
                   'order': this.groups[group_index - 1].order
                 }, true);
               }
             } else if (parts[1] == 'move_group_down' && this.groups && this.groups.length) {
               var _group_index = 0;
-
               var _iterator5 = _createForOfIteratorHelper(this.groups.entries()),
-                  _step5;
-
+                _step5;
               try {
                 for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
                   var _step5$value = (0, _slicedToArray2.default)(_step5.value, 2),
-                      _index5 = _step5$value[0],
-                      _group6 = _step5$value[1];
-
+                    _index5 = _step5$value[0],
+                    _group6 = _step5$value[1];
                   if (_group6.id == value) {
                     _group_index = _index5;
                     break;
@@ -2761,16 +2407,13 @@ var LeafClass = /*#__PURE__*/function () {
               } finally {
                 _iterator5.f();
               }
-
               if (_group_index < this.groups.length - 1) {
                 var _temp = this.groups[_group_index + 1];
                 this.groups[_group_index + 1] = this.groups[_group_index];
                 this.groups[_group_index] = _temp;
-
                 _qursusServices.ApiService.update('qursus\\Group', [this.groups[_group_index + 1].id], {
                   'order': this.groups[_group_index].order
                 }, true);
-
                 _qursusServices.ApiService.update('qursus\\Group', [this.groups[_group_index].id], {
                   'order': this.groups[_group_index + 1].order
                 }, true);
@@ -2779,51 +2422,42 @@ var LeafClass = /*#__PURE__*/function () {
               this.context[parts[1]] = value;
             }
           }
-
           delete contextChange[elem];
         }
       }
-
       this.parent.propagateContextChange(contextChange);
     }
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Leaf::onContextChange', this, contextChange);
-
       for (var _i6 = 0, _Object$keys4 = Object.keys(contextChange); _i6 < _Object$keys4.length; _i6++) {
         var elem = _Object$keys4[_i6];
-
         if (elem.indexOf('$page.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
       }
-
       var visible = true;
-
       if (this.visible) {
         var domain = new _Domain.DomainClass(this.visible);
         visible = domain.evaluate(contextChange);
       }
-
       if (!visible && this.context.mode == 'view') {
         this.$container.find('.leaf').addClass('hidden');
       } else {
-        this.$container.find('.leaf').removeClass('hidden'); // update contextChange object with instance context
+        this.$container.find('.leaf').removeClass('hidden');
 
+        // update contextChange object with instance context
         for (var _i7 = 0, _Object$keys5 = Object.keys(this.context); _i7 < _Object$keys5.length; _i7++) {
           var _elem = _Object$keys5[_i7];
           contextChange['$leaf.' + _elem] = this.context[_elem];
         }
-
         if (this.groups && this.groups.length) {
           var _iterator6 = _createForOfIteratorHelper(this.groups),
-              _step6;
-
+            _step6;
           try {
             for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
               var group = _step6.value;
-
               if (typeof group.onContextChange === 'function') {
                 group.onContextChange(contextChange);
               }
@@ -2839,7 +2473,6 @@ var LeafClass = /*#__PURE__*/function () {
   }]);
   return LeafClass;
 }();
-
 exports.LeafClass = LeafClass;
 var _default = LeafClass;
 exports.default = _default;
@@ -2856,40 +2489,24 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.ModuleClass = void 0;
-
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
-
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  *
  */
@@ -2931,7 +2548,6 @@ var ModuleClass = /*#__PURE__*/function () {
     this.chapters = chapters;
     this.$container = (0, _jqueryLib.$)();
   }
-
   (0, _createClass2.default)(ModuleClass, [{
     key: "setContext",
     value: function setContext(context) {
@@ -2952,81 +2568,70 @@ var ModuleClass = /*#__PURE__*/function () {
     key: "init",
     value: function init() {
       var _this = this;
-
       this.$container = (0, _jqueryLib.$)("<div class=\"module-container viewport-container\" />").append((0, _jqueryLib.$)("<div class=\"container-inner\" />")).appendTo('body');
       var $prev = (0, _jqueryLib.$)('<div class="page-nav-prev page-nav"><i class="arrow material-icons" style="margin-left: -4px;">chevron_left</i></div>').on('click', function () {
         var chapter_context = _this.chapters[_this.context.chapter_index].getContext();
-
         var chapter_page_index = chapter_context.page_index;
-        console.log('page-nav-prev::click', chapter_context); // previous page
-
+        console.log('page-nav-prev::click', chapter_context);
+        // previous page
         if (chapter_page_index > 0) {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
           (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').remove();
           (0, _jqueryLib.$)('body').find('.section-nav').hide();
           _this.context.page_index = chapter_page_index - 1;
-
           _this.chapters[_this.context.chapter_index].render(_this.context);
         } else {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
           (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').remove();
-          (0, _jqueryLib.$)('body').find('.section-nav').hide(); // previous chapter
+          (0, _jqueryLib.$)('body').find('.section-nav').hide();
 
+          // previous chapter
           if (_this.context.chapter_index > 0) {
             --_this.context.chapter_index;
             _this.context.page_index = _this.chapters[_this.context.chapter_index].pages.length - 1;
-
             _this.render();
-
             _this.onContextChange({});
           }
         }
       });
       var $next = (0, _jqueryLib.$)('<div class="page-nav-next page-nav"><i class="arrow material-icons">chevron_right</i></div>').on('click', function () {
         var chapter_context = _this.chapters[_this.context.chapter_index].getContext();
+        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length);
 
-        console.log('page-nav-next::click', _this.context, chapter_context, _this.chapters[_this.context.chapter_index].pages.length); // next page
-
+        // next page
         if (chapter_context.page_index + 1 < _this.chapters[_this.context.chapter_index].pages.length) {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
           (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').remove();
           (0, _jqueryLib.$)('body').find('.section-nav').hide();
-
           if (chapter_context.page_index + 1 < _this.context.page_index || _this.context.mode == 'edit') {
             _this.context.next_active = true;
-
             _this.$container.find('.page-nav-next').show();
           } else {
             // next_active depends on domain of current page 
             _this.context.next_active = false;
-
             _this.$container.find('.page-nav-next').hide();
           }
-
           _this.context.page_index = chapter_context.page_index + 1;
-
           _this.chapters[_this.context.chapter_index].render(_this.context);
         } else {
           (0, _jqueryLib.$)('body').find('.section-container').remove();
           (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').remove();
-          (0, _jqueryLib.$)('body').find('.section-nav').hide(); // next chapter
+          (0, _jqueryLib.$)('body').find('.section-nav').hide();
 
+          // next chapter
           if (_this.context.chapter_index + 1 < _this.chapters.length) {
             ++_this.context.chapter_index;
             _this.context.page_index = 0;
-
             _this.render();
-
             _this.onContextChange({});
           } else {
             // no more pages : hide 'next' button
             _this.context.next_active = false;
-
             _this.$container.find('.page-nav-next').hide();
           }
-        } // notify 'next' action
+        }
 
-
+        // notify 'next' action
         if (_this.context.mode == 'view') {
           _qursusServices.ApiService.fetch('/?do=qursus_next', {
             module_id: _this.id,
@@ -3035,11 +2640,11 @@ var ModuleClass = /*#__PURE__*/function () {
           });
         }
       });
-
       if (this.context.mode == 'view') {
         $next.hide();
       } else if (this.context.mode == 'edit') {
         (0, _jqueryLib.$)('body').css("overflow", "visible").css('background', '#636b7e');
+
         /*
          append controls to module container
         */
@@ -3051,6 +2656,7 @@ var ModuleClass = /*#__PURE__*/function () {
         $module_actions.append($module_edit_button).append($module_add_button);
         $module_controls.append($module_actions);
         $module_controls.appendTo(this.$container);
+
         /*
          setup action handlers
         */
@@ -3063,7 +2669,6 @@ var ModuleClass = /*#__PURE__*/function () {
                 case 0:
                   _context.next = 2;
                   return _qursusServices.EnvService.getEnv();
-
                 case 2:
                   environment = _context.sent;
                   window.eq.popup({
@@ -3075,36 +2680,31 @@ var ModuleClass = /*#__PURE__*/function () {
                     callback: function callback(data) {
                       if (data && data.objects) {
                         var _iterator = _createForOfIteratorHelper(data.objects),
-                            _step;
-
+                          _step;
                         try {
                           for (_iterator.s(); !(_step = _iterator.n()).done;) {
                             var object = _step.value;
                             if (object.id != _this.id) continue;
-
                             for (var _i = 0, _Object$keys = Object.keys(_this); _i < _Object$keys.length; _i++) {
                               var field = _Object$keys[_i];
-
                               if (object.hasOwnProperty(field)) {
                                 var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                                 _this[field] = value;
                               }
                             }
-                          } // request refresh for current context
-
+                          }
+                          // request refresh for current context
                         } catch (err) {
                           _iterator.e(err);
                         } finally {
                           _iterator.f();
                         }
-
                         _this.propagateContextChange({
                           refresh: true
                         });
                       }
                     }
                   });
-
                 case 4:
                 case "end":
                   return _context.stop();
@@ -3124,17 +2724,14 @@ var ModuleClass = /*#__PURE__*/function () {
               // append new chapter to module
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var item = _step2.value;
                     var chapter = new _Chapter.ChapterClass(Number(item.id), Number(item.identifier), Number(item.order), item.title, item.pages);
-
                     if (!_this.chapters) {
                       _this.chapters = new Array();
                     }
-
                     _this.chapters.push(chapter);
                   }
                 } catch (err) {
@@ -3142,7 +2739,6 @@ var ModuleClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -3151,21 +2747,17 @@ var ModuleClass = /*#__PURE__*/function () {
           });
         });
       }
-
       this.$container.append($prev).append($next);
-
       if (this.context.mode == 'view') {
         var $btnup = (0, _jqueryLib.$)('<div class="section-nav section-nav-up"><i class="arrow material-icons">chevron_left</i></div>').hide();
         var $btndown = (0, _jqueryLib.$)('<div class="section-nav section-nav-down"><i class="arrow material-icons">chevron_right</i></div>').hide();
         $btnup.on('click', function () {
           var pages_count = $btndown.data('pages-count');
           var page_index = $btndown.data('page-index');
-
           if (page_index - 1 <= 0) {
             $btndown.data('page-index', 0);
             $btnup.hide();
           }
-
           (0, _jqueryLib.$)((0, _jqueryLib.$)('body').find('.viewport-container').get().reverse()).each(function (index, elem) {
             var $elem = (0, _jqueryLib.$)(elem);
             var vpos = $elem.data("vpos");
@@ -3177,19 +2769,16 @@ var ModuleClass = /*#__PURE__*/function () {
           $btnup.show();
           var pages_count = $btndown.data('pages-count');
           var page_index = $btndown.data('page-index');
-
           if (page_index + 1 > pages_count) {
             $btndown.data('page-index', 0);
             $btnup.hide();
             (0, _jqueryLib.$)('body').find('.viewport-container').each(function (index, elem) {
               var $elem = (0, _jqueryLib.$)(elem);
               $elem.css("transform", "translateY(" + 100 * index + "vh)").data('vpos', 100 * index);
-            }); // mark section as finished
-
+            });
+            // mark section as finished
             var chapter_context = _this.chapters[_this.context.chapter_index].getContext();
-
             var chapter_page_index = chapter_context.page_index;
-
             _this.chapters[_this.context.chapter_index].pages[chapter_page_index].finishSection();
           } else {
             $btndown.data('page-index', page_index + 1);
@@ -3208,21 +2797,17 @@ var ModuleClass = /*#__PURE__*/function () {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Module::propagateContext', contextChange, this.context, this.chapters);
-
       for (var _i2 = 0, _Object$keys2 = Object.keys(contextChange); _i2 < _Object$keys2.length; _i2++) {
         var elem = _Object$keys2[_i2];
-
         if (elem.indexOf('$module') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
               ++this.context[parts[1]];
             } else if (parts[1] == 'next_active') {
               // set next active                        
               var chapter_context = this.chapters[this.context.chapter_index].getContext();
-
               if (chapter_context.page_index + 1 < this.chapters[this.context.chapter_index].pages.length || this.context.chapter_index + 1 < this.chapters.length) {
                 this.context['next_active'] = true;
                 this.$container.find('.page-nav-next').show();
@@ -3233,14 +2818,12 @@ var ModuleClass = /*#__PURE__*/function () {
             } else if (parts[1] == 'remove_chapter') {
               // value is widget id
               var _iterator3 = _createForOfIteratorHelper(this.chapters.entries()),
-                  _step3;
-
+                _step3;
               try {
                 for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                   var _step3$value = (0, _slicedToArray2.default)(_step3.value, 2),
-                      index = _step3$value[0],
-                      chapter = _step3$value[1];
-
+                    index = _step3$value[0],
+                    chapter = _step3$value[1];
                   if (chapter.id == value) {
                     this.chapters.splice(index, 1);
                   }
@@ -3255,21 +2838,21 @@ var ModuleClass = /*#__PURE__*/function () {
             }
           }
         }
-      } // an object has been changed and requests re-rendering
+      }
 
-
+      // an object has been changed and requests re-rendering
       if (contextChange.refresh) {
         this.render();
-      } // relay back context updates to children
+      }
 
-
+      // relay back context updates to children
       this.onContextChange({});
     }
+
     /**
      * Changes received from parent or self
      * @param context
      */
-
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
@@ -3278,27 +2861,24 @@ var ModuleClass = /*#__PURE__*/function () {
         var elem = _Object$keys3[_i3];
         contextChange['$module.' + elem] = this.context[elem];
       }
-
       if (typeof this.chapters[this.context.chapter_index].onContextChange === 'function') {
         this.chapters[this.context.chapter_index].onContextChange(contextChange);
       }
     }
+
     /**
      *  Render the module, according to current context.
      *
      */
-
   }, {
     key: "render",
     value: function render() {
       console.log("Module::render()", this.context);
-
       if (this.context.mode == 'edit') {
         this.$container.addClass('_edit');
       } else {
         this.$container.removeClass('_edit');
       }
-
       if (this.chapters && this.chapters.length) {
         var item = this.chapters[this.context.chapter_index];
         var chapter = new _Chapter.ChapterClass(item.id, item.identifier, item.order, item.title, item.pages);
@@ -3311,7 +2891,6 @@ var ModuleClass = /*#__PURE__*/function () {
   }]);
   return ModuleClass;
 }();
-
 exports.ModuleClass = ModuleClass;
 var _default = ModuleClass;
 exports.default = _default;
@@ -3328,25 +2907,26 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.PackClass = void 0;
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 /**
  * 
  */
-var PackClass = // (ex. PDT, AT)
+var PackClass =
+// (ex. PDT, AT)
 // (ex. Duration: 15 minutes)
 // (ex. Program Development Training, Awareness Training)
-function PackClass(id, name, // (ex. PDT, AT)
-subtitle, // (ex. Duration: 15 minutes)
-title, // (ex. Program Development Training, Awareness Training)
+
+function PackClass(id, name,
+// (ex. PDT, AT)
+subtitle,
+// (ex. Duration: 15 minutes)
+title,
+// (ex. Program Development Training, Awareness Training)
 description) {
   (0, _classCallCheck2.default)(this, PackClass);
   (0, _defineProperty2.default)(this, "id", void 0);
@@ -3360,7 +2940,6 @@ description) {
   this.title = title;
   this.description = description;
 };
-
 exports.PackClass = PackClass;
 var _default = PackClass;
 exports.default = _default;
@@ -3377,38 +2956,23 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.PageClass = void 0;
-
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Section = __webpack_require__(/*! ./Section.class */ "./build/Section.class.js");
-
 var _Leaf = __webpack_require__(/*! ./Leaf.class */ "./build/Leaf.class.js");
-
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-
 var _Chapter = __webpack_require__(/*! ./Chapter.class */ "./build/Chapter.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  */
@@ -3419,9 +2983,11 @@ var PageClass = /*#__PURE__*/function () {
     var order = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
     var leaves = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
     var type = arguments.length > 4 ? arguments[4] : undefined;
-    var //'basic', 'chapter_select'
+    var
+    //'basic', 'chapter_select'
     next_active = arguments.length > 5 ? arguments[5] : undefined;
-    var // domain
+    var
+    // domain
     sections = arguments.length > 6 ? arguments[6] : undefined;
     (0, _classCallCheck2.default)(this, PageClass);
     (0, _defineProperty2.default)(this, "id", void 0);
@@ -3449,14 +3015,11 @@ var PageClass = /*#__PURE__*/function () {
     this.next_active = next_active;
     this.sections = sections;
     this.selection = 0;
-
     if (this.next_active && !Array.isArray(this.next_active)) {
       this.next_active = JSON.parse(this.next_active.replace(/'/g, '"'));
     }
-
     this.$container = (0, _jqueryLib.$)('<div id="page-container" class="page"></div>');
   }
-
   (0, _createClass2.default)(PageClass, [{
     key: "setParent",
     value: function setParent(parent) {
@@ -3477,7 +3040,6 @@ var PageClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -3487,40 +3049,34 @@ var PageClass = /*#__PURE__*/function () {
     key: "render",
     value: function render(context) {
       var _this = this;
+      console.log("PageClass::render", this);
 
-      console.log("PageClass::render", this); //        this.setContext(context);
+      //        this.setContext(context);
 
       var leaves_classes = 'leaf widget';
-
       if (this.leaves && this.leaves.length < 2) {
         leaves_classes = leaves_classes + ' ' + 'full';
       }
-
       var is_single = true;
-
       if (this.leaves && this.leaves.length) {
         is_single = this.leaves.length < 2;
-
         for (var index in this.leaves) {
           var item = this.leaves[index];
           var leaf = new _Leaf.LeafClass(item.id, item.identifier, item.order, item.groups, item.visible, item.background_image, item.background_opacity, item.background_stretch, item.contrast);
           this.leaves[index] = leaf;
           leaf.setParent(this);
-
           if (context.mode == 'edit') {
             leaf.setContext({
               mode: 'edit'
             });
-          } // update context param object with instance context
+          }
 
-
+          // update context param object with instance context
           for (var _i2 = 0, _Object$keys2 = Object.keys(this.context); _i2 < _Object$keys2.length; _i2++) {
             var elem = _Object$keys2[_i2];
             context['$page.' + elem] = this.context[elem];
           }
-
           this.$container.append(leaf.render(is_single, context));
-
           if (this.next_active && !this.next_active.length) {
             if (this.parent instanceof _Chapter.ChapterClass) {
               this.parent.propagateContextChange({
@@ -3530,7 +3086,6 @@ var PageClass = /*#__PURE__*/function () {
           }
         }
       }
-
       if (this.sections && this.sections.length) {
         // when user selects a section, we dynamically create all pages of the section within viewport-containers, and switch to the first page
         for (var _index in this.sections) {
@@ -3544,20 +3099,22 @@ var PageClass = /*#__PURE__*/function () {
         }
       } else {
         (0, _jqueryLib.$)('body').find('.section-container.viewport-container').remove();
-      } // reset section-nav buttons (hide)
-      // $('body').find('.section-nav').hide();
+      }
 
+      // reset section-nav buttons (hide)
+      // $('body').find('.section-nav').hide();
 
       if (context.mode == 'edit') {
         /*
          append controls to module container
         */
+
         // remove any previously rendered controls
         if (this.parent instanceof _Chapter.ChapterClass) {
           this.parent.getParent().getContainer().find('.controls.page-controls').remove();
-        } else if (this.parent instanceof _Section.SectionClass) {// $('.section-page-container.viewport-container').find('.controls.page-controls').remove();
+        } else if (this.parent instanceof _Section.SectionClass) {
+          // $('.section-page-container.viewport-container').find('.controls.page-controls').remove();
         }
-
         var $page_controls = (0, _jqueryLib.$)('<div class="controls page-controls"><div class="label">Page ' + this.identifier + '</div></div>');
         var $page_actions = (0, _jqueryLib.$)('<div class="actions page-actions"></div>');
         var $page_edit_button = (0, _jqueryLib.$)('<div class="action-button page-edit-button" title="Edit Page"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
@@ -3566,24 +3123,21 @@ var PageClass = /*#__PURE__*/function () {
         var $page_delete_button = (0, _jqueryLib.$)('<div class="action-button page-delete-button" title="Delete Page"><span class="material-icons mdc-fab__icon">delete</span></div>');
         $page_actions.append($page_edit_button);
         $page_actions.append($page_add_button);
-
         if (this.parent instanceof _Chapter.ChapterClass) {
           $page_actions.append($page_add_sect_button);
         }
-
         $page_actions.append($page_delete_button);
         $page_controls.append($page_actions);
-
         if (this.parent instanceof _Chapter.ChapterClass) {
           $page_controls.appendTo(this.parent.getParent().getContainer());
         } else if (this.parent instanceof _Section.SectionClass) {
           var $parent_container = this.parent.getContainer(this.id);
           $page_controls.appendTo($parent_container);
         }
+
         /*
          setup action handlers
         */
-
 
         $page_edit_button.on('click', function () {
           window.eq.popup({
@@ -3594,29 +3148,25 @@ var PageClass = /*#__PURE__*/function () {
             callback: function callback(data) {
               if (data && data.objects) {
                 var _iterator = _createForOfIteratorHelper(data.objects),
-                    _step;
-
+                  _step;
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var object = _step.value;
                     if (object.id != _this.id) continue;
-
                     for (var _i3 = 0, _Object$keys3 = Object.keys(_this); _i3 < _Object$keys3.length; _i3++) {
                       var field = _Object$keys3[_i3];
-
                       if (object.hasOwnProperty(field)) {
                         var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                         _this[field] = value;
                       }
                     }
-                  } // request refresh for current context
-
+                  }
+                  // request refresh for current context
                 } catch (err) {
                   _iterator.e(err);
                 } finally {
                   _iterator.f();
                 }
-
                 if (_this.parent instanceof _Chapter.ChapterClass) {
                   _this.parent.propagateContextChange({
                     refresh: true
@@ -3642,18 +3192,14 @@ var PageClass = /*#__PURE__*/function () {
               // append new page to chapter
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var _item2 = _step2.value;
-
                     var _leaf = new _Leaf.LeafClass(Number(_item2.id), Number(_item2.identifier), Number(_item2.order), _item2.groups, _item2.visible, _item2.background_image, _item2.background_opacity, _item2.background_stretch, _item2.contrast);
-
                     if (!_this.leaves) {
                       _this.leaves = new Array();
                     }
-
                     _this.leaves.push(_leaf);
                   }
                 } catch (err) {
@@ -3661,11 +3207,9 @@ var PageClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
-
                 if (_this.parent instanceof _Section.SectionClass) {
                   var parent_section = _this.parent;
                   parent_section.getParent().openSection(parent_section.identifier, context);
@@ -3686,20 +3230,15 @@ var PageClass = /*#__PURE__*/function () {
               // append new page to chapter
               if (data && data.objects) {
                 var _iterator3 = _createForOfIteratorHelper(data.objects),
-                    _step3;
-
+                  _step3;
                 try {
                   for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
                     var _item3 = _step3.value;
-
                     var _section = new _Section.SectionClass(_item3.id, _item3.identifier, _item3.order, _item3.pages);
-
                     if (!_this.sections) {
                       _this.sections = new Array();
                     }
-
                     _this.sections.push(_section);
-
                     if (_this.sections.length == 1) {
                       _this.openSection(_this.sections[0].identifier, context);
                     }
@@ -3709,7 +3248,6 @@ var PageClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator3.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -3720,12 +3258,10 @@ var PageClass = /*#__PURE__*/function () {
         $page_delete_button.on('click', function () {
           if (window.confirm("Page is about to be removed. Do you confirm ?")) {
             _this.parent.getParent().getContainer().find('.controls.page-controls').remove();
-
             if (_this.parent instanceof _Chapter.ChapterClass) {
               _qursusServices.ApiService.update('qursus\\Chapter', [_this.parent.id], {
                 'pages_ids': [-_this.id]
               }, true);
-
               _this.parent.propagateContextChange({
                 '$chapter.remove_page': _this.id,
                 refresh: true
@@ -3734,7 +3270,6 @@ var PageClass = /*#__PURE__*/function () {
               _qursusServices.ApiService.update('qursus\\Section', [_this.parent.id], {
                 'pages_ids': [-_this.id]
               }, true);
-
               _this.parent.propagateContextChange({
                 '$section.remove_page': _this.id,
                 refresh: true
@@ -3742,16 +3277,13 @@ var PageClass = /*#__PURE__*/function () {
             }
           }
         });
-
         if (this.sections && this.sections.length) {
           if (this.section_id == 0) {
             this.section_id = this.sections[0].identifier;
           }
-
           this.openSection(this.section_id, context);
         }
       }
-
       return this.$container;
     }
   }, {
@@ -3760,7 +3292,6 @@ var PageClass = /*#__PURE__*/function () {
       var section = this.sections.find(function (section) {
         return section.identifier == section_id;
       });
-
       if (section) {
         this.section_id = section.identifier;
         section.render(context);
@@ -3772,47 +3303,42 @@ var PageClass = /*#__PURE__*/function () {
   }, {
     key: "finishSection",
     value: function finishSection() {
-      console.log('Page:: mark section as finished'); // find widget related to current section
-
+      console.log('Page:: mark section as finished');
+      // find widget related to current section
       this.$container.find('.widget.type-selector_section.section-' + this.section_id).addClass('finished');
       this.propagateContextChange({
         "$page.actions_counter": 1
       });
     }
+
     /**
      * Changes received from children
      * @param context
      */
-
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Page::propagateContext', contextChange);
-
       for (var _i4 = 0, _Object$keys4 = Object.keys(contextChange); _i4 < _Object$keys4.length; _i4++) {
         var elem = _Object$keys4[_i4];
-
         if (elem.indexOf('$page') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
               ++this.context[parts[1]];
-              contextChange[elem] = this.context[parts[1]]; // relay counter to parent leaf
-
+              contextChange[elem] = this.context[parts[1]];
+              // relay counter to parent leaf
               contextChange['$chapter.actions_counter'] = value;
             } else if (parts[1] == 'remove_leaf' && this.leaves && this.leaves.length) {
               // value is widget id
               var _iterator4 = _createForOfIteratorHelper(this.leaves.entries()),
-                  _step4;
-
+                _step4;
               try {
                 for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
                   var _step4$value = (0, _slicedToArray2.default)(_step4.value, 2),
-                      index = _step4$value[0],
-                      leaf = _step4$value[1];
-
+                    index = _step4$value[0],
+                    leaf = _step4$value[1];
                   if (leaf.id == value) {
                     this.leaves.splice(index, 1);
                   }
@@ -3825,14 +3351,12 @@ var PageClass = /*#__PURE__*/function () {
             } else if (parts[1] == 'remove_section' && this.sections && this.sections.length) {
               // value is section id
               var _iterator5 = _createForOfIteratorHelper(this.sections.entries()),
-                  _step5;
-
+                _step5;
               try {
                 for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
                   var _step5$value = (0, _slicedToArray2.default)(_step5.value, 2),
-                      _index2 = _step5$value[0],
-                      section = _step5$value[1];
-
+                    _index2 = _step5$value[0],
+                    section = _step5$value[1];
                   if (section.id == value) {
                     this.sections.splice(_index2, 1);
                   }
@@ -3845,11 +3369,9 @@ var PageClass = /*#__PURE__*/function () {
             } else {
               this.context[parts[1]] = value;
             }
-
             if (this.next_active) {
               var domain = new _Domain.DomainClass(this.next_active);
               var next_active = domain.evaluate(contextChange);
-
               if (next_active) {
                 contextChange['$module.next_active'] = true;
               }
@@ -3857,7 +3379,6 @@ var PageClass = /*#__PURE__*/function () {
           }
         }
       }
-
       if (this.parent instanceof _Chapter.ChapterClass) {
         this.parent.propagateContextChange(contextChange);
       } else if (this.parent instanceof _Section.SectionClass) {
@@ -3866,41 +3387,38 @@ var PageClass = /*#__PURE__*/function () {
         this.onContextChange(contextChange);
       }
     }
+
     /**
      * Changes received from parent
      * @param contextChange
      */
-
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Page::onContextChange', contextChange);
-
       for (var _i5 = 0, _Object$keys5 = Object.keys(contextChange); _i5 < _Object$keys5.length; _i5++) {
         var elem = _Object$keys5[_i5];
-
         if (elem.indexOf('$chapter.mode') == 0) {
           this.context.mode = contextChange[elem];
         } else if (elem.indexOf('$section.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
-      } // update contextChange object with instance context
+      }
 
-
+      // update contextChange object with instance context
       for (var _i6 = 0, _Object$keys6 = Object.keys(this.context); _i6 < _Object$keys6.length; _i6++) {
         var _elem = _Object$keys6[_i6];
         contextChange['$page.' + _elem] = this.context[_elem];
-      } // relay contextChange to children
+      }
 
+      // relay contextChange to children
 
       if (this.leaves && this.leaves.length) {
         var _iterator6 = _createForOfIteratorHelper(this.leaves),
-            _step6;
-
+          _step6;
         try {
           for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
             var leaf = _step6.value;
-
             if (typeof leaf.onContextChange === 'function') {
               leaf.onContextChange(contextChange);
             }
@@ -3911,15 +3429,12 @@ var PageClass = /*#__PURE__*/function () {
           _iterator6.f();
         }
       }
-
       if (this.sections && this.sections.length) {
         var _iterator7 = _createForOfIteratorHelper(this.sections),
-            _step7;
-
+          _step7;
         try {
           for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
             var section = _step7.value;
-
             if (typeof section.onContextChange === 'function') {
               section.onContextChange(contextChange);
             }
@@ -3934,7 +3449,6 @@ var PageClass = /*#__PURE__*/function () {
   }]);
   return PageClass;
 }();
-
 exports.PageClass = PageClass;
 var _default = PageClass;
 exports.default = _default;
@@ -3951,31 +3465,18 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 var _Module = __webpack_require__(/*! ./Module.class */ "./build/Module.class.js");
-
 var _Pack = __webpack_require__(/*! ./Pack.class */ "./build/Pack.class.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  *
@@ -3989,7 +3490,6 @@ var Qursus = /*#__PURE__*/function () {
     console.log("Qursus::constructor");
     this.onload();
   }
-
   (0, _createClass2.default)(Qursus, [{
     key: "onload",
     value: function () {
@@ -4001,27 +3501,22 @@ var Qursus = /*#__PURE__*/function () {
               case 0:
                 _context.next = 2;
                 return _qursusServices.EnvService.getEnv();
-
               case 2:
                 environment = _context.sent;
                 _context.next = 5;
                 return _jqueryLib.$.getJSON("environment.json", function (json) {
                   console.log("found environment file", json);
-
                   for (var field in json) {
                     if (environment.hasOwnProperty(field)) {
                       environment[field] = json[field];
                     }
                   }
-
                   console.log(environment);
                 }).fail(function (response) {
                   console.log("no environment file found");
                 });
-
               case 5:
                 this.init();
-
               case 6:
               case "end":
                 return _context.stop();
@@ -4029,11 +3524,9 @@ var Qursus = /*#__PURE__*/function () {
           }
         }, _callee, this);
       }));
-
       function onload() {
         return _onload.apply(this, arguments);
       }
-
       return onload;
     }()
   }, {
@@ -4041,72 +3534,55 @@ var Qursus = /*#__PURE__*/function () {
     value: function () {
       var _init = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
         var _this = this;
-
         var environment, _environment;
-
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
                 return _qursusServices.EnvService.getEnv();
-
               case 2:
                 environment = _context2.sent;
-
                 if (_qursusServices.ContextService.user_allowed) {
                   _context2.next = 8;
                   break;
                 }
-
                 (0, _jqueryLib.$)('.spinner-wrapper').hide();
                 (0, _jqueryLib.$)('.access-restricted').show();
                 _context2.next = 12;
                 break;
-
               case 8:
                 _context2.next = 10;
                 return _qursusServices.EnvService.getEnv();
-
               case 10:
                 _environment = _context2.sent;
-
                 _jqueryLib.$.getJSON(_environment.backend_url + "?get=qursus_module&id=" + _qursusServices.ContextService.module_id + '&lang=' + _environment.lang, function (json) {
                   _this.pack = new _Pack.PackClass(json.pack_id.id, json.pack_id.name, json.pack_id.subtitle, json.pack_id.title, json.pack_id.description);
                   _this.module = new _Module.ModuleClass(json.id, json.identifier, json.order, json.name, json.title, json.description, json.duration, json.chapters);
-
                   if (json.pack_id && json.pack_id.langs_ids) {
                     _this.languages = json.pack_id.langs_ids;
                   }
-
                   _this.module.setContext({
                     chapter_index: _qursusServices.ContextService.chapter_index,
                     page_index: _qursusServices.ContextService.page_index,
                     mode: _qursusServices.ContextService.mode
                   });
-
                   _this.module.init();
-
                   (0, _jqueryLib.$)('.spinner-wrapper').hide();
                   (0, _jqueryLib.$)('body').addClass(_qursusServices.ContextService.mode);
                   (0, _jqueryLib.$)('.menu-top').find('.cell-program').text(_this.pack.title);
                   (0, _jqueryLib.$)('.menu-top').find('.cell-module').text('Module ' + _this.module.identifier);
-
                   _this.module.render();
-
                   (0, _jqueryLib.$)('.menu-top .inner .left-cell a').attr('href', '/product/' + _this.pack.name);
                   var $lang_select = (0, _jqueryLib.$)('<select>').on('change', function (event) {
                     return _this.onchangeLang(event);
                   });
-
                   var _iterator = _createForOfIteratorHelper(_this.languages),
-                      _step;
-
+                    _step;
                   try {
                     for (_iterator.s(); !(_step = _iterator.n()).done;) {
                       var lang = _step.value;
                       var $option = (0, _jqueryLib.$)('<option>').attr('value', lang.code).text(lang.name).appendTo($lang_select);
-
                       if (lang.code == _environment.lang) {
                         $option.attr('selected', 'selected');
                         $lang_select.val(lang.code);
@@ -4117,12 +3593,10 @@ var Qursus = /*#__PURE__*/function () {
                   } finally {
                     _iterator.f();
                   }
-
                   (0, _jqueryLib.$)('.menu-top .middle-cell').empty().append($lang_select);
                 }).fail(function (response) {
                   console.log('unexpected error', response);
                   var error_id = 'unknown_error';
-
                   if (response.responseJSON && response.responseJSON.errors) {
                     if (response.responseJSON.errors.NOT_ALLOWED) {
                       error_id = response.responseJSON.errors.NOT_ALLOWED;
@@ -4130,23 +3604,18 @@ var Qursus = /*#__PURE__*/function () {
                       error_id = response.responseJSON.errors.UNKNOWN_ERROR;
                     }
                   }
-
                   switch (error_id) {
                     case 'missing_licence':
                       (0, _jqueryLib.$)('.missing-license').show();
                       break;
-
                     case 'unknown_user':
                       (0, _jqueryLib.$)('.access-restricted').show();
                       break;
-
                     default:
                       (0, _jqueryLib.$)('.unknown-error').show();
                   }
-
                   (0, _jqueryLib.$)('.spinner-wrapper').hide();
                 });
-
               case 12:
               case "end":
                 return _context2.stop();
@@ -4154,11 +3623,9 @@ var Qursus = /*#__PURE__*/function () {
           }
         }, _callee2);
       }));
-
       function init() {
         return _init.apply(this, arguments);
       }
-
       return init;
     }()
   }, {
@@ -4170,14 +3637,16 @@ var Qursus = /*#__PURE__*/function () {
     key: "onchangeLang",
     value: function onchangeLang(event) {
       var $select = (0, _jqueryLib.$)(event.target);
-      var lang = $select.val(); // update env lang
+      var lang = $select.val();
 
-      _qursusServices.EnvService.setEnv('lang', lang); // reset  everything
+      // update env lang
+      _qursusServices.EnvService.setEnv('lang', lang);
 
-
+      // reset  everything
       (0, _jqueryLib.$)('.viewport-container').remove();
-      (0, _jqueryLib.$)('.spinner-wrapper').show(); // module
+      (0, _jqueryLib.$)('.spinner-wrapper').show();
 
+      // module
       this.init();
     }
   }, {
@@ -4188,7 +3657,6 @@ var Qursus = /*#__PURE__*/function () {
   }]);
   return Qursus;
 }();
-
 module.exports = Qursus;
 
 /***/ }),
@@ -4203,30 +3671,19 @@ module.exports = Qursus;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.SectionClass = void 0;
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Page = __webpack_require__(/*! ./Page.class */ "./build/Page.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  * Frames handle a stack of contexts. They're in charge of their header.
  *
@@ -4252,7 +3709,6 @@ var SectionClass = /*#__PURE__*/function () {
     this.pages = pages;
     this.$container = (0, _jqueryLib.$)('<div class="section-container viewport-container"></div>');
   }
-
   (0, _createClass2.default)(SectionClass, [{
     key: "setParent",
     value: function setParent(page) {
@@ -4273,7 +3729,6 @@ var SectionClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -4283,63 +3738,54 @@ var SectionClass = /*#__PURE__*/function () {
     key: "render",
     value: function render(context) {
       var _this = this;
+      console.log("sectionClass::render", this);
 
-      console.log("sectionClass::render", this); // remove any previously rendered section
-
+      // remove any previously rendered section
       (0, _jqueryLib.$)('body').find('.section-container').remove();
       (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').remove();
-
       if (this.pages && this.pages.length) {
         for (var index in this.pages) {
           var item = this.pages[index];
           var page = new _Page.PageClass(item.id, item.identifier, item.order, item.leaves, item.type, item.next_active, item.sections);
           this.pages[index] = page;
           page.setParent(this);
-
           if (context.mode == 'edit') {
             page.setContext({
               mode: 'edit'
             });
           }
-
           var $container = (0, _jqueryLib.$)('<div class="section-page-container viewport-container page-id_' + page.id + '"></div>');
-
           if (context.mode == 'view') {
             $container.css("transform", "translateY(" + (parseInt(index) + 1) * 100 + "vh)").data('vpos', (parseInt(index) + 1) * 100);
           } else if (context.mode == 'edit') {
             $container.addClass('_edit');
             $container.css("transform", "translateY(" + (parseInt(index) + 1) * 700 + "px)");
           }
-
           (0, _jqueryLib.$)('body').append($container);
           $container.append(page.render(context));
-        } // update section nav button to store the count of avalable pages
+        }
 
-
+        // update section nav button to store the count of avalable pages
         (0, _jqueryLib.$)('body').find('.section-nav.section-nav-down').data('pages-count', this.pages.length).data('page-index', 0);
       }
-
       if (context.mode == 'edit') {
         var _$container = (0, _jqueryLib.$)('body').find('.section-page-container.viewport-container').first();
-
         if (_$container.length == 0) {
           this.$container.addClass('_edit');
           (0, _jqueryLib.$)('body').append(this.$container);
           _$container = this.$container;
         }
+
         /*
          append controls to section (virtual) container (i.e. first sub page container)
         */
-
 
         var $section_controls = (0, _jqueryLib.$)('<div class="controls section-controls"><div class="label">Section ' + this.identifier + '</div></div>');
         var $section_actions = (0, _jqueryLib.$)('<div class="actions section-actions"></div>');
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button section-edit-button"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
         var $add_button = (0, _jqueryLib.$)('<div class="action-button section-add-button"><span class="material-icons mdc-fab__icon">add</span></div>');
         var $delete_button = (0, _jqueryLib.$)('<div class="action-button widget-delete-button"><span class="material-icons mdc-fab__icon">delete</span></div>');
-
         _$container.addClass('section-id_' + this.id);
-
         $section_actions.append($edit_button).append($add_button).append($delete_button);
         $section_controls.append($section_actions);
         $section_controls.appendTo(_$container);
@@ -4352,16 +3798,13 @@ var SectionClass = /*#__PURE__*/function () {
             callback: function callback(data) {
               if (data && data.objects) {
                 var _iterator = _createForOfIteratorHelper(data.objects),
-                    _step;
-
+                  _step;
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var object = _step.value;
                     if (object.id != _this.id) continue;
-
                     for (var _i2 = 0, _Object$keys2 = Object.keys(_this); _i2 < _Object$keys2.length; _i2++) {
                       var field = _Object$keys2[_i2];
-
                       if (object.hasOwnProperty(field)) {
                         var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                         _this[field] = value;
@@ -4373,7 +3816,6 @@ var SectionClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
@@ -4393,18 +3835,14 @@ var SectionClass = /*#__PURE__*/function () {
               // append new page to section
               if (data && data.objects) {
                 var _iterator2 = _createForOfIteratorHelper(data.objects),
-                    _step2;
-
+                  _step2;
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                     var _item = _step2.value;
-
                     var _page = new _Page.PageClass(_item.id, _item.identifier, _item.order, _item.leaves, _item.type, _item.next_active, _item.sections);
-
                     if (!_this.pages) {
                       _this.pages = new Array();
                     }
-
                     _this.pages.push(_page);
                   }
                 } catch (err) {
@@ -4412,11 +3850,9 @@ var SectionClass = /*#__PURE__*/function () {
                 } finally {
                   _iterator2.f();
                 }
-
                 _this.propagateContextChange({
                   refresh: true
                 });
-
                 _this.parent.openSection(_this.identifier, context);
               }
             }
@@ -4425,9 +3861,7 @@ var SectionClass = /*#__PURE__*/function () {
         $delete_button.on('click', function () {
           if (window.confirm("Section is about to be removed. Do you confirm ?")) {
             _qursusServices.ApiService.delete('qursus\\Section', [_this.id], true);
-
             (0, _jqueryLib.$)('body').find('.section-page-container.section-id_' + _this.id).remove();
-
             _this.parent.propagateContextChange({
               '$page.remove_section': _this.id,
               refresh: true
@@ -4435,70 +3869,61 @@ var SectionClass = /*#__PURE__*/function () {
           }
         });
       }
-
       return this.$container;
     }
   }, {
     key: "propagateContextChange",
     value: function propagateContextChange(contextChange) {
       console.log('Section::propagateContext', this, contextChange);
-
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
-
         if (elem.indexOf('$section') == 0) {
           var value = contextChange[elem];
           var parts = elem.split('.');
-
           if (parts.length > 1) {
             if (parts[1] == 'actions_counter') {
-              ++this.context[parts[1]]; // relay counter to parent page
-
+              ++this.context[parts[1]];
+              // relay counter to parent page
               contextChange['$page.actions_counter'] = value;
             } else {
               this.context[parts[1]] = value;
             }
           }
-
           delete contextChange[elem];
         }
       }
-
       this.parent.propagateContextChange(contextChange);
     }
+
     /**
      * Changes received from parent
      * @param contextChange
      */
-
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Section::onContextChange', contextChange);
-
       for (var _i4 = 0, _Object$keys4 = Object.keys(contextChange); _i4 < _Object$keys4.length; _i4++) {
         var elem = _Object$keys4[_i4];
-
         if (elem.indexOf('$page.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
-      } // update contextChange object with instance context
+      }
 
-
+      // update contextChange object with instance context
       for (var _i5 = 0, _Object$keys5 = Object.keys(this.context); _i5 < _Object$keys5.length; _i5++) {
         var _elem = _Object$keys5[_i5];
         contextChange['$section.' + _elem] = this.context[_elem];
-      } // relay contextChange to children
+      }
 
+      // relay contextChange to children
 
       if (this.pages && this.pages.length) {
         var _iterator3 = _createForOfIteratorHelper(this.pages),
-            _step3;
-
+          _step3;
         try {
           for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
             var page = _step3.value;
-
             if (typeof page.onContextChange === 'function') {
               page.onContextChange(contextChange);
             }
@@ -4513,7 +3938,6 @@ var SectionClass = /*#__PURE__*/function () {
   }]);
   return SectionClass;
 }();
-
 exports.SectionClass = SectionClass;
 var _default = SectionClass;
 exports.default = _default;
@@ -4530,16 +3954,12 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.TextRendererClass = void 0;
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 /**
  * Text parser/renderer with minimal markdown support
  *
@@ -4548,12 +3968,12 @@ var TextRendererClass = /*#__PURE__*/function () {
   function TextRendererClass() {
     (0, _classCallCheck2.default)(this, TextRendererClass);
   }
-
   (0, _createClass2.default)(TextRendererClass, null, [{
     key: "render",
     value: function render(text) {
-      return text; // #deprecated - after import in backend
+      return text;
 
+      // #deprecated - after import in backend
       return text.replace(/  \* /gim, ' * ') // cleanup list items notation (prevent double line return)
       .replace(/  ([0-9]{1,2}\.) /gim, ' ┌$1 ') // cleanup list items notation (prevent double line return)
       .replace(/  /gim, '┐') // carriage return (convert to temp single char)
@@ -4567,7 +3987,6 @@ var TextRendererClass = /*#__PURE__*/function () {
   }]);
   return TextRendererClass;
 }();
-
 exports.TextRendererClass = TextRendererClass;
 var _default = TextRendererClass;
 exports.default = _default;
@@ -4584,36 +4003,22 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.default = exports.WidgetClass = void 0;
-
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
-
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js"));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js"));
-
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js"));
-
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js"));
-
 var _jqueryLib = __webpack_require__(/*! ./jquery-lib */ "./build/jquery-lib.js");
-
 var _Domain = __webpack_require__(/*! ./Domain.class */ "./build/Domain.class.js");
-
 var _TextRenderer = __webpack_require__(/*! ./TextRenderer.class */ "./build/TextRenderer.class.js");
-
 var _qursusServices = __webpack_require__(/*! ./qursus-services */ "./build/qursus-services.js");
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 /**
  *
  */
@@ -4655,7 +4060,6 @@ var WidgetClass = /*#__PURE__*/function () {
     this.image_url = image_url;
     this.$container = (0, _jqueryLib.$)('<div />');
   }
-
   (0, _createClass2.default)(WidgetClass, [{
     key: "setParent",
     value: function setParent(group) {
@@ -4666,7 +4070,6 @@ var WidgetClass = /*#__PURE__*/function () {
     value: function setContext(context) {
       for (var _i = 0, _Object$keys = Object.keys(this.context); _i < _Object$keys.length; _i++) {
         var _key = _Object$keys[_i];
-
         if (context.hasOwnProperty(_key)) {
           this.context[_key] = context[_key];
         }
@@ -4676,49 +4079,41 @@ var WidgetClass = /*#__PURE__*/function () {
     key: "render",
     value: function render(context) {
       var _this = this;
+      console.log("WidgetClass::render", this);
 
-      console.log("WidgetClass::render", this); // this.setContext(context);
+      // this.setContext(context);
 
       var content = this.content;
       var widget_classes = 'widget';
       widget_classes += ' type-' + this.type;
-
       if (this.has_separator_right) {
         widget_classes += ' separator_right';
       } else if (this.has_separator_left) {
         widget_classes += ' separator_left';
       }
-
       var align = 'none';
-
       if (this.align) {
         align = this.align;
       }
-
       widget_classes += ' align-' + align;
-
       switch (this.type) {
         case 'code':
           // normalize code : remove html layout
-          content = (0, _jqueryLib.$)(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text(); // identitfy target lang
-
+          content = (0, _jqueryLib.$)(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
+          // identitfy target lang
           var target_lang = 'javascript';
           var clues = {
             'php': ['```php'],
             'javascript': ['```javascript']
           };
-
           for (var lang in clues) {
             var lang_clues = clues[lang];
             var found = false;
-
             var _iterator = _createForOfIteratorHelper(lang_clues),
-                _step;
-
+              _step;
             try {
               var _loop = function _loop() {
                 var clue = _step.value;
-
                 if (content.indexOf(clue) !== -1) {
                   // remove line containing clue
                   content = content.split('\n').filter(function (line) {
@@ -4728,15 +4123,12 @@ var WidgetClass = /*#__PURE__*/function () {
                   found = true;
                   return "break";
                 }
-
                 if (found) {
                   return "break";
                 }
               };
-
               for (_iterator.s(); !(_step = _iterator.n()).done;) {
                 var _ret = _loop();
-
                 if (_ret === "break") break;
               }
             } catch (err) {
@@ -4745,12 +4137,10 @@ var WidgetClass = /*#__PURE__*/function () {
               _iterator.f();
             }
           }
-
           content = '<pre style="background: #282c34; text-align: left; padding: 0 5px; border-radius: 5px;" data-lang="' + target_lang + '">' + window.hljs.highlight(content, {
             language: target_lang
           }).value.replace(/\n/g, "<br />") + '</pre>';
           break;
-
         case 'page_title':
         case 'chapter_title':
         case 'chapter_description':
@@ -4761,80 +4151,60 @@ var WidgetClass = /*#__PURE__*/function () {
         case 'selector_yes_no':
           content = _TextRenderer.TextRendererClass.render(content);
           break;
-
         case 'chapter_number':
           break;
-
         case 'submit_button':
           content = _TextRenderer.TextRendererClass.render(content) + '<div class="arrow"><i class="arrow material-icons">chevron_right</i></div>';
           break;
-
         case 'selector':
         case 'selector_wide':
           content = _TextRenderer.TextRendererClass.render(content);
           content = "<span class=\"counter\">" + this.identifier + "</span><span class=\"text\">" + content + "</span><span class=\"marker\"></span>";
           break;
-
         case 'selector_choice':
           content = "<span class=\"marker\"></span>" + content;
           break;
-
         case 'selector_section':
-          widget_classes += ' section-' + this.section_id; // 1 px transparent
-
+          widget_classes += ' section-' + this.section_id;
+          // 1 px transparent
           var background_img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-
           if (this.image_url) {
             background_img = this.image_url;
           }
-
           content = "<div class=\"selector-section-container\" style=\"background-image: url(" + background_img + ")\"><div class=\"overlay\"></div><div class=\"text\">" + content + "</div></div> ";
           break;
-
         case 'selector_section_wide':
           break;
-
         case 'selector_popup':
           content = "<div class=\"popup-container\"><span class=\"text\">" + content + "</span><i class=\"arrow material-icons\">chevron_right</i></div>";
           break;
-
         case 'tooltip':
           content = _TextRenderer.TextRendererClass.render(content);
           content = "<div class=\"tooltip\">Tip!<span class=\"text\">" + content + "</span><div class=\"image\"></div></div>";
           break;
-
         case 'sound':
           content = "<div class=\"sound-container\"><span>" + content + "</span><div class=\"play\"></div></div>";
-
           if (this.sound_url) {
             this.on_click = "play()";
           }
-
           break;
-
         case 'video':
           content = "<div class=\"video-container\"><div class=\"play\"></div></div>";
-
           if (this.video_url) {
             this.on_click = "play()";
           }
-
           break;
-
         case 'image_popup':
           var image_url = this.image_url ? this.image_url : '';
           content = "<div class=\"image-container\"><img width=\"100%\" height=\"100%\" src=" + image_url + "></div> ";
           break;
-
         case 'first_capital':
           var first = content.replace('<p>', '').substr(0, 1);
           content = _TextRenderer.TextRendererClass.render(content);
           content = "<div class=\"letter\">" + first + "</div><div class=\"text\">" + content + "</div>";
           break;
       }
-
       this.$container.addClass(widget_classes).append(content);
-
       if (this.on_click) {
         switch (this.on_click) {
           case 'play()':
@@ -4842,12 +4212,10 @@ var WidgetClass = /*#__PURE__*/function () {
               this.$container.on('click', function () {
                 // use leaf container to append a full page video player
                 var $leafContainer = _this.parent.getParent().getContainer();
-
                 var $videoContainer = (0, _jqueryLib.$)('<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 1;"></div>');
                 var $video = (0, _jqueryLib.$)('<video style="height: 100%; width: 100%;" controls controlsList="nodownload"><source src="' + _this.video_url + '" type="video/mp4"></video>').appendTo($videoContainer);
                 $video.on('ended', function () {
                   $videoContainer.remove();
-
                   _this.parent.propagateContextChange({
                     "$page.actions_counter": +1
                   });
@@ -4856,7 +4224,6 @@ var WidgetClass = /*#__PURE__*/function () {
                 $video.trigger('play');
               });
             }
-
             if (this.type == 'sound' && this.sound_url && this.sound_url.length) {
               this.$container.on('click', function () {
                 console.log('playing sound');
@@ -4864,35 +4231,28 @@ var WidgetClass = /*#__PURE__*/function () {
                 sound.play();
               });
             }
-
             break;
-
           case 'image_full()':
-            if (['image_popup', 'selector_popup'].includes(this.type) && this.image_url && this.image_url.length) {
+            if (['image_popup', 'selector_popup'].indexOf(this.type) > -1 && this.image_url && this.image_url.length) {
               this.$container.on('click', function () {
                 if (_this.type == 'selector_popup') {
                   _this.$container.addClass('previously_selected');
-                } // use page container to append a full page image
-
-
+                }
+                // use page container to append a full page image
                 var $leafContainer = _this.parent.getParent().getParent().getContainer();
-
                 var $imageContainer = (0, _jqueryLib.$)('<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 1;"></div>');
                 var $image = (0, _jqueryLib.$)('<img style="height: 100%; width: 100%;" src="' + _this.image_url + '" />').appendTo($imageContainer);
                 var $closeBtn = (0, _jqueryLib.$)('<div style="position: absolute; top: 10px; right: 10px; z-index: 2; cursor: pointer; border: solid 1px black; border-radius: 50%; width: 30px; height: 30px; background-color:white;"><i class="material-icons" style="width: 100%;text-align: center;margin-top: 2px;">close</i></div>').appendTo($imageContainer);
                 $leafContainer.append($imageContainer);
                 $closeBtn.on('click', function () {
                   $imageContainer.remove();
-
                   _this.parent.propagateContextChange({
                     "$page.actions_counter": +1
                   });
                 });
               });
             }
-
             break;
-
           case 'select()':
           case 'select_one()':
             console.log('widget::select()');
@@ -4900,34 +4260,28 @@ var WidgetClass = /*#__PURE__*/function () {
               var propagate = {
                 "$page.selection": _this.identifier
               };
-
               if (!_this.previously_selected) {
                 propagate["$page.actions_counter"] = +1;
                 _this.previously_selected = true;
               }
-
               _this.parent.propagateContextChange(propagate);
             });
             break;
-
           case 'submit()':
             this.$container.on('click', function () {
               console.log('widget ' + _this.type + ' submit()', _this);
-
               _this.parent.propagateContextChange({
                 "$page.submitted": true
               });
             });
             break;
-
           default:
         }
       }
+
       /*
           handle section selection
       */
-
-
       switch (this.type) {
         case 'selector_section':
         case 'selector_section_wide':
@@ -4937,7 +4291,6 @@ var WidgetClass = /*#__PURE__*/function () {
           });
           break;
       }
-
       if (context.mode == 'edit') {
         var $actions = (0, _jqueryLib.$)('<div class="actions widget-actions"></div>');
         var $edit_button = (0, _jqueryLib.$)('<div class="action-button widget-edit-button" title="Edit Widget"><span class="material-icons mdc-fab__icon">mode_edit</span></div>');
@@ -4951,7 +4304,6 @@ var WidgetClass = /*#__PURE__*/function () {
                 case 0:
                   _context.next = 2;
                   return _qursusServices.EnvService.getEnv();
-
                 case 2:
                   environment = _context.sent;
                   window.eq.popup({
@@ -4963,36 +4315,31 @@ var WidgetClass = /*#__PURE__*/function () {
                     callback: function callback(data) {
                       if (data && data.objects) {
                         var _iterator2 = _createForOfIteratorHelper(data.objects),
-                            _step2;
-
+                          _step2;
                         try {
                           for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                             var object = _step2.value;
                             if (object.id != _this.id) continue;
-
                             for (var _i2 = 0, _Object$keys2 = Object.keys(_this); _i2 < _Object$keys2.length; _i2++) {
                               var field = _Object$keys2[_i2];
-
                               if (object.hasOwnProperty(field)) {
                                 var value = _this[field] ? _this[field].constructor(object[field]) : object[field];
                                 _this[field] = value;
                               }
                             }
-                          } // request refresh for current context
-
+                          }
+                          // request refresh for current context
                         } catch (err) {
                           _iterator2.e(err);
                         } finally {
                           _iterator2.f();
                         }
-
                         _this.parent.propagateContextChange({
                           refresh: true
                         });
                       }
                     }
                   });
-
                 case 4:
                 case "end":
                   return _context.stop();
@@ -5003,7 +4350,6 @@ var WidgetClass = /*#__PURE__*/function () {
         $delete_button.on('click', function () {
           if (window.confirm("Widget is about to be removed. Do you confirm ?")) {
             _qursusServices.ApiService.delete('qursus\\Widget', [_this.id], true);
-
             _this.parent.propagateContextChange({
               '$group.remove_widget': _this.id,
               refresh: true
@@ -5012,35 +4358,29 @@ var WidgetClass = /*#__PURE__*/function () {
         });
         this.$container.append($actions);
       }
-
       return this.$container;
     }
+
     /**
      * Changes received from parent or self
      * @param contextChange
      */
-
   }, {
     key: "onContextChange",
     value: function onContextChange(contextChange) {
       console.log('Widget::onContextChange', contextChange);
-
       for (var _i3 = 0, _Object$keys3 = Object.keys(contextChange); _i3 < _Object$keys3.length; _i3++) {
         var elem = _Object$keys3[_i3];
-
         if (elem.indexOf('$group.mode') == 0) {
           this.context.mode = contextChange[elem];
         }
       }
-
       var selected = this.selected;
       var domain = new _Domain.DomainClass(["$page.selection", "=", this.identifier]);
       selected = domain.evaluate(contextChange);
-
       if (this.on_click && this.on_click == 'select_one') {
         this.selected = selected;
       }
-
       if (this.selected || selected) {
         this.$container.addClass('selected');
       } else {
@@ -5050,7 +4390,6 @@ var WidgetClass = /*#__PURE__*/function () {
   }]);
   return WidgetClass;
 }();
-
 exports.WidgetClass = WidgetClass;
 var _default = WidgetClass;
 exports.default = _default;
@@ -5067,7 +4406,6 @@ exports.default = _default;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
@@ -5077,7 +4415,6 @@ Object.defineProperty(exports, "$", ({
     return _jquery.default;
   }
 }));
-
 var _jquery = _interopRequireDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 
 /***/ }),
@@ -5092,18 +4429,13 @@ var _jquery = _interopRequireDefault(__webpack_require__(/*! jquery */ "./node_m
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.ContextService = exports.EnvService = exports.ApiService = void 0;
-
 var _ApiService2 = _interopRequireDefault(__webpack_require__(/*! ./ApiService */ "./build/ApiService.js"));
-
 var _ContextService2 = _interopRequireDefault(__webpack_require__(/*! ./ContextService */ "./build/ContextService.js"));
-
 var _EnvService2 = _interopRequireDefault(__webpack_require__(/*! ./EnvService */ "./build/EnvService.js"));
-
 /**
  * Singleton instances
  */
