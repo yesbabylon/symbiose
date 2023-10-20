@@ -145,7 +145,7 @@ export class WidgetClass {
             case 'code':
                 // normalize code : remove html layout
                 content = $(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-                // identitfy target lang
+                // identify target lang
                 let target_lang = 'javascript';
                 let clues:any = {
                     'php': ['```php'],
