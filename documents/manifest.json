@@ -1,6 +1,11 @@
 {
     "name": "documents",
+    "description": "Provides management of raw binary data stored as documents, with MIME recognition, that can be tagged and arranged within categories. Also provide features for uploading files.",
+    "author": "yesbabylon",
+    "equal_version": "2.0",
     "depends_on": [
+        "core"
     ],
+    "lang": ["en", "fr"],
     "apps": ["documents"]
 }
