@@ -1,0 +1,8 @@
+{
+    "name": "Symbiose",
+    "author": "Yesbabylon",
+    "description": "Library intended for eQual framework, providing ERP capabilities to serve as business-logic foundations for custom Apps.",
+    "packages": [
+        "communication", "documents", "finance", "hr", "identity", "inventory", "realestate", "sale", "stats", "support"
+    ]
+}
