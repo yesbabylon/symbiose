@@ -492,7 +492,7 @@ class Booking extends Model {
     }
 
     public static function onupdateCustomerId($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerId", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\booking\Booking:onupdateCustomerId", QN_REPORT_DEBUG);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
 
         if($bookings > 0) {
@@ -510,7 +510,7 @@ class Booking extends Model {
     }
 
     public static function onupdateCustomerIdentityId($om, $oids, $values, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\booking\Booking:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\booking\Booking:onupdateCustomerIdentityId", QN_REPORT_DEBUG);
         // reset name
         $om->write(__CLASS__, $oids, ['name' => null]);
         $bookings = $om->read(__CLASS__, $oids, ['customer_identity_id', 'customer_id']);
