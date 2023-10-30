@@ -20,7 +20,7 @@ list($params, $providers) = announce([
         'lang' =>  [
             'description'   => 'Language requested for multilang values.',
             'type'          => 'string',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
     'response'      => [
@@ -69,13 +69,13 @@ ob_start();
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>help2protect</title>
+    <title>qursus</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="<?php echo H2P_WEBSITE_URL; ?>/app/style_pdf.css">
+    <link rel="stylesheet" href="<?php echo constant('ROOT_APP_URL'); ?>/app/style_pdf.css">
 
     <style>
         body {
@@ -90,7 +90,7 @@ ob_start();
 <div class="container-inner">
 
 <div class="page">
-    <div class="title-brand">Help2Protect.info</div>
+    <div class="title-brand">eQual.run</div>
     <div class="title-pack"><?php echo $module['pack_id']['title']; ?></div>
     <div class="title-module">MODULE <?php echo $module['identifier']; ?></div>
 </div>
@@ -204,7 +204,7 @@ function linearizePage($original_page) {
 
     if(count($new_leaf['groups']) > $new_leaf['fixed_groups']) {
       $leaf = json_decode(json_encode($new_leaf), true);
-      
+
       if($leaf_index == 0) {
         // create a new page with right leave empty
         $new_page = [
@@ -221,7 +221,7 @@ function linearizePage($original_page) {
         array_splice($page['leaves'], $leaf_index+$new_leaves_count+1, 0, [$leaf]);
         ++$new_leaves_count;
       }
-      
+
     }
   }
 
@@ -279,20 +279,20 @@ function linearizePage($original_page) {
                 $pages[] = $new_page;
             }
             else if($widget['type'] == 'tooltip') {
-    
+
             }
             else {
               continue;
             }
           }
         }
-        
+
 
     }
   }
   else {
     $pages[] = $page;
-  }  
+  }
 
   return $pages;
 }
@@ -507,7 +507,7 @@ function displayPage($page) {
 
 function qursus_module_render_adapt_url($url) {
   if(substr($url, 0, 1) == '/') {
-    $url = H2P_WEBSITE_URL.$url;
+    $url = constant('ROOT_APP_URL').$url;
   }
   return $url;
 }
