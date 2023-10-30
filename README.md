@@ -1,23 +1,22 @@
 # Building an ERP that suits you
 
-Symbiose is a set of Business Applications components intended for Agile organisations, made to fit the needs of any business logic in an ever-changing marketplace.
+Symbiose is a set of Business Applications components intended for Agile organizations, made to fit the needs of any business logic in an ever-changing marketplace.
 
-Its highly customizable back-end logic and its versatile user interface confiugration allow fast development of tailor-made applications on any type of device.
+Its highly customizable back-end logic and its versatile user interface configuration allow fast development of tailor-made applications on any type of device.
 
 
 ## Installation
 
 ### Prerequisite
 
-Symbiose requires [eQual framework](https://github.com/cedricfrancoys/equal).
+Symbiose requires [eQual framework](https://github.com/equalframework/equal).
 
 ### Setup
-Under the packages directory of your eQual installation, copy files from the Symbiose repository.
 
-For example by running the commands:
-```
-git clone https://github.com/cedricfrancoys/equal.git
-cd equal
-rm packages
-git clone https://github.com/yesbabylon/symbiose.git packages
-```
+This is the dev-2.0 version.
+
+Under the root directory of your eQual installation, run the following command:
+
+`curl https://raw.githubusercontent.com/yesbabylon/symbiose/dev-2.0/install.sh`
+
+Note: The source of that script is available here : [install.sh](https://github.com/yesbabylon/symbiose/blob/dev-2.0/install.sh)
