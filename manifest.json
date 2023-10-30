@@ -1,7 +1,10 @@
 {
     "name": "Symbiose",
+    "description": "Library providing ERP capabilities to serve as business-logic foundations for custom Business Apps.",
+    "version": "2.0",
     "author": "Yesbabylon",
-    "description": "Library intended for eQual framework, providing ERP capabilities to serve as business-logic foundations for custom Apps.",
+    "license": "LGPL-3",
+    "depends_on": ["core"],
     "packages": [
         "communication", "documents", "finance", "hr", "identity", "inventory", "realestate", "sale", "stats", "support"
     ]
