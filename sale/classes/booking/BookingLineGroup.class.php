@@ -237,7 +237,7 @@ class BookingLineGroup extends Model {
         foreach($groups as $oid => $group) {
             $bookings_ids[] = $group['booking_id'];
             $result[$oid] = array_reduce($group['booking_lines_ids.total'], function ($c, $a) {
-                return $c + $a['total'];
+                return $c + round($a['total'], 2);
             }, 0.0);
         }
 

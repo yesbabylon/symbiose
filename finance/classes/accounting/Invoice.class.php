@@ -289,7 +289,7 @@ class Invoice extends Model {
 
         foreach($invoices as $oid => $invoice) {
             $total = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
-                return $c + $a['total'];
+                return $c + round($a['total'], 2);
             }, 0.0);
             $result[$oid] = round($total, 2);
         }

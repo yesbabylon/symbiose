@@ -431,7 +431,7 @@ class Booking extends Model {
         if($bookings > 0) {
             foreach($bookings as $bid => $booking) {
                 $total = array_reduce($booking['booking_lines_groups_ids.total'], function ($c, $a) {
-                    return $c + $a['total'];
+                    return $c + round($a['total'], 2);
                 }, 0.0);
                 $result[$bid] = round($total, 4);
             }
