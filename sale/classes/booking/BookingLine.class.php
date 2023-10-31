@@ -369,6 +369,7 @@ class BookingLine extends Model {
                     // #memo - when price is adapted, it no longer holds more than 2 decimals (so that unit_price x qty = displayed price)
                     $price = round(($price * (1 - $disc_percent)) - $disc_value, 2);
                 }
+                // if no adapters, leave price given from price_id (might have more than 2 decimal digits)
                 $result[$oid] = $price;
             }
         }
