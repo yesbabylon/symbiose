@@ -430,7 +430,7 @@ class BookingLine extends Model {
                 // delta between final price and catalog price
                 $catalog_price = $line['price_id.price'] * $line['qty'] * (1.0 + $line['vat_rate']);
                 $fare_price = $line['unit_price'] * ($line['qty'] - $line['free_qty']) * (1.0 + $line['vat_rate']);
-                $benefit = $catalog_price - $fare_price;
+                $benefit = round($catalog_price - $fare_price, 2);
                 $result[$lid] = max(0.0, $benefit);
             }
         }
