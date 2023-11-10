@@ -177,8 +177,8 @@ class Payment extends Model {
                 return ['is_exported' => ['non_editable' => 'Once exported a payment can no longer be updated.']];
             }
             if($payment['payment_origin'] == 'bank') {
-                if(isset($values['amount']) && $values['amount'] > $payment['statement_line_id.remaining_amount']) {
-                    return ['amount' => ['excessive_amount' => "Payment amount cannot be higher than statement line remaining amount {$payment['statement_line_id.remaining_amount']}."]];
+                if(isset($values['amount']) && round($values['amount'], 2) > round($payment['statement_line_id.remaining_amount'], 2)) {
+                    return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']})."]];
                 }
             }
         }
