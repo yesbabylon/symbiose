@@ -165,24 +165,24 @@ class Payment extends Model {
      * This method can be overridden to define a more precise set of tests.
      *
      * @param  Object   $om         ObjectManager instance.
-     * @param  Array    $oids       List of objects identifiers.
+     * @param  Array    $ids       List of objects identifiers.
      * @param  Array    $values     Associative array holding the new values to be assigned.
      * @param  String   $lang       Language in which multilang fields are being updated.
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang='en') {
-        $payments = $om->read(self::getType(), $oids, ['is_exported', 'payment_origin', 'statement_line_id.remaining_amount'], $lang);
+    public static function canupdate($om, $ids, $values, $lang='en') {
+        $payments = $om->read(self::getType(), $ids, ['is_exported', 'payment_origin', 'statement_line_id.remaining_amount'], $lang);
         foreach($payments as $pid => $payment) {
             if($payment['is_exported']) {
                 return ['is_exported' => ['non_editable' => 'Once exported a payment can no longer be updated.']];
             }
             if($payment['payment_origin'] == 'bank') {
-                if(isset($values['amount']) && $values['amount'] > $payment['statement_line_id.remaining_amount']) {
-                    return ['amount' => ['excessive_amount' => 'Sum of assigned payments cannot be higher than statement line amount.']];
+                if(isset($values['amount']) && round($values['amount'], 2) > round($payment['statement_line_id.remaining_amount'], 2)) {
+                    return ['amount' => ['excessive_amount' => "Sum of assigned payments ({$values['amount']}) cannot be higher than statement line amount ({$payment['statement_line_id.remaining_amount']})."]];
                 }
             }
         }
-        return parent::canupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $ids, $values, $lang);
     }
 
 
