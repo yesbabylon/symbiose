@@ -4,6 +4,18 @@
         "lang": "en",
         "data": [
             {
+                "id": 1001,
+                "name": "sales.default.administrators",
+                "display_name": "Sales \/ All \/ Administrators",
+                "description": "Updating products and adding new products to the catalog."
+            },
+            {
+                "id": 1002,
+                "name": "sales.default.users",
+                "display_name": "Sales \/ All \/ Users",
+                "description": "Updating products and adding new products to the catalog."
+            },
+            {
                 "id": 1011,
                 "name": "sales.catalog.administrators",
                 "display_name": "Sales \/ Catalog \/ Administrators",
@@ -45,6 +57,16 @@
         "name": "core\\Group",
         "lang": "fr",
         "data": [
+            {
+                "id": 1001,
+                "display_name": "Sales \/ All \/ Administrators",
+                "description": "Mise à jour des produit et ajout de nouveaux produits au catalogue."
+            },
+            {
+                "id": 1002,
+                "display_name": "Sales \/ All \/ Users",
+                "description": "Mise à jour des produit et ajout de nouveaux produits au catalogue."
+            },
             {
                 "id": 1011,
                 "display_name": "Ventes \/ Catalogue \/ Administrateurs",
