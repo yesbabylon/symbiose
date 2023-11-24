@@ -35,7 +35,7 @@ class BookingType extends Model {
             ],
 
             'description' => [
-                'type'              => 'text',
+                'type'              => 'string',
                 'description'       => 'Description of the intended use of the type.'
             ],
 
