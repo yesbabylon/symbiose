@@ -88,15 +88,21 @@ class Funding extends \sale\pay\Funding {
         return $result;
     }
 
-    public static function calcAmountShare($om, $oids, $lang) {
+    public static function calcAmountShare($om, $ids, $lang) {
         $result = [];
-        $fundings = $om->read(self::getType(), $oids, ['booking_id.price', 'due_amount'], $lang);
+        $fundings = $om->read(self::getType(), $ids, ['booking_id.price', 'due_amount'], $lang);
 
         if($fundings > 0) {
-            foreach($fundings as $oid => $funding) {
-                $total = $funding['booking_id.price'];
-                $share = ($total != 0)?round($funding['due_amount'] / $total, 2):0;
-                $result[$oid] = min(1.0, $share);
+            foreach($fundings as $id => $funding) {
+                $total = round($funding['booking_id.price'], 2);
+                if($total == 0) {
+                    $share = 1;
+                }
+                else {
+                    $share = round(abs($funding['due_amount']) / abs($total), 2);
+                }
+                $sign = ($funding['due_amount'] < 0)?-1:1;
+                $result[$id] = $share * $sign;
             }
         }
 
