@@ -4100,7 +4100,7 @@ var WidgetClass = /*#__PURE__*/function () {
         case 'code':
           // normalize code : remove html layout
           content = (0, _jqueryLib.$)(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-          // identitfy target lang
+          // identify target lang
           var target_lang = 'javascript';
           var clues = {
             'php': ['```php'],

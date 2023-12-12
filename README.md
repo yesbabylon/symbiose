@@ -1,8 +1,10 @@
 # Building an ERP that suits you
 
 Symbiose is a set of Business Applications components intended for Agile organizations, made to fit the needs of any business logic in an ever-changing marketplace.
+It is a collection of packages designed to operate within the eQual framework, defining business entities by assembling models, views, controllers, and the related applicative logic.
 
 Its highly customizable back-end logic and its versatile user interface configuration allow fast development of tailor-made applications on any type of device.
+
 
 
 ## Installation
