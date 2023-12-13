@@ -25,7 +25,7 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 /*
     Retrieve current user id
 */
-
+/*
 if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
@@ -35,17 +35,19 @@ $user_id = (int) $_COOKIE["wp_lms_user"];
 if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
+*/
 
 /*
     Check if user is granted access
 */
 
 // check that the user is granted to access target module
+/*
 $access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
 if(!$access || !count($access)) {
     throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
 }
-
+*/
 
 /*
     Collect modules from requested pack
@@ -75,14 +77,14 @@ foreach($modules as $index => $module) {
     $status = UserStatus::search([ ['module_id', '=', $module['id']], ['user_id', '=', $user_id] ])->read(['page_count', 'chapter_index', 'page_index', 'is_complete'])->first();
     if($status && count($status)) {
         $percent = intval( (($status['page_count']+1) / $module['page_count']) *100 );
-        $modules[$index]['status'] = 'in progress'; 
+        $modules[$index]['status'] = 'in progress';
         if($status['is_complete']) {
             $percent = 100;
-            $modules[$index]['status'] = 'completed'; 
+            $modules[$index]['status'] = 'completed';
         }
     }
     else {
-        $modules[$index]['status'] = 'not started'; 
+        $modules[$index]['status'] = 'not started';
     }
     $modules[$index]['percent'] = $percent;
 }

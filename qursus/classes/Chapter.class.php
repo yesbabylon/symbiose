@@ -95,7 +95,7 @@ class Chapter extends Model {
             $orm->write('qursus\Module', $chapter['module_id'], ['page_count' => null], $lang);
             $modules_ids[$chapter['module_id']] = true;
         }
-        $orm->read('qursus\Module', array_keys($modules_ids), ['page_count'], $lang);        
+        $orm->read('qursus\Module', array_keys($modules_ids), ['page_count'], $lang);
     }
 
 
@@ -107,5 +107,5 @@ class Chapter extends Model {
         }
     }
 
-    
+
 }

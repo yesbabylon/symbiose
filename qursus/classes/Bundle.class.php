@@ -12,7 +12,7 @@ class Bundle extends Model {
 
     public static function getColumns() {
         return [
-            'name' => [            
+            'name' => [
                 'type'              => 'string',
                 'multilang'         => true
             ],

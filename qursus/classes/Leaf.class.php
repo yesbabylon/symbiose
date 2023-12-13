@@ -43,7 +43,7 @@ class Leaf extends Model {
                 'default'           => 'always visible',
                 'onupdate'          => 'onupdateVisibility'
             ],
-            
+
             'groups' => [
                 'type'              => 'alias',
                 'alias'             => 'groups_ids'
@@ -74,7 +74,7 @@ class Leaf extends Model {
                 'description'       => "Opacity of the background (from 0 to 1).",
                 'default'           => 0.5
             ],
-    
+
             'contrast' => [
                 'type'              => 'string',
                 'selection'         => ['dark', 'light'],
@@ -98,7 +98,7 @@ class Leaf extends Model {
 
         foreach($leaves as $oid => $leaf) {
             if($leaf['visibility_rule'] == 'always visible') {
-                $result[$oid] = "[]";                
+                $result[$oid] = "[]";
             }
             else {
                 $rule = str_replace('$identifier', $leaf['identifier'], $leaf['visibility_rule']);
@@ -111,8 +111,8 @@ class Leaf extends Model {
         }
 
         return $result;
-    }    
-    
+    }
+
     public static function onupdateVisibility($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, ['visible' => null], $lang);
     }

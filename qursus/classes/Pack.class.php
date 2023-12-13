@@ -12,7 +12,7 @@ class Pack extends Model {
 
     public static function getColumns() {
         return [
-            'name' => [            
+            'name' => [
                 'type'              => 'string',
                 'description'       => 'Unique slug of the program.'
             ],
@@ -59,17 +59,17 @@ class Pack extends Model {
                 'ondetach'          => 'delete'
             ],
 
-            'langs_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'qursus\Lang', 
-                'foreign_field'     => 'packs_ids', 
-                'rel_table'         => 'qursus_rel_lang_pack', 
+            'langs_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'qursus\Lang',
+                'foreign_field'     => 'packs_ids',
+                'rel_table'         => 'qursus_rel_lang_pack',
                 'rel_foreign_key'   => 'lang_id',
                 'rel_local_key'     => 'pack_id',
                 'description'       => "List of languages in which the program is available"
-            ]            
+            ]
 
         ];
     }
-   
+
 }

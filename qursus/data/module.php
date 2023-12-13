@@ -20,7 +20,7 @@ list($params, $providers) = announce([
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*',
-        'cacheable'     => true,
+        // 'cacheable'     => true,
         'expires'       => 3600
     ],
     'providers'     => ['context', 'orm', 'auth']
@@ -31,6 +31,7 @@ list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 /*
     Retrieve current user id
 */
+/*
 if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
@@ -40,6 +41,7 @@ $user_id = (int) $_COOKIE["wp_lms_user"];
 if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
+*/
 
 $search = Module::search(['id', '=', $params['id']]);
 
@@ -49,6 +51,7 @@ $search = Module::search(['id', '=', $params['id']]);
 */
 
 // root(1), admin(2) and main author(3) are always granted
+/*
 if($user_id > 3) {
     // retrieve pack_id
     $collection = $search->read(['pack_id'])->get(true);
@@ -67,6 +70,7 @@ if($user_id > 3) {
         throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
     }
 }
+*/
 
 $module = $search->read([
         'id',
