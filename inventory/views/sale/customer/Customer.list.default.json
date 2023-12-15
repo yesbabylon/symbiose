@@ -2,12 +2,6 @@
     "name": "Customers",
     "description": "This view is intended for displaying basic listing of existing Customers.",
     "controller": "inventory_sale_customer_customer-collect",
-    "access": {
-        "groups": [
-            "sale.default.user",
-            "booking.default.user"
-        ]
-    },
     "layout": {
         "items": [
             {

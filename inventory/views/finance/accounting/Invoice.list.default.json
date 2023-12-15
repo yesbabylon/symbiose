@@ -2,13 +2,6 @@
     "name": "Invoices",
     "description": "This view is intented for displaying the invoices.",
     "controller": "finance_accounting_invoice-collect",
-    "access": {
-        "groups": [
-            "finance.default.user",
-            "sale.default.user",
-            "inventory.default.user"
-        ]
-    },
     "operations": {
         "total": {
             "price": {

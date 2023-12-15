@@ -1,9 +1,6 @@
 {
     "name": "Customer",
     "description": "Basic form for displaying a customer (Partner)",
-    "access": {
-        "groups": []
-    },
     "layout": {
         "groups": [
             {
