@@ -14,7 +14,7 @@
                 "ref_order": "",
                 "license_key": "15f37785-9b7d-2f57-d56b-39ad1639631b6",
                 "service_id": 2,
-                "product_id": 0,
+                "product_id": 1,
                 "price": 100
             },
             {
@@ -27,7 +27,7 @@
                 "ref_order": "",
                 "license_key": "cee2f4e7538c9a56c465ac37c9320fa2b1",
                 "service_id": 3,
-                "product_id": 0,
+                "product_id": 1,
                 "price": 100
             },
             {
@@ -41,8 +41,8 @@
                 "ref_order": "",
                 "license_key": "",
                 "service_id": 1,
-                "product_id": 0,
-                "price": 0
+                "product_id": 1,
+                "price": 1
             },
             {
                 "id": 4,

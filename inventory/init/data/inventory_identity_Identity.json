@@ -5,7 +5,6 @@
         "data": [
             {
                 "id": 1,
-                "display_name": "dubois Jean",
                 "type_id": 1,
                 "type": "I",
                 "description": "",
@@ -42,7 +41,6 @@
             {
                 "id": 2,
                 "state": "instance",
-                "display_name": "BIC",
                 "type_id": 3,
                 "type": "C",
                 "description": "",
@@ -77,7 +75,6 @@
             },
             {
                 "id": 9,
-                "display_name": "Yesbabylon",
                 "type_id": 3,
                 "type": "C",
                 "description": "",
@@ -113,7 +110,6 @@
             {
                 "id": 10,
                 "state": "instance",
-                "display_name": "Martin Jean",
                 "type_id": 1,
                 "type": "I",
                 "description": "",
