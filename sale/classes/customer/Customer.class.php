@@ -77,6 +77,48 @@ class Customer extends \identity\Partner {
                 'description'       => 'List receivables of the customers.'
             ],
 
+            'sales_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\SaleEntry',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List sales entries of the customers.'
+            ],
+
+            'products_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\Product',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List products of the customers.'
+            ],
+
+            'softwares_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\Software',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List softwares of the customers.'
+            ],
+
+            'services_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\Service',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List services of the customers.'
+            ],
+
+            'subscriptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List subscriptions of the customers.'
+            ],
+
+            'invoices_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_field'     => 'customer_id',
+                'description'       => 'List invoices of the customers.'
+            ]
+
         ];
     }
 

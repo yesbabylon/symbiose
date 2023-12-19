@@ -62,7 +62,7 @@ list($params, $providers) = eQual::announce([
 
         'customer_id'=> [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\sale\customer\Customer',
+            'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the software.'
         ],
 

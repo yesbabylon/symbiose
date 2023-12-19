@@ -7,8 +7,8 @@
 
 
 use equal\orm\Domain;
-use inventory\identity\Identity;
-use inventory\sale\customer\Customer;
+use identity\Identity;
+use sale\customer\Customer;
 
 list($params, $providers) = eQual::announce([
     'description'   => 'Advanced search for Customer: returns a collection of Reports according to extra paramaters.',
@@ -18,7 +18,7 @@ list($params, $providers) = eQual::announce([
         'entity' =>  [
             'description'   => 'name',
             'type'          => 'string',
-            'default'       => 'inventory\sale\customer\Customer'
+            'default'       => 'sale\customer\Customer'
         ],
 
         'type' => [

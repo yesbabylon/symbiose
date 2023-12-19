@@ -5,10 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use inventory\sale\price\Price;
-use inventory\sale\receivable\Receivable;
-use inventory\sale\receivable\ReceivablesQueue;
-use inventory\service\Subscription;
+use sale\price\Price;
+use sale\receivable\Receivable;
+use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
 
 list($params, $providers) = announce([

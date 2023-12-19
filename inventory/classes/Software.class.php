@@ -44,7 +44,7 @@ class Software extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Server',
                 'ondelete'          => 'cascade',
-                'description'       => 'Server of the software.'
+                'description'       => 'Server hosting the software.'
             ],
 
             'service_id' => [
@@ -55,8 +55,8 @@ class Software extends Model {
 
             'customer_id'=> [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\sale\customer\Customer',
-                'description'       => 'Customer of the software.',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => 'Owner of the software.',
             ],
 
             'accesses_ids' => [

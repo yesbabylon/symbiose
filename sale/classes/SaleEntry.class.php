@@ -47,13 +47,13 @@ class SaleEntry extends Model {
 
             'product_id'=> [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\sale\catalog\Product',
+                'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'Product of the catalog sale.'
             ],
 
             'price_id'=> [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\sale\price\Price',
+                'foreign_object'    => 'sale\price\Price',
                 'description'       => 'Price of the sale.'
             ],
 
