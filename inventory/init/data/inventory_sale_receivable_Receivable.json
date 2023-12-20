@@ -1,6 +1,6 @@
 [
     {
-        "name": "inventory\\sale\\receivable\\Receivable",
+        "name": "sale\\receivable\\Receivable",
         "lang": "en",
         "data": [
             {

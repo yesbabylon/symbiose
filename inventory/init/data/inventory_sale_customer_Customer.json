@@ -1,6 +1,6 @@
 [
     {
-        "name": "inventory\\sale\\customer\\Customer",
+        "name": "sale\\customer\\Customer",
         "lang": "en",
         "data": [
             {

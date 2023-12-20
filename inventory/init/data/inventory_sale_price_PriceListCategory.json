@@ -1,6 +1,6 @@
 [
     {
-        "name": "inventory\\sale\\price\\PriceListCategory",
+        "name": "sale\\price\\PriceListCategory",
         "lang": "en",
         "data": [
             {
