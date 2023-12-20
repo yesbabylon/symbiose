@@ -32,7 +32,7 @@ class Subscription extends \sale\SaleEntry  {
                 'type'              => 'string',
                 'unique'            => true,
                 'required'          => true,
-                'description'       => 'Name of the product.',
+                'description'       => 'Name of the subscription.',
             ],
 
             'description' => [

@@ -16,7 +16,7 @@
                 "label": "Customers",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\sale\\customer\\Customer",
+                    "entity": "sale\\customer\\Customer",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
@@ -60,19 +60,19 @@
                 "label": "Receivables",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\sale\\receivable\\Receivable",
+                    "entity": "sale\\receivable\\Receivable",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
                 }
             },
             {
-                "id": "item..finance.accounting.invoice",
+                "id": "item.finance.accounting.invoice",
                 "type": "entry",
                 "label": "Invoices",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\finance\\accounting\\Invoice",
+                    "entity": "finance\\accounting\\Invoice",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
