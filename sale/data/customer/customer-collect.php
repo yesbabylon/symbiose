@@ -92,5 +92,5 @@ foreach ($columns as $column) {
 $result = eQual::run('get', 'model_collect', $params, true);
 
 $context->httpResponse()
-    ->body($result)
-    ->send();
+        ->body($result)
+        ->send();

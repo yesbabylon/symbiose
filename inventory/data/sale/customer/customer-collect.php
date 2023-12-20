@@ -71,5 +71,5 @@ foreach ($columnsParamKeysMap as $column => $paramKey) {
 $result = eQual::run('get', 'sale_customer_customer-collect', $params);
 
 $context->httpResponse()
-    ->body($result)
-    ->send();
+        ->body($result)
+        ->send();
