@@ -1,9 +1,10 @@
 {
     "name": "Customers",
     "description": "This view is intended for displaying basic listing of existing Customers.",
+    "controller": "sale_customer_customer-collect",
     "domain": ["relationship", "=", "customer"],
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
+        "groups": ["sale.default.user", "booking.default.user", "inventory.default.user"]
      },
     "layout": {
         "items": [

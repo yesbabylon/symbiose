@@ -13,42 +13,91 @@ list($params, $providers) = eQual::announce([
     'description' => 'Advanced search for Customer: returns a collection of Reports according to extra parameters.',
     'extends'     => 'core_model_collect',
     'params'      => [
+
         'entity' => [
             'type'        => 'string',
             'default'     => 'sale\customer\Customer',
             'description' => 'Full name (including namespace) of the class to return.'
         ],
+
         'type' => [
             'type'        => 'string',
-            'description' => 'Code of the type of identity.'
+            'description' => 'Code of the type of identity.',
+            'selection'  => [
+                'all',
+                'I',
+                'SE',
+                'C',
+                'NP',
+                'PA'
+            ],
+            'readonly'   => true,
+            'default'    => 'all'
         ],
+
         'registration_number' => [
             'type'        => 'string',
-            'description' => 'Organization registration number (company number).'
+            'description' => 'Organization registration number (company number).',
+            'visible'     => [['type', '<>', 'I'], ['type', '<>', 'all']]
         ],
+
         'legal_name' => [
             'type'        => 'string',
-            'description' => 'Full name of the Identity.'
+            'description' => 'Full name of the Identity.',
+            'visible'     => [['type', '<>', 'I'], ['type', '<>', 'all']]
         ],
+
         'short_name' => [
             'type'        => 'string',
-            'description' => 'Usual name to be used as a memo for identifying the organization (acronym or short name).'
+            'description' => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
+            'visible'     => [['type', '<>', 'I'], ['type', '<>', 'all']]
         ],
+
         'citizen_identification' => [
             'type'        => 'string',
-            'description' => 'Citizen registration number, if any.'
+            'description' => 'Citizen registration number, if any.',
+            'visible'     => ['type', '=', 'I']
         ],
+
         'firstname' => [
             'type'        => 'string',
-            'description' => 'Full name of the contact (must be a person, not a role).'
+            'description' => 'Full name of the contact (must be a person, not a role).',
+            'visible'     => ['type', '=', 'I']
         ],
+
         'lastname' => [
             'type'        => 'string',
-            'description' => 'Reference contact surname.'
+            'description' => 'Reference contact surname.',
+            'visible'     => ['type', '=', 'I']
         ],
+
         'address' => [
             'type'        => 'string',
             'description' => 'Address the contact'
+        ],
+
+        'product_id' => [
+            'type'           => 'many2one',
+            'foreign_object' => 'inventory\Product',
+            'description'    => 'Product to which the customer.'
+        ],
+
+        'software_id' => [
+            'type'           => 'many2one',
+            'foreign_object' => 'inventory\Software',
+            'description'    => 'Software to which the customer.'
+        ],
+
+        'service_id' => [
+            'type'           => 'many2one',
+            'foreign_object' => 'inventory\service\Service',
+            'description'    => 'Service to which the customer.'
+        ],
+
+        'subscription_id' => [
+            'type'           => 'many2one',
+            'foreign_object' => 'inventory\service\Subscription',
+            'description'    => 'Customer to which the subscription belongs.',
         ],
     ],
     'response'    => [
@@ -64,6 +113,23 @@ list($params, $providers) = eQual::announce([
  * @var \equal\orm\ObjectManager $orm
  */
 list($context, $orm) = [$providers['context'], $providers['orm']];
+
+// Remove filter params of hidden fields
+if (!empty($params['type'])) {
+    $individualParams = ['firstname', 'lastname', 'citizen_identification'];
+    $companyParams = ['legal_name', 'short_name', 'registration_number'];
+
+    $hiddenFields = [];
+    if ($params['type'] === 'all') {
+        $hiddenFields = array_merge($individualParams, $companyParams);
+    } else {
+        $hiddenFields = $params['type'] === 'I' ? $companyParams : $individualParams;
+    }
+
+    foreach ($hiddenFields as $hiddenField) {
+        unset($params[$hiddenField]);
+    }
+}
 
 $columns = [
     'firstname',
@@ -87,6 +153,22 @@ foreach ($columns as $column) {
         $params['domain'],
         ['id', 'in', $customersIds]
     );
+}
+
+$columnsParamKeysMap = [
+    'products_ids'      => 'product_id',
+    'services_ids'      => 'service_id',
+    'softwares_ids'     => 'software_id',
+    'subscriptions_ids' => 'subscription_id',
+];
+
+foreach ($columnsParamKeysMap as $column => $paramKey) {
+    if (empty($params[$paramKey])) {
+        continue;
+    }
+
+    $customersIds = Customer::search([$column, 'contains', $params[$paramKey]])->ids();
+    $params['domain'] = Domain::conditionAdd($params['domain'], ['id', 'in', $customersIds]);
 }
 
 $result = eQual::run('get', 'model_collect', $params, true);

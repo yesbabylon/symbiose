@@ -3,7 +3,7 @@
     "description": "Basic form for displaying a customer (Partner)",
     "domain": ["relationship", "=", "customer"],
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
+        "groups": ["sale.default.user", "booking.default.user", "inventory.default.user"]
     },
     "layout": {
         "groups": [

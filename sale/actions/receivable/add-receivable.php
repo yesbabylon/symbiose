@@ -11,10 +11,10 @@ use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
 
 list($params, $providers) = announce([
-    'description'   => "Create a receivable.",
+    'description'   => 'Create a receivable.',
     'params'        => [
         'id' =>  [
-            'description'   => 'ID of the subscription.',
+            'description'   => 'ID of the sale entry.',
             'type'          => 'integer',
             'required'      => true
         ]
