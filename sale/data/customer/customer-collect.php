@@ -23,16 +23,16 @@ list($params, $providers) = eQual::announce([
         'type' => [
             'type'        => 'string',
             'description' => 'Code of the type of identity.',
-            'selection'  => [
-                'all',
-                'I',
-                'SE',
-                'C',
-                'NP',
-                'PA'
+            'selection'   => [
+                'all' => 'All',
+                'I'   => 'Individual',
+                'SE'  => 'Self-Employed',
+                'C'   => 'Company',
+                'NP'  => 'Non-profit/School',
+                'PA'  => 'Public Administration'
             ],
-            'readonly'   => true,
-            'default'    => 'all'
+            'readonly'    => true,
+            'default'     => 'all'
         ],
 
         'registration_number' => [

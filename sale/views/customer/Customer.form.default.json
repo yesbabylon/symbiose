@@ -2,7 +2,7 @@
     "name": "Customer",
     "description": "Basic form for displaying a customer (Partner)",
     "access": {
-        "groups": ["sale.default.user", "booking.default.user", "inventory.default.user"]
+        "groups": ["sale.default.user", "booking.default.user"]
     },
     "layout": {
         "groups": [
@@ -122,71 +122,9 @@
                         ]
                     },
                     {
-                        "id": "section.customer_bookings",
-                        "label": "Bookings",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "bookings_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": ["state", "in", ["instance", "archive"]]
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Products",
-                        "id": "section.customer_products",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "products_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "view": "list.selection",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label": "Sales entries",
                         "id": "section.customer_sales_entries",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "label": "Sales entries",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -215,13 +153,9 @@
                         ]
                     },
                     {
-                        "label": "Receivables",
                         "id": "section.customers_receivables_list",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "label": "Receivables",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -250,13 +184,70 @@
                         ]
                     },
                     {
-                        "label": "Services",
+                        "id": "section.customer_bookings",
+                        "label": "Bookings",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "bookings_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.default",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.customer_products",
+                        "label": "Inventory Products",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.selection",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "id": "section.product_services",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "label": "Services",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -285,13 +276,9 @@
                         ]
                     },
                     {
-                        "label": "Softwares",
                         "id": "section.customers_softwares",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "label": "Softwares",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -320,15 +307,9 @@
                         ]
                     },
                     {
-                        "label": "Subscriptions",
                         "id": "section.customer_subscriptions",
-                        "visible": [
-                            [
-                                "state",
-                                "<>",
-                                "draft"
-                            ]
-                        ],
+                        "label": "Subscriptions",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -357,13 +338,9 @@
                         ]
                     },
                     {
-                        "label": "Invoices",
                         "id": "section.customers_invoices_list",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "label": "Invoices",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [

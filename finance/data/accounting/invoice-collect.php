@@ -9,7 +9,7 @@
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Receivables: returns a collection of Reports according to extra parameters.',
+    'description'   => 'Advanced search for Invoices: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
