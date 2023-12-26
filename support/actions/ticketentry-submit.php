@@ -48,9 +48,13 @@ if($entry['status'] != 'draft') {
 }
 
 TicketEntry::id($params['id'])->update(['status' => 'sent']);
-$ticket = Ticket::id($entry['ticket_id'])->read(['assignee_id'])->first();
+$ticket = Ticket::id($entry['ticket_id'])->read(['creator', 'assignee_id'])->first();
 
-if(!isset($ticket['assignee_id']) || is_null($ticket['assignee_id'])) {
+if($ticket['creator'] == $user_id) {
+    Ticket::id($entry['ticket_id'])->update(['status' => 'open']);
+}
+elseif(!isset($ticket['assignee_id']) || is_null($ticket['assignee_id'])) {
+    // #memo - this will set the ticket status to pending
     Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
 }
 
