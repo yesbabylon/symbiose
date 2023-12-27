@@ -1,8 +1,8 @@
 {
     "name": "Customer",
-    "description": "Basic form for displaying a customer (Partner)",
+    "description": "Basic form for displaying a customer (Partner) for inventory package",
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
+        "groups": ["inventory.default.user"]
     },
     "layout": {
         "groups": [
@@ -200,6 +200,99 @@
                                                 "widget": {
                                                     "header": {
                                                         "view": "list.default",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.customer_products",
+                        "label": "Inventory Products",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.selection",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.product_services",
+                        "label": "Services",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "services_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.selection",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.customers_softwares",
+                        "label": "Softwares",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "softwares_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.selection",
                                                         "actions": {
                                                             "ACTION.SELECT": false,
                                                             "ACTION.CREATE": false
