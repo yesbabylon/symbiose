@@ -42,7 +42,7 @@ if($user_id <= 0) {
 // check that the user is granted to access target module
 $access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
 if(!$access || !count($access)) {
-    throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
+    throw new Exception('missing_license', QN_ERROR_NOT_ALLOWED);
 }
 
 

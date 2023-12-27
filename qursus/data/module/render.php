@@ -4,7 +4,7 @@ use Dompdf\Options as DompdfOptions;
 use qursus\UserAccess;
 use qursus\Module;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => "Returns a fully loaded JSON formatted single module.",
     'params'        => [
         'id' =>  [
@@ -25,22 +25,12 @@ list($params, $providers) = announce([
     ],
     'response'      => [
         'accept-origin' => '*',
-        'cacheable'     => true
+        // 'cacheable'     => true
     ],
     'providers'     => ['context', 'orm', 'auth']
 ]);
 
-$data = run('get', 'qursus_module', ['lang' => $params['lang'], 'id' => $params['id']]);
-
-$json = json_decode($data, true);
-// relay error if any
-if(isset($json['errors'])) {
-    foreach($json['errors'] as $name => $message) {
-        throw new Exception($message, qn_error_code($name));
-    }
-}
-
-$module = $json;
+$module = eQual::run('get', 'qursus_module', ['lang' => $params['lang'], 'id' => $params['id']]);
 
 
 // linearize module

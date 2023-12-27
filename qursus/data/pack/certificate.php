@@ -8,7 +8,7 @@ use qursus\UserAccess;
 use qursus\Pack;
 use qursus\Module;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => "Returns a fully loaded JSON formatted single module.",
     'params'        => [
         'id' =>  [
@@ -24,7 +24,7 @@ list($params, $providers) = announce([
         'lang' =>  [
             'description'   => 'Language requested for multilang values.',
             'type'          => 'string',
-            'default'       => DEFAULT_LANG
+            'default'       => constant('DEFAULT_LANG')
         ]
     ],
     'response'      => [
