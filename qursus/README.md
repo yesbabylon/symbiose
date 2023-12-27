@@ -1,29 +1,18 @@
 # Qursus
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![Maintainer](https://img.shields.io/badge/maintainer-yesbabylon-blue)](https://github.com/yesbabylon)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/cedricfrancoys/equal/pulls)
-<!-- ![eQual - Create great Apps, your way!](https://github.com/equalframework/equal/blob/master/public/assets/img/equal_logo.png?raw=true) -->
 
-<a href="https://github.com/equalframework/" style="font-size:2rem;display:flex; align-items:center; wrap; flex-wrap: wrap; flex-shrink:0; text-decoration:none; color:inherit">Made with eQual framework <img itemprop="image" style="margin-left:10px; border-radius:10px" src="https://avatars.githubusercontent.com/u/111111764?s=200&amp;v=4" width="46px" height="46px" alt="@equalframework"/>
-</a>
+Qursus is a learning management system using eQual Framework.
 
-![qursus](./assets/images/qursus.png)
 
-## Why Qursus :
 
-We needed a way to present people about how to use eQual so we created this app. Ultimately, you will be able to learn how to use Qursus, how to use eQual framework by following our module Qursus.
+## How it works
 
-## How we propose to solve the problem by using Qursus :
+Qursus works with eQual on the back-end. 
 
-Qursus uses eQual framework in back-end to connect to modules of lessons. There are two views. A user can view a lesson or if the person has the rights there is an edition mode. Every module can be created and edited in the browser, in command lines or through the api, by a user with the correct credentials.
+Courses are modelized as Packs that can hold several modules, each of which having several chapters (sections), each of which having several pages. 
 
-## How Qursus works :
+The student can follow the lesson using the web app that is deployed in /public when the `qursus` package  is initiated.
 
-Qursus works with eQual on the back-end. The eQqual serves the data, auth and controls the views. The Packs, Users and different modules and it chapters can be created in Wordpress by using the Qursus Plugin. The student can follow the lesson using the web app that is deployed in /public when the package qursus is initiated.
 
-## What is Qursus :
-
-Qursus is a learning management system powered by eQual Framework.
 
 **UML Diagram of the application**
 
@@ -36,7 +25,7 @@ A Qursus application contains one or several packs which can contain one or seve
 ![qursus-page-schema](./assets/images/qursus-page-schema.png)
 
 
-## I / Install Qursus
+## I / Installation
 
 Prerequisite : To install Qursus, eQual should be installed. Go to the [eQual documentation](https://doc.equal.run/getting-started/installation/) installation page.
 
@@ -106,7 +95,7 @@ Now in your qursus package you should see :
 ```
 
 
-## II / Configuration :
+## II / Configuration
 
 In the context of using equal with Wordpress we need to configure the environnement file and the `.htacces` file.
 
