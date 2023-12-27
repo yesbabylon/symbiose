@@ -1,6 +1,6 @@
 [
     {
-        "name": "inventory\\sale\\SaleEntry",
+        "name": "sale\\SaleEntry",
         "lang": "en",
         "data": [
             {

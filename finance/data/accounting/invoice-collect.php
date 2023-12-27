@@ -9,7 +9,7 @@
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Receivables: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Invoices: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -50,12 +50,12 @@ list($params, $providers) = eQual::announce([
 
         'customer_id'=> [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\sale\customer\Customer',
+            'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the subscription.'
         ],
 
         'is_paid' => [
-            'type'       => 'boolean',
+            'type'              => 'boolean',
             'description'       => "Indicator of the invoice payment status.",
         ]
     ],

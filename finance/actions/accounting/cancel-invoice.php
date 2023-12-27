@@ -7,10 +7,9 @@
 
 use finance\accounting\Invoice;
 use sale\receivable\Receivable;
-use sale\customer\Customer;
 
 list($params, $providers) = announce([
-    'description'   => "Create a invoice.",
+    'description'   => 'Cancel an invoice.',
     'params'        => [
 
         'id' =>  [

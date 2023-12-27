@@ -1,6 +1,6 @@
 [
     {
-        "name": "inventory\\sale\\catalog\\ProductModel",
+        "name": "sale\\catalog\\ProductModel",
         "lang": "en",
         "data": [
             {

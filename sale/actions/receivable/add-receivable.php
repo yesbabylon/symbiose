@@ -5,17 +5,16 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use inventory\sale\price\Price;
-use inventory\sale\receivable\Receivable;
-use inventory\sale\receivable\ReceivablesQueue;
-use inventory\service\Subscription;
+use sale\price\Price;
+use sale\receivable\Receivable;
+use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
 
 list($params, $providers) = announce([
-    'description'   => "Create a receivable.",
+    'description'   => 'Create a receivable.',
     'params'        => [
         'id' =>  [
-            'description'   => 'ID of the subscription.',
+            'description'   => 'ID of the sale entry.',
             'type'          => 'integer',
             'required'      => true
         ]
