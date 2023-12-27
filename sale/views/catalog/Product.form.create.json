@@ -164,6 +164,30 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Subscriptions",
+                        "id": "section.attributes",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscriptions_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.default"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }

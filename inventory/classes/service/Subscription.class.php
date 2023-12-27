@@ -7,9 +7,9 @@
 
 namespace inventory\service;
 
-use inventory\sale\customer\Customer;
-use inventory\sale\price\Price;
-use inventory\sale\price\PriceList;
+use sale\customer\Customer;
+use sale\price\Price;
+use sale\price\PriceList;
 
 class Subscription extends \sale\SaleEntry  {
 
@@ -32,7 +32,7 @@ class Subscription extends \sale\SaleEntry  {
                 'type'              => 'string',
                 'unique'            => true,
                 'required'          => true,
-                'description'       => 'Name of the product.',
+                'description'       => 'Name of the subscription.',
             ],
 
             'description' => [
@@ -131,7 +131,7 @@ class Subscription extends \sale\SaleEntry  {
 
             'product_id'=> [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\sale\catalog\Product',
+                'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'Product of the catalog sale.',
                 'dependencies'      => ['price_id']
             ],
@@ -139,7 +139,7 @@ class Subscription extends \sale\SaleEntry  {
             'price_id'=> [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'inventory\sale\price\Price',
+                'foreign_object'    => 'sale\price\Price',
                 'description'       => 'Price of the sale.',
                 'dependencies'      => ['price'],
                 'store'             => true,

@@ -22,7 +22,7 @@
                 "icon": "face",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\sale\\customer\\Customer",
+                    "entity": "sale\\customer\\Customer",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
@@ -35,7 +35,7 @@
                 "icon": "receipt",
                 "description": "",
                 "context": {
-                    "entity": "inventory\\finance\\accounting\\Invoice",
+                    "entity": "finance\\accounting\\Invoice",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"
@@ -55,7 +55,7 @@
                         "icon": "label",
                         "description": "",
                         "context": {
-                            "entity": "inventory\\sale\\SaleEntry",
+                            "entity": "sale\\SaleEntry",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
@@ -75,7 +75,7 @@
                                 "icon": "queue",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\receivable\\ReceivablesQueue",
+                                    "entity": "sale\\receivable\\ReceivablesQueue",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
@@ -88,7 +88,7 @@
                                 "icon": "list",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\receivable\\Receivable",
+                                    "entity": "sale\\receivable\\Receivable",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
@@ -101,7 +101,7 @@
                                 "icon": "pending_actions",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\receivable\\Receivable",
+                                    "entity": "sale\\receivable\\Receivable",
                                     "view": "list.pending",
                                     "order": "id",
                                     "sort": "asc"
@@ -123,7 +123,7 @@
                                 "icon": "book",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\catalog\\Product",
+                                    "entity": "sale\\catalog\\Product",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
@@ -136,7 +136,7 @@
                                 "icon": "attach_money",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\price\\Price",
+                                    "entity": "sale\\price\\Price",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
@@ -149,7 +149,7 @@
                                 "icon": "list",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\sale\\price\\PriceList",
+                                    "entity": "sale\\price\\PriceList",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"

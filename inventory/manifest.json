@@ -11,7 +11,7 @@
     "apps": [
         {
             "id": "inventory",
-            "name": "inventory",
+            "name": "Inventory",
             "extends": "app",
             "description": "Application inventory",
             "icon": "analytics",

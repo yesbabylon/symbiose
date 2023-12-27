@@ -4,6 +4,33 @@
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
     },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "Cancel invoice.",
+            "controller": "core_model_transition",
+            "confirm": true,
+            "visible": ["status", "=", "invoice"],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "cancel",
+                "ids": []
+            }
+        }
+    ],
     "layout": {
         "groups": [
             {

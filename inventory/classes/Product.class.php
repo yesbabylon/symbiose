@@ -38,8 +38,8 @@ class Product extends Model {
 
             'customer_id'=> [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\sale\customer\Customer',
-                'description'       => 'Customer of the product.',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => 'Owner of the product.',
                 'visible'           => ['is_internal','=', false]
             ],
 

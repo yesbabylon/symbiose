@@ -12,7 +12,7 @@ use inventory\service\Subscription;
 use inventory\service\Service;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Accesses: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Accesses: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -74,13 +74,13 @@ list($params, $providers) = eQual::announce([
 
         'catalog_product_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\sale\catalog\Product',
+            'foreign_object'    => 'sale\catalog\Product',
             'description'       => 'Product of the catalog sale.'
         ],
 
         'customer_id'=> [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\sale\customer\Customer',
+            'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the subscription.'
         ],
     ],

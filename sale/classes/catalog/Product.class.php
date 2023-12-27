@@ -166,6 +166,13 @@ class Product extends Model {
                 'visible'           => [ ['has_age_range', '=', true] ]
             ],
 
+            'subscriptions_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_field'     => 'product_id',
+                'description'       => 'The subscriptions needed for the product.'
+            ],
+
         ];
     }
 

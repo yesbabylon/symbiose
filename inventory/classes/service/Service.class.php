@@ -9,7 +9,6 @@ namespace inventory\service;
 
 use equal\orm\Model;
 use inventory\Product;
-use inventory\sale\customer\Customer;
 
 class Service extends Model {
 
@@ -71,7 +70,7 @@ class Service extends Model {
             'customer_id'=> [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'inventory\sale\customer\Customer',
+                'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'Customer of the service.',
                 'function'          => 'calcCustomerId',
                 'visible'           => ["is_internal","=", false],

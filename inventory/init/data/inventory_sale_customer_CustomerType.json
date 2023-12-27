@@ -1,27 +1,32 @@
 [
     {
-        "name": "inventory\\sale\\customer\\CustomerType",
+        "name": "sale\\customer\\CustomerType",
         "lang": "en",
         "data": [
             {
                 "id": 1,
-                "code": "I"
+                "code": "I",
+                "description": "Individual"
             },
             {
                 "id": 2,
-                "code": "SE"
+                "code": "SE",
+                "description": "Self-Employed"
             },
             {
                 "id": 3,
-                "code": "C"
+                "code": "C",
+                "description": "Company"
             },
             {
                 "id": 4,
-                "code": "NP"
+                "code": "NP",
+                "description": "Non-profit/ school"
             },
             {
                 "id": 5,
-                "code": "PA"
+                "code": "PA",
+                "description": "Public Administration"
             }
         ]
     }
