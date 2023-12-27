@@ -43,7 +43,7 @@ class Widget extends Model {
 
             'type' => [
                 'type'              => 'string',
-                'onupdate'          => 'qursus\Widget::onupdateType',
+                'onupdate'          => 'onupdateType',
                 'selection'         => [
                     'text'                  => 'Text (free format)',
                     'code'                  => 'Code (highlight)',
@@ -73,7 +73,7 @@ class Widget extends Model {
 
             'section_id' => [
                 'type'              => 'integer',
-                'description'       => 'Id of the section the widget interracts with.',
+                'description'       => 'Id of the section the widget interacts with.',
                 'visible'           => ['type', 'in', ['selector_section', 'selector_section_wide']]
             ],
 
@@ -124,14 +124,14 @@ class Widget extends Model {
                     'select_one()'  => 'select',
                     'submit()'      => 'submit',
                     'image_full()'  => 'show image',
-                    'play()'        => 'play media'  
+                    'play()'        => 'play media'
                 ],
                 'default'           => 'ignore'
             ]
 
         ];
     }
-    
+
     public static function onupdateContent($orm, $oids, $values, $lang) {
         trigger_error("ORM::calling qursus\Widget:onupdateContent", QN_REPORT_DEBUG);
         $res = $orm->read(__CLASS__, $oids, ['content'], $lang);
@@ -139,8 +139,8 @@ class Widget extends Model {
         if($res > 0 && count($res)) {
             foreach($res as $oid => $odata) {
                 if(strpos($odata['content'], '</p>') !== false) {
-                    $str = str_replace(["\r\n", "\n"], '', $odata['content']);                    
-                    // $str = str_replace("/p><p", "/p><br /><p", $odata['content']);                    
+                    $str = str_replace(["\r\n", "\n"], '', $odata['content']);
+                    // $str = str_replace("/p><p", "/p><br /><p", $odata['content']);
                     $str = str_replace('</p>', '┐', $str);
                     $str = preg_replace('/<p[^>]*>([^┐]*)┐/im', '$1', $str);
                     $str = str_replace('<br>', '<br />', $str);
