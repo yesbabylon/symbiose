@@ -38,7 +38,7 @@ class Module extends Model {
             'link' => [
                 'type'              => 'computed',
                 'description'       => "URL to visual edior of the module.",
-                'function'          => 'qursus\Module::calcLink',
+                'function'          => 'calcLink',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
                 'store'             => true,
