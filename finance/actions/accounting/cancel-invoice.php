@@ -8,7 +8,7 @@
 use finance\accounting\Invoice;
 use sale\receivable\Receivable;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => 'Cancel an invoice.',
     'params'        => [
 

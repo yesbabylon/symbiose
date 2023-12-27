@@ -10,7 +10,7 @@ use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 use inventory\service\Subscription;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => "Create a receivable.",
     'params'        => [
         'id' =>  [
