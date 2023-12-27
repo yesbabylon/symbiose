@@ -39,7 +39,7 @@ if($user_id <= 0) {
     Check if user is granted access over given pack
 */
 
-// root(1), admin(2) and editor(3) are always granted
+// root(1), admin(2) and main author(3) are always granted
 if($user_id > 3) {
     // check that the user is granted to access target module
     $access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
