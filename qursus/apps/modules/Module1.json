@@ -1,0 +1,1305 @@
+{
+    "identifier": 1,
+    "name": "Module 1",
+    "title": "Why every organisation should have an Insider Threat Program",
+    "description": "Find out what the Insider Threat is    Explore threat data    Discover the ROI of Insider Threat Programs",
+    "duration": 15,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Why every organisation should have an Insider Theat Program",
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "Why every  organisation  should have an  Insider Theat  Program"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Find out what the Insider  Threat is    Explore threat data    Discover the ROI of Insider  Threat Programs"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "opacity": 0.5,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "It's not a matter of “if”.  It's a matter of “when”."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You try to log into your work computer. It seems the system is blocked. A vengeful IT team member, who was fired earlier, has blocked all IT systems."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "What will most likely be your first thought?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "Oh no! Not again.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "I did not know we were that vulnerable to actions from one single employee.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "This would not have happened if we had an effective Insider Threat Program in place.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "This is not an imaginary scenario. The 'Insider Threat' is real.",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Here is a surprising fact:    **In 2018, 99% of organisations will report feeling vulnerable to Insider Threat attacks.**    This means it is time to act. All organisations, and especially those that work within transportation and critical infrastructure, have to develop, implement and evaluate Insider Threat Progams."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.submitted",
+                                "=",
+                                true
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.submitted",
+                        "=",
+                        true
+                    ]
+                },
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "A definition of the Insider Threat"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "1.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Insider Threat",
+                                            "align": "left",
+                                            "has_separator_left": true
+                                        },
+                                        {
+                                            "type": "sound",
+                                            "content": "ɪnˈsaɪdəʳ θrɛt",
+                                            "sound_url": "../images/module1/sound-insider_threat.mp3",
+                                            "has_separator_left": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Any individual with inside knowledge or access has the potential to harm the organisation and its people."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click on the 4 must knows:"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector",
+                                            "content": "",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Insiders are not always employees"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Have you thought of the following examples? They all have either inside knowledge or access to an organisation:  * Contractors * Subcontractors * Interns * Job students * Business partners * Vendors * Suppliers"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The supply chain shows where assets are at risk"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Organisational assets can also be present at the location of other organisations, or other organisations might have access to your organisation's assets or data.    Of course, this has to be taken into account when developing an Insider Threat Program."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Incidents happen daily but most cases remain undetected"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Small incidents can have great effect. These Insider incidents often go unnoticed:   * No security program and/or policies.  * Lending ID cards to colleagues.  * Illegal copying of information to personal devices.  * Sharing passwords.  * Letting visitors in without ID cards."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 5,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Malicious Insiders act in different ways"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "* **Theft:** Espionage, data loss, property theft, or media leaks.  * **Sabotage:** The destruction of organisational equipment, compromise of operations, corruption of information, or disruption of the decision-making ability.  * **Workplace violence:** Intimidating co-workers, physical violence, stabbings, shootings. * **Terrorism support, infiltration, radicalisation:** Recruiting co-workers, using organisational assets to provide material support to terrorist organisations, or attempting to influence organisational policy or operations."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                4
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        4
+                    ]
+                },
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "video",
+                                            "content": "",
+                                            "video_url": "../images/module1/video-insider_threat.mp4",
+                                            "on_click": "play()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "align": "right",
+                                            "content": "Security employee unmasks a colleague  and prevents an Insider attack     01:48"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        1                        
+                    ]
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Threat data"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "1.2",
+                                            "has_separator_left": false,
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "align": "left",
+                                            "content": "Threat types",
+                                            "has_separator_left": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insiders who want to harm an organisation are a serious threat. However, all organisations have to be aware of other types of Insider Threats as well."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click on the items to explore the various types of Insider Threats."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "Malicious",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "Negligent",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "Accidental",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Malicious",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Employees who aim to hurt the organisation or colleagues."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Motivation**  * Personal advantage * Money * Plotical or religious belief"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Examples**  * Terrorism (support)  * Theft (of information)  * Violence or threat of violence  * Espionage  * Helping others obtain illegal access"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Negligent",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Employees who are aware of security policies and procedures but decide to bypass them."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Motivation**  * Carelessness  * Helping co-workers  * Ignorance"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Examples**  * Lending security badges to co-workers.  * Taking home or sharing information.  * Lack of 'Bring Your Own Device(BYOD) policy/procedures.  * Unauthorised use of PEDs (Personal Electronic Device)."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Accidental",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Employees who are aware of security policies and procedures but accidentally bypass them."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Examples**  * Leaving your computer unlocked.  * Leaving a door unlocked.  * Accidentally sharing information."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        3
+                    ]
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "We are not prepared"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "More and more organisations are becoming aware of the Insider Threat. Data confirms that we are insufficently prepared. We are not equipped to deal with minor accidental threats, let alone major malicious and terrorist threats from the inside."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Click on the items to explore the Insider Threat data."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "Concerns",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "Attacks",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "Programs in place",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Concerns",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You already know that 99% of organisations will feel vulnerable to Insider Threat attacks in 2018. But what types of Insider Threats are they concerned about?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module1/widget-pie_chart_concerns.jpg",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Source: '2018 Insider Threat REPORT' By Cybersecurity Insiders**"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Attacks",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Sometimes one Insider attack can have global impact. Perhaps you can remember the suicidal Germanwings co-pilot who willingly crashed his Airbus, killing 150 persons, including himself. This one incident has led to stricter policies concerning the mental health of flight deck crew.    However, the following statistics show the scale of the Insider Threat we are dealing with:   * In the US, there were 1.900+ reported incidents. About 9% of these incidents involved malicious Insiders.   * 53% of organisations confirmed Insider attacks against their organisation in the past 12 months."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Programs in place",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insider Threat Programs help counter the threat we are facing. But how many organisations have a program in place?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module1/widget-pie_chart_programs.jpg",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Source: '2018 Insider Threat REPORT' By Cybersecurity Insiders**"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ]
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        5
+                    ]
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "The ROI of an Insider Threat Program"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "1.3",
+                                            "has_separator_left": false,
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The costs of Insider incidents"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insider Threats are both costly and damaging.   In absence of European data, let us have a look at some FBI figures:   * The average cost of an Insider incident is €350.000.  * Average victim loss: ~€15M / year.  * Multiple incidents exceed €1 billion."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "A well-built and implemented Insider Threat Program provides real and immediate Return on Investment (ROI)."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_wide",
+                                            "content": "Show me  the ROI",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The Return On Investment"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Return on Investment possibilities**   * Increased client confidence.  * Reduced risk of compromise.  * Increased employee productivity.  * Increased investor confidence.  * Protection of brand and reputation.  * Create asset protection culture.  * Lower insurance premiums.  * Employees feeling safer.  * More efficient decision making.  * Early threat detection.  * Lower remediation cost(s).  * Reduced impact of compromise.  * Halt the loss of intellectual property.  * Halt the loss of sensitive commercial information.  * Bolster existing security measures.  * Reduced time to resolve incidents."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "background_image": "../images/module1/leaf-euro_chart.png",
+                            "background_opacity": 0.5,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        1
+                    ]
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "A surprising fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Half of the employees who left or lost their jobs in the last 12 months kept confidential corporate data.    40% of them plan to use it at their new job!"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Any individual with inside knowledge or access has the potential to harm the organisation and its people.    All organisations are vulnerable to Insider Threats.     A well-built and implemented Insider Threat Program provides real and immediate Return on Investment (ROI)."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ],
+    "selection": 1
+}

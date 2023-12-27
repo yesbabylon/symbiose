@@ -1,0 +1,1072 @@
+{
+    "identifier": 7,
+    "name": "Module 7",
+    "title": "Best practices",
+    "description": "Meet 3 security experts with vast Insider Threat Program building experience    Find out what we have learned so far from effective programs",
+    "duration": 17,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Best practices",
+            "description": "Meet 3 security experts with vast Insider Threat Program building experience    Find out what we have learned so far from effective programs",
+            "duration": 17,
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "7",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "Best practices"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Meet 3 security experts with vast Insider Threat Program building experience    Find out what we have learned so far from effective programs"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'Trust, but verify.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Interview 1",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "7.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Where to start?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "In this module you will learn about 3 security experts who managed Insider Threat case(s) and agreed to share their experience in handling these.    **Risk analysis**  The first step we took was a complete risk analysis. We found out that we were definitely a target, so we had to assess the size of the threat.    Next we analysed the measures that we already had in place and how much of the threat this covered. Then we looked at the rest of the threat, and determined if it was an acceptable risk.    **HR is the first line of defence**  There is always a risk when hiring new employees. That is why HR is our first line of defence. We trained them to check resumes for inconsistencies. If you know what to look for, this is of an enormous help.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A simple example we encountered was a resume of a 26-year-old, with 2 Master degrees and several trips around the world. Sure, it looked good, but where did this person get the time and money to do all this?    **Feedback loop**  We also implemented a feedback loop, where departments discussed who they hired, how the selection procedure had gone and how that correlates to how these employees function now. This proved very valuable and made the whole process much more efficient.    **Training**  The last thing I want to mention here is that we invested in training of security employees in a simple form of profiling. They learned to be more aware of what they see, feel and hear. 'Trust your gut' is what we tell them."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What went well?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Management was open to the notion of an Insider Threat Program**  We were lucky to have the full support of the management. They were open to the notion of an Insider Threat Program and did not need a lot of convincing. This was an important part of getting our organisation to accept the program."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What issues did you encounter?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Assessing your colleagues as potential threats**  It proved hard for employees to see their colleagues as potential threats. These are their co-workers, their friends, the people they see every day. These are not bad people, so employees tend to turn a blind eye. This is something we had to address."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What did you learn?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**No snitching**  Employees seemed to have difficulty reporting about colleagues. It felt like snitching. This requires a definite mindset change. It is all about protecting each other; this is what we need our employees and colleagues to understand."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What would you advise?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**No emotions**  Try not to let emotions lead this process. Make it a matter of fact and do an honest objective analysis of the threat in your organisation. Act on all your findings and stick to the facts."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'Evolution instead of revolution.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Interview 2",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "7.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What have you done so far?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Eye opener**  We started our program after we had an unfortunate situation in our organisation. A malicious Insider had infiltrated our company with intentions of using our aircraft to smuggle money or drugs. After this incident we hired a security expert to lead our recovery program.    We learned our lesson the hard way.    **Rules and regulations**  The first thing we did was to strenghten our rules and regulations concerning security. We incorporated Insider Threat mitigation into our internal procedures, we trained employees and we toughened internal audits."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Awareness**  We focused on the Insider Threats awareness amongst our employees and made sure they all learned this by heart.    **Stricter pre-employment screening**  The program also entailed an even stricter pre-employment screening procedure. We improved the screening structure and added screening for (sub-)contractors, freelancers and interim employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What went well?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Riding the (shock)wave**  Because of this Insider Threat incident there was virtually no resistance to strengthen our security procedures and program. Everybody immediately understood that it was important to protect ourselves, our customers and our assets. The overriding theme remains that we should always be more vigilant."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What issues did you encounter?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Legal restrictions**  Unfortunately, some legal restrictions work against us. We would like to access more information about potential employees than we are currently allowed under national and EU laws. Our own legal department was quick to point out that we could not ask certain questions and these are limitations we have to deal with.    Another area of concern is that not all national governments within the EU have solid Criminal Record inssuance procedures, and in some countries Criminal Record forms are easily forged There is also a lack of a template database against which we can compare presented Criminal Record forms to verify their authenticity."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What did you learn?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Support from the top is important**  It cannot be repeated often enough, you need support from upper management. If they do not embrace the implementation of the Insider Threat Program, nobody else will."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What would you advise?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Start small**  Do not try to take all in at once. Start taking small measures that can be quickly implemented without much effort. It should be evolution, not revolution. This way you will get all employees gradually adjusted to the new more secure ways.    **Crustal clear communication**  Communication is key in making sure that your employees will follow the Insider Threat Porgram. Even if some information is on a need-to-know basis, be transparent about this and make sure that everyone understands it is not a 'witch-hunt' or a 'Big Brother is watching you' scenario.    **Last tip**  Remember, it is about protecting the company, its employees, its customers and its assets!"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'Pre-employment screening and background checks are no longer enough.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Interview 3",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "7.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 14,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "How to plan for success?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Security department**  Our first step was to create an independent (completely committed by upper management) department with clear goals, procedures and agreements. Its main focus was to detect and follow up on potential Insider Threats, both during the pre-employment and the employment period.    The department was populated with carefully selected staff that had a high level of integrity and previous experience. They all had to successfully follow a specific training trajectory.    **Awareness training and reporting line**  To raise more awareness about Insider Threats, we provided an awareness training to all employees. This in-house training emphasised on significant changes in attitudes, statements, clothing or physical appearance of co-workers. If considered important and/or worrying, all employees had the possibility to report their observations via a confidential internal channel."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The independent department followed up on these reports and took action, if necessary.    **One-off pre-employment and background checks are no longer enough**  We have a strict pre-employment screening, but we think it is equally important to keep tabs on our employees once they start working for our organisation. For example, we had an incident with a long-standing employee who posted explicit pictures and sympathetic comments with regards to certain terrorist organisations on social media.    As an organisation, it is important to not only detect this, but to also act fast. That is why we cannot rely on 'accidental discovery' when it comes to this kind of sudden divergent social media activity. We need a proactive approach.    In most cases, follow-up interviews about these divergent activities clear the aire. When they do not, other measures need to be taken."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 15,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What went well?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Commitment from the upper management**  Our upper management provided a clear policy on values and ethics, and committed themselves publicly through an internal manifesto."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What issues did you encounter?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Budget**  There were a lot of discussions about money and time. A program like this needs a budget and can cause delays. When we want to hire someone quickly, the background screening takes time, but it pays off afterwards.  We needed a clear stance, and today there is no confusion or discussion about our policies."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 16,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What did you learn?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**To be careful**  We learned along the way that we needed to be careful about how we handle reports and certain situations.    Feelings can get hurt easily, there is always a danger of misinterpretation, and this can put a strain on the employer-employee relationship, if there is not a clear and open relation between parties.    Handle every observation, report and situation about this subject with care and professionalism."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What would you advise?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Make sure all stakeholders are prepared**  When starting a program like this all stakeholders and social partners should be informed. This includes all of your employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 17,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "An sobering fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "85% of applicants lie on their resume!"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "7",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Pre-employment checks should be part of your Insider Threat Program, but the screening should not stop here ('infinity screening').    Employees need to be made aware of the Insider Threat.    Commitment from upper management is key for a program against Insider Threats."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library.",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

@@ -1,0 +1,1176 @@
+{
+    "identifier": 6,
+    "name": "Module 6",
+    "title": "Creating awareness",
+    "description": "Learn that a communication strategy is essential when you are creating awareness    Explore the conditions for effective training    Find out how important it is to evaluate training effectiveness",
+    "duration": 13,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Creating awareness",
+            "description": "Learn that a communication strategy is essential when you are creating awareness    Explore the conditions for effective training    Find out how important it is to evaluate training effectiveness",
+            "duration": 13,
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "6",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "Creating awareness"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Learn that a communication strategy is essential when you are creating awareness    Explore the conditions for effective training    Find out how important it is to evaluate training effectiveness"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Most organisations have permanent workers and workers with a variety of temporary contracts.",
+                                            "align": "right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Who are most likely to become malicious Insiders?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "Full employment workers.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "Temporary workers, independent contractors and interns.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "Non-employees, such as: guests, visitors, etc.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Of course, all three categories pose a similar threat.",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Here is an interesting fact:**  Most organisations with Insider Theat Programs screen employees before the pre-employment stage. But they do not screen temporary workers and/or visitors that have access to restricted areas.    For anyone who aims to harm an organisation and/or its people, getting employed as a contractor is in these cases the easiest way to get unrestricted access."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'It is about protecting the employees, the customers and the companies' assets.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Strategy",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "6.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Change does not occur overnight",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A well-thought-out program based on a holistic approach is one thing, ensuring behavioural change is most certainly another.    **Defining a strategy**  A defined startegy to push for behavioural change is essential. Some considerations:  * Management should be involved to create broad (political) support.  * Themes and tone of messages will vary by audience and should be consistent with the organisation's culture (stronger tones are more appropriate for management and organisations with a strong security culture).  * Consider adopting an image or motto for the program to help brand the message.  * Strategy should include training and awareness.  * Strategy should include feedback loops.  * Do not overdo communications, which might lead to message fatigue.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Create a positive and empowering narrative"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Communication on the Insider Threat should not scare employees. On the contrary, they should feel empowered to act.    Have a look at the negative campaigns below."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module6/widget-negative-campaign.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module6/widget-positive-campaign.png",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Three tips**  1. Messages should be about protecting employees, assets and information - it is not a **'spy on or report your co-worker'** program.  2. Materials should be appropriate and relevant: avoid upsetting images on materials.  3. Use of the term 'Insider Therat' will not be appealing to many in the workforce."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        4
+                    ]
+                },
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Think about privacy",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**When communicating about the Insider Threat Program, it is important:**  * To properly introduce the program to the employees.  * To create absolute transparency of purpose and objectives.  * To ensure corporate values are communicated and adhered to.  * To have a joint strategy across departments (HR, Communication, PR, etc.).  * To continuously coordinate with the company's legal counsel and/or privacy management.  * To make sure that there is no profiling.  * To involve Unions from the early stages."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Positioning the program"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The positioning of the Insider Threat Program can make or break its effectiveness. Check the model below to see how to position your program in the workforce."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "image_url": "../images/module6/widget-core-principal.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Click to enlarge"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Training",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "6.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Content of the training",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The agenda of a complete and thorough Insider Threat Training Program should include the following:    **A definition of Insider Threat**  Define what your organisation considers as Insider Threats. Does this definition include theft? Fraud? Espionage? Workplace violence? Sabotage? Other criminal activities?    **The scope of the program**  Make sure all employees know what the Insider Threat Program entails. Find a balance between transparency and effectiveness. Some measures are not effective if potential Insiders know about them.    **Impactful stories and messages**  The narrative of the training should be focused on making the problem relevant to employees.    **Explanation of 3 types of (Insider) Threats.**  Employees should be aware of accidental negligent and malicious threats."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Rules of behaviour**  Clarify what is expected of your employees.    **How to tell you are being targeted**  Give insights and practical tips about social engineering, spam, etc.    **Red flags of potential (Insider) Threat**  Train your employees to recognise behaviours that may be suspicious.    **Reporting procedures**  Clear reporting procedures are imperative. If an employee is not aware of what will happen with his/her reported observations, the threshold might be extremely high. When anonymous and/or confidential reporting procedures are in place, make sure employees are aware of it."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Train everyone",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What to train**  Train all incoming employees, as well as:  * Interns and temporary employees  * Contractors  * Consultants  * Freelancers  * Partners  * Tenants"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Not one and done",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Your job is never done**  The training of employees should eb an ongoing process with periodic interventions. These interventions can take several forms, like: e-learning, group sessions, e-mails, screensavers and posters in the workspace.    The goal is to keep the program in the minds of your employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Training tips",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "There are several ways to make your training more effective and engaging. We have selected four tips that are easy to implement and will make your training more impactful."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "notice",
+                                            "content": "Browse through the 4 series of tips:"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector",
+                                            "content": "Fun",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector",
+                                            "content": "Short",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector",
+                                            "content": "Profession-al",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector",
+                                            "content": "Website",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Fun",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Positive**  As mentioned before, the training should be positive and empowering. Let employees practice with scenarios that are relevant to their work. Give practical advice, so that the employees can put this into practice in their every day life.    **Gamification**  Insider Threats are not a game, it you can make your training more enjoyable by taking elements from gaming. For instance:  * Spot the violation.  * Earn badges or other metaphors for progress.  * Compete for least violations (per department)."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                1
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Short",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Short reminders**  Short messages as reminders can substantially reinforce the impact of your training. These can be reminders that refer to training highlights by e-mail, through a poster or a flyer campaign.    **Trigger Messages**  Short messages can also be used as trigger messages to get your employees interested in your training. You can send out intriguing questions through all sorts of communication channels to get attention up front. This will make the actual training more effective."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                2
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Professional",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "All materials (e-learning, posters, flyers, etc.) should look simple and professional. This is the best way to attract serious attention to the subject."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                3
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 5,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Website",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A website/intranet that houses reference, training and awareness materials can be a valuable resource for employees. This gives the whole program a more professional touch."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                "$page.selection",
+                                "=",
+                                4
+                            ],
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        4
+                    ]
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Evaluation",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "6.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Evaluating your training",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Your strategy should include a method to get feedback on the program.    **Feedback loops**  Direct feedback on your training can be valuable information. If employees do not like the training or do not take it seriously, the impact will be low.    **Security surveys**  Monitoring security violations and security surveys can give insight on what behaviours should be addressed. This is valuable input to improve your training.    **Workplace climate surveys**  The right questions in a workplace climate survey can give insight on security perceptions amongst employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Aligning with best practices"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You should assess whether your organisaiton's policies align with best practices to protect against Insider Threats. The following criteria can help you do this."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "image_url": "../images/module6/widget-policy-eval-criteria.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Click to enlarge"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "An interesting fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Training can be boring, right?    33% of employees who attended corporate trainings say that the uninspiring content that they have to content with is the biggest barrier to learning."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "6",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Your training program should be positive and empowering.    Make your training more impactful by using the agenda and tips in this module.    Evaluation should be part of your training program."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

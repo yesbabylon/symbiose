@@ -1,0 +1,1331 @@
+{
+    "identifier": 5,
+    "name": "Module 5",
+    "title": "Human resources are key to a successful Insider Threat Program",
+    "description": "Find out why safe hiring is essential    Explore the possibilities of continous evaluation    Learn that post-employment awareness is just as important",
+    "duration": 20,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Human resources are key to a successful Insider Threat Program",
+            "description": "Find out why safe hiring is essential    Explore the possibilities of continous evaluation    Learn that post-employment awareness is just as important",
+            "duration": 20,
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "5",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "Human resources are key to a successful Insider Threat Program"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Find out why safe hiring is essential    Explore the possibilities of continous evaluation    Learn that post-employment awareness is just as important"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Most organisations have permanent workers and workers with a variety of temporary contracts.",
+                                            "align": "right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Who are most likely to become malicious Insiders?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "Full employment workers.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "Temporary workers, independent contractors and interns.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "Non-employees, such as: guests, visitors, etc.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Of course, all three categories pose a similar threat.",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Here is an interesting fact:**  Most organisations with Insider Theat Programs screen employees before hiring them. But they do not screen temporary workers and/or visitors that have access to restricted areas.    For anyone who aims to harm an organisation and/or its people, getting employed as a contractor is in these cases the easiest way to get unrestricted access."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Pre-employment & safe hiring",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "5.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "headline",
+                                            "content": "'If people lie their way into a job, chances are that they will be dishonest on-the-job.'"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What are people less honest about?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**'I was a Manager'**  In reality this person was an Assistant.    **'I worked there for several years'**  In reality this person is trying to hide a gap.    **'I earned XX euros per year'**  In reality this person is lying about their previous salary.    **'I graduated from University XYZ'**  In reality this person did not attend courses at said University, or did not get a degree from it.    **Are you aware that:**  * The world is flooded with fake degrees?  * Authentic-looking fake diplomas are available on the Internet for many schools in the EU and USA (including fictitious schools/universities)?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "How to distinguish truths from lies?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Since most HRM staff, tasked with interviewing potential candidates, cannot identify potential bad hires during the interview and recruitment process, it is strongly recommended that HRM interviewers receive adequate training in recognising inconsistencies and what constitues 'red flags'. When inconsistencies are noted, they should be able to enquire them thoroughly.    **Some considerations**  * Even though many experienced HRM people believe they can effectively detect liars, they only have a 50% chance, at best.  * Some applicants tell their lie(s) so often that they naturally come across as honest; they actually end up believing their stories/lies.  * Unfortunately, indicators such as: body language, eyes, voice, etc. are **not** always reliable."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What is a 'bad hire'?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "It is not uncommon for an employer to hire someone who turns out to be unfit for the job, unqualified, or even dangerous.    **Are you aware that:**  * Employees are typically a firm's greatest investment and largest cost, especially in service providers?  * Each new hire represents a potential risk?  * Every employer has the obligation to exercise 'Due Diligence'⁎ when hiring?  * Employers, especially in industries with higher risk, actually vouch for the integrity and honesty of their employees?  * Identity fraud during pre-employment is not uncommon, as applicants use false social security numbers, passports and Criminal Records forms?"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "⁎ *Due Diligence is the duty of a firm's directors and officers to act prudently when evaluating associated risks in all transactions.*"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What does a 'bad hire' do?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A bad hire may impact an organisation in various ways.    **Some examples:**  * Theft  * Fraud  * Embezzlement  * Data breach  * Intellectual property (IP) theft  * Workplace violence"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "**The effect of a bad hire**  All of the above examples lead to the same result. The integrity of the organisation is impacted."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The costs of a 'bad hire'",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "When employers fail to exercise Due Diligence in their hiring process, and just one bad hire slips through, it can damage the company in many ways:    **Possible impact**  * Lost customers or business.  * Damage to employee morale.  * Lower employee retention.  * Brand damage/destruction.  * Damage to corporate culture.  * Litigation.  * High profile cases with far reaching consequences (especially on social media)."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **The financial impact**  The average cost of a bad hire is approximately €50.000 in the US and in the UK."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "8 reasons to develop a 'Safe Hiring Program'",
+                                            "align": "right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "1. Safe hiring will help mitigate Insider Threat(s).  2. A bad hire will have a negative financial impact.  3. Replacing a bad hire will have a financial impact as well, especially on management and director level.  4. Safe hiring will prevent workplace harassment and/or (verbal) violence.  5. Bad hires can upset the present workforce and /or union(s).  6. Bad hiring may lead to costly legal fees and litigation.  7. Safe hiring will prevent shareholder lawsuits/litigation (especially in litigious societies).  8. Bad hires will have a detrimental effect on the reputation (brand damage) of the organisation.",
+                                            "has_separator_right": true                                            
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What others do to ensure safe hiring",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Some countries are already proactive in getting the pre-employment screening routine known within industry(ies).    Unforturnely many see it is as a cumbersome and difficult process, with too many pitfalls. For example, in the aviation industry they leave it to the authorities when they perform the background check on Airport ID Card applications."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "An effective approach in 9 steps",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**#1 Risk assessment**  Map all possible risks and threats, and rate them based on potential impact.    **#2 Score all job roles**  Determine which fraud or misconduct can be committed in which roles. Combine with the risk rates.    **#3 Determine screening levels**  Build three control packages and apply these three screening levels (low, medium, high) to all roles.    **#4 Screen all new employees**  Protect the entire organisation and screen everyone. Never be discriminatory.    **#5 Decide how to interpret results**  Determine red lines and interpretations. Be prepared and practice with scenarios."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**#6 Map the complete process**  Capture all actions from getting consent to the interpretation of results. Ensure that responsibilities, roles and timelines are clear.    **#7 Be transparent**  Inform new employees about the steps, the actual status and outcome of a screening.    **#8 Always get candidate consent**  Never start a screening without explicit consent from a candidate.    **#9 Publish the policy and procedures internally**  Get everyone on board and inform (hiring managers) on how they can contribute."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }                        
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        1
+                    ]
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Pre-employment check and screening",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What is pre-employment screening?**  Pre-employment screening involves verification of information provided by an applicant, with his/her express written consent.    A typical international screening means contacting the employers and schools that have been listed, and conducting a reasonable crimincal record check to the possible extent in that country.    If more information is needed, the applicant may be asked to supply it."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Getting the basics right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Sources of information are often public. Private records serve as verification of credentials."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Consent in writing under national and state laws, where applicable."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Rationale: Pre-employment screening discourages applicants who have something to hide and ecourages honesty."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Even-handed: Similarly situated people are treated likewise."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Effectiveness: No single tool can be relied upon; a series of overlapping tools is needed."
+                                        },
+                                        {
+                                            "type": "first_capital",
+                                            "content": "Not 'Big Brother is watching', but a valuable Due Diligence employment tool."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "An integral approach",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Screening**  Depending on the type of organisation and the role and responsibilities of the applicant, there are several elements a screening might include, such as:  * Mental health testing.  * Psychological assessment."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "**Clear policies and procedures**  *Supervisor and co-worker training to recognise danger signals.  * Culture of safety, reporting and integrity.  * Internal controls and continuous evaluation."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The 'Know Your Candidate' campaign"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Know your candidate is a British organisation that provides resources and guidance in order to help UK companies in their pre-employment process. It provides valuable insights on how pre-employment screening can be performed effectively."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module5/widget-know-candidate.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Click the image to view it at full size."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light",
+                            "background_image": "../images/module5/widget-safe-hiring.png"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Safe hiring;  a summary",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Safe Hiring - Stages of the recruitment/hiring process**  Hiring occurs regularly. It is critical to understand different legal obligations depending on each stage of the hiring process."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Continuous evaluation",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "5.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Infinity screening",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Awareness doesn't stop after a new hire enters through 'the front door'. Organisations should always be aware of potential risks and threats, such as:  * Persons with substantial authority.  * Persons with wide access to IT or sensitive financial and/or proprietary information.  * Persons with access to cash, accounting, etc.  * Persons in sensitive positions with access to confidential information, such as: customer lists, operational information, financial information, etc.  * Persons who can make (large) financial decisions.  * Any current or former employee/contractor with a grievance, and who might have access to a weapon (e.g.: ex-military, law enforcement, security staff, etc.)."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Risks during employment"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Below you will find a new examples of predictable, unpredictable and hidden risks.    **Predictable risks**  An employee may have access to cash or assets, and while the need for internal controls might be well known, specific controls may need to be implemented.    **Unpredictable risks**  * An employee may develop financial issues, undergo stressful periods, have addition issues, such as gambling, alcohol or drugs.  * The supervisor may suggest, encourage, imply or order an employee to perform acts of questionable honesty.  **Hidden risks**  A person with a political agenda gets a job to secretly pursue a goal that is detrimental to the employer's interests."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 14,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Due Diligence",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What is it?**  Continuous or infinity screening that occurs periodically after hiring.    **Why do it?**  * Employees may commit crime(s) after being hired.  * Embezzlers often come disguised as your best employees.  * Trust is needed in order to have the necessary access to steal or cause harm."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **Considerations**  * What will be the return on investment given the time, cost, and administrative issues?  * What are the main legal obstacles?  * Although screening is critical to detect and deter fraud, internal controls seem to be the critical tool in preventing surprises."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Credit reports",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What is it?**  Some employees use credit (check) reports to determine if applicants are trustworthy and responsible enough for handling cash and company assets.    **Why do it?**  * May reveal excessive levels of debt or spending.  * Could be a sign of a potential threat.  * Could be consistent with numerous innocent explanations (red flags)."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "**Considerations**  * Future employers may choose to go beyond a credit report to search for assets.  * This search most likely leads to capture the 'dumb' dishonest Insider, i.e. not cleaver enough to put assets into someone else's name (e.g. spouse).  * Entity search may help to see if someone is getting vendor 'kickbacks' by showing an association with a vendor."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 15,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Social media checks",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**What is it?**  Where permitted by law, screening of social media of employees for worrisome content, possibly with specific IT tools.    **Why do it?**  * Employees may share content that conflicts with the ethics of the organisation.  * Employees may showcase a predisposition, drive or motivation to become an Insider Threat."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **Considerations**  * Software tools lack nuances.  * Screening large numbers can be expensive when done manually by trained professionals or organisations.  * There are various ethical, legal, discriminatory, privacy and accuracy issues."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**How do you make sure you do it right?**  * Perform social media checks behind an 'Ethics Wall', i.e. a neutral employee who does not make hiring decisions, who filters out material using standardised procedures, and who only provides job related data to the decision maker (preferably after there has been a offer).  * Have documented training about discrimination (for HR/recruiting staff and those who perform pre-employment and background checks).  * Establish standard practices to show decisions are made objectively.  * Do not let the decision maker view unfiltered Internet/social media data.  * Consider showing negative material to the applicant first."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 16,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Post-employment",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "5.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 17,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Three scenarios you want to avoid",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "1. Ex-employees who still have access to restricted sites.  2. Ex-employees who keep hold of IT hardware.  3. Ex-employees who still have access to data or administration software."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "5 tips for managing post-employment"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**1. Handle with care** : As a general rule, pay attention to the people leaving your organisation.  **2. Plan an exit conversation** : Have a conversation on the employee's last day, about their potential anger or frustrations, and get a feel of the risk the person might pose. This will help understand if this person may become a risk.  **3. Use checklists** : Create a checklist for existing employees. Make sure all devices, keys, cards and any other means of company access are returned.  **4. Change passwords** : Do not forget to change general passwords or access codes when an employee leaves.  **5. Delete accounts** Delete the employee's account on his or her last day."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "next_active": []
+                },
+                {
+                    "identifier": 18,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "An interesting fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Most organisations are not prepared for Insider Threats.    A survery amongst IT professionals says most companies are not prepared for Insider Threats. Not only are most companies incapable of deterring the threat, but most of them also believe that they lack the necessary capabilities to detect and address it."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "5",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Make sure that your pre-employment screening process is solid in order to avoid bad hires.    You should have a continuous (infinity) evaluation in place for employees. Awareness doesn't stop after a new hire starts his or her job.    Make sure that your off-boarding (exit) procedures are solid for employees who are leaving your organisation."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
