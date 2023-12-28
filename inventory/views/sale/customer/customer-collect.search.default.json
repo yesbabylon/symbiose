@@ -59,6 +59,35 @@
                                                 "width": "50%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Inventory Product",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_id",
+                                                "label": "Service",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "software_id",
+                                                "label": "Software",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_id",
+                                                "label": "Subscription",
+                                                "width": "25%"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
