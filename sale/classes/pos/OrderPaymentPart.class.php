@@ -8,6 +8,10 @@ namespace sale\pos;
 
 class OrderPaymentPart extends \sale\booking\Payment {
 
+    public function getTable() {
+        return 'sale_pos_orderpaymentpart';
+    }
+
     public static function getColumns() {
         return [
 
