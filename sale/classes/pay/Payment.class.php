@@ -16,7 +16,7 @@ class Payment extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
-                'description'       => "The partner to whom the booking relates."
+                'description'       => "The partner to whom the payment relates."
             ],
 
             'amount' => [
@@ -127,11 +127,9 @@ class Payment extends Model {
                 if($payment['funding_id']) {
                     // make sure a partner_id is assigned to the payment
                     if(!$payment['partner_id']) {
-                        $fundings = $om->read('sale\booking\Funding', $payment['funding_id'], [
+                        $fundings = $om->read('sale\pay\Funding', $payment['funding_id'], [
                                 'type',
                                 'due_amount',
-                                'booking_id.customer_id.id',
-                                'booking_id.customer_id.name',
                                 'invoice_id',
                                 'invoice_id.partner_id.id',
                                 'invoice_id.partner_id.name'
@@ -140,9 +138,6 @@ class Payment extends Model {
 
                         if($fundings > 0) {
                             $funding = reset($fundings);
-                            $values = [
-                                'partner_id' => $funding['booking_id.customer_id.id']
-                            ];
                             if($funding['type'] == 'invoice')  {
                                 $values['partner_id'] = $funding['invoice_id.partner_id.id'];
                                 $values['invoice_id'] = $funding['invoice_id'];
