@@ -63,7 +63,7 @@ class OrderPaymentPart extends \sale\booking\Payment {
         if($parts > 0) {
             foreach($parts as $pid => $part) {
                 $om->write(get_called_class(), $pid, ['order_id' => $part['order_payment_id.order_id'] ], $lang);
-            }            
+            }
         }
     }
 

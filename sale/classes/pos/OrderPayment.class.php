@@ -54,7 +54,7 @@ class OrderPayment extends Model {
                 'foreign_object'    => OrderLine::getType(),
                 'foreign_field'     => 'order_payment_id',
                 'ondetach'          => 'null',
-                'description'       => 'The order lines selected for the payement.',
+                'description'       => 'The order lines selected for the payment.',
                 'onupdate'          => 'onupdateOrderLinesIds'
             ],
 
@@ -62,7 +62,7 @@ class OrderPayment extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => OrderPaymentPart::getType(),
                 'foreign_field'     => 'order_payment_id',
-                'description'       => 'The parts that relate to the payement.',
+                'description'       => 'The parts that relate to the payment.',
                 'onupdate'          => 'onupdateOrderPaymentPartsIds'
             ],
 
@@ -118,14 +118,17 @@ class OrderPayment extends Model {
 
     public static function calcTotalPaid($om, $ids, $lang) {
         $result = [];
-        $payments = $om->read(__CLASS__, $ids, ['order_payment_parts_ids.amount'], $lang);
+        $payments = $om->read(self::getType(), $ids, ['order_payment_parts_ids'], $lang);
         if($payments > 0) {
-            foreach($payments as $oid => $payment) {
-                $result[$oid] = 0.0;
-                foreach($payment['order_payment_parts_ids.amount'] as $part) {
-                    $result[$oid] += $part['amount'];
+            foreach($payments as $id => $payment) {
+                $result[$id] = 0.0;
+                $parts = $om->read(OrderPaymentPart::getType(), $payment['order_payment_parts_ids'], ['status', 'amount'], $lang);
+                foreach($parts as $part) {
+                    if($part['status'] == 'paid') {
+                        $result[$id] += $part['amount'];
+                    }
                 }
-                $result[$oid] = round($result[$oid], 2);
+                $result[$id] = round($result[$id], 2);
             }
         }
         return $result;
