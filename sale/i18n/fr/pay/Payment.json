@@ -61,6 +61,15 @@
             "label": "Financement",
             "description": "Financement de réservation lié au paiement.",
             "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut du paiement.",
+            "selection": {
+                "pending": "En attente",
+                "paid": "Payé"
+            },
+            "help": ""
         }
     },
     "view": {
