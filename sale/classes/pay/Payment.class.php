@@ -118,10 +118,10 @@ class Payment extends Model {
     public static function onupdateFundingId($om, $ids, $values, $lang) {
         trigger_error("ORM::calling sale\pay\Payment::onupdateFundingId", QN_REPORT_DEBUG);
 
-        $payments = $om->read(self::getType(), $ids, ['funding_id', 'partner_id', 'funding_id.due_amount', 'amount', 'statement_line_id']);
+        $payments = $om->read(self::getType(), $ids, ['funding_id', 'partner_id']);
 
         if($payments > 0) {
-            $fundings_ids = [];
+            // $fundings_ids = [];
             foreach($payments as $pid => $payment) {
 
                 if($payment['funding_id']) {
@@ -147,11 +147,11 @@ class Payment extends Model {
                     }
 
                     $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null, 'paid_amount' => null]);
-                    $fundings_ids[] = $payment['funding_id'];
+                    // $fundings_ids[] = $payment['funding_id'];
                 }
             }
             // force immediate re-computing of the is_paid field
-            $om->read('sale\pay\Funding', array_unique($fundings_ids), ['is_paid', 'paid_amount']);
+            // $om->read('sale\pay\Funding', array_unique($fundings_ids), ['is_paid', 'paid_amount']);
         }
     }
 
