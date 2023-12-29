@@ -50,7 +50,7 @@ foreach($receivablesQueues as $id => $receivablesQueue) {
                 'customer_id',
                 'product_id',
                 'price_id',
-                'price_unit',
+                'unit_price',
                 'vat_rate',
                 'qty',
                 'free_qty',

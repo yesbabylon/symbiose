@@ -87,7 +87,7 @@ $receivables = Receivable::ids($params['ids'])
         'customer_id',
         'product_id',
         'price_id',
-        'price_unit',
+        'unit_price',
         'vat_rate',
         'qty',
         'free_qty',
@@ -109,7 +109,7 @@ foreach($receivables as $id => $receivable) {
             'invoice_id'                       => $invoice['id'],
             'product_id'                       => $receivable['product_id'],
             'price_id'                         => $receivable['price_id'],
-            'unit_price'                       => $receivable['price_unit'],
+            'unit_price'                       => $receivable['unit_price'],
             'qty'                              => $receivable['qty'],
             'free_qty'                         => $receivable['free_qty'],
             'discount'                         => $receivable['discount']
