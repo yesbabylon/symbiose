@@ -1,43 +1,48 @@
 {
-    "name": "Operations",
-    "description": "List of cashdesk operations.",
-    "access": {
-        "groups": ["pos.default.user"]
-    },
-    "order": "created",
-    "sort": "desc",
-    "layout": {
-        "items": [
-            {
-                "type": "field",
-                "value": "name",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "created",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "user_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "cashdesk_id",
-                "width": "20%"
-            },
-            {
-                "type": "field",
-                "value": "type",
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "amount",
-                "width": "15%"
-            }
-        ]
-    }
+	"name": "Operations",
+	"description": "List of cashdesk operations.",
+	"access": {
+		"groups": ["pos.default.user"]
+	},
+	"order": "created",
+	"sort": "desc",
+	"header": {
+		"actions": {
+			"ACTION.CREATE" : false
+		}
+	},
+	"layout": {
+		"items": [
+			{
+				"type": "field",
+				"value": "name",
+				"width": "20%"
+			},
+			{
+				"type": "field",
+				"value": "created",
+				"width": "15%"
+			},
+			{
+				"type": "field",
+				"value": "user_id",
+				"width": "20%"
+			},
+			{
+				"type": "field",
+				"value": "cashdesk_id",
+				"width": "20%"
+			},
+			{
+				"type": "field",
+				"value": "type",
+				"width": "10%"
+			},
+			{
+				"type": "field",
+				"value": "amount",
+				"width": "15%"
+			}
+		]
+	}
 }
