@@ -6,6 +6,11 @@
     },
     "order": "created",
     "sort": "desc",
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : false
+        }
+    },
     "layout": {
         "items": [
             {
