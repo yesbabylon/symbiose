@@ -23,14 +23,7 @@ list($params, $providers) = eQual::announce([
         'type' => [
             'type'        => 'string',
             'description' => 'Code of the type of identity.',
-            'selection'   => [
-                'all' => 'All',
-                'I'   => 'Individual',
-                'SE'  => 'Self-Employed',
-                'C'   => 'Company',
-                'NP'  => 'Non-profit/School',
-                'PA'  => 'Public Administration'
-            ],
+            'selection'   => ['all', 'I', 'SE', 'C', 'NP', 'PA'],
             'readonly'    => true,
             'default'     => 'all'
         ],
@@ -74,30 +67,6 @@ list($params, $providers) = eQual::announce([
         'address' => [
             'type'        => 'string',
             'description' => 'Address the contact'
-        ],
-
-        'product_id' => [
-            'type'           => 'many2one',
-            'foreign_object' => 'inventory\Product',
-            'description'    => 'Product to which the customer.'
-        ],
-
-        'software_id' => [
-            'type'           => 'many2one',
-            'foreign_object' => 'inventory\Software',
-            'description'    => 'Software to which the customer.'
-        ],
-
-        'service_id' => [
-            'type'           => 'many2one',
-            'foreign_object' => 'inventory\service\Service',
-            'description'    => 'Service to which the customer.'
-        ],
-
-        'subscription_id' => [
-            'type'           => 'many2one',
-            'foreign_object' => 'inventory\service\Subscription',
-            'description'    => 'Customer to which the subscription belongs.',
         ],
     ],
     'response'    => [
@@ -153,22 +122,6 @@ foreach ($columns as $column) {
         $params['domain'],
         ['id', 'in', $customersIds]
     );
-}
-
-$columnsParamKeysMap = [
-    'products_ids'      => 'product_id',
-    'services_ids'      => 'service_id',
-    'softwares_ids'     => 'software_id',
-    'subscriptions_ids' => 'subscription_id',
-];
-
-foreach ($columnsParamKeysMap as $column => $paramKey) {
-    if (empty($params[$paramKey])) {
-        continue;
-    }
-
-    $customersIds = Customer::search([$column, 'contains', $params[$paramKey]])->ids();
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['id', 'in', $customersIds]);
 }
 
 $result = eQual::run('get', 'model_collect', $params, true);

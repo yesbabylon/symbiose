@@ -10,7 +10,7 @@ use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
 use inventory\service\Subscription;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => "Create a receivable.",
     'params'        => [
         'id' =>  [
@@ -68,7 +68,7 @@ $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivablesQueue['id']],
         ['product_id', '=', $subscription['product_id']],
         ['price_id', '=', $price['id']],
-        ['status', '=', 'proforma'],
+        ['status', '=', 'pending'],
     ])
     ->read(['id'])
     ->first();
