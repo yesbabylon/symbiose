@@ -3,14 +3,12 @@
     "description": "",
     "access": {
         "groups": ["pos.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "label": "General Info",
-                        "id": "section.operation_section",
                         "rows": [
                             {
                                 "columns": [
@@ -20,10 +18,30 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "75%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -33,14 +51,14 @@
                                                 "widget": {
                                                     "header": {
                                                         "actions":{
-                                                            "ACTION.CREATE": false  
+                                                            "ACTION.CREATE": false
                                                         }
                                                     }
                                                 }
                                             },
                                             {
-                                                "type": "field",
-                                                "value": "type",
+                                                "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
