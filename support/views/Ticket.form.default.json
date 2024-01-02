@@ -31,7 +31,7 @@
             "description": "Ticket will be submitted and marked as open.",
             "controller": "support_ticket-close",
             "confirm": true,
-            "visible": ["status", "=", "pending"]
+            "visible": ["status", "in", ["open","pending","waiting"]]
         }
     ],
     "layout": {
