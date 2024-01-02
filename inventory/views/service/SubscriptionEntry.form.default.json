@@ -4,24 +4,12 @@
     "actions": [
         {
             "id": "action.receivable",
-            "label": "receivable",
-            "controller": "sale_receivable_add-receivable",
+            "label": "Receivable",
+            "controller": "inventory_sale_receivable_add-receivable",
             "visible": [
-                [
-                    "state",
-                    "<>",
-                    "draft"
-                ],
-                [
-                    "has_receivable",
-                    "=",
-                    false
-                ],
-                [
-                    "is_billable",
-                    "=",
-                    true
-                ]
+                ["state", "<>", "draft"],
+                ["has_receivable", "=", false],
+                ["is_billable", "=", true]
             ]
         }
     ],
@@ -40,6 +28,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "subscription_id",
+                                                "readonly": true,
                                                 "label": "Subscription",
                                                 "width": "100%"
                                             },
@@ -59,12 +48,14 @@
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
+                                                "readonly": true,
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
+                                                "readonly": true,
                                                 "width": "50%"
                                             },
                                             {
@@ -76,37 +67,26 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Quantity",
-                                                "value": "qty",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "is_billable",
                                                 "label": "is Billable",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_receivable",
                                                 "label": "Has Receivable",
+                                                "readonly": true,
                                                 "width": "50%",
-                                                "visible": [
-                                                    "state",
-                                                    "<>",
-                                                    "draft"
-                                                ]
+                                                "visible": ["state", "<>", "draft"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "receivable_id",
                                                 "label": "Receivable",
+                                                "readonly": true,
                                                 "width": "50%",
-                                                "visible": [
-                                                    "state",
-                                                    "<>",
-                                                    "draft"
-                                                ]
+                                                "visible": ["state", "<>", "draft"]
                                             }
                                         ]
                                     }

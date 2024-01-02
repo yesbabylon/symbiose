@@ -1,35 +1,6 @@
 {
     "name": "Subscription",
     "description": "Subscription of a service.",
-    "actions": [
-        {
-            "id": "action.receivable",
-            "label": "receivable",
-            "controller": "inventory_sale_receivable_add-receivable",
-            "visible": [
-                [
-                    "state",
-                    "<>",
-                    "draft"
-                ],
-                [
-                    "is_internal",
-                    "=",
-                    false
-                ],
-                [
-                    "has_receivable",
-                    "=",
-                    false
-                ],
-                [
-                    "is_billable",
-                    "=",
-                    true
-                ]
-            ]
-        }
-    ],
     "layout": {
         "groups": [
             {

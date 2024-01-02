@@ -8,57 +8,55 @@
 use sale\price\Price;
 use sale\receivable\Receivable;
 use sale\receivable\ReceivablesQueue;
-use inventory\service\Subscription;
+use inventory\service\SubscriptionEntry;
 
 list($params, $providers) = eQual::announce([
-    'description'   => "Create a receivable.",
-    'params'        => [
+    'description' => 'Create a receivable from a subscription entry.',
+    'params'      => [
         'id' =>  [
-            'description'   => 'ID of the subscription.',
-            'type'          => 'integer',
-            'required'      => true
+            'description' => 'ID of the subscription entry.',
+            'type'        => 'integer',
+            'required'    => true
         ]
     ],
-
-    'response'      => [
+    'response'    => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'   => ['context', 'orm']
 ]);
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$subscription = Subscription::id($params['id'])
-                ->read(
-                    ['id',
-                    'customer_id',
-                    'name',
-                    'product_id',
-                    'price_id',
-                    'price',
-                    'qty',
-                    'has_receivable'
-                ])
-                ->first();
+$subscriptionEntry = SubscriptionEntry::id($params['id'])
+    ->read([
+        'id',
+        'customer_id',
+        'name',
+        'product_id',
+        'price_id',
+        'price',
+        'qty',
+        'has_receivable'
+    ])
+    ->first();
 
-if(!$subscription) {
-    throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
+if(!$subscriptionEntry) {
+    throw new Exception('unknown_subscription_entry', QN_ERROR_UNKNOWN_OBJECT);
 }
-$customer_id = $subscription['customer_id'];
 
-$receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $customer_id])->read(['id'])->first();
+$receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $subscriptionEntry['customer_id']])
+    ->read(['id'])
+    ->first();
 
 
 if(!$receivablesQueue) {
-    $receivablesQueue = ReceivablesQueue::create([
-            'customer_id'   => $customer_id
-        ])
+    $receivablesQueue = ReceivablesQueue::create(['customer_id' => $subscriptionEntry['customer_id']])
         ->first();
 }
 
-$price =Price::id($subscription['price_id'])->read(['id','vat_rate'])->first();
+$price = Price::id($subscriptionEntry['price_id'])->read(['id','vat_rate'])->first();
 
 if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
@@ -66,7 +64,7 @@ if(!$price) {
 
 $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivablesQueue['id']],
-        ['product_id', '=', $subscription['product_id']],
+        ['product_id', '=', $subscriptionEntry['product_id']],
         ['price_id', '=', $price['id']],
         ['status', '=', 'pending'],
     ])
@@ -74,25 +72,23 @@ $receivable = Receivable::search([
     ->first();
 
 if(!$receivable) {
-
     $receivable = Receivable::create([
-        'receivables_queue_id'   => $receivablesQueue['id'],
-        'date'                   => time(),
-        'product_id'             => $subscription['product_id'],
-        'price_id'               => $price['id'],
-        'unit_price'             => $subscription['price'],
-        'vat_rate'               => $price['vat_rate'],
-        'qty'                    => $subscription['qty'],
-        'description'            => 'reference subscription',
+        'receivables_queue_id' => $receivablesQueue['id'],
+        'date'                 => time(),
+        'product_id'           => $subscriptionEntry['product_id'],
+        'price_id'             => $price['id'],
+        'unit_price'           => $subscriptionEntry['price'],
+        'vat_rate'             => $price['vat_rate'],
+        'qty'                  => $subscriptionEntry['qty'],
+        'description'          => 'reference subscription',
     ])
     ->first();
 
-    Subscription::ids($subscription['id'])
-    ->update([
-        'has_receivable' => true,
-        'receivable_id'  => $receivable['id']
-    ]);
-
+    SubscriptionEntry::id($subscriptionEntry['id'])
+        ->update([
+            'has_receivable' => true,
+            'receivable_id'  => $receivable['id']
+        ]);
 }
 
 $context->httpResponse()
