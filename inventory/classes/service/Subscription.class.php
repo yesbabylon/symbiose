@@ -295,8 +295,8 @@ class Subscription extends Model  {
     public static function calcPrice($self) {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['price_id']['price'];
+        foreach($self as $id => $subscription) {
+            $result[$id] = $subscription['price_id']['price'];
         }
         return $result;
     }
@@ -323,7 +323,7 @@ class Subscription extends Model  {
     public static function onupdateHasSubscription($self) {
         $self->read(['service_id']);
         foreach($self as $id) {
-            Service::ids($id['service_id'])->update(['has_subscription' => true]);
+            Service::id($id['service_id'])->update(['has_subscription' => true]);
         }
     }
 
