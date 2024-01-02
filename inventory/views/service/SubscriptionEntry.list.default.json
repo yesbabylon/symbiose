@@ -1,8 +1,7 @@
 {
-    "name": "Subscription",
-    "description": "Default listing of all subscriptions.",
-    "controller": "inventory_service_subscription-collect",
-    "order": "date_from,date_to,name",
+    "name": "Subscription entry",
+    "description": "Default listing of all subscription entries.",
+    "order": "date_from,date_to",
     "sort": "asc",
     "operations": {
         "total": {
@@ -19,15 +18,16 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "name",
-                "width": "20%",
-                "sortable": true
+                "value": "date_from",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",
@@ -38,23 +38,8 @@
             },
             {
                 "type": "field",
-                "value": "is_expired",
-                "label": "Expired",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "has_upcoming_expiry",
-                "label": "Upcoming expiry",
-                "width": "20%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "service_id",
-                "label": "Service",
+                "value": "subscription_id",
+                "label": "Subscription",
                 "width": "30%"
             },
             {
@@ -65,25 +50,10 @@
             },
             {
                 "type": "field",
-                "value": "has_external_provider",
-                "label": "Has external provider",
-                "width": "20%",
-                "readonly": true,
-                "sortable": true
-            },
-            {
-                "type": "field",
                 "value": "is_billable",
                 "label": "Billable",
                 "width": "15%",
                 "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "is_internal",
-                "label": "Internal",
-                "width": "15%",
                 "readonly": true
             },
             {

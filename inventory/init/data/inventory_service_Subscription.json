@@ -10,12 +10,11 @@
                 "description": "",
                 "date_from": "2023-03-10T00:00:00+00:00",
                 "date_to": "2024-03-10T00:00:00+00:00",
-                "duration": "Annual",
+                "duration": "yearly",
                 "ref_order": "",
                 "license_key": "15f37785-9b7d-2f57-d56b-39ad1639631b6",
                 "service_id": 2,
-                "product_id": 1,
-                "price": 100
+                "product_id": 1
             },
             {
                 "id": 2,
@@ -23,12 +22,11 @@
                 "description": "",
                 "date_from": "2023-01-08T00:00:00+00:00",
                 "date_to": "2024-01-08T00:00:00+00:00",
-                "duration": "Annual",
+                "duration": "yearly",
                 "ref_order": "",
                 "license_key": "cee2f4e7538c9a56c465ac37c9320fa2b1",
                 "service_id": 3,
-                "product_id": 1,
-                "price": 100
+                "product_id": 1
             },
             {
                 "id": 3,
@@ -37,44 +35,37 @@
                 "description": "",
                 "date_from": "2023-07-09T00:00:00+00:00",
                 "date_to": "2023-08-09T00:00:00+00:00",
-                "duration": "Monthly",
+                "duration": "monthly",
                 "ref_order": "",
                 "license_key": "",
                 "service_id": 1,
-                "product_id": 1,
-                "price": 1
+                "product_id": 1
             },
             {
                 "id": 4,
                 "state": "instance",
-                "has_receivable": true,
-                "receivable_id": 1,
                 "name": "subscription FPDF",
                 "description": "",
                 "date_from": "2023-05-12T00:00:00+00:00",
                 "date_to": "2023-06-12T00:00:00+00:00",
-                "duration": "Monthly",
+                "duration": "monthly",
                 "ref_order": "",
                 "license_key": "",
                 "service_id": 4,
-                "product_id": 3,
-                "price": 10
+                "product_id": 3
             },
             {
                 "id": 5,
                 "state": "instance",
-                "has_receivable": true,
-                "receivable_id": 2,
                 "name": "sub calendar",
                 "description": "",
                 "date_from": "2023-07-11T00:00:00+00:00",
                 "date_to": "2024-01-11T00:00:00+00:00",
-                "duration": "Half-annual",
+                "duration": "half-yearly",
                 "ref_order": "",
                 "license_key": "",
                 "service_id": 5,
-                "product_id": 1,
-                "price": 10
+                "product_id": 1
             }
         ]
     }

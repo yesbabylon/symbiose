@@ -3,7 +3,8 @@
     "depends_on": [
         "core",
         "identity",
-        "finance"
+        "finance",
+        "inventory"
     ],
     "apps": ["sale", "pos"]
 }

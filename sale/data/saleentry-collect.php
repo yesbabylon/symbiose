@@ -21,7 +21,7 @@ list($params, $providers) = eQual::announce([
 
         'is_billable' => [
             'type'              => 'boolean',
-            'description'       => 'The lines that are assigned to the statement.',
+            'description'       => 'Can be billed to the customer.',
             'default'           => false
         ],
 

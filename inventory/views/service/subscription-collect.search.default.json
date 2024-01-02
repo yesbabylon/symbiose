@@ -64,13 +64,13 @@
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
-                                                "label": "Product (Customer)",
+                                                "label": "Product",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "catalog_product_id",
-                                                "label": "Product (Catalog)",
+                                                "label": "Catalog product",
                                                 "width": "20%"
                                             }
                                         ]

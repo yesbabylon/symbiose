@@ -35,6 +35,8 @@
             {
                 "sections": [
                     {
+                        "label": "Subscription Infos",
+                        "id": "section.subscription",
                         "rows": [
                             {
                                 "columns": [
@@ -64,15 +66,7 @@
                                         ]
                                     }
                                 ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "sections": [
-                    {
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {
@@ -216,6 +210,37 @@
                                                 "width": "50%",
                                                 "widget": {
                                                     "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Entries",
+                        "id": "section.subscription-entries",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "view": "list.default",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
