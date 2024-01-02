@@ -32,7 +32,8 @@ class Receivable extends Model {
                 'type'              => 'datetime',
                 'description'       => 'The entry is linked to a Receivable entry.',
                 'required'          => true,
-                'default'           => time()
+                'default'           => time(),
+                'dependencies'      => ['price_id']
             ],
 
             'invoice_line_id' => [
@@ -82,7 +83,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
                 'required'          => true,
-                'dependencies'      => ['name']
+                'dependencies'      => ['name', 'price_id']
             ],
 
             'price_id' => [
@@ -91,15 +92,18 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the line relates to (assigned at line creation).',
                 'dependencies'      => ['unit_price'],
-                'function'          => 'calPriceId',
+                'function'          => 'calcPriceId',
                 'store'             => true
             ],
 
             'unit_price' => [
-                'type'              => 'float',
+                'type'              => 'computed',
+                'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the line.',
-                'dependencies'      => ['total', 'price']
+                'dependencies'      => ['total', 'price'],
+                'function'          => 'calcUnitPrice',
+                'store'             => true
             ],
 
             'vat_rate' => [
@@ -211,36 +215,44 @@ class Receivable extends Model {
     }
 
     public static function calcPriceId($self) {
-
         $result = [];
         $self->read(['date', 'product_id']);
-        foreach($self as $id => $receivables_queue) {
-
+        foreach($self as $id => $receivable) {
             $price_lists_ids = PriceList::search([
                 [
-                    ['date_from', '<=', $receivables_queue['date']],
-                    ['date_to', '>=', $receivables_queue['date']],
+                    ['date_from', '<=', $receivable['date']],
+                    ['date_to', '>=', $receivable['date']],
                     ['status', '=', 'published'],
                 ]
-            ] )
+            ])
             ->ids();
 
             $price = Price::search([
-                ['product_id', '=', $receivables_queue['product_id']],
-                ['price_list_id', 'in', $price_lists_ids]
-                ])->read(['id'])->first();
+                    ['product_id', '=', $receivable['product_id']],
+                    ['price_list_id', 'in', $price_lists_ids]
+                ])
+                ->read(['id'])
+                ->first();
 
             $result[$id] = $price['id'];
         }
         return $result;
     }
 
+    public static function calcUnitPrice($self) {
+        $result = [];
+        $self->read(['price_id' => ['price']]);
+        foreach($self as $id => $receivable) {
+            $result[$id] = $receivable['price_id']['price'];
+        }
+        return $result;
+    }
 
     public static function calcName($self) {
         $result = [];
         $self->read(['product_id' => ['name']]);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['product_id']['name'];
+        foreach($self as $id => $receivable) {
+            $result[$id] = $receivable['product_id']['name'];
         }
         return $result;
     }
@@ -257,28 +269,28 @@ class Receivable extends Model {
     }
 
     /**
-     * Get total tax-excluded price of the line.
+     * Get total tax-excluded price of the receivable.
      *
      */
     public static function calcTotal($self) {
         $result = [];
         $self->read(['qty','unit_price','free_qty','discount']);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+        foreach($self as $id => $receivable) {
+            $result[$id] = $receivable['unit_price'] * (1.0 - $receivable['discount']) * ($receivable['qty'] - $receivable['free_qty']);
         }
         return $result;
     }
 
     /**
-     * Get final tax-included price of the line.
+     * Get final tax-included price of the receivable.
      *
      */
     public static function calcPrice($self) {
         $result = [];
         $self->read(['total','vat_rate']);
-        foreach($self as $id => $line) {
-            $total = (float) $line['total'];
-            $vat = (float) $line['vat_rate'];
+        foreach($self as $id => $receivable) {
+            $total = (float) $receivable['total'];
+            $vat = (float) $receivable['vat_rate'];
             $result[$id] = round($total * (1.0 + $vat), 2);
         }
         return $result;

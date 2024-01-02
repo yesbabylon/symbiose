@@ -63,13 +63,10 @@ class SubscriptionEntry extends \sale\SaleEntry {
             ],
 
             'price_id' => [
-                'type'           => 'computed',
-                'result_type'    => 'many2one',
+                'type'           => 'many2one',
                 'foreign_object' => 'sale\price\Price',
                 'description'    => 'Price of the subscription entry.',
-                'dependencies'   => ['price'],
-                'store'          => true,
-                'function'       => 'calcPriceId'
+                'dependencies'   => ['price']
             ],
 
             'price' => [
@@ -86,7 +83,7 @@ class SubscriptionEntry extends \sale\SaleEntry {
                 'description'    => 'Quantity of product.',
                 'default'        => 1,
                 'visible'        => false
-            ],
+            ]
 
         ];
     }
@@ -94,8 +91,8 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcIsBillable($self) {
         $result = [];
         $self->read(['subscription_id' => ['is_billable']]);
-        foreach ($self as $id => $subscription) {
-            $result[$id] = $subscription['subscription_id']['is_billable'];
+        foreach ($self as $id => $subscriptionEntry) {
+            $result[$id] = $subscriptionEntry['subscription_id']['is_billable'];
         }
         return $result;
     }
@@ -103,8 +100,8 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcCustomerId($self) {
         $result = [];
         $self->read(['subscription_id' => ['customer_id']]);
-        foreach ($self as $id => $subscription) {
-            $result[$id] = $subscription['subscription_id']['customer_id'];
+        foreach ($self as $id => $subscriptionEntry) {
+            $result[$id] = $subscriptionEntry['subscription_id']['customer_id'];
         }
         return $result;
     }
@@ -112,17 +109,8 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcProductId($self) {
         $result = [];
         $self->read(['subscription_id' => ['product_id']]);
-        foreach ($self as $id => $subscription) {
-            $result[$id] = $subscription['subscription_id']['product_id'];
-        }
-        return $result;
-    }
-
-    public static function calcPriceId($self) {
-        $result = [];
-        $self->read(['subscription_id' => ['price_id']]);
-        foreach ($self as $id => $subscription) {
-            $result[$id] = $subscription['subscription_id']['price_id'];
+        foreach ($self as $id => $subscriptionEntry) {
+            $result[$id] = $subscriptionEntry['subscription_id']['product_id'];
         }
         return $result;
     }
@@ -130,8 +118,8 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcPrice($self) {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['price_id']['price'];
+        foreach($self as $id => $subscriptionEntry) {
+            $result[$id] = $subscriptionEntry['price_id']['price'];
         }
         return $result;
     }

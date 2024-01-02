@@ -41,6 +41,7 @@ class Subscription extends Model  {
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
                 'default'           => time(),
+                'dependencies'      => ['price_id']
             ],
 
             'date_to' => [
@@ -48,7 +49,7 @@ class Subscription extends Model  {
                 'description'       => 'End date of subscription.',
                 'required'          => true,
                 'default'           => strtotime('+1 year'),
-                'dependencies'      => ['is_expired','has_upcoming_expiry']
+                'dependencies'      => ['price_id', 'is_expired','has_upcoming_expiry']
             ],
 
             'duration' => [
@@ -152,8 +153,8 @@ class Subscription extends Model  {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Price of the subscription.',
-                'function'          => 'calcPrice',
-                'store'             => true
+                'store'             => true,
+                'function'          => 'calcPrice'
             ],
 
             'customer_id' => [
