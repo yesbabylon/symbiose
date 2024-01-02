@@ -102,15 +102,14 @@ class Ticket extends Model {
     }
 
     /**
-     * Handler for field status.
      * Used to intercept ticket submission and create a first entry.
-     */
-    public static function onupdateStatus($om, $oids, $values, $lang) {
-        $tickets = $om->read(self::getType(), $oids, ['creator', 'status', 'description', 'environment', 'attachments_ids']);
+    */
+    public static function onupdate($om, $ids, $values, $lang) {
+        $tickets = $om->read(self::getType(), $ids, ['creator', 'status', 'description', 'environment', 'attachments_ids']);
         if($tickets > 0 && count($tickets)) {
             foreach($tickets as $tid => $ticket) {
                 // if ticket status just changed to 'open',
-                if($ticket['status'] == 'open') {
+                if(isset($values['status']) && $values['status'] == 'open' && $ticket['status'] == 'draft') {
                     // create a first ticket entry by duplicating the description
                     $entry_id = $om->create(TicketEntry::getType(), [
                             'creator'       => $ticket['creator'],
