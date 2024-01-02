@@ -1,6 +1,16 @@
 {
     "name": "Subscription",
     "description": "Subscription of a service.",
+    "actions": [
+        {
+            "id": "action.subscription",
+            "label": "Entry",
+            "controller": "inventory_service_add-subscriptionentry",
+            "visible": [
+                ["state", "<>", "draft"]
+            ]
+        }
+    ],
     "layout": {
         "groups": [
             {

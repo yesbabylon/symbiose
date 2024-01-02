@@ -33,7 +33,6 @@ $subscriptionEntry = SubscriptionEntry::id($params['id'])
     ->read([
         'id',
         'customer_id',
-        'name',
         'product_id',
         'price_id',
         'price',
