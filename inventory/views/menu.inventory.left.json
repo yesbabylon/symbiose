@@ -23,7 +23,7 @@
                 "description": "",
                 "context": {
                     "entity": "sale\\customer\\Customer",
-                    "view": "list.default",
+                    "view": "list.inventory",
                     "order": "id",
                     "sort": "asc"
                 }
