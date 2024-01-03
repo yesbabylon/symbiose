@@ -44,7 +44,8 @@
                                                 "value": "name",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "heading": true
+                                                    "heading": true,
+                                                    "required": true
                                                 }
                                             }
                                         ]
@@ -86,7 +87,8 @@
                                                 "value": "description",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "height": 500
+                                                    "height": 500,
+                                                    "required": true
                                                 }
                                             }
                                         ]
