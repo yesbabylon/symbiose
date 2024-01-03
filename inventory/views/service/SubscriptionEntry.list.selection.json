@@ -1,6 +1,6 @@
 {
-    "name": "Subscription entries",
-    "description": "Default listing of all subscription entries.",
+    "name": "Selected Subscription entries",
+    "description": "Default listing of selected subscription entries.",
     "order": "date_from,date_to",
     "sort": "asc",
     "operations": {
@@ -25,28 +25,16 @@
             {
                 "type": "field",
                 "value": "date_from",
-                "width": "15%",
+                "width": "30%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "date_to",
-                "width": "15%",
+                "width": "30%",
                 "sortable": true,
                 "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "subscription_id",
-                "label": "Subscription",
-                "width": "30%"
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "15%"
             },
             {
                 "type": "field",
@@ -59,7 +47,7 @@
             {
                 "type": "field",
                 "value": "price",
-                "width": "10%",
+                "width": "15%",
                 "sortable": true
             }
         ]

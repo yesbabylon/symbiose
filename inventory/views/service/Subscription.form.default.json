@@ -215,13 +215,7 @@
                                                 "value": "subscription_entries_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "header": {
-                                                        "view": "list.default",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]

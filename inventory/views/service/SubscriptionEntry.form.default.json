@@ -62,8 +62,13 @@
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "readonly": true,
-                                                "width": "50%"
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "label": "Price amount",
+                                                "width": "20%"
                                             },
                                             {
                                                 "type": "field",
