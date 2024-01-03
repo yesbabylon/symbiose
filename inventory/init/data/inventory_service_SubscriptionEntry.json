@@ -8,14 +8,16 @@
                 "state": "instance",
                 "subscription_id": 4,
                 "date_from": "2023-03-12T00:00:00+00:00",
-                "date_to": "2023-04-12T00:00:00+00:00"
+                "date_to": "2023-04-12T00:00:00+00:00",
+                "price_id": 3
             },
             {
                 "id": 2,
                 "state": "instance",
                 "subscription_id": 4,
                 "date_from": "2023-04-12T00:00:00+00:00",
-                "date_to": "2023-05-12T00:00:00+00:00"
+                "date_to": "2023-05-12T00:00:00+00:00",
+                "price_id": 3
             }
         ]
     }

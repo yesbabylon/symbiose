@@ -1,0 +1,18 @@
+[
+    {
+        "name": "core\\Task",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Update subscriptions expiration columns",
+                "controller": "inventory_service_subscription_update-expirations",
+                "is_active": true,
+                "is_recurring": true,
+                "is_exclusive": false,
+                "repeat_axis": "day",
+                "repeat_step": 1
+            }
+        ]
+    }
+]
