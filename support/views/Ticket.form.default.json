@@ -26,12 +26,20 @@
             "visible": ["status", "=", "draft"]
         },
         {
+            "id": "action.awaiting",
+            "label": "Awaiting",
+            "description": "Ticket will be marked as waiting for external dependency.",
+            "controller": "support_ticket-await",
+            "confirm": true,
+            "visible": ["status", "in", ["pending"]]
+        },
+        {
             "id": "action.close",
             "label": "Close",
             "description": "Ticket will be submitted and marked as open.",
             "controller": "support_ticket-close",
             "confirm": true,
-            "visible": ["status", "in", ["open","pending","waiting"]]
+            "visible": ["status", "in", ["open","waiting", "pending"]]
         }
     ],
     "layout": {
