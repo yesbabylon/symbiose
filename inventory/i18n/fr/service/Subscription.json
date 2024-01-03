@@ -1,0 +1,112 @@
+
+{
+    "name": "Abonnement",
+    "plural": "Abonnements",
+    "description": "Vue par défaut pour la liste des abonnements.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'abonnement.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'abonnement.",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Du",
+            "description": "Date de début de l'abonnement.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Date de fin de l'abonnement.",
+            "help": ""
+        },
+        "duration": {
+            "label": "Durée",
+            "description": "Type de durée de l'abonnement.",
+            "help": ""
+        },
+        "is_expired": {
+            "label": "Est expiré",
+            "description": "L'abonnement est expiré.",
+            "help": ""
+        },
+        "is_internal": {
+            "label": "Est expiré",
+            "description": "L'abonnement utilisé par l'entreprise en interne.",
+            "help": ""
+        },
+        "is_billable": {
+            "label": "Est expiré",
+            "description": "L'abonnement peut être facturé au client.",
+            "help": ""
+        },
+        "has_upcoming_expiry": {
+            "label": "Est expiré",
+            "description": "L'abonnement va arriver à expiriration.",
+            "help": ""
+        },
+        "has_external_provider": {
+            "label": "Est expiré",
+            "description": "L'abonnement à un fournisseur externe.",
+            "help": ""
+        },
+        "ref_order": {
+            "label": "Référence de commande",
+            "description": "Information à propos de la commande.",
+            "help": ""
+        },
+        "license_key": {
+            "label": "Clé de license",
+            "description": "Clé de license pour l'activation de l'abonnement.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit catalogue",
+            "description": "Le produit lié à l'abonnement.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Le prix du produit lié à l'abonnement.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix",
+            "description": "Le montant du prix du produit lié à l'abonnement.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client à qui est destiné cet abonnement.",
+            "help": ""
+        },
+        "subscription_entries_ids": {
+            "label": "Entrées",
+            "description": "Les entrées qui détails les périodes d'abonnement.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Abonnement",
+            "description": "",
+            "layout": {
+                "section.subscription-info": {
+                    "label": "Infos Abonnement"
+                },
+                "section.subscription-entries":{
+                    "label": "Entrées"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste des Abonnements",
+            "description": "Liste des Abonnements.",
+            "layout": {}
+        }
+    }
+}

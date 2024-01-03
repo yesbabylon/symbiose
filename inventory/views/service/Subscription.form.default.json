@@ -17,7 +17,7 @@
                 "sections": [
                     {
                         "label": "Subscription Infos",
-                        "id": "section.subscription",
+                        "id": "section.subscription-info",
                         "rows": [
                             {
                                 "columns": [
