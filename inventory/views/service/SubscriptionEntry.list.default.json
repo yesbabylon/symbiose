@@ -1,18 +1,7 @@
 {
-    "name": "Subscription entries",
+    "name": "Subscription Entries",
     "description": "Default listing of all subscription entries.",
-    "order": "date_from,date_to",
-    "sort": "asc",
-    "operations": {
-        "total": {
-            "price": {
-                "id": "operations.total.price",
-                "label": "Total price",
-                "usage": "amount/money:2",
-                "operation": "SUM"
-            }
-        }
-    },
+    "sort": "desc",
     "layout": {
         "items": [
             {
@@ -24,43 +13,61 @@
             },
             {
                 "type": "field",
+                "value": "customer_id",
+                "label": "Customer",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "product_id",
+                "label": "Product (Catalog)",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "subscription_id",
+                "label": "Subscription",
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "date_from",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "date_to",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "subscription_id",
-                "label": "Subscription",
-                "width": "30%"
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "15%"
+                "value": "price_id",
+                "label": "Price",
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "is_billable",
-                "label": "Billable",
-                "width": "15%",
+                "label": "Is Billable",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
-                "value": "price",
-                "width": "10%",
-                "sortable": true
+                "value": "has_receivable",
+                "label": "Has receivable",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "receivable_id",
+                "label": "Receivable",
+                "width": "10%"
             }
         ]
     }

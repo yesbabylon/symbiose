@@ -1,5 +1,5 @@
 {
-    "name": "Selected Subscription entries",
+    "name": "Selected Subscription Entries",
     "description": "Default listing of selected subscription entries.",
     "order": "date_from,date_to",
     "sort": "asc",

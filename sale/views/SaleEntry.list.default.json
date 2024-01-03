@@ -2,7 +2,7 @@
     "name": "Sale Entries",
     "description": "Default listing of all sale entries.",
     "controller": "sale_saleentry-collect",
-    "sort": "asc",
+    "sort": "desc",
     "layout": {
         "items": [
             {
