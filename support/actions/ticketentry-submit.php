@@ -37,7 +37,7 @@ list($context, $reporter, $auth) = [ $providers['context'], $providers['report']
 // retrieve the user making the submission
 $user_id = $auth->userId();
 
-$entry = TicketEntry::id($params['id'])->read(['id', 'status', 'ticket_id'])->first();
+$entry = TicketEntry::id($params['id'])->read(['id', 'creator', 'status', 'ticket_id'])->first();
 
 if(!$entry) {
     throw new Exception('unknown_ticket_entry', QN_ERROR_UNKNOWN);
@@ -54,8 +54,13 @@ if($ticket['creator'] == $user_id) {
     Ticket::id($entry['ticket_id'])->update(['status' => 'open']);
 }
 elseif(!isset($ticket['assignee_id']) || is_null($ticket['assignee_id'])) {
-    // #memo - this will set the ticket status to pending
-    Ticket::id($entry['ticket_id'])->update(['assignee_id' => $user_id]);
+    Ticket::id($entry['ticket_id'])
+        ->update(['assignee_id' => $user_id])
+        ->update(['status' => 'pending']);
+}
+elseif($ticket['assignee_id'] == $entry['creator']) {
+    Ticket::id($entry['ticket_id'])
+        ->update(['status' => 'pending']);
 }
 
 $context

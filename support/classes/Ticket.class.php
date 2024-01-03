@@ -128,7 +128,6 @@ class Ticket extends Model {
     }
 
     public static function onupdateAssigneeId($om, $oids, $values, $lang) {
-        $om->update(self::getType(), $oids, ['status' => 'pending']);
     }
 
     /**
