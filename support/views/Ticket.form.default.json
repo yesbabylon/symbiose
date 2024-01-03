@@ -28,7 +28,7 @@
         {
             "id": "action.awaiting",
             "label": "Awaiting",
-            "description": "Ticket will be marked as wainting for external dependency.",
+            "description": "Ticket will be marked as waiting for external dependency.",
             "controller": "support_ticket-await",
             "confirm": true,
             "visible": ["status", "in", ["pending"]]
