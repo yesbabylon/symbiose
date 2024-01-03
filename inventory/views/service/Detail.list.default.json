@@ -1,6 +1,6 @@
 {
-    "name": "Detail",
-    "description": "Default listing of all details.",
+    "name": "Details",
+    "description": "Default listing of all service details.",
     "order": "name",
     "sort": "asc",
     "layout": {

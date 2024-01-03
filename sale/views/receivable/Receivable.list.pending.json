@@ -1,6 +1,6 @@
 {
-    "name": "Receivables Pending",
-    "description": "This view is intended for displaying the Receivables.",
+    "name": "Pending Receivables",
+    "description": "This view is intended for displaying the Pending Receivables.",
     "access": {
     },
     "header": {

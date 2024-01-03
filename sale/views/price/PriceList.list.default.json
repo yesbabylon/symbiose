@@ -1,6 +1,6 @@
 {
-    "name": "Price List",
-    "description": "This view is intended for displaying the list of prices.",
+    "name": "Price Lists",
+    "description": "This view is intended for displaying the list of price lists.",
     "access": {
         "groups": ["sale.default.user"]
      },

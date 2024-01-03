@@ -1,5 +1,5 @@
 {
-    "name": "Access",
+    "name": "Accesses",
     "description": "Default listing of all accesses.",
     "domain": [],
     "controller": "inventory_access-collect",

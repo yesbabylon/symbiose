@@ -1,5 +1,5 @@
 {
-    "name": "Subscription",
+    "name": "Subscriptions",
     "description": "Default listing of all subscriptions.",
     "controller": "inventory_service_subscription-collect",
     "order": "date_from,date_to,name",

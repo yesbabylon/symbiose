@@ -1,6 +1,6 @@
 {
-    "name": "Receivables Queue",
-    "description": "This view is intended for displaying the Receivables Queue.",
+    "name": "Receivable Queues",
+    "description": "This view is intended for displaying the Receivable Queues.",
     "access": {
      },
     "header": {

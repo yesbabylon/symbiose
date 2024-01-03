@@ -1,5 +1,5 @@
 {
-    "name": "Ip Address",
+    "name": "Ip Addresses",
     "description": "Default listing of all Ip Addresses.",
     "order": "name",
     "group_by": [
