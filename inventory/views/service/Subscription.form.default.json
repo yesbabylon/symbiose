@@ -3,9 +3,17 @@
     "description": "Subscription of a service.",
     "actions": [
         {
-            "id": "action.subscription",
-            "label": "Entry",
-            "controller": "inventory_service_add-subscriptionentry",
+            "id": "action.shift-subscription",
+            "label": "Shift Period",
+            "controller": "inventory_service_subscription_shift-period",
+            "visible": [
+                ["state", "<>", "draft"]
+            ]
+        },
+        {
+            "id": "action.add-subscription-entry",
+            "label": "Create Entry",
+            "controller": "inventory_service_subscription_add-subscriptionentry",
             "visible": [
                 ["state", "<>", "draft"]
             ]
