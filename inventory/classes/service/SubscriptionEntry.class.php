@@ -27,13 +27,15 @@ class SubscriptionEntry extends \sale\SaleEntry {
             'date_from' => [
                 'type'           => 'date',
                 'description'    => 'Start date of the subscription period this entry covers.',
-                'required'       => true
+                'required'       => true,
+                'default'        => time()
             ],
 
             'date_to' => [
                 'type'           => 'date',
                 'description'    => 'End date of the subscription period this entry covers.',
-                'required'       => true
+                'required'       => true,
+                'default'        => strtotime('+1 year')
             ],
 
             'is_billable' => [
