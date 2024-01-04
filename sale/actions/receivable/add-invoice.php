@@ -11,7 +11,7 @@ use finance\accounting\InvoiceLineGroup;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => "Create a invoice.",
+    'description'   => 'Add receivables to an invoice.',
     'params'        => [
 
         'ids' =>  [
@@ -21,29 +21,20 @@ list($params, $providers) = announce([
             'required'          => true
         ],
 
-
-        'is_new_invoice' => [
-            'type'              => 'boolean',
-            'description'       => 'Mark the invoice as new.',
-            'default'           => false
-        ],
-
         'invoice_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'finance\accounting\Invoice',
-            'description'       => 'Invoice the line is related to.',
+            'description'       => 'If left empty a new invoice proforma will be created.',
             'domain'            => [
-                                    ['customer_id', '=', 'parent.customer_id'],
-                                    ['status', '=', 'proforma'],
-                                   ],
-            'visible'           => ['is_new_invoice',"=", false]
+                ['customer_id', '=', 'parent.customer_id'],
+                ['status', '=', 'proforma'],
+            ]
         ],
 
         'title' =>  [
             'description'       => 'Title of the invoice line Group.',
             'type'              => 'string',
-            'visible'           => ['is_new_invoice',"=", false],
-            'default'           =>  'Additional Services ('.date('Y-m-d').')',
+            'default'           => 'Additional Services ('.date('Y-m-d').')',
         ]
     ],
     'response'      => [
@@ -58,61 +49,56 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 
 $receivable_first = Receivable::ids($params['ids'])->read(['id', 'customer_id'])->first();
 
-if($params['is_new_invoice']) {
+if(empty($params['invoice_id'])) {
     $invoice = Invoice::create([
-            'customer_id'            =>$receivable_first['customer_id']
-        ])
+        'customer_id' => $receivable_first['customer_id']
+    ])
         ->first();
-}
-else{
+} else {
     $invoice = Invoice::search([
             ['id', '=', $params['invoice_id']],
             ['status', '=', 'proforma']
         ])
         ->read(['status'])
         ->first();
+
+    if (!$invoice) {
+        throw new Exception('unknown_invoice', QN_ERROR_UNKNOWN_OBJECT);
+    }
 }
 
 $invoice_line_group = InvoiceLineGroup::create([
-        'name'                  => $params['title'],
-        'invoice_id'            => $invoice['id']
-    ])->first();
+    'name'       => $params['title'],
+    'invoice_id' => $invoice['id']
+])
+    ->first();
 
-$receivables = Receivable::ids($params['ids'])
+$receivables = Receivable::search([
+    ['id', 'in', $params['ids']],
+    ['status', '=', 'pending']
+])
     ->read([
         'id',
-        'name',
-        "description",
-        'status',
-        'customer_id',
+        'description',
         'product_id',
         'price_id',
         'unit_price',
-        'vat_rate',
         'qty',
         'free_qty',
-        'discount',
-        'total',
-        'price'
-
+        'discount'
     ]);
 
 foreach($receivables as $id => $receivable) {
-
-    if ($receivable['status'] != 'pending') {
-        continue;
-    }
-
     $invoiceLine = InvoiceLine::create([
-            'description'                      => $receivable['description'],
-            'invoice_line_group_id'            => $invoice_line_group['id'],
-            'invoice_id'                       => $invoice['id'],
-            'product_id'                       => $receivable['product_id'],
-            'price_id'                         => $receivable['price_id'],
-            'unit_price'                       => $receivable['unit_price'],
-            'qty'                              => $receivable['qty'],
-            'free_qty'                         => $receivable['free_qty'],
-            'discount'                         => $receivable['discount']
+            'description'           => $receivable['description'],
+            'invoice_line_group_id' => $invoice_line_group['id'],
+            'invoice_id'            => $invoice['id'],
+            'product_id'            => $receivable['product_id'],
+            'price_id'              => $receivable['price_id'],
+            'unit_price'            => $receivable['unit_price'],
+            'qty'                   => $receivable['qty'],
+            'free_qty'              => $receivable['free_qty'],
+            'discount'              => $receivable['discount']
         ])
         ->first();
 
@@ -122,7 +108,6 @@ foreach($receivables as $id => $receivable) {
             'invoice_line_id' => $invoiceLine['id'],
             'status'          => 'invoiced'
         ]);
-
 }
 
 $context->httpResponse()
