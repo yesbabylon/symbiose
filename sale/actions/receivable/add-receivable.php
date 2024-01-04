@@ -11,7 +11,7 @@ use sale\receivable\ReceivablesQueue;
 use sale\SaleEntry;
 
 list($params, $providers) = announce([
-    'description'   => 'Create a receivable.',
+    'description'   => 'Create a receivable from a sale entry.',
     'params'        => [
         'id' =>  [
             'description'   => 'ID of the sale entry.',
@@ -19,7 +19,6 @@ list($params, $providers) = announce([
             'required'      => true
         ]
     ],
-
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',

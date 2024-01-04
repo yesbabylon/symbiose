@@ -11,9 +11,8 @@ use finance\accounting\InvoiceLineGroup;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => "Create a invoice.",
-    'params'        => [
-    ],
+    'description'   => 'Create invoices for all pending receivables.',
+    'params'        => [],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
