@@ -41,7 +41,7 @@ if(!$subscription) {
     throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$subscriptionEntry = SubscriptionEntry::search([
+$subscription_entry = SubscriptionEntry::search([
     ['subscription_id', '=', $subscription['id']],
     ['date_from', '=', $subscription['date_from']],
     ['date_to', '=', $subscription['date_to']]
@@ -49,8 +49,8 @@ $subscriptionEntry = SubscriptionEntry::search([
     ->read(['id'])
     ->first();
 
-if (!$subscriptionEntry) {
-    $subscriptionEntry = SubscriptionEntry::create([
+if (!$subscription_entry) {
+    $subscription_entry = SubscriptionEntry::create([
         'subscription_id' => $subscription['id'],
         'date_from'       => $subscription['date_from'],
         'date_to'         => $subscription['date_to'],

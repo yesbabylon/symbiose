@@ -29,7 +29,7 @@ list($params, $providers) = eQual::announce([
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$subscriptionEntry = SubscriptionEntry::id($params['id'])
+$subscription_entry = SubscriptionEntry::id($params['id'])
     ->read([
         'id',
         'customer_id',
@@ -41,49 +41,49 @@ $subscriptionEntry = SubscriptionEntry::id($params['id'])
     ])
     ->first();
 
-if(!$subscriptionEntry) {
+if(!$subscription_entry) {
     throw new Exception('unknown_subscription_entry', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$receivablesQueue = ReceivablesQueue::search(['customer_id', '=', $subscriptionEntry['customer_id']])
+$receivables_queue = ReceivablesQueue::search(['customer_id', '=', $subscription_entry['customer_id']])
     ->read(['id'])
     ->first();
 
 
-if(!$receivablesQueue) {
-    $receivablesQueue = ReceivablesQueue::create(['customer_id' => $subscriptionEntry['customer_id']])
+if(!$receivables_queue) {
+    $receivables_queue = ReceivablesQueue::create(['customer_id' => $subscription_entry['customer_id']])
         ->first();
 }
 
-$price = Price::id($subscriptionEntry['price_id'])->read(['id','vat_rate'])->first();
+$price = Price::id($subscription_entry['price_id'])->read(['id', 'vat_rate'])->first();
 
 if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
 }
 
 $receivable = Receivable::search([
-        ['receivables_queue_id', '=', $receivablesQueue['id']],
-        ['product_id', '=', $subscriptionEntry['product_id']],
-        ['price_id', '=', $price['id']],
-        ['status', '=', 'pending'],
+    ['receivables_queue_id', '=', $receivables_queue['id']],
+    ['product_id', '=', $subscription_entry['product_id']],
+    ['price_id', '=', $price['id']],
+    ['status', '=', 'pending'],
     ])
     ->read(['id'])
     ->first();
 
 if(!$receivable) {
     $receivable = Receivable::create([
-        'receivables_queue_id' => $receivablesQueue['id'],
+        'receivables_queue_id' => $receivables_queue['id'],
         'date'                 => time(),
-        'product_id'           => $subscriptionEntry['product_id'],
+        'product_id'           => $subscription_entry['product_id'],
         'price_id'             => $price['id'],
-        'unit_price'           => $subscriptionEntry['price'],
+        'unit_price'           => $subscription_entry['price'],
         'vat_rate'             => $price['vat_rate'],
-        'qty'                  => $subscriptionEntry['qty'],
+        'qty'                  => $subscription_entry['qty'],
         'description'          => 'reference subscription',
     ])
     ->first();
 
-    SubscriptionEntry::id($subscriptionEntry['id'])
+    SubscriptionEntry::id($subscription_entry['id'])
         ->update([
             'has_receivable' => true,
             'receivable_id'  => $receivable['id']
