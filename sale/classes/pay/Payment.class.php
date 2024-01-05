@@ -175,7 +175,7 @@ class Payment extends Model {
                 if(isset($values['amount'])) {
                     $payment_amount = round($values['amount'], 2);
                     $remaining_amount = round($payment['statement_line_id.remaining_amount'], 2) - $payment_amount;
-                    if($remaining_amount <= 0) {
+                    if($remaining_amount < 0) {
                         return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']})."]];
                     }
                 }
