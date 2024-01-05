@@ -2,8 +2,6 @@
 
 use inventory\service\Subscription;
 
-$providers = eQual::inject(['context', 'orm', 'auth', 'access']);
-
 $tests = [
     '0101' => [
         'description' => 'Tests that action update-expirations updates when subscription should be expired',
