@@ -5,7 +5,7 @@ use inventory\service\Subscription;
 $tests = [
     '0101' => [
         'description' => 'Tests that action update-expirations updates when subscription should be expired',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription that should have is_expired to true
             Subscription::create([
                 'name'       => 'Test subscription',
@@ -16,11 +16,11 @@ $tests = [
                 'service_id' => 1
             ])->first();
         },
-        'act' => function() {
+        'act'         => function() {
             // Run action
             eQual::run('do', 'inventory_service_subscription_update-expirations');
         },
-        'assert' => function() {
+        'assert'      => function() {
             // Assert that subscription is now expired
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['is_expired'])
@@ -28,7 +28,7 @@ $tests = [
 
             return $subscription['is_expired'] === true;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove test subscription
             Subscription::search(['name', '=', 'Test subscription'])
                 ->delete(true);
@@ -37,7 +37,7 @@ $tests = [
 
     '0102' => [
         'description' => 'Tests that action update-expirations does not update when subscription should not be expired',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription that should have is_expired to false
             Subscription::create([
                 'name'       => 'Test subscription',
@@ -48,11 +48,11 @@ $tests = [
                 'service_id' => 1
             ])->first();
         },
-        'act' => function() {
+        'act'         => function() {
             // Run action
             eQual::run('do', 'inventory_service_subscription_update-expirations');
         },
-        'assert' => function() {
+        'assert'      => function() {
             // Assert that subscription is still not expired
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['is_expired'])
@@ -60,7 +60,7 @@ $tests = [
 
             return $subscription['is_expired'] === false;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove test subscription
             Subscription::search(['name', '=', 'Test subscription'])
                 ->delete(true);
@@ -69,7 +69,7 @@ $tests = [
 
     '0103' => [
         'description' => 'Tests that action update-expirations updates when subscription should be upcoming expiry',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription that should have has_upcoming_expiry to true
             Subscription::create([
                 'name'                => 'Test subscription',
@@ -80,11 +80,11 @@ $tests = [
                 'service_id'          => 1
             ])->first();
         },
-        'act' => function() {
+        'act'         => function() {
             // Run action
             eQual::run('do', 'inventory_service_subscription_update-expirations');
         },
-        'assert' => function() {
+        'assert'      => function() {
             // Assert that subscription is now expired
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['has_upcoming_expiry'])
@@ -92,7 +92,7 @@ $tests = [
 
             return $subscription['has_upcoming_expiry'] === true;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove test subscription
             Subscription::search(['name', '=', 'Test subscription'])
                 ->delete(true);
@@ -101,7 +101,7 @@ $tests = [
 
     '0104' => [
         'description' => 'Tests that action update-expirations does not update when subscription should not be upcoming expiry',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription that should have has_upcoming_expiry to false
             Subscription::create([
                 'name'                => 'Test subscription',
@@ -112,11 +112,11 @@ $tests = [
                 'service_id'          => 1
             ])->first();
         },
-        'act' => function() {
+        'act'         => function() {
             // Run action
             eQual::run('do', 'inventory_service_subscription_update-expirations');
         },
-        'assert' => function() {
+        'assert'      => function() {
             // Assert that subscription is still not upcoming expiry
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['has_upcoming_expiry'])
@@ -124,7 +124,7 @@ $tests = [
 
             return $subscription['has_upcoming_expiry'] === false;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove test subscription
             Subscription::search(['name', '=', 'Test subscription'])
                 ->delete(true);

@@ -6,9 +6,9 @@ use inventory\service\SubscriptionEntry;
 $tests = [
     '0101' => [
         'description' => 'Tests that action add-subscriptionentry throws if subscription does not exist',
-        'return' =>  'integer',
-        'expected' => QN_ERROR_UNKNOWN_OBJECT,
-        'test' => function() {
+        'return'      =>  'integer',
+        'expected'    => QN_ERROR_UNKNOWN_OBJECT,
+        'test'        => function() {
             $error = 0;
             try {
                 // Run action
@@ -23,7 +23,7 @@ $tests = [
 
     '0102' => [
         'description' => 'Tests that action add-subscriptionentry does not create the entry if it already exist',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription and its entry
             $subscription = Subscription::create([
                 'name'       => 'Test subscription',
@@ -38,13 +38,13 @@ $tests = [
 
             SubscriptionEntry::create([
                 'subscription_id' => $subscription['id'],
-                'date_from'  => strtotime('-1 month -1 day'),
-                'date_to'    => strtotime('-1 day'),
+                'date_from'       => strtotime('-1 month -1 day'),
+                'date_to'         => strtotime('-1 day'),
             ]);
 
             return $subscription['id'];
         },
-        'act' => function($subscription_id) {
+        'act'         => function($subscription_id) {
             // Run action
             eQual::run(
                 'do',
@@ -54,13 +54,13 @@ $tests = [
 
             return $subscription_id;
         },
-        'assert' => function($subscription_id) {
-           // Assert that there is still only 1 entry linked to the subscription
+        'assert'      => function($subscription_id) {
+            // Assert that there is still only 1 entry linked to the subscription
             $subscription_entries_ids = SubscriptionEntry::search(['subscription_id', '=', $subscription_id])->ids();
 
             return count($subscription_entries_ids) === 1;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove subscription and subscription entry
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['id'])
@@ -76,7 +76,7 @@ $tests = [
 
     '0103' => [
         'description' => 'Tests that action add-subscriptionentry creates the entry if it does not already exist',
-        'arrange' => function() {
+        'arrange'     => function() {
             // Create subscription without its entry
             $subscription = Subscription::create([
                 'name'       => 'Test subscription',
@@ -91,7 +91,7 @@ $tests = [
 
             return $subscription['id'];
         },
-        'act' => function($subscription_id) {
+        'act'         => function($subscription_id) {
             // Run action
             eQual::run(
                 'do',
@@ -101,7 +101,7 @@ $tests = [
 
             return $subscription_id;
         },
-        'assert' => function($subscription_id) {
+        'assert'      => function($subscription_id) {
             // Assert that there is now 1 entry linked to the subscription and that the data matches
             $subscription_entries_ids = SubscriptionEntry::search(['subscription_id', '=', $subscription_id])->ids();
 
@@ -115,7 +115,7 @@ $tests = [
                 && $subscription_entry['price_id'] === 1
                 && $subscription_entry['price'] === 100;
         },
-        'rollback' => function() {
+        'rollback'    => function() {
             // Remove subscription and subscription entry
             $subscription = Subscription::search(['name', '=', 'Test subscription'])
                 ->read(['id'])
