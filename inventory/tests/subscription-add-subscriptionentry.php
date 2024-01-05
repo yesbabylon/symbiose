@@ -6,7 +6,7 @@ use inventory\service\SubscriptionEntry;
 $tests = [
     '0101' => [
         'description' => 'Tests that action add-subscriptionentry throws if subscription does not exist',
-        'return' =>  array('integer'),
+        'return' =>  'integer',
         'expected' => QN_ERROR_UNKNOWN_OBJECT,
         'test' => function() {
             $error = 0;
@@ -23,7 +23,6 @@ $tests = [
 
     '0102' => [
         'description' => 'Tests that action add-subscriptionentry does not create the entry if it already exist',
-        'return' => 'integer',
         'arrange' => function() {
             // Create subscription and its entry
             $subscription = Subscription::create([
@@ -77,7 +76,6 @@ $tests = [
 
     '0103' => [
         'description' => 'Tests that action add-subscriptionentry creates the entry if it does not already exist',
-        'return' => 'integer',
         'arrange' => function() {
             // Create subscription without its entry
             $subscription = Subscription::create([
