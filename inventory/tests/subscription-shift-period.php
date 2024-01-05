@@ -5,7 +5,7 @@ use inventory\service\Subscription;
 $tests = [
     '0101' => [
         'description' => 'Tests that action shift-period throws if subscription does not exist',
-        'return'      =>  'integer',
+        'return'      => 'integer',
         'expected'    => QN_ERROR_UNKNOWN_OBJECT,
         'test'        => function() {
             $error = 0;
