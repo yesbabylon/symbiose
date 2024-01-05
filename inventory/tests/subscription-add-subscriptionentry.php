@@ -6,7 +6,7 @@ use inventory\service\SubscriptionEntry;
 $tests = [
     '0101' => [
         'description' => 'Tests that action add-subscriptionentry throws if subscription does not exist',
-        'return'      =>  'integer',
+        'return'      => 'integer',
         'expected'    => QN_ERROR_UNKNOWN_OBJECT,
         'test'        => function() {
             $error = 0;
