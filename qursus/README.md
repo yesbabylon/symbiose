@@ -6,10 +6,10 @@ Qursus is a learning management system using eQual Framework.
 
 Qursus works with eQual on the back-end.
 
-Courses are modelized as Packs that can hold several modules, each of which having several chapters (sections), each of
+Courses are modeled as Packs that can hold several modules, each of which having several chapters (sections), each of
 which having several pages.
 
-The student can follow the lesson using the web app that is deployed in /public when the `qursus` package is initiated.
+The student can follow the lesson using the web app that is deployed in `/public` when the `qursus` package is initiated.
 
 **UML Diagram of the application**
 
@@ -50,13 +50,13 @@ Now in your qursus package you should see :
 /packages
     /qursus
         /actions
-             import.php --> Create Modules, Chapters, Leaves, Pages, Groups and Widgets based on ATModule.json file.
-             next.php --> Handle action from user when performing a click to see next page of a given module.
-             survey.php --> Send an invite to satisfaction survey.
+             import.php         --> Create Modules, Chapters, Leaves, Pages, Groups and Widgets based on ATModule.json file.
+             next.php           --> Handle action from user when performing a click to see next page of a given module.
+             survey.php         --> Send an invite to satisfaction survey.
         /apps
-            /qursus --> front-end in TypeScript and jQuery web.app that will be unpacked in /public/qursus on init
-                export.sh -->
-                web.app --> zip of the front-end build
+            /qursus             --> front-end in TypeScript and jQuery web.app that will be unpacked in /public/qursus on init
+                export.sh       --> utility script for exporting the app to /public
+                web.app         --> zip of the front-end build
                 manifest.json
         /classes
             Bundle.class.php
@@ -75,15 +75,15 @@ Now in your qursus package you should see :
             Widget.class.php
         /data
             /module
-                render.php  --> Returns a fully loaded JSON formatted single module
+                render.php      --> Returns a fully loaded JSON formatted single module
             /pack
-                access.php --> Checks if current user has a license for a given program.
+                access.php      --> Checks if current user has a license for a given program.
                 certificate.php --> Returns a html page or a signed pdf certificate.
-                complete.php --> Checks if a pack has been fully completed by current user.
-                grant.php --> Checks if current user has a license for a given program.
-            bundle.php   --> Sends either a single attachment or a zip archive containing all attachments.
-            module.php  --> Returns a fully loaded JSON formatted single module.
-            modules.php  --> "Returns a list of all modules for a given pack, enriched with current user status.
+                complete.php    --> Checks if a pack has been fully completed by current user.
+                grant.php       --> Checks if current user has a license for a given program.
+            bundle.php          --> Sends either a single attachment or a zip archive containing all attachments.
+            module.php          --> Returns a fully loaded JSON formatted single module.
+            modules.php         --> "Returns a list of all modules for a given pack, enriched with current user status.
         /init
             /data
         /views
@@ -93,91 +93,11 @@ Now in your qursus package you should see :
             Widget.form.create.default.json
             Widget.form.default.json
             Widget.list.default.json
-        config.inc.php --> specify the DEFAULT_PACKAGE constant used for routing
-        manifest.json --> usual eQual package manifest
+        config.inc.php          --> specify the DEFAULT_PACKAGE constant used for routing
+        manifest.json           --> usual eQual package manifest
 ```
 
-## II / Configuration
-
-In the context of using equal with Wordpress we need to configure the environnement file and the `.htacces` file.
-
-The configuration file will indicate what is the back-end api and what is the front-end api.
-
-### a) config.json
-
-**/public/assets/env/config.json**
-
-```json
-{
-  "production": true,
-  "parent_domain": "equal.local",
-  "backend_url": "http://wpeq.local/equal.php",
-  "rest_api_url": "http://wpeq.local/",
-  "lang": "en",
-  "locale": "en",
-  "company_name": "eQual Framework",
-  "company_url": "https://yesbabylon.com",
-  "app_name": "eQual.run",
-  "app_logo_url": "/assets/img/logo.svg",
-  "app_settings_root_package": "core",
-  "version": "1.0",
-  "license": "AGPL",
-  "license_url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
-}
-```
-
-### b) .htaccess
-
-**/public/.htacces**
-
-```apacheconf
-Options -Indexes
-DirectoryIndex index.php equal.php index.html
-
-# BEGIN WordPress
-# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
-# dynamically generated, and should only be modified via WordPress filters.
-# Any changes to the directives between these markers will be overwritten.
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteRule ^userinfo$ equal.php [L,QSA]
-RewriteRule ^appinfo$ equal.php [L,QSA]
-RewriteRule ^envinfo$ equal.php [L,QSA]
-RewriteRule ^workbench$ equal.php [L,QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
-
-# END WordPress
-```
-
-### c) config.inc.php
-
-**/packages/qursus/config.inc.php**
-
-```php
-<?
-namespace config;
-define('WEBSITE_URL', 'http://wpeq.local');
-define('WEBSITE_TITLE', 'Learning with Qursus');
-```
-
-### d) Tips and help
-
-In your terminal you can use the flag --announce to get information about the controller. Since eQual controllers are
-self documented, you will know how it works.
-
-```bash
-./equal.run --get=model_collect --announce
-./equal.run --do=model_update --announce
-
-```
-
-## III / Classes and Controllers
+## II / Classes and Controllers
 
 Fundamentally the qursus application can be schematized this way :
 
@@ -201,13 +121,11 @@ Fundamentally the qursus application can be schematized this way :
 
 ### Pack
 
-A pack is at the basis of a qursus. It has a title, a subtitle and languages it is available into. Some (learning)
+A pack is at the basis of a Qursus. It has a title, a subtitle and languages it is available into. Some (learning)
 modules will be attached to the pack. For example, the package **Learning eQual** could have modules called **back-end ,
 front-end, low-code**.
 
-To create a pack. You can go to the Wordpress part of your site http://wpeq.local/wp-admin/index.php and create the Pack
-with the **YB LMS** plugin installed and activated. Or if you don't have Wordpress, go to the In the dashboard menu,
-select Pack and click on the button create. You should get a form and enter the title, the slug of the package which
+To create a pack, go to the In the dashboard menu, select Pack and click on the button create. You should get a form and enter the title, the slug of the package which
 should be unique. You can add a subtitle if you wish. Don't forget to click on the save button.
 
 #### A pack is defined by :
