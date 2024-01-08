@@ -5,7 +5,7 @@
         {
             "id": "action.receivable",
             "label": "receivable",
-            "controller": "sale_receivable_add-receivable",
+            "controller": "sale_saleentry_add-receivable",
             "visible": [
                 [
                     "state",
