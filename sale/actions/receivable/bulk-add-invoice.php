@@ -5,32 +5,84 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use finance\accounting\Invoice;
+use finance\accounting\InvoiceLine;
+use finance\accounting\InvoiceLineGroup;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => 'Create invoices for all pending receivables',
-    'params'        => [],
+    'description'   => 'Create a invoice.',
+    'params'        => [
+    ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'     => ['context', 'orm']
 ]);
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$receivable_ids = Receivable::search(['status', '=', 'pending'])
-    ->ids();
+$receivables = Receivable::search(['status', '=', 'pending'])
+    ->read([
+        'id',
+        'name',
+        'description',
+        'customer_id',
+        'product_id',
+        'price_id',
+        'unit_price',
+        'qty',
+        'free_qty',
+        'discount',
+        'total',
+        'price'
+    ]);
 
-if (!empty($receivable_ids)) {
-    $result = eQual::run(
-        'do',
-        'sale_receivable_add-invoice',
-        ['ids' => $receivable_ids]
-    );
+
+foreach($receivables as $receivable) {
+    $invoice = Invoice::search([
+            ['customer_id', '=', $receivable['customer_id']],
+            ['status', '=', 'proforma']
+        ])
+        ->read(['status'])
+        ->first();
+
+    if(!$invoice) {
+        $invoice = Invoice::create([
+            'customer_id' => $receivable['customer_id']
+        ])
+            ->first();
+    }
+
+    $invoice_line_group = InvoiceLineGroup::create([
+        'name'       =>'Additional Services ('.date('Y-m-d').')',
+        'invoice_id' => $invoice['id']
+    ])
+        ->first();
+
+    $invoiceLine = InvoiceLine::create([
+        'description'           => $receivable['description'],
+        'invoice_line_group_id' => $invoice_line_group['id'],
+        'invoice_id'            => $invoice['id'],
+        'product_id'            => $receivable['product_id'],
+        'price_id'              => $receivable['price_id'],
+        'unit_price'            => $receivable['unit_price'],
+        'qty'                   => $receivable['qty'],
+        'free_qty'              => $receivable['free_qty'],
+        'discount'              => $receivable['discount']
+    ])
+        ->first();
+
+    Receivable::ids($receivable['id'])
+        ->update([
+            'invoice_id'      => $invoice['id'],
+            'invoice_line_id' => $invoiceLine['id'],
+            'status'          => 'invoiced'
+        ]);
 }
 
 $context->httpResponse()
-        ->body($result)
+        ->status(204)
         ->send();

@@ -62,10 +62,10 @@ if(!$price) {
 }
 
 $receivable = Receivable::search([
-    ['receivables_queue_id', '=', $receivables_queue['id']],
-    ['product_id', '=', $subscription_entry['product_id']],
-    ['price_id', '=', $price['id']],
-    ['status', '=', 'pending'],
+        ['receivables_queue_id', '=', $receivables_queue['id']],
+        ['product_id', '=', $subscription_entry['product_id']],
+        ['price_id', '=', $price['id']],
+        ['status', '=', 'pending'],
     ])
     ->read(['id'])
     ->first();
