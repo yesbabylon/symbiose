@@ -19,6 +19,7 @@ class ReceivablesQueue extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer the queue refers to.',
+                'unique'            => true,
                 'required'          => true
             ],
 

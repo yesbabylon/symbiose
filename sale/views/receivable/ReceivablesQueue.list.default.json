@@ -1,6 +1,6 @@
 {
-    "name": "Receivables Queue",
-    "description": "This view is intended for displaying the Receivables Queue.",
+    "name": "Receivable Queues",
+    "description": "This view is intended for displaying the Receivable Queues.",
     "access": {
      },
     "header": {
@@ -8,14 +8,11 @@
             "default" : false,
             "actions" : [
                 {
-                    "id": "header.selection.actions.add-invoice-receivable-queue",
+                    "id": "header.selection.actions.receivablequeue.add-invoice",
                     "label": "Add invoice",
                     "icon": "list",
-                    "controller": "sale_receivable_add-invoice-receivable-queue",
-                    "confirm": true,
-                    "params": {
-                        "customer_id": "object.customer_id"
-                    }
+                    "controller": "sale_receivablequeue_add-invoice",
+                    "confirm": true
                 }
             ]
         }
@@ -25,7 +22,7 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "5%"
+                "width": "10%"
             },
             {
                 "type": "field",

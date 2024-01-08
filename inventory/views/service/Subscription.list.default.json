@@ -1,5 +1,5 @@
 {
-    "name": "Subscription",
+    "name": "Subscriptions",
     "description": "Default listing of all subscriptions.",
     "controller": "inventory_service_subscription-collect",
     "order": "date_from,date_to,name",
@@ -46,7 +46,7 @@
             {
                 "type": "field",
                 "value": "has_upcoming_expiry",
-                "label": "Upcomming expiry",
+                "label": "Upcoming expiry",
                 "width": "20%",
                 "sortable": true,
                 "readonly": true
@@ -82,25 +82,9 @@
             {
                 "type": "field",
                 "value": "is_internal",
-                "label": "Is Internal",
+                "label": "Internal",
                 "width": "15%",
                 "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "has_receivable",
-                "label": "Has receivable",
-                "width": "15%",
-                "readonly": true,
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "receivable_id",
-                "label": "Receivable",
-                "width": "15%",
-                "readonly": true,
-                "sortable": true
             },
             {
                 "type": "field",

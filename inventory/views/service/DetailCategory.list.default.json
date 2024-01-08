@@ -1,6 +1,6 @@
 {
-    "name": "Details categories",
-    "description": "Default listing of all details categories.",
+    "name": "Detail categories",
+    "description": "Default listing of all detail categories.",
     "order": "name",
     "layout": {
         "items": [

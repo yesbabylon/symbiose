@@ -132,8 +132,8 @@
                                                 "label": "Accesses",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "view": "list.selection",
                                                     "header": {
-                                                        "view": "list.selection",
                                                         "actions": {
                                                             "ACTION.SELECT": false,
                                                             "ACTION.CREATE": false
@@ -194,8 +194,8 @@
                                                 "width": "100%",
                                                 "label": "Softwares",
                                                 "widget": {
+                                                    "view": "list.selection",
                                                     "header": {
-                                                        "view": "list.selection",
                                                         "actions": {
                                                             "ACTION.SELECT": false,
                                                             "ACTION.CREATE": false

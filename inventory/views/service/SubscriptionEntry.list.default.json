@@ -1,7 +1,6 @@
 {
-    "name": "Sale Entries",
-    "description": "Default listing of all sale entries.",
-    "controller": "sale_saleentry-collect",
+    "name": "Subscription Entries",
+    "description": "Default listing of all subscription entries.",
     "sort": "desc",
     "layout": {
         "items": [
@@ -16,35 +15,44 @@
                 "type": "field",
                 "value": "customer_id",
                 "label": "Customer",
-                "width": "15%",
-                "readonly": true,
-                "sortable": true
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "product_id",
                 "label": "Product (Catalog)",
-                "width": "15%",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "subscription_id",
+                "label": "Subscription",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "10%",
+                "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "price_id",
                 "label": "Price",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "qty",
-                "label": "Quantity",
-                "width": "15%",
-                "sortable": true
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "is_billable",
-                "label": "Is billable",
+                "label": "Is Billable",
                 "width": "10%",
                 "sortable": true,
                 "readonly": true
@@ -53,17 +61,13 @@
                 "type": "field",
                 "value": "has_receivable",
                 "label": "Has receivable",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
+                "width": "10%"
             },
             {
                 "type": "field",
                 "value": "receivable_id",
                 "label": "Receivable",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
+                "width": "10%"
             }
         ]
     }

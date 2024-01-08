@@ -1,27 +1,15 @@
 {
-    "name": "Sale Entry",
-    "description": "Sale entry.",
+    "name": "Subscription Entry",
+    "description": "Subscription entry.",
     "actions": [
         {
             "id": "action.receivable",
-            "label": "receivable",
-            "controller": "sale_saleentry_add-receivable",
+            "label": "Receivable",
+            "controller": "inventory_service_subscriptionentry_add-receivable",
             "visible": [
-                [
-                    "state",
-                    "<>",
-                    "draft"
-                ],
-                [
-                    "has_receivable",
-                    "=",
-                    false
-                ],
-                [
-                    "is_billable",
-                    "=",
-                    true
-                ]
+                ["state", "<>", "draft"],
+                ["has_receivable", "=", false],
+                ["is_billable", "=", true]
             ]
         }
     ],
@@ -39,34 +27,55 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "subscription_id",
+                                                "readonly": true,
+                                                "label": "Subscription",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "label": "From",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "label": "To",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
+                                                "readonly": true,
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
+                                                "readonly": true,
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "readonly": true,
-                                                "width": "50%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Quantity",
-                                                "value": "qty",
-                                                "width": "50%"
+                                                "value": "price",
+                                                "label": "Price amount",
+                                                "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_billable",
                                                 "label": "is Billable",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",

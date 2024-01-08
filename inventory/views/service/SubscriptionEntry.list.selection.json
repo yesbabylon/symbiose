@@ -1,0 +1,55 @@
+{
+    "name": "Selected Subscription Entries",
+    "description": "Default listing of selected subscription entries.",
+    "order": "date_from,date_to",
+    "sort": "asc",
+    "operations": {
+        "total": {
+            "price": {
+                "id": "operations.total.price",
+                "label": "Total price",
+                "usage": "amount/money:2",
+                "operation": "SUM"
+            }
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "date_from",
+                "width": "30%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "date_to",
+                "width": "30%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "is_billable",
+                "label": "Billable",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "price",
+                "width": "15%",
+                "sortable": true
+            }
+        ]
+    }
+}

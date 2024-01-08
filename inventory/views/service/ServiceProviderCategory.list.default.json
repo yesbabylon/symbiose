@@ -1,6 +1,6 @@
 {
-    "name": "Service Provider Category",
-    "description": "Default listing of all services providers categories.",
+    "name": "Service Provider Categories",
+    "description": "Default listing of all service provider categories.",
     "order": "name",
     "sort": "asc",
     "layout": {

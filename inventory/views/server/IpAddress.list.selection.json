@@ -1,5 +1,5 @@
 {
-    "name": "Ip Address Selected",
+    "name": "Ip Addresses Selected",
     "description": "Default listing of all Ip Addresses.",
     "order": "name",
     "operations": {

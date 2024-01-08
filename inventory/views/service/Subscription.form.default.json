@@ -3,30 +3,19 @@
     "description": "Subscription of a service.",
     "actions": [
         {
-            "id": "action.receivable",
-            "label": "receivable",
-            "controller": "inventory_sale_receivable_add-receivable",
+            "id": "action.shift-subscription",
+            "label": "Shift Period",
+            "controller": "inventory_service_subscription_shift-period",
             "visible": [
-                [
-                    "state",
-                    "<>",
-                    "draft"
-                ],
-                [
-                    "is_internal",
-                    "=",
-                    false
-                ],
-                [
-                    "has_receivable",
-                    "=",
-                    false
-                ],
-                [
-                    "is_billable",
-                    "=",
-                    true
-                ]
+                ["state", "<>", "draft"]
+            ]
+        },
+        {
+            "id": "action.add-subscription-entry",
+            "label": "Create Entry",
+            "controller": "inventory_service_subscription_add-subscriptionentry",
+            "visible": [
+                ["state", "<>", "draft"]
             ]
         }
     ],
@@ -35,6 +24,8 @@
             {
                 "sections": [
                     {
+                        "label": "Subscription Infos",
+                        "id": "section.subscription-info",
                         "rows": [
                             {
                                 "columns": [
@@ -64,15 +55,7 @@
                                         ]
                                     }
                                 ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "sections": [
-                    {
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {
@@ -216,6 +199,31 @@
                                                 "width": "50%",
                                                 "widget": {
                                                     "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Entries",
+                        "id": "section.subscription-entries",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscription_entries_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]

@@ -7,22 +7,18 @@
 
 namespace inventory\service;
 
+use equal\orm\Model;
 use sale\customer\Customer;
 use sale\price\Price;
 use sale\price\PriceList;
 
-class Subscription extends \sale\SaleEntry  {
-
-    public function getTable() {
-        // force table name to use distinct tables and ID columns
-        return 'inventory_service_subscription';
-    }
+class Subscription extends Model  {
 
     const MAP_DURATION = [
-        'Monthly'      => "+1 month",
-        'Quarterly'    => "+3 month",
-        'Half-annual'  => "+6 month",
-        'Annual'       => "+1 year"
+        'monthly'      => '+1 month',
+        'quarterly'    => '+3 month',
+        'half-yearly'  => '+6 month',
+        'yearly'       => '+1 year'
     ];
 
     public static function getColumns()
@@ -45,22 +41,27 @@ class Subscription extends \sale\SaleEntry  {
                 'required'          => true,
                 'description'       => 'Start date of subscription.',
                 'default'           => time(),
+                'dependencies'      => ['price_id']
             ],
 
             'date_to' => [
                 'type'              => 'date',
                 'description'       => 'End date of subscription.',
                 'required'          => true,
-                'default'           => strtotime("+1 year"),
-                'dependencies'      => ['is_expired','has_upcoming_expiry']
+                'default'           => strtotime('+1 year'),
+                'dependencies'      => ['price_id', 'is_expired','has_upcoming_expiry']
             ],
 
             'duration' => [
                 'type'              => 'string',
-                'selection'         => ['Monthly', 'Quarterly', 'Half-annual', 'Annual'],
+                'selection'         => [
+                    'monthly'     => 'Monthly',
+                    'quarterly'   => 'Quarterly',
+                    'half-yearly' => 'Half-yearly',
+                    'yearly'      => 'Yearly'
+                ],
                 'description'       => 'Type of the duration.',
-                'default'           => 'Annual'
-
+                'default'           => 'yearly'
             ],
 
             'is_expired' => [
@@ -112,7 +113,7 @@ class Subscription extends \sale\SaleEntry  {
             'is_billable' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'The lines that are assigned to the statement.',
+                'description'       => 'Can be billed to the customer.',
                 'default'           => false,
                 'visible'           => ['service_id','<>', null],
                 'store'             =>  true,
@@ -148,24 +149,12 @@ class Subscription extends \sale\SaleEntry  {
             ],
 
             'price' => [
-                'type'              => 'float',
-                'description'       => 'Amount to be received.',
-                'usage'             => 'amount/money:2',
-                'default'           =>  0.0
-            ],
-
-            'has_receivable' => [
-                'type'              => 'boolean',
-                'description'       => 'The entry is linked to a Receivable entry.',
-                'visible'           => ['service_id','<>', null],
-                'default'           => false
-            ],
-
-            'receivable_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\receivable\Receivable',
-                'description'       => 'The entry is linked to a Receivable entry.',
-                'visible'           => ['service_id','<>', null]
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Price of the subscription.',
+                'store'             => true,
+                'function'          => 'calcPrice'
             ],
 
             'customer_id' => [
@@ -176,13 +165,14 @@ class Subscription extends \sale\SaleEntry  {
                 'store'             => true,
                 'function'          => 'calcCustomer',
             ],
-            'qty' => [
-                'type'              => 'float',
-                'description'       => 'Quantity of product.',
-                'default'           => 1,
-                'visible'           => false
-            ],
 
+            'subscription_entries_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\SubscriptionEntry',
+                'foreign_field'     => 'subscription_id',
+                'ondetach'          => 'delete',
+                'description'       => 'Subscription entries of the subscription.'
+            ]
 
         ];
     }
@@ -260,7 +250,6 @@ class Subscription extends \sale\SaleEntry  {
     }
 
     public static function calcPriceId($self) {
-
         $result = [];
         $self->read(['date_from', 'date_to', 'product_id']);
         foreach($self as $id => $subscription) {
@@ -301,9 +290,16 @@ class Subscription extends \sale\SaleEntry  {
         }
 
         return $result;
-
     }
 
+    public static function calcPrice($self) {
+        $result = [];
+        $self->read(['price_id' => ['price']]);
+        foreach($self as $id => $subscription) {
+            $result[$id] = $subscription['price_id']['price'];
+        }
+        return $result;
+    }
 
     public static function calcIsExpired($self) {
         $result = [];
@@ -312,7 +308,6 @@ class Subscription extends \sale\SaleEntry  {
             $result[$id] = (time() > $subscription['date_to']);
         }
         return $result;
-
     }
 
     public static function calcUpcomingExpiry($self) {
@@ -328,9 +323,8 @@ class Subscription extends \sale\SaleEntry  {
     public static function onupdateHasSubscription($self) {
         $self->read(['service_id']);
         foreach($self as $id) {
-            Service::ids($id['service_id'])->update(['has_subscription' =>true]);
+            Service::id($id['service_id'])->update(['has_subscription' => true]);
         }
-
     }
 
     public static function calcHasExternalProvider($self) {
@@ -341,6 +335,7 @@ class Subscription extends \sale\SaleEntry  {
         }
         return $result;
     }
+
     public static function calcIsInternal($self) {
         $result = [];
         $self->read(['service_id' => ['is_internal']]);
