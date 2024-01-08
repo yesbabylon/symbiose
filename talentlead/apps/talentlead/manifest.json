@@ -7,7 +7,7 @@
     "access": {
         "groups": [
             "users",
-            "admin"
+            "admins"
         ]
     },
     "show_in_apps": true
