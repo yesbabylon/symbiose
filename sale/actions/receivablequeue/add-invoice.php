@@ -56,7 +56,7 @@ foreach($receivables_queues as $receivables_queue) {
         ]);
 
     $invoice = Invoice::search([
-        ['customer_id', '=', $receivables_queues['customer_id']],
+        ['customer_id', '=', $receivables_queue['customer_id']],
         ['status', '=', 'proforma']
     ])
         ->read(['status'])
@@ -64,7 +64,7 @@ foreach($receivables_queues as $receivables_queue) {
 
     if(!$invoice){
         $invoice = Invoice::create([
-            'customer_id' => $receivables_queues['customer_id']
+            'customer_id' => $receivables_queue['customer_id']
         ])
             ->first();
     }
