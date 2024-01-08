@@ -40,7 +40,7 @@ if(!$receivables_queues) {
 
 foreach($receivables_queues as $receivables_queue) {
     $receivables = Receivable::search([
-        ['id', 'in', $receivables_queue['id']],
+        ['receivables_queue_id', '=', $receivables_queue['id']],
         ['status', '=', 'pending']
     ])
         ->read([
