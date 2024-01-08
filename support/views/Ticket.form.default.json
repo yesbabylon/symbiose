@@ -31,7 +31,7 @@
             "description": "Ticket will be marked as waiting for external dependency.",
             "controller": "support_ticket-await",
             "confirm": true,
-            "visible": ["status", "in", ["pending"]]
+            "visible": ["status", "in", ["open", "pending"]]
         },
         {
             "id": "action.close",
