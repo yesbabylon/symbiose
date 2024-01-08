@@ -17,7 +17,7 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'groups'            => ['admin'],
+        'groups'            => ['admins'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
