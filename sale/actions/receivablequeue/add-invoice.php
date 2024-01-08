@@ -17,7 +17,7 @@ list($params, $providers) = announce([
         'ids' =>  [
             'description'    => 'Identifier of the targeted reports.',
             'type'           => 'one2many',
-            'foreign_object' => 'sale\receivable\Receivable',
+            'foreign_object' => 'sale\receivable\ReceivablesQueue',
             'required'       => true
         ]
     ],
@@ -31,21 +31,20 @@ list($params, $providers) = announce([
 
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$receivablesQueues = ReceivablesQueue::ids($params['ids'])
-    ->read(['id','customer_id' => ['name'],'receivables_ids']);
+$receivables_queues = ReceivablesQueue::ids($params['ids'])
+    ->read(['id', 'customer_id']);
 
-if(!$receivablesQueues) {
+if(!$receivables_queues) {
     throw new Exception('unknown_receivables_queue', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-foreach($receivablesQueues as $receivablesQueue) {
+foreach($receivables_queues as $receivables_queue) {
     $receivables = Receivable::search([
-        ['id', 'in', $receivablesQueue['receivables_ids']],
+        ['id', 'in', $receivables_queue['id']],
         ['status', '=', 'pending']
     ])
         ->read([
             'id',
-            'name',
             'description',
             'customer_id',
             'product_id',
@@ -53,25 +52,24 @@ foreach($receivablesQueues as $receivablesQueue) {
             'unit_price',
             'qty',
             'free_qty',
-            'discount',
-            'total',
-            'price'
+            'discount'
         ]);
 
-    foreach($receivables as $receivable) {
-        $invoice = Invoice::search([
-                ['customer_id', '=', $receivable['customer_id']],
-                ['status', '=', 'proforma']
-            ])
-            ->read(['status'])
+    $invoice = Invoice::search([
+        ['customer_id', '=', $receivables_queues['customer_id']],
+        ['status', '=', 'proforma']
+    ])
+        ->read(['status'])
+        ->first();
+
+    if(!$invoice){
+        $invoice = Invoice::create([
+            'customer_id' => $receivables_queues['customer_id']
+        ])
             ->first();
+    }
 
-        if(!$invoice){
-            $invoice = Invoice::create([
-                'customer_id' => $receivable['customer_id']
-            ])->first();
-        }
-
+    foreach($receivables as $receivable) {
         $invoice_line_group = InvoiceLineGroup::create([
             'name'       => 'Additional Services ('.date('Y-m-d').')',
             'invoice_id' => $invoice['id']
@@ -88,7 +86,8 @@ foreach($receivablesQueues as $receivablesQueue) {
             'qty'                   => $receivable['qty'],
             'free_qty'              => $receivable['free_qty'],
             'discount'              => $receivable['discount'],
-        ])->first();
+        ])
+            ->first();
 
         Receivable::ids($receivable['id'])
             ->update([

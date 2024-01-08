@@ -27,7 +27,6 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 $receivables = Receivable::search(['status', '=', 'pending'])
     ->read([
         'id',
-        'name',
         'description',
         'customer_id',
         'product_id',
@@ -35,11 +34,8 @@ $receivables = Receivable::search(['status', '=', 'pending'])
         'unit_price',
         'qty',
         'free_qty',
-        'discount',
-        'total',
-        'price'
+        'discount'
     ]);
-
 
 foreach($receivables as $receivable) {
     $invoice = Invoice::search([
