@@ -12,10 +12,7 @@
                     "label": "Add invoice",
                     "icon": "list",
                     "controller": "sale_receivablequeue_add-invoice",
-                    "confirm": true,
-                    "params": {
-                        "customer_id": "object.customer_id"
-                    }
+                    "confirm": true
                 }
             ]
         }

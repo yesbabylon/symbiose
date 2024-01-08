@@ -12,7 +12,7 @@ use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => 'Create invoices for all pending receivables of given queues.',
+    'description'   => 'Create invoices for all pending receivables of selected queues.',
     'params'        => [
         'ids' =>  [
             'description'    => 'Identifier of the targeted reports.',

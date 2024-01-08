@@ -11,9 +11,8 @@ use finance\accounting\InvoiceLineGroup;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => 'Add receivables to an invoice.',
+    'description'   => 'Create an invoice for selected receivables.',
     'params'        => [
-
         'ids' =>  [
             'description'       => 'Identifier of the targeted reports.',
             'type'              => 'one2many',
