@@ -68,6 +68,7 @@ $tests = [
         },
         'rollback'    => function() {
             // Remove customer, receivable queue and subscription entry
+
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
@@ -78,10 +79,11 @@ $tests = [
         }
     ],
 
-
     '0103' => [
         'description' => 'Tests that action add-receivable create a queue for customer if does not exist',
         'arrange'     => function() {
+            // Create customer, price, product and subscription entry
+
             $customer = Customer::create([
                 'name' => 'Test customer',
                 'partner_identity_id' => 0
@@ -129,6 +131,8 @@ $tests = [
             );
         },
         'assert'      => function() {
+            // Assert that a receivable queue is created for the customer
+
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
@@ -161,6 +165,8 @@ $tests = [
     '0104' => [
         'description' => 'Tests that action add-receivable does not create a queue for customer if already exist',
         'arrange'     => function() {
+            // Create customer, receivable queue, price, product and subscription entry
+
             $customer = Customer::create([
                 'name' => 'Test customer',
                 'partner_identity_id' => 0
@@ -214,6 +220,8 @@ $tests = [
             );
         },
         'assert'      => function() {
+            // Assert that a receivable queue is not created for the customer because one already exist
+
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
@@ -246,6 +254,8 @@ $tests = [
     '0105' => [
         'description' => 'Tests that action add-receivable create a receivable for entry if does not exist',
         'arrange'     => function() {
+            // Create customer, price, product and subscription entry
+
             $customer = Customer::create([
                 'name' => 'Test customer',
                 'partner_identity_id' => 0
@@ -294,6 +304,8 @@ $tests = [
             );
         },
         'assert'      => function() {
+            // Assert that receivable created with the correct values
+
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
@@ -347,6 +359,8 @@ $tests = [
     '0106' => [
         'description' => 'Tests that action add-receivable pass entry has_receivable to true',
         'arrange'     => function() {
+            // Create customer, price, product and subscription entry
+
             $customer = Customer::create([
                 'name' => 'Test customer',
                 'partner_identity_id' => 0
@@ -395,6 +409,8 @@ $tests = [
             );
         },
         'assert'      => function() {
+            // Assert that when a receivable is created the subscription entry is updated to create a link
+
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
@@ -404,7 +420,8 @@ $tests = [
                 ->first();
 
             return $entry['has_receivable'] === true
-                && !empty($entry['receivable_id']);
+                && !empty($entry['receivable_id'])
+                && $entry['receivable_id'] > 0;
         },
         'rollback'    => function() {
             // Remove customer, receivable queue, price, product, subscription entry and receivable
