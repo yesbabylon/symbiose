@@ -14,15 +14,5 @@
                 "repeat_step": 1
             }
         ]
-    },
-    {
-        "name": "core\\Task",
-        "lang": "fr",
-        "data": [
-            {
-                "id": 101,
-                "name": "Mise à jour des expirations des abonnements"
-            }
-        ]
     }
 ]
