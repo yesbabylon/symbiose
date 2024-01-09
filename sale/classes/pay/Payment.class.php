@@ -51,7 +51,8 @@ class Payment extends Model {
                 'selection'         => [
                     'voucher',              // gift, coupon, or tour-operator voucher
                     'cash',                 // cash money
-                    'bank_card'             // electronic payment with bank (or credit) card
+                    'bank_card',            // electronic payment with bank (or credit) card
+                    'wire_transfer'         // transfer between bank account
                 ],
                 'description'       => "The method used for payment at the cashdesk.",
                 'visible'           => [ ['payment_origin', '=', 'cashdesk'] ],
