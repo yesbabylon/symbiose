@@ -4,7 +4,6 @@
         "lang": "en",
         "data": [
             {
-                "id": 101,
                 "name": "Update subscriptions expiration columns",
                 "controller": "inventory_service_subscription_update-expirations",
                 "is_active": true,
