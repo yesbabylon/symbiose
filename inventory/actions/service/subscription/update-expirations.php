@@ -28,7 +28,7 @@ $should_be_expired_ids = Subscription::search([
 
 if (!empty($should_be_expired_ids)) {
     Subscription::ids($should_be_expired_ids)
-        ->update(['is_expired' => true]);
+        ->update(['is_expired' => null]);
 }
 
 $should_be_upcoming_expiry_ids = Subscription::search([
@@ -39,7 +39,7 @@ $should_be_upcoming_expiry_ids = Subscription::search([
 
 if (!empty($should_be_upcoming_expiry_ids)) {
     Subscription::ids($should_be_upcoming_expiry_ids)
-        ->update(['has_upcoming_expiry' => true]);
+        ->update(['has_upcoming_expiry' => null]);
 }
 
 $context->httpResponse()
