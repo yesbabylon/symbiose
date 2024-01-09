@@ -38,7 +38,8 @@
             "selection": {
                 "voucher": "Chèque cadeau (voucher)",
                 "cash": "Espèces",
-                "bank_card": "Carte bancaire"
+                "bank_card": "Carte bancaire",
+                "wire_transfer": "Virement bancaire"
             },
             "help": ""
         },
