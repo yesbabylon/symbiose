@@ -25,6 +25,16 @@ class CashdeskSession extends Model {
                 'alias'             => 'amount_opening'
             ],
 
+            'date_opening' => [
+                'type'              => 'alias',
+                'alias'             => 'created'
+            ],
+
+            'date_closing' => [
+                'type'              => 'datetime',
+                'description'       => "Date and time of the closing of the Session."
+            ],
+
             'amount_opening' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
