@@ -1,6 +1,6 @@
 <?php
 
-use inventory\service\SubscriptionEntry;
+use sale\SaleEntry;
 use sale\receivable\ReceivablesQueue;
 use sale\customer\Customer;
 use sale\price\Price;
@@ -9,7 +9,7 @@ use sale\receivable\Receivable;
 
 $tests = [
     '0101' => [
-        'description' => 'Tests that action add-receivable throws if subscription entry does not exist',
+        'description' => 'Tests that action add-receivable throws if sale entry does not exist',
         'return'      => 'integer',
         'expected'    => QN_ERROR_UNKNOWN_OBJECT,
         'test'        => function() {
@@ -29,25 +29,22 @@ $tests = [
         'description' => 'Tests that action add-receivable throws if price does not exist',
         'arrange'     => function() {
             $customer = Customer::create([
-                'name'                => 'Test customer',
+                'name' => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
                 ->first();
 
-            $subscription_entry = SubscriptionEntry::create([
-                'subscription_id' => 0,
-                'customer_id'     => $customer['id'],
-                'date_from'       => time(),
-                'date_to'         => time(),
-                'price_id'        => '-1'
+            $sale_entry = SaleEntry::create([
+                'customer_id' => $customer['id'],
+                'price_id'    => '-1'
             ])
                 ->read(['id'])
                 ->first();
 
-            return $subscription_entry['id'];
+            return $sale_entry['id'];
         },
-        'act'         => function($subscription_entry_id) {
+        'act'         => function($sale_entry_id) {
             $error = 0;
 
             try {
@@ -55,7 +52,7 @@ $tests = [
                 eQual::run(
                     'do',
                     'sale_saleentry_add-receivable',
-                    ['id' => $subscription_entry_id]
+                    ['id' => $sale_entry_id]
                 );
             } catch (Exception $e) {
                 $error = $e->getCode();
@@ -67,7 +64,7 @@ $tests = [
             return QN_ERROR_UNKNOWN_OBJECT === $error;
         },
         'rollback'    => function() {
-            // Remove customer, receivable queue and subscription entry
+            // Remove customer, receivable queue and sale entry
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
@@ -75,17 +72,17 @@ $tests = [
 
             Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
-            SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
         }
     ],
 
     '0103' => [
         'description' => 'Tests that action add-receivable create a queue for customer if does not exist',
         'arrange'     => function() {
-            // Create customer, price, product and subscription entry
+            // Create customer, price, product and sale entry
 
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
@@ -109,25 +106,22 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            $subscription_entry = SubscriptionEntry::create([
-                'subscription_id' => 0,
-                'product_id'      => $product['id'],
-                'customer_id'     => $customer['id'],
-                'date_from'       => time(),
-                'date_to'         => time(),
-                'price_id'        => $price['id']
+            $sale_entry = SaleEntry::create([
+                'product_id'  => $product['id'],
+                'customer_id' => $customer['id'],
+                'price_id'    => $price['id']
             ])
                 ->read(['id'])
                 ->first();
 
-            return $subscription_entry['id'];
+            return $sale_entry['id'];
         },
-        'act'         => function($subscription_entry_id) {
+        'act'         => function($sale_entry_id) {
             // Run action
             eQual::run(
                 'do',
                 'sale_saleentry_add-receivable',
-                ['id' => $subscription_entry_id]
+                ['id' => $sale_entry_id]
             );
         },
         'assert'      => function() {
@@ -143,13 +137,13 @@ $tests = [
             return count($queues) === 1;
         },
         'rollback'    => function() {
-            // Remove customer, receivable queue, price, product, subscription entry and receivable
+            // Remove customer, receivable queue, price, product, sale entry and receivable
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['price_id', 'product_id'])
                 ->first();
 
@@ -157,7 +151,7 @@ $tests = [
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
             Price::id($entry['price_id'])->delete(true);
             Product::id($entry['product_id'])->delete(true);
-            SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
     ],
@@ -165,7 +159,7 @@ $tests = [
     '0104' => [
         'description' => 'Tests that action add-receivable does not create a queue for customer if already exist',
         'arrange'     => function() {
-            // Create customer, receivable queue, price, product and subscription entry
+            // Create customer, receivable queue, price, product and sale entry
 
             $customer = Customer::create([
                 'name'                => 'Test customer',
@@ -198,25 +192,22 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            $subscription_entry = SubscriptionEntry::create([
-                'subscription_id' => 0,
-                'product_id'      => $product['id'],
-                'customer_id'     => $customer['id'],
-                'date_from'       => time(),
-                'date_to'         => time(),
-                'price_id'        => $price['id']
+            $sale_entry = SaleEntry::create([
+                'product_id'  => $product['id'],
+                'customer_id' => $customer['id'],
+                'price_id'    => $price['id']
             ])
                 ->read(['id'])
                 ->first();
 
-            return $subscription_entry['id'];
+            return $sale_entry['id'];
         },
-        'act'         => function($subscription_entry_id) {
+        'act'         => function($sale_entry_id) {
             // Run action
             eQual::run(
                 'do',
                 'sale_saleentry_add-receivable',
-                ['id' => $subscription_entry_id]
+                ['id' => $sale_entry_id]
             );
         },
         'assert'      => function() {
@@ -232,13 +223,13 @@ $tests = [
             return count($queues) === 1;
         },
         'rollback'    => function() {
-            // Remove customer, receivable queue, price, product, subscription entry and receivable
+            // Remove customer, receivable queue, price, product, sale entry and receivable
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['price_id', 'product_id'])
                 ->first();
 
@@ -246,7 +237,7 @@ $tests = [
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
             Price::id($entry['price_id'])->delete(true);
             Product::id($entry['product_id'])->delete(true);
-            SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
     ],
@@ -254,7 +245,7 @@ $tests = [
     '0105' => [
         'description' => 'Tests that action add-receivable create a receivable for entry if does not exist',
         'arrange'     => function() {
-            // Create customer, price, product and subscription entry
+            // Create customer, price, product and sale entry
 
             $customer = Customer::create([
                 'name'                => 'Test customer',
@@ -281,26 +272,23 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            $subscription_entry = SubscriptionEntry::create([
-                'subscription_id' => 0,
-                'product_id'      => $product['id'],
-                'customer_id'     => $customer['id'],
-                'date_from'       => time(),
-                'date_to'         => time(),
-                'price_id'        => $price['id'],
-                'unit_price'      => 25.99
+            $sale_entry = SaleEntry::create([
+                'product_id'  => $product['id'],
+                'customer_id' => $customer['id'],
+                'price_id'    => $price['id'],
+                'unit_price'  => 25.99
             ])
                 ->read(['id'])
                 ->first();
 
-            return $subscription_entry['id'];
+            return $sale_entry['id'];
         },
-        'act'         => function($subscription_entry_id) {
+        'act'         => function($sale_entry_id) {
             // Run action
             eQual::run(
                 'do',
                 'sale_saleentry_add-receivable',
-                ['id' => $subscription_entry_id]
+                ['id' => $sale_entry_id]
             );
         },
         'assert'      => function() {
@@ -310,7 +298,7 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['price_id', 'unit_price', 'qty', 'product_id', 'receivable_id'])
                 ->first();
 
@@ -334,16 +322,16 @@ $tests = [
                 && $receivable['unit_price'] === $entry['unit_price']
                 && $receivable['qty'] === $entry['qty']
                 && $receivable['product_id'] === $entry['product_id']
-                && $receivable['description'] === 'Reference Subscription entry product.';
+                && $receivable['description'] === 'Reference Sale entry product.';
         },
         'rollback'    => function() {
-            // Remove customer, receivable queue, price, product, subscription entry and receivable
+            // Remove customer, receivable queue, price, product, sale entry and receivable
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['price_id', 'product_id'])
                 ->first();
 
@@ -351,7 +339,7 @@ $tests = [
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
             Price::id($entry['price_id'])->delete(true);
             Product::id($entry['product_id'])->delete(true);
-            SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
     ],
@@ -359,7 +347,7 @@ $tests = [
     '0106' => [
         'description' => 'Tests that action add-receivable pass entry has_receivable to true',
         'arrange'     => function() {
-            // Create customer, price, product and subscription entry
+            // Create customer, price, product and sale entry
 
             $customer = Customer::create([
                 'name'                => 'Test customer',
@@ -386,36 +374,33 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            $subscription_entry = SubscriptionEntry::create([
-                'subscription_id' => 0,
-                'product_id'      => $product['id'],
-                'customer_id'     => $customer['id'],
-                'date_from'       => time(),
-                'date_to'         => time(),
-                'price_id'        => $price['id'],
-                'unit_price'      => 25.99
+            $sale_entry = SaleEntry::create([
+                'product_id'  => $product['id'],
+                'customer_id' => $customer['id'],
+                'price_id'    => $price['id'],
+                'unit_price'  => 25.99
             ])
                 ->read(['id'])
                 ->first();
 
-            return $subscription_entry['id'];
+            return $sale_entry['id'];
         },
-        'act'         => function($subscription_entry_id) {
+        'act'         => function($sale_entry_id) {
             // Run action
             eQual::run(
                 'do',
                 'sale_saleentry_add-receivable',
-                ['id' => $subscription_entry_id]
+                ['id' => $sale_entry_id]
             );
         },
         'assert'      => function() {
-            // Assert that when a receivable is created the subscription entry is updated to create a link
+            // Assert that when a receivable is created the sale entry is updated to create a link
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['has_receivable', 'receivable_id'])
                 ->first();
 
@@ -424,13 +409,13 @@ $tests = [
                 && $entry['receivable_id'] > 0;
         },
         'rollback'    => function() {
-            // Remove customer, receivable queue, price, product, subscription entry and receivable
+            // Remove customer, receivable queue, price, product, sale entry and receivable
 
             $customer = Customer::search(['name', '=', 'Test customer'])
                 ->read(['id'])
                 ->first();
 
-            $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
+            $entry = SaleEntry::search(['customer_id', '=', $customer['id']])
                 ->read(['price_id', 'product_id'])
                 ->first();
 
@@ -438,7 +423,7 @@ $tests = [
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
             Price::id($entry['price_id'])->delete(true);
             Product::id($entry['product_id'])->delete(true);
-            SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
     ]

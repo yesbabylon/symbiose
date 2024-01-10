@@ -9,83 +9,42 @@ namespace inventory\service;
 
 class SubscriptionEntry extends \sale\SaleEntry {
 
-    public function getTable() {
-        // force table name to use distinct tables and ID columns
-        return 'inventory_service_subscriptionentry';
-    }
-
     public static function getColumns() {
         return [
 
-            'subscription_id' => [
-                'type'           => 'many2one',
-                'required'       => true,
-                'foreign_object' => 'inventory\service\Subscription',
-                'description'    => 'Subscription of the entry.'
-            ],
-
-            'date_from' => [
-                'type'           => 'date',
-                'description'    => 'Start date of the subscription period this entry covers.',
-                'required'       => true,
-                'default'        => time()
-            ],
-
-            'date_to' => [
-                'type'           => 'date',
-                'description'    => 'End date of the subscription period this entry covers.',
-                'required'       => true,
-                'default'        => strtotime('+1 year')
-            ],
-
-            'is_billable' => [
-                'type'           => 'computed',
-                'result_type'    => 'boolean',
-                'description'    => 'Can be billed to the customer.',
-                'store'          => true,
-                'function'       => 'calcIsBillable'
-            ],
-
-            'customer_id' => [
-                'type'           => 'computed',
-                'result_type'    => 'many2one',
-                'foreign_object' => 'sale\customer\Customer',
-                'description'    => 'The Customer to who refers the item.',
-                'store'          => true,
-                'function'       => 'calcCustomerId'
-            ],
-
-            'product_id' => [
-                'type'           => 'computed',
-                'result_type'    => 'many2one',
-                'foreign_object' => 'sale\catalog\Product',
-                'description'    => 'Product of the catalog sale.',
-                'store'          => true,
-                'function'       => 'calcProductId'
-            ],
-
-            'price_id' => [
-                'type'           => 'many2one',
-                'foreign_object' => 'sale\price\Price',
-                'description'    => 'Price of the subscription entry.',
-                'dependencies'   => ['price']
-            ],
-
-            'price' => [
-                'type'           => 'computed',
-                'result_type'    => 'float',
-                'usage'          => 'amount/money:4',
-                'description'    => 'Price amount of the subscription entry.',
-                'function'       => 'calcPrice',
-                'store'          => true
-            ],
+            /**
+             * Override SaleEntry columns
+             */
 
             'qty' => [
                 'type'           => 'float',
                 'description'    => 'Quantity of product.',
                 'default'        => 1,
                 'visible'        => false
-            ]
+            ],
+
+            'object_class' => [
+                'type'           => 'string',
+                'description'    => 'Class of the object object_id points to.',
+                'default'        => 'inventory\service\Subscription',
+                'dependencies'   => ['subscription_id']
+            ],
+
+            /**
+             * Specific SubscriptionEntry columns
+             */
+
+            'date_from' => [
+                'type'           => 'date',
+                'description'    => 'Start date of the subscription period this entry covers.',
+                'required'       => true
+            ],
+
+            'date_to' => [
+                'type'           => 'date',
+                'description'    => 'End date of the subscription period this entry covers.',
+                'required'       => true
+            ],
 
         ];
     }
@@ -113,15 +72,6 @@ class SubscriptionEntry extends \sale\SaleEntry {
         $self->read(['subscription_id' => ['product_id']]);
         foreach ($self as $id => $subscription_entry) {
             $result[$id] = $subscription_entry['subscription_id']['product_id'];
-        }
-        return $result;
-    }
-
-    public static function calcPrice($self) {
-        $result = [];
-        $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $subscription_entry) {
-            $result[$id] = $subscription_entry['price_id']['price'];
         }
         return $result;
     }
