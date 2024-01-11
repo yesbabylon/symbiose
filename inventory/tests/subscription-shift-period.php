@@ -12,7 +12,7 @@ $tests = [
             try {
                 // Run action
                 eQual::run('do', 'inventory_service_subscription_shift-period', ['id' => '-1']);
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 

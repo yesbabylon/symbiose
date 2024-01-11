@@ -45,7 +45,7 @@ if(!$subscription) {
     throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-if ($subscription['is_internal'] || empty($subscription['customer_id'])) {
+if($subscription['is_internal'] || empty($subscription['customer_id'])) {
     throw new Exception('internal_subscription_cannot_generate_sale_entry', QN_ERROR_NOT_ALLOWED);
 }
 
@@ -57,7 +57,7 @@ $subscription_entry = SubscriptionEntry::search([
     ->read(['id'])
     ->first();
 
-if (!$subscription_entry) {
+if(!$subscription_entry) {
     $subscription_entry = SubscriptionEntry::create([
         'object_id'       => $subscription['id'],
         'subscription_id' => $subscription['id'],

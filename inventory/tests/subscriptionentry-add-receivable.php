@@ -17,7 +17,7 @@ $tests = [
             try {
                 // Run action
                 eQual::run('do', 'sale_saleentry_add-receivable', ['id' => '-1']);
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 
@@ -57,7 +57,7 @@ $tests = [
                     'sale_saleentry_add-receivable',
                     ['id' => $subscription_entry_id]
                 );
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 

@@ -27,24 +27,24 @@ class Service extends Model {
                 'description'       => 'Information about a service.',
             ],
 
-            'has_subscription' =>[
+            'has_subscription' => [
                 'type'              => 'boolean',
                 'description'       => 'The service has a subscription.',
                 'default'           => false,
                 'dependencies'      => ['is_billable','is_internal'],
             ],
 
-            'is_billable' =>[
+            'is_billable' => [
                 'type'              => 'boolean',
                 'description'       => 'The service is billable.',
                 'visible'           => ['has_subscription', '=', true],
                 'default'           => false,
             ],
 
-            'is_auto_renew' =>[
+            'is_auto_renew' => [
                 'type'              => 'boolean',
                 'description'       => 'The service is auto renew .',
-                'visible'           => ['has_subscription','=', true],
+                'visible'           => ['has_subscription', '=', true],
                 'default'           => false
             ],
 
@@ -78,7 +78,7 @@ class Service extends Model {
                 'instant'           => true
             ],
 
-            'has_external_provider' =>[
+            'has_external_provider' => [
                 'type'              => 'boolean',
                 'description'       => 'The service has external provider.',
                 'default'           =>  false

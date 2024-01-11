@@ -84,18 +84,18 @@ list($params, $providers) = eQual::announce([
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
 // Remove filter params of hidden fields
-if (!empty($params['type'])) {
+if(!empty($params['type'])) {
     $individualParams = ['firstname', 'lastname', 'citizen_identification'];
     $companyParams = ['legal_name', 'short_name', 'registration_number'];
 
     $hiddenFields = [];
-    if ($params['type'] === 'all') {
+    if($params['type'] === 'all') {
         $hiddenFields = array_merge($individualParams, $companyParams);
     } else {
         $hiddenFields = $params['type'] === 'I' ? $companyParams : $individualParams;
     }
 
-    foreach ($hiddenFields as $hiddenField) {
+    foreach($hiddenFields as $hiddenField) {
         unset($params[$hiddenField]);
     }
 }
@@ -110,8 +110,8 @@ $columns = [
     'registration_number'
 ];
 
-foreach ($columns as $column) {
-    if (empty($params[$column])) {
+foreach($columns as $column) {
+    if(empty($params[$column])) {
         continue;
     }
 

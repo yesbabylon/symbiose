@@ -16,7 +16,7 @@ $tests = [
             try {
                 // Run action
                 eQual::run('do', 'inventory_service_subscription_add-subscriptionentry', ['id' => '-1']);
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 
@@ -58,7 +58,7 @@ $tests = [
                     'inventory_service_subscription_add-subscriptionentry',
                     ['id' => $subscription_id]
                 );
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 
@@ -117,7 +117,7 @@ $tests = [
                     'inventory_service_subscription_add-subscriptionentry',
                     ['id' => $subscription_id]
                 );
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 

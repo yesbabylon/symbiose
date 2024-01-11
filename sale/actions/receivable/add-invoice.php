@@ -61,7 +61,7 @@ if(empty($params['invoice_id'])) {
         ->read(['status'])
         ->first();
 
-    if (!$invoice) {
+    if(!$invoice) {
         throw new Exception('unknown_invoice', QN_ERROR_UNKNOWN_OBJECT);
     }
 }

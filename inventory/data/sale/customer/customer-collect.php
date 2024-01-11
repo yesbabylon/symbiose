@@ -59,8 +59,8 @@ $columnsParamKeysMap = [
     'subscriptions_ids' => 'subscription_id',
 ];
 
-foreach ($columnsParamKeysMap as $column => $paramKey) {
-    if (empty($params[$paramKey])) {
+foreach($columnsParamKeysMap as $column => $paramKey) {
+    if(empty($params[$paramKey])) {
         continue;
     }
 

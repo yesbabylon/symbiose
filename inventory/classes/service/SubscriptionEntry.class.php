@@ -52,7 +52,7 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcIsBillable($self) {
         $result = [];
         $self->read(['subscription_id' => ['is_billable']]);
-        foreach ($self as $id => $subscription_entry) {
+        foreach($self as $id => $subscription_entry) {
             $result[$id] = $subscription_entry['subscription_id']['is_billable'];
         }
         return $result;
@@ -61,7 +61,7 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcCustomerId($self) {
         $result = [];
         $self->read(['subscription_id' => ['customer_id']]);
-        foreach ($self as $id => $subscription_entry) {
+        foreach($self as $id => $subscription_entry) {
             $result[$id] = $subscription_entry['subscription_id']['customer_id'];
         }
         return $result;
@@ -70,7 +70,7 @@ class SubscriptionEntry extends \sale\SaleEntry {
     public static function calcProductId($self) {
         $result = [];
         $self->read(['subscription_id' => ['product_id']]);
-        foreach ($self as $id => $subscription_entry) {
+        foreach($self as $id => $subscription_entry) {
             $result[$id] = $subscription_entry['subscription_id']['product_id'];
         }
         return $result;

@@ -134,7 +134,7 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['object_class', 'object_id']);
         foreach($self as $id => $sale_entry) {
-            if ($sale_entry['object_class'] !== 'inventory\service\Subscription') {
+            if($sale_entry['object_class'] !== 'inventory\service\Subscription') {
                 $result[$id] = null;
                 continue;
             }

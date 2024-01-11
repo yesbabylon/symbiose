@@ -78,7 +78,7 @@ $receivable = Receivable::search([
 
 if(!$receivable) {
     $objectName = 'Sale';
-    if (!is_null($sale_entry['object_class'])) {
+    if(!is_null($sale_entry['object_class'])) {
         $objectName = array_reverse(
             explode('\\', $sale_entry['object_class'])
         )[0];
