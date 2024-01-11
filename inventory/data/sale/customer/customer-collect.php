@@ -52,20 +52,20 @@ list($params, $providers) = eQual::announce([
  */
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
-$columnsParamKeysMap = [
+$columns_param_keys_map = [
     'products_ids'      => 'product_id',
     'services_ids'      => 'service_id',
     'softwares_ids'     => 'software_id',
     'subscriptions_ids' => 'subscription_id',
 ];
 
-foreach($columnsParamKeysMap as $column => $paramKey) {
-    if(empty($params[$paramKey])) {
+foreach($columns_param_keys_map as $column => $param_key) {
+    if(empty($params[$param_key])) {
         continue;
     }
 
-    $customersIds = Customer::search([$column, 'contains', $params[$paramKey]])->ids();
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['id', 'in', $customersIds]);
+    $customers_ids = Customer::search([$column, 'contains', $params[$param_key]])->ids();
+    $params['domain'] = Domain::conditionAdd($params['domain'], ['id', 'in', $customers_ids]);
 }
 
 $result = eQual::run('get', 'sale_customer_customer-collect', $params, true);

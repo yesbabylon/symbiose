@@ -53,7 +53,8 @@ if(empty($params['invoice_id'])) {
         'customer_id' => $receivable_first['customer_id']
     ])
         ->first();
-} else {
+}
+else {
     $invoice = Invoice::search([
             ['id', '=', $params['invoice_id']],
             ['status', '=', 'proforma']
