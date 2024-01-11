@@ -30,6 +30,10 @@ list($context, $orm) = [$providers['context'], $providers['orm']];
 $subscription = Subscription::id($params['id'])
     ->read([
         'id',
+        'is_internal',
+        'is_billable',
+        'customer_id',
+        'product_id',
         'date_from',
         'date_to',
         'price_id',
@@ -41,6 +45,10 @@ if(!$subscription) {
     throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
 }
 
+if($subscription['is_internal'] || empty($subscription['customer_id'])) {
+    throw new Exception('internal_subscription_cannot_generate_sale_entry', QN_ERROR_NOT_ALLOWED);
+}
+
 $subscription_entry = SubscriptionEntry::search([
     ['subscription_id', '=', $subscription['id']],
     ['date_from', '=', $subscription['date_from']],
@@ -49,13 +57,17 @@ $subscription_entry = SubscriptionEntry::search([
     ->read(['id'])
     ->first();
 
-if (!$subscription_entry) {
+if(!$subscription_entry) {
     $subscription_entry = SubscriptionEntry::create([
+        'object_id'       => $subscription['id'],
         'subscription_id' => $subscription['id'],
+        'is_billable'     => $subscription['is_billable'],
+        'customer_id'     => $subscription['customer_id'],
+        'product_id'      => $subscription['product_id'],
         'date_from'       => $subscription['date_from'],
         'date_to'         => $subscription['date_to'],
         'price_id'        => $subscription['price_id'],
-        'price'           => $subscription['price']
+        'unit_price'      => $subscription['price']
     ])
         ->first();
 }

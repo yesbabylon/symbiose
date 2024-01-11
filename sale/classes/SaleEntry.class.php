@@ -54,13 +54,44 @@ class SaleEntry extends Model {
             'price_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
-                'description'       => 'Price of the sale.'
+                'description'       => 'Price of the sale.',
+                'dependencies'      => ['unit_price']
+            ],
+
+            'unit_price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Unit price of the product related to the entry.',
+                'function'          => 'calcUnitPrice',
+                'store'             => true
             ],
 
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 0
+            ],
+
+            'object_class' => [
+                'type'              => 'string',
+                'description'       => 'Class of the object object_id points to.',
+                'dependencies'      => ['subscription_id']
+            ],
+
+            'object_id' => [
+                'type'              => 'integer',
+                'description'       => 'Identifier of the object the sale entry originates from.',
+                'dependencies'      => ['subscription_id']
+            ],
+
+            'subscription_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'inventory\service\Subscription',
+                'function'          => 'calcSubscriptionId',
+                'description'       => 'Identifier of the subscription the sale entry originates from.',
+                'store'             => true
             ],
 
         ];
@@ -70,27 +101,46 @@ class SaleEntry extends Model {
         $result = [];
 
         if(isset($event['product_id'])) {
-
             $price_lists_ids = PriceList::search([
-                    [
-                        ['date_from', '<=', time()],
-                        ['date_to', '>=', time()],
-                        ['status', '=', 'published'],
-                    ]
-                ] )
+                [
+                    ['date_from', '<=', time()],
+                    ['date_to', '>=', time()],
+                    ['status', '=', 'published'],
+                ]
+            ])
                 ->ids();
 
-            $price = Price::search([
+            $result['price_id'] = Price::search([
                 ['product_id', '=', $event['product_id']],
                 ['price_list_id', 'in', $price_lists_ids]
-                ])->read(['id','name','price','vat_rate'])->first();
-
-                $result['price_id'] = $price;
-
+            ])
+                ->read(['id', 'name', 'price', 'vat_rate'])
+                ->first();
         }
-
 
         return $result;
     }
 
+    public static function calcUnitPrice($self) {
+        $result = [];
+        $self->read(['price_id' => ['price']]);
+        foreach($self as $id => $receivable) {
+            $result[$id] = $receivable['price_id']['price'];
+        }
+        return $result;
+    }
+
+    public static function calcSubscriptionId($self) {
+        $result = [];
+        $self->read(['object_class', 'object_id']);
+        foreach($self as $id => $sale_entry) {
+            if($sale_entry['object_class'] !== 'inventory\service\Subscription') {
+                $result[$id] = null;
+                continue;
+            }
+
+            $result[$id] = $sale_entry['object_id'];
+        }
+        return $result;
+    }
 }

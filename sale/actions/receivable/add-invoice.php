@@ -53,7 +53,8 @@ if(empty($params['invoice_id'])) {
         'customer_id' => $receivable_first['customer_id']
     ])
         ->first();
-} else {
+}
+else {
     $invoice = Invoice::search([
             ['id', '=', $params['invoice_id']],
             ['status', '=', 'proforma']
@@ -61,7 +62,7 @@ if(empty($params['invoice_id'])) {
         ->read(['status'])
         ->first();
 
-    if (!$invoice) {
+    if(!$invoice) {
         throw new Exception('unknown_invoice', QN_ERROR_UNKNOWN_OBJECT);
     }
 }
