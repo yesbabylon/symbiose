@@ -1,0 +1,135 @@
+{
+    "name": "Time entry",
+    "description": "Default form for time entry",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.time-entry",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Start",
+                                                "value": "time_start",
+                                                "width": "20%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "End",
+                                                "value": "time_end",
+                                                "width": "20%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Duration",
+                                                "value": "duration",
+                                                "width": "20%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Realised by",
+                                                "value": "user_id",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Project",
+                                                "value": "project_id",
+                                                "width": "25%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "25%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Origin",
+                                                "value": "origin",
+                                                "width": "20%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Related ticket",
+                                                "value": "ticket_id",
+                                                "width": "20%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Ticket link",
+                                                "value": "ticket_link",
+                                                "width": "20%",
+                                                "align": "left",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "name": "Time entries",
+    "description": "Default listing of all time entries.",
+    "actions": [
+        {
+            "id": "action.create-empty",
+            "label": "Create empty",
+            "description": "Create an empty time entry that is destined to be modified inline.",
+            "controller": "timetrack_timeentry_create-empty",
+            "params": {
+                "user_id": "user.id"
+            }
+        }
+    ],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "5%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Realised by",
+                "value": "user_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Project",
+                "value": "project_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Origin",
+                "value": "origin",
+                "width": "5%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Ticket link",
+                "value": "ticket_link",
+                "width": "5%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Start",
+                "value": "time_start",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "End",
+                "value": "time_end",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Duration",
+                "value": "duration",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

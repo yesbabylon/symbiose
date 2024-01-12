@@ -1,0 +1,33 @@
+{
+    "name": "Timetrack left menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.time-entries",
+                "type": "entry",
+                "label": "Time entries",
+                "icon": "timer",
+                "description": "Time entries",
+                "context": {
+                    "entity": "timetrack\\TimeEntry",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.projects",
+                "type": "entry",
+                "label": "Projects",
+                "icon": "dataset",
+                "description": "Projects",
+                "context": {
+                    "entity": "timetrack\\Project",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "desc"
+                }
+            }
+        ]
+    }
+}
