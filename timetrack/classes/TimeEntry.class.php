@@ -62,6 +62,15 @@ class TimeEntry extends SaleEntry {
                 'store'          => true
             ],
 
+            'qty' => [
+                'type'           => 'computed',
+                'result_type'    => 'float',
+                'description'    => 'Quantity of product.',
+                'visible'        => false,
+                'store'          => true,
+                'function'       => 'calcQty'
+            ],
+
             /**
              * Specific TimeEntry columns
              */
@@ -97,7 +106,8 @@ class TimeEntry extends SaleEntry {
                 'store'          => true,
                 'instant'        => true,
                 'function'       => 'calcDuration',
-                'onupdate'       => 'onupdateDuration'
+                'onupdate'       => 'onupdateDuration',
+                'dependencies'   => ['qty']
             ],
 
             'user_id' => [
@@ -271,6 +281,21 @@ class TimeEntry extends SaleEntry {
             }
 
             $return[$id] = $instance_url.'support/#/ticket/'.$time_entry['ticket_id'];
+        }
+
+        return $return;
+    }
+
+    public static function calcQty($self): array {
+        $return = [];
+        $self->read(['duration']);
+        foreach($self as $id => $time_entry) {
+            if (is_null($time_entry['duration'])) {
+                continue;
+            }
+
+            $parsed_time = date_parse($time_entry['duration'].':00');
+            $return[$id] = $parsed_time['hour'] + $parsed_time['minute'] / 60;
         }
 
         return $return;
