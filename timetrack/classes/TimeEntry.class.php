@@ -21,6 +21,14 @@ class TimeEntry extends SaleEntry {
         self::ORIGIN_SUPPORT => 'Support ticket',
     ];
 
+    public static function getName(): string {
+        return 'Time entry';
+    }
+
+    public static function getDescription(): string {
+        return 'A time entry records a duration of time an employee spent on a task related to a customer\'s project.';
+    }
+
     public static function getColumns(): array {
         return [
 

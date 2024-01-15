@@ -11,6 +11,15 @@ use equal\orm\Model;
 
 class TimeEntrySaleModel extends Model {
 
+    public static function getName(): string {
+        return 'Time entry sale model';
+    }
+
+    public static function getDescription(): string {
+        return 'A time entry sale model allows to auto set a time entry sale related fields (product_id, price_id and unit_price),'.PHP_EOL
+            .' when the time entry origin and project are matching a sale model.';
+    }
+
     public static function getColumns(): array {
         return [
 
