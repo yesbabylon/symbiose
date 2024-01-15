@@ -100,7 +100,7 @@ class OrderLine extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price of the line (computed).',
                 'function'          => 'calcTotal',
                 'store'             => true
@@ -169,7 +169,7 @@ class OrderLine extends Model {
         $lines = $om->read(__CLASS__, $ids, ['unit_price', 'qty', 'free_qty', 'discount']);
         if($lines > 0) {
             foreach($lines as $lid => $line) {
-                $result[$lid] = round(($line['unit_price'] * (1 - $line['discount'])) * ($line['qty'] - $line['free_qty']), 2);
+                $result[$lid] = round(($line['unit_price'] * (1 - $line['discount'])) * ($line['qty'] - $line['free_qty']), 4);
             }
         }
         return $result;
