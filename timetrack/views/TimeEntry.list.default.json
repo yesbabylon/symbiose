@@ -17,12 +17,13 @@
     "actions": [
         {
             "id": "action.create-empty",
-            "label": "Create empty",
-            "description": "Create an empty time entry that is destined to be modified inline.",
-            "controller": "timetrack_timeentry_create-empty",
+            "label": "Quick create",
+            "description": "Quick creation of time entry that is destined to be modified inline.",
+            "controller": "timetrack_timeentry_create-quick",
             "params": {
                 "user_id": "user.id"
-            }
+            },
+            "confirm": true
         }
     ],
     "layout": {
@@ -69,7 +70,8 @@
                 "label": "Origin",
                 "value": "origin",
                 "width": "5%",
-                "sortable": true
+                "sortable": true,
+                "readonly": true
             },
             {
                 "type": "field",

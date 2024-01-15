@@ -133,8 +133,12 @@ class SaleEntry extends Model {
     public static function calcUnitPrice($self) {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $receivable) {
-            $result[$id] = $receivable['price_id']['price'];
+        foreach($self as $id => $sale_entry) {
+            if(!isset($sale_entry['price_id']['price'])) {
+                continue;
+            }
+
+            $result[$id] = $sale_entry['price_id']['price'];
         }
         return $result;
     }

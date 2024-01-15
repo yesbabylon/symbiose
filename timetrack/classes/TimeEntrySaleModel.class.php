@@ -64,12 +64,12 @@ class TimeEntrySaleModel extends Model {
     public static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $receivable) {
-            if(!isset($receivable['price_id']['price'])) {
+        foreach($self as $id => $sale_model) {
+            if(!isset($sale_model['price_id']['price'])) {
                 continue;
             }
 
-            $result[$id] = $receivable['price_id']['price'];
+            $result[$id] = $sale_model['price_id']['price'];
         }
 
         return $result;

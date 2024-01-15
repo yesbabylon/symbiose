@@ -53,13 +53,32 @@ class TimeEntry extends SaleEntry {
                 'dependencies'   => ['project_id']
             ],
 
-            'product_id'=> [
+            'product_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
                 'foreign_object' => 'sale\catalog\Product',
                 'description'    => 'Product of the catalog sale.',
                 'function'       => 'calcProductId',
                 'store'          => true
+            ],
+            
+            'price_id' => [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'sale\price\Price',
+                'description'    => 'Price of the sale.',
+                'function'       => 'calcPriceId',
+                'store'          => true,
+                'dependencies'   => ['unit_price']
+            ],
+
+            'unit_price' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'Unit price of the product related to the entry.',
+                'function'          => 'calcUnitPrice',
+                'store'             => true
             ],
 
             'qty' => [
@@ -187,42 +206,82 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function calcProductId($self): array {
-        $return = [];
-        $self->read([
-            'project_id' => [
-                'time_entry_sale_models_ids' => [
-                    'origin',
-                    'product_id'
-                ]
-            ],
-            'origin'
-        ]);
+        $result = [];
+        $self->read(['project_id', 'origin']);
         foreach($self as $id => $time_entry) {
-            if (empty($time_entry['project_id']['time_entry_sale_models_ids'])) {
+            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
                 continue;
             }
 
-            foreach($time_entry['project_id']['time_entry_sale_models_ids'] as $model) {
-                if($model['origin'] !== $time_entry['origin']) {
-                    continue;
-                }
+            $sale_model = TimeEntrySaleModel::getModelToApply(
+                $time_entry['origin'],
+                $time_entry['project_id']
+            );
+            if(!isset($sale_model['product_id']['id'])) {
+                continue;
+            }
 
-                $return[$id] = $model['product_id'];
+            $result[$id] = $sale_model['product_id']['id'];
+        }
+
+        return $result;
+    }
+
+    public static function calcPriceId($self): array {
+        $result = [];
+        $self->read(['project_id', 'origin']);
+        foreach($self as $id => $time_entry) {
+            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
+                continue;
+            }
+
+            $sale_model = TimeEntrySaleModel::getModelToApply(
+                $time_entry['origin'],
+                $time_entry['project_id']
+            );
+            if(!isset($sale_model['price_id']['id'])) {
+                continue;
+            }
+
+            $result[$id] = $sale_model['price_id']['id'];
+        }
+
+        return $result;
+    }
+
+    public static function calcUnitPrice($self) {
+        $result = [];
+        $self->read(['project_id', 'origin', 'price_id' => ['price']]);
+        foreach($self as $id => $time_entry) {
+            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
+                continue;
+            }
+
+            $sale_model = TimeEntrySaleModel::getModelToApply(
+                $time_entry['origin'],
+                $time_entry['project_id']
+            );
+
+            if(isset($sale_model['unit_price'])) {
+                $result[$id] = $sale_model['unit_price'];
+            }
+            elseif(isset($time_entry['price_id']['price'])) {
+                $result[$id] = $time_entry['price_id']['price'];
             }
         }
 
-        return $return;
+        return $result;
     }
 
     public static function calcDuration($self): array {
-        $return = [];
+        $result = [];
         $self->read(['time_start', 'time_end']);
         foreach($self as $id => $time_entry) {
             $seconds = $time_entry['time_end'] - $time_entry['time_start'];
-            $return[$id] = sprintf('%02d:%02d', ($seconds/3600), ($seconds/60%60));
+            $result[$id] = sprintf('%02d:%02d', ($seconds/3600), ($seconds/60%60));
         }
 
-        return $return;
+        return $result;
     }
 
     public static function onupdateDuration($self): void {
@@ -250,21 +309,21 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function calcCustomerId($self): array {
-        $return = [];
+        $result = [];
         $self->read(['project_id' => ['customer_id']]);
         foreach($self as $id => $time_entry) {
             if (!isset($time_entry['project_id']['customer_id'])) {
                 continue;
             }
 
-            $return[$id] = $time_entry['project_id']['customer_id'];
+            $result[$id] = $time_entry['project_id']['customer_id'];
         }
 
-        return $return;
+        return $result;
     }
 
     public static function calcTicketLink($self): array {
-        $return = [];
+        $result = [];
         $self->read(['origin', 'ticket_id', 'project_id' => ['instance_id' => ['url']]]);
         foreach($self as $id => $time_entry) {
             if(
@@ -280,14 +339,14 @@ class TimeEntry extends SaleEntry {
                 $instance_url .= '/';
             }
 
-            $return[$id] = $instance_url.'support/#/ticket/'.$time_entry['ticket_id'];
+            $result[$id] = $instance_url.'support/#/ticket/'.$time_entry['ticket_id'];
         }
 
-        return $return;
+        return $result;
     }
 
     public static function calcQty($self): array {
-        $return = [];
+        $result = [];
         $self->read(['duration']);
         foreach($self as $id => $time_entry) {
             if (is_null($time_entry['duration'])) {
@@ -295,9 +354,9 @@ class TimeEntry extends SaleEntry {
             }
 
             $parsed_time = date_parse($time_entry['duration'].':00');
-            $return[$id] = $parsed_time['hour'] + $parsed_time['minute'] / 60;
+            $result[$id] = $parsed_time['hour'] + $parsed_time['minute'] / 60;
         }
 
-        return $return;
+        return $result;
     }
 }
