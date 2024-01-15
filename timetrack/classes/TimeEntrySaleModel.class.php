@@ -9,10 +9,17 @@ namespace timetrack;
 
 use equal\orm\Model;
 
-class TimeEntrySale extends Model {
+class TimeEntrySaleModel extends Model {
 
     public static function getColumns(): array {
         return [
+
+            'name' => [
+                'type'            => 'string',
+                'description'     => 'Name of the sale model.',
+                'required'        => true,
+                'unique'          => true
+            ],
 
             'origin' => [
                 'type'            => 'integer',
@@ -45,11 +52,11 @@ class TimeEntrySale extends Model {
             'projects_ids' => [
                 'type'            => 'many2many',
                 'foreign_object'  => 'timetrack\Project',
-                'foreign_field'   => 'time_entry_sales_ids',
-                'rel_table'       => 'timetrack_project_rel_time_entry_sale',
+                'foreign_field'   => 'time_entry_sale_models_ids',
+                'rel_table'       => 'timetrack_project_rel_time_entry_sale_model',
                 'rel_foreign_key' => 'project_id',
-                'rel_local_key'   => 'time_entry_sale_id'
-            ],
+                'rel_local_key'   => 'time_entry_sale_model_id'
+            ]
 
         ];
     }
@@ -66,6 +73,30 @@ class TimeEntrySale extends Model {
         }
 
         return $result;
+    }
+
+    public static function getModelToApply(string $origin, int $project_id): ?array {
+        $sale_models = self::search(['origin', '=', $origin])
+            ->read([
+                'name',
+                'projects_ids',
+                'product_id' => ['id', 'name'],
+                'price_id' => ['id', 'name'],
+                'unit_price'
+            ]);
+
+        $sale_model_to_apply = null;
+        foreach($sale_models as $model) {
+            if(empty($model['projects_ids']) && is_null($sale_model_to_apply)) {
+                $sale_model_to_apply = $model->toArray();
+            }
+            elseif(in_array($project_id, $model['projects_ids'])) {
+                $sale_model_to_apply = $model->toArray();
+                break;
+            }
+        }
+
+        return $sale_model_to_apply;
     }
 
 }

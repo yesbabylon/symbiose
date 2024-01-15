@@ -91,7 +91,8 @@
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "25%",
-                                                "align": "left"
+                                                "align": "left",
+                                                "visible": ["project_id", "<>", null]
                                             }
                                         ]
                                     },
@@ -144,7 +145,6 @@
                     {
                         "id": "section.sale-entry",
                         "label": "Sale",
-                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -156,40 +156,45 @@
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
-                                                "width": "40%"
+                                                "width": "100%",
+                                                "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "readonly": true,
-                                                "width": "30%"
+                                                "width": "50%",
+                                                "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "unit_price",
                                                 "label": "Unit price amount",
-                                                "width": "30%"
+                                                "width": "50%",
+                                                "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_billable",
                                                 "label": "is Billable",
-                                                "width": "50%"
+                                                "width": "100%",
+                                                "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_receivable",
                                                 "label": "Has Receivable",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "receivable_id",
                                                 "label": "Receivable",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "align": "left"
                                             }
                                         ]
                                     }

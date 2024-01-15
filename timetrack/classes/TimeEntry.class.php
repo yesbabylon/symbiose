@@ -62,9 +62,6 @@ class TimeEntry extends SaleEntry {
                 'store'          => true
             ],
 
-            // Override price_id   to be computed on origin and project
-            // Override unit_price to be computed on origin and project
-
             /**
              * Specific TimeEntry columns
              */
@@ -72,8 +69,7 @@ class TimeEntry extends SaleEntry {
             'name' => [
                 'type'           => 'string',
                 'description'    => 'Name of the time entry.',
-                'required'       => true,
-                'unique'         => true
+                'required'       => true
             ],
 
             'description' => [
@@ -134,6 +130,38 @@ class TimeEntry extends SaleEntry {
             ]
 
         ];
+    }
+
+    public static function onchange($event, $values): array {
+        $result = [];
+
+        if(
+            (isset($event['project_id']) && isset($values['origin']))
+            || (isset($event['origin']) && isset($values['project_id']))
+        ) {
+            $sale_model = TimeEntrySaleModel::getModelToApply(
+                $event['origin'] ?? $values['origin'],
+                $event['project_id'] ?? $values['project_id']
+            );
+
+            if(!is_null($sale_model)) {
+                $result = [
+                    'product_id' => $sale_model['product_id'],
+                    'price_id'   => $sale_model['price_id'],
+                    'unit_price' => $sale_model['unit_price']
+                ];
+            }
+        }
+
+        if(isset($event['project_id'])) {
+            $project = Project::id($event['project_id'])
+                ->read(['customer_id' => ['name']])
+                ->first();
+
+            $result['customer_id'] = $project['customer_id'];
+        }
+
+        return $result;
     }
 
     public static function onupdateProjectId($self): void {
