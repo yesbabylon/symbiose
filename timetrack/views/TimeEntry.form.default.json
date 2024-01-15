@@ -1,12 +1,25 @@
 {
     "name": "Time entry",
     "description": "Default form for time entry",
+    "actions": [
+        {
+            "id": "action.receivable",
+            "label": "Receivable",
+            "controller": "sale_saleentry_add-receivable",
+            "visible": [
+                ["state", "<>", "draft"],
+                ["has_receivable", "=", false],
+                ["is_billable", "=", true]
+            ]
+        }
+    ],
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
                         "id": "section.time-entry",
+                        "label": "Time Entry Infos",
                         "rows": [
                             {
                                 "columns": [
@@ -121,6 +134,62 @@
                                                 "widget": {
                                                     "usage": "string/text"
                                                 }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.sale-entry",
+                        "label": "Sale",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "40%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_id",
+                                                "label": "Price",
+                                                "readonly": true,
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "unit_price",
+                                                "label": "Unit price amount",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_receivable",
+                                                "label": "Has Receivable",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receivable_id",
+                                                "label": "Receivable",
+                                                "readonly": true,
+                                                "width": "50%"
                                             }
                                         ]
                                     }

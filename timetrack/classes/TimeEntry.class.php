@@ -7,9 +7,9 @@
 
 namespace timetrack;
 
-use equal\orm\Model;
+use sale\SaleEntry;
 
-class TimeEntry extends Model {
+class TimeEntry extends SaleEntry {
 
     const ORIGIN_BACKLOG = 1;
     const ORIGIN_EMAIL = 2;
@@ -23,6 +23,51 @@ class TimeEntry extends Model {
 
     public static function getColumns(): array {
         return [
+
+            /**
+             * Override SaleEntry columns
+             */
+
+            'project_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'timetrack\Project',
+                'description'       => 'Identifier of the Project the sale entry originates from.',
+                'dependencies'      => ['ticket_link'],
+                'onupdate'          => 'onupdateProjectId'
+            ],
+
+            'customer_id' => [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'sale\customer\Customer',
+                'description'    => 'Customer this time entry was created for.',
+                'function'       => 'calcCustomerId',
+                'store'          => true,
+                'readonly'       => true
+            ],
+
+            'object_class' => [
+                'type'           => 'string',
+                'description'    => 'Class of the object object_id points to.',
+                'default'        => 'timetrack\Project',
+                'dependencies'   => ['project_id']
+            ],
+
+            'product_id'=> [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'sale\catalog\Product',
+                'description'    => 'Product of the catalog sale.',
+                'function'       => 'calcProductId',
+                'store'          => true
+            ],
+
+            // Override price_id   to be computed on origin and project
+            // Override unit_price to be computed on origin and project
+
+            /**
+             * Specific TimeEntry columns
+             */
 
             'name' => [
                 'type'           => 'string',
@@ -72,26 +117,9 @@ class TimeEntry extends Model {
                 'default'        => self::ORIGIN_EMAIL
             ],
 
-            'project_id' => [
-                'type'           => 'many2one',
-                'foreign_object' => 'timetrack\Project',
-                'description'    => 'Project for which this time entry has been created.',
-                'dependencies'   => ['ticket_link'],
-            ],
-
-            'customer_id' => [
-                'type'           => 'computed',
-                'result_type'    => 'many2one',
-                'foreign_object' => 'sale\customer\Customer',
-                'description'    => 'Customer this time entry was created for.',
-                'function'       => 'calcCustomerId',
-                'store'          => true,
-                'readonly'       => true
-            ],
-
             'ticket_id' => [
                 'type'           => 'integer',
-                'description'    => 'Support ticket id from project Symbiose instance',
+                'description'    => 'Support ticket id from project Symbiose instance.',
                 'dependencies'   => ['ticket_link'],
                 'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
             ],
@@ -106,6 +134,46 @@ class TimeEntry extends Model {
             ]
 
         ];
+    }
+
+    public static function onupdateProjectId($self): void {
+        $self->read(['object_id', 'project_id']);
+        foreach($self as $id => $time_entry) {
+            if ($time_entry['object_id'] === $time_entry['project_id']) {
+                continue;
+            }
+
+            TimeEntry::id($id)
+                ->update(['object_id' => $time_entry['project_id']]);
+        }
+    }
+
+    public static function calcProductId($self): array {
+        $return = [];
+        $self->read([
+            'project_id' => [
+                'time_entry_sale_models_ids' => [
+                    'origin',
+                    'product_id'
+                ]
+            ],
+            'origin'
+        ]);
+        foreach($self as $id => $time_entry) {
+            if (empty($time_entry['project_id']['time_entry_sale_models_ids'])) {
+                continue;
+            }
+
+            foreach($time_entry['project_id']['time_entry_sale_models_ids'] as $model) {
+                if($model['origin'] !== $time_entry['origin']) {
+                    continue;
+                }
+
+                $return[$id] = $model['product_id'];
+            }
+        }
+
+        return $return;
     }
 
     public static function calcDuration($self): array {
@@ -147,6 +215,10 @@ class TimeEntry extends Model {
         $return = [];
         $self->read(['project_id' => ['customer_id']]);
         foreach($self as $id => $time_entry) {
+            if (!isset($time_entry['project_id']['customer_id'])) {
+                continue;
+            }
+
             $return[$id] = $time_entry['project_id']['customer_id'];
         }
 
@@ -162,7 +234,6 @@ class TimeEntry extends Model {
                 || is_null($time_entry['ticket_id'])
                 || empty($time_entry['project_id']['instance_id']['url'])
             ) {
-                $return[$id] = null;
                 continue;
             }
 

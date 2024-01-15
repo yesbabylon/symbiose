@@ -1,6 +1,19 @@
 {
     "name": "Time entries",
     "description": "Default listing of all time entries.",
+    "domain": ["object_class", "=", "timetrack\\Project"],
+    "header": {
+        "selection": {
+            "actions" : [
+                {
+                    "id": "header.selection.actions.add-receivables",
+                    "label": "Receivable",
+                    "icon": "note",
+                    "controller": "sale_saleentry_add-receivables"
+                }
+            ]
+        }
+    },
     "actions": [
         {
             "id": "action.create-empty",
