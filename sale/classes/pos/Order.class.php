@@ -95,7 +95,7 @@ class Order extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price for all lines (computed).',
                 'function'          => 'calcTotal',
                 'store'             => true
@@ -240,7 +240,7 @@ class Order extends Model {
                     foreach($order['order_lines_ids.total'] as $lid => $line) {
                         $result[$oid] += $line['total'];
                     }
-                    $result[$oid] = round($result[$oid], 2);
+                    $result[$oid] = round($result[$oid], 4);
                 }
             }
         }
