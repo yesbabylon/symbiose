@@ -37,11 +37,11 @@ class TimeEntry extends SaleEntry {
              */
 
             'project_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'timetrack\Project',
-                'description'       => 'Identifier of the Project the sale entry originates from.',
-                'dependencies'      => ['ticket_link'],
-                'onupdate'          => 'onupdateProjectId'
+                'type'           => 'many2one',
+                'foreign_object' => 'timetrack\Project',
+                'description'    => 'Identifier of the Project the sale entry originates from.',
+                'dependencies'   => ['ticket_link'],
+                'onupdate'       => 'onupdateProjectId'
             ],
 
             'customer_id' => [
@@ -81,12 +81,12 @@ class TimeEntry extends SaleEntry {
             ],
 
             'unit_price' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
-                'usage'             => 'amount/money:4',
-                'description'       => 'Unit price of the product related to the entry.',
-                'function'          => 'calcUnitPrice',
-                'store'             => true
+                'type'           => 'computed',
+                'result_type'    => 'float',
+                'usage'          => 'amount/money:4',
+                'description'    => 'Unit price of the product related to the entry.',
+                'function'       => 'calcUnitPrice',
+                'store'          => true
             ],
 
             'qty' => [
@@ -138,9 +138,9 @@ class TimeEntry extends SaleEntry {
             ],
 
             'user_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'core\User',
-                'description'       => 'User the time entry was realised by.'
+                'type'           => 'many2one',
+                'foreign_object' => 'core\User',
+                'description'    => 'User the time entry was realised by.'
             ],
 
             'origin' => [
