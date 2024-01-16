@@ -84,23 +84,23 @@ class TimeEntrySaleModel extends Model {
         return $result;
     }
 
-    public static function getModelToApply(string $origin, int $project_id): ?array {
+    public static function getModelToApply(string $origin, int $project_id): ?self {
         $sale_models = self::search(['origin', '=', $origin])
             ->read([
                 'name',
                 'projects_ids',
-                'product_id' => ['id', 'name'],
-                'price_id' => ['id', 'name'],
+                'product_id',
+                'price_id',
                 'unit_price'
             ]);
 
         $sale_model_to_apply = null;
         foreach($sale_models as $model) {
             if(empty($model['projects_ids']) && is_null($sale_model_to_apply)) {
-                $sale_model_to_apply = $model->toArray();
+                $sale_model_to_apply = $model;
             }
             elseif(in_array($project_id, $model['projects_ids'])) {
-                $sale_model_to_apply = $model->toArray();
+                $sale_model_to_apply = $model;
                 break;
             }
         }

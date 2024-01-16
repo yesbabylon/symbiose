@@ -8,6 +8,8 @@
 namespace timetrack;
 
 use sale\SaleEntry;
+use sale\catalog\Product;
+use sale\price\Price;
 
 class TimeEntry extends SaleEntry {
 
@@ -182,9 +184,23 @@ class TimeEntry extends SaleEntry {
             );
 
             if(!is_null($sale_model)) {
+                $product = null;
+                if (!is_null($sale_model['product_id'])) {
+                    $product = Product::id($sale_model['product_id'])
+                        ->read(['id', 'name'])
+                        ->first();
+                }
+
+                $price = null;
+                if (!is_null($sale_model['price_id'])) {
+                    $price = Price::id($sale_model['price_id'])
+                        ->read(['id', 'name'])
+                        ->first();
+                }
+
                 $result = [
-                    'product_id' => $sale_model['product_id'],
-                    'price_id'   => $sale_model['price_id'],
+                    'product_id' => $product,
+                    'price_id'   => $price,
                     'unit_price' => $sale_model['unit_price']
                 ];
             }
@@ -225,11 +241,11 @@ class TimeEntry extends SaleEntry {
                 $time_entry['origin'],
                 $time_entry['project_id']
             );
-            if(!isset($sale_model['product_id']['id'])) {
+            if(is_null($sale_model['product_id'])) {
                 continue;
             }
 
-            $result[$id] = $sale_model['product_id']['id'];
+            $result[$id] = $sale_model['product_id'];
         }
 
         return $result;
@@ -247,11 +263,11 @@ class TimeEntry extends SaleEntry {
                 $time_entry['origin'],
                 $time_entry['project_id']
             );
-            if(!isset($sale_model['price_id']['id'])) {
+            if(is_null($sale_model['price_id'])) {
                 continue;
             }
 
-            $result[$id] = $sale_model['price_id']['id'];
+            $result[$id] = $sale_model['price_id'];
         }
 
         return $result;
