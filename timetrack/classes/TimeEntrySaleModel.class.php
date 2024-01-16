@@ -16,7 +16,7 @@ class TimeEntrySaleModel extends Model {
     }
 
     public static function getDescription(): string {
-        return 'A time entry sale model allows to auto set a time entry sale related fields (product_id, price_id and unit_price),'.PHP_EOL
+        return 'A time entry sale model allows to auto set a time entry sale related fields (product_id, price_id and unit_price),'
             .' when the time entry origin and project are matching a sale model.';
     }
 

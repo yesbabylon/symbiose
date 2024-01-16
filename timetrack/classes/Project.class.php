@@ -16,8 +16,8 @@ class Project extends Model {
     }
 
     public static function getDescription(): string {
-        return 'A project is linked to a customer and time entries.'.PHP_EOL
-            .'It organizes time entries and allows to configure sale models to auto apply sale related fields of a time entry.';
+        return 'A project is linked to a customer and time entries.'
+            .' It organizes time entries and allows to configure sale models to auto apply sale related fields of a time entry.';
     }
 
     public static function getColumns(): array {
