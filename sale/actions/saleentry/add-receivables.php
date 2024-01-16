@@ -31,13 +31,13 @@ if(empty($params['ids'])) {
     throw new Exception('empty_ids_param', QN_ERROR_INVALID_PARAM);
 }
 
-$sale_entries = SaleEntry::ids($params['ids'])->read();
+$sale_entries = SaleEntry::ids($params['ids'])->read(['id']);
 if(count($sale_entries) !== count($params['ids'])) {
     throw new Exception('unknown_saleentry', QN_ERROR_UNKNOWN_OBJECT);
 }
 
 foreach($sale_entries as $sale_entry) {
-    eQual::run('get', 'sale_saleentry_add-receivable', $sale_entry['id'], true);
+    eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $sale_entry['id']], true);
 }
 
 $context->httpResponse()

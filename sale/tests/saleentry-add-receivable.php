@@ -28,8 +28,10 @@ $tests = [
     '0102' => [
         'description' => 'Tests that action add-receivable throws if price does not exist',
         'arrange'     => function() {
+            // Create customer and sale entry
+
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
