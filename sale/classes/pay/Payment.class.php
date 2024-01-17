@@ -172,7 +172,7 @@ class Payment extends Model {
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $ids, $values, $lang='en') {
-        $payments = $om->read(self::getType(), $ids, ['is_exported', 'payment_origin', 'statement_line_id.remaining_amount'], $lang);
+        $payments = $om->read(self::getType(), $ids, ['is_exported', 'payment_origin', 'amount', 'statement_line_id.remaining_amount'], $lang);
         foreach($payments as $pid => $payment) {
             if($payment['is_exported']) {
                 return ['is_exported' => ['non_editable' => 'Once exported a payment can no longer be updated.']];
@@ -180,7 +180,7 @@ class Payment extends Model {
             if($payment['payment_origin'] == 'bank') {
                 if(isset($values['amount'])) {
                     $payment_amount = round($values['amount'], 2);
-                    $remaining_amount = round($payment['statement_line_id.remaining_amount'], 2) - $payment_amount;
+                    $remaining_amount = round($payment['statement_line_id.remaining_amount'], 2) + $payment['amount'] - $payment_amount;
                     if($remaining_amount < 0) {
                         return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']})."]];
                     }
