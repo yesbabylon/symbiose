@@ -31,10 +31,20 @@ if(empty($params['ids'])) {
     throw new Exception('empty_ids_param', QN_ERROR_INVALID_PARAM);
 }
 
-$sale_entries = SaleEntry::ids($params['ids'])->read(['id']);
+$sale_entries = SaleEntry::ids($params['ids'])
+    ->read(['is_billable', 'has_receivable'])
+    ->toArray();
+
 if(count($sale_entries) !== count($params['ids'])) {
     throw new Exception('unknown_saleentry', QN_ERROR_UNKNOWN_OBJECT);
 }
+
+$sale_entries = array_filter(
+    $sale_entries,
+    function($entry) {
+        return $entry['is_billable'] && !$entry['has_receivable'];
+    }
+);
 
 foreach($sale_entries as $sale_entry) {
     eQual::run(

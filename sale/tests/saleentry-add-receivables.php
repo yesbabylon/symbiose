@@ -77,6 +77,121 @@ $tests = [
     ],
 
     '0103' => [
+        'description' => 'Tests that action add-receivables create receivables only if time entry is_billable and does not have a receivable',
+        'arrange'     => function() {
+            // Create customer, price, product and two sale entries
+
+            $customer = Customer::create([
+                'name'                => 'Test customer',
+                'partner_identity_id' => 0
+            ])
+                ->read(['id'])
+                ->first();
+
+            $product_one = Product::create([
+                'name'             => 'Test product (1111.111111.11111111.111)',
+                'label'            => 'Test product',
+                'sku'              => '1111.111111.11111111.111',
+                'product_model_id' => 0
+            ])
+                ->read(['id'])
+                ->first();
+
+            $price_one = Price::create([
+                'price'         => 29.99,
+                'vat_rate'      => 0.99,
+                'price_list_id' => 0,
+                'product_id'    => $product_one['id']
+            ])
+                ->read(['id'])
+                ->first();
+
+            $sale_entry_one = SaleEntry::create([
+                'product_id'     => $product_one['id'],
+                'customer_id'    => $customer['id'],
+                'price_id'       => $price_one['id'],
+                'unit_price'     => 25.99,
+                'is_billable'    => false,
+                'has_receivable' => false
+            ])
+                ->read(['id'])
+                ->first();
+
+            $product_two = Product::create([
+                'name'             => 'Test product (2222.22222.22222222.222)',
+                'label'            => 'Test product',
+                'sku'              => '2222.22222.22222222.222',
+                'product_model_id' => 0
+            ])
+                ->read(['id'])
+                ->first();
+
+            $price_two = Price::create([
+                'price'         => 40.0,
+                'vat_rate'      => 0.99,
+                'price_list_id' => 0,
+                'product_id'    => $product_two['id']
+            ])
+                ->read(['id'])
+                ->first();
+
+            $sale_entry_two = SaleEntry::create([
+                'product_id'     => $product_two['id'],
+                'customer_id'    => $customer['id'],
+                'price_id'       => $price_two['id'],
+                'unit_price'     => 40.0,
+                'is_billable'    => true,
+                'has_receivable' => true
+            ])
+                ->read(['id'])
+                ->first();
+
+            return [$sale_entry_one['id'], $sale_entry_two['id']];
+        },
+        'act'         => function($sale_entry_ids) {
+            // Run action
+            eQual::run(
+                'do',
+                'sale_saleentry_add-receivables',
+                ['ids' => $sale_entry_ids]
+            );
+        },
+        'assert'      => function() {
+            // Assert that receivable created with the correct values
+
+            $customer = Customer::search(['name', '=', 'Test customer'])
+                ->read(['id'])
+                ->first();
+
+            $receivables = Receivable::search(['customer_id', '=', $customer['id']])
+                ->read(['id']);
+
+            return !count($receivables);
+        },
+        'rollback'    => function() {
+            // Remove customer, receivable queue, price, product, sale entry and receivable
+
+            $customer = Customer::search(['name', '=', 'Test customer'])
+                ->read(['id'])
+                ->first();
+
+            $entries = SaleEntry::search(['customer_id', '=', $customer['id']])
+                ->read(['price_id', 'product_id'])
+                ->toArray();
+
+            Customer::id($customer['id'])->delete(true);
+
+            Price::id($entries[0]['price_id'])->delete(true);
+            Product::id($entries[0]['product_id'])->delete(true);
+
+            Price::id($entries[1]['price_id'])->delete(true);
+            Product::id($entries[1]['product_id'])->delete(true);
+
+            SaleEntry::search(['customer_id', '=', $customer['id']])->delete(true);
+        }
+    ],
+
+    '0104' => [
         'description' => 'Tests that action add-receivables create receivables for entries if does not exist',
         'arrange'     => function() {
             // Create customer, price, product and two sale entries
@@ -107,10 +222,12 @@ $tests = [
                 ->first();
 
             $sale_entry_one = SaleEntry::create([
-                'product_id'  => $product_one['id'],
-                'customer_id' => $customer['id'],
-                'price_id'    => $price_one['id'],
-                'unit_price'  => 25.99
+                'product_id'     => $product_one['id'],
+                'customer_id'    => $customer['id'],
+                'price_id'       => $price_one['id'],
+                'unit_price'     => 25.99,
+                'is_billable'    => true,
+                'has_receivable' => false
             ])
                 ->read(['id'])
                 ->first();
@@ -134,10 +251,12 @@ $tests = [
                 ->first();
 
             $sale_entry_two = SaleEntry::create([
-                'product_id'  => $product_two['id'],
-                'customer_id' => $customer['id'],
-                'price_id'    => $price_two['id'],
-                'unit_price'  => 40.0
+                'product_id'     => $product_two['id'],
+                'customer_id'    => $customer['id'],
+                'price_id'       => $price_two['id'],
+                'unit_price'     => 40.0,
+                'is_billable'    => true,
+                'has_receivable' => false
             ])
                 ->read(['id'])
                 ->first();
