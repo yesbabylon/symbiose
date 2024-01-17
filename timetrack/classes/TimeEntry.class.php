@@ -13,9 +13,9 @@ use sale\price\Price;
 
 class TimeEntry extends SaleEntry {
 
-    const ORIGIN_BACKLOG = 1;
-    const ORIGIN_EMAIL = 2;
-    const ORIGIN_SUPPORT = 3;
+    const ORIGIN_BACKLOG = 'backlog';
+    const ORIGIN_EMAIL = 'email';
+    const ORIGIN_SUPPORT = 'support';
 
     const ORIGIN_MAP = [
         self::ORIGIN_BACKLOG => 'Backlog',
@@ -148,7 +148,7 @@ class TimeEntry extends SaleEntry {
             ],
 
             'origin' => [
-                'type'           => 'integer',
+                'type'           => 'string',
                 'selection'      => self::ORIGIN_MAP,
                 'description'    => 'Origin of the this time entry creation.',
                 'default'        => self::ORIGIN_EMAIL

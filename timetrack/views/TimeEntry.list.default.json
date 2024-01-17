@@ -1,6 +1,7 @@
 {
     "name": "Time entries",
     "description": "Default listing of all time entries.",
+    "controller": "timetrack_timeentry-collect",
     "domain": ["object_class", "=", "timetrack\\Project"],
     "header": {
         "selection": {
@@ -45,15 +46,7 @@
                 "type": "field",
                 "label": "Realised by",
                 "value": "user_id",
-                "width": "10%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "label": "Project",
-                "value": "project_id",
-                "width": "10%",
+                "width": "15%",
                 "sortable": true,
                 "readonly": true
             },
@@ -61,6 +54,15 @@
                 "type": "field",
                 "label": "Customer",
                 "value": "customer_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Project",
+                "value": "project_id",
                 "width": "10%",
                 "sortable": true,
                 "readonly": true
@@ -79,7 +81,26 @@
                 "value": "ticket_link",
                 "width": "5%",
                 "sortable": true,
-                "readonly": true
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Is billable",
+                "value": "is_billable",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Has receivable",
+                "value": "has_receivable",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
             },
             {
                 "type": "field",

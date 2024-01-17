@@ -1,0 +1,97 @@
+{
+    "name": "Time Entries search",
+    "description": "Advanced collector for time entries",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "label": "Name",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "user_id",
+                                                "label": "Realised by",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "time_start",
+                                                "label": "Start",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "time_end",
+                                                "label": "End",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "project_id",
+                                                "label": "Project",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "origin",
+                                                "label": "Origin",
+                                                "width": "30%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "Is billable",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_receivable",
+                                                "label": "Has receivable",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
