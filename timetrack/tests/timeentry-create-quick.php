@@ -59,13 +59,17 @@ $tests = [
         },
         'assert'      => function($user_id) {
             $time_entries = TimeEntry::search(['user_id', '=', $user_id])
-                ->read(['project_id', 'origin']);
+                ->read(['project_id', 'origin', 'is_billable', 'product_id', 'price_id', 'unit_price']);
 
             $time_entry = $time_entries->first();
 
             return count($time_entries) === 1
                 && $time_entry['project_id'] === 0
-                && $time_entry['origin'] === 2;
+                && $time_entry['origin'] === 2
+                && is_null($time_entry['product_id'])
+                && is_null($time_entry['price_id'])
+                && is_null($time_entry['unit_price'])
+                && $time_entry['is_billable'] === false;
         },
         'rollback'    => function() {
             // Remove user and time entry
@@ -155,12 +159,13 @@ $tests = [
             list($user_id, $project_id, $product_id, $price_id, $unit_price) = $data;
 
             $time_entry = TimeEntry::search(['user_id', '=', $user_id])
-                ->read(['product_id', 'price_id', 'unit_price'])
+                ->read(['product_id', 'price_id', 'unit_price', 'is_billable'])
                 ->first();
 
             return $time_entry['product_id'] === $product_id
                 && $time_entry['price_id'] === $price_id
-                && $time_entry['unit_price'] === $unit_price;
+                && $time_entry['unit_price'] === $unit_price
+                && $time_entry['is_billable'];
         },
         'rollback'    => function() {
             // Remove user, time entry sale model, time entry, product and price
@@ -293,12 +298,13 @@ $tests = [
             list($user_id, $project_id, $product_id, $price_id, $unit_price) = $data;
 
             $time_entry = TimeEntry::search(['user_id', '=', $user_id])
-                ->read(['product_id', 'price_id', 'unit_price'])
+                ->read(['product_id', 'price_id', 'unit_price', 'is_billable'])
                 ->first();
 
             return $time_entry['product_id'] === $product_id
                 && $time_entry['price_id'] === $price_id
-                && $time_entry['unit_price'] === $unit_price;
+                && $time_entry['unit_price'] === $unit_price
+                && $time_entry['is_billable'];
         },
         'rollback'    => function() {
             // Remove user, time entry, project, time entry sale models, products and prices

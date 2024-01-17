@@ -59,14 +59,15 @@ if(isset($params['origin'], $params['project_id'])) {
 }
 
 TimeEntry::create([
-    'name'       => 'New entry '.date('Y-m-d H:m:s', time()),
-    'user_id'    => $params['user_id'],
-    'object_id'  => $params['project_id'],
-    'project_id' => $params['project_id'],
-    'origin'     => $params['origin'],
-    'product_id' => $sale_model['product_id'] ?? null,
-    'price_id'   => $sale_model['price_id'] ?? null,
-    'unit_price' => $sale_model['unit_price'] ?? null,
+    'name'        => 'New entry '.date('Y-m-d H:m:s', time()),
+    'user_id'     => $params['user_id'],
+    'object_id'   => $params['project_id'],
+    'project_id'  => $params['project_id'],
+    'origin'      => $params['origin'],
+    'product_id'  => $sale_model['product_id'] ?? null,
+    'price_id'    => $sale_model['price_id'] ?? null,
+    'unit_price'  => $sale_model['unit_price'] ?? null,
+    'is_billable' => !is_null($sale_model)
 ]);
 
 $context->httpResponse()

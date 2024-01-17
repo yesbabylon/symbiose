@@ -201,9 +201,10 @@ class TimeEntry extends SaleEntry {
                 }
 
                 $result = [
-                    'product_id' => $product,
-                    'price_id'   => $price,
-                    'unit_price' => $sale_model['unit_price']
+                    'product_id'  => $product,
+                    'price_id'    => $price,
+                    'unit_price'  => $sale_model['unit_price'],
+                    'is_billable' => true
                 ];
             }
         }
