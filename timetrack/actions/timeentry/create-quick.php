@@ -61,6 +61,7 @@ if(isset($params['origin'], $params['project_id'])) {
 TimeEntry::create([
     'name'       => 'New entry '.date('Y-m-d H:m:s', time()),
     'user_id'    => $params['user_id'],
+    'object_id'  => $params['project_id'],
     'project_id' => $params['project_id'],
     'origin'     => $params['origin'],
     'product_id' => $sale_model['product_id'] ?? null,

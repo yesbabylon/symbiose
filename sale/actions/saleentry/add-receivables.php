@@ -37,7 +37,14 @@ if(count($sale_entries) !== count($params['ids'])) {
 }
 
 foreach($sale_entries as $sale_entry) {
-    eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $sale_entry['id']], true);
+    eQual::run(
+        'do',
+        'sale_saleentry_add-receivable',
+        [
+            'id'               => $sale_entry['id'],
+            'allow_multi_sale' => true
+        ]
+    );
 }
 
 $context->httpResponse()

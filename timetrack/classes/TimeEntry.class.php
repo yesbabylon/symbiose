@@ -53,6 +53,7 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'Customer this time entry was created for.',
                 'function'       => 'calcCustomerId',
                 'store'          => true,
+                'instant'        => true,
                 'readonly'       => true
             ],
 
@@ -96,8 +97,9 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'float',
                 'description'    => 'Quantity of product.',
                 'visible'        => false,
+                'function'       => 'calcQty',
                 'store'          => true,
-                'function'       => 'calcQty'
+                'instant'        => true
             ],
 
             /**
@@ -132,9 +134,9 @@ class TimeEntry extends SaleEntry {
             'duration' => [
                 'type'           => 'computed',
                 'result_type'    => 'string',
+                'function'       => 'calcDuration',
                 'store'          => true,
                 'instant'        => true,
-                'function'       => 'calcDuration',
                 'onupdate'       => 'onupdateDuration',
                 'dependencies'   => ['qty']
             ],

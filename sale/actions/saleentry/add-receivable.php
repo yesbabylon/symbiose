@@ -17,6 +17,12 @@ list($params, $providers) = announce([
             'description'   => 'ID of the sale entry.',
             'type'          => 'integer',
             'required'      => true
+        ],
+
+        'allow_multi_sale' => [
+            'description'   => 'Allows to create multiple pending receivables for a same product, price and customer.',
+            'type'          => 'boolean',
+            'default'       => false
         ]
     ],
     'response'      => [
@@ -67,16 +73,19 @@ if(!$price) {
     throw new Exception('unknown_price', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$receivable = Receivable::search([
-    ['receivables_queue_id', '=', $receivables_queue['id']],
-    ['product_id', '=', $sale_entry['product_id']],
-    ['price_id', '=', $price['id']],
-    ['status', '=', 'pending']
-])
-    ->read(['id'])
-    ->first();
+$receivable = null;
+if(!$params['allow_multi_sale']) {
+    $receivable = Receivable::search([
+        ['receivables_queue_id', '=', $receivables_queue['id']],
+        ['product_id', '=', $sale_entry['product_id']],
+        ['price_id', '=', $price['id']],
+        ['status', '=', 'pending']
+    ])
+        ->read(['id'])
+        ->first();
+}
 
-if(!$receivable) {
+if($params['allow_multi_sale'] || is_null($receivable)) {
     $objectName = 'Sale';
     if(!is_null($sale_entry['object_class'])) {
         $objectName = array_reverse(
