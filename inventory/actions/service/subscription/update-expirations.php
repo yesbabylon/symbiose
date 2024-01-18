@@ -15,10 +15,13 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'   => ['context', 'orm']
+    'providers'   => ['context']
 ]);
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/**
+ * @var \equal\php\Context $context
+ */
+$context = $providers['context'];
 
 $should_be_expired_ids = Subscription::search([
     ['date_to', '<', date('Y-m-d', time())],

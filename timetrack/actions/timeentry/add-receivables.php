@@ -20,10 +20,13 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm']
+    'providers'     => ['context']
 ]);
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/**
+ * @var \equal\php\Context $context
+ */
+$context = $providers['context'];
 
 eQual::run(
     'do',
@@ -35,5 +38,5 @@ eQual::run(
 );
 
 $context->httpResponse()
-    ->status(204)
-    ->send();
+        ->status(204)
+        ->send();

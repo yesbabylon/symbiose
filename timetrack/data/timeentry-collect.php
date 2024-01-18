@@ -83,9 +83,8 @@ list($params, $providers) = eQual::announce([
 
 /**
  * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
  */
-list($context, $orm) = [$providers['context'], $providers['orm']];
+$context = $providers['context'];
 
 if(isset($params['name']) && strlen($params['name']) > 0) {
     $params['domain'] = Domain::conditionAdd($params['domain'], ['name', 'ilike', '%'.$params['name'].'%']);
