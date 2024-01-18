@@ -54,17 +54,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "address",
-                                                "label": "Address Street",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
                                                 "value": "product_id",
                                                 "label": "Inventory Product",
                                                 "width": "25%"
