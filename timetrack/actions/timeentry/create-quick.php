@@ -26,7 +26,7 @@ list($params, $providers) = eQual::announce([
         ],
 
         'origin'     => [
-            'type'           => 'integer',
+            'type'           => 'string',
             'selection'      => array_keys(TimeEntry::ORIGIN_MAP),
             'description'    => 'Time entry origin.',
             'required'       => true
@@ -37,9 +37,12 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'      => ['context', 'orm']
+    'providers'      => ['context']
 ]);
 
+/**
+ * @var \equal\php\Context $context
+ */
 $context = $providers['context'];
 
 $user = User::id($params['user_id'])

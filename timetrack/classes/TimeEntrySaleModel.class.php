@@ -31,7 +31,7 @@ class TimeEntrySaleModel extends Model {
             ],
 
             'origin' => [
-                'type'            => 'integer',
+                'type'            => 'string',
                 'selection'       => TimeEntry::ORIGIN_MAP,
                 'description'     => 'Origin of the this time entry creation.',
                 'default'         => TimeEntry::ORIGIN_EMAIL

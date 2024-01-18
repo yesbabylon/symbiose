@@ -19,7 +19,7 @@ $tests = [
                 eQual::run(
                     'do',
                     'timetrack_timeentry_create-quick',
-                    ['user_id' => -1, 'project_id' => 1, 'origin' => 1]
+                    ['user_id' => -1, 'project_id' => 1, 'origin' => 'backlog']
                 );
             } catch(Exception $e) {
                 $error = $e->getCode();
@@ -51,7 +51,7 @@ $tests = [
                 [
                     'user_id'    => $user_id,
                     'project_id' => 0,
-                    'origin'     => 2
+                    'origin'     => 'email'
                 ]
             );
 
@@ -65,7 +65,7 @@ $tests = [
 
             return count($time_entries) === 1
                 && $time_entry['project_id'] === 0
-                && $time_entry['origin'] === 2
+                && $time_entry['origin'] === 'email'
                 && is_null($time_entry['product_id'])
                 && is_null($time_entry['price_id'])
                 && is_null($time_entry['unit_price'])
@@ -123,7 +123,7 @@ $tests = [
 
             TimeEntrySaleModel::create([
                 'name'       => 'Test sale model',
-                'origin'     => 2,
+                'origin'     => 'email',
                 'product_id' => $product['id'],
                 'price_id'   => $price['id'],
                 'unit_price' => $unit_price
@@ -147,7 +147,7 @@ $tests = [
                 [
                     'user_id'    => $user_id,
                     'project_id' => $project_id,
-                    'origin'     => 2
+                    'origin'     => 'email'
                 ]
             );
 
@@ -224,7 +224,7 @@ $tests = [
 
             TimeEntrySaleModel::create([
                 'name'        => 'Test sale model 1',
-                'origin'      => 2,
+                'origin'      => 'email',
                 'product_id'  => $product_one['id'],
                 'price_id'    => $price_one['id'],
                 'unit_price'  => $unit_price_one
@@ -259,7 +259,7 @@ $tests = [
 
             TimeEntrySaleModel::create([
                 'name'        => 'Test sale model 2',
-                'origin'      => 2,
+                'origin'      => 'email',
                 'product_id'  => $product_two['id'],
                 'price_id'    => $price_two['id'],
                 'unit_price'  => $unit_price_two,
@@ -286,7 +286,7 @@ $tests = [
                 [
                     'user_id'    => $user_id,
                     'project_id' => $project_id,
-                    'origin'     => 2
+                    'origin'     => 'email'
                 ]
             );
 
