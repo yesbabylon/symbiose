@@ -22,10 +22,13 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm']
+    'providers'     => ['context']
 ]);
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/**
+ * @var \equal\php\Context $context
+ */
+$context = $providers['context'];
 
 if(empty($params['ids'])) {
     throw new Exception('empty_ids_param', QN_ERROR_INVALID_PARAM);
