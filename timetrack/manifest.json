@@ -5,6 +5,7 @@
     "depends_on": [
         "core",
         "identity",
+        "sale",
         "inventory"
     ],
     "apps": [
