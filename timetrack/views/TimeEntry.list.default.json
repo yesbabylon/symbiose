@@ -10,7 +10,7 @@
                     "id": "header.selection.actions.add-receivables",
                     "label": "Receivable",
                     "icon": "note",
-                    "controller": "sale_saleentry_add-receivables"
+                    "controller": "timetrack_timeentry_add-receivables"
                 }
             ]
         }
