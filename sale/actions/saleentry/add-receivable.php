@@ -17,12 +17,6 @@ list($params, $providers) = announce([
             'description'   => 'ID of the sale entry.',
             'type'          => 'integer',
             'required'      => true
-        ],
-
-        'allow_multi_sale' => [
-            'description'   => 'Allows to create multiple pending receivables for a same product, price and customer.',
-            'type'          => 'boolean',
-            'default'       => false
         ]
     ],
     'response'      => [
@@ -74,7 +68,7 @@ if(!$price) {
 }
 
 $receivable = null;
-if(!$params['allow_multi_sale']) {
+if($sale_entry['object_class'] !== 'timetrack\TimeEntry') {
     $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivables_queue['id']],
         ['product_id', '=', $sale_entry['product_id']],
@@ -85,7 +79,7 @@ if(!$params['allow_multi_sale']) {
         ->first();
 }
 
-if($params['allow_multi_sale'] || is_null($receivable)) {
+if(is_null($receivable)) {
     $objectName = 'Sale';
     if(!is_null($sale_entry['object_class'])) {
         $objectName = array_reverse(

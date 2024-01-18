@@ -15,12 +15,6 @@ list($params, $providers) = announce([
             'type'           => 'one2many',
             'foreign_object' => 'sale\SaleEntry',
             'required'       => true
-        ],
-
-        'allow_multi_sale' => [
-            'description'    => 'If true allows to create multiple pending receivables for a same product, price and customer.',
-            'type'           => 'boolean',
-            'default'        => false
         ]
     ],
     'response'      => [
@@ -53,14 +47,7 @@ $sale_entries = array_filter(
 );
 
 foreach($sale_entries as $sale_entry) {
-    eQual::run(
-        'do',
-        'sale_saleentry_add-receivable',
-        [
-            'id'               => $sale_entry['id'],
-            'allow_multi_sale' => $params['allow_multi_sale']
-        ]
-    );
+    eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $sale_entry['id']]);
 }
 
 $context->httpResponse()
