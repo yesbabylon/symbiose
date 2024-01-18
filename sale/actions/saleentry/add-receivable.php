@@ -68,7 +68,7 @@ if(!$price) {
 }
 
 $receivable = null;
-if($sale_entry['object_class'] !== 'timetrack\TimeEntry') {
+if($sale_entry['object_class'] !== 'timetrack\Project') {
     $receivable = Receivable::search([
         ['receivables_queue_id', '=', $receivables_queue['id']],
         ['product_id', '=', $sale_entry['product_id']],
