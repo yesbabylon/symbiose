@@ -9,8 +9,8 @@ use equal\orm\Domain;
 use timetrack\TimeEntry;
 
 $filters = [
-    'name' => [
-        'description'    => 'Display only entries matching the given name',
+    'description' => [
+        'description'    => 'Display only entries matching the given description',
         'type'           => 'string'
     ],
     'user_id' => [

@@ -102,17 +102,6 @@ class TimeEntry extends SaleEntry {
              * Specific TimeEntry columns
              */
 
-            'name' => [
-                'type'           => 'string',
-                'description'    => 'Name of the time entry.',
-                'required'       => true
-            ],
-
-            'description' => [
-                'type'           => 'string',
-                'description'    => 'Description of the time entry.'
-            ],
-
             'date'       => [
                 'type'           => 'date',
                 'description'    => 'Date of the entry',

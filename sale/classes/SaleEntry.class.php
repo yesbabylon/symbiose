@@ -20,6 +20,27 @@ class SaleEntry extends Model {
 
         return [
 
+            'code' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Entry code',
+                'function'          => 'calcCode'
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Description of the entry.',
+                'dependencies'      => ['name']
+            ],
+
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Short readable identifier of the entry.',
+                'store'             => true,
+                'function'          => 'calcName'
+            ],
+
             'has_receivable' => [
                 'type'              => 'boolean',
                 'description'       => 'The entry is linked to a receivable entry.',
@@ -127,6 +148,30 @@ class SaleEntry extends Model {
                 ->first();
         }
 
+        return $result;
+    }
+
+    public static function calcCode($self) {
+        $result = [];
+        $self->read(['id']);
+        foreach($self as $id => $sale_entry) {
+            $result[$id] = str_pad($id, 5, '0', STR_PAD_LEFT);
+        }
+        return $result;
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['code', 'description']);
+        foreach($self as $id => $sale_entry) {
+            $result[$id] = '['.$sale_entry['code'].']';
+            if(
+                isset($sale_entry['description'])
+                && strlen($sale_entry['description']) > 0
+            ) {
+                $result[$id] .= ' '.$sale_entry['description'];
+            }
+        }
         return $result;
     }
 

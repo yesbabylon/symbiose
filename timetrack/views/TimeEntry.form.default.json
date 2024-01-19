@@ -28,8 +28,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
+                                                "label": "Description",
+                                                "value": "description",
                                                 "width": "50%",
                                                 "align": "left",
                                                 "widget": {
@@ -127,21 +127,6 @@
                                                 "width": "20%",
                                                 "align": "left",
                                                 "readonly": true
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Description",
-                                                "value": "description",
-                                                "width": "50%",
-                                                "align": "left",
-                                                "widget": {
-                                                    "usage": "string/text"
-                                                }
                                             }
                                         ]
                                     }

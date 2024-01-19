@@ -14,8 +14,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "label": "Name",
+                                                "value": "description",
+                                                "label": "Description",
                                                 "width": "30%"
                                             },
                                             {

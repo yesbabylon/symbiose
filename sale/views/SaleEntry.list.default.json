@@ -14,6 +14,12 @@
             },
             {
                 "type": "field",
+                "value": "description",
+                "width": "25%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "customer_id",
                 "label": "Customer",
                 "width": "15%",

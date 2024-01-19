@@ -38,7 +38,7 @@
             },
             {
                 "type": "field",
-                "value": "name",
+                "value": "description",
                 "width": "15%",
                 "sortable": true
             },
