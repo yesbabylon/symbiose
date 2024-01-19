@@ -104,16 +104,23 @@
             },
             {
                 "type": "field",
+                "label": "Date",
+                "value": "date",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "label": "Start",
                 "value": "time_start",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true
             },
             {
                 "type": "field",
                 "label": "End",
                 "value": "time_end",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true
             },
             {

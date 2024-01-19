@@ -5,75 +5,68 @@
     License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use core\setting\Setting;
 use equal\orm\Domain;
 use timetrack\TimeEntry;
 
-$time_zone = Setting::get_value('core', 'locale', 'time_zone');
+$filters = [
+    'name' => [
+        'description'    => 'Display only entries matching the given name',
+        'type'           => 'string'
+    ],
+    'user_id' => [
+        'description'    => 'Display only entries of selected user',
+        'type'           => 'many2one',
+        'foreign_object' => 'core\User'
+    ],
+    'show_filter_date' => [
+        'type'           => 'boolean',
+        'default'        => false
+    ],
+    'date' => [
+        'description'    => 'Display only entries that occurred on selected date',
+        'type'           => 'date',
+        'default'        => strtotime('today')
+    ],
+    'customer_id' => [
+        'description'    => 'Display only entries of selected customer',
+        'type'           => 'many2one',
+        'foreign_object' => 'sale\customer\Customer'
+    ],
+    'project_id' => [
+        'description'    => 'Display only entries of selected project',
+        'type'           => 'many2one',
+        'foreign_object' => 'timetrack\Project'
+    ],
+    'origin' => [
+        'description'    => 'Display only entries of selected origin',
+        'type'           => 'string',
+        'selection'      => array_merge(['all'], array_keys(TimeEntry::ORIGIN_MAP)),
+        'default'        => 'all'
+    ],
+    'has_receivable' => [
+        'description'    => 'Filter entries on has receivable',
+        'type'           => 'boolean',
+    ],
+    'is_billable' => [
+        'description'    => 'Filter entries on is billable',
+        'type'           => 'boolean',
+    ]
+];
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Time Entries: returns a collection of Reports according to extra parameters.',
-    'extends'       => 'core_model_collect',
-    'params'        => [
-        'entity' => [
-            'description'    => 'Full name (including namespace) of the class to return.',
-            'type'           => 'string',
-            'default'        => 'timetrack\TimeEntry'
+    'description' => 'Advanced search for Time Entries: returns a collection of Reports according to extra parameters.',
+    'extends'     => 'core_model_collect',
+    'params'      => array_merge(
+        [
+            'entity' => [
+                'description' => 'Full name (including namespace) of the class to return.',
+                'type'        => 'string',
+                'default'     => 'timetrack\TimeEntry'
+            ],
         ],
-
-        'name' => [
-            'description'    => 'Display only entries matching the given name',
-            'type'           => 'string'
-        ],
-
-        'user_id' => [
-            'description'    => 'Display only entries of selected user',
-            'type'           => 'many2one',
-            'foreign_object' => 'core\User'
-        ],
-
-        'time_start' => [
-            'description'    => 'Display only entries who start on and after selected time',
-            'type'           => 'datetime',
-            'default'        => strtotime('first day of last month 00:00:00 '.$time_zone, time())
-        ],
-
-        'time_end' => [
-            'description'    => 'Display only entries who end on and before selected time',
-            'type'           => 'datetime',
-            'default'        => strtotime('last day of this month 23:59:59 '.$time_zone, time())
-        ],
-
-        'customer_id' => [
-            'description'    => 'Display only entries of selected customer',
-            'type'           => 'many2one',
-            'foreign_object' => 'sale\customer\Customer'
-        ],
-
-        'project_id' => [
-            'description'    => 'Display only entries of selected project',
-            'type'           => 'many2one',
-            'foreign_object' => 'timetrack\Project'
-        ],
-
-        'origin' => [
-            'description' => 'Display only entries of selected origin',
-            'type'        => 'string',
-            'selection'   => array_merge(['all'], array_keys(TimeEntry::ORIGIN_MAP)),
-            'default'     => 'all'
-        ],
-
-        'has_receivable' => [
-            'description' => 'Filter entries on has receivable',
-            'type'        => 'boolean',
-        ],
-
-        'is_billable' => [
-            'description' => 'Filter entries on is billable',
-            'type'        => 'boolean',
-        ]
-    ],
-    'response'      => [
+        $filters
+    ),
+    'response'    => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
@@ -86,37 +79,35 @@ list($params, $providers) = eQual::announce([
  */
 $context = $providers['context'];
 
-if(isset($params['name']) && strlen($params['name']) > 0) {
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['name', 'ilike', '%'.$params['name'].'%']);
+if(!$params['show_filter_date']) {
+    unset($filters['date']);
 }
+unset($filters['show_filter_date']);
 
-$relation_fields = ['customer_id', 'project_id', 'user_id'];
-foreach($relation_fields as $field) {
-    if(empty($params[$field])) {
-        continue;
+$domain = [];
+foreach($filters as $field => $field_config) {
+    $value = $params[$field];
+
+    $type = $field_config['type'];
+    if($type === 'string' && !empty($field_config['selection'])) {
+        $type = 'selection';
     }
-    $params['domain'] = Domain::conditionAdd($params['domain'], [$field, '=', $params[$field]]);
-}
 
-if(isset($params['origin']) && $params['origin'] !== 'all') {
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['origin', '=', $params['origin']]);
-}
-
-if(isset($params['time_start'])) {
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['time_start', '>=', $params['time_start']]);
-}
-
-if(isset($params['time_end'])) {
-    $params['domain'] = Domain::conditionAdd($params['domain'], ['time_end', '<=', $params['time_end']]);
-}
-
-$boolean_fields = ['is_billable', 'has_receivable'];
-foreach($boolean_fields as $field) {
-    if(!isset($params[$field])) {
-        continue;
+    if($type === 'string' && strlen($value ?? '') > 0) {
+        $domain[] = [$field, 'ilike', '%'.$value.'%'];
     }
-    $params['domain'] = Domain::conditionAdd($params['domain'], [$field, '=', $params[$field]]);
+    elseif(
+        ($type === 'many2one' && !empty($value))
+        || ($type === 'selection' && ($value ?? 'all') !== 'all')
+        || (in_array($type, ['boolean', 'date']) && isset($value))
+    ) {
+        $domain[] = [$field, '=', $value];
+    }
 }
+
+$params['domain'] = (new Domain($params['domain']))
+    ->merge(new Domain($domain))
+    ->toArray();
 
 $result = eQual::run('get', 'model_collect', $params, true);
 

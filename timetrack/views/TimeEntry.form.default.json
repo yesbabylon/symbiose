@@ -43,23 +43,30 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Date",
+                                                "value": "date",
+                                                "width": "15%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Start",
                                                 "value": "time_start",
-                                                "width": "20%",
+                                                "width": "15%",
                                                 "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "End",
                                                 "value": "time_end",
-                                                "width": "20%",
+                                                "width": "15%",
                                                 "align": "left"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Duration",
                                                 "value": "duration",
-                                                "width": "20%",
+                                                "width": "15%",
                                                 "align": "left"
                                             }
                                         ]

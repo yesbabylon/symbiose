@@ -7,9 +7,13 @@
 
 namespace timetrack;
 
+use DateTime;
+use DateTimeZone;
+use Exception;
 use sale\SaleEntry;
 use sale\catalog\Product;
 use sale\price\Price;
+use core\setting\Setting;
 
 class TimeEntry extends SaleEntry {
 
@@ -32,6 +36,8 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function getColumns(): array {
+        $current_hour = self::getTimeZoneCurrentHour();
+
         return [
 
             /**
@@ -92,16 +98,6 @@ class TimeEntry extends SaleEntry {
                 'store'          => true
             ],
 
-            'qty' => [
-                'type'           => 'computed',
-                'result_type'    => 'float',
-                'description'    => 'Quantity of product.',
-                'visible'        => false,
-                'function'       => 'calcQty',
-                'store'          => true,
-                'instant'        => true
-            ],
-
             /**
              * Specific TimeEntry columns
              */
@@ -117,28 +113,34 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'Description of the time entry.'
             ],
 
-            'time_start' => [
-                'type'           => 'datetime',
-                'description'    => 'Start date time of the entry.',
+            'date'       => [
+                'type'           => 'date',
+                'description'    => 'Date of the entry',
                 'default'        => time(),
+            ],
+
+            'time_start' => [
+                'type'           => 'time',
+                'description'    => 'Start time of the entry.',
+                'default'        => $current_hour * 3600,
                 'dependencies'   => ['duration']
             ],
 
             'time_end' => [
-                'type'           => 'datetime',
-                'description'    => 'End date time of the entry.',
-                'default'        => strtotime('+1 hour'),
+                'type'           => 'time',
+                'description'    => 'End time of the entry.',
+                'default'        => ($current_hour + 1) * 3600,
                 'dependencies'   => ['duration']
             ],
 
             'duration' => [
                 'type'           => 'computed',
-                'result_type'    => 'string',
+                'result_type'    => 'time',
+                'description'    => 'Duration of the entry.',
                 'function'       => 'calcDuration',
                 'store'          => true,
                 'instant'        => true,
-                'onupdate'       => 'onupdateDuration',
-                'dependencies'   => ['qty']
+                'onupdate'       => 'onupdateDuration'
             ],
 
             'user_id' => [
@@ -164,6 +166,7 @@ class TimeEntry extends SaleEntry {
             'ticket_link' => [
                 'type'           => 'computed',
                 'result_type'    => 'string',
+                'description'    => 'Support ticket link for quick access.',
                 'usage'          => 'uri/url',
                 'function'       => 'calcTicketLink',
                 'store'          => true,
@@ -173,12 +176,31 @@ class TimeEntry extends SaleEntry {
         ];
     }
 
+    private static function getTimeZoneCurrentHour(): int {
+        $time_zone = Setting::get_value('core', 'locale', 'time_zone');
+
+        $current_hour = (int) date('H');
+        if(!is_null($time_zone)) {
+            try {
+                $timezone = new DateTimeZone($time_zone);
+                $dateTime = new DateTime('now', $timezone);
+
+                $current_hour = (int) $dateTime->format('H');
+            }
+            catch(Exception $e) {
+                trigger_error('PHP::error getting time zone current hour', QN_REPORT_DEBUG);
+            }
+        }
+
+        return $current_hour;
+    }
+
     public static function onchange($event, $values): array {
         $result = [];
 
         if(
-            (isset($event['project_id']) && isset($values['origin']))
-            || (isset($event['origin']) && isset($values['project_id']))
+            isset($event['project_id'], $values['origin'])
+            || isset($event['origin'], $values['project_id'])
         ) {
             $sale_model = TimeEntrySaleModel::getModelToApply(
                 $event['origin'] ?? $values['origin'],
@@ -215,6 +237,19 @@ class TimeEntry extends SaleEntry {
                 ->first();
 
             $result['customer_id'] = $project['customer_id'];
+        }
+
+        if(
+            isset($event['time_start'], $values['time_end'])
+            || isset($event['time_end'], $values['time_start'])
+        ) {
+            $time_start = $event['time_start'] ?? $values['time_start'];
+            $time_end = $event['time_end'] ?? $values['time_end'];
+
+            $result['duration'] = $time_end - $time_start;
+        }
+        elseif(isset($event['duration'], $values['time_start'])) {
+            $result['time_end'] = $values['time_start'] + $event['duration'];
         }
 
         return $result;
@@ -304,34 +339,33 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['time_start', 'time_end']);
         foreach($self as $id => $time_entry) {
-            $seconds = $time_entry['time_end'] - $time_entry['time_start'];
-            $result[$id] = sprintf('%02d:%02d', ($seconds/3600), ($seconds/60%60));
+            if (!isset($time_entry['time_start'], $time_entry['time_end'])) {
+                continue;
+            }
+
+            $result[$id] = $time_entry['time_end'] - $time_entry['time_start'];
         }
 
         return $result;
     }
 
     public static function onupdateDuration($self): void {
-        $self->read(['time_start', 'time_end', 'duration']);
+        $self->read(['time_start', 'time_end', 'duration', 'qty']);
         foreach($self as $id => $time_entry) {
-            $hh_mm_pattern = '/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/';
+            $updates = ['qty' => 0];
+
+            if(!isset($time_entry['duration'])) {
+                $updates['qty'] = $time_entry['duration'] / 3600;
+            }
+
             if(
-                is_null($time_entry['duration'])
-                || !preg_match($hh_mm_pattern, $time_entry['duration'])
+                isset($time_entry['duration'], $time_entry['time_start'], $time_entry['time_end'])
+                && $time_entry['duration'] !== ($time_entry['time_end'] - $time_entry['time_start'])
             ) {
-                continue;
+                $updates['time_end'] = $time_entry['time_start'] + $time_entry['duration'];
             }
 
-            $parsed_time = date_parse($time_entry['duration'].':00');
-            $duration = $parsed_time['hour'] * 3600 + $parsed_time['minute'] * 60;
-            if($duration === ($time_entry['time_end'] - $time_entry['time_start'])) {
-                continue;
-            }
-
-            $new_time_end = $time_entry['time_start'] + $duration;
-
-            TimeEntry::id($id)
-                ->update(['time_end' => $new_time_end]);
+            TimeEntry::id($id)->update($updates);
         }
     }
 
@@ -367,21 +401,6 @@ class TimeEntry extends SaleEntry {
             }
 
             $result[$id] = $instance_url.'support/#/ticket/'.$time_entry['ticket_id'];
-        }
-
-        return $result;
-    }
-
-    public static function calcQty($self): array {
-        $result = [];
-        $self->read(['duration']);
-        foreach($self as $id => $time_entry) {
-            if (is_null($time_entry['duration'])) {
-                continue;
-            }
-
-            $parsed_time = date_parse($time_entry['duration'].':00');
-            $result[$id] = $parsed_time['hour'] + $parsed_time['minute'] / 60;
         }
 
         return $result;

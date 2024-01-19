@@ -16,25 +16,26 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "label": "Name",
-                                                "width": "25%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "user_id",
                                                 "label": "Realised by",
-                                                "width": "25%"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "time_start",
-                                                "label": "Start",
-                                                "width": "25%"
+                                                "value": "show_filter_date",
+                                                "label": "Filter by date",
+                                                "width": "15%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "time_end",
-                                                "label": "End",
-                                                "width": "25%"
+                                                "value": "date",
+                                                "label": "Date",
+                                                "width": "15%",
+                                                "visible": ["show_filter_date", "=", true]
                                             }
                                         ]
                                     }
