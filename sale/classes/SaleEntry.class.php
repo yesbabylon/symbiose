@@ -41,6 +41,12 @@ class SaleEntry extends Model {
                 'function'          => 'calcName'
             ],
 
+            'detailed_description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Detailed description of the entry.'
+            ],
+
             'has_receivable' => [
                 'type'              => 'boolean',
                 'description'       => 'The entry is linked to a receivable entry.',

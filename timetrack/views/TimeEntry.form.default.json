@@ -53,22 +53,19 @@
                                                 "type": "field",
                                                 "label": "Realised by",
                                                 "value": "user_id",
-                                                "width": "30%",
-                                                "align": "left"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Project",
                                                 "value": "project_id",
-                                                "width": "30%",
-                                                "align": "left"
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "30%",
-                                                "align": "left",
                                                 "visible": ["project_id", "<>", null]
                                             }
                                         ]
@@ -107,15 +104,13 @@
                                                 "type": "field",
                                                 "label": "Start",
                                                 "value": "time_start",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "End",
                                                 "value": "time_end",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -233,6 +228,27 @@
                                                 "label": "Receivable",
                                                 "readonly": true,
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.time-entry-extra-details",
+                        "label": "Extra details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "detailed_description",
+                                                "label": "Detailed description",
+                                                "width": "100%"
                                             }
                                         ]
                                     }
