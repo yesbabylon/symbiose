@@ -86,20 +86,23 @@ unset($filters['show_filter_date']);
 
 $domain = [];
 foreach($filters as $field => $field_config) {
-    $value = $params[$field];
+    if(!isset($params[$field])) {
+        continue;
+    }
 
+    $value = $params[$field];
     $type = $field_config['type'];
     if($type === 'string' && !empty($field_config['selection'])) {
         $type = 'selection';
     }
 
-    if($type === 'string' && strlen($value ?? '') > 0) {
+    if($type === 'string' && strlen($value) > 0) {
         $domain[] = [$field, 'ilike', '%'.$value.'%'];
     }
     elseif(
         ($type === 'many2one' && !empty($value))
-        || ($type === 'selection' && ($value ?? 'all') !== 'all')
-        || (in_array($type, ['boolean', 'date']) && isset($value))
+        || ($type === 'selection' && $value !== 'all')
+        || (in_array($type, ['boolean', 'date']))
     ) {
         $domain[] = [$field, '=', $value];
     }
