@@ -1,0 +1,91 @@
+{
+    "name": "Time entry sale models",
+    "description": "Default form for time entry sale model",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.time-entry-sale-model",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Projects",
+                                                "value": "projects_ids",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Origin",
+                                                "value": "origin",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Product (Catalog)",
+                                                "value": "product_id",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Price",
+                                                "value": "price_id",
+                                                "width": "25%",
+                                                "align": "left"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Unit price",
+                                                "value": "unit_price",
+                                                "width": "25%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

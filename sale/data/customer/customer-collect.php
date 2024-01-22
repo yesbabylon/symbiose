@@ -62,12 +62,7 @@ list($params, $providers) = eQual::announce([
             'type'        => 'string',
             'description' => 'Reference contact surname.',
             'visible'     => ['type', '=', 'I']
-        ],
-
-        'address' => [
-            'type'        => 'string',
-            'description' => 'Address the contact'
-        ],
+        ]
     ],
     'response'    => [
         'content-type'  => 'application/json',
@@ -106,7 +101,6 @@ $columns = [
     'lastname',
     'short_name',
     'legal_name',
-    'address',
     'citizen_identification',
     'registration_number'
 ];

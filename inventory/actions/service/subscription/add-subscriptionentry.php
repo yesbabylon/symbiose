@@ -22,10 +22,13 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'   => ['context', 'orm']
+    'providers'   => ['context']
 ]);
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/**
+ * @var \equal\php\Context $context
+ */
+$context = $providers['context'];
 
 $subscription = Subscription::id($params['id'])
     ->read([

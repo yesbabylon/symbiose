@@ -27,6 +27,15 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "description",
+                                                "label": "Description",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
                                                 "width": "100%"

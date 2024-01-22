@@ -1,0 +1,135 @@
+{
+    "name": "Time entries",
+    "description": "Default listing of all time entries.",
+    "controller": "timetrack_timeentry-collect",
+    "domain": ["object_class", "=", "timetrack\\Project"],
+    "header": {
+        "selection": {
+            "actions" : [
+                {
+                    "id": "header.selection.actions.add-receivables",
+                    "label": "Receivable",
+                    "icon": "note",
+                    "controller": "sale_saleentry_add-receivables"
+                }
+            ]
+        }
+    },
+    "actions": [
+        {
+            "id": "action.create-empty",
+            "label": "Quick create",
+            "description": "Quick creation of time entry that is destined to be modified inline.",
+            "controller": "timetrack_timeentry_create-quick",
+            "params": {
+                "user_id": "user.id"
+            },
+            "confirm": true
+        }
+    ],
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "5%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Realised by",
+                "value": "user_id",
+                "width": "15%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Customer",
+                "value": "customer_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Project",
+                "value": "project_id",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Origin",
+                "value": "origin",
+                "width": "5%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Ticket link",
+                "value": "ticket_link",
+                "width": "5%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Is billable",
+                "value": "is_billable",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Has receivable",
+                "value": "has_receivable",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true,
+                "visible": false
+            },
+            {
+                "type": "field",
+                "label": "Date",
+                "value": "date",
+                "width": "15%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Start",
+                "value": "time_start",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "End",
+                "value": "time_end",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "label": "Duration",
+                "value": "duration",
+                "width": "10%",
+                "sortable": true
+            }
+        ]
+    }
+}

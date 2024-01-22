@@ -20,6 +20,33 @@ class SaleEntry extends Model {
 
         return [
 
+            'code' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Entry code',
+                'function'          => 'calcCode'
+            ],
+
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Description of the entry.',
+                'dependencies'      => ['name']
+            ],
+
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Short readable identifier of the entry.',
+                'store'             => true,
+                'function'          => 'calcName'
+            ],
+
+            'detailed_description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'description'       => 'Detailed description of the entry.'
+            ],
+
             'has_receivable' => [
                 'type'              => 'boolean',
                 'description'       => 'The entry is linked to a receivable entry.',
@@ -76,13 +103,13 @@ class SaleEntry extends Model {
             'object_class' => [
                 'type'              => 'string',
                 'description'       => 'Class of the object object_id points to.',
-                'dependencies'      => ['subscription_id']
+                'dependencies'      => ['subscription_id', 'project_id']
             ],
 
             'object_id' => [
                 'type'              => 'integer',
                 'description'       => 'Identifier of the object the sale entry originates from.',
-                'dependencies'      => ['subscription_id']
+                'dependencies'      => ['subscription_id', 'project_id']
             ],
 
             'subscription_id' => [
@@ -91,6 +118,15 @@ class SaleEntry extends Model {
                 'foreign_object'    => 'inventory\service\Subscription',
                 'function'          => 'calcSubscriptionId',
                 'description'       => 'Identifier of the subscription the sale entry originates from.',
+                'store'             => true
+            ],
+
+            'project_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'timetrack\Project',
+                'function'          => 'calcProjectId',
+                'description'       => 'Identifier of the Project the sale entry originates from.',
                 'store'             => true
             ],
 
@@ -121,11 +157,39 @@ class SaleEntry extends Model {
         return $result;
     }
 
+    public static function calcCode($self) {
+        $result = [];
+        $self->read(['id']);
+        foreach($self as $id => $sale_entry) {
+            $result[$id] = str_pad($id, 5, '0', STR_PAD_LEFT);
+        }
+        return $result;
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['code', 'description']);
+        foreach($self as $id => $sale_entry) {
+            $result[$id] = '['.$sale_entry['code'].']';
+            if(
+                isset($sale_entry['description'])
+                && strlen($sale_entry['description']) > 0
+            ) {
+                $result[$id] .= ' '.$sale_entry['description'];
+            }
+        }
+        return $result;
+    }
+
     public static function calcUnitPrice($self) {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $receivable) {
-            $result[$id] = $receivable['price_id']['price'];
+        foreach($self as $id => $sale_entry) {
+            if(!isset($sale_entry['price_id']['price'])) {
+                continue;
+            }
+
+            $result[$id] = $sale_entry['price_id']['price'];
         }
         return $result;
     }
@@ -135,7 +199,19 @@ class SaleEntry extends Model {
         $self->read(['object_class', 'object_id']);
         foreach($self as $id => $sale_entry) {
             if($sale_entry['object_class'] !== 'inventory\service\Subscription') {
-                $result[$id] = null;
+                continue;
+            }
+
+            $result[$id] = $sale_entry['object_id'];
+        }
+        return $result;
+    }
+
+    public static function calcProjectId($self) {
+        $result = [];
+        $self->read(['object_class', 'object_id']);
+        foreach($self as $id => $sale_entry) {
+            if($sale_entry['object_class'] !== 'timetrack\Project') {
                 continue;
             }
 
