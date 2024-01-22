@@ -198,14 +198,14 @@ class TimeEntry extends SaleEntry {
 
             if(!is_null($sale_model)) {
                 $product = null;
-                if (!is_null($sale_model['product_id'])) {
+                if(!is_null($sale_model['product_id'])) {
                     $product = Product::id($sale_model['product_id'])
                         ->read(['id', 'name'])
                         ->first();
                 }
 
                 $price = null;
-                if (!is_null($sale_model['price_id'])) {
+                if(!is_null($sale_model['price_id'])) {
                     $price = Price::id($sale_model['price_id'])
                         ->read(['id', 'name'])
                         ->first();
@@ -247,7 +247,7 @@ class TimeEntry extends SaleEntry {
     public static function onupdateProjectId($self): void {
         $self->read(['object_id', 'project_id']);
         foreach($self as $id => $time_entry) {
-            if ($time_entry['object_id'] === $time_entry['project_id']) {
+            if($time_entry['object_id'] === $time_entry['project_id']) {
                 continue;
             }
 
@@ -328,7 +328,7 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['time_start', 'time_end']);
         foreach($self as $id => $time_entry) {
-            if (!isset($time_entry['time_start'], $time_entry['time_end'])) {
+            if(!isset($time_entry['time_start'], $time_entry['time_end'])) {
                 continue;
             }
 
@@ -362,7 +362,7 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['project_id' => ['customer_id']]);
         foreach($self as $id => $time_entry) {
-            if (!isset($time_entry['project_id']['customer_id'])) {
+            if(!isset($time_entry['project_id']['customer_id'])) {
                 continue;
             }
 
