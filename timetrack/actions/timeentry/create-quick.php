@@ -6,6 +6,7 @@
 */
 
 use core\User;
+use timetrack\Project;
 use timetrack\TimeEntry;
 use timetrack\TimeEntrySaleModel;
 
@@ -13,8 +14,9 @@ list($params, $providers) = eQual::announce([
     'description'    => 'Quick create a time entry with minimal information.',
     'params'         => [
         'user_id'    => [
-            'type'           => 'integer',
-            'description'    => 'ID of the user who realised that time entry.',
+            'type'           => 'many2one',
+            'foreign_object' => 'core\User',
+            'description'    => 'User who realised the time entry.',
             'required'       => true
         ],
 
@@ -53,6 +55,14 @@ if(!isset($user)) {
     throw new Exception('unknown_user', QN_ERROR_UNKNOWN_OBJECT);
 }
 
+$project = Project::id($params['project_id'])
+    ->read(['id'])
+    ->first();
+
+if(!isset($project)) {
+    throw new Exception('unknown_project', QN_ERROR_UNKNOWN_OBJECT);
+}
+
 $sale_model = null;
 if(isset($params['origin'], $params['project_id'])) {
     $sale_model = TimeEntrySaleModel::getModelToApply(
@@ -62,7 +72,7 @@ if(isset($params['origin'], $params['project_id'])) {
 }
 
 TimeEntry::create([
-    'name'        => 'New entry '.date('Y-m-d H:m:s', time()),
+    'description' => 'New entry '.date('Y-m-d H:m:s', time()),
     'user_id'     => $params['user_id'],
     'object_id'   => $params['project_id'],
     'project_id'  => $params['project_id'],

@@ -30,6 +30,37 @@ $tests = [
     ],
 
     '0102' => [
+        'description' => 'Tests that action create-quick throws if project does not exist',
+        'return'      => 'integer',
+        'expected'    => QN_ERROR_UNKNOWN_OBJECT,
+        'test'        => function() {
+            $user = User::create([
+                'name'     => 'Test user',
+                'login'    => 'testUser@devmail.com',
+                'password' => 'password'
+            ])
+                ->read(['id'])
+                ->first();
+
+            $error = 0;
+            try {
+                // Run action
+                eQual::run(
+                    'do',
+                    'timetrack_timeentry_create-quick',
+                    ['user_id' => $user['id'], 'project_id' => -1, 'origin' => 'backlog']
+                );
+            } catch(Exception $e) {
+                $error = $e->getCode();
+            }
+
+            User::id($user['id'])->delete(true);
+
+            return $error;
+        }
+    ],
+
+    '0103' => [
         'description' => 'Tests that action create-quick creates with given user, project and origin',
         'arrange'     => function() {
             // Create user, project
@@ -41,30 +72,49 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            return $user['id'];
+            $project = Project::create(['name' => 'Test project'])
+                ->read(['id'])
+                ->first();
+
+            return [$user['id'], $project['id']];
         },
-        'act'         => function($user_id) {
+        'act'         => function($data) {
+            list($user_id, $project_id) = $data;
+
             // Run action
             eQual::run(
                 'do',
                 'timetrack_timeentry_create-quick',
                 [
                     'user_id'    => $user_id,
-                    'project_id' => 0,
+                    'project_id' => $project_id,
                     'origin'     => 'email'
                 ]
             );
 
-            return $user_id;
+            return $data;
         },
-        'assert'      => function($user_id) {
+        'assert'      => function($data) {
+            list($user_id, $project_id) = $data;
+
             $time_entries = TimeEntry::search(['user_id', '=', $user_id])
-                ->read(['project_id', 'origin', 'is_billable', 'product_id', 'price_id', 'unit_price']);
+                ->read([
+                    'object_class',
+                    'object_id',
+                    'project_id',
+                    'origin',
+                    'is_billable',
+                    'product_id',
+                    'price_id',
+                    'unit_price'
+                ]);
 
             $time_entry = $time_entries->first();
 
             return count($time_entries) === 1
-                && $time_entry['project_id'] === 0
+                && $time_entry['object_class'] === 'timetrack\Project'
+                && $time_entry['object_id'] === $project_id
+                && $time_entry['project_id'] === $project_id
                 && $time_entry['origin'] === 'email'
                 && is_null($time_entry['product_id'])
                 && is_null($time_entry['price_id'])
@@ -80,10 +130,12 @@ $tests = [
 
             User::id($user['id'])->delete(true);
             TimeEntry::search(['user_id', '=', $user['id']])->delete(true);
+
+            Project::search(['name', '=', 'Test project'])->delete(true);
         }
     ],
 
-    '0103' => [
+    '0104' => [
         'description' => 'Tests that action create-quick creates with model matching only origin',
         'arrange'     => function() {
             // Create user and time entry sale model
@@ -188,7 +240,7 @@ $tests = [
         },
     ],
 
-    '0104' => [
+    '0105' => [
         'description' => 'Tests that action create-quick creates with model matching origin and project',
         'arrange'     => function() {
             // Create user, a time entry sale model not linked to any project and time entry sale model link to a project
