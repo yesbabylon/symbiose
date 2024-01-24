@@ -28,7 +28,10 @@
                                             {
                                                 "type": "field",
                                                 "label": "Description",
-                                                "value": "description"
+                                                "value": "description",
+                                                "widget": {
+                                                    "heading": true
+                                                }
                                             }
                                         ]
                                     }
