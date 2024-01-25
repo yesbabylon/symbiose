@@ -1,0 +1,16 @@
+[
+    {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "type_id": 3,
+                "type": "C",
+                "legal_name": "Your company name",
+                "short_name": "Your company name",
+                "has_parent": false
+            }
+        ]
+    }
+]
