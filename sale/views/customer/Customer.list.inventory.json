@@ -5,6 +5,16 @@
     "access": {
         "groups": ["inventory.default.user"]
      },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "Simplified form to ease creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
