@@ -20,7 +20,7 @@
             },
             {
                 "type": "field",
-                "label": "Type",
+                "label": "Nature",
                 "value": "customer_nature_id",
                 "width": "15%"
             },
