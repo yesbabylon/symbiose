@@ -343,7 +343,7 @@ class TimeEntry extends SaleEntry {
         foreach($self as $id => $time_entry) {
             $updates = ['qty' => 0];
 
-            if(!isset($time_entry['duration'])) {
+            if(isset($time_entry['duration'])) {
                 $updates['qty'] = $time_entry['duration'] / 3600;
             }
 
