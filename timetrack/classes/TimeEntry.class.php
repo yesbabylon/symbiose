@@ -27,6 +27,23 @@ class TimeEntry extends SaleEntry {
         self::ORIGIN_SUPPORT => 'Support ticket',
     ];
 
+    const STATUS_PENDING = 'pending';
+    const STATUS_READY = 'ready';
+    const STATUS_VALIDATED = 'validated';
+    const STATUS_BILLED = 'billed';
+
+    const STATUS_MAP = [
+        self::STATUS_PENDING   => 'Pending',
+        self::STATUS_READY     => 'Ready for validation',
+        self::STATUS_VALIDATED => 'Validated',
+        self::STATUS_BILLED    => 'Billed',
+    ];
+
+    const TRANSITION_REQUEST_VALIDATION = 'request-validation';
+    const TRANSITION_REFUSE = 'refuse';
+    const TRANSITION_VALIDATE = 'validate';
+    const TRANSITION_BILL = 'bill';
+
     public static function getName(): string {
         return 'Time entry';
     }
@@ -78,7 +95,7 @@ class TimeEntry extends SaleEntry {
                 'function'       => 'calcProductId',
                 'store'          => true
             ],
-            
+
             'price_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
@@ -160,6 +177,13 @@ class TimeEntry extends SaleEntry {
                 'function'       => 'calcTicketLink',
                 'store'          => true,
                 'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
+            ],
+
+            'status' => [
+                'type'           => 'string',
+                'selection'      => array_keys(self::STATUS_MAP),
+                'description'    => 'Status of the time entry',
+                'default'        => self::STATUS_PENDING
             ]
 
         ];
@@ -300,7 +324,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcUnitPrice($self) {
+    public static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['project_id', 'origin', 'price_id' => ['price']]);
         foreach($self as $id => $time_entry) {
@@ -393,5 +417,38 @@ class TimeEntry extends SaleEntry {
         }
 
         return $result;
+    }
+
+    public static function getWorkflow(): array {
+        return [
+            self::STATUS_PENDING   => [
+                'transitions' => [
+                    self::TRANSITION_REQUEST_VALIDATION => [
+                        'description' => 'Sets time entry as ready for validation.',
+                        'status'      => 'ready'
+                    ]
+                ]
+            ],
+            self::STATUS_READY     => [
+                'transitions' => [
+                    self::TRANSITION_REFUSE   => [
+                        'description' => 'Refuse time entry, sets its status back to pending.',
+                        'status'      => 'pending'
+                    ],
+                    self::TRANSITION_VALIDATE => [
+                        'description' => 'Validate time entry.',
+                        'status'      => 'validated'
+                    ]
+                ]
+            ],
+            self::STATUS_VALIDATED => [
+                'transitions' => [
+                    self::TRANSITION_BILL   => [
+                        'description' => 'Create receivable, from time entry, who will be billed to the customer.',
+                        'status'      => 'billed'
+                    ]
+                ]
+            ],
+        ];
     }
 }

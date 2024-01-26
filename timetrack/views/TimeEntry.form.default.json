@@ -3,13 +3,59 @@
     "description": "Default form for time entry",
     "actions": [
         {
-            "id": "action.receivable",
-            "label": "Receivable",
-            "controller": "sale_saleentry_add-receivable",
+            "id": "action.transition.ready",
+            "label": "Ready",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "request-validation",
+                "ids": []
+            },
             "visible": [
                 ["state", "<>", "draft"],
-                ["has_receivable", "=", false],
-                ["is_billable", "=", true]
+                ["status", "=", "pending"]
+            ]
+        },
+        {
+            "id": "action.transition.refuse",
+            "label": "Refuse",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "refuse",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "ready"]
+            ]
+        },
+        {
+            "id": "action.transition.validate",
+            "label": "Validate",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "validate",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "ready"]
+            ]
+        },
+        {
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "bill",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "validated"]
             ]
         }
     ],
@@ -151,6 +197,21 @@
                                                 "value": "ticket_link",
                                                 "width": "100%",
                                                 "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "visible": false
                                             }
                                         ]
                                     }
