@@ -44,6 +44,9 @@ class TimeEntry extends SaleEntry {
     const TRANSITION_VALIDATE = 'validate';
     const TRANSITION_BILL = 'bill';
 
+    const POLICY_READY_FOR_VALIDATION = 'ready-for-validation';
+    const POLICY_BILLABLE = 'billable';
+
     public static function getName(): string {
         return 'Time entry';
     }
@@ -419,13 +422,57 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
+    public static function getPolicies(): array {
+        return [
+            self::POLICY_READY_FOR_VALIDATION => [
+                'description' => 'Verifies that time entry is ready for validation.',
+                'function'    => 'isReadyForValidation'
+            ],
+            self::POLICY_BILLABLE => [
+                'description' => 'Verifies that time entry is billable.',
+                'function'    => 'isBillable'
+            ]
+        ];
+    }
+
+    public static function isReadyForValidation($self, $user_id): array {
+        $result = [];
+        $self->read(['project_id', 'user_id', 'origin', 'duration']);
+        foreach($self as $id => $time_entry) {
+            if(
+                !isset($time_entry['project_id'], $time_entry['user_id'], $time_entry['origin'], $time_entry['duration'])
+                || $time_entry['duration'] <= 0
+            ) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function isBillable($self, $user_id): array {
+        $result = [];
+        $self->read(['product_id', 'price_id', 'unit_price', 'is_billable']);
+        foreach($self as $id => $time_entry) {
+            if(
+                !isset($time_entry['product_id'], $time_entry['price_id'], $time_entry['unit_price'])
+                || !$time_entry['is_billable']
+            ) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
     public static function getWorkflow(): array {
         return [
             self::STATUS_PENDING   => [
                 'transitions' => [
                     self::TRANSITION_REQUEST_VALIDATION => [
                         'description' => 'Sets time entry as ready for validation.',
-                        'status'      => 'ready'
+                        'status'      => self::STATUS_READY,
+                        'policies'    => [self::POLICY_READY_FOR_VALIDATION]
                     ]
                 ]
             ],
@@ -433,11 +480,11 @@ class TimeEntry extends SaleEntry {
                 'transitions' => [
                     self::TRANSITION_REFUSE   => [
                         'description' => 'Refuse time entry, sets its status back to pending.',
-                        'status'      => 'pending'
+                        'status'      => self::STATUS_PENDING
                     ],
                     self::TRANSITION_VALIDATE => [
                         'description' => 'Validate time entry.',
-                        'status'      => 'validated'
+                        'status'      => self::STATUS_VALIDATED
                     ]
                 ]
             ],
@@ -445,7 +492,8 @@ class TimeEntry extends SaleEntry {
                 'transitions' => [
                     self::TRANSITION_BILL   => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
-                        'status'      => 'billed'
+                        'status'      => self::STATUS_BILLED,
+                        'policies'    => [self::POLICY_BILLABLE]
                     ]
                 ]
             ],
