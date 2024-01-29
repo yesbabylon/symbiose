@@ -212,6 +212,39 @@ class TimeEntry extends SaleEntry {
         return $current_hour;
     }
 
+    public static function canupdate($om, $oids, $values, $lang = 'en'): array {
+        $res = $om->read(self::class, $oids, ['status']);
+
+        foreach($res as $odata) {
+            if(in_array($odata['status'], [self::STATUS_PENDING, self::STATUS_READY])) {
+                continue;
+            }
+
+            $editableFields = ['description', 'detailed_description', 'status'];
+            $saleFields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
+            if($odata['status'] === self::STATUS_VALIDATED) {
+                $editableFields = array_merge($editableFields, $saleFields);
+            }
+
+            foreach($values as $field => $value) {
+                if(!in_array($field, $editableFields)) {
+                    return [
+                        $field => [
+                            'non_editable' => sprintf(
+                                'Time entry %s can only be updated from %s to %s.',
+                                $field,
+                                self::STATUS_PENDING,
+                                !in_array($field, $saleFields) ? self::STATUS_READY : self::STATUS_VALIDATED
+                            )
+                        ]
+                    ];
+                }
+            }
+        }
+
+        return parent::canupdate($om, $oids, $values, $lang);
+    }
+
     public static function onchange($event, $values): array {
         $result = [];
 
@@ -466,7 +499,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function addReceivable($self) {
+    public static function addReceivable($self): void {
         $self->read(['id']);
         foreach($self as $time_entry) {
             try {
