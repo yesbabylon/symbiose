@@ -425,11 +425,11 @@ class TimeEntry extends SaleEntry {
 
     public static function getPolicies(): array {
         return [
-            self::POLICY_READY_FOR_VALIDATION => [
+            'ready-for-validation' => [
                 'description' => 'Verifies that time entry is ready for validation.',
                 'function'    => 'isReadyForValidation'
             ],
-            self::POLICY_BILLABLE => [
+            'billable' => [
                 'description' => 'Verifies that time entry is billable.',
                 'function'    => 'isBillable'
             ]
@@ -483,37 +483,39 @@ class TimeEntry extends SaleEntry {
 
     public static function getWorkflow(): array {
         return [
-            self::STATUS_PENDING   => [
+            'pending'   => [
                 'transitions' => [
-                    self::TRANSITION_REQUEST_VALIDATION => [
+                    'request-validation' => [
                         'description' => 'Sets time entry as ready for validation.',
-                        'status'      => self::STATUS_READY,
-                        'policies'    => [self::POLICY_READY_FOR_VALIDATION]
+                        'status'      => 'ready',
+                        'policies'    => ['ready-for-validation']
                     ]
                 ]
             ],
-            self::STATUS_READY     => [
+
+            'ready'     => [
                 'transitions' => [
-                    self::TRANSITION_REFUSE   => [
+                    'refuse'   => [
                         'description' => 'Refuse time entry, sets its status back to pending.',
-                        'status'      => self::STATUS_PENDING
+                        'status'      => 'pending'
                     ],
-                    self::TRANSITION_VALIDATE => [
+                    'validate' => [
                         'description' => 'Validate time entry.',
-                        'status'      => self::STATUS_VALIDATED
+                        'status'      => 'validated'
                     ]
                 ]
             ],
-            self::STATUS_VALIDATED => [
+
+            'validated' => [
                 'transitions' => [
-                    self::TRANSITION_BILL   => [
+                    'bill' => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
-                        'status'      => self::STATUS_BILLED,
-                        'policies'    => [self::POLICY_BILLABLE],
+                        'status'      => 'billed',
+                        'policies'    => ['billable'],
                         'onafter'     => 'addReceivable'
                     ]
                 ]
-            ],
+            ]
         ];
     }
 }
