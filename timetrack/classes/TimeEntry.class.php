@@ -469,7 +469,15 @@ class TimeEntry extends SaleEntry {
     public static function addReceivable($self) {
         $self->read(['id']);
         foreach($self as $time_entry) {
-            eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $time_entry['id']]);
+            try {
+                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $time_entry['id']]);
+            }
+            catch (Exception $e) {
+                trigger_error("PHP::Failed sale\saleentry\add-receivable for time entry {$time_entry['id']}", QN_REPORT_ERROR);
+
+                TimeEntry::id($time_entry['id'])
+                    ->update(['status' => self::STATUS_VALIDATED]);
+            }
         }
     }
 
