@@ -302,6 +302,14 @@ class TimeEntry extends SaleEntry {
             $result['time_end'] = $values['time_start'] + $event['duration'];
         }
 
+        if(isset($event['price_id'])) {
+            $price = Price::id($event['price_id'])
+                ->read(['price'])
+                ->first();
+
+            $result['unit_price'] = $price['price'];
+        }
+
         return $result;
     }
 
