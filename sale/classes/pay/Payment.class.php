@@ -167,17 +167,43 @@ class Payment extends Model {
      * @return Array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
     public static function canupdate($om, $ids, $values, $lang='en') {
-        $payments = $om->read(self::getType(), $ids, ['is_exported', 'payment_origin', 'amount', 'statement_line_id.remaining_amount'], $lang);
+        $payments = $om->read(self::getType(), $ids, ['state', 'is_exported', 'payment_origin', 'amount', 'statement_line_id.amount', 'statement_line_id.remaining_amount'], $lang);
         foreach($payments as $pid => $payment) {
             if($payment['is_exported']) {
                 return ['is_exported' => ['non_editable' => 'Once exported a payment can no longer be updated.']];
             }
             if($payment['payment_origin'] == 'bank') {
                 if(isset($values['amount'])) {
-                    $payment_amount = round($values['amount'], 2);
-                    $remaining_amount = round($payment['statement_line_id.remaining_amount'], 2) + $payment['amount'] - $payment_amount;
-                    if($remaining_amount < 0) {
-                        return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']})."]];
+                    $sign_line = intval($payment['statement_line_id.amount'] > 0) - intval($payment['statement_line_id.amount'] < 0);
+                    $sign_payment = intval($values['amount'] > 0) - intval($values['amount'] < 0);
+                    // #memo - we prevent creating payment that do not decrease the remaining amount
+                    if($sign_line != $sign_payment) {
+                        return ['amount' => ['incompatible_sign' => "Payment amount ({$values['amount']}) and statement line amount ({$payment['statement_line_id.amount']}) must have the same sign."]];
+                    }
+                    // #memo - when state is still draft, it means that reconcile is made manually
+                    if($payment['state'] == 'draft') {
+                        if($payment['statement_line_id.amount'] < 0) {
+                            if(($payment['statement_line_id.remaining_amount'] - $values['amount']) > 0) {
+                                return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#1)."]];
+                            }
+                        }
+                        else {
+                            if(($payment['statement_line_id.remaining_amount'] - $values['amount']) < 0) {
+                                return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#2)."]];
+                            }
+                        }
+                    }
+                    else  {
+                        if($payment['statement_line_id.amount'] < 0) {
+                            if($payment['statement_line_id.remaining_amount'] > 0) {
+                                return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#3)."]];
+                            }
+                        }
+                        else {
+                            if($payment['statement_line_id.remaining_amount'] < 0) {
+                                return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#4)."]];
+                            }
+                        }
                     }
                 }
             }
