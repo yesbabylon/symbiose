@@ -220,21 +220,21 @@ class TimeEntry extends SaleEntry {
                 continue;
             }
 
-            $editableFields = ['description', 'detailed_description', 'status'];
-            $saleFields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
+            $editable_fields = ['description', 'detailed_description', 'status'];
+            $sale_fields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
             if($odata['status'] === self::STATUS_VALIDATED) {
-                $editableFields = array_merge($editableFields, $saleFields);
+                $editable_fields = array_merge($editable_fields, $sale_fields);
             }
 
             foreach($values as $field => $value) {
-                if(!in_array($field, $editableFields)) {
+                if(!in_array($field, $editable_fields)) {
                     return [
                         $field => [
                             'non_editable' => sprintf(
                                 'Time entry %s can only be updated from %s to %s.',
                                 $field,
                                 self::STATUS_PENDING,
-                                !in_array($field, $saleFields) ? self::STATUS_READY : self::STATUS_VALIDATED
+                                !in_array($field, $sale_fields) ? self::STATUS_READY : self::STATUS_VALIDATED
                             )
                         ]
                     ];
