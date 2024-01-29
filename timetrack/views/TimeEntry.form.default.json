@@ -55,7 +55,8 @@
             },
             "visible": [
                 ["state", "<>", "draft"],
-                ["status", "=", "validated"]
+                ["status", "=", "validated"],
+                ["is_billable", "=", true]
             ]
         }
     ],

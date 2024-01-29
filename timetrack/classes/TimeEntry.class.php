@@ -9,11 +9,12 @@ namespace timetrack;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
 use sale\SaleEntry;
 use sale\catalog\Product;
 use sale\price\Price;
 use core\setting\Setting;
+use eQual;
+use Exception;
 
 class TimeEntry extends SaleEntry {
 
@@ -465,6 +466,13 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
+    public static function addReceivable($self) {
+        $self->read(['id']);
+        foreach($self as $time_entry) {
+            eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $time_entry['id']]);
+        }
+    }
+
     public static function getWorkflow(): array {
         return [
             self::STATUS_PENDING   => [
@@ -493,7 +501,8 @@ class TimeEntry extends SaleEntry {
                     self::TRANSITION_BILL   => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
                         'status'      => self::STATUS_BILLED,
-                        'policies'    => [self::POLICY_BILLABLE]
+                        'policies'    => [self::POLICY_BILLABLE],
+                        'onafter'     => 'addReceivable'
                     ]
                 ]
             ],
