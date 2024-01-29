@@ -9,11 +9,12 @@ namespace timetrack;
 
 use DateTime;
 use DateTimeZone;
-use Exception;
 use sale\SaleEntry;
 use sale\catalog\Product;
 use sale\price\Price;
 use core\setting\Setting;
+use eQual;
+use Exception;
 
 class TimeEntry extends SaleEntry {
 
@@ -26,6 +27,26 @@ class TimeEntry extends SaleEntry {
         self::ORIGIN_EMAIL   => 'E-mail',
         self::ORIGIN_SUPPORT => 'Support ticket',
     ];
+
+    const STATUS_PENDING = 'pending';
+    const STATUS_READY = 'ready';
+    const STATUS_VALIDATED = 'validated';
+    const STATUS_BILLED = 'billed';
+
+    const STATUS_MAP = [
+        self::STATUS_PENDING   => 'Pending',
+        self::STATUS_READY     => 'Ready for validation',
+        self::STATUS_VALIDATED => 'Validated',
+        self::STATUS_BILLED    => 'Billed',
+    ];
+
+    const TRANSITION_REQUEST_VALIDATION = 'request-validation';
+    const TRANSITION_REFUSE = 'refuse';
+    const TRANSITION_VALIDATE = 'validate';
+    const TRANSITION_BILL = 'bill';
+
+    const POLICY_READY_FOR_VALIDATION = 'ready-for-validation';
+    const POLICY_BILLABLE = 'billable';
 
     public static function getName(): string {
         return 'Time entry';
@@ -78,7 +99,7 @@ class TimeEntry extends SaleEntry {
                 'function'       => 'calcProductId',
                 'store'          => true
             ],
-            
+
             'price_id' => [
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
@@ -160,6 +181,13 @@ class TimeEntry extends SaleEntry {
                 'function'       => 'calcTicketLink',
                 'store'          => true,
                 'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
+            ],
+
+            'status' => [
+                'type'           => 'string',
+                'selection'      => array_keys(self::STATUS_MAP),
+                'description'    => 'Status of the time entry',
+                'default'        => self::STATUS_PENDING
             ]
 
         ];
@@ -182,6 +210,39 @@ class TimeEntry extends SaleEntry {
         }
 
         return $current_hour;
+    }
+
+    public static function canupdate($om, $oids, $values, $lang = 'en'): array {
+        $res = $om->read(self::class, $oids, ['status']);
+
+        foreach($res as $odata) {
+            if(in_array($odata['status'], [self::STATUS_PENDING, self::STATUS_READY])) {
+                continue;
+            }
+
+            $editable_fields = ['description', 'detailed_description', 'status'];
+            $sale_fields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
+            if($odata['status'] === self::STATUS_VALIDATED) {
+                $editable_fields = array_merge($editable_fields, $sale_fields);
+            }
+
+            foreach($values as $field => $value) {
+                if(!in_array($field, $editable_fields)) {
+                    return [
+                        $field => [
+                            'non_editable' => sprintf(
+                                'Time entry %s can only be updated from %s to %s.',
+                                $field,
+                                self::STATUS_PENDING,
+                                !in_array($field, $sale_fields) ? self::STATUS_READY : self::STATUS_VALIDATED
+                            )
+                        ]
+                    ];
+                }
+            }
+        }
+
+        return parent::canupdate($om, $oids, $values, $lang);
     }
 
     public static function onchange($event, $values): array {
@@ -239,6 +300,14 @@ class TimeEntry extends SaleEntry {
         }
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
+        }
+
+        if(isset($event['price_id'])) {
+            $price = Price::id($event['price_id'])
+                ->read(['price'])
+                ->first();
+
+            $result['unit_price'] = $price['price'];
         }
 
         return $result;
@@ -300,7 +369,7 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function calcUnitPrice($self) {
+    public static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['project_id', 'origin', 'price_id' => ['price']]);
         foreach($self as $id => $time_entry) {
@@ -393,5 +462,101 @@ class TimeEntry extends SaleEntry {
         }
 
         return $result;
+    }
+
+    public static function getPolicies(): array {
+        return [
+            'ready-for-validation' => [
+                'description' => 'Verifies that time entry is ready for validation.',
+                'function'    => 'isReadyForValidation'
+            ],
+            'billable' => [
+                'description' => 'Verifies that time entry is billable.',
+                'function'    => 'isBillable'
+            ]
+        ];
+    }
+
+    public static function isReadyForValidation($self, $user_id): array {
+        $result = [];
+        $self->read(['project_id', 'user_id', 'origin', 'duration']);
+        foreach($self as $id => $time_entry) {
+            if(
+                !isset($time_entry['project_id'], $time_entry['user_id'], $time_entry['origin'], $time_entry['duration'])
+                || $time_entry['duration'] <= 0
+            ) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function isBillable($self, $user_id): array {
+        $result = [];
+        $self->read(['product_id', 'price_id', 'unit_price', 'is_billable']);
+        foreach($self as $id => $time_entry) {
+            if(
+                !isset($time_entry['product_id'], $time_entry['price_id'], $time_entry['unit_price'])
+                || !$time_entry['is_billable']
+            ) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function addReceivable($self): void {
+        $self->read(['id']);
+        foreach($self as $time_entry) {
+            try {
+                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $time_entry['id']]);
+            }
+            catch (Exception $e) {
+                trigger_error("PHP::Failed sale\saleentry\add-receivable for time entry {$time_entry['id']}", QN_REPORT_ERROR);
+
+                TimeEntry::id($time_entry['id'])
+                    ->update(['status' => self::STATUS_VALIDATED]);
+            }
+        }
+    }
+
+    public static function getWorkflow(): array {
+        return [
+            'pending'   => [
+                'transitions' => [
+                    'request-validation' => [
+                        'description' => 'Sets time entry as ready for validation.',
+                        'status'      => 'ready',
+                        'policies'    => ['ready-for-validation']
+                    ]
+                ]
+            ],
+
+            'ready'     => [
+                'transitions' => [
+                    'refuse'   => [
+                        'description' => 'Refuse time entry, sets its status back to pending.',
+                        'status'      => 'pending'
+                    ],
+                    'validate' => [
+                        'description' => 'Validate time entry.',
+                        'status'      => 'validated'
+                    ]
+                ]
+            ],
+
+            'validated' => [
+                'transitions' => [
+                    'bill' => [
+                        'description' => 'Create receivable, from time entry, who will be billed to the customer.',
+                        'status'      => 'billed',
+                        'policies'    => ['billable'],
+                        'onafter'     => 'addReceivable'
+                    ]
+                ]
+            ]
+        ];
     }
 }
