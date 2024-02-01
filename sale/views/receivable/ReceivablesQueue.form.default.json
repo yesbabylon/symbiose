@@ -6,8 +6,6 @@
             {
                 "sections": [
                     {
-                        "label": "Receivables Queue Infos",
-                        "id": "section.receivable_queue_info",
                         "rows": [
                             {
                                 "columns": [
@@ -19,7 +17,6 @@
                                                 "type": "field",
                                                 "value": "id",
                                                 "width": "15%",
-                                                "sortable": true,
                                                 "readonly":true
                                             },
                                             {
@@ -33,7 +30,11 @@
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "sections": [
                     {
                         "label": "Receivables",
                         "id": "section.receivables_id_receivables",
