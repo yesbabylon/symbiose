@@ -120,16 +120,14 @@
                                         ]
                                     },
                                     {
-                                        "width": "100%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "50%",
                                                 "widget":{
-                                                    "usage": "string/text"
+                                                    "usage": "text/plain"
                                                 }
                                             }
                                         ]
