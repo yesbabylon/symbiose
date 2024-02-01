@@ -44,17 +44,14 @@
             },
             {
                 "id": 3,
-                "code": "C",
 				"description": "Entreprise"
             },
             {
                 "id": 4,
-                "code": "NP",
 				"description": "ASBL / école"
             },
             {
                 "id": 5,
-                "code": "PA",
 				"description": "Administration publique"
             }
         ]

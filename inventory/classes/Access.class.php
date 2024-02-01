@@ -142,7 +142,7 @@ class Access extends Model {
 
         }
 
-        if (isset($event['type']) || isset($event['username']) || isset($event['password']) || isset($event['host']) ) {
+        if(isset($event['type']) || isset($event['username']) || isset($event['password']) || isset($event['host']) ) {
 
             $type = (string) (isset($event['type']))?$event['type']:$values['type'];
             $username = (string) (isset($event['username']))?$event['username']:$values['username'];

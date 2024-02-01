@@ -62,12 +62,7 @@ list($params, $providers) = eQual::announce([
             'type'        => 'string',
             'description' => 'Reference contact surname.',
             'visible'     => ['type', '=', 'I']
-        ],
-
-        'address' => [
-            'type'        => 'string',
-            'description' => 'Address the contact'
-        ],
+        ]
     ],
     'response'    => [
         'content-type'  => 'application/json',
@@ -84,19 +79,20 @@ list($params, $providers) = eQual::announce([
 list($context, $orm) = [$providers['context'], $providers['orm']];
 
 // Remove filter params of hidden fields
-if (!empty($params['type'])) {
-    $individualParams = ['firstname', 'lastname', 'citizen_identification'];
-    $companyParams = ['legal_name', 'short_name', 'registration_number'];
+if(!empty($params['type'])) {
+    $individual_params = ['firstname', 'lastname', 'citizen_identification'];
+    $company_params = ['legal_name', 'short_name', 'registration_number'];
 
-    $hiddenFields = [];
-    if ($params['type'] === 'all') {
-        $hiddenFields = array_merge($individualParams, $companyParams);
-    } else {
-        $hiddenFields = $params['type'] === 'I' ? $companyParams : $individualParams;
+    $hidden_fields = [];
+    if($params['type'] === 'all') {
+        $hidden_fields = array_merge($individual_params, $company_params);
+    }
+    else {
+        $hidden_fields = $params['type'] === 'I' ? $company_params : $individual_params;
     }
 
-    foreach ($hiddenFields as $hiddenField) {
-        unset($params[$hiddenField]);
+    foreach($hidden_fields as $hidden_field) {
+        unset($params[$hidden_field]);
     }
 }
 
@@ -105,22 +101,21 @@ $columns = [
     'lastname',
     'short_name',
     'legal_name',
-    'address',
     'citizen_identification',
     'registration_number'
 ];
 
-foreach ($columns as $column) {
-    if (empty($params[$column])) {
+foreach($columns as $column) {
+    if(empty($params[$column])) {
         continue;
     }
 
-    $identitiesIds = Identity::search([$column, 'ilike', '%' . $params[$column] . '%'])->ids();
-    $customersIds = Customer::search(['partner_identity_id', 'in', $identitiesIds])->ids();
+    $identities_ids = Identity::search([$column, 'ilike', '%' . $params[$column] . '%'])->ids();
+    $customers_ids = Customer::search(['partner_identity_id', 'in', $identities_ids])->ids();
 
     $params['domain'] = Domain::conditionAdd(
         $params['domain'],
-        ['id', 'in', $customersIds]
+        ['id', 'in', $customers_ids]
     );
 }
 

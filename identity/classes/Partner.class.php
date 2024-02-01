@@ -45,7 +45,8 @@ class Partner extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
                 'description'       => 'The identity organisation which the targeted identity is a partner of.',
-                'visible'           => ['is_internal', '=', false]
+                'visible'           => ['is_internal', '=', false],
+                'default'           => Identity::OWNER_IDENTITY_ID
             ],
 
             'partner_identity_id' => [

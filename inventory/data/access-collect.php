@@ -70,13 +70,12 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'     => ['context']
 ]);
 /**
  * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
  */
-list($context, $orm) = [ $providers['context'], $providers['orm'] ];
+$context = $providers['context'];
 
 //   Add conditions to the domain to consider advanced parameters
 $domain = $params['domain'];
@@ -99,6 +98,10 @@ if(isset($params['url']) && strlen($params['url']) > 0 ) {
 
 if(isset($params['server_id']) && $params['server_id'] > 0) {
     $domain = Domain::conditionAdd($domain, ['server_id', '=', $params['server_id']]);
+}
+
+if(isset($params['software_id']) && $params['software_id'] > 0) {
+    $domain = Domain::conditionAdd($domain, ['software_id', '=', $params['software_id']]);
 }
 
 if(isset($params['instance_id']) && $params['instance_id'] > 0) {

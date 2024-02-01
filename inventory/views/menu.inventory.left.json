@@ -62,19 +62,6 @@
                         }
                     },
                     {
-                        "id": "item.subscription.entry",
-                        "type": "entry",
-                        "label": "Subscription Entries",
-                        "icon": "subscriptions",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\service\\SubscriptionEntry",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "item.all.receivables",
                         "type": "parent",
                         "label": "Receivables",

@@ -16,8 +16,8 @@ $tests = [
             $error = 0;
             try {
                 // Run action
-                eQual::run('do', 'inventory_service_subscriptionentry_add-receivable', ['id' => '-1']);
-            } catch (Exception $e) {
+                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => '-1']);
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 
@@ -29,7 +29,7 @@ $tests = [
         'description' => 'Tests that action add-receivable throws if price does not exist',
         'arrange'     => function() {
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
@@ -54,10 +54,10 @@ $tests = [
                 // Run action
                 eQual::run(
                     'do',
-                    'inventory_service_subscriptionentry_add-receivable',
+                    'sale_saleentry_add-receivable',
                     ['id' => $subscription_entry_id]
                 );
-            } catch (Exception $e) {
+            } catch(Exception $e) {
                 $error = $e->getCode();
             }
 
@@ -73,7 +73,7 @@ $tests = [
                 ->read(['id'])
                 ->first();
 
-            Customer::search(['id', '=', $customer['id']])->delete(true);
+            Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
             SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
         }
@@ -101,9 +101,9 @@ $tests = [
                 ->first();
 
             $product = Product::create([
-                'name' => 'Test product (1111.111111.11111111.111)',
-                'label' => 'Test product',
-                'sku'   => '1111.111111.11111111.111',
+                'name'             => 'Test product (1111.111111.11111111.111)',
+                'label'            => 'Test product',
+                'sku'              => '1111.111111.11111111.111',
                 'product_model_id' => 0
             ])
                 ->read(['id'])
@@ -126,7 +126,7 @@ $tests = [
             // Run action
             eQual::run(
                 'do',
-                'inventory_service_subscriptionentry_add-receivable',
+                'sale_saleentry_add-receivable',
                 ['id' => $subscription_entry_id]
             );
         },
@@ -153,10 +153,10 @@ $tests = [
                 ->read(['price_id', 'product_id'])
                 ->first();
 
-            Customer::search(['id', '=', $customer['id']])->delete(true);
+            Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
-            Price::search(['id', '=', $entry['price_id']])->delete(true);
-            Product::search(['id', '=', $entry['product_id']])->delete(true);
+            Price::id($entry['price_id'])->delete(true);
+            Product::id($entry['product_id'])->delete(true);
             SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
@@ -168,7 +168,7 @@ $tests = [
             // Create customer, receivable queue, price, product and subscription entry
 
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
@@ -190,9 +190,9 @@ $tests = [
                 ->first();
 
             $product = Product::create([
-                'name' => 'Test product (1111.111111.11111111.111)',
-                'label' => 'Test product',
-                'sku'   => '1111.111111.11111111.111',
+                'name'             => 'Test product (1111.111111.11111111.111)',
+                'label'            => 'Test product',
+                'sku'              => '1111.111111.11111111.111',
                 'product_model_id' => 0
             ])
                 ->read(['id'])
@@ -215,7 +215,7 @@ $tests = [
             // Run action
             eQual::run(
                 'do',
-                'inventory_service_subscriptionentry_add-receivable',
+                'sale_saleentry_add-receivable',
                 ['id' => $subscription_entry_id]
             );
         },
@@ -242,10 +242,10 @@ $tests = [
                 ->read(['price_id', 'product_id'])
                 ->first();
 
-            Customer::search(['id', '=', $customer['id']])->delete(true);
+            Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
-            Price::search(['id', '=', $entry['price_id']])->delete(true);
-            Product::search(['id', '=', $entry['product_id']])->delete(true);
+            Price::id($entry['price_id'])->delete(true);
+            Product::id($entry['product_id'])->delete(true);
             SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
@@ -257,7 +257,7 @@ $tests = [
             // Create customer, price, product and subscription entry
 
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
@@ -273,9 +273,9 @@ $tests = [
                 ->first();
 
             $product = Product::create([
-                'name' => 'Test product (1111.111111.11111111.111)',
-                'label' => 'Test product',
-                'sku'   => '1111.111111.11111111.111',
+                'name'             => 'Test product (1111.111111.11111111.111)',
+                'label'            => 'Test product',
+                'sku'              => '1111.111111.11111111.111',
                 'product_model_id' => 0
             ])
                 ->read(['id'])
@@ -288,7 +288,7 @@ $tests = [
                 'date_from'       => time(),
                 'date_to'         => time(),
                 'price_id'        => $price['id'],
-                'price'           => 25.99
+                'unit_price'      => 25.99
             ])
                 ->read(['id'])
                 ->first();
@@ -299,7 +299,7 @@ $tests = [
             // Run action
             eQual::run(
                 'do',
-                'inventory_service_subscriptionentry_add-receivable',
+                'sale_saleentry_add-receivable',
                 ['id' => $subscription_entry_id]
             );
         },
@@ -311,14 +311,14 @@ $tests = [
                 ->first();
 
             $entry = SubscriptionEntry::search(['customer_id', '=', $customer['id']])
-                ->read(['price_id', 'price', 'qty', 'product_id', 'receivable_id'])
+                ->read(['price_id', 'unit_price', 'qty', 'product_id', 'receivable_id'])
                 ->first();
 
             $price = Price::id($entry['price_id'])
                 ->read(['id', 'vat_rate'])
                 ->first();
 
-            $receivable = Receivable::search(['id', '=', $entry['receivable_id']])
+            $receivable = Receivable::id($entry['receivable_id'])
                 ->read([
                     'price_id',
                     'vat_rate',
@@ -331,10 +331,10 @@ $tests = [
 
             return $receivable['price_id'] === $price['id']
                 && $receivable['vat_rate'] === $price['vat_rate']
-                && $receivable['unit_price'] === $entry['price']
+                && $receivable['unit_price'] === $entry['unit_price']
                 && $receivable['qty'] === $entry['qty']
                 && $receivable['product_id'] === $entry['product_id']
-                && $receivable['description'] === 'reference subscription';
+                && $receivable['description'] === 'Reference Subscription entry product.';
         },
         'rollback'    => function() {
             // Remove customer, receivable queue, price, product, subscription entry and receivable
@@ -347,10 +347,10 @@ $tests = [
                 ->read(['price_id', 'product_id'])
                 ->first();
 
-            Customer::search(['id', '=', $customer['id']])->delete(true);
+            Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
-            Price::search(['id', '=', $entry['price_id']])->delete(true);
-            Product::search(['id', '=', $entry['product_id']])->delete(true);
+            Price::id($entry['price_id'])->delete(true);
+            Product::id($entry['product_id'])->delete(true);
             SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }
@@ -362,7 +362,7 @@ $tests = [
             // Create customer, price, product and subscription entry
 
             $customer = Customer::create([
-                'name' => 'Test customer',
+                'name'                => 'Test customer',
                 'partner_identity_id' => 0
             ])
                 ->read(['id'])
@@ -378,9 +378,9 @@ $tests = [
                 ->first();
 
             $product = Product::create([
-                'name' => 'Test product (1111.111111.11111111.111)',
-                'label' => 'Test product',
-                'sku'   => '1111.111111.11111111.111',
+                'name'             => 'Test product (1111.111111.11111111.111)',
+                'label'            => 'Test product',
+                'sku'              => '1111.111111.11111111.111',
                 'product_model_id' => 0
             ])
                 ->read(['id'])
@@ -393,7 +393,7 @@ $tests = [
                 'date_from'       => time(),
                 'date_to'         => time(),
                 'price_id'        => $price['id'],
-                'price'           => 25.99
+                'unit_price'      => 25.99
             ])
                 ->read(['id'])
                 ->first();
@@ -404,7 +404,7 @@ $tests = [
             // Run action
             eQual::run(
                 'do',
-                'inventory_service_subscriptionentry_add-receivable',
+                'sale_saleentry_add-receivable',
                 ['id' => $subscription_entry_id]
             );
         },
@@ -434,10 +434,10 @@ $tests = [
                 ->read(['price_id', 'product_id'])
                 ->first();
 
-            Customer::search(['id', '=', $customer['id']])->delete(true);
+            Customer::id($customer['id'])->delete(true);
             ReceivablesQueue::search(['customer_id', '=', $customer['id']])->delete(true);
-            Price::search(['id', '=', $entry['price_id']])->delete(true);
-            Product::search(['id', '=', $entry['product_id']])->delete(true);
+            Price::id($entry['price_id'])->delete(true);
+            Product::id($entry['product_id'])->delete(true);
             SubscriptionEntry::search(['customer_id', '=', $customer['id']])->delete(true);
             Receivable::search(['product_id', '=', $entry['product_id']])->delete(true);
         }

@@ -1,0 +1,31 @@
+{
+    "name": "timetrack",
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": [
+        "core",
+        "identity",
+        "sale",
+        "inventory"
+    ],
+    "apps": [
+        {
+            "id": "timetrack",
+            "name": "Timetrack",
+            "extends": "app",
+            "description": "Application timetrack",
+            "icon": "timer",
+            "color": "#27ab4f",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "timetrack.left"
+                }
+            }
+        }
+    ]
+}

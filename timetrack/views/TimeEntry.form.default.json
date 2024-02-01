@@ -1,0 +1,328 @@
+{
+    "name": "Time entry",
+    "description": "Default form for time entry",
+    "actions": [
+        {
+            "id": "action.transition.ready",
+            "label": "Ready",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "request-validation",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "pending"]
+            ]
+        },
+        {
+            "id": "action.transition.refuse",
+            "label": "Refuse",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "refuse",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "ready"]
+            ]
+        },
+        {
+            "id": "action.transition.validate",
+            "label": "Validate",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "validate",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "ready"]
+            ]
+        },
+        {
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "timetrack\\TimeEntry",
+                "transition": "bill",
+                "ids": []
+            },
+            "visible": [
+                ["state", "<>", "draft"],
+                ["status", "=", "validated"],
+                ["is_billable", "=", true]
+            ]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.time-entry-general",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.time-entry-details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Realised by",
+                                                "value": "user_id",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Project",
+                                                "value": "project_id",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "30%",
+                                                "visible": ["project_id", "<>", null]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "15%"
+                                    },
+                                    {
+                                        "width": "30%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Date",
+                                                "value": "date",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Duration",
+                                                "value": "duration",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "65%"
+                                    },
+                                    {
+                                        "width": "30%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Start",
+                                                "value": "time_start",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "End",
+                                                "value": "time_end",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Origin",
+                                                "value": "origin",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Related ticket",
+                                                "value": "ticket_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Ticket link",
+                                                "value": "ticket_link",
+                                                "width": "100%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "50%",
+                                                "visible": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.time-entry-sale-details",
+                        "label": "Sale",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "75%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "price_id",
+                                                "label": "Price",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "unit_price",
+                                                "label": "Unit price",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_receivable",
+                                                "label": "Has Receivable",
+                                                "readonly": true,
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "receivable_id",
+                                                "label": "Receivable",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.time-entry-extra-details",
+                        "label": "Extra details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "detailed_description",
+                                                "label": "Detailed description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

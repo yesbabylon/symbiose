@@ -7,21 +7,9 @@
             "label": "receivable",
             "controller": "sale_saleentry_add-receivable",
             "visible": [
-                [
-                    "state",
-                    "<>",
-                    "draft"
-                ],
-                [
-                    "has_receivable",
-                    "=",
-                    false
-                ],
-                [
-                    "is_billable",
-                    "=",
-                    true
-                ]
+                ["state", "<>", "draft"],
+                ["has_receivable", "=", false],
+                ["is_billable", "=", true]
             ]
         }
     ],
@@ -39,6 +27,15 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "description",
+                                                "label": "Description",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
                                                 "width": "100%"
@@ -47,14 +44,20 @@
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
-                                                "width": "50%"
+                                                "width": "40%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
                                                 "readonly": true,
-                                                "width": "50%"
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "unit_price",
+                                                "label": "Unit price amount",
+                                                "width": "30%"
                                             },
                                             {
                                                 "type": "field",

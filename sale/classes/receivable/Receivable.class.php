@@ -166,7 +166,7 @@ class Receivable extends Model {
             $result['customer_id'] = $receivables_queue['customer_id'];
         }
 
-        if (isset($event['product_id'])) {
+        if(isset($event['product_id'])) {
             $product = Product::id($event['product_id'])->read('name')->first();
             $result['name'] =$product['name'];
         }
@@ -192,7 +192,7 @@ class Receivable extends Model {
 
         }
 
-        if (isset($event['unit_price']) || isset($event['qty']) || isset($event['free_qty']) || isset($event['discount']) || isset($event['vat_rate'])) {
+        if(isset($event['unit_price']) || isset($event['qty']) || isset($event['free_qty']) || isset($event['discount']) || isset($event['vat_rate'])) {
 
             $unit_price =(float) isset($event['unit_price'])?$event['unit_price']:$values['unit_price'];
             $qty = isset($event['qty'])?$event['qty']:$values['qty'];

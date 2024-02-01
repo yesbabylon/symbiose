@@ -5,6 +5,16 @@
     "access": {
         "groups": ["sale.default.user", "booking.default.user"]
      },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "Simplified form to ease creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
@@ -20,7 +30,7 @@
             },
             {
                 "type": "field",
-                "label": "Type",
+                "label": "Nature",
                 "value": "customer_nature_id",
                 "width": "15%"
             },

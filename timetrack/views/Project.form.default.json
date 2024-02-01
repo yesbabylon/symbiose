@@ -1,0 +1,75 @@
+{
+    "name": "Project",
+    "description": "Default form for project",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "id": "section.project",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Name",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Instance",
+                                                "value": "instance_id",
+                                                "width": "50%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "50%",
+                                                "align": "left",
+                                                "widget": {
+                                                    "usage": "string/text"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

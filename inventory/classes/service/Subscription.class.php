@@ -163,7 +163,7 @@ class Subscription extends Model  {
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer to who refers the item.',
                 'store'             => true,
-                'function'          => 'calcCustomer',
+                'function'          => 'calcCustomerId',
             ],
 
             'subscription_entries_ids' => [
@@ -176,7 +176,6 @@ class Subscription extends Model  {
 
         ];
     }
-
 
     public static function onchange($event, $values) {
         $result = [];
@@ -355,7 +354,7 @@ class Subscription extends Model  {
 
     }
 
-    public static function calcCustomer($self) {
+    public static function calcCustomerId($self) {
         $result = [];
         $self->read(['service_id' => ['customer_id']]);
         foreach($self as $id => $subscription) {

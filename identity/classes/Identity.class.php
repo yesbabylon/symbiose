@@ -14,6 +14,9 @@ use equal\orm\Model;
  */
 class Identity extends Model {
 
+    // Identity id of the company who uses this instance of Symbiose
+    const OWNER_IDENTITY_ID = 1;
+
     public static function getName() {
         return "Identity";
     }
