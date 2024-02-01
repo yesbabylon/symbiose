@@ -12,7 +12,7 @@
     "actions" : [
         {
             "id": "header.pending.actions.bulk_add_invoice",
-            "label": "Add invoice",
+            "label": "Add to invoice",
             "icon": "list",
             "controller": "sale_receivable_bulk-add-invoice"
         }
