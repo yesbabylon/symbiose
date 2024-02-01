@@ -6,19 +6,17 @@
     },
     "operations": {
         "total": {
-          "total": {
-            "id": "operations.total.total",
-            "label": "Total without vat",
-            "usage":"amount/money:2",
-            "operation": "SUM"
-          }
-        },
-        "price": {
+            "total": {
+                "id": "operations.total.total",
+                "label": "Total without vat",
+                "usage":"amount/money:2",
+                "operation": "SUM"
+            },
             "price": {
-              "id": "operations.total.price",
-              "label": "Total with vat",
-              "usage":"amount/money:2",
-              "operation": "SUM"
+                "id": "operations.total.price",
+                "label": "Total with vat",
+                "usage":"amount/money:2",
+                "operation": "SUM"
             }
         }
     },
