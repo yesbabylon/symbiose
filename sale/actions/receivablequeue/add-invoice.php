@@ -50,6 +50,7 @@ foreach($receivables_queues as $receivables_queue) {
             'product_id',
             'price_id',
             'unit_price',
+            'vat_rate',
             'qty',
             'free_qty',
             'discount'
@@ -83,6 +84,7 @@ foreach($receivables_queues as $receivables_queue) {
             'product_id'            => $receivable['product_id'],
             'price_id'              => $receivable['price_id'],
             'unit_price'            => $receivable['unit_price'],
+            'vat_rate'              => $receivable['vat_rate'],
             'qty'                   => $receivable['qty'],
             'free_qty'              => $receivable['free_qty'],
             'discount'              => $receivable['discount'],
