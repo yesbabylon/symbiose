@@ -169,8 +169,7 @@ class CashdeskSession extends Model {
                         $total_cash += $operation['amount'];
                     }
                     // compute the difference (if any) between expected cash and actual cash in the cashdesk
-                    $expected_cash = $total_cash + $session['amount_opening'];
-                    $delta = $session['amount_closing'] - $expected_cash;
+                    $delta = $session['amount_closing'] - $total_cash;
                     if($delta != 0) {
                         // create a new move with the delta
                         $om->create(Operation::getType(), [
