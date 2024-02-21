@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "code": "I",
-				"description": "Individual"
+				"description": "Individual (natural person)"
             },
             {
                 "id": 2,
@@ -21,7 +21,7 @@
             {
                 "id": 4,
                 "code": "NP",
-				"description": "Non-Profit organization / School"
+				"description": "Non-Profit organization"
             },
             {
                 "id": 5,
