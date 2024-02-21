@@ -159,10 +159,13 @@ class CashdeskSession extends Model {
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        // upon session closing, create additional operation if there is a delta in cash amount
+        // upon session closing, set date_closing and create additional operation if there is a delta in cash amount
         if(isset($values['status']) && $values['status'] == 'closed') {
-            $sessions = $om->read(self::getType(), $oids, ['cashdesk_id', 'user_id', 'amount_opening', 'amount_closing', 'operations_ids.amount'], $lang);
+            $sessions = $om->read(self::getType(), $oids, ['id', 'cashdesk_id', 'user_id', 'amount_opening', 'amount_closing', 'operations_ids.amount'], $lang);
             if($sessions > 0) {
+                // set cashdesk session date_closing
+                $om->update(self::getType(), $oids, ['date_closing' => time()], $lang);
+
                 foreach($sessions as $sid => $session) {
                     $total_cash = 0.0;
                     foreach($session['operations_ids.amount'] as $oid => $operation) {
