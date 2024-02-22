@@ -6,27 +6,27 @@
             {
                 "id": 1,
                 "code": "I",
-				"description": "Individual (natural person)"
+                "description": "Individual (natural person)"
             },
             {
                 "id": 2,
                 "code": "SE",
-				"description": "Self-Employed"
+                "description": "Self-Employed"
             },
             {
                 "id": 3,
                 "code": "C",
-				"description": "Company"
+                "description": "Company"
             },
             {
                 "id": 4,
                 "code": "NP",
-				"description": "Non-Profit organization"
+                "description": "Non-Profit organization"
             },
             {
                 "id": 5,
                 "code": "PA",
-				"description": "Public Administration"
+                "description": "Public Administration"
             }
         ]
     },
@@ -36,23 +36,23 @@
         "data": [
             {
                 "id": 1,
-				"description": "Particulier"
+                "description": "Particulier"
             },
             {
                 "id": 2,
-				"description": "Indépendant"
+                "description": "Indépendant"
             },
             {
                 "id": 3,
-				"description": "Entreprise"
+                "description": "Entreprise"
             },
             {
                 "id": 4,
-				"description": "ASBL / école"
+                "description": "ASBL / école"
             },
             {
                 "id": 5,
-				"description": "Administration publique"
+                "description": "Administration publique"
             }
         ]
     }
