@@ -50,19 +50,19 @@ $search = Bundle::search(['id', '=', $params['id']]);
 
 // root(1), admin(2) and main author(3) are always granted
 if($user_id > 3) {
-    // retrieve pack_id
-    $collection = $search->read(['pack_id'])->get(true);
+    // retrieve course_id
+    $collection = $search->read(['course_id'])->get(true);
     if(!$collection || !count($collection)) {
         throw new Exception('unknown_module', QN_ERROR_INVALID_PARAM);
     }
     $instance = $collection[0];
-    if(!$instance || !isset($instance['pack_id'])) {
+    if(!$instance || !isset($instance['course_id'])) {
         throw new Exception('unknown_error', QN_ERROR_UNKNOWN);
     }
-    $pack_id = $instance['pack_id'];
+    $course_id = $instance['course_id'];
 
     // check that the user is granted to access target module
-    $access = UserAccess::search([ ['pack_id', '=', $pack_id], ['user_id', '=', $user_id] ])->ids();
+    $access = UserAccess::search([ ['course_id', '=', $course_id], ['user_id', '=', $user_id] ])->ids();
     if(!$access || !count($access)) {
         throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
     }

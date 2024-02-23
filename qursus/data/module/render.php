@@ -81,7 +81,7 @@ ob_start();
 
 <div class="page">
     <div class="title-brand">eQual.run</div>
-    <div class="title-pack"><?php echo $module['pack_id']['title']; ?></div>
+    <div class="title-pack"><?php echo $module['course_id']['title']; ?></div>
     <div class="title-module">MODULE <?php echo $module['identifier']; ?></div>
 </div>
 
@@ -120,7 +120,7 @@ $font1 = $dompdf->getFontMetrics()->getFont("Montserrat", "bold");
 $font2 = $dompdf->getFontMetrics()->getFont("Montserrat", "bold");
 // $canvas->page_text(90, 15, "Help2Protect.info", $font1, 18, array(0.74,0.25,0.57));
 $canvas->page_text(95, $canvas->get_height() - 58, "Help2Protect.info", $font2, 11, array(0.074,0.25,0.57));
-$canvas->page_text(220, $canvas->get_height() - 58, $module['pack_id']['title'], $font2, 11, array(0,0.066,0.29));
+$canvas->page_text(220, $canvas->get_height() - 58, $module['course_id']['title'], $font2, 11, array(0,0.066,0.29));
 // $canvas->page_text(705, $canvas->get_height() - 45, "p. {PAGE_NUM} / {PAGE_COUNT}", $font2, 11, array(0,0.066,0.29));
 $canvas->page_text(650, $canvas->get_height() - 58, "Module {$module['identifier']} - Page {PAGE_NUM} ", $font2, 11, array(0,0.066,0.29));
 

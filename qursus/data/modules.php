@@ -6,8 +6,8 @@ use qursus\UserStatus;
 list($params, $providers) = announce([
     'description'   => "Returns a list of all modules for a given pack, enriched with current user status.",
     'params'        => [
-        'pack_id' =>  [
-            'description'   => 'Pack identifier (id field).',
+        'course_id' =>  [
+            'description'   => 'Course identifier (id field).',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -43,7 +43,7 @@ if($user_id <= 0) {
 
 // check that the user is granted to access target module
 /*
-$access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
+$access = UserAccess::search([ ['course_id', '=', $params['course_id']], ['user_id', '=', $user_id] ])->ids();
 if(!$access || !count($access)) {
     throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
 }
@@ -55,7 +55,7 @@ if(!$access || !count($access)) {
 
 $json = run('get', 'model_collect', [
             'entity' 	=> 'qursus\Module',
-            'domain' 	=> ['pack_id', '=', $params['pack_id'] ],
+            'domain' 	=> ['course_id', '=', $params['course_id'] ],
             'fields' 	=> ['identifier', 'title', 'duration', 'description', 'page_count'],
             'order' 	=> 'identifier',
             'sort' 		=> 'asc'

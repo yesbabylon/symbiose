@@ -39,7 +39,7 @@ if($user_id <= 0) {
     Check if user is granted access
 */
 
-UserAccess::create(['pack_id' => $params['id'], 'user_id' => $user_id])->read(['code']);
+UserAccess::create(['course_id' => $params['id'], 'user_id' => $user_id])->read(['code']);
 
 
 $context->httpResponse()

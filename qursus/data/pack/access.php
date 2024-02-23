@@ -5,8 +5,8 @@ use qursus\UserAccess;
 list($params, $providers) = announce([
     'description'   => "Checks if current user has a license for a given program.",
     'params'        => [
-        'pack_id' =>  [
-            'description'   => 'Pack identifier (id field).',
+        'course_id' =>  [
+            'description'   => 'Course identifier (id field).',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -40,7 +40,7 @@ if($user_id <= 0) {
 */
 
 // check that the user is granted to access target module
-$access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
+$access = UserAccess::search([ ['course_id', '=', $params['course_id']], ['user_id', '=', $user_id] ])->ids();
 if(!$access || !count($access)) {
     throw new Exception('missing_license', QN_ERROR_NOT_ALLOWED);
 }

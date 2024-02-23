@@ -21,7 +21,7 @@ class UserAccess extends Model {
                 'description'       => 'Unique random identifier.'
             ],
 
-            /* virtual field for retrieving Pack based on verification URL */
+            /* virtual field for retrieving Course based on verification URL */
             'code_alpha' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -63,20 +63,20 @@ class UserAccess extends Model {
 
     public function getUnique() {
         return [
-            ['pack_id', 'user_id']
+            ['course_id', 'user_id']
         ];
     }
 
     public static function getIsComplete($om, $oids, $lang) {
         $result = [];
 
-        $accesses = $om->read(__CLASS__, $oids, ['pack_id', 'user_id', 'code', 'code_alpha'], $lang);
+        $accesses = $om->read(__CLASS__, $oids, ['course_id', 'user_id', 'code', 'code_alpha'], $lang);
 
         foreach($accesses as $aid => $access) {
-            // read related pack modules ids
-            $courses = $om->read('qursus\Course', $access['pack_id'], ['modules_ids'], $lang);
+            // read related course modules ids
+            $courses = $om->read('qursus\Course', $access['course_id'], ['modules_ids'], $lang);
             $course = array_pop($courses);
-            $statuses_ids = $om->search('qursus\UserStatus', [ ['pack_id', '=', $access['pack_id']], ['user_id', '=', $access['user_id']] ]);
+            $statuses_ids = $om->search('qursus\UserStatus', [ ['course_id', '=', $access['course_id']], ['user_id', '=', $access['user_id']] ]);
             if(!$statuses_ids || count($course['modules_ids']) > count($statuses_ids)) {
                 $result[$aid] = false;
                 continue;
@@ -97,16 +97,16 @@ class UserAccess extends Model {
 
 
     /**
-     * Generate a unique pseudo-random value for the Pack.
+     * Generate a unique pseudo-random value for the Course.
      */
     public static function getCode($om, $oids, $lang) {
         $result = [];
 
-        $accesses = $om->read(__CLASS__, $oids, ['pack_id', 'user_id'], $lang);
+        $accesses = $om->read(__CLASS__, $oids, ['course_id', 'user_id'], $lang);
 
         foreach($accesses as $oid => $access) {
-            trigger_error("ORM::generating code for {$access['pack_id']}:{$access['user_id']}", QN_REPORT_DEBUG);
-            $result[$oid] = (intval($access['user_id']) * 100) + (intval($access['pack_id'])) + 19995;
+            trigger_error("ORM::generating code for {$access['course_id']}:{$access['user_id']}", QN_REPORT_DEBUG);
+            $result[$oid] = (intval($access['user_id']) * 100) + (intval($access['course_id'])) + 19995;
         }
 
         return $result;

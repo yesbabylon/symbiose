@@ -58,7 +58,7 @@ $installment_qr_url = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQ
 /*
   Retrieve info related to user : completeness and unique alpha code
 */
-$access_ids = UserAccess::search([ ['pack_id', '=', $params['id']], ['user_id', '=', $user_id] ])->ids();
+$access_ids = UserAccess::search([ ['course_id', '=', $params['id']], ['user_id', '=', $user_id] ])->ids();
 
 if(!count($access_ids)) {
   throw new Exception('missing_status', QN_ERROR_INVALID_PARAM);

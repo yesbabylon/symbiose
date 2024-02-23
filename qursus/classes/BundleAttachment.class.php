@@ -26,7 +26,7 @@ class BundleAttachment extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'qursus\Bundle',
                 'description'       => 'Bundle the attachment relates to.',
-                'ondelete'          => 'cascade'         // delete bundle when parent pack is deleted
+                'ondelete'          => 'cascade'         // delete bundle when parent bundle is deleted
             ]
 
         ];

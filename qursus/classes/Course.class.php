@@ -41,31 +41,31 @@ class Course extends Model {
             'modules_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'qursus\Module',
-                'foreign_field'     => 'pack_id',
+                'foreign_field'     => 'course_id',
                 'ondetach'          => 'delete'
             ],
 
             'quizzes_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'qursus\Quiz',
-                'foreign_field'     => 'pack_id',
+                'foreign_field'     => 'course_id',
                 'ondetach'          => 'delete'
             ],
 
             'bundles_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'qursus\Bundle',
-                'foreign_field'     => 'pack_id',
+                'foreign_field'     => 'course_id',
                 'ondetach'          => 'delete'
             ],
 
             'langs_ids' => [
                 'type'              => 'many2many',
                 'foreign_object'    => 'qursus\Lang',
-                'foreign_field'     => 'packs_ids',
-                'rel_table'         => 'qursus_rel_lang_pack',
+                'foreign_field'     => 'courses_ids',
+                'rel_table'         => 'qursus_rel_lang_course',
                 'rel_foreign_key'   => 'lang_id',
-                'rel_local_key'     => 'pack_id',
+                'rel_local_key'     => 'course_id',
                 'description'       => "List of languages in which the program is available"
             ]
 

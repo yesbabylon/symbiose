@@ -4,8 +4,8 @@ use qursus\UserAccess;
 list($params, $providers) = announce([
     'description'   => "Checks if a pack has been fully completed by current user.",
     'params'        => [
-        'pack_id' =>  [
-            'description'   => 'Pack identifier (id field).',
+        'course_id' =>  [
+            'description'   => 'Course identifier (id field).',
             'type'          => 'integer',
             'required'      => true
         ],
@@ -42,14 +42,14 @@ if($user_id <= 0) {
 // root(1), admin(2) and main author(3) are always granted
 if($user_id > 3) {
     // check that the user is granted to access target module
-    $access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->ids();
+    $access = UserAccess::search([ ['course_id', '=', $params['course_id']], ['user_id', '=', $user_id] ])->ids();
     if(!$access || !count($access)) {
         throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
     }
 }
 
 
-$access = UserAccess::search([ ['pack_id', '=', $params['pack_id']], ['user_id', '=', $user_id] ])->read(['is_complete', 'code', 'code_alpha'])->first();
+$access = UserAccess::search([ ['course_id', '=', $params['course_id']], ['user_id', '=', $user_id] ])->read(['is_complete', 'code', 'code_alpha'])->first();
 
 $result = ['complete' => true];
 

@@ -14,7 +14,7 @@ class Quiz extends Model {
         return [
             'identifier' => [
                 'type'              => 'integer',
-                'description'       => 'Unique Id of the quiz within the pack.'
+                'description'       => 'Unique Id of the quiz within the course.'
             ],
 
             'name' => [
@@ -32,7 +32,7 @@ class Quiz extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'qursus\Course',
                 'description'       => 'Course the attachment relates to.',
-                'ondelete'          => 'cascade'         // delete module when parent pack is deleted
+                'ondelete'          => 'cascade'         // delete module when parent course is deleted
             ]
         ];
     }
