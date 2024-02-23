@@ -17,21 +17,21 @@ class Quiz extends Model {
                 'description'       => 'Unique Id of the quiz within the pack.'
             ],
 
-            'name' => [            
+            'name' => [
                 'type'              => 'string',
                 'multilang'         => true,
                 'default'           => 'Quiz'
             ],
 
-            'quiz_code' => [            
+            'quiz_code' => [
                 'type'              => 'integer',
                 'multilang'         => true
-            ],            
+            ],
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
-                'description'       => 'Pack the attachment relates to.',
+                'foreign_object'    => 'qursus\Course',
+                'description'       => 'Course the attachment relates to.',
                 'ondelete'          => 'cascade'         // delete module when parent pack is deleted
             ]
         ];

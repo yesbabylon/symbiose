@@ -8,7 +8,7 @@ namespace qursus;
 
 use equal\orm\Model;
 
-class Pack extends Model {
+class Course extends Model {
 
     public static function getColumns() {
         return [

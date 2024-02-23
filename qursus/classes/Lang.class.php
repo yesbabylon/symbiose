@@ -12,7 +12,7 @@ class Lang extends Model {
 
     public static function getColumns() {
         return [
-            'name' => [            
+            'name' => [
                 'type'              => 'string',
                 'description'       => "Full name of language, in english."
             ],
@@ -22,12 +22,12 @@ class Lang extends Model {
                 'description'       => "ISO 639-1 language code."
             ],
 
-            'packs_ids' => [ 
-                'type'              => 'many2many', 
-                'foreign_object'    => 'qursus\Pack', 
-                'foreign_field'     => 'langs_ids', 
-                'rel_table'         => 'qursus_rel_lang_pack', 
-                'rel_foreign_key'   => 'pack_id',
+            'courses_ids' => [
+                'type'              => 'many2many',
+                'foreign_object'    => 'qursus\Course',
+                'foreign_field'     => 'langs_ids',
+                'rel_table'         => 'qursus_rel_lang_course',
+                'rel_foreign_key'   => 'course_id',
                 'rel_local_key'     => 'lang_id'
             ]
 

@@ -87,10 +87,10 @@ class Module extends Model {
                 'onupdate'          => 'onupdateChaptersIds'
             ],
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
-                'description'       => 'Pack the module relates to.',
+                'foreign_object'    => 'qursus\Course',
+                'description'       => 'Course the module relates to.',
                 'ondelete'          => 'cascade'         // delete module when parent pack is deleted
             ]
 

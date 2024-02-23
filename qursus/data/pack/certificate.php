@@ -5,7 +5,7 @@ use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
 
 use qursus\UserAccess;
-use qursus\Pack;
+use qursus\Course;
 use qursus\Module;
 
 list($params, $providers) = eQual::announce([

@@ -14,7 +14,7 @@ class UserAccess extends Model {
         return [
             /* virtual field for generating verification URL */
             'code' => [
-                'type'              => 'computed',                
+                'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'qursus\UserAccess::getCode',
                 'store'             => true,
@@ -30,12 +30,12 @@ class UserAccess extends Model {
                 'description'       => 'Alpha code for retrieval by URL.'
             ],
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
+                'foreign_object'    => 'qursus\Course',
                 'description'       => 'Program the user is granted access to.',
                 'required'          => true,
-                'ondelete'          => 'cascade'         // delete access when parent module is deleted
+                'ondelete'          => 'cascade'         // delete access when parent course is deleted
             ],
 
             'master_user_id' => [
@@ -74,10 +74,10 @@ class UserAccess extends Model {
 
         foreach($accesses as $aid => $access) {
             // read related pack modules ids
-            $packs = $om->read('qursus\Pack', $access['pack_id'], ['modules_ids'], $lang);
-            $pack = array_pop($packs);
+            $courses = $om->read('qursus\Course', $access['pack_id'], ['modules_ids'], $lang);
+            $course = array_pop($courses);
             $statuses_ids = $om->search('qursus\UserStatus', [ ['pack_id', '=', $access['pack_id']], ['user_id', '=', $access['user_id']] ]);
-            if(!$statuses_ids || count($pack['modules_ids']) > count($statuses_ids)) {
+            if(!$statuses_ids || count($course['modules_ids']) > count($statuses_ids)) {
                 $result[$aid] = false;
                 continue;
             }
