@@ -2,7 +2,7 @@
     "name": "Attachment",
     "description": "",
     "layout": {
-        "groups": [            
+        "groups": [
             {
                 "sections": [
                     {
@@ -32,11 +32,11 @@
                                                 "visible": false
                                             }
                                         ]
-                                    }                                   
+                                    }
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

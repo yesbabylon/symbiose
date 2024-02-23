@@ -1,8 +1,8 @@
 {
     "name": "Module",
-    "description": "",    
+    "description": "",
     "layout": {
-        "groups": [        
+        "groups": [
             {
                 "sections": [
                     {
@@ -75,7 +75,7 @@
                                         ]
                                     }
                                 ]
-                            }                            
+                            }
                         ]
                     },
                     {
@@ -83,7 +83,7 @@
                         "label": "Chapters",
                         "rows": [
                             {
-                                "columns": [                                    
+                                "columns": [
                                     {
                                         "width": "100%",
                                         "items": [
@@ -97,7 +97,7 @@
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]
