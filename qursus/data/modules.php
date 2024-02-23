@@ -5,6 +5,7 @@ use qursus\UserStatus;
 
 list($params, $providers) = announce([
     'description'   => "Returns a list of all modules for a given pack, enriched with current user status.",
+    'deprecated'    => true,
     'params'        => [
         'course_id' =>  [
             'description'   => 'Course identifier (id field).',
