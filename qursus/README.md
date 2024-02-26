@@ -6,7 +6,7 @@ Qursus is a learning management system using eQual Framework.
 
 Qursus works with eQual on the back-end.
 
-Courses are modeled as Packs that can hold several modules, each of which having several chapters (sections), each of
+Courses are modeled as Courses that can hold several modules, each of which having several chapters (sections), each of
 which having several pages.
 
 The student can follow the lesson using the web app that is deployed in `/public` when the `qursus` package is initiated.
@@ -17,9 +17,9 @@ The student can follow the lesson using the web app that is deployed in `/public
 
 **Schema of the application**
 
-A Qursus application contains one or several packs which can contain one or several modules which are themselves divided
+A Qursus application contains one or several courses which can contain one or several modules which are themselves divided
 into chapters and pages. Each page has sections and "leaves". Leaves are divided into groups of 8 spaces per leaf. Those
-spaces can contain widgets. A widget can be a picture, a text, a title, some code excerpt... A pack can also have a
+spaces can contain widgets. A widget can be a picture, a text, a title, some code excerpt... A course can also have a
 bundle which is basically a zipped piece of attachments (video, pictures, pdf files) the student can download and follow
 the course.
 
@@ -66,24 +66,23 @@ Now in your qursus package you should see :
             Lang.class.php
             Leaf.class.php
             Module.class.php
-            Pack.class.php
+            Course.class.php
             Page.class.php
             Quiz.class.php
-            Section.class.php
             UserAccess.class.php
             UserStatus.class.php
             Widget.class.php
         /data
             /module
                 render.php      --> Returns a fully loaded JSON formatted single module
-            /pack
+            /course
                 access.php      --> Checks if current user has a license for a given program.
                 certificate.php --> Returns a html page or a signed pdf certificate.
-                complete.php    --> Checks if a pack has been fully completed by current user.
+                complete.php    --> Checks if a course has been fully completed by current user.
                 grant.php       --> Checks if current user has a license for a given program.
             bundle.php          --> Sends either a single attachment or a zip archive containing all attachments.
             module.php          --> Returns a fully loaded JSON formatted single module.
-            modules.php         --> "Returns a list of all modules for a given pack, enriched with current user status.
+            modules.php         --> "Returns a list of all modules for a given course, enriched with current user status.
         /init
             /data
         /views
@@ -102,15 +101,13 @@ Now in your qursus package you should see :
 Fundamentally the qursus application can be schematized this way :
 
 ```bash
-├─Pack
+├─Course
     ├─Lang
     ├─Bundle
         ├─BundleAttachment
     ├─Module
         ├─Chapter
             ├─Page
-                ├─Section
-                    ├─Page
                 ├─Leaves
                     ├─Group
                         ├─Widgets
@@ -119,39 +116,39 @@ Fundamentally the qursus application can be schematized this way :
 
 ![qursus-page](./doc/qursus-page.png)
 
-### Pack
+### Course
 
-A pack is at the basis of a Qursus. It has a title, a subtitle and languages it is available into. Some (learning)
-modules will be attached to the pack. For example, the package **Learning eQual** could have modules called **back-end ,
+A course is at the basis of a Qursus. It has a title, a subtitle and languages it is available into. Some (learning)
+modules will be attached to the course. For example, the package **Learning eQual** could have modules called **back-end ,
 front-end, low-code**.
 
-To create a pack, go to the In the dashboard menu, select Pack and click on the button create. You should get a form and enter the title, the slug of the package which
+To create a course, go to the In the dashboard menu, select Course and click on the button create. You should get a form and enter the title, the slug of the package which
 should be unique. You can add a subtitle if you wish. Don't forget to click on the save button.
 
-#### A pack is defined by :
+#### A course is defined by :
 
 | Property    | Type      | Description                                                                                                 |
 |-------------|-----------|-------------------------------------------------------------------------------------------------------------|
 | name        | unique    |                                                                                                             |
-| title       | string    | The title is `multilang` so you can set a different one according to the language the pack is available in. |
+| title       | string    | The title is `multilang` so you can set a different one according to the language the course is available in. |
 | subtitle    | string    | This field is `multilang` so you can set a different one according to the language.                         |
 | description | text      |                                                                                                             |
 | modules     | alias     | Alias of modules_ids.                                                                                       |
 | module_ids  | one2many  |                                                                                                             |
 | quizzes_ids | one2many  |                                                                                                             |
 | bundles_ids | one2many  |                                                                                                             |
-| langs_ids   | many2many | Pack can have many languages and a language can be available in many packs.                                 |
+| langs_ids   | many2many | Course can have many languages and a language can be available in many courses.                                 |
 
-![Create and update a Pack](./doc/pack.png)
+![Create and update a Course](./doc/course.png)
 
-If the pack is deleted, its associated modules are deleted too.
+If the course is deleted, its associated modules are deleted too.
 
-To create a pack or any other entity like a Module a Chapter you can also use the usual eQual controllers and replace by
+To create a course or any other entity like a Module a Chapter you can also use the usual eQual controllers and replace by
 the appropriate entity name and fields:
-http://wpeq.local/equal.php/?do=model_create&entity=qursus\Pack&fields[state]=draft&lang=en
+http://wpeq.local/equal.php/?do=model_create&entity=qursus\Course&fields[state]=draft&lang=en
 
 ```bash
-./equal.run --do=model_create --entity=qursus\Pack --fields[state]=draft --lang=en
+./equal.run --do=model_create --entity=qursus\Course --fields[state]=draft --lang=en
 ```
 
 You can the update this model.
@@ -160,15 +157,15 @@ The response should be:
 
 ```json
 {
-  "entity": "qursus\\Pack",
+  "entity": "qursus\\Course",
   "id": 6
 }
 ```
 
-You can update the Pack entries:
+You can update the Course entries:
 
 ```bash
-./equal.run --do=model_update --entity='qursus\Pack' --ids=6 --fields='{name:"slug-of-the-pack", title:"Title of the Pack", subtitle : "Subtitle of the Pack", description: "This is a basic description of what is taught in this pack. I can write the numbers and names of the modules and chapters etc." }'
+./equal.run --do=model_update --entity='qursus\Course' --ids=6 --fields='{name:"slug-of-the-course", title:"Title of the Course", subtitle : "Subtitle of the Course", description: "This is a basic description of what is taught in this course. I can write the numbers and names of the modules and chapters etc." }'
 ```
 
 **Response**
@@ -177,10 +174,10 @@ You can update the Pack entries:
 [
   {
     "id": 6,
-    "name": "slug-of-the-pack",
-    "title": "Title of the Pack",
-    "subtitle": " Subtitle of the Pack",
-    "description": " This is a basic description of what is taught in this pack. I can write the numbers and names of the modules and chapters etc.",
+    "name": "slug-of-the-course",
+    "title": "Title of the Course",
+    "subtitle": " Subtitle of the Course",
+    "description": " This is a basic description of what is taught in this course. I can write the numbers and names of the modules and chapters etc.",
     "langs_ids": " ",
     "modifier": 1,
     "state": "instance",
@@ -189,10 +186,10 @@ You can update the Pack entries:
 ]
 ```
 
-Now you can check your newly updated pack by using eQual model_collect.
+Now you can check your newly updated course by using eQual model_collect.
 
 ```bash
-./equal.run --get=model_collect --entity='qursus\Pack' --domain=['id','=',6]
+./equal.run --get=model_collect --entity='qursus\Course' --domain=['id','=',6]
 
 ```
 
@@ -202,7 +199,7 @@ Now you can check your newly updated pack by using eQual model_collect.
 [
   {
     "id": 6,
-    "name": "slug-of-the-pack",
+    "name": "slug-of-the-course",
     "state": "instance",
     "modified": "2023-12-19T10:28:02+00:00"
   }
@@ -212,18 +209,18 @@ Now you can check your newly updated pack by using eQual model_collect.
 
 ### Languages
 
-You can have a pack so a course available in one or several languages. They are defined by the Lang.class.php. A
+You can have a course so a course available in one or several languages. They are defined by the Lang.class.php. A
 language has a
 
 | Property  | Type     | Description                                                                                 |
 |-----------|----------|---------------------------------------------------------------------------------------------|
 | name      | string   |                                                                                             |
 | code      | string   | ISO 639-1 language code                                                                     |
-| packs_ids | many2one | Relation many2one to the packs the language is used in <br><br> **Example :** ``[1, 2, 3]`` |
+| courses_ids | many2one | Relation many2one to the courses the language is used in <br><br> **Example :** ``[1, 2, 3]`` |
 
 ### Quiz
 
-You can create one or many quizzes for a pack. When the pack is deleted so are its quizzes.
+You can create one or many quizzes for a course. When the course is deleted so are its quizzes.
 They are defined by the Quiz.class.php. A quiz has a
 
 | Property   | Type     | Description                                                                                                                                            |
@@ -231,11 +228,11 @@ They are defined by the Quiz.class.php. A quiz has a
 | identifier | integer  |                                                                                                                                                        |
 | name       | string   |                                                                                                                                                        |
 | quiz-code  | integer  | Integer which is multilang language code.<br><br>**Example :** <ul><li> **1** for english</li> <li>**2** for french</li> <li>**3** for dutch</li></ul> |
-| packs_ids  | many2one | Relation many2one to the packs the language is used. <br><br> **Example :** ``[1, 2, 3]``                                                              |
+| courses_ids  | many2one | Relation many2one to the courses the language is used. <br><br> **Example :** ``[1, 2, 3]``                                                              |
 
 ### Bundle and Bundle attachments
 
-You can create one or many Bundles for a pack. When the pack is deleted so are its Bundles. Basically a Bundle is a zip
+You can create one or many Bundles for a course. When the course is deleted so are its Bundles. Basically a Bundle is a zip
 folder the student can download. It contains attachments files that are used to follow the course.
 They are defined by the Bundle.class.php and BundleAttachment.class.php. A Bundle has a
 
@@ -244,28 +241,28 @@ They are defined by the Bundle.class.php and BundleAttachment.class.php. A Bundl
 | name            | string   |                                                                                         |
 | description     | string   |                                                                                         |
 | attachments_ids | many2one | Relation many2one between the bundle and its attachments                                |
-| packs_ids       | many2one | Relation many2one to the packs the bundle is used.<br><br> **Example :** ``[1 , 2, 3]`` |
+| courses_ids       | many2one | Relation many2one to the courses the bundle is used.<br><br> **Example :** ``[1 , 2, 3]`` |
 
 When a bundle is deleted the attachment is removed to. A bundle attachment is defined by :
 
 | Property    | Type     | Description                                                                                                                                                                                                             |
 |-------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | name        | string   |                                                                                                                                                                                                                         |
-| url         | string   | The destination the file is.<br><br> **Example :** https://equal.local/qursus/assets/images/qursus.webp, <br> The url is `multilang` so you can set a different one according to the language the pack is available in. |
+| url         | string   | The destination the file is.<br><br> **Example :** https://equal.local/qursus/assets/images/qursus.webp, <br> The url is `multilang` so you can set a different one according to the language the course is available in. |
 | bundles_ids | many2one | Relation many2one to the bundle the attachment is used                                                                                                                                                                  |
 
 ### Module
 
 #### Definition of a Module :
 
-A Module is a major part in the pack. It contains chapters. A Module is defined by :
+A Module is a major part in the course. It contains chapters. A Module is defined by :
 
 | Property      | Type     | Description                                                                                                                   |
 |---------------|----------|-------------------------------------------------------------------------------------------------------------------------------|
 | identifier    | integer  | Unique identifier.                                                                                                            |
 | title         | string   | Description of the module as presented to user.                                                                               |
 | name          | unique   | Alias of the title.                                                                                                           |
-| order         | integer  | The module position in the pack.                                                                                              |
+| order         | integer  | The module position in the course.                                                                                              |
 | link          | computed | URL of the module visual editor. <br><br> Example: http://equal.local/qursus/?mode=edit&module=11&lang=en*                    |
 | page_count    | computed | Total amount of pages in the module.                                                                                          |
 | chapter_count | computed | Total amount of chapters in the module.                                                                                       |
@@ -273,11 +270,11 @@ A Module is a major part in the pack. It contains chapters. A Module is defined 
 | duration      | integer  | Indicative duration, in minutes, for completing the module.                                                                   |
 | chapters      | alias    | Alias of ``chapters_ids``                                                                                                     |
 | chapters_ids  | one2many | Relationship one2many between the module and its many chapters. <br><br>When the module is deleted, chapters are deleted too. |
-| pack_id       | many2one | Relationship many2one between the module and its parent pack. <br><br>When the pack is deleted, modules are deleted too.      |
+| course_id       | many2one | Relationship many2one between the module and its parent course. <br><br>When the course is deleted, modules are deleted too.      |
 
 #### Creating a Module :
 
-Select the pack you just created, and click on update you can add modules to it.
+Select the course you just created, and click on update you can add modules to it.
 
 ![Module](./doc/module.png)
 
@@ -285,11 +282,11 @@ A module is a major part in your course. It will be divided into chapters and pa
 
 #### The modules controllers and actions :
 
-If you want to visualize all modules of a given pack you can use the terminal and the qursus_modules controller or for
-instance make a http request at http://equal.local?get=qursus_modules&pack_id=5 :
+If you want to visualize all modules of a given course you can use the terminal and the qursus_modules controller or for
+instance make a http request at http://equal.local?get=qursus_modules&course_id=5 :
 
 ```bash
-./equal.run --get=qursus_modules --pack_id=5
+./equal.run --get=qursus_modules --course_id=5
 
 ```
 
@@ -301,7 +298,7 @@ instance make a http request at http://equal.local?get=qursus_modules&pack_id=5 
     "identifier": 1,
     "title": "My very first module",
     "duration": 10,
-    "description": "<p>This is the first module of the pack Learning Qursus.</p>",
+    "description": "<p>This is the first module of the course Learning Qursus.</p>",
     "page_count": 1,
     "name": "My very first module",
     "id": 11,
@@ -340,15 +337,15 @@ which is the id of the first module:
 {
   "id": 11,
   "identifier": 1,
-  // first module created in the pack
+  // first module created in the course
   "order": 1,
   // order the module will be displayed at
   "title": "My very first module",
-  "description": "<p>This is the first module of the pack Learning Qursus.<\/p>",
+  "description": "<p>This is the first module of the course Learning Qursus.<\/p>",
   "duration": 10,
   // duration of the module in minutes
-  "pack_id": {
-    // pack the module is part of
+  "course_id": {
+    // course the module is part of
     "id": 5,
     "name": "learning-qursus",
     "title": "Learning Qursus",
@@ -413,7 +410,6 @@ which is the id of the first module:
                       "order": 1,
                       "content": "<p><strong>Test of a <em>widget<\/em><\/strong><\/p>",
                       "type": "page_title",
-                      "section_id": null,
                       "image_url": "",
                       "video_url": "",
                       "sound_url": "",
@@ -451,12 +447,12 @@ which is the id of the first module:
 
 #### Definition of a Chapter:
 
-A Chapter is a major part in the pack. It contains chapters. A chapter is defined by :
+A Chapter is a major part in the course. It contains chapters. A chapter is defined by :
 
 | Property          | Type     | Description                                                                                                                                                       |
 |-------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | identifier        | integer  | Unique identifier.                                                                                                                                                |
-| order             | integer  | The chapter position in the pack.                                                                                                                                 |
+| order             | integer  | The chapter position in the course.                                                                                                                                 |
 | name              | alias    | Alias of the title.                                                                                                                                               |
 | title  (required) | string   | Description of the chapter presented to user.                                                                                                                     |
 | page_count        | computed | Total amount of pages in the chapter.                                                                                                                             |
@@ -475,8 +471,8 @@ You can add a page at the same time.
 
 ### Definition of a page:
 
-A page is a part of a chapter. It can represent a lesson or an exercise for example. It contains leaves and sections.
-Sections can contain a page which itself can contain other sections and leaves. A page is defined by :
+A page is a part of a chapter. It can cover a topic or an exercise for example. It contains one or more leaves.
+A page is defined by :
 
 | Property         | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -487,9 +483,7 @@ Sections can contain a page which itself can contain other sections and leaves. 
 | next_active_rule | string   | Select field with the following options:<br><br>**selection:**<ul><li>'always visible'            => 'always visible'</li><li>'$page.submitted = true'    => 'page submitted'</li><li>'$page.selection > 0'       => 'item selected'</li><li>'$page.actions_counter > 0' => '1 or more actions'</li><li>'$page.actions_counter > 1' => '2 or more actions'</li><li>'$page.actions_counter > 2' => '3 or more actions'</li><li>'$page.actions_counter > 3' => '4 or more actions'</li><li>'$page.actions_counter > 4' => '5 or more actions'</li><li>'$page.actions_counter > 5' => '6 or more actions'</li><li>'$page.actions_counter > 6' => '7 or more actions'</li></ul>**default:** 'always visible' |
 | leaves           | alias    | Alias of leaves_ids.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | leaves_ids       | one2many | Relationship one2many. A page can have many leaves. Leaves are deleted when the page is detached.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| sections         | alias    | Alias of section_ids                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| sections_ids     | one2many | Relationship one2many between the page and its many sections. If the page is detached, the sections are deleted too.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| section_id       | many2one | Relationship many2one between the section and its many pages. If the page is deleted, the sections are deleted too.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+
 | chapter_id       | many2one | Relationship many2one between the page and its parent chapter. Many pages can be in one chapter. When the chapter is deleted so are its pages. When the chapter_id is updated, the ``$page['chapter_id']`` is also updated to match the new value.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 A page usually contains two leaves. Pages are displayed flex row with one leaf on the left and a second one on the
@@ -518,18 +512,6 @@ A leaf is defined by :
 
 ![Create Leaf](./doc/leaf.png)
 
-## Section
-
-A Section is defined by :
-
-| Property   | Type     | Description                                                                                                                                               |
-|------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| identifier | integer  | Unique identifier.                                                                                                                                        |
-| order      | integer  | The position of the section in the page.                                                                                                                  |
-| name       | string   | Computed field result type string, stored: getDisplayName made of the section_id (in the example 65) and the  section_identifier (here 1) *example 65-1*. |
-| pages      | alias    | Alias of pages_ids                                                                                                                                        |
-| pages_ids  | one2many | Relation one2many, one section can contain many pages. If the section is detached, pages it deleted.                                                      |
-| page_id    | many2one | Relation many2one where many sections can be in one page. When the parent page is deleted the sections are deleted too.                                   |
 
 ## Group
 
@@ -616,8 +598,8 @@ It is defined by :
 | Property       | Type     | Description                                                                                                                                                             |
 |----------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | code           | computed | Computed result type integer function getCode : a unique identifier used for generating verification url.                                                               |
-| code_alpha     | computed | Computed result type string function getCodeAlpha: retrieve the pack based on verification url code of 4 chars (3 letters + 1 digit).                                   |
-| pack_id        | many2one | Relation many2one, many users can access one pack.                                                                                                                      |
+| code_alpha     | computed | Computed result type string function getCodeAlpha: retrieve the course based on verification url code of 4 chars (3 letters + 1 digit).                                   |
+| course_id        | many2one | Relation many2one, many users can access one course.                                                                                                                      |
 | master_user_id | integer  | In case of multi-accounts, external user id.                                                                                                                            |
 | user_id        | integer  | External user identifier that is granted access.                                                                                                                        |
 | is_complete    | computed | Computed result type ``boolean``, function ``getIsComplete`` : The user has finished the programs modules from the UserStatus the value is_complete is set to ``true``. |
@@ -630,7 +612,7 @@ It is defined by :
 
 | Property      | Type     | Description                                                                                                |
 |---------------|----------|------------------------------------------------------------------------------------------------------------|
-| pack_id       | many2one | Relation many2one, many UserStatus can be in one pack. It is used to determine the completeness of a pack. |
+| course_id       | many2one | Relation many2one, many UserStatus can be in one course. It is used to determine the completeness of a course. |
 | module_id     | many2one | Relation many2one, many UserStatus can be in one Module.                                                   |
 | user_id       | integer  | External user identifier that is granted access                                                            |
 | chapter_index | integer  | Chapter index/identifier within the module.                                                                |
@@ -664,7 +646,7 @@ Use babel to transpile .ts file into .js :
 
 Generate an app.bundle.js that can be embedded to any .html file:
 
-`npm run webpack`# Building an ERP that suits you
+`npm run webcourse`# Building an ERP that suits you
 
 ## Symbiose suite of apps for eQual
 

@@ -14,14 +14,14 @@ class UserAccess extends Model {
         return [
             /* virtual field for generating verification URL */
             'code' => [
-                'type'              => 'computed',                
+                'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'qursus\UserAccess::getCode',
                 'store'             => true,
                 'description'       => 'Unique random identifier.'
             ],
 
-            /* virtual field for retrieving Pack based on verification URL */
+            /* virtual field for retrieving Course based on verification URL */
             'code_alpha' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -30,12 +30,12 @@ class UserAccess extends Model {
                 'description'       => 'Alpha code for retrieval by URL.'
             ],
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
+                'foreign_object'    => 'qursus\Course',
                 'description'       => 'Program the user is granted access to.',
                 'required'          => true,
-                'ondelete'          => 'cascade'         // delete access when parent module is deleted
+                'ondelete'          => 'cascade'         // delete access when parent course is deleted
             ],
 
             'master_user_id' => [
@@ -63,21 +63,21 @@ class UserAccess extends Model {
 
     public function getUnique() {
         return [
-            ['pack_id', 'user_id']
+            ['course_id', 'user_id']
         ];
     }
 
     public static function getIsComplete($om, $oids, $lang) {
         $result = [];
 
-        $accesses = $om->read(__CLASS__, $oids, ['pack_id', 'user_id', 'code', 'code_alpha'], $lang);
+        $accesses = $om->read(__CLASS__, $oids, ['course_id', 'user_id', 'code', 'code_alpha'], $lang);
 
         foreach($accesses as $aid => $access) {
-            // read related pack modules ids
-            $packs = $om->read('qursus\Pack', $access['pack_id'], ['modules_ids'], $lang);
-            $pack = array_pop($packs);
-            $statuses_ids = $om->search('qursus\UserStatus', [ ['pack_id', '=', $access['pack_id']], ['user_id', '=', $access['user_id']] ]);
-            if(!$statuses_ids || count($pack['modules_ids']) > count($statuses_ids)) {
+            // read related course modules ids
+            $courses = $om->read('qursus\Course', $access['course_id'], ['modules_ids'], $lang);
+            $course = array_pop($courses);
+            $statuses_ids = $om->search('qursus\UserStatus', [ ['course_id', '=', $access['course_id']], ['user_id', '=', $access['user_id']] ]);
+            if(!$statuses_ids || count($course['modules_ids']) > count($statuses_ids)) {
                 $result[$aid] = false;
                 continue;
             }
@@ -97,16 +97,16 @@ class UserAccess extends Model {
 
 
     /**
-     * Generate a unique pseudo-random value for the Pack.
+     * Generate a unique pseudo-random value for the Course.
      */
     public static function getCode($om, $oids, $lang) {
         $result = [];
 
-        $accesses = $om->read(__CLASS__, $oids, ['pack_id', 'user_id'], $lang);
+        $accesses = $om->read(__CLASS__, $oids, ['course_id', 'user_id'], $lang);
 
         foreach($accesses as $oid => $access) {
-            trigger_error("ORM::generating code for {$access['pack_id']}:{$access['user_id']}", QN_REPORT_DEBUG);
-            $result[$oid] = (intval($access['user_id']) * 100) + (intval($access['pack_id'])) + 19995;
+            trigger_error("ORM::generating code for {$access['course_id']}:{$access['user_id']}", QN_REPORT_DEBUG);
+            $result[$oid] = (intval($access['user_id']) * 100) + (intval($access['course_id'])) + 19995;
         }
 
         return $result;

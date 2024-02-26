@@ -48,7 +48,7 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-$module = Module::id($params['module_id'])->read(['pack_id', 'chapter_count', 'chapters_ids'])->first();
+$module = Module::id($params['module_id'])->read(['course_id', 'chapter_count', 'chapters_ids'])->first();
 
 if(!$module) {
     throw new Exception('unknown_module', QN_ERROR_INVALID_PARAM);
@@ -74,13 +74,13 @@ if(!count($status_ids)) {
     UserStatus::create([
         'user_id'       => $user_id,
         'module_id'     => $params['module_id'],
-        'pack_id'       => $module['pack_id'],
+        'course_id'     => $module['course_id'],
         'chapter_index' => $params['chapter_index'],
         'page_index'    => $params['page_index']
     ]);
 }
 else {
-    $status = UserStatus::ids($status_ids)->read(['pack_id', 'chapter_index', 'page_index', 'page_count', 'is_complete'])->first();
+    $status = UserStatus::ids($status_ids)->read(['course_id', 'chapter_index', 'page_index', 'page_count', 'is_complete'])->first();
 
     // we expect and allow one page turn at a time
     if( ($params['chapter_index'] == $status['chapter_index'] && $params['page_index'] == $status['page_index']+1)
@@ -98,11 +98,11 @@ else {
         if(!$status['is_complete']) {
             // mark the program as complete for current user
             UserStatus::ids($status_ids)->update(['is_complete' => true]);
-            $access = UserAccess::search([ ['pack_id', '=', $status['pack_id']], ['user_id', '=', $user_id] ])->read(['is_complete'])->first();
+            $access = UserAccess::search([ ['course_id', '=', $status['course_id']], ['user_id', '=', $user_id] ])->read(['is_complete'])->first();
             if($access && $access['is_complete']) {
                 // send an email to offer the user to participate to anonymous survey
                 run('do', 'qursus_survey', [
-                    'pack_id'       => $status['pack_id'],
+                    'course_id'       => $status['course_id'],
                     'user_id'       => $user_id
                 ]);                
             }

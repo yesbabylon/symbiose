@@ -9,7 +9,7 @@
                 "width": "10%",
                 "widget": {
                     "readonly": true
-                }                
+                }
             },
             {
                 "type": "field",

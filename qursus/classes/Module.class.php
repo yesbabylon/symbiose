@@ -14,13 +14,13 @@ class Module extends Model {
         return [
             'identifier' => [
                 'type'              => 'integer',
-                'description'       => 'Unique identifier the module within the pack.',
+                'description'       => 'Unique identifier the module within the course.',
                 'default'           => 1
             ],
 
             'order' => [
                 'type'              => 'integer',
-                'description'       => 'Position of the module in the pack.'
+                'description'       => 'Position of the module in the course.'
             ],
 
             'name' => [
@@ -87,11 +87,11 @@ class Module extends Model {
                 'onupdate'          => 'onupdateChaptersIds'
             ],
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
-                'description'       => 'Pack the module relates to.',
-                'ondelete'          => 'cascade'         // delete module when parent pack is deleted
+                'foreign_object'    => 'qursus\Course',
+                'description'       => 'Course the module relates to.',
+                'ondelete'          => 'cascade'         // delete module when parent course is deleted
             ]
 
         ];

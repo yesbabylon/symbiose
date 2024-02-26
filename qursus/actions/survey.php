@@ -7,7 +7,7 @@ use qursus\Pack;
 list($params, $providers) = announce([
     'description'	=>	"Send an invite to satisfaction survey.",
     'params' 		=>	[
-        'pack_id' => [
+        'course_id' => [
             'description'   => 'Identifier of the pack the user just finished.',
             'type'          => 'integer',
             'required'      => true
@@ -46,7 +46,7 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 }
 
-$pack = Pack::ids($params['pack_id'])->read(['title'])->first();
+$pack = Pack::ids($params['course_id'])->read(['title'])->first();
 $user = [];
 
 $db = $orm->getDb();

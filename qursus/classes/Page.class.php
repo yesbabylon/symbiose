@@ -64,33 +64,12 @@ class Page extends Model {
                 'ondetach'          => 'delete'
             ],
 
-            'sections' => [
-                'type'              => 'alias',
-                'alias'             => 'sections_ids'
-            ],
-
-            'sections_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'qursus\Section',
-                'foreign_field'     => 'page_id',
-                'order'             => 'order',
-                'sort'              => 'asc',
-                'ondetach'          => 'delete'
-            ],
-
             'chapter_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'qursus\Chapter',
                 'description'       => 'Chapter the page relates to, if any.',
                 'ondelete'          => 'cascade',         // delete chapter when parent module is deleted
                 'onupdate'          => 'onupdateChapterId'
-            ],
-
-            'section_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Section',
-                'description'       => 'Section the page relates to, if any.',
-                'ondelete'          => 'cascade'         // delete chapter when parent module is deleted
             ]
 
         ];
@@ -118,14 +97,14 @@ class Page extends Model {
         return $result;
     }
 
-    public static function onupdateNextActive($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, ['next_active' => null], $lang);
+    public static function onupdateNextActive($om, $ids, $values, $lang) {
+        $om->write(__CLASS__, $ids, ['next_active' => null], $lang);
     }
 
-    public static function onupdateChapterId($om, $oids, $values, $lang) {
-        $pages = $om->read(__CLASS__, $oids, ['chapter_id'], $lang);
+    public static function onupdateChapterId($om, $ids, $values, $lang) {
+        $pages = $om->read(__CLASS__, $ids, ['chapter_id'], $lang);
 
-        foreach($pages as $oid => $page) {
+        foreach($pages as $id => $page) {
             Chapter::onupdatePagesIds($om, $page['chapter_id'], $values, $lang);
         }
     }

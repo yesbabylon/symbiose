@@ -20,9 +20,9 @@
                                                 "width": "50%",
                                                 "widget": {
                                                     "heading": true,
-                                                    "min": 1                                                    
+                                                    "min": 1
                                                 }
-                                            },   
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "order",

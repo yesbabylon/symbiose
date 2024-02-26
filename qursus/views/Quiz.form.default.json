@@ -2,7 +2,7 @@
     "name": "Quiz",
     "description": "",
     "layout": {
-        "groups": [            
+        "groups": [
             {
                 "sections": [
                     {
@@ -23,11 +23,11 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    }                                   
+                                    }
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

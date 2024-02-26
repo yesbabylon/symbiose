@@ -2,7 +2,7 @@
     "name": "Widget",
     "description": "",
     "layout": {
-        "groups": [            
+        "groups": [
             {
                 "sections": [
                     {
@@ -95,13 +95,13 @@
                                                 "type": "field",
                                                 "value": "sound_url",
                                                 "width": "100%"
-                                            }                                            
+                                            }
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]

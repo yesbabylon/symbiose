@@ -35,6 +35,12 @@ class Chapter extends Model {
                 'multilang'         => true
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'usage'             => 'text/plain',
+                'multilang'         => true
+            ],
+
             'module_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'qursus\Module',

@@ -21,7 +21,7 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },   
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "order",
@@ -39,13 +39,7 @@
                                                 "type": "field",
                                                 "value": "chapter_id",
                                                 "width": "50%",
-                                                "visible": false                                                
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "section_id",
-                                                "width": "50%",
-                                                "visible": false                                                
+                                                "visible": false
                                             }
                                         ]
                                     }
@@ -72,28 +66,7 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "id": "section.sections",
-                        "label": "Sections",
-                        "visible": ["section_id", "is", null],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "sections_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }                    
+                    }
                 ]
             }
         ]

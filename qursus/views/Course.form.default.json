@@ -21,7 +21,7 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            }                                        
+                                            }
                                         ]
                                     },
                                     {
@@ -34,14 +34,14 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },                                            
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "subtitle",
                                                 "width": "100%"
                                             }
                                         ]
-                                    }                                    
+                                    }
                                 ]
                             }
                         ]

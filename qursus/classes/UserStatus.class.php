@@ -13,12 +13,12 @@ class UserStatus extends Model {
     public static function getColumns() {
         return [
 
-            'pack_id' => [
+            'course_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'qursus\Pack',
-                'description'       => 'Pack identifier (for computing completeness of a whole pack).',
+                'foreign_object'    => 'qursus\Course',
+                'description'       => 'Course identifier (for computing completeness of a whole course).',
                 'required'          => true,
-                'ondelete'          => 'cascade'         // delete status when parent pack is deleted
+                'ondelete'          => 'cascade'         // delete status when parent course is deleted
             ],
 
             'module_id' => [
@@ -32,10 +32,10 @@ class UserStatus extends Model {
             'user_id' => [
                 'type'              => 'integer',
                 'description'       => 'External user identifier.',
-                'default'           => 1                
+                'default'           => 1
             ],
 
-            'chapter_index' => [            
+            'chapter_index' => [
                 'type'              => 'integer',
                 'description'       => 'Chapter index within the module.',
                 'default'           => 0
@@ -57,36 +57,36 @@ class UserStatus extends Model {
                 'type'              => 'boolean',
                 'description'       => 'The user has finished the module.',
                 'default'           => false,
-                'onupdate'          => 'qursus\UserStatus::onupdateIsComplete'                
+                'onupdate'          => 'qursus\UserStatus::onupdateIsComplete'
             ]
 
         ];
-    }    
+    }
 
     public function getUnique() {
         return [
             ['module_id', 'user_id']
         ];
-    }    
+    }
 
     public static function onupdateIsComplete($orm, $oids, $values, $lang) {
-        
-        $statuses = $orm->read(__CLASS__, $oids, ['pack_id', 'user_id'], $lang);
+
+        $statuses = $orm->read(__CLASS__, $oids, ['course_id', 'user_id'], $lang);
 
         if($statuses && count($statuses)) {
             foreach($statuses as $oid => $status) {
-                $pack_id = $status['pack_id'];
+                $course_id = $status['course_id'];
                 $user_id = $status['user_id'];
-                $ids = $orm->search('qursus\UserAccess', [ ['user_id', '=', $user_id], ['pack_id', '=', $pack_id] ]);
+                $ids = $orm->search('qursus\UserAccess', [ ['user_id', '=', $user_id], ['course_id', '=', $course_id] ]);
                 if($ids && count($ids)) {
-                    // reset related UserAccess is_complete                
+                    // reset related UserAccess is_complete
                     $orm->write('qursus\UserAccess', $ids, ['is_complete' => null], $lang);
                     // and force immediate refresh
                     $orm->read('qursus\UserAccess', $ids, ['is_complete'], $lang);
                 }
             }
         }
-        
+
     }
 
 }
