@@ -1,0 +1,35 @@
+{
+    "name": "Identity menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.home",
+                "label": "Home",
+                "description": "",
+                "icon": "menu_book",
+                "type": "entry",
+                "route": "/"
+            },
+            {
+                "id": "item.identity",
+                "type": "entry",
+                "label": "Identities",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Identity",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.partner",
+                "type": "entry",
+                "label": "Partners",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Partner",
+                    "view": "list.default"
+                }
+            }
+        ]
+    }
+}

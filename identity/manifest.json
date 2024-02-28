@@ -1,6 +1,29 @@
 {
     "name": "identity",
+    "version": "1.0",
+    "author": "Yesbabylon",
     "depends_on": [
         "core"
+    ],
+    "apps": [
+        {
+            "id": "identity",
+            "name": "Identity",
+            "extends": "app",
+            "description": "Application identity",
+            "icon": "manage",
+            "color": "#2874A6",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "identity.left",
+                    "top": "identity.top"
+                }
+            }
+        }
     ]
 }
