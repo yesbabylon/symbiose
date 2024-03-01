@@ -62,8 +62,7 @@ OrderPayment::id($params['id'])->update(['status' => 'paid']);
 // create cash-in operation
 $cash_in = 0.0;
 foreach($payment['order_payment_parts_ids'] as $pid => $part) {
-    // #memo - cash part cannot be negative (but a payment can)
-    if($part['payment_method'] == 'cash') {
+    if($part['payment_method'] == 'cash' && $part['amount'] > 0) {
         $cash_in += $part['amount'];
     }
 }
@@ -78,9 +77,19 @@ if($cash_in > 0.0) {
 }
 
 // create cash-out operation, if any
-if($payment['total_paid'] > $payment['total_due']) {
+$cash_out = 0;
+if($payment['total_due'] < 0) {
+    // cash refunding
+    $cash_out = $payment['total_due'];
+}
+elseif($payment['total_paid'] > $payment['total_due']) {
+    // too much cash given
+    $cash_out = $payment['total_due'] - $payment['total_paid'];
+}
+
+if($cash_out < 0) {
     Operation::create([
-        'amount'        => round($payment['total_due'] - $payment['total_paid'], 2),
+        'amount'        => round($cash_out, 2),
         'type'          => 'sale',
         'user_id'       => $payment['creator'],
         'session_id'    => $session['id']
