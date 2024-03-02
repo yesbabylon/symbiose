@@ -29,6 +29,12 @@ class Contact extends Partner {
                 'type'              => 'string',
                 'default'           => 'contact',
                 'help'              => "The partnership should remain 'contact'."
+            ],
+
+            'position' => [
+                'type'              => 'string',
+                'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
+                'visible'           => [ ['relationship', '=', 'contact'] ]
             ]
 
         ];
