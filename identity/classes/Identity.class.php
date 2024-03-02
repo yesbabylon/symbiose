@@ -436,11 +436,11 @@ class Identity extends Model {
         foreach($self as $id => $identity) {
             $parts = [];
             if($identity['type'] == 'I') {
-                if( isset($identity['lastname']) && strlen($identity['lastname'])) {
-                    $parts[] = $identity['lastname'];
-                }
-                if( isset($identity['firstname']) && strlen($identity['firstname']) ) {
+                if(isset($identity['firstname']) && strlen($identity['firstname'])) {
                     $parts[] = $identity['firstname'];
+                }
+                if(isset($identity['lastname']) && strlen($identity['lastname']) ) {
+                    $parts[] = mb_strtoupper($identity['lastname']);
                 }
             }
             if(empty($parts) ) {
