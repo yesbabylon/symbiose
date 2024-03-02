@@ -6,19 +6,19 @@
 */
 namespace identity;
 
-class Organization extends Identity {
+class Organisation extends Identity {
 
     public static function getName() {
-        return "Organization";
+        return "Organisation";
     }
 
     public function getTable() {
         // force table name to use distinct tables and ID columns
-        return 'identity_organization';
+        return 'identity_organisation';
     }
 
     public static function getDescription() {
-        return "Organizations are the legal entities to which the ERP is dedicated. By convention, the main Organization has the ID 1.";
+        return "Organizations are the legal entities to which the ERP is dedicated. By convention, the main Organization uses ID 1.";
     }
 
     public static function getColumns() {
