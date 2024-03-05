@@ -221,7 +221,7 @@ class Order extends Model {
         if($orders > 0) {
             foreach($orders as $id => $order) {
                 $result[$id] = 1;
-                $orders_ids = $om->search(self::getType(), ['session_id', '=', $order['session_id']]);
+                $orders_ids = $om->search(self::getType(), [['session_id', '=', $order['session_id']], ['id', '<>', $id]]);
                 $siblings_orders = $om->read(self::getType(), $orders_ids, ['id', 'sequence']);
                 foreach($siblings_orders as $sibling) {
                     if($sibling['sequence'] >= $result[$id]) {
