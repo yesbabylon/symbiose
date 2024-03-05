@@ -95,7 +95,7 @@ class Order extends Model {
             'total' => [
                 'type'              => 'computed',
                 'result_type'       => 'float',
-                'usage'             => 'amount/money',
+                'usage'             => 'amount/money:4',
                 'description'       => 'Total tax-excluded price for all lines (computed).',
                 'function'          => 'calcTotal',
                 'store'             => true
@@ -215,15 +215,18 @@ class Order extends Model {
     }
 
     public static function calcSequence($om, $ids, $lang) {
-        trigger_error("QN_DEBUG_ORM::calling sale\pos\Order:calcSequence", QN_REPORT_DEBUG);
+        trigger_error("ORM::calling sale\pos\Order:calcSequence", QN_REPORT_DEBUG);
         $result = [];
-        $orders = $om->read(get_called_class(), $ids, ['session_id'], $lang);
+        $orders = $om->read(self::getType(), $ids, ['session_id'], $lang);
         if($orders > 0) {
-            foreach($orders as $oid => $order) {
-                $result[$oid] = 1;
-                $orders_ids = $om->search(get_called_class(), ['session_id', '=', $order['session_id']]);
-                if($orders_ids >= 0) {
-                    $result[$oid] = count($orders_ids) + 1;
+            foreach($orders as $id => $order) {
+                $result[$id] = 1;
+                $orders_ids = $om->search(self::getType(), ['session_id', '=', $order['session_id']]);
+                $siblings_orders = $om->read(self::getType(), $orders_ids, ['id', 'sequence']);
+                foreach($siblings_orders as $sibling) {
+                    if($sibling['sequence'] > $result[$id]) {
+                        $result[$id] = $sibling['sequence'] + 1;
+                    }
                 }
             }
         }
@@ -240,7 +243,7 @@ class Order extends Model {
                     foreach($order['order_lines_ids.total'] as $lid => $line) {
                         $result[$oid] += $line['total'];
                     }
-                    $result[$oid] = round($result[$oid], 2);
+                    $result[$oid] = round($result[$oid], 4);
                 }
             }
         }
@@ -347,7 +350,7 @@ class Order extends Model {
 
             if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
                 // a mandatory value could not be retrieved
-                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                trigger_error("ORM::missing mandatory account", QN_REPORT_ERROR);
                 return [];
             }
 
