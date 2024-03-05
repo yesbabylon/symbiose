@@ -61,6 +61,11 @@
             "label": "Facture associée",
             "description": "La facture visée par le financement, le cas échéant.",
             "help": ""
+        },
+        "payment_reference": {
+            "label": "Référence",
+            "description": "Communication structurée utilisée pour le paiement.",
+            "help": ""
         }
     },
     "view": {

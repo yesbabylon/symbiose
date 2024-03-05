@@ -91,7 +91,7 @@ class Repairing extends Model {
         $repairings = $om->read(self::getType(), $oids, ['description'], $lang);
         if($repairings > 0) {
             foreach($repairings as $oid => $odata) {
-                $result[$oid] = substr(HTMLToText::convert($odata['description']), 0, 25);
+                $result[$oid] = mb_substr(strip_tags($odata['description']), 0, 25);
             }
         }
         return $result;
@@ -108,7 +108,7 @@ class Repairing extends Model {
                 if($repairs > 0 && count($repairs)) {
                     foreach($repairs as $rid => $repair) {
                         if($repair['date'] < $min_date) {
-                            $min_date = $repair['date_from'];
+                            $min_date = $repair['date'];
                             $time_from = $repair['schedule_from'];
                         }
                     }
@@ -130,7 +130,7 @@ class Repairing extends Model {
                 if($repairs > 0 && count($repairs)) {
                     foreach($repairs as $rid => $repair) {
                         if($repair['date'] > $max_date) {
-                            $max_date = $repair['date_to'];
+                            $max_date = $repair['date'];
                             $time_to = $repair['schedule_to'];
                         }
                     }

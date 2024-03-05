@@ -349,7 +349,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => \core\Lang::getType(),
                 'description'       => "Preferred language of the identity.",
-                'default'           => 1,
+                'default'           => 2,
                 'onupdate'          => 'onupdateLangId'
             ],
 
@@ -401,7 +401,7 @@ class Identity extends Model {
                         $parts[] = $odata['firstname'];
                     }
                 }
-                else {
+                if( $odata['type_id'] != 1 || empty($parts) ) {
                     if( isset($odata['short_name']) && strlen($odata['short_name'])) {
                         $parts[] = $odata['short_name'];
                     }
@@ -592,13 +592,20 @@ class Identity extends Model {
                         return !( strlen($legal_name) < 2 && isset($values['type_id']) && $values['type_id'] != 1 );
                     }
                 ],
+                'too_long' => [
+                    'message'       => 'Legal name must be maximum 70 chars long.',
+                    'function'      => function ($legal_name, $values) {
+                        return !( strlen($legal_name) > 70 && isset($values['type_id']) && $values['type_id'] != 1 );
+                    }
+                ],
                 'invalid_chars' => [
                     'message'       => 'Legal name must contain only naming glyphs.',
                     'function'      => function ($legal_name, $values) {
                         if( isset($values['type_id']) && $values['type_id'] == 1 ) {
                             return true;
                         }
-                        return (bool) (preg_match('/^[\w\'\-,.][^_!¡?÷?¿\/\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name));
+                        // authorized : a-z, 0-9, '/', '-', ',', '.', ''', '&'
+                        return (bool) (preg_match('/^[\w\'\-,.&][^_!¡?÷?¿\\+=@#$%ˆ*{}|~<>;:[\]]{1,}$/u', $legal_name));
                     }
                 ]
             ],

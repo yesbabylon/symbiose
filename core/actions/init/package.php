@@ -139,7 +139,7 @@ foreach($classes as $class) {
     $model = $orm->getModel($entity);
 
     $table_name = $orm->getObjectTableName($entity);
-    $query = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND TABLE_SCHEMA='".DB_NAME."';";
+    $query = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table_name' AND TABLE_SCHEMA='".constant('DB_NAME')."';";
     $res = $db->sendQuery($query);
     $columns = [];
     while ($row = $db->fetchArray($res)) {
@@ -296,21 +296,21 @@ if(isset($package_manifest['apps']) && is_array($package_manifest['apps'])) {
         if(file_exists("public/$app")) {
             // remove existing folder, if present
             if(!rmdir("public/$app")) {
-                // trigger_error("QN_DEBUG_PHP::error removing folder : $message", QN_REPORT_DEBUG);
+                // trigger_error("PHP::error removing folder : $message", QN_REPORT_DEBUG);
                 // throw new Exception('fs_removing_file_failure', QN_ERROR_UNKNOWN);
             }
         }
 
         // (re)create the (empty) folder
         if(!mkdir("public/$app")) {
-            // trigger_error("QN_DEBUG_PHP::error moving file : $message", QN_REPORT_DEBUG);
+            // trigger_error("PHP::error moving file : $message", QN_REPORT_DEBUG);
             // throw new Exception('fs_moving_file_failure', QN_ERROR_UNKNOWN);
         }
 
         // verify the checksum
+        $version_md5 = md5_file("$app_path/web.app");
         if(isset($app_manifest['checksum'])) {
-            $md5 = md5_file("$app_path/web.app");
-            if($md5 != $app_manifest['checksum']) {
+            if($version_md5 != $app_manifest['checksum']) {
                 // #todo - not required for now, nice to have: would increase version identification
                 // throw new Exception("Invalid checksum for app {$app}: ".json_last_error_msg().'.', QN_ERROR_UNKNOWN);
             }
@@ -324,6 +324,11 @@ if(isset($package_manifest['apps']) && is_array($package_manifest['apps'])) {
         // export to public folder
         $zip->extractTo("public/$app/");
         $zip->close();
+
+        // add a version file (holding md5 of the web.app archive)
+        if(file_exists("public/$app")) {
+            file_put_contents("public/$app/version", $version_md5);
+        }
     }
 }
 

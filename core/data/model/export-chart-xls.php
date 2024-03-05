@@ -100,8 +100,12 @@ if(isset($body['range_to'])) {
     $body['range_to'] = date('c', $ref->getDate());
 }
 
-$values = eQual::run('get', $controller, $body);
+foreach($params['params'] as $param => $value) {
+    $body[$param] = $value;
+}
 
+// #memo - we run the controller under root context to use cache, if present
+$values = eQual::run('get', $controller, $body, true);
 
 
 // generate a virtual layout

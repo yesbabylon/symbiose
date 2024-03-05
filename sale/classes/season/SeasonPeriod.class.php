@@ -41,7 +41,7 @@ class SeasonPeriod extends Model {
                 'foreign_object'    => 'sale\season\Season',
                 'description'       => "The season the period belongs to.",
                 'required'          => true,
-                'onupdate'          => 'onupdateSeason'
+                'onupdate'          => 'onupdateSeasonId'
             ],
 
             'season_type_id' => [
@@ -81,15 +81,15 @@ class SeasonPeriod extends Model {
     }
 
     public static function onupdateDateFrom($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, ['month' => null]);
+        $om->write(__CLASS__, $oids, ['month' => null, 'year' => null]);
         // force immediate re-computing
-        $om->read(__CLASS__, $oids, ['month']);
+        $om->read(__CLASS__, $oids, ['month', 'year']);
     }
 
-    public static function onupdateSeason($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, ['year' => null, 'season_category_id' => null]);
+    public static function onupdateSeasonId($om, $oids, $values, $lang) {
+        $om->write(__CLASS__, $oids, ['season_category_id' => null]);
         // force immediate re-computing
-        $om->read(__CLASS__, $oids, ['year', 'season_category_id']);
+        $om->read(__CLASS__, $oids, ['season_category_id']);
     }
 
     public static function calcMonth($om, $oids, $lang) {
@@ -103,9 +103,9 @@ class SeasonPeriod extends Model {
 
     public static function calcYear($om, $oids, $lang) {
         $result = [];
-        $periods = $om->read(__CLASS__, $oids, ['season_id.year']);
+        $periods = $om->read(__CLASS__, $oids, ['date_from']);
         foreach($periods as $oid => $odata) {
-            $result[$oid] = $odata['season_id.year'];
+            $result[$oid] = date('Y', $odata['date_from']);
         }
         return $result;
     }
@@ -118,4 +118,5 @@ class SeasonPeriod extends Model {
         }
         return $result;
     }
+
 }

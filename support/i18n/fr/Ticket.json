@@ -1,0 +1,113 @@
+{
+    "name": "Ticket",
+    "plural": "Tickets",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Sujet",
+            "description": "Motif principal du ticket."
+        },
+        "created": {
+            "label": "Créé le",
+            "description": "Date de création du ticket."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Le type renseigne la nature de l'action requise.",
+            "selection": {
+                "incident": "Incident",
+                "question": "Question",
+                "feature_request": "Demande de fonctionnalités"
+            }
+        },
+        "priority": {
+            "label": "Priorité",
+            "description": "Niveau d'importance du ticket.",
+            "selection": {
+                "1": "Basse",
+                "2": "Moyenne",
+                "3": "Haute",
+                "4": "Critique"
+            }
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut du ticket.",
+            "selection": {
+                "draft": "Brouillon",
+                "open": "Ouvert",
+                "pending": "En cours",
+                "waiting": "En attente",
+                "closed": "Résolu"
+            }
+        },
+        "environment": {
+            "label": "Environnement",
+            "description": "Environnement de utilisateur à l'origine du message."
+        },
+        "assignee_id": {
+            "label": "Assigné à",
+            "description": "Personne en charge du suivi du ticket."
+        },
+        "attachments_ids": {
+            "label": "Pièces jointes",
+            "description": "Documents associés au ticket."
+        }
+    },
+    "view": {
+        "form.create": {
+            "name": "Ticket",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
+        "form.default": {
+            "name": "Ticket",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le ticket sera marqué comme ouvert, une notification sera envoyée au support, et le ticket sera visible pour tous les utilisateurs."
+                },
+                "action.awaiting": {
+                    "label": "En attente",
+                    "description": "Le ticket sera marqué comme en attente d'un événement ou d'une dépendance externe."
+                },
+                "action.close": {
+                    "label": "Cloturer",
+                    "description": "Le ticket sera clôturé et placé dans l'historique."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Ticket",
+            "description": "Liste des tickets.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "name": {
+            "too_short": "Titre trop court."
+        },
+        "type": {
+            "mandatory": "Champ obligatoire."
+        },
+        "errors": {
+
+        }
+    }
+}

@@ -25,12 +25,12 @@
         },
         "account_iban": {
             "label": "Compte IBAN",
-            "description": "IBAN à l'origine du paiement.",
+            "description": "Numéro de compte IBAN de la contrepartie.",
             "help": ""
         },
         "account_holder": {
             "label": "Titulaire de compte",
-            "description": "Nom de la personne à l'origine du paiement.",
+            "description": "Nom de la personne titulaire du compte.",
             "help": ""
         },
         "status": {
@@ -75,7 +75,7 @@
     },
     "error": {
         "amount": {
-            "exceded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
+            "exceeded_price": "La somme des paiements ne peut pas être supérieurs au total de la ligne."
         },
         "errors": {
             "already_imported": "Fichier déjà importé."

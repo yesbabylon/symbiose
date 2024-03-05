@@ -14,15 +14,9 @@
             },
             {
                 "type": "field",
-                "value": "is_active",
-                "width": "20%",
-                "sortable": true
-            },
-            {
-                "type": "field",
                 "value": "status",
                 "width": "10%",
-                "sortable": true                
+                "sortable": true
             },
             {
                 "type": "field",

@@ -38,7 +38,8 @@
             "selection": {
                 "voucher": "Chèque cadeau (voucher)",
                 "cash": "Espèces",
-                "bank_card": "Carte bancaire"
+                "bank_card": "Carte bancaire",
+                "wire_transfer": "Virement bancaire"
             },
             "help": ""
         },
@@ -48,7 +49,7 @@
             "help": ""
         },
         "statement_line_id": {
-            "label": "Ligne d'extrait'",
+            "label": "Ligne d'extrait",
             "description": "La ligne de relevé bancaire à laquelle se rapporte le paiement.",
             "help": ""
         },
@@ -60,6 +61,15 @@
         "funding_id": {
             "label": "Financement",
             "description": "Financement de réservation lié au paiement.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut du paiement.",
+            "selection": {
+                "pending": "En attente",
+                "paid": "Payé"
+            },
             "help": ""
         }
     },

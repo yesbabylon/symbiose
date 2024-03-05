@@ -1,0 +1,124 @@
+{
+    "name": "Ticket",
+    "description": "",
+    "access": {
+        "groups": ["users"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_VIEW"
+                }
+            ]
+        }
+    },
+    "actions": [
+        {
+            "id": "action.submit",
+            "label": "Submit",
+            "description": "Entry will be submitted and marked as open.",
+            "controller": "support_ticketentry-submit",
+            "confirm": true,
+            "visible": [ ["state", "<>", "draft"], ["status", "=", "draft"] ]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ticket_id",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "creator",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "environment",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "visible": [["status", "<>", "draft"]]
+                                                }
+                                            }
+
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "height": 500
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.attachments",
+                        "label": "Attachments",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "attachments_ids"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

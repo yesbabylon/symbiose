@@ -1,0 +1,56 @@
+{
+    "name": "Support menu",
+    "access": {
+      "groups": ["users"]
+   },
+    "layout": {
+        "items": [
+            {
+                "id": "item.tickets.incidents",
+                "label": "Incidents",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": [["type", "=", "incident"], ["status", "=", "pending"]],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.tickets.questions",
+                "label": "Questions",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": [["type", "=", "question"], ["status", "=", "pending"]],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            },
+            {
+                "id": "item.tickets.feature_requests",
+                "label": "Demandes de fonctionnalités",
+                "description": "",
+                "icon": "support",
+                "type": "entry",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": [["type", "=", "feature_request"], ["status", "=", "pending"]],
+                    "order": "id",
+                    "sort": "desc"
+                }
+            }
+
+        ]
+    }
+}

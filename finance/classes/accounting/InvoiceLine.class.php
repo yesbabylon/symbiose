@@ -121,8 +121,13 @@ class InvoiceLine extends Model {
                 'description'       => 'Final tax-included price of the line (computed).',
                 'function'          => 'calcPrice',
                 'store'             => true
-            ]
+            ],
 
+            'downpayment_invoice_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => Invoice::getType(),
+                'description'       => 'Downpayment invoice (set when the line refers to an invoiced downpayment.)'
+            ]
         ];
     }
 
@@ -174,7 +179,7 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['qty','unit_price','free_qty','discount']);
 
         foreach($lines as $oid => $line) {
-            $result[$oid] = $line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']);
+            $result[$oid] = round($line['unit_price'] * (1.0 - $line['discount']) * ($line['qty'] - $line['free_qty']), 4);
         }
         return $result;
     }
@@ -189,8 +194,8 @@ class InvoiceLine extends Model {
         $lines = $om->read(get_called_class(), $oids, ['total','vat_rate']);
 
         foreach($lines as $oid => $odata) {
-            $total = (float) $odata['total'];
-            $vat = (float) $odata['vat_rate'];
+            $total = round((float) $odata['total'], 4);
+            $vat = round((float) $odata['vat_rate'], 4);
 
             $result[$oid] = round($total * (1.0 + $vat), 2);
         }

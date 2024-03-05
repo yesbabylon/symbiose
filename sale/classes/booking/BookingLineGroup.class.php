@@ -217,7 +217,7 @@ class BookingLineGroup extends Model {
         $result = [];
         $groups = $om->read(self::gettype(), $oids, ['date_from', 'date_to']);
         foreach($groups as $gid => $group) {
-            $result[$gid] = floor( ($group['date_to'] - $group['date_from']) / (60*60*24) );
+            $result[$gid] = round( ($group['date_to'] - $group['date_from']) / (60*60*24) );
         }
         return $result;
     }
@@ -237,7 +237,7 @@ class BookingLineGroup extends Model {
         foreach($groups as $oid => $group) {
             $bookings_ids[] = $group['booking_id'];
             $result[$oid] = array_reduce($group['booking_lines_ids.total'], function ($c, $a) {
-                return $c + $a['total'];
+                return $c + round($a['total'], 2);
             }, 0.0);
         }
 

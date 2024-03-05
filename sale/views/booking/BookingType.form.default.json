@@ -22,17 +22,29 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "code",
+                                                "width": "25%"
+                                            }
+
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
                                                 "width": "100%"
                                             }
+                                        ]
+                                    },
+
+                                    {
+                                        "width": "25%",
+                                        "items": [
                                         ]
                                     }
                                 ]

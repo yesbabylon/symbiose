@@ -1,0 +1,45 @@
+{
+    "name": "Ticket entry",
+    "description": "",
+    "access": {
+        "groups": ["users"]
+    },
+    "order": "created",
+    "sort": "desc",
+    "header": {
+        "actions": {
+            "ACTION.CREATE": [ {
+                "view": "form.create"
+            } ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "created",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "creator",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "type",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "status",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "excerpt",
+                "width": "40%"
+            }
+        ]
+    }
+}

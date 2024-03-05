@@ -68,7 +68,7 @@
                                 "context": {
                                     "entity": "lodging\\identity\\Identity",
                                     "view": "list.default",
-                                    "domain": ["id", "<", 4]
+                                    "domain": ["id", "in", [1,2,3,4,100]]
                                 }
                             },
                             {
@@ -447,6 +447,17 @@
                                             "entity": "sale\\price\\PriceList",
                                             "view": "list.default",
                                             "domain": ["is_active", "=", true]
+                                        }
+                                    },
+                                    {
+                                        "id": "sales.catalog.prices.pricelists_draft",
+                                        "type": "entry",
+                                        "label": "Draft Price Lists",
+                                        "description": "",
+                                        "context": {
+                                            "entity": "sale\\price\\PriceList",
+                                            "view": "list.default",
+                                            "domain": ["status", "=", "pending"]
                                         }
                                     },
                                     {

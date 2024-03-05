@@ -30,13 +30,13 @@ class Document extends Model {
             'type' => [
                 'type'              => 'string',
                 'readonly'          => true,
-                'desription'        => 'Content type of the document (from data).'
+                'description'        => 'Content type of the document (from data).'
             ],
 
             'size'		    => [
                 'type'              => 'integer',
                 'readonly'          => true,
-                'desription'        => 'Size of the document, in octets (from data).'
+                'description'        => 'Size of the document, in octets (from data).'
             ],
 
             'readable_size' => [
@@ -58,7 +58,7 @@ class Document extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'string',
                 'usage'             => 'uri/url',
-                'description'       => 'URL to visual edior of the module.',
+                'description'       => 'Direct URL to the document (uses hash).',
                 'function'          => 'calcLink',
                 'store'             => true,
                 'readonly'          => true

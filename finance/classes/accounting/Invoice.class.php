@@ -31,10 +31,16 @@ class Invoice extends Model {
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
             ],
 
+            'is_deposit' => [
+                'type'              => 'boolean',
+                'description'       => 'Marks the invoice as a deposit one, relating to a downpayment.',
+                'default'           => false
+            ],
+
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => "The organisation that emitted the invoice.",
+                'description'       => "The organization that emitted the invoice.",
                 'default'           => 1
             ],
 
@@ -61,7 +67,7 @@ class Invoice extends Model {
             'number' => [
                 'type'              => 'computed',
                 'result_type'        => 'string',
-                'description'       => "Number of the invoice, according to organisation logic (@see config/invoicing).",
+                'description'       => "Number of the invoice, according to organization logic (@see config/invoicing).",
                 'function'          => 'calcNumber',
                 'store'             => true
             ],
@@ -88,7 +94,7 @@ class Invoice extends Model {
                     'pending',          // non-paid, payment terms delay running
                     'overdue',          // non-paid, and payment terms delay is over
                     'debit_balance',    // partially paid: customer still has to pay something
-                    'credit_balance',   // fully paid and a reimbusrsement to customer is required
+                    'credit_balance',   // fully paid and a reimbursement to customer is required
                     'balanced'          // fully paid and balanced
                 ],
                 'visible'           => ['status', '=', 'invoice'],
@@ -112,7 +118,7 @@ class Invoice extends Model {
             'partner_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \identity\Partner::getType(),
-                'description'       => "The counter party organisation the invoice relates to.",
+                'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true
             ],
 
@@ -161,8 +167,9 @@ class Invoice extends Model {
             ],
 
             'fundings_ids' => [
-                'type'              => 'many2one',
+                'type'              => 'one2many',
                 'foreign_object'    => 'sale\pay\Funding',
+                'foreign_field'     => 'invoice_id',
                 'description'       => 'Fundings related to the invoice (should be max. 1).'
             ],
 
@@ -192,19 +199,22 @@ class Invoice extends Model {
 
     public static function calcIsPaid($om, $oids, $lang) {
         $result = [];
-        $invoices = $om->read(get_called_class(), $oids, ['fundings_ids.is_paid'], $lang);
+        // #memo - fundings_ids targets all fundings relating to invoice: this includes the installments
+        // we need to limit the check to the direct funding, if any
+        $invoices = $om->read(get_called_class(), $oids, ['status', 'price', 'funding_id.paid_amount'], $lang);
         if($invoices > 0) {
             foreach($invoices as $oid => $invoice) {
                 $result[$oid] = false;
-                $count_paid = 0;
-                if($invoice['fundings_ids.is_paid'] && count($invoice['fundings_ids.is_paid'])) {
-                    foreach($invoice['fundings_ids.is_paid'] as $fid => $funding) {
-                        if($funding['is_paid']) {
-                            ++$count_paid;
-                        }
-                    }
+                if($invoice['status'] != 'invoice') {
+                    // proforma invoices cannot be marked as paid
+                    continue;
                 }
-                if($count_paid > 0 && count($invoice['fundings_ids.is_paid']) == $count_paid) {
+                if($invoice['price'] == 0) {
+                    // mark the invoice as paid, whatever its funding
+                    $result[$oid] = true;
+                    continue;
+                }
+                if($invoice['funding_id.paid_amount'] && $invoice['funding_id.paid_amount'] == $invoice['price']) {
                     $result[$oid] = true;
                 }
             }
@@ -279,9 +289,9 @@ class Invoice extends Model {
 
         foreach($invoices as $oid => $invoice) {
             $total = array_reduce($invoice['invoice_lines_ids.total'], function ($c, $a) {
-                return $c + $a['total'];
+                return $c + round($a['total'], 2);
             }, 0.0);
-            $result[$oid] = round($total, 4);
+            $result[$oid] = round($total, 2);
         }
         return $result;
     }
@@ -419,7 +429,7 @@ class Invoice extends Model {
 
             if(!$account_sales_id || !$account_sales_taxes_id || !$account_trade_debtors_id) {
                 // a mandatory value could not be retrieved
-                trigger_error("QN_DEBUG_ORM::missing mandatory account", QN_REPORT_ERROR);
+                trigger_error("ORM::missing mandatory account", QN_REPORT_ERROR);
                 return [];
             }
 
@@ -432,7 +442,7 @@ class Invoice extends Model {
                 // retrieve downpayment product
                 $downpayment_sku = Setting::get_value('sale', 'invoice', 'downpayment.sku.'.$invoice['organisation_id']);
                 if($downpayment_sku) {
-                    $products_ids = $om->search(\lodging\sale\catalog\Product::getType(), ['sku', '=', $downpayment_sku]);
+                    $products_ids = $om->search(\sale\catalog\Product::getType(), ['sku', '=', $downpayment_sku]);
                     if($products_ids) {
                         $downpayment_product_id = reset($products_ids);
                     }

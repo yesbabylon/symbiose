@@ -1,0 +1,196 @@
+{
+    "name": "Ticket",
+    "description": "",
+    "access": {
+        "groups": ["users"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.EDIT": {
+                "visible": ["support.default.user", "in", "user.groups"]
+            },
+            "ACTION.SAVE": [
+                {
+                    "id": "SAVE_AND_VIEW"
+                }
+            ]
+        }
+    },
+    "actions": [
+        {
+            "id": "action.submit",
+            "label": "Submit",
+            "description": "Ticket will be submitted and marked as open.",
+            "controller": "support_ticket-submit",
+            "confirm": true,
+            "visible": ["status", "=", "draft"]
+        },
+        {
+            "id": "action.awaiting",
+            "label": "Awaiting",
+            "description": "Ticket will be marked as waiting for external dependency.",
+            "controller": "support_ticket-await",
+            "confirm": true,
+            "visible": ["status", "in", ["open", "pending"]]
+        },
+        {
+            "id": "action.close",
+            "label": "Close",
+            "description": "Ticket will be submitted and marked as open.",
+            "controller": "support_ticket-close",
+            "confirm": true,
+            "visible": ["status", "in", ["open","waiting", "pending"]]
+        }
+    ],
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "75%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "created",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "creator",
+                                                "width": "25%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "assignee_id",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "visible": ["status", "<>", "draft"]
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "reference",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "visible": ["status", "<>", "draft"]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "priority",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "visible": ["status", "=", "draft"],
+                "sections": [
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%",
+                                                "visible": ["status", "=", "draft"],
+                                                "widget": {
+                                                    "height": 500
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.attachments",
+                        "label": "Attachments",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "attachments_ids"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "visible": ["status", "<>", "draft"],
+                "sections": [
+                    {
+                        "id": "section.entries",
+                        "label": "Messages",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ticket_entries_ids",
+                                                "widget": {
+                                                    "domain": [ [ ["status", "<>", "draft"] ], [ ["creator", "=", "user.id"] ] ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

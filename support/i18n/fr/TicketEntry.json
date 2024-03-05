@@ -1,0 +1,87 @@
+{
+    "name": "Message de ticket",
+    "plural": "Messages de tickets",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Sujet",
+            "description": "Motif principal du ticket."
+        },
+        "created": {
+            "label": "Créé le",
+            "description": "Date de création du ticket."
+        },
+        "type": {
+            "label": "Type",
+            "description": "Niveau d'importance du ticket.",
+            "selection": {
+                "request": "Requête",
+                "response": "Réponse"
+            }
+        },
+        "environment": {
+            "label": "Environnement",
+            "description": "Environnement de utilisateur à l'origine du message."
+        },
+        "attachments_ids": {
+            "label": "Pièces jointes",
+            "description": "Documents associés au ticket."
+        },
+        "status": {
+            "label": "Statut",
+            "description": "Statut du message.",
+            "selection": {
+                "draft": "Brouillon",
+                "sent": "envoyé"
+            }
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Message",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le message sera marqué comme envoyé et visible pour tous les utilisateurs."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
+        "form.create": {
+            "name": "Message",
+            "description": "",
+            "actions": {
+                "action.submit": {
+                    "label": "Soumettre",
+                    "description": "Le message sera marqué comme envoyé et visible pour tous les utilisateurs."
+                }
+            },
+            "layout": {
+                "section.attachments": {
+                    "label": "Pièces jointes"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Messages",
+            "description": "Liste des messages.",
+            "layout": {}
+        }
+    },
+    "error": {
+        "name": {
+            "too_short": "Titre trop court."
+        },
+        "type": {
+            "mandatory": "Champ obligatoire."
+        },
+        "errors": {
+
+        }
+    }
+}

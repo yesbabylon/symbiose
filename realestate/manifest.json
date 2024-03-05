@@ -2,10 +2,5 @@
     "name": "realestate",
     "depends_on": [
         "identity"
-    ],
-    "apps": {
-        "realestate":{
-            "show_in_apps": false
-        }
-    }
+    ]
 }

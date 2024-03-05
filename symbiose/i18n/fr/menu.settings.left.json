@@ -122,6 +122,10 @@
             "label": "Toutes les Listes",
             "help": ""
         },
+        "sales.catalog.prices.pricelists_draft": {
+            "label": "Listes en brouillon",
+            "help": ""
+        },
         "sales.catalog.prices.prices_all": {
             "label": "Tous les Prix",
             "help": ""

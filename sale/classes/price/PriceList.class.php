@@ -46,7 +46,7 @@ class PriceList extends Model {
                     'pending',              // list is "under construction" (to be confirmed)
                     'published',            // completed and ready to be used
                     'paused',               // (temporarily) on hold (not to be used)
-                    'closed'                // can no longer be used          
+                    'closed'                // can no longer be used (similar to archive)
                 ],
                 'description'       => 'Status of the list.',
                 'onupdate'          => 'onupdateStatus',
@@ -58,8 +58,9 @@ class PriceList extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsActive',
-                'description'       => "Is the pricelist currently applicable?",
-                'store'             => true,                
+                'description'       => "Is the pricelist currently applicable? ",
+                'help'              => "When this flag is set to true, it means the list is eligible for future bookings. i.e. with a 'date_to' in the future and 'published'.",
+                'store'             => true,
                 'readonly'          => true
             ],
 
@@ -90,7 +91,7 @@ class PriceList extends Model {
 
     public static function calcDuration($om, $oids, $lang) {
         $result = [];
-        $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to']);
+        $lists = $om->read(self::getType(), $oids, ['date_from', 'date_to']);
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
@@ -100,15 +101,13 @@ class PriceList extends Model {
         return $result;
     }
 
-    public static function calcIsActive($om, $oids, $lang) {
+    public static function calcIsActive($om, $ids, $lang) {
         $result = [];
-        $lists = $om->read(__CLASS__, $oids, ['date_from', 'date_to', 'status']);
-
+        $lists = $om->read(self::getType(), $ids, ['date_from', 'date_to', 'status']);
         $now = time();
-
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
-                $result[$lid] = boolval( ($list['date_to'] > $now) && (in_array($list['status'], ['pending', 'published'])) );
+                $result[$lid] = boolval( $list['date_to'] > $now && $list['status'] == 'published' );
             }
         }
         return $result;
@@ -117,50 +116,45 @@ class PriceList extends Model {
 
     public static function calcPricesCount($om, $oids, $lang) {
         $result = [];
-        $lists = $om->read(__CLASS__, $oids, ['prices_ids']);
+        $lists = $om->read(self::getType(), $oids, ['prices_ids']);
 
         if($lists > 0 && count($lists)) {
             foreach($lists as $lid => $list) {
                 $result[$lid] = count($list['prices_ids']);
             }
         }
-        return $result;        
+        return $result;
     }
 
     /**
      * Invalidate related prices names.
      */
     public static function onupdateName($om, $oids, $values, $lang) {
-        $lists = $om->read(__CLASS__, $oids, ['prices_ids'], $lang);
+        $lists = $om->read(self::getType(), $oids, ['prices_ids'], $lang);
 
         if($lists > 0) {
             foreach($lists as $lid => $list) {
-                $om->write('sale\price\Price', $list['prices_ids'], ['name' => null]);        
+                $om->update('sale\price\Price', $list['prices_ids'], ['name' => null]);
             }
         }
     }
 
     public static function onupdateStatus($om, $oids, $values, $lang) {
-        $pricelists = $om->read(__CLASS__, $oids, ['status']);
-        $om->write(__CLASS__, $oids, ['is_active' => null]);
+        $pricelists = $om->read(self::getType(), $oids, ['status', 'prices_ids']);
+        $om->update(self::getType(), $oids, ['is_active' => null]);
+        // immediate re-compute (required by subsequent re-computations of prices is_active flag)
+        $om->read(self::getType(), $oids, ['is_active']);
 
         if($pricelists > 0) {
+            $providers = \eQual::inject(['cron']);
+            $cron = $providers['cron'];
+
             foreach($pricelists as $pid => $pricelist) {
-                if($pricelist['status'] == 'published') {
-                    $providers = \eQual::inject(['cron']);
-                    $cron = $providers['cron'];
-                    // add a task to the CRON for updating status of bookings waiting for the pricelist
-                    $cron->schedule(
-                        "booking.is_tbc.confirm",
-                        time() + 60,
-                        'lodging_pricelist_check-bookings',
-                        [ 'id' => $pid ]
-                    );
-                }
+                // immediate re-compute prices is_active flag
+                $om->update('sale\price\Price', $pricelist['prices_ids'], ['is_active' => null]);
+                $om->read('sale\price\Price', $pricelist['prices_ids'], ['is_active']);
             }
         }
-        // immediate re-compute
-        $om->read(__CLASS__, $oids, ['is_active']);
     }
-    
+
 }

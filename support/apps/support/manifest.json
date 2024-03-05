@@ -1,0 +1,13 @@
+{
+    "name": "Support",
+    "description": "App for submission and follow up of support tickets.",
+    "url": "/support",
+    "icon": "support",
+    "color": "#30c172",
+    "access": {
+        "groups": [
+            "users", "admins"
+        ]
+    },
+    "show_in_apps": true
+}

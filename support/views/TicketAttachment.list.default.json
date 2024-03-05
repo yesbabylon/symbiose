@@ -1,0 +1,40 @@
+{
+    "name": "Document list",
+    "description": "This view is intended for displaying the list of bookings.",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "label": "Preview",
+                "value": "preview_image",
+                "width": "5%"
+            },
+            {
+                "type": "field",
+                "value": "link",
+                "width": "35%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Created",
+                "value": "created",
+                "width": "15%",
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "label": "Type",
+                "value": "type",
+                "width": "8%"
+            },
+            {
+                "type": "field",
+                "value": "category_id",
+                "label": "Category",
+                "width": "10%",
+                "readonly": true
+            }
+        ]
+    }
+}

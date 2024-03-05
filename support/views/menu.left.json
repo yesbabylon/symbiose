@@ -1,0 +1,58 @@
+{
+    "name": "Support menu",
+    "access": {
+        "groups": ["users"]
+    },
+    "layout": {
+        "items": [
+            {
+                "id": "tickets",
+                "type": "entry",
+                "label": "Tickets ouverts",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "open"]
+                }
+            },
+            {
+                "id": "tickets",
+                "type": "entry",
+                "label": "Tickets en cours",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "pending"]
+                }
+            },
+            {
+                "id": "tickets",
+                "type": "entry",
+                "label": "Tickets en attente",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.default",
+                    "domain": ["status", "=", "waiting"]
+                }
+            },
+            {
+                "id": "ticket_entries",
+                "type": "entry",
+                "label": "Historique",
+                "description": "",
+                "route": "/",
+                "context": {
+                    "entity": "support\\Ticket",
+                    "view": "list.history",
+                    "domain": ["status", "=", "closed"]
+                }
+            }
+        ]
+    }
+}
