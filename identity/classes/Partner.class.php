@@ -14,8 +14,16 @@ class Partner extends Model {
     }
 
     public static function getDescription() {
-        return "A Partner entity describes a relationship between two Identities (contact, employee, customer, provider, payer, other).";
+        return "Partner is an entity that describes a relationship (contact, employee, customer, supplier, ...) between two Identities : an Owner identity (often, but not necessarily, the company) and a Partner identity.";
     }
+
+    /*
+    les champs de Partner sont non-modifiables et synchronisés par l'identitié qui y est liée
+    les champs de Identity sont syncrhonisés avec Partner à chaque modification
+    une vue pour un partner reprend tous les champs en readonly
+
+    lorsqu'on crée un partner
+    */
 
     public static function getColumns() {
         return [
@@ -25,14 +33,15 @@ class Partner extends Model {
                 'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
+                'instant'           => true,
                 'description'       => 'The display name of the partner (related organisation name).'
             ],
 
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organization',
-                'description'       => 'Organisation of the current installation the partner relates to.',
-                'default'           => 1
+                'description'       => 'Organisation of the current installation the partner belongs to.',
+                'default'           => Identity::OWNER_IDENTITY_ID
             ],
 
             'is_internal' => [
@@ -52,153 +61,192 @@ class Partner extends Model {
             'partner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The targeted identity (the partner).',
-                'required'          => true
+                'description'       => 'The targeted identity (the partner).'
             ],
 
             'relationship' => [
                 'type'              => 'string',
                 'selection'         => [
+                    'user',
                     'contact',
                     'employee',
                     'customer',
-                    'provider',
-                    'payer',
-                    'other'
+                    'supplier'
                 ],
                 'description'       => 'The kind of partnership that exists between the identities.'
             ],
 
-            // if partner is a contact, keep the organisation (s)he is a contact from
-            'partner_organisation_id' => [
+            'type_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Identity',
-                'description'       => 'Target organisation which the contact is working for.',
-                'visible'           => [ ['relationship', '=', 'contact'] ]
+                'foreign_object'    => 'identity\IdentityType',
+                'onupdate'          => 'onupdateTypeId',
+                'default'           => 1,
+                'dependencies'      => ['type', 'name'],
+                'description'       => 'Type of identity.'
             ],
 
-            // if partner is a contact, keep its 'position' within the
-            'partner_position' => [
+            'type' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true,
+                'description'       => 'Code of the type of identity.',
+                'function'          => 'calcType'
+            ],
+
+            'has_vat' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the organization have a VAT number?',
+                'default'           => false
+            ],
+
+            'vat_number' => [
                 'type'              => 'string',
-                'description'       => 'Position of the contact (natural person) within the target organisation (legal person), e.g. \'director\', \'CEO\', \'Regional manager\'.',
-                'visible'           => [ ['relationship', '=', 'contact'] ]
+                'description'       => 'Value Added Tax identification number, if any.',
+                'visible'           => [ ['has_vat', '=', true] ]
             ],
 
-            // if partner is a customer, it can have an external reference (e.g. reference assigned by previous software)
-            'customer_external_ref' => [
+            'legal_name' => [
                 'type'              => 'string',
-                'description'       => 'External reference for customer, if any.',
-                'visible'           => ['relationship', '=', 'customer']
+                'description'       => 'Full name of the Identity.',
+                'visible'           => [ ['type', '<>', 'I'] ],
+                'dependencies'      => ['name']
             ],
 
-            // #memo - email remains related to identity
-            'email' => [
-                'type'              => 'computed',
-                'function'          => 'calcEmail',
-                'result_type'       => 'string',
-                'usage'             => 'email',
-                'description'       => 'Email of the contact (from Identity).'
+            /*
+                Contact details.
+                For individuals, these are the contact details of the person herself.
+            */
+            'firstname' => [
+                'type'              => 'string',
+                'description'       => "Full name of the contact (must be a person, not a role).",
+                'visible'           => ['type', '=', 'I'],
+                'dependencies'      => ['name']
             ],
 
-            // #memo - phone remains related to identity
-            'phone' => [
-                'type'              => 'computed',
-                'function'          => 'calcPhone',
-                'result_type'       => 'string',
-                'usage'             => 'phone',
-                'description'       => 'Phone number of the contact (from Identity).'
+            'lastname' => [
+                'type'              => 'string',
+                'description'       => 'Reference contact surname.',
+                'visible'           => ['type', '=', 'I'],
+                'dependencies'      => ['name']
             ],
 
-            // #memo - mobile remains related to identity
-            'mobile' => [
-                'type'              => 'computed',
-                'function'          => 'calcMobile',
-                'result_type'       => 'string',
-                'usage'             => 'phone',
-                'description'       => 'Mobile phone number of the contact (from Identity).',
+            'gender' => [
+                'type'              => 'string',
+                'selection'         => ['M' => 'Male', 'F' => 'Female', 'X' => 'Non-binary'],
+                'description'       => 'Reference contact gender.',
+                'visible'           => ['type', '=', 'I']
             ],
 
             'title' => [
-                'type'              => 'computed',
-                'function'          => 'calcTitle',
-                'result_type'       => 'string',
-                'description'       => 'Title of the contact (from Identity).',
+                'type'              => 'string',
+                'selection'         => ['Dr' => 'Doctor', 'Ms' => 'Miss', 'Mrs' => 'Misses', 'Mr' => 'Mister', 'Pr' => 'Professor'],
+                'description'       => 'Reference contact title.',
+                'visible'           => ['type', '=', 'I']
+            ],
+
+            'date_of_birth' => [
+                'type'              => 'date',
+                'description'       => 'Date of birth.',
+                'visible'           => ['type', '=', 'I']
             ],
 
             'lang_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'many2one',
+                'type'              => 'many2one',
                 'foreign_object'    => 'core\Lang',
-                'description'       => "Preferred language of the partner (relates to identity).",
-                'function'          => 'calcLangId'
+                'description'       => "Preferred language of the identity.",
+                'default'           => 1,
+                'onupdate'          => 'onupdateLangId'
             ],
 
-            'is_active' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the partner as active.',
-                'default'           => true
+            'address_street' => [
+                'type'              => 'string',
+                'description'       => 'Street and number.'
+            ],
+
+            'address_dispatch' => [
+                'type'              => 'string',
+                'description'       => 'Optional info for mail dispatch (apartment, box, floor, ...).'
+            ],
+
+            'address_city' => [
+                'type'              => 'string',
+                'description'       => 'City.'
+            ],
+
+            'address_zip' => [
+                'type'              => 'string',
+                'description'       => 'Postal code.'
+            ],
+
+            'address_state' => [
+                'type'              => 'string',
+                'description'       => 'State or region.'
+            ],
+
+            'address_country' => [
+                'type'              => 'string',
+                'usage'             => 'country/iso-3166:2',
+                'description'       => 'Country.',
+                'default'           => 'BE'
+            ],
+
+            'email' => [
+                'type'              => 'string',
+                'usage'             => 'email',
+                'onupdate'          => 'onupdateEmail',
+                'description'       => "Identity main email address."
+            ],
+
+            'phone' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'onupdate'          => 'onupdatePhone',
+                'description'       => "Identity secondary phone number (mobile or landline)."
+            ],
+
+            'mobile' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'onupdate'          => 'onupdateMobile',
+                'description'       => "Identity mobile phone number."
+            ],
+
+            'fax' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity main fax number."
             ]
+
         ];
     }
 
+    /*
+    // #memo - we must allow duplicates since the identity might be created afterward (partner_identity_id = NULL)
     public function getUnique() {
         return [
             ['owner_identity_id', 'partner_identity_id', 'relationship']
         ];
     }
+    */
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcType($self) {
         $result = [];
-        $partners = $om->read(self::getType(), $oids, ['partner_identity_id.name'], $lang);
-        foreach($partners as $oid => $partner) {
-            if(isset($partner['partner_identity_id.name'])) {
-                $result[$oid] = $partner['partner_identity_id.name'];
+        $self->read(['type_id' => ['code']]);
+        foreach($self as $id => $identity) {
+            $result[$id] = $identity['type_id']['code'];
+        }
+        return $result;
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['partner_identity_id' => ['name']]);
+        foreach($self as $id => $partner) {
+            if(isset($partner['partner_identity_id']['name'])) {
+                $result[$id] = $partner['partner_identity_id']['name'];
             }
-        }
-        return $result;
-    }
-
-    public static function calcEmail($self) {
-        $result = [];
-        $self->read(['partner_identity_id' => ['email']]);
-        foreach($self as $oid => $partner) {
-            $result[$oid] = $partner['partner_identity_id']['email'];
-        }
-        return $result;
-    }
-
-    public static function calcPhone($self) {
-        $result = [];
-        $self->read(['partner_identity_id' => ['phone'] ]);
-        foreach($self as $oid => $partner) {
-            $result[$oid] = $partner['partner_identity_id.phone'];
-        }
-        return $result;
-    }
-
-    public static function calcMobile($self) {
-        $result = [];
-        $self->read(['partner_identity_id' => ['mobile']]);
-        foreach($self as $id => $partner) {
-            $result[$id] = $partner['partner_identity_id']['mobile'];
-        }
-        return $result;
-    }
-
-    public static function calcTitle($self) {
-        $result = [];
-        $self->read(['partner_identity_id']['title']);
-        foreach($self as $id => $partner) {
-            $result[$id] = $partner['partner_identity_id']['title'];
-        }
-        return $result;
-    }
-
-    public static function calcLangId($self) {
-        $result = [];
-        $self->read(['partner_identity_id' => ['lang_id']]);
-        foreach($self as $id => $partner) {
-            $result[$id] = $partner['partner_identity_id']['lang_id'];
         }
         return $result;
     }
@@ -210,12 +258,55 @@ class Partner extends Model {
      * @param  Array    $values    Copy of the current (partial) state of the object (fields depend on the view).
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($event, $values) {
+    public static function onchange($self, $event, $values) {
         $result = [];
-        if(isset($event['partner_identity_id'])) {
-            $identity = Identity::id($event['partner_identity_id'])->read(['name'])->first();
-            $result['name'] = $identity['name'];
+        if(isset($event['type_id'])) {
+            $type = IdentityType::id($event['type_id'])->read(['code'])->first();
+            if($type) {
+                $result['type'] = $type['code'];
+            }
+            if($event['type_id'] > 1) {
+                $result['firstname'] = '';
+                $result['lastname'] = '';
+            }
         }
         return $result;
     }
+
+    public static function onafterupdate($self, $values) {
+        $self->read([
+                'partner_identity_id',
+                'type_id', 'has_vat', 'vat_number', 'legal_name', 'firstname', 'lastname',
+                'email', 'phone', 'mobile', 'fax',
+                'address_street', 'address_dispatch', 'address_zip', 'address_city', 'address_state', 'address_country'
+            ]);
+
+        foreach($self as $id => $partner) {
+            if(is_null($partner['partner_identity_id'])) {
+                $identity = Identity::create([
+                        'type_id'           => $partner['type_id'],
+                        'has_vat'           => $partner['has_vat'],
+                        'vat_number'        => $partner['vat_number'],
+                        'legal_name'        => $partner['legal_name'],
+                        'firstname'         => $partner['firstname'],
+                        'lastname'          => $partner['lastname'],
+                        'email'             => $partner['email'],
+                        'phone'             => $partner['phone'],
+                        'mobile'            => $partner['mobile'],
+                        'fax'               => $partner['fax'],
+                        'address_street'    => $partner['address_street'],
+                        'address_dispatch'  => $partner['address_dispatch'],
+                        'address_zip'       => $partner['address_zip'],
+                        'address_city'      => $partner['address_city'],
+                        'address_state'     => $partner['address_state'],
+                        'address_country'   => $partner['address_country']
+                    ])
+                    ->read(['id'])
+                    ->first();
+
+                self::id($id)->update(['partner_identity_id' => $identity['id']]);
+            }
+        }
+    }
+
 }

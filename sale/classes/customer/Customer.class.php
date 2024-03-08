@@ -6,6 +6,8 @@
 */
 namespace sale\customer;
 
+use identity\Identity;
+
 class Customer extends \identity\Partner {
 
     public function getTable() {
@@ -121,9 +123,32 @@ class Customer extends \identity\Partner {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List invoices of the customers.'
+            ],
+
+            'customer_external_ref' => [
+                'type'              => 'string',
+                'description'       => 'External reference for the customer, if any.'
+            ],
+
+            'flag_latepayer' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark the customer as bad payer.'
+            ],
+
+            'flag_damage' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark the customer with a damage history.'
+            ],
+
+            'flag_nuisance' => [
+                'type'              => 'boolean',
+                'default'           => false,
+                'description'       => 'Mark the customer with a disturbances history.'
             ]
 
         ];
@@ -141,17 +166,24 @@ class Customer extends \identity\Partner {
         }
     }
 
-    /**
-     * Computes the number of bookings made by the customer during the last two years.
-     *
-     */
     public static function calcAddress($self) {
         $result = [];
-        $self->read(['partner_identity_id' => ['address_street', 'address_city']]);
+        $self->read(['address_street', 'address_city']);
         foreach($self as $id => $customer) {
-            $result[$id] = "{$customer['partner_identity_id']['address_street']} {$customer['partner_identity_id']['address_city']}";
+            $result[$id] = "{$customer['address_street']} {$customer['address_city']}";
         }
         return $result;
+    }
+
+    public static function onafterupdate($self, $values) {
+        parent::onafterupdate($self, $values);
+
+        $self->read(['partner_identity_id' => ['id', 'customer_id']]);
+        foreach($self as $id => $customer) {
+            if(is_null($customer['partner_identity_id']['customer_id'])) {
+                Identity::id($customer['partner_identity_id']['id'])->update(['customer_id' => $id]);
+            }
+        }
     }
 
 }

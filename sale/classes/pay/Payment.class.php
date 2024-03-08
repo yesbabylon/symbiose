@@ -230,7 +230,7 @@ class Payment extends Model {
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
                 $om->update('sale\pay\BankStatementLine', $payment['statement_line_id'], ['status' => 'pending']);
-                $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => false]);
+                $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null]);
             }
         }
         return parent::ondelete($om, $oids);

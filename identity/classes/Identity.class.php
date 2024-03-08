@@ -6,11 +6,12 @@
 */
 namespace identity;
 use equal\orm\Model;
+use hr\employee\Employee;
+use purchase\supplier\Supplier;
+use sale\customer\Customer;
 
 /**
  * This class is meant to be used as an interface for other entities (organisation and partner).
- * An identity is either a legal or natural person (Legal persons are Organisations).
- * An organisation usually has several partners of various kind (contact, employee, provider, customer, ...).
  */
 class Identity extends Model {
 
@@ -22,7 +23,7 @@ class Identity extends Model {
     }
 
     public static function getDescription() {
-        return "An Identity is either a legal or natural person: organisations are legal persons and users, contacts and employees are natural persons.";
+        return "An Identity is either a legal or natural person: organizations are legal persons and users, contacts and employees are natural persons. An identity might have several partners of various kind (contact, employee, provider, customer, ...).";
     }
 
     public static function getColumns() {
@@ -33,6 +34,7 @@ class Identity extends Model {
                 'function'          => 'calcName',
                 'result_type'       => 'string',
                 'store'             => true,
+                'instant'           => true,
                 'description'       => 'The display name of the identity.',
                 'help'              => "
                     The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
@@ -41,33 +43,24 @@ class Identity extends Model {
                 "
             ],
 
-            // @deprecated
-            'display_name' => [
-                'type'             => 'alias',
-                'alias'            => 'name'
-            ],
-
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
                 'onupdate'          => 'onupdateTypeId',
-                'default'           => 1,                                    // default is 'I' individual
+                // default is 'I' individual
+                'default'           => 1,
+                'dependencies'      => ['type', 'name'],
                 'description'       => 'Type of identity.'
             ],
 
             'type' => [
-                'type'              => 'string',
-                'selection'         => [
-                    'I'  => 'Individual (natural person)',
-                    'SE' => 'Self-employed',
-                    'C'  => 'Company',
-                    'NP' => 'Non-profit organization',
-                    'PA' => 'Public administration'
-                ],
-                'default'           => 'I',
-                'readonly'          => true,                                // has to be changed through type_id
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'store'             => true,
+                'instant'           => true,
+                'readonly'          => true,
                 'description'       => 'Code of the type of identity.',
-                'visible'           => [ ['has_parent', '=', false] ]
+                'function'          => 'calcType'
             ],
 
             'description' => [
@@ -103,25 +96,32 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'onupdate'          => 'onupdateName'
+                'dependencies'      => ['name'],
+                'onupdate'          => 'onupdateLegalName'
             ],
+
             'short_name' => [
-                'type'          => 'string',
-                'description'   => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
+                'type'              => 'string',
+                'description'       => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'onupdate'          => 'onupdateName'
+                'dependencies'      => ['name']
             ],
+
             'has_vat' => [
                 'type'              => 'boolean',
                 'description'       => 'Does the organization have a VAT number?',
                 'visible'           => [ ['type', '<>', 'I'], ['has_parent', '=', false] ],
-                'default'           => false
+                'default'           => false,
+                'onupdate'          => 'onupdateHasVat'
             ],
+
             'vat_number' => [
                 'type'              => 'string',
                 'description'       => 'Value Added Tax identification number, if any.',
-                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'], ['has_parent', '=', false] ]
+                'visible'           => [ ['has_vat', '=', true], ['type', '<>', 'I'], ['has_parent', '=', false] ],
+                'onupdate'          => 'onupdateVatNumber'
             ],
+
             'registration_number' => [
                 'type'              => 'string',
                 'description'       => 'Organization registration number (company number).',
@@ -171,147 +171,48 @@ class Identity extends Model {
                 'visible'           => [ ['has_parent', '=', true] ]
             ],
 
+            'contacts_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'identity\Contact',
+                'foreign_field'     => 'owner_identity_id',
+                'domain'            => ['partner_identity_id', '<>', 'object.id'],
+                'description'       => 'List of contacts related to the organization, if any.',
+                'help'              => 'A contact is an arbitrary relation between two identities. Any Identity can have several contacts.'
+            ],
+
+            'users_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'identity\Organisation',
+                'foreign_field'     => 'organisation_id',
+                'description'       => 'List of users of the organization, if any.' ,
+                'visible'           => [ ['type', '<>', 'I'] ]
+            ],
+
             'employees_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'identity\Partner',
+                'foreign_object'    => 'hr\employee\Employee',
                 'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['relationship', '=', 'employee'],
                 'description'       => 'List of employees of the organization, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
             'customers_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'identity\Partner',
+                'foreign_object'    => 'sale\customer\Customer',
                 'foreign_field'     => 'owner_identity_id',
                 'domain'            => ['relationship', '=', 'customer'],
                 'description'       => 'List of customers of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
-            'providers_ids' => [
+            'suppliers_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'identity\Partner',
+                'foreign_object'    => 'purchase\supplier\Supplier',
                 'foreign_field'     => 'owner_identity_id',
-                'domain'            => ['relationship', '=', 'provider'],
-                'description'       => 'List of providers of the organization, if any.',
+                'description'       => 'List of suppliers of the organization, if any.',
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
-            // Any Identity can have several contacts
-            'contacts_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\Partner',
-                'foreign_field'     => 'owner_identity_id',
-                'domain'            => [ ['partner_identity_id', '<>', 'object.id'], ['relationship', '=', 'contact'] ],
-                'description'       => 'List of contacts related to the organization (not necessarily employees), if any.'
-            ],
-
-            /*
-                Description of the Identity address.
-                For organizations this is the official (legal) address (typically headquarters, but not necessarily)
-            */
-            'address_street' => [
-                'type'              => 'string',
-                'description'       => 'Street and number.'
-            ],
-
-            'address_dispatch' => [
-                'type'              => 'string',
-                'description'       => 'Optional info for mail dispatch (apartment, box, floor, ...).'
-            ],
-
-            'address_city' => [
-                'type'              => 'string',
-                'description'       => 'City.'
-            ],
-
-            'address_zip' => [
-                'type'              => 'string',
-                'description'       => 'Postal code.'
-            ],
-
-            'address_state' => [
-                'type'              => 'string',
-                'description'       => 'State or region.'
-            ],
-
-            'address_country' => [
-                'type'              => 'string',
-                'usage'             => 'country/iso-3166:2',
-                'description'       => 'Country.',
-                'default'           => 'BE'
-            ],
-
-            /*
-                Additional official contact details.
-                For individuals these are personal contact details, whereas for companies these are official (registered) details.
-            */
-            'email' => [
-                'type'              => 'string',
-                'usage'             => 'email',
-                'onupdate'          => 'onupdateEmail',
-                'description'       => "Identity main email address."
-            ],
-
-            'phone' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'onupdate'          => 'onupdatePhone',
-                'description'       => "Identity main phone number (mobile or landline)."
-            ],
-
-            'mobile' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'onupdate'          => 'onupdateMobile',
-                'description'       => "Identity mobile phone number."
-            ],
-
-            'fax' => [
-                'type'              => 'string',
-                'usage'             => 'phone',
-                'description'       => "Identity main fax number."
-            ],
-
-            // Companies can also have an official website.
-            'website' => [
-                'type'              => 'string',
-                'usage'             => 'url',
-                'description'       => 'Organization main official website URL, if any.',
-                'visible'           => ['type', '<>', 'I']
-            ],
-
-            // an identity can have several addresses
-            'addresses_ids' => [
-                'type'              => 'one2many',
-                'foreign_object'    => 'identity\Address',
-                'foreign_field'     => 'identity_id',
-                'description'       => 'List of addresses related to the identity.',
-            ],
-
-            /*
-                For organizations, there might be a reference person: a person who is entitled to legally represent the organization (typically the director, the manager, the CEO, ...).
-                These contact details are commonly requested by service providers for validating the identity of an organization.
-            */
-            'reference_partner_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\Partner',
-                'domain'            => ['relationship', '=', 'contact'],
-                'description'       => 'Contact (natural person) that can legally represent the organization.',
-                'onupdate'          => 'onupdateReferencePartnerId',
-                'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
-            ],
-
-            /*
-                For individuals, the identity might be related to a user.
-            */
-            'user_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'identity\User',
-                'description'       => 'User associated to this identity.',
-                'visible'           => ['type', '=', 'I']
-            ],
 
             /*
                 Contact details.
@@ -321,14 +222,16 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
                 'visible'           => ['type', '=', 'I'],
-                'onupdate'          => 'onupdateName'
+                'dependencies'      => ['name'],
+                'onupdate'          => 'onupdateFirstname'
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
                 'visible'           => ['type', '=', 'I'],
-                'onupdate'          => 'onupdateName'
+                'dependencies'      => ['name'],
+                'onupdate'          => 'onupdateLastname'
             ],
 
             'gender' => [
@@ -359,137 +262,283 @@ class Identity extends Model {
                 'onupdate'          => 'onupdateLangId'
             ],
 
-            // field for retrieving all partners related to the identity
-            // @deprecated - irrelevant since partner relates to distinct tables
-            'partners_ids' => [
+            /*
+                Description of the Identity address.
+                For organizations this is the official (legal) address (typically headquarters, but not necessarily)
+            */
+            'address_street' => [
+                'type'              => 'string',
+                'description'       => 'Street and number.',
+                'onupdate'          => 'onupdateAddressStreet'
+            ],
+
+            'address_dispatch' => [
+                'type'              => 'string',
+                'description'       => 'Optional info for mail dispatch (apartment, box, floor, ...).',
+                'onupdate'          => 'onupdateAddressDispatch'
+            ],
+
+            'address_city' => [
+                'type'              => 'string',
+                'description'       => 'City.',
+                'onupdate'          => 'onupdateAddressCity'
+            ],
+
+            'address_zip' => [
+                'type'              => 'string',
+                'description'       => 'Postal code.',
+                'onupdate'          => 'onupdateAddressZip'
+            ],
+
+            'address_state' => [
+                'type'              => 'string',
+                'description'       => 'State or region.',
+                'onupdate'          => 'onupdateAddressState'
+            ],
+
+            'address_country' => [
+                'type'              => 'string',
+                'usage'             => 'country/iso-3166:2',
+                'description'       => 'Country.',
+                'default'           => 'BE',
+                'onupdate'          => 'onupdateAddressCountry'
+            ],
+
+            /*
+                Additional official contact details.
+                For individuals these are personal contact details, whereas for companies these are official (registered) details.
+            */
+            'email' => [
+                'type'              => 'string',
+                'usage'             => 'email',
+                'onupdate'          => 'onupdateEmail',
+                'description'       => "Identity main email address."
+            ],
+
+            'email_alt' => [
+                'type'              => 'string',
+                'usage'             => 'email',
+                'description'       => "Identity secondary email address."
+            ],
+
+            'phone' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'onupdate'          => 'onupdatePhone',
+                'description'       => "Identity secondary phone number (mobile or landline)."
+            ],
+
+            'phone_alt' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity main phone number (mobile or landline)."
+            ],
+
+            'mobile' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'onupdate'          => 'onupdateMobile',
+                'description'       => "Identity mobile phone number."
+            ],
+
+            'fax' => [
+                'type'              => 'string',
+                'usage'             => 'phone',
+                'description'       => "Identity main fax number."
+            ],
+
+            // Companies can also have an official website.
+            'website' => [
+                'type'              => 'string',
+                'usage'             => 'url',
+                'description'       => 'Organization main official website URL, if any.',
+                'visible'           => ['type', '<>', 'I']
+            ],
+
+            // an identity can have additional addresses
+            'addresses_ids' => [
                 'type'              => 'one2many',
+                'foreign_object'    => 'identity\Address',
+                'foreign_field'     => 'identity_id',
+                'description'       => 'List of addresses related to the identity.',
+            ],
+
+            /*
+                For organizations, there might be a reference person: a person who is entitled to legally represent the organization (typically the director, the manager, the CEO, ...).
+                These contact details are commonly requested by service providers for validating the identity of an organization.
+            */
+            'reference_partner_id' => [
+                'type'              => 'many2one',
                 'foreign_object'    => 'identity\Partner',
+                'domain'            => ['relationship', '=', 'contact'],
+                'description'       => 'Contact (natural person) that can legally represent the organization.',
+                'onupdate'          => 'onupdateReferencePartnerId',
+                'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
+            ],
+
+            /*
+                For individuals, the identity might be related to a user.
+            */
+            'user_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\User',
+                'description'       => 'User associated to this identity, if any.',
+                'visible'           => ['type', '=', 'I']
+            ],
+
+            'customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Partnerships that relate to the identity.',
-                'domain'            => ['owner_identity_id', '<>', 'object.id']
+                'description'       => 'Customer associated to this identity, if any.'
             ],
 
-            'flag_latepayer' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'description'       => 'Mark the customer as bad payer.'
+            'supplier_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'purchase\supplier\Supplier',
+                'foreign_field'     => 'partner_identity_id',
+                'description'       => 'Supplier associated to this identity, if any.'
             ],
 
-            'flag_damage' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'description'       => 'Mark the customer with a damage history.'
+            'contact_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\contact',
+                'foreign_field'     => 'partner_identity_id',
+                'description'       => 'Contact associated to this identity, if any.'
             ],
 
-            'flag_nuisance' => [
-                'type'              => 'boolean',
-                'default'           => false,
-                'description'       => 'Mark the customer with a disturbances history.'
+            'employee_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'hr\employee\Employee',
+                'foreign_field'     => 'partner_identity_id',
+                'description'       => 'Employee associated to this identity, if any.'
             ]
 
         ];
     }
 
-    /**
-     * For organisations the display name is the legal name
-     * For individuals, the display name is the concatenation of first and last names
-     */
-    public static function calcName($om, $oids, $lang) {
+    public static function calcType($self) {
         $result = [];
-        $res = $om->read(self::getType(), $oids, ['type_id', 'firstname', 'lastname', 'legal_name', 'short_name']);
-        foreach($res as $oid => $odata) {
-            $parts = [];
-            if( isset($odata['type_id'])  ) {
-                if( $odata['type_id'] == 1  ) {
-                    if( isset($odata['lastname']) && strlen($odata['lastname'])) {
-                        $parts[] = $odata['lastname'];
-                    }
-                    if( isset($odata['firstname']) && strlen($odata['firstname']) ) {
-                        $parts[] = $odata['firstname'];
-                    }
-                }
-                if( $odata['type_id'] != 1 || empty($parts) ) {
-                    if( isset($odata['short_name']) && strlen($odata['short_name'])) {
-                        $parts[] = $odata['short_name'];
-                    }
-                    else if( isset($odata['legal_name']) && strlen($odata['legal_name'])) {
-                        $parts[] = $odata['legal_name'];
-                    }
-                }
-            }
-            $result[$oid] = implode(' ', $parts);
+        $self->read(['type_id' => ['code']]);
+        foreach($self as $id => $identity) {
+            $result[$id] = $identity['type_id']['code'];
         }
         return $result;
     }
 
-    public static function onupdatePhone($om, $oids, $values, $lang) {
-        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
-        foreach($identities as $oid => $odata) {
-            $om->update('identity\Partner', $odata['partners_ids'], [ 'phone' => null ], $lang);
-        }
-    }
-
-    public static function onupdateMobile($om, $oids, $values, $lang) {
-        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
-        foreach($identities as $oid => $odata) {
-            $om->update('identity\Partner', $odata['partners_ids'], [ 'mobile' => null ], $lang);
-        }
-    }
-
-    public static function onupdateEmail($om, $oids, $values, $lang) {
-        $identities = $om->read(self::getType(), $oids, ['partners_ids']);
-        foreach($identities as $oid => $odata) {
-            $om->update('identity\Partner', $odata['partners_ids'], [ 'email' => null ], $lang);
-        }
-    }
-
-    public static function onupdateName($om, $oids, $values, $lang) {
-        $om->update(self::getType(), $oids, [ 'name' => null ], $lang);
-        $res = $om->read(self::getType(), $oids, ['partners_ids']);
-        $partners_ids = [];
-        foreach($res as $oid => $odata) {
-            $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
-        }
-        // force re-computing of related partners names
-        $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
-        $om->read('identity\Partner', $partners_ids, ['name'], $lang);
-    }
-
-
-    public static function onupdateTypeId($om, $oids, $values, $lang) {
-        $res = $om->read(self::getType(), $oids, ['type_id', 'type_id.code', 'partners_ids']);
-        if($res > 0) {
-            $partners_ids = [];
-            foreach($res as $oid => $odata) {
-                $values = [ 'type' => $odata['type_id.code'], 'name' => null];
-                if($odata['type_id'] == 1 ) {
-                    $values['legal_name'] = '';
-                }
-                else {
-                    $values['firstname'] = '';
-                    $values['lastname'] = '';
-                }
-                $partners_ids = array_merge($partners_ids, $odata['partners_ids']);
-                $om->update(self::getType(), $oid, $values, $lang);
-            }
-            $om->read(self::getType(), $oids, ['name'], $lang);
-            // force re-computing of related partners names
-            $om->update('identity\Partner', $partners_ids, [ 'name' => null ], $lang);
-            $om->read('identity\Partner', $partners_ids, ['name'], $lang);
-        }
-    }
-
     /**
-     * When lang_id is updated, perform cascading through the partners to update related lang_id
+     * For organizations the name is the legal name.
+     * For individuals, the name is the concatenation of first and last names.
      */
-    public static function onupdateLangId($om, $oids, $values, $lang) {
-        $res = $om->read(self::getType(), $oids, ['partners_ids', 'lang_id']);
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['type', 'firstname', 'lastname', 'legal_name', 'short_name']);
+        foreach($self as $id => $identity) {
+            $parts = [];
+            if($identity['type'] == 'I') {
+                if(isset($identity['firstname']) && strlen($identity['firstname'])) {
+                    $parts[] = $identity['firstname'];
+                }
+                if(isset($identity['lastname']) && strlen($identity['lastname']) ) {
+                    $parts[] = mb_strtoupper($identity['lastname']);
+                }
+            }
+            if(empty($parts) ) {
+                if(isset($identity['short_name']) && strlen($identity['short_name'])) {
+                    $parts[] = $identity['short_name'];
+                }
+                elseif(isset($identity['legal_name']) && strlen($identity['legal_name'])) {
+                    $parts[] = $identity['legal_name'];
+                }
+            }
+            $result[$id] = implode(' ', $parts);
+        }
+        return $result;
+    }
 
-        if($res > 0 && count($res)) {
-            foreach($res as $oid => $odata) {
-                $om->update('identity\Partner', $odata['partners_ids'], ['lang_id' => $odata['lang_id']]);
+    private static function _updateField($self, $field) {
+        $self->read(['user_id', 'contact_id', 'employee_id', 'customer_id', 'supplier_id', $field]);
+        foreach($self as $id => $identity) {
+            if($identity['user_id']) {
+                User::id($identity['user_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['contact_id']) {
+                Contact::id($identity['contact_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['employee_id']) {
+                Employee::id($identity['employee_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['customer_id']) {
+                Customer::id($identity['customer_id'])->update([$field => $identity[$field]]);
+            }
+            if($identity['supplier_id']) {
+                Supplier::id($identity['supplier_id'])->update([$field => $identity[$field]]);
             }
         }
+    }
+
+    public static function onupdateTypeId($self) {
+        self::_updateField($self, 'type_id');
+    }
+
+    public static function onupdateLegalName($self) {
+        self::_updateField($self, 'legal_name');
+    }
+
+    public static function onupdateFirstname($self) {
+        self::_updateField($self, 'firstname');
+    }
+
+    public static function onupdateLastname($self) {
+        self::_updateField($self, 'lastname');
+    }
+
+    public static function onupdateHasVat($self) {
+        self::_updateField($self, 'has_vat');
+    }
+
+    public static function onupdateVatNumber($self) {
+        self::_updateField($self, 'vat_number');
+    }
+
+    public static function onupdateEmail($self) {
+        self::_updateField($self, 'email');
+    }
+
+    public static function onupdatePhone($self) {
+        self::_updateField($self, 'phone');
+    }
+
+    public static function onupdateMobile($self) {
+        self::_updateField($self, 'mobile');
+    }
+
+    public static function onupdateLangId($self) {
+        self::_updateField($self, 'lang_id');
+    }
+
+    public static function onupdateAddressStreet($self) {
+        self::_updateField($self, 'address_street');
+    }
+
+    public static function onupdateAddressDispatch($self) {
+        self::_updateField($self, 'address_dispatch');
+    }
+
+    public static function onupdateAddressCity($self) {
+        self::_updateField($self, 'address_city');
+    }
+
+    public static function onupdateAddressZip($self) {
+        self::_updateField($self, 'address_zip');
+    }
+
+    public static function onupdateAddressState($self) {
+        self::_updateField($self, 'address_state');
+    }
+
+    public static function onupdateAddressCountry($self) {
+        self::_updateField($self, 'address_country');
     }
 
     /**
@@ -512,27 +561,25 @@ class Identity extends Model {
         }
     }
 
-
     /**
      * Signature for single object change from views.
      *
-     * @param  Object   $om        Object Manager instance.
      * @param  Array    $event     Associative array holding changed fields as keys, and their related new values.
      * @param  Array    $values    Copy of the current (partial) state of the object (fields depend on the view).
-     * @param  String   $lang      Language (char 2) in which multilang field are to be processed.
      * @return Array    Associative array mapping fields with their resulting values.
      */
-    public static function onchange($om, $event, $values, $lang='en') {
+    public static function onchange($self, $event, $values) {
         $result = [];
-
         if(isset($event['type_id'])) {
-            $types = $om->read('identity\IdentityType', $event['type_id'], ['code']);
-            if($types > 0) {
-                $type = reset($types);
+            $type = IdentityType::id($event['type_id'])->read(['code'])->first();
+            if($type) {
                 $result['type'] = $type['code'];
             }
+            if($event['type_id'] > 1) {
+                $result['firstname'] = '';
+                $result['lastname'] = '';
+            }
         }
-
         return $result;
     }
 
