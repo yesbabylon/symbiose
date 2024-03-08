@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr" id="top">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <!-- webapp title -->
+        <title>Learn</title>
+        <meta name="title" content="">
+        <!-- webapp description -->
+        <meta name="description" content="">
+
+        <base href="">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@12.0.0/dist/material-components-web.min.css">
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script type="text/javascript" src="/wp-content/plugins/yb-lms/js/equal.bundle.js"></script>
+        <script type="text/javascript" src="learn.bundle.js"></script>
+
+        <!-- individually load additional languages -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
+<script>
+
+
+$(document).ready( function() {
+
+    //$.getJSON("../modules/ATModule.json", function(json) {
+
+    window.eq = new eQ('eq-listener');
+
+    var learn = new Learn();
+
+});
+</script>
+
+</head>
+<body>
+    <div class="spinner-wrapper">
+        <div class="spinner">
+            <div></div>
+        </div>
+    </div>
+    <div class="menu-top">
+        <div class="inner">
+            <div class="left-cell cell"><a href=""><i class="arrow material-icons" style="margin-left: -4px; line-height: 40px;">chevron_left</i> Back to Program overview</a></div>
+            <div class="middle-cell"></div>
+            <div class="right-cell">
+                <span class="cell-program">program</span> <i class="arrow material-icons" style="line-height: 40px;">chevron_right</i> <span class="cell-module">module</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="unknown-error">An unknown error occured. Please contact the website admin.</div>
+    <div class="access-restricted">Access is restricted to authentified users.</div>
+    <div class="missing-license">You don't have a licence for this program. Buy it on the <a href="/shop/">traingings store</a>.</div>
+
+    <div id="sb-root">
+        <div id="sb-container"></div>
+    </div>
+
+</body>
+</html>
