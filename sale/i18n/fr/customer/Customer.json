@@ -72,6 +72,12 @@
                 "section.customer_details": {
                     "label": "Détails"
                 },
+                "section.customer": {
+                    "label": "Spécifités du client"
+                },
+                "section.advanced": {
+                    "label": "Avancé"
+                },
                 "section.customer_bookings": {
                     "label": "Historique des Réservations"
                 }
