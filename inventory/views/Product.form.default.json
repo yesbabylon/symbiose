@@ -22,7 +22,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Is Internal",
+                                                "label": "Internal",
                                                 "value": "is_internal",
                                                 "width": "20%"
                                             },
@@ -30,7 +30,17 @@
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "header": {
+                                                    "view": "form.inventory",
+                                                    "actions": {
+                                                        "ACTION.CREATE": [
+                                                            {
+                                                                "view": "form.create"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         ]
                                     },
@@ -44,7 +54,7 @@
                                                 "value": "description",
                                                 "width": "50%",
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "usage": "text/plain"
                                                 }
                                             }
                                         ]
