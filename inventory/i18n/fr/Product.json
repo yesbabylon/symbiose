@@ -14,9 +14,9 @@
             "help": "Description du produit."
         },
         "is_internal":{
-            "label": "Est-il interne",
-            "description": "Le produit est interne.",
-            "help": "Le produit est interne."
+            "label": "Interne",
+            "description": "Le produit est interne à l'entreprise.",
+            "help": "Le produit fait partie de l'infrasture de l'entreprise (et pas de celle d'un client)."
         },
         "customer_id":{
             "label": "Client",
