@@ -7,8 +7,8 @@
                 "id": 1,
                 "type_id": 3,
                 "type": "C",
-                "legal_name": "Your company name",
-                "short_name": "Your company name",
+                "legal_name": "Your company name Inc.",
+                "short_name": "Your company",
                 "has_parent": false
             }
         ]
