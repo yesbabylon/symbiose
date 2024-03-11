@@ -56,26 +56,24 @@
         "form.default": {
             "name": "Relation",
             "description": "Formulaire de base pour afficher un partenaire",
-            "layout": {}
+            "layout": {
+                "section.identity_info": {
+                    "label": "Infos de contact"
+                }
+            }
+        },
+        "form.create": {
+            "name": "Relation",
+            "description": "Formulaire de base pour créer un partenaire",
+            "layout": {
+                "section.identity_info": {
+                    "label": "Infos de contact"
+                }
+            }
         },
         "list.default": {
             "name": "Relations",
             "description": "Liste de base des partenaires existants.",
-            "layout": {}
-        },
-        "form.customer": {
-            "name": "Client",
-            "description": "Formulaire de base pour afficher un client (Partenaire)",
-            "layout": {}
-        },
-        "list.customer": {
-            "name": "Clients",
-            "description": "Liste de base des clients existants.",
-            "layout": {}
-        },
-        "list.contact": {
-            "name": "Contacts",
-            "description": "Liste des contacts existants Partenaires.",
             "layout": {}
         }
     },
