@@ -40,7 +40,7 @@ class Invoice extends Model {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organization',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => "The organization that emitted the invoice.",
                 'default'           => 1
             ],

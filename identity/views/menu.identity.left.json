@@ -1,0 +1,82 @@
+{
+    "name": "Identity menu",
+    "layout": {
+        "items": [
+            {
+                "id": "item.identity",
+                "type": "entry",
+                "label": "Identities",
+                "icon": "manage",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Identity",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.partner",
+                "type": "entry",
+                "label": "Partners",
+                "icon": "group",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Partner",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.address",
+                "type": "entry",
+                "label": "Addresses",
+                "icon": "place",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Address",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.establishment",
+                "type": "entry",
+                "label": "Establishments",
+                "icon": "apartment",
+                "description": "",
+                "context": {
+                    "entity": "identity\\Establishment",
+                    "view": "list.default"
+                }
+            },
+            {
+                "id": "item.sale",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.user",
+                        "type": "entry",
+                        "label": "Users",
+                        "icon": "person",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\User",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.identityType",
+                        "type": "entry",
+                        "label": "Identities Types",
+                        "icon": "face",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\IdentityType",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

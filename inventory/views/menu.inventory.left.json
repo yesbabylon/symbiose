@@ -1,4 +1,4 @@
-{
+    {
     "name": "Inventory menu",
     "layout": {
         "items": [
@@ -24,19 +24,6 @@
                 "context": {
                     "entity": "sale\\customer\\Customer",
                     "view": "list.inventory",
-                    "order": "id",
-                    "sort": "asc"
-                }
-            },
-            {
-                "id": "item.invoice",
-                "type": "entry",
-                "label": "Invoices",
-                "icon": "receipt",
-                "description": "",
-                "context": {
-                    "entity": "finance\\accounting\\Invoice",
-                    "view": "list.default",
                     "order": "id",
                     "sort": "asc"
                 }

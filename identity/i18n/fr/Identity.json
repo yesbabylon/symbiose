@@ -201,7 +201,7 @@
             "label": "Langue",
             "description": "Langue parlée préférée.",
             "help": ""
-        },        
+        },
         "bank_account_iban": {
             "label": "IBAN",
             "description": "Compte bancaire.",
@@ -256,6 +256,6 @@
             "missing": "Le nom est obligatoire pour une personne morale.",
             "invalid_chars": "Caractères invalides.",
             "too_short": "Nom trop court (min 2 car.)."
-        }   
+        }
     }
 }

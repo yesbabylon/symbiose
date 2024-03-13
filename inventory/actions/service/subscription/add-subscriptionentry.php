@@ -53,25 +53,25 @@ if($subscription['is_internal'] || empty($subscription['customer_id'])) {
 }
 
 $subscription_entry = SubscriptionEntry::search([
-    ['subscription_id', '=', $subscription['id']],
-    ['date_from', '=', $subscription['date_from']],
-    ['date_to', '=', $subscription['date_to']]
-])
+        ['subscription_id', '=', $subscription['id']],
+        ['date_from', '=', $subscription['date_from']],
+        ['date_to', '=', $subscription['date_to']]
+    ])
     ->read(['id'])
     ->first();
 
 if(!$subscription_entry) {
     $subscription_entry = SubscriptionEntry::create([
-        'object_id'       => $subscription['id'],
-        'subscription_id' => $subscription['id'],
-        'is_billable'     => $subscription['is_billable'],
-        'customer_id'     => $subscription['customer_id'],
-        'product_id'      => $subscription['product_id'],
-        'date_from'       => $subscription['date_from'],
-        'date_to'         => $subscription['date_to'],
-        'price_id'        => $subscription['price_id'],
-        'unit_price'      => $subscription['price']
-    ])
+            'object_id'       => $subscription['id'],
+            'subscription_id' => $subscription['id'],
+            'is_billable'     => $subscription['is_billable'],
+            'customer_id'     => $subscription['customer_id'],
+            'product_id'      => $subscription['product_id'],
+            'date_from'       => $subscription['date_from'],
+            'date_to'         => $subscription['date_to'],
+            'price_id'        => $subscription['price_id'],
+            'unit_price'      => $subscription['price']
+        ])
         ->first();
 }
 

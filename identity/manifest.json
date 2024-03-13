@@ -1,6 +1,29 @@
 {
     "name": "identity",
+    "version": "1.0",
+    "author": "Yesbabylon",
     "depends_on": [
         "core"
+    ],
+    "apps": [
+        {
+            "id": "identity",
+            "name": "Contact",
+            "extends": "app",
+            "description": "Manage contacts and identities.",
+            "icon": "contacts",
+            "color": "#2874A6",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "identity.left",
+                    "top": "identity.top"
+                }
+            }
+        }
     ]
 }

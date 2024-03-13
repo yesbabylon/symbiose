@@ -214,16 +214,18 @@ class Order extends Model {
         return $result;
     }
 
+    #todo - store sequence number in parent session
     public static function calcSequence($om, $ids, $lang) {
         trigger_error("ORM::calling sale\pos\Order:calcSequence", QN_REPORT_DEBUG);
         $result = [];
-        $orders = $om->read(get_called_class(), $ids, ['session_id'], $lang);
+        $orders = $om->read(self::getType(), $ids, ['session_id'], $lang);
         if($orders > 0) {
-            foreach($orders as $oid => $order) {
-                $result[$oid] = 1;
-                $orders_ids = $om->search(get_called_class(), ['session_id', '=', $order['session_id']]);
-                if($orders_ids >= 0) {
-                    $result[$oid] = count($orders_ids) + 1;
+            foreach($orders as $id => $order) {
+                $result[$id] = 1;
+                $orders_ids = $om->search(self::getType(), [['session_id', '=', $order['session_id']], ['id', '<>', $id]]);
+                // #memo - trying to access sequence of other orders here might lead to infinite loop
+                if(count($orders_ids) > 0) {
+                    $result[$id] = count($orders_ids) + 1;
                 }
             }
         }

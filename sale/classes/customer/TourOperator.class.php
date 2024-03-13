@@ -32,12 +32,6 @@ class TourOperator extends Customer {
                 'default'           => 0.0
             ],
 
-            'is_tour_operator' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the customer as a Tour Operator.',
-                'default'           => true
-            ],
-
             'customer_nature_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\CustomerNature',

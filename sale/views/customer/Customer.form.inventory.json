@@ -1,28 +1,102 @@
 {
     "name": "Customer",
-    "description": "Basic form for displaying a customer (Partner) for inventory package",
+    "description": "Form holding the inventory details of a given customer.",
     "access": {
         "groups": ["inventory.default.user"]
     },
     "layout": {
-        "groups": [
-            {
-                "sections": [
+        "extends": {
+            "entity": "identity\\Partner",
+            "view": "form.default"
+        },
+        "remove": [
+            "group.partner_info"
+        ],
+        "update": {
+            "section.identity_info": {
+                "before": [
                     {
+                        "id": "section.customer_products",
+                        "label": "Inventory Products",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "75%",
+                                        "width": "100%",
+                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Name of Customer",
-                                                "value": "name",
+                                                "value": "products_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.product_services",
+                        "label": "Services",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "services_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.customers_softwares",
+                        "label": "Softwares",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "softwares_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
@@ -31,52 +105,12 @@
                             }
                         ]
                     }
-                ]
-            },
-            {
-                "sections": [
+                ],
+                "after": [
                     {
-                        "id": "section.customer_details",
-                        "label": "Details",
+                        "id": "section.customer",
+                        "label": "Customer specifics",
                         "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Identity of Customer",
-                                                "value": "partner_identity_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Owner Identity",
-                                                "value": "owner_identity_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "relationship",
-                                                "width": "50%",
-                                                "visible": false
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "partner_position",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Partner Organisation",
-                                                "value": "partner_organisation_id",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
                             {
                                 "columns": [
                                     {
@@ -120,225 +154,9 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "id": "section.customer_sales_entries",
-                        "label": "Sales entries",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "sales_entries_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "view": "list.default",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.customers_receivables_list",
-                        "label": "Receivables",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "receivables_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "view": "list.default",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.customer_bookings",
-                        "label": "Bookings",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "bookings_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "view": "list.default",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.customer_products",
-                        "label": "Inventory Products",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "products_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.product_services",
-                        "label": "Services",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "services_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.customers_softwares",
-                        "label": "Softwares",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "softwares_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.customers_invoices_list",
-                        "label": "Invoices",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "invoices_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "view": "list.default",
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 ]
             }
-        ]
+        }
     }
 }
