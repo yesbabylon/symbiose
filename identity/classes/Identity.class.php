@@ -394,11 +394,11 @@ class Identity extends Model {
             $parts = [];
             if( isset($odata['type_id'])  ) {
                 if( $odata['type_id'] == 1  ) {
-                    if( isset($odata['lastname']) && strlen($odata['lastname'])) {
-                        $parts[] = $odata['lastname'];
-                    }
                     if( isset($odata['firstname']) && strlen($odata['firstname']) ) {
-                        $parts[] = $odata['firstname'];
+                        $parts[] = ucfirst($odata['firstname']);
+                    }
+                    if( isset($odata['lastname']) && strlen($odata['lastname'])) {
+                        $parts[] = mb_strtoupper($odata['lastname']);
                     }
                 }
                 if( $odata['type_id'] != 1 || empty($parts) ) {
