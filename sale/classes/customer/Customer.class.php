@@ -19,7 +19,7 @@ class Customer extends \identity\Partner {
     }
 
     public static function getDescription() {
-        return "A customer is a partner from who originates one or more bookings.";
+        return "A customer is a partner with whom the company carries out commercial sales operations.";
     }
 
     public static function getColumns() {
@@ -31,7 +31,6 @@ class Customer extends \identity\Partner {
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "Rate class that applies to the customer.",
                 'help'              => "If partner is a customer, it can be assigned to a rate class.",
-                'visible'           => ['relationship', '=', 'customer'],
                 'default'           => 1,
                 'readonly'          => true
             ],
@@ -48,7 +47,6 @@ class Customer extends \identity\Partner {
                 'foreign_object'    => 'sale\customer\CustomerType',
                 'description'       => "Type of customer (map with rate classes). Defaults to 'individual'.",
                 'help'              => "If partner is a customer, it can be assigned a customer type",
-                'visible'           => ['relationship', '=', 'customer'],
                 'default'           => 1
             ],
 
@@ -149,6 +147,12 @@ class Customer extends \identity\Partner {
                 'type'              => 'boolean',
                 'default'           => false,
                 'description'       => 'Mark the customer with a disturbances history.'
+            ],
+
+            'is_tour_operator' => [
+                'type'              => 'boolean',
+                'description'       => 'Mark the customer as a Tour Operator.',
+                'default'           => false
             ]
 
         ];

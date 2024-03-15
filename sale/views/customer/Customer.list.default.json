@@ -3,14 +3,14 @@
     "description": "This view is intended for displaying basic listing of existing Customers.",
     "controller": "sale_customer_customer-collect",
     "access": {
-        "groups": ["sale.default.user", "booking.default.user"]
-     },
+        "groups": ["sale.default.user"]
+    },
     "header": {
         "actions": {
             "ACTION.CREATE" : [
                 {
                     "view": "form.create",
-                    "description": "Simplified form to ease creation"
+                    "description": "Simplified form to ease creation."
                 }
             ]
         }

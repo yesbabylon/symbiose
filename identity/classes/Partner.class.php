@@ -17,14 +17,6 @@ class Partner extends Model {
         return "Partner is an entity that describes a relationship (contact, employee, customer, supplier, ...) between two Identities : an Owner identity (often, but not necessarily, the company) and a Partner identity.";
     }
 
-    /*
-    les champs de Partner sont non-modifiables et synchronisés par l'identitié qui y est liée
-    les champs de Identity sont syncrhonisés avec Partner à chaque modification
-    une vue pour un partner reprend tous les champs en readonly
-
-    lorsqu'on crée un partner
-    */
-
     public static function getColumns() {
         return [
 
@@ -39,7 +31,7 @@ class Partner extends Model {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organization',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => 'Organisation of the current installation the partner belongs to.',
                 'default'           => Identity::OWNER_IDENTITY_ID
             ],
