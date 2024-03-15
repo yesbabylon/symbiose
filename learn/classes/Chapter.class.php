@@ -24,6 +24,12 @@ class Chapter extends Model {
                 'default'           => 1
             ],
 
+            'duration' => [
+                'type'              => 'integer',
+                'default'           => 10,
+                'description'       => "Indicative duration, in minutes, for completing the module."
+            ],
+
             'name' => [
                 'type'              => 'alias',
                 'alias'             => 'title'

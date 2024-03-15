@@ -6,7 +6,9 @@
 */
 namespace learn;
 
+use equal\orm\Collection;
 use equal\orm\Model;
+use equal\orm\ObjectManager;
 
 class Module extends Model {
 
@@ -67,9 +69,10 @@ class Module extends Model {
             ],
 
             'duration' => [
-                'type'              => 'integer',
-                'default'           => 10,
-                'description'       => "Indicative duration, in minutes, for completing the module."
+                'type'              => 'computed',
+                'description'       => "Total duration of chapters in the module.",
+                'function'          => 'calcChaptersDuration',
+                'result_type'       => 'integer'
             ],
 
             'chapters' => [
@@ -139,6 +142,24 @@ class Module extends Model {
         // force immediate refresh chapter_count
         $orm->write(__CLASS__, $oids, ['chapter_count' => null], $lang);
         $orm->read(__CLASS__, $oids, ['chapter_count'], $lang);
+    }
+
+    public static function calcChaptersDuration($self): array {
+        $result = [];
+        /** @var $self Collection */
+        $self->read(['chapters_ids' => ['duration']]);
+
+        foreach ($self as $id => $module) {
+            $moduleDurationCount = 0;
+
+            foreach ($module['chapters_ids'] as $chapter) {
+                $moduleDurationCount += $chapter['duration'];
+            }
+
+            $result[$id] = $moduleDurationCount;
+        }
+
+        return $result;
     }
 
 }
