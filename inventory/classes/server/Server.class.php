@@ -45,14 +45,14 @@ class Server extends Model {
                 'foreign_field'     => 'server_id',
                 'foreign_object'    => 'inventory\server\Instance',
                 'ondetach'          => 'delete',
-                'description'       => 'Instances information to the server.'
+                'description'       => 'Instances running on the server.'
             ],
 
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\Product',
                 'ondelete'          => 'cascade',
-                'description'       => 'Product attached to the server.'
+                'description'       => 'Product the server belongs to.'
             ],
 
             'ip_address_ids' => [
@@ -65,7 +65,7 @@ class Server extends Model {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Software',
+                'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'server_id',
                 'ondetach'          => 'delete',
                 'description'       => 'Softwares installed on the server.'

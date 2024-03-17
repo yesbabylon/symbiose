@@ -22,16 +22,22 @@
             },
             {
                 "type": "field",
-                "value": "is_internal",
-                "label": "Is Internal",
+                "value": "customer_id",
+                "label": "Customer",
                 "width": "25%",
                 "sortable": true
             },
             {
                 "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "25%"
+                "value": "is_internal",
+                "label": "Is Internal",
+                "width": "10%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "30%"
             }
         ]
     }
