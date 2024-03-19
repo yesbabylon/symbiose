@@ -130,13 +130,16 @@ if(in_array($params['controller'], ['model_collect', 'core_model_collect'])) {
     $values = $params['entity']::search($params['domain'], ['sort' => [$order => $sort]])->shift($start)->limit($limit)->read($fields_to_read)->get();
 }
 else {
-    $body = [
+    $body = array_merge(
+        [
             'entity'    => $params['entity'],
             'domain'    => $params['domain'],
             'fields'    => [],
             'limit'     => 25,
             'lang'      => $params['lang']
-        ] + $params['params'];
+        ],
+        $params['params']
+    );
     // retrieve objects collection using the target controller
     $data = eQual::run('get', $params['controller'], $body);
     // extract objects ids
