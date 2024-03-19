@@ -30,7 +30,7 @@ class Customer extends \identity\Partner {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "Rate class that applies to the customer.",
-                'help'              => "If partner is a customer, it can be assigned to a rate class.",
+                'help'              => "The fare (rate) class allows for the automatic assignment of a price list or price calculation for the customer.",
                 'default'           => 1,
                 'readonly'          => true
             ],

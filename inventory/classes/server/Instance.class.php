@@ -49,15 +49,17 @@ class Instance extends Model {
                 'type'              => 'string',
                 'description'       => "Home URL for front-end."
             ],
+
             'accesses_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Access',
                 'foreign_field'     => 'instance_id',
                 'description'       => 'Access information to the server.'
             ],
+
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Software',
+                'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'instance_id',
                 "description"       => 'Softwares installed on the Instance.'
             ],
@@ -66,8 +68,30 @@ class Instance extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Server',
                 'ondelete'          => 'cascade',
-                'description'       => 'Server to which the instance belongs.'
+                'description'       => 'Server to which the instance belongs.',
+                'dependencies'      => ['product_id']
             ],
+
+            'product_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'inventory\Product',
+                'ondelete'          => 'cascade',
+                'description'       => 'Product the instance belongs to.',
+                'store'             => true,
+                'instant'           => true,
+                'function'          => 'calcProductId'
+            ],
+
         ];
+    }
+
+    public static function calcProductId($self) {
+        $result = [];
+        $self->read(['server_id' => ['product_id']]);
+        foreach($self as $id => $instance) {
+            $result[$id] = $instance['server_id']['product_id'] ?? null;
+        }
+        return $result;
     }
 }

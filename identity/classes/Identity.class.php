@@ -437,7 +437,7 @@ class Identity extends Model {
             $parts = [];
             if($identity['type'] == 'I') {
                 if(isset($identity['firstname']) && strlen($identity['firstname'])) {
-                    $parts[] = $identity['firstname'];
+                    $parts[] = ucfirst($identity['firstname']);
                 }
                 if(isset($identity['lastname']) && strlen($identity['lastname']) ) {
                     $parts[] = mb_strtoupper($identity['lastname']);

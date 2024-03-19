@@ -13,7 +13,7 @@ use sale\catalog\Product;
 class Receivable extends Model {
 
     public static function getDescription() {
-        return "A Sale Receivable represent a good or a service that has been delivered to a Customer and that must be billed.";
+        return "A Sale Receivable represent a good or a service that has been sold to a Customer, and whose amount must be received.";
     }
 
     public static function getColumns() {

@@ -1,5 +1,6 @@
-    {
+{
     "name": "Inventory menu",
+    "search": false,
     "layout": {
         "items": [
             {

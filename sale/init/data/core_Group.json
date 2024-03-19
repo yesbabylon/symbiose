@@ -5,49 +5,49 @@
         "data": [
             {
                 "id": 1001,
-                "name": "sales.default.administrators",
+                "name": "sale.default.administrators",
                 "display_name": "Sales \/ All \/ Administrators",
                 "description": "Updating products and adding new products to the catalog."
             },
             {
                 "id": 1002,
-                "name": "sales.default.users",
+                "name": "sale.default.users",
                 "display_name": "Sales \/ All \/ Users",
                 "description": "Updating products and adding new products to the catalog."
             },
             {
                 "id": 1011,
-                "name": "sales.catalog.administrators",
+                "name": "sale.catalog.administrators",
                 "display_name": "Sales \/ Catalog \/ Administrators",
                 "description": "Updating products and adding new products to the catalog."
             },
             {
                 "id": 1012,
-                "name": "sales.catalog.users",
+                "name": "sale.catalog.users",
                 "display_name": "Sales \/ Catalog \/ Users",
                 "description": "Consulting products catalog."
             },
             {
                 "id": 1021,
-                "name": "sales.pricelist.users",
+                "name": "sale.pricelist.users",
                 "display_name": "Sales \/ Price lists \/ Users",
                 "description": "Consulting pricelists."
             },
             {
                 "id": 1022,
-                "name": "sales.pricelist.administrators",
+                "name": "sale.pricelist.administrators",
                 "display_name": "Sales \/ Price lists \/ Administrators",
                 "description": "Updating prices and fares."
             },
             {
                 "id": 1031,
-                "name": "sales.discounts.users",
+                "name": "sale.discounts.users",
                 "display_name": "Sales \/ Discount \/ Users",
                 "description": "Consulting discounts and discount lists."
             },
             {
                 "id": 1032,
-                "name": "sales.discounts.administrators",
+                "name": "sale.discounts.administrators",
                 "display_name": "Sales \/ Discount \/ Administrators",
                 "description": "Creating and updating discount lists."
             }
@@ -59,12 +59,12 @@
         "data": [
             {
                 "id": 1001,
-                "display_name": "Sales \/ All \/ Administrators",
+                "display_name": "Ventes \/ Tout \/ Administrateurs",
                 "description": "Mise à jour des produit et ajout de nouveaux produits au catalogue."
             },
             {
                 "id": 1002,
-                "display_name": "Sales \/ All \/ Users",
+                "display_name": "Ventes \/ Tout \/ Utilisateurs",
                 "description": "Mise à jour des produit et ajout de nouveaux produits au catalogue."
             },
             {
@@ -74,27 +74,27 @@
             },
             {
                 "id": 1012,
-                "display_name": "Ventes \/ Catalogue \/ Userrs",
+                "display_name": "Ventes \/ Catalogue \/ Utilisateurs",
                 "description": "Consultation des produits du catalogue."
             },
             {
                 "id": 1021,
-                "display_name": "Ventes \/ Listes de prix \/ Users",
+                "display_name": "Ventes \/ Listes de prix \/ Utilisateurs",
                 "description": "Consultation des listes de prix."
             },
             {
                 "id": 1022,
-                "display_name": "Ventes \/ Listes de prix \/ Administrators",
+                "display_name": "Ventes \/ Listes de prix \/ Administrateurs",
                 "description": "Mises à jour des prix et tarifs."
             },
             {
                 "id": 1031,
-                "display_name": "Ventes \/ Réductions \/ Users",
+                "display_name": "Ventes \/ Réductions \/ Utilisateurs",
                 "description": "Consultation des réductions et listes de réduction."
             },
             {
                 "id": 1032,
-                "display_name": "Ventes \/ Réductions \/ Administrators",
+                "display_name": "Ventes \/ Réductions \/ Administrateurs",
                 "description": "Création et mise à jour des listes de réduction."
             }
         ]
