@@ -1,0 +1,22 @@
+.layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100vh;
+
+    background-color: #11021c;
+
+    .text {
+        font-size: 11vw;
+        font-weight: 900;
+        text-transform: uppercase;
+        text-rendering: geometricprecision;
+
+        background-image: linear-gradient(0deg, rgb(9 248 114 / 100%) 0%, rgb(9 248 169 / 100%) 35%, rgb(0 212 255 / 100%) 100%);
+        background-clip: text;
+        background-size: 100%;
+
+        -webkit-text-fill-color: transparent;
+    }
+}

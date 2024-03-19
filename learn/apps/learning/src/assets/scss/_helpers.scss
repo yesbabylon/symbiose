@@ -8,7 +8,7 @@
     pointer-events: none;
 }
 
-.scrollbar-style {
+@mixin scrollbar-style {
     $color-primary: #3f51b5;
 
     &::-webkit-scrollbar {
@@ -26,4 +26,8 @@
     &::-webkit-scrollbar-thumb:hover {
         background: $color-primary;
     }
+}
+
+.scrollbar-style {
+    @include scrollbar-style;
 }

@@ -1,0 +1,10 @@
+{
+  "name": "learning",
+  "version": "1.0",
+  "author": "Yesbabylon",
+  "depends_on": [
+    "core"
+  ],
+  "lang": ["en", "fr"],
+  "apps": ["learning"]
+}

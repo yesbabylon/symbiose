@@ -1,0 +1,107 @@
+<app-top-bar
+    *ngIf="course && appInfo && environnementInfo && userStatement"
+    [environmentInfo]="environnementInfo"
+    [appInfo]="appInfo"
+    [userStatement]="userStatement"
+    [course]="course"></app-top-bar>
+<div class="body">
+    <div class="side-bar">
+        <div class="search" *ngIf="hasAccessToCourse">
+            <mat-icon class="search-icon" matPrefix>search</mat-icon>
+            <input type="search" />
+        </div>
+
+        <button #sideBarMenuButton *ngIf="course" mat-icon-button (click)="onSideBarButtonClick()">
+            <mat-icon>{{ menuIcon }}</mat-icon>
+        </button>
+    </div>
+
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+
+    <div class="content">
+        <div class="no-content font-size-6" *ngIf="!hasAccessToCourse && !isLoading">
+            <span>You don't have access to course</span>
+        </div>
+        <mat-tab-group *ngIf="hasAccessToCourse">
+            <mat-tab label="Content">
+                <app-content></app-content>
+                <p *ngFor="let i of [5, 4, 3, 2, 1, 0, -1, -2, -3]" [class]="'font-size-' + i">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur, assumenda culpa
+                    cumque delectus doloribus.
+                </p>
+            </mat-tab>
+            <mat-tab label="Presentation">
+                <app-presentation></app-presentation>
+                Content 2
+            </mat-tab>
+            <mat-tab label="Questions and answers">
+                <app-q-and-a></app-q-and-a>
+                Content 3
+            </mat-tab>
+            <mat-tab label="Reviews">
+                <app-reviews></app-reviews>
+                Content 4
+            </mat-tab>
+        </mat-tab-group>
+
+        <div #drawer class="drawer" [class]="drawerState">
+            <mat-accordion multi *ngIf="course">
+                <ng-container *ngFor="let module of course.modules; index as moduleIndex">
+                    <mat-expansion-panel
+                        class="module-panel"
+                        (opened)="selectedModuleIndex = moduleIndex"
+                        [expanded]="currentModuleProgressionIndex === moduleIndex"
+                        [class.current-progression]="currentModuleProgressionIndex === moduleIndex">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="font-size--1">{{ module.title }}</mat-panel-title>
+                            <mat-panel-description class="font-size--2">
+                                <div class="panel-description">
+                                    <div class="chapters-count">
+                                        {{ getUserStatusChapterIndex(module.id) }} / {{ module.chapters?.length }}
+                                    </div>
+                                    <div class="duration">{{ computeDuration(module.duration) }}</div>
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-selection-list [multiple]="false" *ngIf="module.chapters && module.chapters.length > 0">
+                            <ng-container *ngFor="let chapter of module.chapters; index as chapterIndex">
+                                <mat-list-option
+                                    [class.selected]="currentModuleProgressionIndex === moduleIndex && currentChapterProgressionIndex === chapterIndex ? 'primary' : undefined"
+                                    *ngIf="chapter"
+                                    [value]="chapter"
+                                    class="item"
+                                    (click)="onClickChapter(module.id)">
+                                    <div class="content">
+                                        <div class="row">
+                                            <span class="font-size--3">{{ chapter.title }}</span>
+                                            <!-- <button -->
+                                            <!--     class="star-button" -->
+                                            <!--     title="Add to favorite" -->
+                                            <!--     mat-icon-button -->
+                                            <!--     (click)="onStarredLessonClick($event, module, lesson)"> -->
+                                            <!--     <mat-icon [style.opacity]="lesson.starred ? 1 : undefined" svgIcon> -->
+                                            <!--         {{ lesson.starred ? 'star' : 'star_outline' }} -->
+                                            <!--     </mat-icon> -->
+                                            <!-- </button> -->
+                                        </div>
+                                        <div class="row">
+                                            <div class="assets">
+                                                <mat-icon>movie</mat-icon>
+                                                <mat-icon color="primary">description</mat-icon>
+                                                <mat-icon style="color: #7e7e7e">attach_file</mat-icon>
+                                            </div>
+                                            <span class="font-size--3 duration">
+                                                {{ computeDuration(chapter.duration) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </mat-list-option>
+                            </ng-container>
+                        </mat-selection-list>
+                    </mat-expansion-panel>
+                </ng-container>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

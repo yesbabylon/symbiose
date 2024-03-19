@@ -5,10 +5,10 @@ import { AppModule } from './app/app.module';
 // @ts-ignore
 import { EnvService } from 'sb-shared-lib';
 
-const env = new EnvService();
+const env: EnvService = new EnvService();
 
 env.getEnv()
-    .then((environment: any) => {
+    .then((environment: Record<string, any>): void => {
         if (environment.production) {
             enableProdMode();
         }

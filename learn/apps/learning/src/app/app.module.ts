@@ -1,57 +1,52 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
-
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { Platform, PlatformModule } from '@angular/cdk/platform';
-
-import {
-    SharedLibModule,
-    AuthInterceptorService,
-    CustomDateAdapter,
-    // @ts-ignore
-} from 'sb-shared-lib';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-
-import { AppRoutingModule } from './app-routing.module';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRootComponent } from './app.root.component';
 import { AppComponent } from './in/app.component';
-
-import { MatTableModule } from '@angular/material/table';
-/* HTTP requests interception dependencies */
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { registerLocaleData } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedLibModule, CustomDateAdapter } from 'sb-shared-lib';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-
-// specific locale setting
-import localeFr from '@angular/common/locales/fr';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Platform } from '@angular/cdk/platform';
+import { TopBarComponent } from './_components/top-bar/top-bar.component';
+import { LargeComponent } from './in/large/large.component';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
-import { RightmenuComponent } from './_components/rightmenu/rightmenu.component';
-
-registerLocaleData(localeFr);
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SmallComponent } from './in/small/small.component';
+import { ContentComponent } from './in/large/tabs/content/content.component';
+import { PresentationComponent } from './in/large/tabs/presentation/presentation.component';
+import { QAndAComponent } from './in/large/tabs/q-and-a/q-and-a.component';
+import { ReviewsComponent } from './in/large/tabs/reviews/reviews.component';
 
 @NgModule({
-    declarations: [AppRootComponent, AppComponent, RightmenuComponent],
+    declarations: [
+        AppRootComponent,
+        AppComponent,
+        TopBarComponent,
+        LargeComponent,
+        SmallComponent,
+        ContentComponent,
+        PresentationComponent,
+        QAndAComponent,
+        ReviewsComponent,
+    ],
     imports: [
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
         SharedLibModule,
-        MatNativeDateModule,
-        PlatformModule,
-        NgxMaterialTimepickerModule.setLocale('fr-BE'),
-        MatTableModule,
-        MatButtonModule,
-        MatInputModule,
-        MatListModule,
+        MatTabsModule,
         MatIconModule,
-        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatListModule,
+        MatProgressSpinnerModule,
     ],
     providers: [
         // add HTTP interceptor to inject AUTH header to any outgoing request
@@ -68,7 +63,7 @@ registerLocaleData(localeFr);
             deps: [MAT_DATE_LOCALE, Platform],
         },
     ],
-    exports: [],
     bootstrap: [AppRootComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

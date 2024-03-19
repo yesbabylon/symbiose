@@ -1,0 +1,19 @@
+:host {
+    .top-bar {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+
+        width: 100%;
+        padding: 0 24px;
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-end;
+
+            margin: 0 8px;
+        }
+    }
+}

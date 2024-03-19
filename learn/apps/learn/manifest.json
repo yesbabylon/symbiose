@@ -1,0 +1,14 @@
+{
+    "name": "learning",
+    "description": "",
+    "url": "/learning",
+    "icon": "",
+    "color": "#ff0000",
+    "access": {
+        "groups": [
+            "admins",
+            "users"
+        ]
+    },
+    "show_in_apps": true
+}

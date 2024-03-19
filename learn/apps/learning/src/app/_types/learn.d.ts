@@ -1,19 +1,20 @@
 import * as Equal from './equal';
+import { User } from './equal';
 
-export interface Course {
+export type Course = {
     id: number;
     name: string;
     title: string;
     subtitle: string;
     description: string;
     creator?: number;
-    modules?: String[];
+    modules: Module[];
     modified?: string;
-    langs_ids?: number[];
+    langs_ids?: Record<string, any>[];
     state?: Equal.ModelState;
-}
+};
 
-export interface Module {
+export type Module = {
     id: number;
     identifier: number;
     title: string;
@@ -22,38 +23,40 @@ export interface Module {
     duration: number;
     modified: string;
     state: Equal.ModelState;
-    lessons?: Chapter[];
     creator?: number;
-    chapters?: String[];
-    order?: number;
+    chapters: Chapter[];
+    order: number;
     chapter_count?: number;
-    course_id?: number | Course;
+    course_id: number | Course;
     link?: string;
-}
+};
 
-export interface Chapter {
+export type Chapter = {
     id: number;
     identifier: number;
     modified: string;
     title: string;
+    duration: number;
     description: string;
-    module_id?: number;
+    module_id: number;
     state: Equal.ModelState;
+    page_count: number;
     creator?: number;
-    order?: number;
-    pages?: String[];
-}
+    order: number;
+    pages: Page[];
+};
 
-export interface Page {
+export type Page = {
     id: number;
     identifier: number;
     modified: string;
     next_active: string;
     order: number;
     leaves: Leaf[];
-}
+    chapter_id: number;
+};
 
-export interface Leaf {
+export type Leaf = {
     id: number;
     identifier: number;
     modified: string;
@@ -65,9 +68,9 @@ export interface Leaf {
     state: Equal.ModelState;
     visible: string;
     groups: Group[];
-}
+};
 
-export interface Group {
+export type Group = {
     id: number;
     identifier: number;
     modified: string;
@@ -78,9 +81,9 @@ export interface Group {
     fixed: boolean;
     row_span: number;
     widgets: Widget[];
-}
+};
 
-export interface Widget {
+export type Widget = {
     id: number;
     identifier: number;
     modified: string;
@@ -96,7 +99,7 @@ export interface Widget {
     align: string;
     on_click: string;
     state: Equal.ModelState;
-}
+};
 
 export type WidgetType =
     | 'text'
@@ -121,3 +124,20 @@ export type WidgetType =
     | 'selector_section'
     | 'selector_section_wide'
     | 'selector_popup';
+
+export type UserStatus = {
+    course_id: number;
+    module_id: number;
+    user_id: number;
+    chapter_index: number;
+    page_index: number;
+    page_count: number;
+    is_complete: boolean;
+};
+
+export type UserStatement = {
+    user: User;
+    userAccess: any;
+    userInfo: any;
+    userStatus: UserStatus[];
+};
