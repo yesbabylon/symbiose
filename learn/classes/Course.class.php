@@ -10,7 +10,8 @@ use equal\orm\Model;
 
 class Course extends Model {
 
-    public static function getColumns() {
+    public static function getColumns(): array
+    {
         return [
             'name' => [
                 'type'              => 'string',
@@ -42,7 +43,9 @@ class Course extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'learn\Module',
                 'foreign_field'     => 'course_id',
-                'ondetach'          => 'delete'
+                'order'             => 'order',
+                'sort'              => 'asc',
+                'ondetach'          => 'delete',
             ],
 
             'quizzes_ids' => [

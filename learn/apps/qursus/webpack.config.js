@@ -1,6 +1,6 @@
  var path = require('path');
  var webpack = require('webpack');
- 
+
  module.exports = {
     entry: './build/Learn.js',
     output: {
@@ -18,7 +18,7 @@
         modules: [
             path.resolve(__dirname, 'build/'),
             path.join(__dirname, 'node_modules/')
-        ],        
+        ],
         extensions: ['*', '.js']
     },
     module: {

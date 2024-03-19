@@ -145,7 +145,7 @@ export class WidgetClass {
             case 'code':
                 // normalize code : remove html layout
                 content = $(content.replace(/<br>/g, "").replace(/<\/p><p>/g, "\n")).text();
-                // identitfy target lang
+                // identify target lang
                 let target_lang = 'javascript';
                 let clues:any = {
                     'php': ['```php'],
@@ -266,7 +266,7 @@ export class WidgetClass {
                     }
                     break;
                 case 'image_full()':
-                    if(['image_popup', 'selector_popup'].includes(this.type) && this.image_url && this.image_url.length) {
+                    if(['image_popup', 'selector_popup'].indexOf(this.type) > -1 && this.image_url && this.image_url.length) {
                         this.$container.on('click', () => {
                             if(this.type == 'selector_popup') {
                                 this.$container.addClass('previously_selected');

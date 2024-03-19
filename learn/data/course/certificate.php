@@ -4,9 +4,9 @@ use Dompdf\Options as DompdfOptions;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
 
-use qursus\UserAccess;
-use qursus\Course;
-use qursus\Module;
+use learn\UserAccess;
+use learn\Course;
+use learn\Module;
 
 list($params, $providers) = eQual::announce([
     'description'   => "Returns a fully loaded JSON formatted single module.",
@@ -78,7 +78,7 @@ if(!$access['is_complete']) {
   Retrieve Pack details
 */
 
-$pack = Pack::id($params['id'])->read(['title', 'subtitle', 'modules_ids'])->first();
+$pack = Course::id($params['id'])->read(['title', 'subtitle', 'modules_ids'])->first();
 
 if(!$pack) {
   throw new Exception('unavailable_pack', QN_ERROR_UNKNOWN);

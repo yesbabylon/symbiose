@@ -1,5 +1,5 @@
 <?php
-use qursus\UserAccess;
+use learn\UserAccess;
 
 list($params, $providers) = announce([
     'description'   => "Checks if a pack has been fully completed by current user.",

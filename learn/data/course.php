@@ -28,7 +28,7 @@ $user_id = $auth->userId();
 
 $access_ids = UserAccess::search([['course_id', '=', $params['course_id']], ['user_id', '=', $user_id]])->ids();
 
-if(!count($access_ids)) {
+if (!count($access_ids)) {
     throw new Exception('missing_licence', QN_ERROR_NOT_ALLOWED);
 }
 
@@ -37,6 +37,7 @@ $data = Course::search(['id', '=', $params['course_id']])->read([
     'title',
     'subtitle',
     'description',
+    'langs_ids'=> ['id', 'name', 'code'],
     'modules' => [
         'id',
         'identifier',
@@ -54,48 +55,49 @@ $data = Course::search(['id', '=', $params['course_id']])->read([
             'duration',
             'description',
             'page_count',
-            'pages' => [
-                'id',
-                'identifier',
-                'order',
-//                'next_active',
-//                'next_active_rule',
-                'leaves' => [
-                    'id',
-                    'identifier',
-                    'order',
-//                    'visible',
-//                    'visibility_rule',
-                    'background_image',
-                    'background_stretch',
-                    'background_opacity',
-                    'contrast',
-                    'groups' => [
-                        'id',
-//                        'identifier',
-                        'order',
-                        'direction',
-                        'row_span',
-//                        'visible',
-//                        'visibility_rule',
-                        'fixed',
-                        'widgets' => [
-                            'id',
-                            'identifier',
-                            'order',
-                            'content',
-//                            'type',
-                            'image_url',
-                            'video_url',
-                            'sound_url',
-                            'has_separator_left',
-                            'has_separator_right',
-                            'align',
-                            'on_click'
-                        ]
-                    ]
-                ],
-            ]
+//            'pages' => [
+//                'id',
+//                'identifier',
+//                'order',
+////                'next_active',
+////                'next_active_rule',
+//                // ! Cut here
+//                'leaves' => [
+//                    'id',
+//                    'identifier',
+//                    'order',
+////                    'visible',
+////                    'visibility_rule',
+//                    'background_image',
+//                    'background_stretch',
+//                    'background_opacity',
+//                    'contrast',
+//                    'groups' => [
+//                        'id',
+////                        'identifier',
+//                        'order',
+//                        'direction',
+//                        'row_span',
+////                        'visible',
+////                        'visibility_rule',
+//                        'fixed',
+//                        'widgets' => [
+//                            'id',
+//                            'identifier',
+//                            'order',
+//                            'content',
+////                            'type',
+//                            'image_url',
+//                            'video_url',
+//                            'sound_url',
+//                            'has_separator_left',
+//                            'has_separator_right',
+//                            'align',
+//                            'on_click'
+//                        ]
+//                    ]
+//                ],
+//            ]
         ]
     ]
 ],

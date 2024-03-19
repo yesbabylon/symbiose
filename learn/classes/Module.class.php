@@ -88,6 +88,7 @@ class Module extends Model {
                 'sort'              => 'asc',
                 'ondetach'          => 'delete',
                 'onupdate'          => 'onupdateChaptersIds'
+
             ],
 
             'course_id' => [
