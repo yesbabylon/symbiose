@@ -17,14 +17,14 @@ list($params, $providers) = announce([
         ],
     ],
     'access' => [
-        'groups'            => ['admin'],
+        'groups'            => ['admins'],
     ],
     'response'      => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm', 'auth'] 
+    'providers'     => ['context', 'orm', 'auth']
 ]);
 
 
