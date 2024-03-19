@@ -1,0 +1,58 @@
+<section class="lesson-edit scrollbar-style">
+    <app-top-bar>
+        <ng-container ngProjectAs="[actions]">
+            <button mat-raised-button (click)="navigateToViewMode()" color="primary">View</button>
+        </ng-container>
+    </app-top-bar>
+    <div class="container">
+        <div class="details" *ngIf="lesson">
+            <div class="left">
+                <eq-string
+                    [title]="'Lesson title'"
+                    [hint]="'Title of the lesson'"
+                    [value]="lesson.title"
+                    [mode]="'edit'"
+                    [size]="'large'"
+                    [required]="true"
+                    (valueChange)="updateLessonField($event, 'title')">
+                </eq-string>
+                <eq-text
+                    [title]="'Lesson description'"
+                    [hint]="'Description of the lesson'"
+                    [value]="lesson.description"
+                    [mode]="'edit'"
+                    [size]="'normal'"
+                    [required]="true"
+                    [autoGrow]="true"
+                    [minHeight]="88"
+                    (valueChange)="updateLessonField($event, 'description')">
+                    >
+                </eq-text>
+            </div>
+
+            <div class="right">
+                <div class="additional-information mat-elevation-z3">
+                    <span class="last-update" title="Last modification date">
+                        <mat-icon>schedule</mat-icon>
+                        <span> {{ lesson.modified | date: 'shortDate' }}</span>
+                    </span>
+
+                    <div class="author" title="Author">
+                        <mat-icon>person</mat-icon>
+                        <span>{{ author }}</span>
+                    </div>
+
+                    <div class="pages-count" title="Pages count">
+                        <mat-icon>auto_stories</mat-icon>
+                        <span>{{ lesson.pages?.length }}</span>
+                    </div>
+
+                    <div class="learning-time" title="Learning time">
+                        <mat-icon>timer</mat-icon>
+                        <span>{{ +(90 / 60).toFixed(0) - 1 }}h {{ 90 * (1000 * 60) | date: 'm' }}min</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

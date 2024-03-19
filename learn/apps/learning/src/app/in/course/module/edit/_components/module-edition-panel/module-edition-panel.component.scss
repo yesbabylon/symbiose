@@ -1,0 +1,88 @@
+:host {
+    display: block;
+    width: 480px;
+
+    .edit-panel {
+        height: calc(100svh - 103px);
+        padding: 16px 16px 0 8px;
+
+        .drop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            justify-content: center;
+
+            .item {
+                cursor: grab;
+
+                display: flex;
+                flex-direction: row;
+
+                width: 100%;
+                height: min-content;
+                margin-bottom: 8px;
+                padding: 4px 8px 0 4px;
+
+                > *|* {
+                    pointer-events: none;
+                    user-select: none;
+                }
+
+                .drag {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: 40px;
+                    min-width: 40px;
+                    max-width: 40px;
+
+                    .icon {
+                        width: auto;
+                    }
+                }
+
+                .content {
+                    width: 100%;
+                    padding-left: 5px;
+
+                    .title {
+                        overflow: hidden;
+
+                        width: 92%;
+
+                        font-size: 17px;
+                        color: var(--color-text-content-title);
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cdk-drag-preview {
+    display: flex;
+    flex-direction: row;
+
+    height: min-content;
+    margin-bottom: 8px;
+    padding: 4px 8px 0 4px;
+
+    background: #f5f5f5;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%),
+    0 0 1px 1px rgb(0 0 0 / 50%);
+
+    h4 {
+        overflow: hidden;
+
+        width: 87%;
+        margin-left: 3%;
+
+        font-size: 17px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
