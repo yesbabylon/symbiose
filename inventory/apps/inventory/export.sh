@@ -1,2 +1,3 @@
 #!/bin/bash
-rm -rf ../../inventory & mkdir ../../inventory & cp -a dist/symbiose/* ../../inventory/
+# cp -r version ../version && cp -r web.app ../web.app && cp -r manifest.json ../manifest.json
+rm -rf ../../../../public/inventory && mkdir ../../../../public/inventory && cp -a dist/symbiose/* ../../../../public/inventory/

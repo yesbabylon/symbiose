@@ -51,6 +51,13 @@ class Product extends Model {
                 'description'       => 'Server used by product.'
             ],
 
+            'instances_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\service\Instance',
+                'foreign_field'     => 'product_id',
+                'description'       => 'Instances used by product.'
+            ],
+
             'services_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\service\Service',

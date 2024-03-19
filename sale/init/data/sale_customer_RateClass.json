@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "name": "Default class",
-                "description": "Default class to modify if more classes are needed"
+                "description": "Default fare class."
             }
         ]
     },
@@ -16,7 +16,7 @@
         "data": [
             {
                 "id": 1,
-                "description": "Classe par défaut à modifier si plusieurs classes sont nécessaires"
+                "description": "Classe tarifaire par défaut."
             }
         ]
     }

@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace inventory;
+namespace inventory\server;
 
 use equal\orm\Model;
 
