@@ -1,0 +1,48 @@
+:host {
+    /* These two properties are used for the rightmenu */
+    display: block;
+    width: max-content;
+
+    .edit-panel {
+        width: 480px;
+        height: calc(100svh - 103px);
+        padding: 16px 16px 0 8px;
+
+        .mat-tree {
+            width: 100%;
+            background: transparent;
+
+            .mat-tree-node {
+                display: block;
+                width: 100%;
+                background: #f5f5f5;
+
+                .fix-height-position-icon {
+                    position: relative;
+                    bottom: 1px;
+                }
+
+                .drag-button {
+                    margin-right: 8px;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .text-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cursor-move {
+            cursor: grab;
+        }
+    }
+}
+
+.cdk-drag-preview {
+    background: #f5f5f5;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%),
+    0 0 1px 1px rgb(0 0 0 / 50%);
+}

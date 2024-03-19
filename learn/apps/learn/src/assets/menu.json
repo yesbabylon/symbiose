@@ -1,0 +1,84 @@
+{
+    "name": "YesBabylon e-learning platform menu",
+    "access": {
+        "groups": [
+            "users"
+        ]
+    },
+    "layout": {
+        "items": [
+            {
+                "id": "accueil",
+                "type": "entry",
+                "label": "Accueil",
+                "description": "Accueil de YesBabylon e-learning platform",
+                "icon": "home",
+                "url": "/"
+            },
+            {
+                "id": "courses",
+                "type": "entry",
+                "label": "courses",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "school",
+                "url": "/courses"
+            },
+            {
+                "id": "course/1",
+                "type": "entry",
+                "label": "course",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "school",
+                "url": "/course/1"
+            },
+            {
+                "id": "cours 1 edit",
+                "type": "entry",
+                "label": "course edit",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "school",
+                "url": "/course/1/edit"
+            },
+            {
+                "id": "course/1/module/1",
+                "type": "entry",
+                "label": "module",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "view_module",
+                "url": "course/1/module/1"
+            },
+            {
+                "id": "course/1/module/1/edit",
+                "type": "entry",
+                "label": "module edit",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "view_module",
+                "url": "course/1/module/1/edit"
+            },
+            {
+                "id": "course/1/module/1/lesson/1",
+                "type": "entry",
+                "label": "lesson",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "play_lesson",
+                "url": "course/1/module/1/lesson/1"
+            },
+            {
+                "id": "course/1/module/1/lesson/1/edit",
+                "type": "entry",
+                "label": "lesson edit",
+                "description": "Cours de YesBabylon e-learning platform",
+                "icon": "play_lesson",
+                "url": "course/1/module/1/lesson/1/edit"
+            },
+            {
+                "id": "account",
+                "type": "entry",
+                "label": "Mon compte",
+                "description": "Mon compte de YesBabylon e-learning platform",
+                "icon": "manage_accounts",
+                "url": "/account"
+            }
+        ]
+    }
+}

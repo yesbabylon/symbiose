@@ -1,0 +1,5 @@
+<ul>
+    <li *ngFor="let routeSegment of routeSegments$ | async">
+        <a [href]="'/#/' + routeSegment.path">{{ routeSegment.label }}</a>
+    </li>
+</ul>

@@ -1,0 +1,40 @@
+:host {
+    .course-module-lesson-page-list-item {
+        cursor: grab;
+
+        display: flex;
+        flex-direction: row;
+
+        width: 100%;
+        height: min-content;
+        margin-bottom: 8px;
+        padding: 4px 8px 4px 4px;
+
+        border: 1px solid rgb(0 0 0 / 12%);
+        border-radius: 5px;
+
+        .content {
+            padding-left: 5px;
+
+            .title {
+                font-size: 17px;
+                font-weight: 600;
+                color: var(--color-text-content-title);
+            }
+
+            .description {
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+
+                margin-top: 0;
+                margin-bottom: 0;
+
+                font-size: 14px;
+                text-overflow: ellipsis;
+
+                -webkit-line-clamp: 2;
+            }
+        }
+    }
+}

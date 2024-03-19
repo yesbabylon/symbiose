@@ -1,0 +1,14 @@
+<div id="sb-container" class="sb-container"></div>
+<app-large
+    *ngIf="device === 'large'"
+    [userStatement]="userStatement"
+    [environnementInfo]="environnementInfo"
+    [appInfo]="appInfo"
+    [course]="course"
+    [hasAccessToCourse]="hasAccessToCourse"
+    [isLoading]="isLoading"
+    [currentModuleProgressionIndex]="currentModuleProgressionIndex"
+    [currentChapterProgressionIndex]="currentChapterProgressionIndex"
+    (moduleToLoad)="onModuleClick($event)"
+></app-large>
+<app-small *ngIf="device === 'small'"></app-small>

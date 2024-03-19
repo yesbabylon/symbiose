@@ -1,0 +1,80 @@
+<section class="course-edit scrollbar-style">
+    <app-top-bar>
+        <ng-container ngProjectAs="[actions]">
+            <button mat-raised-button (click)="navigateToViewMode()" color="primary">View</button>
+        </ng-container>
+    </app-top-bar>
+    <div class="container">
+        <div class="details" *ngIf="course">
+            <div class="left">
+                <eq-string
+                    [title]="'Course title'"
+                    [hint]="'Title of the course'"
+                    [value]="course.title"
+                    [mode]="'edit'"
+                    [size]="'large'"
+                    [required]="true"
+                    (valueChange)="updateCourseField($event, 'title')">
+                </eq-string>
+                <eq-string
+                    [title]="'Course subtitle'"
+                    [hint]="'Subtitle of the course'"
+                    [value]="course.subtitle"
+                    [mode]="'edit'"
+                    [size]="'normal'"
+                    [required]="true"
+                    (valueChange)="updateCourseField($event, 'subtitle')">
+                </eq-string>
+                <eq-text
+                    [title]="'Course description'"
+                    [hint]="'Description of the course'"
+                    [value]="course.description"
+                    [mode]="'edit'"
+                    [size]="'normal'"
+                    [required]="true"
+                    [autoGrow]="true"
+                    [minHeight]="88"
+                    (valueChange)="updateCourseField($event, 'description')">
+                </eq-text>
+            </div>
+
+            <div class="right">
+                <img
+                    src="https://placehold.co/600x400/EEE/31343C?text=Image+course"
+                    alt=""
+                    class="img mat-elevation-z3" />
+
+                <div class="additional-information mat-elevation-z3">
+                    <span class="last-update" title="Last modification date">
+                        <mat-icon>schedule</mat-icon>
+                        <span> {{ course.modified | date: 'shortDate' }}</span>
+                    </span>
+
+                    <div class="author" title="Author">
+                        <mat-icon>person</mat-icon>
+                        <span>{{ author }}</span>
+                    </div>
+
+                    <div class="modules-count" title="Modules count">
+                        <mat-icon>view_module</mat-icon>
+                        <span>{{ course.modules?.length }}</span>
+                    </div>
+
+                    <div class="learning-time" title="Learning time">
+                        <mat-icon>timer</mat-icon>
+                        <span>{{ +(90 / 60).toFixed(0) - 1 }}h {{ 90 * (1000 * 60) | date: 'm' }}min</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h3 class="title text__course__title">Modules in this course</h3>
+            <app-course-module-list-item></app-course-module-list-item>
+        </div>
+
+        <!--    <div class="edit">-->
+        <!--        <app-course-edition-panel></app-course-edition-panel>-->
+        <!--    </div>-->
+    </div>
+</section>

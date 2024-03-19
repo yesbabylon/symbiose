@@ -1,0 +1,148 @@
+/* stylelint-disable no-descending-specificity */
+@use "sass:color";
+
+:host {
+    .top-bar {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        width: 100%;
+        padding: 12px;
+
+        border-bottom: 1px solid var(--color-border);
+
+        .brand {
+            width: 150px;
+            min-width: 150px;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .informations {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 100%;
+            margin: 0 32px;
+
+            .course {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                // .name {
+                // }
+
+                .breadcrumb {
+                    position: relative;
+
+                    display: flex;
+                    gap: 24px;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+
+                    &:first-child:is(.part) {
+                        text-align: right;
+
+
+                    }
+
+                    .part + .part::before {
+                        content: '›';
+
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        transform: translateY(-31%) translateX(-16px);
+
+                        display: block;
+
+                        font-size: 175%;
+                    }
+
+                    .part {
+                        position: relative;
+
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+
+
+                         .label {
+                             font-weight: 600;
+                         }
+
+                         .progress {
+                             color: rgb(0 0 0 / 60%);
+                         }
+                    }
+                }
+            }
+
+            .progression {
+                display: flex;
+                flex-direction: row;
+                gap: 24px;
+                align-items: center;
+                justify-content: flex-start;
+
+                .text {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+
+                    .title {
+                        font-weight: 600;
+                    }
+                }
+
+                .chart {
+                    position: relative;
+                    width: 75px;
+                    min-width: 75px;
+                    height: 75px;
+
+                    *:not(.percentage) {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+
+                    .background::ng-deep svg circle {
+                        stroke: rgb(0 0 0 / 12%);
+                    }
+
+                    .percentage {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+
+                        color: color.adjust(#3f51b5, $lightness: -20%);
+                    }
+                }
+            }
+        }
+
+        .profile {
+            width: 50px;
+
+            img {
+                width: 50px;
+                border-radius: 9999px;
+            }
+        }
+    }
+}

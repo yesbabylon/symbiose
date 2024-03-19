@@ -1,0 +1,17 @@
+<ng-container *ngIf="modules">
+    <div class="course-module-lesson-list" cdkDropList (cdkDropListDropped)="onDrop($event)">
+        <div
+            cdkDrag
+            *ngFor="let module of modules; trackBy: trackModuleById"
+            class="course-module-list-item"
+            (click)="navigateToModule(module.id)">
+            <div class="drag">
+                <mat-icon class="icon">drag_indicator</mat-icon>
+            </div>
+            <div class="content">
+                <h4 class="title">{{ module.title }}</h4>
+                <p class="description">{{ module.description }}</p>
+            </div>
+        </div>
+    </div>
+</ng-container>

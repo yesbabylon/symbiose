@@ -1,0 +1,32 @@
+/* stylelint-disable selector-class-pattern */
+.text__course__title {
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    line-height: 26.4px !important;
+    color: #424242 !important;
+    letter-spacing: -0.2667px !important;
+}
+
+.text__course__subtitle {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    color: rgb(66 66 66) !important;
+    letter-spacing: normal !important;
+}
+
+.text__course__description {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    color: rgb(66 66 66) !important;
+    letter-spacing: normal !important;
+}
+
+@media screen and (width >= 1366px) {
+    .text__course__title {
+        font-size: 32px !important;
+        font-weight: 400 !important;
+        line-height: 38.4px !important;
+    }
+}

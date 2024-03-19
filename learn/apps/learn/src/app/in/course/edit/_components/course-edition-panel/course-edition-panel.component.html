@@ -1,0 +1,68 @@
+<ng-container *ngIf="modules">
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>settings</mat-icon>
+                Parameters
+            </ng-template>
+            <div class="edit-panel scrollbar-style">Hello</div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>account_tree</mat-icon>
+                Tree
+            </ng-template>
+            <div class="edit-panel scrollbar-style">
+                <mat-tree
+                    [dataSource]="dataSource"
+                    [treeControl]="treeControl"
+                    (cdkDropListDropped)="onDrop($event)"
+                    cdkDropList>
+                    <mat-tree-node
+                        class="cursor-pointer text-ellipsis"
+                        *matTreeNodeDef="let node"
+                        matTreeNodePadding=""
+                        cdkDrag
+                        [cdkDragData]="node"
+                        [title]="node.title">
+                        <button mat-icon-button [disabled]="true"></button>
+                        <mat-icon cdkDragHandle class="cursor-move drag-button fix-height-position-icon"
+                            >drag_handle</mat-icon
+                        >
+                        {{ node.title }}
+                    </mat-tree-node>
+                    <mat-tree-node
+                        class="cursor-pointer text-ellipsis"
+                        *matTreeNodeDef="let node; when: hasChild"
+                        matTreeNodePadding=""
+                        cdkDrag
+                        [cdkDragData]="node"
+                        [title]="node.title">
+                        <button
+                            mat-icon-button
+                            matTreeNodeToggle
+                            (click)="expansionModel.toggle(node.id)"
+                            [attr.aria-label]="'Toggle ' + node.title">
+                            <mat-icon class="mat-icon-rtl-mirror fix-height-position-icon">
+                                {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                            </mat-icon>
+                        </button>
+                        <mat-icon cdkDragHandle class="cursor-move drag-button fix-height-position-icon"
+                            >drag_handle</mat-icon
+                        >
+                        {{ node.title }}
+                    </mat-tree-node>
+                </mat-tree>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>public</mat-icon>
+                SEO
+            </ng-template>
+            <div class="edit-panel scrollbar-style">!!!</div>
+        </mat-tab>
+    </mat-tab-group>
+</ng-container>

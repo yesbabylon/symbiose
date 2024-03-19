@@ -1,0 +1,41 @@
+:host {
+    margin-left: 12px;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        vertical-align: baseline;
+        list-style: none;
+
+        li {
+            display: inline;
+
+            &:before {
+                content: "›";
+                margin: 0 10px;
+                font-size: 2rem;
+            }
+
+            &:first-child:before {
+                content: "";
+                margin: 0;
+            }
+
+            a {
+                cursor: pointer;
+
+                overflow: hidden;
+
+                box-sizing: border-box;
+
+                font-size: 24px;
+                line-height: 48px;
+                color: var(--mdc-theme-primary);
+                text-decoration: none;
+                text-overflow: ellipsis;
+                letter-spacing: 0;
+                white-space: nowrap;
+            }
+        }
+    }
+}
