@@ -164,7 +164,7 @@ class OrderPayment extends Model {
             foreach($payments as $id => $payment) {
                 $result[$id] = 0.0;
                 if($payment['total_due'] > 0) {
-                    $result[$id] = round($payment['total_paid'] - $payment['total_due'], 2);
+                    $result[$id] = -round($payment['total_paid'] - $payment['total_due'], 2);
                 }
             }
         }
