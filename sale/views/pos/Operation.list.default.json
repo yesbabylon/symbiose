@@ -11,6 +11,14 @@
             "ACTION.CREATE" : false
         }
     },
+    "operations": {
+        "total": {
+            "amount": {
+                "usage": "numeric/float",
+                "operation": "SUM"
+            }
+        }
+    },
     "layout": {
         "items": [
             {
