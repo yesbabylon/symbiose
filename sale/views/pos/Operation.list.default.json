@@ -14,7 +14,7 @@
     "operations": {
         "total": {
             "amount": {
-                "usage": "numeric/float",
+                "usage": "amount/money:2",
                 "operation": "SUM"
             }
         }
