@@ -183,7 +183,7 @@ class BankStatementLine extends Model {
      * @param  string                       $lang       Language in which multilang fields are being updated.
      * @return array            Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang) {
+    public static function canupdate($om, $ids, $values, $lang) {
         if(isset($values['payments_ids'])) {
             $new_payments_ids = array_map(function ($a) {return abs($a);}, $values['payments_ids']);
             $new_payments = $om->read(Payment::getType(), $new_payments_ids, ['amount'], $lang);
@@ -193,12 +193,9 @@ class BankStatementLine extends Model {
                 if($pid < 0) {
                     $new_payments_diff -= $new_payments[abs($pid)]['amount'];
                 }
-                else {
-                    $new_payments_diff += $new_payments[$pid]['amount'];
-                }
             }
 
-            $lines = $om->read(self::getType(), $oids, ['payments_ids', 'amount', 'remaining_amount'], $lang);
+            $lines = $om->read(self::getType(), $ids, ['payments_ids', 'amount', 'remaining_amount'], $lang);
 
             if($lines > 0) {
                 foreach($lines as $lid => $line) {
@@ -213,7 +210,7 @@ class BankStatementLine extends Model {
                     }
                 }
             }
-            return parent::canupdate($om, $oids, $values, $lang);
+            return parent::canupdate($om, $ids, $values, $lang);
         }
     }
 
