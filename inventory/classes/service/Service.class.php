@@ -114,7 +114,7 @@ class Service extends Model {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Software',
+                'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'service_id',
                 'description'       => 'Access about to the service.'
             ],

@@ -93,7 +93,7 @@ list($params, $providers) = eQual::announce([
 
         'software_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\Software',
+            'foreign_object'    => 'inventory\server\Software',
             'description'       => 'Software to which the service belongs.'
         ],
 
