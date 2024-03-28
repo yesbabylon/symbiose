@@ -169,19 +169,25 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "25%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Origin",
                                                 "value": "origin",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Related ticket",
+                                                "label": "Related ticket id",
                                                 "value": "ticket_id",
-                                                "width": "50%"
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Reference",
+                                                "value": "reference",
+                                                "width": "66%"
                                             }
                                         ]
                                     }
@@ -190,7 +196,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "25%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
