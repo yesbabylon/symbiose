@@ -8,8 +8,12 @@ namespace sale\accounting\invoice;
 
 class Invoice extends \finance\accounting\Invoice {
 
+    public static function getName() {
+        return "Sale invoice";
+    }
+
     public static function getDescription() {
-        return "A sale invoice is a legal document issued after some goods have been sold to a purchaser.";
+        return "A sale invoice is a legal document issued after some goods have been sold to a customer.";
     }
 
     public static function getColumns() {

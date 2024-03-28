@@ -116,18 +116,12 @@ class Invoice extends Model {
                 'dependencies'      =>['number']
             ],
 
-            /** @deprecated */
-            'partner_id' => [
-                'type'              => 'alias',
-                'alias'             => 'customer_id'
-            ],
-
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true,
-                'dependencies'      =>['number']
+                'dependencies'      => ['number']
             ],
 
             'price' => [
@@ -154,7 +148,7 @@ class Invoice extends Model {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Detailed lines of the invoice.',
                 'ondetach'          => 'delete',
-                'onupdate'          => 'onupdateInvoiceLinesIds'
+                'dependencies'      => ['total', 'price']
             ],
 
             'invoice_line_groups_ids' => [
@@ -163,7 +157,7 @@ class Invoice extends Model {
                 'foreign_field'     => 'invoice_id',
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
-                'onupdate'          => 'onupdateInvoiceLineGroupsIds'
+                'dependencies'      => ['total', 'price']
             ],
 
             'accounting_entries_ids' => [
@@ -370,14 +364,6 @@ class Invoice extends Model {
             }
         }
         return $result;
-    }
-
-    public static function onupdateInvoiceLinesIds($om, $oids, $values, $lang) {
-        $om->update(__CLASS__, $oids, ['price' => null, 'total' => null]);
-    }
-
-    public static function onupdateInvoiceLineGroupsIds($om, $oids, $values, $lang) {
-        $om->update(__CLASS__, $oids, ['price' => null, 'total' => null]);
     }
 
     // #todo - move this to onbefore

@@ -22,7 +22,7 @@ list($params, $providers) = announce([
 
         'invoice_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'finance\accounting\Invoice',
+            'foreign_object'    => 'sale\accounting\invoice\Invoice',
             'description'       => 'If left empty a new invoice proforma will be created.',
             'domain'            => [
                 ['customer_id', '=', 'parent.customer_id'],

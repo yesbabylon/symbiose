@@ -49,7 +49,7 @@ list($params, $providers) = eQual::announce([
 
         'invoice_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'finance\accounting\Invoice',
+            'foreign_object'    => 'sale\accounting\invoice\Invoice',
             'description'       => 'Invoice the line is related to.'
         ],
 

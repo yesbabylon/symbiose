@@ -8,6 +8,10 @@ namespace purchase\accounting\invoice;
 
 class Invoice extends \finance\accounting\Invoice {
 
+    public static function getName() {
+        return "Purchase invoice";
+    }
+
     public static function getDescription() {
         return "A purchase invoice is a legal document issued after some goods have been bought from a supplier.";
     }

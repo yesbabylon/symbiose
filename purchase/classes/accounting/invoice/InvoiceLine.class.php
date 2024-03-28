@@ -12,14 +12,14 @@ class InvoiceLine extends \finance\accounting\InvoiceLine {
         return [
             'invoice_line_group_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
+                'foreign_object'    => 'purchase\accounting\invoice\InvoiceLineGroup',
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
                 'ondelete'          => 'cascade'
             ],
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'purchase\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'

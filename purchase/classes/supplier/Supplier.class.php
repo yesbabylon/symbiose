@@ -6,7 +6,10 @@
 */
 namespace purchase\supplier;
 
-class Supplier extends \identity\Partner {
+use identity\Identity;
+use identity\Partner;
+
+class Supplier extends Partner {
 
     public function getTable() {
         return 'purchase_supplier_supplier';
@@ -32,7 +35,7 @@ class Supplier extends \identity\Partner {
 
             'invoices_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'purchase\accounting\Invoice',
+                'foreign_object'    => 'purchase\accounting\invoice\Invoice',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'Purchase invoices from the supplier.'
             ]
@@ -40,4 +43,14 @@ class Supplier extends \identity\Partner {
         ];
     }
 
+    public static function onafterupdate($self, $values) {
+        parent::onafterupdate($self, $values);
+
+        $self->read(['partner_identity_id' => ['id', 'supplier_id']]);
+        foreach($self as $id => $customer) {
+            if(is_null($customer['partner_identity_id']['supplier_id'])) {
+                Identity::id($customer['partner_identity_id']['id'])->update(['supplier_id' => $id]);
+            }
+        }
+    }
 }
