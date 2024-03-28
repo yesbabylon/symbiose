@@ -100,7 +100,7 @@ class Customer extends \identity\Partner {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\Software',
+                'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List softwares of the customers.'
             ],
