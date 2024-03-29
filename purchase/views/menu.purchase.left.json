@@ -1,0 +1,34 @@
+{
+    "name": "Purchase menu",
+    "search": false,
+    "layout": {
+        "items": [
+            {
+                "id": "item.suppliers",
+                "type": "entry",
+                "label": "Suppliers",
+                "icon": "storefront",
+                "description": "",
+                "context": {
+                    "entity": "purchase\\supplier\\Supplier",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.invoices",
+                "type": "entry",
+                "label": "Invoices",
+                "icon": "receipt_long",
+                "description": "",
+                "context": {
+                    "entity": "purchase\\accounting\\invoice\\Invoice",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            }
+        ]
+    }
+}

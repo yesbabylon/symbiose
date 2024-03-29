@@ -1,0 +1,29 @@
+{
+    "name": "purchase",
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": [
+        "core",
+        "finance"
+    ],
+    "apps": [
+        {
+            "id": "purchase",
+            "name": "Purchase",
+            "extends": "app",
+            "description": "Application purchase",
+            "icon": "storefront",
+            "color": "#a13a32",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "purchase.left"
+                }
+            }
+        }
+    ]
+}
