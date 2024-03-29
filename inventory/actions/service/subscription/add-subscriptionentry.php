@@ -63,13 +63,15 @@ $subscription_entry = SubscriptionEntry::search([
 if(!$subscription_entry) {
     $subscription_entry = SubscriptionEntry::create([
             'object_id'       => $subscription['id'],
-            'subscription_id' => $subscription['id'],
             'is_billable'     => $subscription['is_billable'],
             'customer_id'     => $subscription['customer_id'],
             'product_id'      => $subscription['product_id'],
             'date_from'       => $subscription['date_from'],
             'date_to'         => $subscription['date_to'],
-            'price_id'        => $subscription['price_id'],
+            'price_id'        => $subscription['price_id']
+        ])
+        ->update([
+            'subscription_id' => $subscription['id'],
             'unit_price'      => $subscription['price']
         ])
         ->first();
