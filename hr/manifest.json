@@ -1,0 +1,29 @@
+{
+    "name": "hr",
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": [
+        "core",
+        "identity"
+    ],
+    "apps": [
+        {
+            "id": "hr",
+            "name": "Human resources",
+            "extends": "app",
+            "description": "Application human resources",
+            "icon": "groups",
+            "color": "#dd5281",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "hr.left"
+                }
+            }
+        }
+    ]
+}
