@@ -83,7 +83,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
                 'required'          => true,
-                'dependencies'      => ['name', 'price_id']
+                'dependencies'      => ['price_id']
             ],
 
             'price_id' => [
