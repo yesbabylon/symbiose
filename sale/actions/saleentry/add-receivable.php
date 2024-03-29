@@ -38,7 +38,8 @@ $sale_entry = SaleEntry::id($params['id'])
         'price_id',
         'unit_price',
         'qty',
-        'has_receivable'
+        'has_receivable',
+        'receivable_name'
     ])
     ->first();
 
@@ -80,9 +81,9 @@ if($sale_entry['object_class'] !== 'timetrack\Project') {
 }
 
 if(is_null($receivable)) {
-    $objectName = 'Sale';
+    $object_name = 'Sale';
     if(!is_null($sale_entry['object_class'])) {
-        $objectName = array_reverse(
+        $object_name = array_reverse(
             explode('\\', $sale_entry['object_class'])
         )[0];
     }
@@ -95,7 +96,8 @@ if(is_null($receivable)) {
         'unit_price'           => $sale_entry['unit_price'],
         'vat_rate'             => $price['vat_rate'],
         'qty'                  => $sale_entry['qty'],
-        'description'          => "Reference $objectName entry product.",
+        'name'                 => $sale_entry['receivable_name'],
+        'description'          => "Reference $object_name entry product.",
     ])
         ->first();
 
