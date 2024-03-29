@@ -6,5 +6,26 @@
         "finance",
         "inventory"
     ],
-    "apps": ["sale", "pos"]
+    "apps": [
+        {
+            "id": "sale",
+            "name": "Sale",
+            "extends": "app",
+            "description": "Application sale",
+            "icon": "store",
+            "color": "#772923",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "sale.left"
+                }
+            }
+        },
+        "sale",
+        "pos"
+    ]
 }

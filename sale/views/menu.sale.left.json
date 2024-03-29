@@ -4,249 +4,186 @@
         "groups": ["sale.default.user"]
     },
     "layout": {
-        "items": [{
-                "id": "item.bank_statements",
-                "label": "Statements",
-                "description": "",
-                "icon": "list_alt",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.bank_statements.statements_to_process",
-                        "type": "entry",
-                        "label": "Statements to process",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
-                            "view": "list.default",
-                            "order": "date",
-                            "sort": "desc",
-                            "domain": ["status", "=", "pending"]
-                        }
-                    },
-                    {
-                        "id": "item.bank_statements.all",
-                        "type": "entry",
-                        "label": "All Bank Statements",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
-                            "view": "list.default",
-                            "order": "date",
-                            "sort": "desc"
-                        }
-                    },
-                    {
-                        "id": "item.bank_statements.lines_to_review",
-                        "type": "entry",
-                        "label": "Lines to review",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.default",
-                            "order": "date",
-                            "sort": "desc",
-                            "domain": ["status", "=", "pending"]
-                        }
-                    },
-                    {
-                        "id": "item.bank_statements.all_lines",
-                        "type": "entry",
-                        "label": "All lines",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.default",
-                            "order": "date",
-                            "sort": "desc"
-                        }
-                    },
-                    {
-                        "id": "item.bank_statements.statements_ready",
-                        "type": "entry",
-                        "label": "Statements",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.reconciled",
-                            "domain": [
-                                ["status", "=", "reconciled"]
-                            ]
-                        }
-                    }
-                ]
-            },
+        "items": [
             {
-                "id": "item.customers",
+                "id": "item.customer",
+                "type": "entry",
                 "label": "Customers",
+                "icon": "face",
                 "description": "",
-                "icon": "person",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.customers_types",
-                        "label": "Types",
-                        "description": "",
-                        "icon": "person_outline",
-                        "type": "parent",
-                        "children": [
-                            {
-                                "id": "item.all_customers_types",
-                                "type": "entry",
-                                "label": "All types",
-                                "description": "",
-                                "route": "/",
-                                "context": {
-                                    "entity": "sale\\customer\\CustomerType",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.customers_natures",
-                        "label": "Natures",
-                        "description": "",
-                        "icon": "person_outline",
-                        "type": "parent",
-                        "children": [
-                            {
-                                "id": "item.all_customers_natures",
-                                "type": "entry",
-                                "label": "All natures",
-                                "description": "",
-                                "route": "/",
-                                "context": {
-                                    "entity": "sale\\customer\\CustomerNature",
-                                    "view": "list.default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "id": "item.new_customer",
-                        "type": "entry",
-                        "label": "New customer",
-                        "description": "",
-                        "icon": "add",
-                        "route": "/",
-                        "context": {
-                            "entity": "sale\\customer\\Customer",
-                            "view": "form.create",
-                            "purpose": "create",
-                            "domain": ["relationship", "=", "customer"]
-                        }
-                    },
-                    {
-                        "id": "item.all_customers",
-                        "type": "entry",
-                        "label": "All customers",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "sale\\customer\\Customer",
-                            "view": "list.default",
-                            "domain": ["relationship", "=", "customer"]
-                        }
-                    },
-                    {
-                        "id": "item.all_partners",
-                        "type": "entry",
-                        "label": "All partners",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "identity\\Partner",
-                            "view": "list.default"
-                        }
-                    }
-
-                ]
+                "context": {
+                    "entity": "sale\\customer\\Customer",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
             },
-
             {
-                "id": "item.fundings",
-                "label": "Fundings",
+                "id": "item.sale.entry",
+                "type": "entry",
+                "label": "Sale Entries",
+                "icon": "label",
                 "description": "",
-                "icon": "person",
+                "context": {
+                    "entity": "sale\\SaleEntry",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.all.receivables",
                 "type": "parent",
+                "label": "Receivables",
+                "icon": "note",
+                "description": "",
                 "children": [
                     {
-                        "id": "item.fundings.waiting",
+                        "id": "item.receivablesqueue",
                         "type": "entry",
-                        "label": "Waiting for payment",
+                        "label": "Receivable Queues",
+                        "icon": "queue",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Funding",
+                            "entity": "sale\\receivable\\ReceivablesQueue",
                             "view": "list.default",
-                            "domain": ["is_paid", "=", false]
+                            "order": "id",
+                            "sort": "asc"
                         }
                     },
                     {
-                        "id": "item.fundings.overdue",
+                        "id": "item.receivable",
                         "type": "entry",
-                        "label": "Overdue fundings",
+                        "label": "All Receivables",
+                        "icon": "list",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Funding",
+                            "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",
-                            "domain": [ ["due_date", "<=", "date.this.day"],  ["is_paid", "=", false] ]
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.receivable.pending",
+                        "type": "entry",
+                        "label": "Pending Receivables",
+                        "icon": "pending_actions",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\receivable\\Receivable",
+                            "view": "list.pending",
+                            "order": "id",
+                            "sort": "asc"
                         }
                     }
                 ]
             },
             {
                 "id": "item.invoices",
+                "type": "entry",
                 "label": "Invoices",
+                "icon": "receipt_long",
                 "description": "",
-                "icon": "person",
+                "context": {
+                    "entity": "sale\\accounting\\invoice\\Invoice",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.catalog",
                 "type": "parent",
+                "label": "Catalog",
+                "icon": "collections_bookmark",
+                "description": "",
                 "children": [
                     {
-                        "id": "item.invoices.all",
+                        "id": "item.catalog.products",
                         "type": "entry",
-                        "label": "All invoices",
+                        "label": "Products",
+                        "icon": "book",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "entity": "sale\\catalog\\Product",
                             "view": "list.default",
-                            "domain": ["status", "=", "invoice"]
+                            "order": "id",
+                            "sort": "asc"
                         }
                     },
                     {
-                        "id": "item.invoices.overdue",
+                        "id": "item.catalog.product-models",
                         "type": "entry",
-                        "label": "Overdue invoices",
+                        "label": "Product models",
+                        "icon": "bookmark",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\sale\\booking\\Invoice",
+                            "entity": "sale\\catalog\\ProductModel",
                             "view": "list.default",
-                            "domain": [ ["due_date", "<=", "date.this.day"],  ["is_paid", "=", false] ]
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.catalog.categories",
+                        "type": "entry",
+                        "label": "Categories",
+                        "icon": "category",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\catalog\\Category",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.catalog.families",
+                        "type": "entry",
+                        "label": "Families",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\catalog\\Family",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
                         }
                     }
                 ]
             },
             {
-                "id": "item.contracts",
-                "label": "Contracts",
-                "description": "",
-                "icon": "drive_file_rename_outline",
+                "id": "item.prices",
                 "type": "parent",
+                "label": "All Prices",
+                "icon": "price_check",
+                "description": "",
                 "children": [
                     {
-                        "id": "item.contracts.all",
+                        "id": "item.Price",
                         "type": "entry",
-                        "label": "All contracts",
+                        "label": "Prices",
+                        "icon": "attach_money",
                         "description": "",
                         "context": {
-                            "entity": "sale\\contract\\Contract",
+                            "entity": "sale\\price\\Price",
                             "view": "list.default",
-                            "domain": ["status", "<>", "cancelled"]
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.price.list",
+                        "type": "entry",
+                        "label": "Price Lists",
+                        "icon": "list",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\price\\PriceList",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
                         }
                     }
                 ]
