@@ -1,4 +1,26 @@
 {
     "name": "calendar",
-    "depends_on": ["core"]
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": ["core"],
+    "apps": [
+        {
+            "id": "calendar",
+            "name": "Calendar",
+            "extends": "app",
+            "description": "Application calendar",
+            "icon": "calendar_month",
+            "color": "#2a3781",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "calendar.left"
+                }
+            }
+        }
+    ]
 }

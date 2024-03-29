@@ -1,0 +1,34 @@
+{
+    "name": "Calendar menu",
+    "search": false,
+    "layout": {
+        "items": [
+            {
+                "id": "item.holiday-years",
+                "type": "entry",
+                "label": "Holiday years",
+                "icon": "calendar_month",
+                "description": "",
+                "context": {
+                    "entity": "calendar\\HolidayYear",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            },
+            {
+                "id": "item.holidays",
+                "type": "entry",
+                "label": "Holidays",
+                "icon": "event",
+                "description": "",
+                "context": {
+                    "entity": "calendar\\Holiday",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            }
+        ]
+    }
+}
