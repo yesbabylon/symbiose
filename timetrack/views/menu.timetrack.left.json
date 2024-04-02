@@ -8,12 +8,47 @@
                 "label": "Time entries",
                 "icon": "timer",
                 "description": "Time entries",
-                "context": {
-                    "entity": "timetrack\\TimeEntry",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "desc"
-                }
+                "children": [
+                    {
+                        "id": "item.time-entries-all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "All time entries",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.time-entries-billable",
+                        "type": "entry",
+                        "label": "Billable",
+                        "icon": "payments",
+                        "description": "Billable time entries",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.billable",
+                            "order": "created",
+                            "sort": "desc"
+                        }
+                    },
+                    {
+                        "id": "item.time-entries-billed",
+                        "type": "entry",
+                        "label": "Billed",
+                        "icon": "receipt_long",
+                        "description": "Billed time entries",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.billed",
+                            "order": "created",
+                            "sort": "desc"
+                        }
+                    }
+                ]
             },
             {
                 "id": "item.projects",
