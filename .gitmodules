@@ -7,3 +7,6 @@
 [submodule "learn/apps/learning/source"]
 	path = learn/apps/learning/source
 	url = https://github.com/yesbabylon/apps-learn-learning
+[submodule "doc"]
+	path = doc
+	url = https://github.com/yesbabylon/symbiose-doc.git
