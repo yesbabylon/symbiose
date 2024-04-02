@@ -1,0 +1,21 @@
+{
+    "name": "Hr menu",
+    "search": false,
+    "layout": {
+        "items": [
+            {
+                "id": "item.employees",
+                "type": "entry",
+                "label": "Employees",
+                "icon": "face",
+                "description": "",
+                "context": {
+                    "entity": "hr\\employee\\Employee",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            }
+        ]
+    }
+}

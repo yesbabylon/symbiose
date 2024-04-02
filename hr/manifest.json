@@ -1,16 +1,19 @@
 {
-    "name": "communication",
+    "name": "hr",
     "version": "1.0",
     "author": "Yesbabylon",
-    "depends_on": ["core", "documents"],
+    "depends_on": [
+        "core",
+        "identity"
+    ],
     "apps": [
         {
-            "id": "communication",
-            "name": "Communication",
+            "id": "hr",
+            "name": "Human resources",
             "extends": "app",
-            "description": "Application communication",
-            "icon": "mail",
-            "color": "#a12f56",
+            "description": "Application human resources",
+            "icon": "groups",
+            "color": "#dd5281",
             "access": {
                 "groups": [
                     "users"
@@ -18,7 +21,7 @@
             },
             "params": {
                 "menus": {
-                    "left": "communication.left"
+                    "left": "hr.left"
                 }
             }
         }

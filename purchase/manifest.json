@@ -1,16 +1,19 @@
 {
-    "name": "communication",
+    "name": "purchase",
     "version": "1.0",
     "author": "Yesbabylon",
-    "depends_on": ["core", "documents"],
+    "depends_on": [
+        "core",
+        "finance"
+    ],
     "apps": [
         {
-            "id": "communication",
-            "name": "Communication",
+            "id": "purchase",
+            "name": "Purchase",
             "extends": "app",
-            "description": "Application communication",
-            "icon": "mail",
-            "color": "#a12f56",
+            "description": "Application purchase",
+            "icon": "storefront",
+            "color": "#a13a32",
             "access": {
                 "groups": [
                     "users"
@@ -18,7 +21,7 @@
             },
             "params": {
                 "menus": {
-                    "left": "communication.left"
+                    "left": "purchase.left"
                 }
             }
         }
