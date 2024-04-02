@@ -305,6 +305,7 @@ class Invoice extends Model {
             $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
 
             if($sequence) {
+                // #todo - user ORM fetchAndAdd()
                 Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
                 $result[$id] = Setting::parse_format($format, [
                     'year'      => $year,
