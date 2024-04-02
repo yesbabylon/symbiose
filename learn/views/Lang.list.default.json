@@ -1,0 +1,23 @@
+{
+    "name": "Languages list",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "code",
+                "width": "15%"
+            }
+        ]
+    }
+}

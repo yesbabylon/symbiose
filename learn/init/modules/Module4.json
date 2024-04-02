@@ -1,0 +1,1806 @@
+{
+    "identifier": 4,
+    "name": "Module 4",
+    "title": "A holistic approach is essential for the development of an effective Insider Threat Program",
+    "description": "Learn about the challenges of building an effective Insider Threat Program    Explore the process of building an effective Insider Threat Program    Learn how to assess the Insider Threat Program",
+    "duration": 25,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "A holistic approach is essential for the development of an effective Insider Threat Program",
+            "description": "Learn about the challenges of building an effective Insider Threat Program    Explore the process of building an effective Insider Threat Program    Learn how to assess the Insider Threat Program",
+            "duration": 25,
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "4",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "A holistic approach is essential for the development of an effective Insider Threat Program"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Learn about the challenges of building an effective Insider Threat Program    Explore the process of building an effective Insider Threat Program    Learn how to assess the Insider Threat Program"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Some organisations have mature Insider Threat Programs, are considering having mature Insider Threat Programs, have started an Insider Threat Program, or do not have anything in place.",
+                                            "align": "right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "How would you rate the  maturity of your organisation?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "We do not have a program in place and I am not sure if the organisation is even aware of the threat at all.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "There is a program in place but I question its effectiveness and efficiency. Awareness is lacking and it is an isolated program.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "We have a strong security culture and an effective Insider Threat Program.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "This model helps you assess  your organisation",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "These five stages display different levels of program maturity:  * Stage 1: Initial/Ad hoc  * Stage 2: Repeatable but intuitive  * Stage 3: Defined process  * Stage 4: Managed and measurable  * Stage 5: Optimised"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "**Here is an interesting fact:**  Most organisations are in Stage 1 or 2 of the maturity model."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "selector_popup",
+                                            "content": "View complete model and its corresponding criteria",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module4/widget-insider_threat_program.png"
+                                        }
+
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Challenges",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "4.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Challenge #1  It is not about stand-alone measures!",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "With stand-alone measures only, an organisation is powerless against the Insider Threat. A holistic approach is needed. This means that an effective Insider Threat Program should be free from the 'traditional' walls between security and all other departments."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "How to manage the Insider Threat effectively",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "This model visualises the holistic approach of managing the Insider Threat."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click the image to view it at full size."
+                                        },
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module4/widget-manage-effectively.png",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Challenge #2  It is a team job!",
+                                            "align": "left",
+                                            "has_separator_left": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "There is no single type of Insider Threat, because the organisation's critical assets are generally diverse:  * People  * Information  * Technology  * Facilities  Mitigating the (Insider) Threat thus requires action across the organisation. Any Insider Threat team should at least include:  * Security  * Human Resources  * Health Programs  * Internal Affairs  * Legal & Counterintelligence departments  In essence, everyone becomes a part of the security chain."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "And sharing information is key",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insiders are hard to find and investigators need to look for red flags throughout the organisation. That is why sharing information is so important. One red flag in one department might not seem significant. But several clues (red flags) within several departments might add up to a holistic picture of the (potential) threat.    Sharing information is key as a red flag in one department may not be known in another department.",
+                                            "has_separator_right": true                                            
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 6,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Challenge #3  It is a cycle",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Research has shown that the pathway the employee takes to become a threat, and progression along this pathway is a negligent action. Therefore it is critical to understand human factors such as motivation and intent.     As the employee makes individual decisions to move along the pathway, he or she will often display a number of observable behaviours.     By matching an employee's observable behaviours with phases along the pathway, investigators can start to gain a sense of how far along the pathway to an attack the employee may be.     Motivations and the observable behaviours associated with them will vary in person and in the employee's individual situation."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Pathway from Insider to Insider Threat",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The three things you should know about the pathway of the Insider:     **#1**  Research shows that most employees do not join an organisation with the intent of becoming an Insider Threat.     **#2**  After being hired the employee experiences some type of significant life change.     **#3**  The employee then takes a series of actions leading to a threat.",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 7,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Building an Insider Threat Program",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "4.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 8,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Why build an Insider Threat Program?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You might be convinced of the importance of an effective Insider Threat Program. But others might not be. So here are some arguments to convince the stakeholders in your organisation:  * **Most importantly, an Insider Threat Program is about protecting your assets, employees and customers.**  * Your organisation does not want to become a headline in 'the news' because of an Insider attack occurence.  * An effective program will make sure that you are prepared because at some point in time it will become mandatory.  * Already now or in the (very) near future, insurance companies, sponsors, and customers might require a program to be in place.  * Organisations can eventually reduce insurance premiums by having a robust program in place."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 9,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Getting started",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The methodology depicted on the right is instrumental in building an effective Insider Threat Program.     The methodology is divided into three phases:  * Initiation  * Development  * Implementation"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Each phase is agnostic and designed to be applied to the creation of any of the eco-system components, individually or collectively."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The 11-step methodology"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "This methodology includes 11 steps. Each step should be organised around five key concepts:  * **Goal:** What is the desired objective of the step?  * **Participants:** Who should be responsible for completing the objective?  * **Timeframe:** What is the time allotted for this step?  * **Justification:** Why is this step necessary?  * **Implementation:** What are the essential actions for completing the step?"
+                                        },
+                                        {
+                                            "type": "image_popup",
+                                            "content": "", 
+                                            "image_url": "../images/module4/widget-11-step.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Click the image to view it at full size."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 10,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 1  Start the plan!",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "If you aim to set up an effective Insider Threat Program, you have to plan for success. Having clear goals helps.     **Insider Threat Program goals**  An effective program is not only reactive, but also preventive and proactive. The following program goals illustrate this:  * An Insider Threat Program should respond to identified threats.  * An Insider Threat Program should deter employees from engaging in high risk behaviours.  * An Insider Threat Program should identify employee high-risk behaviours and prevent escalation."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  Once the program goals are defined, it is time to think about the scope."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Define the scope",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The scope is defined by the type of organisation and the type of threats the organisation might face. The following points might help discuss and define the scope.     **Will the program cover:**  * Common thieves?  * (Industrial) spies?  * Violent employees?  * Employees with terrorism connections?  * Saboteurs?  **What resources are available to the organisation?**  * Are there elements of an Insider Program already in place?  * Can Human Resources, HSE/OHS Specialist, Security and IT assist?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "tooltip",
+                                            "content": "**Addressing the Insider Threat requires a strong security culture.**    Identify and prioritise the organisational assets that need protection, and assess their vulnerabilities with the understanding that not everything can be protected/defended with equal effect."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 2  Who should be involved?",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Getting the right person involved is crucial, if you want to build a robust program.  Management needs to be involved but there are more skateholders to be taken into account.     **Management is part of the solution**  * Support alone is not enough. Management needs to be actively engaged and needs to be the main driver.  * Executive Management is the owner of the organisation's assets, security is just the custodian.  * Management needs to guide the direction of the program.  * Management should have a foundation of policies guiding the Insider Threat Program.  * Management will need to make hard decisions and be the referee when conflicts arise.  * Corporate culture may discourage employee matters from being addressed before becoming threats.  * Mismanaging your Insider Threat Program (InTP) can actually create (more) disgruntled employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Who else to involve?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The Insider Threat is not just a 'security problem'. The organisation's critical assets are at stake and the indicators of a problem can exist anywhere in the organisation.    The Insider Threat is a decentralized problem. It requires resources across the entire organisation, amongst others:  * Senior Leadership  * Legal Counsel  * Human Resources  * Facility & Physical Security  * Privacy Officer  * Cyber- & IT-Security  * HSE/OHS Management"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 3  Develop Business Case",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A robust program will require significant resources, both human and financial. A proper business case is therefore instrumental in obtaining management or stakeholder support.    A clear picture of the costs and the return on investment may help building your business case. You need to consider:     **The costs:**  * The average cost of an Insider incident is approximately €350.000.  * Average victim loss: ~€13 million/year.  * Multiple incidents exceed €1 billion."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  A well-built and implemented Insider Threat Program provides real and immediate Return on Investment (ROI)."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The Return On Investment"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**A quick overview of possible benefits an Insider Threat could create:**  * Increased client confidence.  * Reduced risk of compromise.  * Increased employee productivity.  * Increased investor confidence.  * Protection of brand and reputation.  * Create asset protection culture.  * Lower insurance premiums.  * Employees feeling safer.  * More efficient decision making.  * Early threat detection.  * Lower remediation cost(s).  * Reduced impact of compromise.  * Stop loss of intellectual property.  * Stop loss of commercial sensitive information.  * Bolster existing security measures.  * Reduce incident resolution time."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 4  Set up the team",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "How a team looks like depends on the type of organisation and the type of threats the organisation is facing.    **Roles**  Any team could include the following roles:  * Executive Level Decision Making Body(mandatory)  * Single Executive or Executive Board  * Multi-Disciplinary Advisory Board  * Training, Awareness & Communications  * Incident Response & Investigation  * Data Analysis  * Network Monitoring"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Roles, functions and responsibilities"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Each role has specific functions and responsibilities."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click on the image to explore the roles, functions and responsibilties."
+                                        },
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module4/widget-roles-fcts.png",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 14,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 5  Evaluate Insider risk",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The Insider Threats are an organisation's specific problem, meaning that the type of organisation determines the type of threats an organisation is facing. There are some general assumptions that help assess the Insider Threat:  * Insiders are usually trusted employees with regular access to critical assets.  * Insiders have access to everything in the organisation; everything is part of the Insider Threat landscape.  * Insider Threats may look and act just like everyone else. Identifying the Insider can feel like 'finding a needle in a stack of needles'.  * The Insider knows the organisation's security measures and therefore knows how to work around them."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 15,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 6  Set up InTP action strategy",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**10 key steps**  1. Establish the need for an Insider Threat Program.  2. Create the business case of the Insider Threat Program.  3. Engage all stakeholders.  4. Assemble the Insider Threat Program team.  5. Integrate Corporate Governance∗ and oversight.  6. Select processes and technologies (where relevant).  7. Commit resources and document everything.  8. Implement the solution.  9. Educate and train the organisation.  10. Monitor the execution (apply: Plan-Do-Check-Act (PDCA cycle)).    ∗ *Corporate Governance is the framework of rules and practices by which a board of directors ensures accountability, fairness, and transparency in a company's relationship with all its stakeholders (financiers, customers, management, employees, government, and the community).*"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The Toolbox",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "We have created a toolbox with several helpful documents to give your Insider Threat Program a head start.    The Insider Threat Program Toolbox contains the following document templates:  * Template: Insider Threat Policy  * Template: Insider Threat Security Program Behaviour Identification  * Template: Pre-Employment Check"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "You can access the Insider Threat Program Toolbox from the Training Library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 16,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 7  Design the InTP plan architecture",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "To make sure your program has a holistic approach instead of a combination of measures, you need to develop a framework. This framework gives direction to all the measures you will implement and ensure that they complement each other."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The key components of a program"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "This model visualises the key components of an Insider Threat Program."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click the model to explore its components"
+                                        },
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module4/widget-key-component.png",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 17,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 8  Get employee buy-in",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The employees are the eyes and ears of an organisation. Therefore they are crucial in mitigating the Insider Threat.    Employees have daily routines. If anything is out of the ordinary, they are most likely to notice it. You want for the employees to ask questions and speak up in the instances below:  * A new maintenance team is working in a restricted area. The workers have no ID-badges and have not been seen before.  * A colleague returns from holiday and now refuses to talk or shake hands with women.  * A colleague has financial troubles and is desperately looking for ways to 'make cash fast'.  * A visitor is walking by himself and taking pictures of all the security procedures.  * Somebody 'hovers' around the printer and collects documents.  * Someone is 'shoulder surfing' and watches screens with sensitive information."
+                                        },
+                                        {
+                                            "type": "tooltip",
+                                            "content": "**Addressing the Insider Threat requires a strong security culture.**    Document employee acknowledgement of 'Rules of Behaviour'."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Where to start?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 7,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "There are many ways to involve employees. But the following elements are crucial:    **Create awareness**  Awareness of the Insider Threat and how employees can help protect co-workers and the organisation is vital in obtaining support.    **Make sure the process is clear and transparent**  Employees need to know where and how they can report, but it is also vital that employees know how the organisation deals with reports.    **Allow for anonymous reporting**  Not all employees feel safe about reporting and therefore prefer reporting anonymously.    **Encourage reporting**  This will initially lead to many reports that need to be processed.    **Train the workforce**  The Help2Protect Awareness module or live-training helps employees understand what is expected of them."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 18,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 9  Data analysis",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Data, often being already collected by the organisation, can be very helpful in detecting a threat. Imagine an employee that on a daily basis enters a restricted area for no obvious reasons. Or an employee downloading classified information in bulk.    Knowing what data is being collected within the organisation, and knowing how it can be useful in mitigating the Insider Threat, will be helpful in getting a clear picture of what needs to be addressed."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "What data is actually useful?"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The model depicted below includes Potential Risk Indicators (PRIs), including attributes and behaviours across three key categories:  * Virtual  * Non-virtual  * Contextual"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click the model to explore attributes and behaviours."
+                                        },
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module4/widget-data-useful.png",
+                                            "on_click": "image_full()"
+                                        },
+                                        {
+                                            "type": "tooltip",
+                                            "content": "**Addressing the Insider Threat requires a strong security culture:**    * Implement access controls.  * Establish alerts for abnormal activity.  * Focus on high-risk employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 19,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 10  Elaborate response capacity",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "If a threat becomes clear, there needs to be a proper response.    Companies should start creating an Insider Threat Incident Response Plan:  * This plan details how Insider Threat alerts and anomalies will be identified, managed communicated, escalated.  * This includes a detailed timeline for every action and formal disposition procedure."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Incident Response & Investigation"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The model depicted below indicates the following necessary steps for a proper response.  * **Collect**  * **Triage**  * **Investigate**  * **Act**"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click the model to explore various steps."
+                                        },
+                                        {
+                                            "identifier": 1,
+                                            "type": "image_popup",
+                                            "content": "",
+                                            "image_url": "../images/module4/widget-incident-response.png",
+                                            "on_click": "image_full()"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        2
+                    ]
+                },
+                {
+                    "identifier": 20,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Step 11  Enforce the policy",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Create an oversight program, assign responsibilities, disseminate information about reporting processes, and ensure that InTP program is implemented equitably and in compliance with:  * EU laws  * National laws  * Local laws"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "Take into account the newly introduced EU GDPR laws, too."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 21,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Considerations",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "4.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 22,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "The most common trouble spots",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Learn from what others have done and where others have failed. Here is a quick overview of the most common trouble spots.    **Ineffective termination procedures**  * Organisations are very vulnerable just before and right after termination.  * Consider additional monitoring prior to termination and administer access control procedures.  * Consider 'soft landing'⁎ for employees with deep knowledge of critical information.  ⁎ *Soft Landing = post-employment assistance & financial incentive(s)*",
+                                            "align": "left"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **Lack of pre-employment investigations**  * Prevent previous violators from entering the organisation.  * Must be done periodically: most Insiders become threats after being hired.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**There are policy vulnerabilities**  Evaluate the organisation's policies (Security, Human Resources, IT Management, etc.) for gaps.    **There are no clear rules of behaviour**  * Employees must be informed about what they can and cannot do.  * Some employees believe it is 'OK' to keep proprietary information when they leave the organisation.  * Proper documentation provides evidence for court proceedings."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 23,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Some (legal) considerations",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Unfortunately, no program will be 100% effective. It must strike a balance between operations/production, privacy and security.    **The legal aspect**  Ensure a thorough legal review of the organisation's Insider Threat Program.    **Always consider employee privacy**  Employee data will include sensitive personal information and possibly health data. The Insider Threat Program must protect the staff's privacy and reputation.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Other considerations**  * Law enforcement requests the allowance of conduct advancement (weighing liability and reputational concerns).  * System monitoring considerations.  * Addressing the employee's own devices (BYOD).  * Issues related to remote access (VPN, Citrix, etc.).  * Disclosure considerations where data is lost (GDPR!).  * Legal challenges involving an employee who exceeds authorised system access.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light",
+                            "background_opacity": 1
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 24,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "An interesting fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Insider Threats are discovered most frequently by the IT department. You might have thought that it would be the Security team.    The second most likely group consists of fellow employees."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "4",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "A holistic approach, rather than stand-alone measures, is needed when fighting the Insider Threat.    Follow the 11-step method to build your own effective Insider Threat Program.    Make sure you are well-informed when you start your program. Learn from what others have done and where others have failed."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

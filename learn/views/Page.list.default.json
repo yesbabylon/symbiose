@@ -1,0 +1,21 @@
+{
+    "name": "Pages list",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "identifier",
+                "width": "10%",
+                "widget": {
+                    "readonly": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "10%"
+            }
+        ]
+    }
+}

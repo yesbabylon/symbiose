@@ -1,0 +1,26 @@
+{
+    "name": "Chapters list",
+    "description": "",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "identifier",
+                "width": "15%",
+                "widget": {
+                    "readonly": true
+                }
+            },
+            {
+                "type": "field",
+                "value": "order",
+                "width": "15%"
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "15%"
+            }
+        ]
+    }
+}

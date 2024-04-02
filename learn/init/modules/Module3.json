@@ -1,0 +1,1023 @@
+{
+    "identifier": 3,
+    "name": "Module 3",
+    "title": "Insider Threat models help understand the malicious Insider",
+    "description": "Explore various Insider Threat models    Find out what the threat indicators are    Research the evolution of an attack",
+    "duration": 17,
+    "chapters": [
+        {
+            "identifier": 1,
+            "title": "Intro",
+            "pages": [
+                {
+                    "identifier": 1,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_description",
+                                            "content": "Insider Threat models help understand the malicious Insider"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "In this module  you will:",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "head_text",
+                                            "content": "Explore various Insider Threat models      Find out what the threat indicators are      Research the evolution of an attack"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 0,
+                            "contrast": "dark"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 2,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "You spot a well-respected colleague in a room that she has no security clearance for.",
+                                            "align": "right"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "What will you most likely do?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_choice",
+                                            "content": "It is not my problem and she is senior to me, so I turn a blind eye.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_choice",
+                                            "content": "I immediately challenge her, ask her what she is doing in this room and if I can help her with something.",
+                                            "on_click": "select_one()"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_choice",
+                                            "content": "I challenge her. I ask her to leave the room and notify security that she was there.",
+                                            "on_click": "select_one()"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 4,
+                                            "type": "submit_button",
+                                            "content": "Submit",
+                                            "on_click": "submit()"
+                                        }
+                                    ],
+                                    "visible": [
+                                        "$page.actions_counter",
+                                        ">",
+                                        0
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Have you considered the following?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Not reacting to blatant security violations can cause harm to the organisation and to yourself, as you become (unwillingly to a certain degree) an accomplice.    Here is an interesting fact:    **A 2016 report revealed that at some major US airports, 5% of the Airport ID badges had gone missing.**    These Airport ID badges can end up falling into the wrong hands. Take a minute to think of what could happen if criminals or terrorists had long-term access to highly restricted areas."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ],
+                                [
+                                    "$page.selection",
+                                    "=",
+                                    1
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 3,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Have you considered the following?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Challenging intruders, or those without proper clearance(s)/credentials, is not enough. When someone doesn't need to be in secure location, or has no \"need-to-know\" clearance, you must take immediate action to stop the instrusion/access.    Here is an interesting fact:    **A 2016 report revealed that at some major US airports, 5% of the Airport ID badges had gone missing.**    These Airport ID badges can end up falling into the wrong hands. Take a minute to think of what could happen if criminals or terrorists had long-term access to highly restricted areas."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ],
+                                [
+                                    "$page.selection",
+                                    "=",
+                                    2
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 4,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "subtitle",
+                                            "content": "Have you considered the following?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": []
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "It speaks for itself that this must happen in  non-confrontational manner. If someone is not willing to comply, let this be handled by security, or by the appropiate authority(ies).    Here is an interesting fact:    **A 2016 report revealed that at some major US airports, 5% of the Airport ID badges had gone missing.**    These Airport ID badges can end up falling into the wrong hands. Take a minute to think of what could happen if criminals or terrorists had long-term access to highly restricted areas."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "visible": [
+                                [
+                                    "$page.submitted",
+                                    "=",
+                                    true
+                                ],
+                                [
+                                    "$page.selection",
+                                    "=",
+                                    3
+                                ]
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.submitted",
+                        "=",
+                        true
+                    ]
+                },
+                {
+                    "identifier": 3,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Insider incidents are on the rise"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 6,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Over the past years, we have seen a vast rise in Insider incidents. The reasons vary. Here is a quick overview:    **The global economic crisis**  * Employee financial hardships.  * Reduction of employer benefits (pension plans).  * Foreign nations more eager to acquire new technologies and R&D results.  * Mergers, acquitions, divesitures, joint ventures."
+                                        },
+                                        {
+                                            "type": "text",
+                                            "content": "  **Digitalisation**  * Ease of stealing anything stored electronically.  * Increasing exposure to foreign intelligence entities (FIE) presented by the reality of global business, joint ventures, and the growing international footprint of (multi-national) firms."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Who are the Insiders?",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Some first insights**  * Insiders are hard to find and can hide in plain sight.  * Insiders are trusted and are supposed to have access to sensitive assets.  * Insiders know what is most valuable to the organisation, and they know many of the security controls."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                }
+            ]
+        },
+        {
+            "identifier": 2,
+            "title": "Insider Threat models",
+            "pages": [
+                {
+                    "identifier": 4,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "(Insider) Threat Models",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "3.1",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 5,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "5 (Insider) Threat models",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Research into various types of Insider Threats has yielded a number of models.    **What you should know**   * Models will not predict Insider Threat cases but can be used to assess employees for risk.  * There is no single model which fully explains every Insider Threat.  * Understanding each of the models helps understand how to identify an Insider Threat."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "row_span": 2
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_popup",
+                                            "content": "The Fraud Triangle",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-fraud-triangle.png"
+                                        },
+                                        {
+                                            "identifier": 2,
+                                            "type": "selector_popup",
+                                            "content": "The Pathway to Intended Violence",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-pathway-violence.png"
+                                        },
+                                        {
+                                            "identifier": 3,
+                                            "type": "selector_popup",
+                                            "content": "The Critical Path Model",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-critical-path-model.png"
+                                        },
+                                        {
+                                            "identifier": 4,
+                                            "type": "selector_popup",
+                                            "content": "The Stressor Emotion for CWB",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-stressor-emotion.png"
+                                        },
+                                        {
+                                            "identifier": 5,
+                                            "type": "selector_popup",
+                                            "content": "The Radicalisation & Mobilisation Framework",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-radicalisation.png"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        5
+                    ]
+                }
+            ]
+        },
+        {
+            "identifier": 3,
+            "title": "Indicators",
+            "pages": [
+
+
+
+                {
+                    "identifier": 11,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "Indicators",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "3.2",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 12,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Identifying the threat",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The goal of an efficient Insider Threat Program is to prevent an attack from happening. Therefore, it is important to identify an Insider in time. Threat indicators help identify Insiders.    Threat indicators are observable behaviours or conditions, which indicate that a specific threat is present. These indicators can be general in nature (planning an attack).    **Using the threat indicators can help:**  * To determine where the employee is along the pathway towards becoming a threat.  * To find possible risk mitigation strategies.",
+                                            "align": "left"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Some remarks",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "The challenge is to identify an appropriate mix of observable behaviours, which may point to an Insider Threat risk.    The Insider may not demonstrate any indicators.    The presence of indicators does not necessarily mean a person is a threat."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 13,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Threat indicators",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**History**  * Previous security violations.  * Certain cases of mental instabilitiy.  * Previous examples of violent behaviour.",
+                                            "has_separator_left": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "  **Networks**  * Networks.  * Divided loyalties. * Suspicious foreign contacts.  * Family ties, or other close associations, to:  - Known or suspected intelligence officers.  - Foreign government officials.  - Known or suspected terrorists.  - Terrorist supporters."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 5,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "**Observable Behaviours**  * Disgruntled to the point of wanting to retaliate against the organisation.  * Seeking access above what is authorised both physically in an area/room, or in an IT network.  * Unusual finances.  * Misuse of company technology.  * Statements of support for threatening country governments or societies.  * Statements of support for suicide bombers.  * Testing security procedures.  * Simultaneous employment in a related field.  * Downloading large quantities of information.",
+                                            "has_separator_left": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 3,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "  **Observable Behavioural Change**  * Visiting objectionable or inappropriate websites.  * Changes in physical appearance,  * Change in performance due to personal stress.  * Sudden resignation after foreign travel.  * Significant changes after foreign travel."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                }
+            ]
+        },
+        {
+            "identifier": 4,
+            "title": "From threat to attack",
+            "pages": [
+                {
+                    "identifier": 14,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_title",
+                                            "content": "From threat to attack",
+                                            "align": "right"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "3.3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": []
+                },
+                {
+                    "identifier": 15,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Why Insiders act",
+                                            "align": "left"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "An Insider attack is generally not an impulse triggered by a single event or cause. It is the result of a chain of events or causes, which have certain effects that ultimately will motivate the Insider to act. This evolution can be seen in the model 'Insider Threat Pathway'."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "identifier": 1,
+                                            "type": "selector_popup",
+                                            "content": "Show pathway",
+                                            "on_click": "image_full()",
+                                            "image_url": "../images/module3/widget-idea-action.png"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "background_opacity": 1,
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": []
+                                }
+                            ],
+                            "background_opacity": "1",
+                            "contrast": "light"
+                        }
+                    ],
+                    "type": "basic",
+                    "next_active": [
+                        "$page.actions_counter",
+                        "=",
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "identifier": 5,
+            "title": "Summary",
+            "pages": [        
+                {
+                    "identifier": 17,
+                    "leaves": [
+                        {
+                            "identifier": 1,
+                            "groups": [
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "A surprising fact",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 5,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Half of the employees who left or lost their jobs in the last 12 months kept confidential corporate data.    40% of them plan to use it at their new job!"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        },
+                        {
+                            "identifier": 2,
+                            "groups": [
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 3,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "chapter_number",
+                                            "content": "3",
+                                            "has_separator_right": true
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "page_title",
+                                            "content": "Summary"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 4,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "There is no single model that fully explains the variety of Insider Threats. However, there are various models that could help identify the Insider Threats.     Threat indicators are observable behaviours, or conditions, which indicate that a specific threat is present.    An Insider attack is generally not an impulse triggered by a single event or cause. It is the result of a chain of events or causes, which have certain effects that ultimately will motivate the Insider to act."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "direction": "vertical",
+                                    "row_span": 2,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Protecting the confidential nature of data is paramount. Therefore, companies must have a solid process to revoke all credentials, offline and online, of employees leaving the company, with immediate effect. This will eliminate the risk of them accessing information or areas to which they are no longer entitled."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "row_span": 1
+                                },
+                                {
+                                    "direction": "horizontal",
+                                    "row_span": 1,
+                                    "fixed": true,
+                                    "widgets": [
+                                        {
+                                            "type": "text",
+                                            "content": "Click 'Back to overview' at the top of the screen to go back to the Training library."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "contrast": "light"
+                        }
+                    ]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}
