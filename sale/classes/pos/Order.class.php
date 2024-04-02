@@ -114,7 +114,8 @@ class Order extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Total paid amount from payments.',
+                'description'       => 'Total received amount from customer (sum of payments amounts).',
+                'help'              => 'The difference (total_paid - price) is expected to be returned in cash to the customer as a cashdesk operation.',
                 'function'          => 'calcTotalPaid'
             ],
 
