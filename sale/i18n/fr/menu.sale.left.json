@@ -1,91 +1,79 @@
 {
     "description": "",
     "view": {
-        "item.bank_statements": {
+        "bank_statements": {
             "label": "Extraits bancaires",
             "help": ""
         },
-        "item.bank_statements.statements_to_process": {
+        "bank_statements.statements_to_process": {
             "label": "Extraits à réconcilier",
             "help": ""
         },
-        "item.bank_statements.all": {
+        "bank_statements.all": {
             "label": "Tous les extraits",
             "help": ""
         },
-        "item.bank_statements.lines_to_review": {
+        "bank_statements.lines_to_review": {
             "label": "Paiements à réconcilier",
             "help": ""
         },
-        "item.bank_statements.statements_ready": {
+        "bank_statements.statements_ready": {
             "label": "Paiements réconciliés",
             "help": ""
         },
-        "item.bank_statements.all_lines": {
+        "bank_statements.all_lines": {
             "label": "Tous les paiements",
             "help": ""
         },
-        "item.customers": {
+        "customers": {
             "label": "Clients",
             "help": ""
         },
-        "item.customers_types": {
+        "settings.customers.types": {
             "label": "Types de client",
             "help": ""
         },
-        "item.all_customers_types": {
-            "label": "Tous les types",
-            "help": ""
-        },
-        "item.customers_natures": {
+        "settings.customers.natures": {
             "label": "Natures de client",
             "help": ""
         },
-        "item.all_customers_natures": {
-            "label": "Toutes les natures",
-            "help": ""
-        },
-        "item.new_customer": {
+        "customers.new_customer": {
             "label": "Nouveau client",
             "help": ""
         },
-        "item.all_customers": {
+        "customers.customers": {
             "label": "Tous les clients",
             "help": ""
         },
-        "item.all_partners": {
-            "label": "Tous les partenaires",
-            "help": ""
-        },
-        "item.fundings": {
+        "fundings": {
             "label": "Financements",
             "help": ""
         },
-        "item.fundings.waiting": {
+        "fundings.waiting": {
             "label": "Paiements en attente",
             "help": ""
         },
-        "item.fundings.overdue": {
+        "fundings.overdue": {
             "label": "Paiements en retard",
             "help": ""
         },
-        "item.invoices": {
+        "invoices": {
             "label": "Factures",
             "help": ""
         },
-        "item.invoices.all": {
+        "invoices.invoices": {
             "label": "Toutes les factures",
             "help": ""
         },
-        "item.invoices.overdue": {
+        "invoices.overdue": {
             "label": "Factures en retard",
             "help": ""
         },
-        "item.contracts": {
+        "contracts": {
             "label": "Contrats",
             "help": ""
         },
-        "item.contracts.all": {
+        "contracts.contracts": {
             "label": "Tous les contrats",
             "help": ""
         }
