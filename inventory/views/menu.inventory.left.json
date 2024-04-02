@@ -37,19 +37,6 @@
                 "description": "",
                 "children": [
                     {
-                        "id": "item.sale.entry",
-                        "type": "entry",
-                        "label": "Sale Entries",
-                        "icon": "label",
-                        "description": "",
-                        "context": {
-                            "entity": "sale\\SaleEntry",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "item.all.receivables",
                         "type": "parent",
                         "label": "Receivables",
@@ -98,52 +85,17 @@
                         ]
                     },
                     {
-                        "id": "item.prices",
-                        "type": "parent",
-                        "label": "All Prices",
-                        "icon": "price_check",
+                        "id": "item.sale.entry",
+                        "type": "entry",
+                        "label": "Sale Entries",
+                        "icon": "label",
                         "description": "",
-                        "children": [
-                            {
-                                "id": "item.product.catalog",
-                                "type": "entry",
-                                "label": "Products (Catalog)",
-                                "icon": "book",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\catalog\\Product",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.Price",
-                                "type": "entry",
-                                "label": "Prices",
-                                "icon": "attach_money",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\price\\Price",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "item.price.list",
-                                "type": "entry",
-                                "label": "Price Lists",
-                                "icon": "list",
-                                "description": "",
-                                "context": {
-                                    "entity": "sale\\price\\PriceList",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            }
-                        ]
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
                     }
 
                 ]
@@ -152,7 +104,7 @@
                 "id": "item.serves",
                 "type": "parent",
                 "label": "Advanced",
-                "icon": "settings",
+                "icon": "tune",
                 "description": "",
                 "children": [
                     {
@@ -292,6 +244,63 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    }
+                ]
+            },
+            {
+                "id": "item.settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.prices",
+                        "type": "parent",
+                        "label": "All Prices",
+                        "icon": "price_check",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.product.catalog",
+                                "type": "entry",
+                                "label": "Products (Catalog)",
+                                "icon": "book",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\catalog\\Product",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.Price",
+                                "type": "entry",
+                                "label": "Prices",
+                                "icon": "attach_money",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\price\\Price",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.price.list",
+                                "type": "entry",
+                                "label": "Price Lists",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\price\\PriceList",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
