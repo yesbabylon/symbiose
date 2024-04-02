@@ -1,0 +1,9 @@
+[submodule "learn/apps/qursus/source"]
+	path = learn/apps/qursus/source
+	url = https://github.com/yesbabylon/apps-learn-qursus
+[submodule "learn/apps/learn/source"]
+	path = learn/apps/learn/source
+	url = https://github.com/yesbabylon/apps-learn-learn
+[submodule "learn/apps/learning/source"]
+	path = learn/apps/learning/source
+	url = https://github.com/yesbabylon/apps-learn-learning
