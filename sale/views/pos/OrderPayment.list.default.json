@@ -13,10 +13,14 @@
             "total_due": {
                 "operation": "SUM",
                 "usage": "amount/money:2"
+            },
+            "total_change": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
             }
         }
     },
-    "limit": 100,    
+    "limit": 100,
     "layout": {
         "items": [
             {
@@ -45,6 +49,12 @@
                 "type": "field",
                 "label": "Paid Amount",
                 "value": "total_paid",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Change",
+                "value": "total_change",
                 "width": "20%"
             }
         ]
