@@ -73,7 +73,7 @@ class Receivable extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'ondelete'          => 'null'
             ],
@@ -83,7 +83,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the line relates to.',
                 'required'          => true,
-                'dependencies'      => ['name', 'price_id']
+                'dependencies'      => ['price_id']
             ],
 
             'price_id' => [

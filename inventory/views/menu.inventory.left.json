@@ -180,7 +180,7 @@
                                 "icon": "apps",
                                 "description": "",
                                 "context": {
-                                    "entity": "inventory\\Software",
+                                    "entity": "inventory\\server\\Software",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"

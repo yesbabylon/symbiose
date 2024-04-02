@@ -99,7 +99,7 @@ class Funding extends Model {
 
             'invoice_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\Invoice',
+                'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'ondelete'          => 'null',
                 'description'       => 'The invoice targeted by the funding, if any.',
                 'help'              => 'As a convention, this field is set when a funding relates to an invoice: either because the funding has been invoiced (downpayment or balance invoice), or because it is an installment (deduced from the due amount)'

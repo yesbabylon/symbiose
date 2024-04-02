@@ -183,6 +183,12 @@ class TimeEntry extends SaleEntry {
                 'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
             ],
 
+            'reference' => [
+                'type'           => 'string',
+                'description'    => 'Email or backlog reference.',
+                'visible'        => ['origin', 'in', [self::ORIGIN_EMAIL, self::ORIGIN_BACKLOG]]
+            ],
+
             'status' => [
                 'type'           => 'string',
                 'selection'      => array_keys(self::STATUS_MAP),
@@ -278,6 +284,16 @@ class TimeEntry extends SaleEntry {
                     'unit_price'  => $sale_model['unit_price'],
                     'is_billable' => true
                 ];
+            }
+        }
+
+        if(isset($event['origin'])) {
+            if($event['origin'] === self::ORIGIN_SUPPORT) {
+                $result['reference'] = null;
+            }
+            else {
+                $result['ticket_id'] = null;
+                $result['ticket_link'] = null;
             }
         }
 

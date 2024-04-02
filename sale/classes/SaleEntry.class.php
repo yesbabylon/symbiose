@@ -130,6 +130,14 @@ class SaleEntry extends Model {
                 'store'             => true
             ],
 
+            'receivable_name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Name given to the generated receivable.',
+                'function'          => 'calcReceivableName',
+                'store'             => false
+            ]
+
         ];
     }
 
@@ -217,6 +225,22 @@ class SaleEntry extends Model {
 
             $result[$id] = $sale_entry['object_id'];
         }
+        return $result;
+    }
+
+    public static function calcReceivableName($self): array {
+        $result = [];
+        $self->read(['object_class', 'description', 'product_id' => ['name']]);
+
+        foreach($self as $id => $sale_entry) {
+            $receivable_name = $sale_entry['product_id']['name'];
+            if($sale_entry['object_class'] === 'timetrack\Project') {
+                $receivable_name .= ' ' . $sale_entry['description'];
+            }
+
+            $result[$id] = trim($receivable_name);
+        }
+
         return $result;
     }
 }
