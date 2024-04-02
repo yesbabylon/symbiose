@@ -1,5 +1,7 @@
 {
     "name": "sale",
+    "version": "1.0",
+    "author": "Yesbabylon",
     "depends_on": [
         "core",
         "identity",
@@ -7,13 +9,14 @@
         "inventory"
     ],
     "apps": [
+        "pos",
         {
             "id": "sale",
-            "name": "Sale",
+            "name": "Sales",
             "extends": "app",
-            "description": "Application sale",
-            "icon": "store",
-            "color": "#772923",
+            "description": "Sales, commercial transactions, and invoicing",
+            "icon": "shopping_cart_checkout",
+            "color": "#f6bd04",
             "access": {
                 "groups": [
                     "users"
@@ -21,11 +24,10 @@
             },
             "params": {
                 "menus": {
-                    "left": "sale.left"
+                    "left": "sale.left",
+                    "top": "sale.top"
                 }
             }
-        },
-        "sale",
-        "pos"
+        }
     ]
 }
