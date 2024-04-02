@@ -81,6 +81,14 @@ class OrderPayment extends Model {
                 'usage'             => 'amount/money:2',
                 'description'       => 'Total due amount (tax incl.) from selected lines.',
                 'function'          => 'calcTotalDue'
+            ],
+
+            'total_change' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/money:2',
+                'description'       => 'Total due amount (tax incl.) from selected lines.',
+                'function'          => 'calcTotalChange'
             ]
 
         ];
@@ -142,6 +150,20 @@ class OrderPayment extends Model {
                     $result[$oid] += $line['price'];
                 }
                 $result[$oid] = round($result[$oid], 2);
+            }
+        }
+        return $result;
+    }
+
+    public static function calcTotalChange($om, $ids, $lang) {
+        $result = [];
+        $payments = $om->read(__CLASS__, $ids, ['total_due', 'total_paid'], $lang);
+        if($payments > 0) {
+            foreach($payments as $id => $payment) {
+                $result[$id] = 0.0;
+                if($payment['total_due'] > 0) {
+                    $result[$id] = -round($payment['total_paid'] - $payment['total_due'], 2);
+                }
             }
         }
         return $result;
