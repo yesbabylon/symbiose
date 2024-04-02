@@ -200,12 +200,12 @@ class Payment extends Model {
                     }
                     else  {
                         if($payment['statement_line_id.amount'] < 0) {
-                            if($payment['statement_line_id.remaining_amount'] > 0) {
+                            if(($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount']) > 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#3)."]];
                             }
                         }
                         else {
-                            if($payment['statement_line_id.remaining_amount'] < 0) {
+                            if(($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount']) < 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#4)."]];
                             }
                         }
@@ -230,7 +230,7 @@ class Payment extends Model {
         if($payments > 0) {
             foreach($payments as $pid => $payment) {
                 $om->update('sale\pay\BankStatementLine', $payment['statement_line_id'], ['status' => 'pending']);
-                $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => null]);
+                $om->update('sale\pay\Funding', $payment['funding_id'], ['is_paid' => false]);
             }
         }
         return parent::ondelete($om, $oids);
