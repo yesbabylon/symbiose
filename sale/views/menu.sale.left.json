@@ -6,40 +6,58 @@
     "layout": {
         "items": [
             {
-                "id": "item.customer",
-                "type": "entry",
+                "id": "customers",
+                "type": "parent",
                 "label": "Customers",
                 "icon": "face",
                 "description": "",
-                "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "children": [
+                    {
+                        "id": "customers.customers",
+                        "type": "entry",
+                        "label": "All Customers",
+                        "icon": "face",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             },
             {
-                "id": "item.sale.entry",
-                "type": "entry",
-                "label": "Sale Entries",
+                "id": "sale_entries",
+                "type": "parent",
+                "label": "Sale entries",
                 "icon": "label",
                 "description": "",
-                "context": {
-                    "entity": "sale\\SaleEntry",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "children": [
+                    {
+                        "id": "sale_entries.entries",
+                        "type": "entry",
+                        "label": "Sale Entries",
+                        "icon": "label",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             },
             {
-                "id": "item.all.receivables",
+                "id": "receivables",
                 "type": "parent",
                 "label": "Receivables",
                 "icon": "note",
                 "description": "",
                 "children": [
                     {
-                        "id": "item.receivablesqueue",
+                        "id": "receivables.queues",
                         "type": "entry",
                         "label": "Receivable Queues",
                         "icon": "queue",
@@ -52,7 +70,7 @@
                         }
                     },
                     {
-                        "id": "item.receivable",
+                        "id": "receivables.receivables",
                         "type": "entry",
                         "label": "All Receivables",
                         "icon": "list",
@@ -80,27 +98,36 @@
                 ]
             },
             {
-                "id": "item.invoices",
-                "type": "entry",
+                "id": "invoices",
+                "type": "parent",
                 "label": "Invoices",
                 "icon": "receipt_long",
                 "description": "",
-                "context": {
-                    "entity": "sale\\accounting\\invoice\\Invoice",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "children": [
+                    {
+                        "id": "invoices.invoices",
+                        "type": "entry",
+                        "label": "Invoices",
+                        "icon": "receipt_long",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\accounting\\invoice\\Invoice",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             },
             {
-                "id": "item.catalog",
+                "id": "catalog",
                 "type": "parent",
                 "label": "Catalog",
                 "icon": "collections_bookmark",
                 "description": "",
                 "children": [
                     {
-                        "id": "item.catalog.products",
+                        "id": "catalog.products",
                         "type": "entry",
                         "label": "Products",
                         "icon": "book",
@@ -113,7 +140,7 @@
                         }
                     },
                     {
-                        "id": "item.catalog.product-models",
+                        "id": "catalog.product_models",
                         "type": "entry",
                         "label": "Product models",
                         "icon": "bookmark",
@@ -126,7 +153,7 @@
                         }
                     },
                     {
-                        "id": "item.catalog.categories",
+                        "id": "catalog.categories",
                         "type": "entry",
                         "label": "Categories",
                         "icon": "category",
@@ -139,7 +166,7 @@
                         }
                     },
                     {
-                        "id": "item.catalog.families",
+                        "id": "catalog.families",
                         "type": "entry",
                         "label": "Families",
                         "icon": "list",
@@ -154,16 +181,16 @@
                 ]
             },
             {
-                "id": "item.prices",
+                "id": "prices",
                 "type": "parent",
-                "label": "All Prices",
+                "label": "Prices",
                 "icon": "price_check",
                 "description": "",
                 "children": [
                     {
-                        "id": "item.Price",
+                        "id": "prices.prices",
                         "type": "entry",
-                        "label": "Prices",
+                        "label": "All Prices",
                         "icon": "attach_money",
                         "description": "",
                         "context": {
@@ -174,7 +201,7 @@
                         }
                     },
                     {
-                        "id": "item.price.list",
+                        "id": "prices.pricelists",
                         "type": "entry",
                         "label": "Price Lists",
                         "icon": "list",
@@ -185,6 +212,46 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    }
+                ]
+            },
+            {
+                "id": "settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "settings.customers",
+                        "type": "parent",
+                        "label": "Customers",
+                        "icon": "work",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "settings.customers.types",
+                                "type": "entry",
+                                "label": "Customers types",
+                                "description": "",
+                                "route": "/",
+                                "context": {
+                                    "entity": "sale\\customer\\CustomerType",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "settings.customers.natures",
+                                "type": "entry",
+                                "label": "Customer natures",
+                                "description": "",
+                                "route": "/",
+                                "context": {
+                                    "entity": "sale\\customer\\CustomerNature",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
