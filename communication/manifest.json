@@ -1,4 +1,26 @@
 {
     "name": "communication",
-    "depends_on": ["core"]
+    "version": "1.0",
+    "author": "Yesbabylon",
+    "depends_on": ["core", "documents"],
+    "apps": [
+        {
+            "id": "communication",
+            "name": "Communication",
+            "extends": "app",
+            "description": "Application communication",
+            "icon": "mail",
+            "color": "#a12f56",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "communication.left"
+                }
+            }
+        }
+    ]
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Communication menu",
+    "search": false,
+    "layout": {
+        "items": [
+            {
+                "id": "item.templates",
+                "type": "entry",
+                "label": "Templates",
+                "icon": "description",
+                "description": "",
+                "context": {
+                    "entity": "communication\\Template",
+                    "view": "list.default",
+                    "order": "id",
+                    "sort": "asc"
+                }
+            }
+        ]
+    }
+}
