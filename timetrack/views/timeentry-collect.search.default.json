@@ -69,6 +69,7 @@
                                 ]
                             },
                             {
+                                "id": "row.billing_and_status_filter",
                                 "columns": [
                                     {
                                         "width": "100%",
@@ -77,13 +78,19 @@
                                                 "type": "field",
                                                 "value": "is_billable",
                                                 "label": "Is billable",
-                                                "width": "25%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_receivable",
                                                 "label": "Has receivable",
-                                                "width": "25%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "label": "Status",
+                                                "width": "33%"
                                             }
                                         ]
                                     }

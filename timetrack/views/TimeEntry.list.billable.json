@@ -1,0 +1,38 @@
+{
+    "name": "Billable time entries",
+    "description": "Default listing of all time entries.",
+    "controller": "timetrack_timeentry-billable-collect",
+    "domain": [
+        ["object_class", "=", "timetrack\\Project"],
+        ["is_billable", "=", true],
+        ["status", "=", "validated"]
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "actions" : [
+                {
+                    "id": "header.selection.actions.bill",
+                    "label": "Bill",
+                    "icon": "receipt_long",
+                    "controller": "core_model_transition",
+                    "params": {
+                        "entity": "timetrack\\TimeEntry",
+                        "transition": "bill"
+                    }
+                }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\TimeEntry",
+            "view": "list.default"
+        },
+        "remove": [
+            "item.status"
+        ]
+    }
+}

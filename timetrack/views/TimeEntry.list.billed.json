@@ -1,0 +1,23 @@
+{
+    "name": "Billed time entries",
+    "description": "Default listing of all time entries.",
+    "controller": "timetrack_timeentry-billed-collect",
+    "domain": [
+        ["object_class", "=", "timetrack\\Project"],
+        ["status", "=", "billed"]
+    ],
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\TimeEntry",
+            "view": "list.default"
+        },
+        "remove": [
+            "item.status"
+        ]
+    }
+}

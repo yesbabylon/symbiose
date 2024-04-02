@@ -3,18 +3,6 @@
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
     "domain": ["object_class", "=", "timetrack\\Project"],
-    "header": {
-        "selection": {
-            "actions" : [
-                {
-                    "id": "header.selection.actions.add-receivables",
-                    "label": "Receivable",
-                    "icon": "note",
-                    "controller": "sale_saleentry_add-receivables"
-                }
-            ]
-        }
-    },
     "actions": [
         {
             "id": "action.create-empty",
@@ -129,6 +117,15 @@
                 "value": "duration",
                 "width": "10%",
                 "sortable": true
+            },
+            {
+                "id": "item.status",
+                "type": "field",
+                "label": "Status",
+                "value": "status",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
             }
         ]
     }

@@ -1,0 +1,13 @@
+{
+    "name": "Time Entries search",
+    "description": "Advanced collector for billable time entries",
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\timeentry-collect",
+            "view": "search.default"
+        },
+        "remove": [
+            "row.billing_and_status_filter"
+        ]
+    }
+}
