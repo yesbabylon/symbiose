@@ -65,7 +65,7 @@
                         "description": "Add new project",
                         "context": {
                             "entity": "timetrack\\Project",
-                            "view": "form.new",
+                            "view": "form.create",
                             "purpose": "create"
                         }
                     },

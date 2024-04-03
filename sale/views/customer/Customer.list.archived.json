@@ -1,0 +1,25 @@
+{
+    "name": "Archived customers",
+    "description": "This view is intended for displaying basic listing of archived Customers.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "domain": ["state", "=", "archive"],
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default": false,
+            "actions": [
+                { "id": "ACTION.DELETE", "visible": true }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "sale\\customer\\Customer",
+            "view": "list.default"
+        }
+    }
+}

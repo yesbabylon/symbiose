@@ -14,7 +14,7 @@
     "layout": {
         "extends": {
             "entity": "sale\\customer\\Customer",
-            "view": "form.inventory"
+            "view": "form.create"
         }
     }
 }
