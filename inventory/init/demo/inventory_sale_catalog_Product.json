@@ -7,52 +7,44 @@
                 "id": 1,
                 "label": "Calendar plugin",
                 "sku": "123.123.123",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
                 "id": 2,
                 "label": "sale plugin",
                 "sku": "321.321.321",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
                 "id": 3,
                 "label": "Library FPF ",
                 "sku": "321.654.312",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
                 "id": 4,
                 "label": "cloud product",
                 "sku": "1233.123.123",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
@@ -60,13 +52,11 @@
                 "state": "instance",
                 "label": "user access",
                 "sku": "11.22.33",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
@@ -74,13 +64,11 @@
                 "state": "instance",
                 "label": "payment",
                 "sku": "444.55.66",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             },
             {
@@ -88,13 +76,11 @@
                 "state": "instance",
                 "label": "management organization",
                 "sku": "44.55.77.88",
-                "description": "",
                 "product_model_id": 1,
                 "family_id": 1,
                 "is_locked": false,
                 "can_buy": false,
                 "can_sell": true,
-                "groups_ids": [],
                 "has_age_range": false
             }
         ]
