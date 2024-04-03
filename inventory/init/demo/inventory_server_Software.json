@@ -1,12 +1,11 @@
 [
     {
-        "name": "inventory\\Software",
+        "name": "inventory\\server\\Software",
         "lang": "en",
         "data": [
             {
                 "id": 1,
                 "name": "Wordpress",
-                "edition": "",
                 "version": "6.01",
                 "instance_id": 1,
                 "server_id": 1,
@@ -15,7 +14,6 @@
             {
                 "id": 2,
                 "name": "Application management drive",
-                "description": "",
                 "edition": "beta",
                 "version": "1.0",
                 "server_id": 2,
@@ -24,7 +22,6 @@
             {
                 "id": 3,
                 "name": "Edition picture",
-                "description": "",
                 "edition": "Pro",
                 "version": "1.2",
                 "server_id": 2,

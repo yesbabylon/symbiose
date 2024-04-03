@@ -5,28 +5,23 @@
         "data": [
             {
                 "id": 1,
-                "name": "Software",
-                "description": ""
+                "name": "Software"
             },
             {
                 "id": 2,
-                "name": "Infrastructure",
-                "description": ""
+                "name": "Infrastructure"
             },
             {
                 "id": 3,
-                "name": "Data",
-                "description": ""
+                "name": "Data"
             },
             {
                 "id": 4,
-                "name": "Access",
-                "description": ""
+                "name": "Access"
             },
             {
                 "id": 5,
-                "name": "Mobility",
-                "description": ""
+                "name": "Mobility"
             }
         ]
     }
