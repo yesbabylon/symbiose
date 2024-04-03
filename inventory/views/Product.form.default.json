@@ -86,8 +86,7 @@
                                                     "view": "list.selection",
                                                     "header": {
                                                         "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
+                                                            "ACTION.SELECT": false
                                                         }
                                                     }
                                                 }
@@ -121,8 +120,7 @@
                                                     "view": "list.selection",
                                                     "header": {
                                                         "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
+                                                            "ACTION.SELECT": false
                                                         }
                                                     }
                                                 }
