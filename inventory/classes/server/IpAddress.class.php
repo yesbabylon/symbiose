@@ -15,12 +15,14 @@ class IpAddress extends Model {
         return [
             'ip_v4' => [
                 'type'              => 'string',
-                'description'       => 'IPV4 address of the server (32 bits).'
+                'description'       => 'IPV4 address of the server (32 bits).',
+                'dependents'        => ['name']
             ],
 
             'ip_v6' => [
                 'type'              => 'string',
-                'description'       => 'IPV6 address of the server (128 bits).'
+                'description'       => 'IPV6 address of the server (128 bits).',
+                'dependents'        => ['name']
             ],
 
             'name' => [
@@ -39,8 +41,10 @@ class IpAddress extends Model {
 
             'visibility' => [
                 'type'              => 'string',
-                'default'           => 'protected',
-                'selection'         => ['public', 'protected']
+                'default'           => 'public',
+                'selection'         => ['public', 'private', 'protected'],
+                'description'       => 'Visibility indicates how an IP address is exposed to the cloud.',
+                'help'              => 'A public address is associated with a reverse DNS entry. A protected address is a public IP not associated with any DNS record. A private address is not public and is only accessible through a private network.'
             ],
 
             'server_id' => [
