@@ -277,6 +277,28 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "id": "settings.time-entries",
+                        "type": "parent",
+                        "label": "Time entries",
+                        "icon": "timer",
+                        "description": "Time entries sale settings",
+                        "children": [
+                            {
+                                "id": "settings.time-entries.sale-models",
+                                "type": "entry",
+                                "label": "Sale models",
+                                "icon": "calculate",
+                                "description": "Time entries sale models",
+                                "context": {
+                                    "entity": "timetrack\\TimeEntrySaleModel",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
