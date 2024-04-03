@@ -4,8 +4,8 @@
     "description": "Vue par défaut pour la liste des serveurs.",
     "model": {
         "name":{
-            "label": "Nom",
-            "description": "Nom du serveur.",
+            "label": "Nom d'hôte",
+            "description": "Nom du serveur (hostname).",
             "help": ""
         },
         "type":{
