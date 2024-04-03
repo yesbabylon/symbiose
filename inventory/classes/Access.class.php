@@ -56,30 +56,29 @@ class Access extends Model {
 
             'host' => [
                 'type'              => 'string',
-                'description'       => 'IP address or hostname¨of the server.',
+                'description'       => 'IP address or hostname of the server.',
                 'required'          => true,
-                'dependencies'      => ['url']
+                'dependents'        => ['url']
             ],
 
             'port' => [
                 'type'              => 'string',
                 'description'       => 'Port to connect to (default based on protocol).',
-                'dependencies'      => ['url']
+                'dependents'        => ['url']
             ],
 
             'username' => [
                 'type'              => 'string',
                 'description'       => 'Username of the account related to this access.',
                 'required'          => true,
-                'dependencies'      => ['url']
+                'dependents'        => ['url']
             ],
 
             'password' => [
                 'type'              => 'string',
-                'usage'             => 'password',
                 'required'          => true,
-                'description'       => 'Password of the account related to this access.'
-
+                'description'       => 'Password of the account related to this access.',
+                'help'              => 'The password is arbitrary and depends on the application logic of the host (so there are no constraints on it).'
             ],
 
             'server_id' => [
