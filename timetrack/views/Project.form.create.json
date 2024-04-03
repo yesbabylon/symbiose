@@ -1,0 +1,17 @@
+{
+    "name": "Project",
+    "description": "Form for new project",
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\Project",
+            "view": "form.default"
+        }
+    }
+}

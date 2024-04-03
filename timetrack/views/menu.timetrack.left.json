@@ -52,16 +52,72 @@
             },
             {
                 "id": "item.projects",
-                "type": "entry",
+                "type": "parent",
                 "label": "Projects",
                 "icon": "dataset",
                 "description": "Projects",
-                "context": {
-                    "entity": "timetrack\\Project",
-                    "view": "list.default",
-                    "order": "id",
-                    "sort": "desc"
-                }
+                "children": [
+                    {
+                        "id": "item.project-new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new project",
+                        "context": {
+                            "entity": "timetrack\\Project",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
+                        "id": "item.projects-all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "All projects",
+                        "context": {
+                            "entity": "timetrack\\Project",
+                            "view": "list.default",
+                            "sort": "desc",
+                            "order": "id"
+                        }
+                    },
+                    {
+                        "id": "item.projects-archived",
+                        "type": "entry",
+                        "label": "Archived",
+                        "icon": "inventory",
+                        "description": "Archived projects",
+                        "context": {
+                            "entity": "timetrack\\Project",
+                            "view": "list.archived",
+                            "sort": "desc",
+                            "order": "id"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "item.advanced",
+                "type": "parent",
+                "label": "Advanced",
+                "icon": "settings",
+                "description": "",
+                "children": [
+                    {
+                        "id": "item.time-entry-sale-models",
+                        "type": "entry",
+                        "label": "Sale models",
+                        "icon": "calculate",
+                        "description": "Time entry sale models",
+                        "context": {
+                            "entity": "timetrack\\TimeEntrySaleModel",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "desc"
+                        }
+                    }
+                ]
             }
         ]
     }

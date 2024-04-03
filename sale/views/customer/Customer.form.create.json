@@ -4,6 +4,13 @@
     "access": {
         "groups": ["inventory.default.user"]
     },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
     "layout": {
         "extends": {
             "entity": "identity\\Partner",

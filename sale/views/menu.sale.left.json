@@ -10,17 +10,42 @@
                 "type": "parent",
                 "label": "Customers",
                 "icon": "face",
-                "description": "",
+                "description": "Customers",
                 "children": [
                     {
-                        "id": "customers.customers",
+                        "id": "customers.new",
                         "type": "entry",
-                        "label": "All Customers",
-                        "icon": "face",
-                        "description": "",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new customer",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
+                        "id": "customers.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "All customers",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "customers.archived",
+                        "type": "entry",
+                        "label": "Archived",
+                        "icon": "inventory",
+                        "description": "Archived customers",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.archived",
                             "order": "id",
                             "sort": "asc"
                         }

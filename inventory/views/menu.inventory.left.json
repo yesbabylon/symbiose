@@ -18,16 +18,50 @@
             },
             {
                 "id": "item.customer",
-                "type": "entry",
+                "type": "parent",
                 "label": "Customers",
                 "icon": "face",
-                "description": "",
-                "context": {
-                    "entity": "sale\\customer\\Customer",
-                    "view": "list.inventory",
-                    "order": "id",
-                    "sort": "asc"
-                }
+                "description": "Customers",
+                "children": [
+                    {
+                        "id": "item.customer-new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new customer",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "form.inventory-create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
+                        "id": "item.customers-all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "All customers",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.inventory",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.customers-archived",
+                        "type": "entry",
+                        "label": "Archived",
+                        "icon": "inventory",
+                        "description": "Archived customers",
+                        "context": {
+                            "entity": "sale\\customer\\Customer",
+                            "view": "list.inventory-archived",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
             },
             {
                 "id": "item.sale",

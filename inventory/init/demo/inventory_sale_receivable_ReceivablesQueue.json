@@ -5,18 +5,7 @@
         "data": [
             {
                 "id": 1,
-                "state": "instance",
                 "customer_id": 2
-            },
-            {
-                "id": 2,
-                "state": "instance",
-                "customer_id": 1
-            },
-            {
-                "id": 3,
-                "state": "instance",
-                "customer_id": 3
             }
         ]
     }

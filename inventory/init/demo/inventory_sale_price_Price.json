@@ -5,34 +5,30 @@
         "data": [
             {
                 "id": 1,
-                "state": "instance",
-                "price": 5,
+                "price": 50,
+                "type": "direct",
+                "price_list_id": 4,
+                "accounting_rule_id": 1,
+                "product_id": 1
+            },
+            {
+                "id": 2,
+                "price": 10,
                 "type": "direct",
                 "price_list_id": 5,
                 "accounting_rule_id": 1,
                 "product_id": 1
             },
             {
-                "id": 2,
-                "state": "instance",
-                "price": 10,
-                "type": "direct",
-                "price_list_id": 1,
-                "accounting_rule_id": 1,
-                "product_id": 1
-            },
-            {
                 "id": 3,
-                "state": "instance",
                 "price": 10,
                 "type": "direct",
-                "price_list_id": 1,
+                "price_list_id": 5,
                 "accounting_rule_id": 1,
                 "product_id": 3
             },
             {
                 "id": 4,
-                "state": "instance",
                 "price": 15,
                 "type": "direct",
                 "price_list_id": 3,
@@ -41,55 +37,9 @@
             },
             {
                 "id": 5,
-                "state": "instance",
                 "price": 50,
                 "type": "direct",
-                "price_list_id": 4,
-                "accounting_rule_id": 1,
-                "product_id": 3
-            },
-            {
-                "id": 6,
-                "state": "instance",
-                "price": 100,
-                "type": "direct",
-                "price_list_id": 6,
-                "accounting_rule_id": 1,
-                "product_id": 2
-            },
-            {
-                "id": 7,
-                "state": "instance",
-                "price": 40,
-                "type": "direct",
-                "price_list_id": 1,
-                "accounting_rule_id": 1,
-                "product_id": 4
-            },
-            {
-                "id": 8,
-                "state": "instance",
-                "price": 3,
-                "type": "direct",
-                "price_list_id": 1,
-                "accounting_rule_id": 1,
-                "product_id": 5
-            },
-            {
-                "id": 9,
-                "state": "instance",
-                "price": 27,
-                "type": "direct",
-                "price_list_id": 1,
-                "accounting_rule_id": 1,
-                "product_id": 6
-            },
-            {
-                "id": 10,
-                "state": "instance",
-                "price": 25,
-                "type": "direct",
-                "price_list_id": 1,
+                "price_list_id": 5,
                 "accounting_rule_id": 1,
                 "product_id": 7
             }
