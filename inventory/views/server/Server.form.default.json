@@ -82,7 +82,7 @@
                                                 "width": "100%",
                                                 "label": "Accesses",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "view": "list.server"
                                                 }
                                             }
                                         ]
