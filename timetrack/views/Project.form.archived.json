@@ -1,0 +1,15 @@
+{
+    "name": "Project",
+    "description": "Form for archived project",
+    "header": {
+        "actions": {
+            "ACTION.EDIT": false
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\Project",
+            "view": "form.default"
+        }
+    }
+}
