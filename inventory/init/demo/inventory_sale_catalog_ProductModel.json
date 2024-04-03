@@ -5,7 +5,6 @@
         "data": [
             {
                 "id": 1,
-                "state": "instance",
                 "name": "Product ERP  Symbiose",
                 "family_id": 1,
                 "can_buy": false,
@@ -13,14 +12,10 @@
                 "is_pack": false,
                 "has_own_price": false,
                 "type": "service",
-                "consumable_type": "",
                 "service_type": "simple",
                 "schedule_type": "time",
-                "schedule_default_value": "",
                 "schedule_offset": 0,
-                "tracking_type": "sku",
-                "groups_ids": [],
-                "categories_ids": []
+                "tracking_type": "sku"
             }
         ]
     }

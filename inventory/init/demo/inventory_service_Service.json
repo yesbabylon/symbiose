@@ -5,9 +5,7 @@
         "data": [
             {
                 "id": 1,
-                "state": "instance",
                 "name": "Google Analytics account",
-                "description": "",
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": true,
@@ -17,9 +15,7 @@
             },
             {
                 "id": 2,
-                "state": "instance",
                 "name": "Microsoft 365 account",
-                "description": "",
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": false,
@@ -29,9 +25,7 @@
             },
             {
                 "id": 3,
-                "state": "instance",
                 "name": "Wordpress multilang",
-                "description": "",
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": true,
@@ -41,21 +35,16 @@
             },
             {
                 "id": 4,
-                "state": "instance",
                 "name": "Services FPDF",
-                "description": "",
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": true,
                 "product_id": 3,
-                "has_external_provider": false,
-                "service_provider_id": 0
+                "has_external_provider": false
             },
             {
                 "id": 5,
-                "state": "instance",
                 "name": "services calendar",
-                "description": "",
                 "has_subscription": true,
                 "is_billable": true,
                 "is_auto_renew": true,

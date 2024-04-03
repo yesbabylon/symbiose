@@ -1,0 +1,22 @@
+{
+    "name": "Archived projects",
+    "description": "Default listing of archived projects.",
+    "domain": ["state", "=", "archive"],
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default": false,
+            "actions": [
+                { "id": "ACTION.DELETE", "visible": true }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "timetrack\\Project",
+            "view": "list.default"
+        }
+    }
+}
