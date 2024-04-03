@@ -6,6 +6,49 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "75%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "label": "Server Infos",
                         "id": "section.server_info",
                         "rows": [
@@ -17,40 +60,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "25%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "type",
-                                                "width": "15%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product",
-                                                "width": "25%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "usage": "string/text"
                                                 }
