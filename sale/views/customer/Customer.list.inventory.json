@@ -4,7 +4,7 @@
     "controller": "inventory_sale_customer_customer-collect",
     "access": {
         "groups": ["inventory.default.user"]
-     },
+    },
     "header": {
         "actions": {
             "ACTION.CREATE" : [
