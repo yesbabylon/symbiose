@@ -9,4 +9,4 @@
 	url = https://github.com/yesbabylon/apps-learn-learning
 [submodule "doc"]
 	path = doc
-	url = https://github.com/yesbabylon/symbiose-doc.git
+	url = https://github.com/yesbabylon/symbiose-doc
