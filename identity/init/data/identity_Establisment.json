@@ -1,0 +1,14 @@
+[
+    {
+        "name": "identity\\Establishment",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Your Establisment",
+                "legal_name": "Establisment",
+                "organisation_id": 1
+            }
+        ]
+    }
+]

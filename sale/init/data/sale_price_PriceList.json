@@ -1,0 +1,16 @@
+[
+    {
+        "name": "sale\\price\\PriceList",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Price 2024",
+                "date_from": "2024-01-01T00:00:00+00:00",
+                "date_to": "2024-12-31T00:00:00+00:00",
+                "status": "published",
+                "price_list_category_id": 1
+            }
+        ]
+    }
+]
