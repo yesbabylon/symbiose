@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>Invoice title</title>
+
+    <style type="text/css">
+        @page {
+            margin: 350px 1cm 80px 1cm;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.7em;
+            text-align: justify;
+        }
+
+        header {
+            position: fixed;
+            top: -310px;
+            left: 0;
+            right: 0;
+            height: 280px;
+        }
+
+        header .organisation-info {
+            position: absolute;
+            height: 150px;
+            width: 350px;
+            z-index: -1;
+        }
+
+        header .customer-info {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            width: 350px;
+            height: 123px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        header .invoice-info {
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: separate;
+        }
+
+        footer {
+            position: fixed;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            overflow: visible;
+            z-index: 200;
+            font-size: 0.8em !important;
+        }
+    </style>
+
+    <title>Invoice</title>
+</head>
+
+<body>
+    <header>
+        {%
+            include 'components/organisation-info.html.twig' with {
+                'class':                     'organisation-info',
+                'registration_number_label': 'Registration n°',
+                'vat_number_label':          'VAT n°',
+                'organisation':              invoice.organisation_id
+            }
+        %}
+
+        {%
+            include 'components/customer-info.html.twig' with {
+                'class':         'customer-info',
+                'name_label':    'Name',
+                'address_label': 'Address',
+                'vat_label':     'VAT',
+                'customer':      invoice.customer_id
+            }
+        %}
+
+        <div style="position: relative; height: 165px; width: 100%;"></div>
+
+        <table class="invoice-info">
+            <tr valign="top">
+                <td style="width: 77%"></td>
+                <td style="width: 23%">
+                    {%
+                        include 'components/invoice-info.html.twig' with {
+                            'class':        'invoice-info',
+                            'number_label': 'N°',
+                            'invoice':      invoice,
+                            'timezone':     timezone
+                        }
+                    %}
+                </td>
+            </tr>
+        </table>
+    </header>
+
+    <footer>
+        {%
+            include 'components/organisation-footer-info.html.twig' with {
+                'class'       : 'organisation-footer-info',
+                'organisation': invoice.organisation_id
+            }
+        %}
+    </footer>
+
+    <main>
+        {%
+            include 'components/invoice-lines.html.twig' with {
+                'class':   'invoice-lines',
+                'invoice': invoice,
+                'lines':   lines
+            }
+        %}
+    </main>
+</body>
+
+</html>

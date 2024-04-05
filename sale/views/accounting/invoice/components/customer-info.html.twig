@@ -1,0 +1,46 @@
+{% set address_zip_city_country = '' %}
+{% if customer.address_zip|length > 0 %}
+    {% set address_zip_city_country = customer.address_zip %}
+{% endif %}
+{% if customer.address_city|length > 0 %}
+    {% if address_zip_city_country|length > 0 %}
+        {% set address_zip_city_country = address_zip_city_country ~ ' ' %}
+    {% endif %}
+    {% set address_zip_city_country = address_zip_city_country ~ customer.address_city %}
+{% endif %}
+{% if customer.address_country|length > 0 %}
+    {% if address_zip_city_country|length > 0 %}
+        {% set address_zip_city_country = address_zip_city_country ~ ' - ' %}
+    {% endif %}
+    {% set address_zip_city_country = address_zip_city_country ~ customer.address_country %}
+{% endif %}
+
+<div class="{{ class }}">
+    <table>
+        <tr>
+            <td style="width: 70px; vertical-align: top;">
+                <b>{{ name_label }}:</b><br/>
+                <b>{{ address_label }}:</b><br/>
+            </td>
+            <td>
+                <span>{{ customer.name }}</span><br/>
+
+                {% if customer.address_street|length > 0 %}
+                    <span>{{ customer.address_street }}</span><br/>
+                {% endif %}
+
+                {% if customer.address_dispatch|length > 0 %}
+                    <span>{{ customer.address_dispatch }}</span><br/>
+                {% endif %}
+
+                {% if address_zip_city_country|length > 0 %}
+                    <span>{{ address_zip_city_country }}</span><br/>
+                {% endif %}
+
+                {% if customer.has_vat and customer.vat_number|length > 0 %}
+                    <span>{{ vat_label }} {{ customer.vat_number }}</span><br/>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
