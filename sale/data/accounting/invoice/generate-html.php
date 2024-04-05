@@ -47,6 +47,108 @@ list($params, $providers) = announce([
 /** @var \equal\php\Context $context */
 $context = $providers['context'];
 
+$generateInvoiceLines = function($invoice, $mode) {
+    $lines = [];
+
+    foreach($invoice['invoice_line_groups_ids'] as $group) {
+        if(count($group['invoice_lines_ids']) <= 0) {
+            continue;
+        }
+
+        $lines[] = [
+            'name'       => $group['name'] ?? '',
+            'price'      => null,
+            'total'      => null,
+            'unit_price' => null,
+            'vat_rate'   => null,
+            'qty'        => null,
+            'free_qty'   => null,
+            'is_group'   => true
+        ];
+
+        $group_lines = [];
+        foreach($group['invoice_lines_ids'] as $line) {
+            foreach($invoice['invoice_lines_ids'] as $i => $l) {
+                if($l['id'] === $line['id']) {
+                    unset($invoice['invoice_lines_ids'][$i]);
+                    break;
+                }
+            }
+
+            $group_lines[] = [
+                'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
+                'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
+                'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+                'unit_price' => $line['unit_price'],
+                'vat_rate'   => $line['vat_rate'],
+                'qty'        => $line['qty'],
+                'discount'   => $line['discount'],
+                'free_qty'   => $line['free_qty'],
+                'is_group'   => false
+            ];
+        }
+
+        switch($mode) {
+            case 'detailed':
+                $lines = array_merge($lines, $group_lines);
+                break;
+            case 'grouped':
+                $group_tax_lines = [];
+
+                foreach($group_lines as $line) {
+                    $vat_rate = strval(round($line['vat_rate'], 2));
+
+                    if(!isset($group_tax_lines[$vat_rate])) {
+                        $group_tax_lines[$vat_rate] = [];
+                    }
+
+                    $group_tax_lines[$vat_rate][] = $line;
+                }
+
+                $nb_taxes = count(array_keys($group_tax_lines));
+                if($nb_taxes == 1) {
+                    $pos = count($lines) - 1;
+                    foreach($group_tax_lines as $vat_rate => $tax_lines) {
+                        $lines[$pos]['qty'] = 1;
+                        $lines[$pos]['vat_rate'] = $vat_rate;
+                        foreach($tax_lines as $tax_line) {
+                            $lines[$pos]['total'] += $tax_line['total'];
+                            $lines[$pos]['price'] += $tax_line['price'];
+                        }
+                    }
+                }
+                elseif($nb_taxes > 1) {
+                    foreach($group_tax_lines as $vat_rate => $tax_lines) {
+                        $lines[] = [
+                            'name'     => 'VAT '.($vat_rate * 100).'%',
+                            'qty'      => 1,
+                            'vat_rate' => $vat_rate,
+                            'price'    => round(array_sum(array_column($tax_lines, 'price')), 2),
+                            'total'    => round(array_sum(array_column($tax_lines, 'total')), 2)
+                        ];
+                    }
+                }
+                break;
+        }
+    }
+
+    foreach($invoice['invoice_lines_ids'] as $line) {
+        $lines[] = [
+            'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
+            'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
+            'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+            'unit_price' => $line['unit_price'],
+            'vat_rate'   => $line['vat_rate'],
+            'qty'        => $line['qty'],
+            'discount'   => $line['discount'],
+            'free_qty'   => $line['free_qty'],
+            'is_group'   => false
+        ];
+    }
+
+    return $lines;
+};
+
 $invoice_parties_fields = [
     'name', 'address_street', 'address_dispatch', 'address_zip',
     'address_city', 'address_country', 'has_vat', 'vat_number'
@@ -84,103 +186,7 @@ foreach($organisation_field_format as $column => $usage) {
     $invoice['organisation_id'][$column] = DataFormatter::format($invoice['organisation_id'][$column], $usage);
 }
 
-$lines = [];
-$added_in_group_lines_ids = [];
-foreach($invoice['invoice_line_groups_ids'] as $group) {
-    if(count($group['invoice_lines_ids']) <= 0) {
-        continue;
-    }
-
-    $lines[] = [
-        'name'       => $group['name'] ?? '',
-        'price'      => null,
-        'total'      => null,
-        'unit_price' => null,
-        'vat_rate'   => null,
-        'qty'        => null,
-        'free_qty'   => null,
-        'is_group'   => true
-    ];
-
-    $group_lines = [];
-    foreach($group['invoice_lines_ids'] as $line) {
-        foreach($invoice['invoice_lines_ids'] as $i => $l) {
-            if($l['id'] === $line['id']) {
-                unset($invoice['invoice_lines_ids'][$i]);
-                break;
-            }
-        }
-
-        $group_lines[] = [
-            'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-            'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-            'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
-            'unit_price' => $line['unit_price'],
-            'vat_rate'   => $line['vat_rate'],
-            'qty'        => $line['qty'],
-            'discount'   => $line['discount'],
-            'free_qty'   => $line['free_qty'],
-            'is_group'   => false
-        ];
-    }
-
-    switch($params['mode']) {
-        case 'detailed':
-            $lines = array_merge($lines, $group_lines);
-            break;
-        case 'grouped':
-            $group_tax_lines = [];
-
-            foreach($group_lines as $line) {
-                $vat_rate = strval(round($line['vat_rate'], 2));
-
-                if(!isset($group_tax_lines[$vat_rate])) {
-                    $group_tax_lines[$vat_rate] = [];
-                }
-
-                $group_tax_lines[$vat_rate][] = $line;
-            }
-
-            $nb_taxes = count(array_keys($group_tax_lines));
-            if($nb_taxes == 1) {
-                $pos = count($lines) - 1;
-                foreach($group_tax_lines as $vat_rate => $tax_lines) {
-                    $lines[$pos]['qty'] = 1;
-                    $lines[$pos]['vat_rate'] = $vat_rate;
-                    foreach($tax_lines as $tax_line) {
-                        $lines[$pos]['total'] += $tax_line['total'];
-                        $lines[$pos]['price'] += $tax_line['price'];
-                    }
-                }
-            }
-            elseif($nb_taxes > 1) {
-                foreach($group_tax_lines as $vat_rate => $tax_lines) {
-                    $lines[] = [
-                        'name'     => 'VAT '.($vat_rate * 100).'%',
-                        'qty'      => 1,
-                        'vat_rate' => $vat_rate,
-                        'price'    => round(array_sum(array_column($tax_lines, 'price')), 2),
-                        'total'    => round(array_sum(array_column($tax_lines, 'total')), 2)
-                    ];
-                }
-            }
-            break;
-    }
-}
-
-foreach($invoice['invoice_lines_ids'] as $line) {
-    $lines[] = [
-        'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-        'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-        'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
-        'unit_price' => $line['unit_price'],
-        'vat_rate'   => $line['vat_rate'],
-        'qty'        => $line['qty'],
-        'discount'   => $line['discount'],
-        'free_qty'   => $line['free_qty'],
-        'is_group'   => false
-    ];
-}
+$lines = $generateInvoiceLines($invoice, $params['mode']);
 
 $loader = new TwigFilesystemLoader(QN_BASEDIR.'/packages/sale/views/accounting/invoice');
 $twig = new TwigEnvironment($loader);
