@@ -10,6 +10,12 @@
                 "legal_name": "Your company name Inc.",
                 "short_name": "Your company",
                 "has_parent": false
+            },
+            {
+                "id": 2,
+                "type_id": 1,
+                "firstname": "Contact",
+                "lastname": "Contact"
             }
         ]
     }
