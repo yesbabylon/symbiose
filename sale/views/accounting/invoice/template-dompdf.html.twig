@@ -95,7 +95,8 @@
                             'class':        'invoice-info',
                             'number_label': 'N°',
                             'invoice':      invoice,
-                            'timezone':     timezone
+                            'timezone':     timezone,
+                            'date_format':  date_format
                         }
                     %}
                 </td>
@@ -115,9 +116,10 @@
     <main>
         {%
             include 'components/invoice-lines.html.twig' with {
-                'class':   'invoice-lines',
-                'invoice': invoice,
-                'lines':   lines
+                'class':    'invoice-lines',
+                'invoice':  invoice,
+                'lines':    lines,
+                'currency': currency
             }
         %}
     </main>

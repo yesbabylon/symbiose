@@ -52,7 +52,7 @@
                 </td>
                 <td style="width: 10%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
                     {% if line.unit_price is not null %}
-                        {{ line.unit_price | format_currency('EUR', [], locale) }}
+                        {{ line.unit_price | format_currency(currency, [], locale) }}
                     {% endif %}
                 </td>
                 <td style="width: 8%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
@@ -67,7 +67,7 @@
                 </td>
                 <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
                     {% if line.total is not null %}
-                        {{ line.total | format_currency('EUR', [], locale) }}
+                        {{ line.total | format_currency(currency, [], locale) }}
                     {% endif %}
                 </td>
             </tr>
@@ -82,7 +82,7 @@
                 Total ex. VAT
             </td>
             <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                {{ invoice.total | format_currency('EUR', [], locale) }}
+                {{ invoice.total | format_currency(currency, [], locale) }}
             </td>
         </tr>
 
@@ -91,7 +91,7 @@
                 <b>Total inc. VAT</b>
             </td>
             <td style="text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-                <b>{{ invoice.price | format_currency('EUR', [], locale) }}</b>
+                <b>{{ invoice.price | format_currency(currency, [], locale) }}</b>
             </td>
         </tr>
         </tbody>

@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use core\setting\Setting;
 use equal\data\DataFormatter;
 use sale\accounting\invoice\Invoice;
 use Twig\Environment as TwigEnvironment;
@@ -149,6 +150,17 @@ $generateInvoiceLines = function($invoice, $mode) {
     return $lines;
 };
 
+$getTwigCurrency = function($equal_currency) {
+    $equal_twig_currency_map = [
+        '€'   => 'EUR',
+        '£'   => 'GBP',
+        'CHF' => 'CHF',
+        '$'   => 'USD'
+    ];
+
+    return $equal_twig_currency_map[$equal_currency] ?? $equal_currency;
+};
+
 $invoice_parties_fields = [
     'name', 'address_street', 'address_dispatch', 'address_zip',
     'address_city', 'address_country', 'has_vat', 'vat_number'
@@ -188,6 +200,9 @@ foreach($organisation_field_format as $column => $usage) {
 
 $lines = $generateInvoiceLines($invoice, $params['mode']);
 
+$date_format = Setting::get_value('core', 'locale', 'date_format', 'm/d/Y');
+$currency = $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€'));
+
 $loader = new TwigFilesystemLoader(QN_BASEDIR.'/packages/sale/views/accounting/invoice');
 $twig = new TwigEnvironment($loader);
 
@@ -202,7 +217,9 @@ $html = $template->render([
     'lines'        => $lines,
     'company_logo' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
     'timezone'     => constant('L10N_TIMEZONE'),
-    'locale'       => constant('L10N_LOCALE')
+    'locale'       => constant('L10N_LOCALE'),
+    'date_format'  => $date_format,
+    'currency'     => $currency
 ]);
 
 $context->httpResponse()
