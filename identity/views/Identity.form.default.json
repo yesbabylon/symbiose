@@ -311,26 +311,6 @@
                         ]
                     },
                     {
-                        "label": "Relations",
-                        "id": "section.identity_relations",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "partners_ids",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Departments & Subsidiaries",
                         "id": "section.departments",
                         "visible": ["has_parent", "=", false],
