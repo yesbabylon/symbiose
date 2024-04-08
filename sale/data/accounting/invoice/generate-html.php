@@ -36,6 +36,10 @@ list($params, $providers) = announce([
             'default'     => 'template'
         ]
     ],
+    'access'        => [
+        'visibility' => 'protected',
+        'groups'     => ['sale.default.user'],
+    ],
     'response'      => [
         'content-type'  => 'text/html',
         'charset'       => 'utf-8',

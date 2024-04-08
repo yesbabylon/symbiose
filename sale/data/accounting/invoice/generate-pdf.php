@@ -32,6 +32,10 @@ list($params, $providers) = announce([
             'default'     => 'invoice'
         ]
     ],
+    'access'        => [
+        'visibility' => 'protected',
+        'groups'     => ['sale.default.user'],
+    ],
     'response'      => [
         'accept-origin' => '*',
         'content-type'  => 'application/pdf'
