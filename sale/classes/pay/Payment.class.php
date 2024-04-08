@@ -182,25 +182,25 @@ class Payment extends Model {
                     }
                     // #memo - when state is still draft, it means that reconcile is made manually
                     if($payment['state'] == 'draft') {
-                        if($payment['statement_line_id.amount'] < 0) {
-                            if(($payment['statement_line_id.remaining_amount'] - $values['amount']) > 0) {
+                        if(round($payment['statement_line_id.amount'], 2) < 0) {
+                            if(round($payment['statement_line_id.remaining_amount'] - $values['amount'], 2) > 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#1)."]];
                             }
                         }
                         else {
-                            if(($payment['statement_line_id.remaining_amount'] - $values['amount']) < 0) {
+                            if(round($payment['statement_line_id.remaining_amount'] - $values['amount'], 2) < 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#2)."]];
                             }
                         }
                     }
                     else  {
-                        if($payment['statement_line_id.amount'] < 0) {
-                            if(($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount']) > 0) {
+                        if(round($payment['statement_line_id.amount'], 2) < 0) {
+                            if(round($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount'], 2) > 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#3)."]];
                             }
                         }
                         else {
-                            if(($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount']) < 0) {
+                            if(round($payment['statement_line_id.remaining_amount'] + $payment['amount'] - $values['amount'], 2) < 0) {
                                 return ['amount' => ['excessive_amount' => "Payment amount ({$values['amount']}) cannot be higher than statement line remaining amount ({$payment['statement_line_id.remaining_amount']}) (err#4)."]];
                             }
                         }
