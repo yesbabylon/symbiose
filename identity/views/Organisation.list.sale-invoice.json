@@ -1,0 +1,22 @@
+{
+    "name": "Organisations images",
+    "description": "This view is intended for displaying basic listing of existing organisations images for invoices.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "50%"
+            },
+            {
+                "type": "field",
+                "value": "invoice_image_document_id",
+                "label": "Invoice image",
+                "width": "50%"
+            }
+        ]
+    }
+}

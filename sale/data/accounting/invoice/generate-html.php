@@ -161,21 +161,45 @@ $getTwigCurrency = function($equal_currency) {
     return $equal_twig_currency_map[$equal_currency] ?? $equal_currency;
 };
 
+$getOrganisationLogo = function($invoice) {
+    $organisation_logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
+    if(
+        isset(
+            $invoice['organisation_id']['invoice_image_document_id']['type'],
+            $invoice['organisation_id']['invoice_image_document_id']['data']
+        )
+    ) {
+        $organisation_logo = sprintf(
+            'data:%s;base64,%s',
+            $invoice['organisation_id']['invoice_image_document_id']['type'],
+            base64_encode($invoice['organisation_id']['invoice_image_document_id']['data'])
+        );
+    }
+
+    return $organisation_logo;
+};
+
 $invoice_parties_fields = [
     'name', 'address_street', 'address_dispatch', 'address_zip',
     'address_city', 'address_country', 'has_vat', 'vat_number'
 ];
 
+$invoice_organisation_fields = [
+    'legal_name', 'registration_number', 'bank_account_iban',
+    'website', 'email', 'phone', 'fax', 'invoice_image_type',
+    'invoice_image_document_id' => ['type', 'data']
+];
+
 $invoice_lines_fields = [
     'product_id', 'description', 'qty', 'unit_price', 'discount',
     'free_qty', 'vat_rate', 'total', 'price',
-    'downpayment_invoice_id' => ['status'],
+    'downpayment_invoice_id' => ['status']
 ];
 
 $invoice = Invoice::id($params['id'])
     ->read([
         'name', 'date', 'status', 'total', 'price',
-        'organisation_id' => array_merge($invoice_parties_fields, ['legal_name', 'registration_number', 'bank_account_iban', 'website', 'email', 'phone', 'fax']),
+        'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
         'customer_id'     => $invoice_parties_fields,
         'invoice_lines_ids' => $invoice_lines_fields,
         'invoice_line_groups_ids' => [
@@ -213,13 +237,13 @@ $twig->addExtension($extension);
 $template = $twig->load($params['view_id'].'.html.twig');
 
 $html = $template->render([
-    'invoice'      => $invoice,
-    'lines'        => $lines,
-    'company_logo' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=',
-    'timezone'     => constant('L10N_TIMEZONE'),
-    'locale'       => constant('L10N_LOCALE'),
-    'date_format'  => $date_format,
-    'currency'     => $currency
+    'invoice'           => $invoice,
+    'lines'             => $lines,
+    'organisation_logo' => $getOrganisationLogo($invoice),
+    'timezone'          => constant('L10N_TIMEZONE'),
+    'locale'            => constant('L10N_LOCALE'),
+    'date_format'       => $date_format,
+    'currency'          => $currency
 ]);
 
 $context->httpResponse()

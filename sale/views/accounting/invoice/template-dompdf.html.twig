@@ -70,8 +70,9 @@
                 'class':                     'organisation-info',
                 'registration_number_label': 'Registration n°',
                 'vat_number_label':          'VAT n°',
-                'organisation':              invoice.organisation_id
-            }
+                'organisation':              invoice.organisation_id,
+                'organisation_logo':         organisation_logo
+            } only
         %}
 
         {%
@@ -81,7 +82,7 @@
                 'address_label': 'Address',
                 'vat_label':     'VAT',
                 'customer':      invoice.customer_id
-            }
+            } only
         %}
 
         <div style="position: relative; height: 165px; width: 100%;"></div>
@@ -97,7 +98,7 @@
                             'invoice':      invoice,
                             'timezone':     timezone,
                             'date_format':  date_format
-                        }
+                        } only
                     %}
                 </td>
             </tr>
@@ -109,7 +110,7 @@
             include 'components/organisation-footer-info.html.twig' with {
                 'class'       : 'organisation-footer-info',
                 'organisation': invoice.organisation_id
-            }
+            } only
         %}
     </footer>
 
@@ -120,7 +121,7 @@
                 'invoice':  invoice,
                 'lines':    lines,
                 'currency': currency
-            }
+            } only
         %}
     </main>
 </body>

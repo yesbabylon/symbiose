@@ -30,13 +30,13 @@ class Document extends Model {
             'type' => [
                 'type'              => 'string',
                 'readonly'          => true,
-                'desription'        => 'Content type of the document (from data).'
+                'description'       => 'Content type of the document (from data).'
             ],
 
             'size' => [
                 'type'              => 'integer',
                 'readonly'          => true,
-                'desription'        => 'Size of the document, in octets (from data).'
+                'description'       => 'Size of the document, in octets (from data).'
             ],
 
             'readable_size' => [
