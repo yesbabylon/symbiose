@@ -1,0 +1,60 @@
+{
+    "name": "Invoice",
+    "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "Cancel invoice.",
+            "controller": "core_model_transition",
+            "confirm": true,
+            "visible": ["status", "=", "invoice"],
+            "params": {
+                "entity": "finance\\accounting\\Invoice",
+                "transition": "cancel",
+                "ids": []
+            }
+        }
+    ],
+    "routes": [
+        {
+            "id": "route.print.pdf",
+            "label": "Print invoice",
+            "description": "",
+            "icon": "print",
+            "route": "/?get=sale_accounting_invoice_generate-pdf&mode=grouped&id=object.id",
+            "target": "_blank",
+            "absolute": true
+        },
+        {
+            "id": "route.print-detailed.pdf",
+            "label": "Print detailed invoice",
+            "description": "",
+            "icon": "print",
+            "route": "/?get=sale_accounting_invoice_generate-pdf&mode=detailed&id=object.id",
+            "target": "_blank",
+            "absolute": true
+        }
+    ],
+    "layout": {
+        "extends": {
+            "entity": "finance\\accounting\\Invoice",
+            "view": "form.default"
+        }
+    }
+}
