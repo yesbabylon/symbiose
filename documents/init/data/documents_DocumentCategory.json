@@ -1,0 +1,12 @@
+[
+    {
+        "name": "documents\\DocumentCategory",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Document category"
+            }
+        ]
+    }
+]
