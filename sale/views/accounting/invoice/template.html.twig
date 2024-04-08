@@ -4,7 +4,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <title>Invoice title</title>
+    <title>
+        {% if invoice.type == 'invoice' %}
+            Invoice
+        {% else %}
+            Credit note
+        {% endif %}
+    </title>
 
     <style type="text/css">
         @media print {
@@ -75,8 +81,6 @@
             text-align: center;
         }
     </style>
-
-    <title>Invoice</title>
 </head>
 
 <body>

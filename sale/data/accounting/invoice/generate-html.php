@@ -202,7 +202,7 @@ $invoice_lines_fields = [
 
 $invoice = Invoice::id($params['id'])
     ->read([
-        'name', 'date', 'status', 'total', 'price',
+        'name', 'date', 'status', 'type', 'total', 'price',
         'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
         'customer_id'     => $invoice_parties_fields,
         'invoice_lines_ids' => $invoice_lines_fields,
