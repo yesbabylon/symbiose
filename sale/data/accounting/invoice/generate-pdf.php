@@ -30,6 +30,12 @@ list($params, $providers) = announce([
             'description' => 'Name given to the generated pdf file.',
             'type'        => 'string',
             'default'     => 'invoice'
+        ],
+
+        'lang' =>  [
+            'description' => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
+            'type'        => 'string',
+            'default'     => constant('DEFAULT_LANG')
         ]
     ],
     'access'        => [
@@ -57,7 +63,8 @@ if(empty($invoice)) {
 $html = eQual::run('get', 'sale_accounting_invoice_generate-html', [
     'id'      => $params['id'],
     'mode'    => $params['mode'],
-    'view_id' => 'template-dompdf'
+    'view_id' => 'template-dompdf',
+    'lang'    => $params['lang']
 ]);
 
 $options = new DompdfOptions();

@@ -6,9 +6,9 @@
 
     <title>
         {% if invoice.type == 'invoice' %}
-            Invoice
+            {{ labels.invoice }}
         {% else %}
-            Credit note
+            {{ labels.credit_note }}
         {% endif %}
     </title>
 
@@ -90,8 +90,8 @@
             {%
                 include 'components/organisation-info.html.twig' with {
                     'class':                     'organisation-info',
-                    'registration_number_label': 'Registration n°',
-                    'vat_number_label':          'VAT n°',
+                    'registration_number_label': labels.registration_number,
+                    'vat_number_label':          labels.vat_number,
                     'organisation':              invoice.organisation_id,
                     'organisation_logo':         organisation_logo
                 } only
@@ -100,9 +100,9 @@
             {%
                 include 'components/customer-info.html.twig' with {
                     'class':         'customer-info',
-                    'name_label':    'Name',
-                    'address_label': 'Address',
-                    'vat_label':     'VAT',
+                    'name_label':    labels.customer_name,
+                    'address_label': labels.customer_address,
+                    'vat_label':     labels.vat_number,
                     'customer':      invoice.customer_id
                 } only
             %}
@@ -115,11 +115,15 @@
                     <td style="width: 23%">
                         {%
                             include 'components/invoice-info.html.twig' with {
-                                'class':        'invoice-info',
-                                'number_label': 'N°',
-                                'invoice':      invoice,
-                                'timezone':     timezone,
-                                'date_format':  date_format
+                                'class':         'invoice-info',
+                                'number_label':  'N°',
+                                'invoice':       invoice,
+                                'timezone':      timezone,
+                                'date_format':   date_format,
+                                'invoice_label': labels.invoice ,
+                                'number_label':  labels.number,
+                                'date_label':    labels.date,
+                                'status_label':  labels.status
                             } only
                         %}
                     </td>
@@ -130,11 +134,14 @@
         <main>
             {%
                 include 'components/invoice-lines.html.twig' with {
-                    'class':    'invoice-lines',
-                    'invoice':  invoice,
-                    'lines':    lines,
-                    'currency': currency,
-                    'locale':   locale
+                    'class':          'invoice-lines',
+                    'invoice':        invoice,
+                    'lines':          lines,
+                    'currency':       currency,
+                    'locale':         locale,
+                    'total_ex_vat':   labels.total_ex_vat,
+                    'total_inc_vat':  labels.total_inc_vat,
+                    'columns_labels': labels.columns
                 } only
             %}
         </main>
@@ -142,7 +149,7 @@
         <footer>
             {%
                 include 'components/organisation-footer-info.html.twig' with {
-                    'class'       : 'organisation-footer-info',
+                    'class':        'organisation-footer-info',
                     'organisation': invoice.organisation_id
                 } only
             %}

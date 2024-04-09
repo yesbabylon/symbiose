@@ -1,0 +1,320 @@
+[
+    {
+        "name": "core\\setting\\SettingValue",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1050,
+                "name": "invoice-labels.invoice",
+                "setting_id": 1050,
+                "user_id": 0,
+                "value": "Invoice"
+            },
+            {
+                "id": 1051,
+                "name": "invoice-labels.credit-note",
+                "setting_id": 1051,
+                "user_id": 0,
+                "value": "Credit note"
+            },
+            {
+                "id": 1052,
+                "name": "invoice-labels.customer-name",
+                "setting_id": 1052,
+                "user_id": 0,
+                "value": "Name"
+            },
+            {
+                "id": 1053,
+                "name": "invoice-labels.customer-address",
+                "setting_id": 1053,
+                "user_id": 0,
+                "value": "Address"
+            },
+            {
+                "id": 1054,
+                "name": "invoice-labels.registration-number",
+                "setting_id": 1054,
+                "user_id": 0,
+                "value": "Registration n°"
+            },
+            {
+                "id": 1055,
+                "name": "invoice-labels.vat-number",
+                "setting_id": 1055,
+                "user_id": 0,
+                "value": "VAT n°"
+            },
+            {
+                "id": 1056,
+                "name": "invoice-labels.number",
+                "setting_id": 1056,
+                "user_id": 0,
+                "value": "N°"
+            },
+            {
+                "id": 1057,
+                "name": "invoice-labels.date",
+                "setting_id": 1057,
+                "user_id": 0,
+                "value": "Date"
+            },
+            {
+                "id": 1058,
+                "name": "invoice-labels.status",
+                "setting_id": 1058,
+                "user_id": 0,
+                "value": "Status"
+            },
+            {
+                "id": 1059,
+                "name": "invoice-labels.product-column",
+                "setting_id": 1059,
+                "user_id": 0,
+                "value": "Product label"
+            },
+            {
+                "id": 1060,
+                "name": "invoice-labels.qty-column",
+                "setting_id": 1060,
+                "user_id": 0,
+                "value": "Qty"
+            },
+            {
+                "id": 1061,
+                "name": "invoice-labels.free-column",
+                "setting_id": 1061,
+                "user_id": 0,
+                "value": "Free"
+            },
+            {
+                "id": 1062,
+                "name": "invoice-labels.unit-price-column",
+                "setting_id": 1062,
+                "user_id": 0,
+                "value": "U. price"
+            },
+            {
+                "id": 1063,
+                "name": "invoice-labels.discount-column",
+                "setting_id": 1063,
+                "user_id": 0,
+                "value": "Disc."
+            },
+            {
+                "id": 1064,
+                "name": "invoice-labels.vat-column",
+                "setting_id": 1064,
+                "user_id": 0,
+                "value": "VAT"
+            },
+            {
+                "id": 1065,
+                "name": "invoice-labels.taxes-column",
+                "setting_id": 1065,
+                "user_id": 0,
+                "value": "Taxes"
+            },
+            {
+                "id": 1066,
+                "name": "invoice-labels.price-ex-vat-column",
+                "setting_id": 1066,
+                "user_id": 0,
+                "value": "Price ex. VAT"
+            },
+            {
+                "id": 1067,
+                "name": "invoice-labels.price-column",
+                "setting_id": 1067,
+                "user_id": 0,
+                "value": "Price"
+            },
+            {
+                "id": 1068,
+                "name": "invoice-labels.total-ex-vat",
+                "setting_id": 1068,
+                "user_id": 0,
+                "value": "Total ex. VAT"
+            },
+            {
+                "id": 1069,
+                "name": "invoice-labels.total-inc-vat",
+                "setting_id": 1069,
+                "user_id": 0,
+                "value": "Total inc. VAT"
+            }
+        ]
+    },
+    {
+        "name": "core\\setting\\SettingValue",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1050,
+                "value": "Facture"
+            },
+            {
+                "id": 1051,
+                "value": "Note de crédit"
+            },
+            {
+                "id": 1052,
+                "value": "Nom"
+            },
+            {
+                "id": 1053,
+                "value": "Adresse"
+            },
+            {
+                "id": 1054,
+                "value": "N° registre"
+            },
+            {
+                "id": 1055,
+                "value": "N° TVA"
+            },
+            {
+                "id": 1056,
+                "value": "N°"
+            },
+            {
+                "id": 1057,
+                "value": "Date"
+            },
+            {
+                "id": 1058,
+                "value": "Status"
+            },
+            {
+                "id": 1059,
+                "value": "Libellé produit"
+            },
+            {
+                "id": 1060,
+                "value": "Qté"
+            },
+            {
+                "id": 1061,
+                "value": "Grat."
+            },
+            {
+                "id": 1062,
+                "value": "Prix u."
+            },
+            {
+                "id": 1063,
+                "value": "Réd."
+            },
+            {
+                "id": 1064,
+                "value": "TVA"
+            },
+            {
+                "id": 1065,
+                "value": "Tax"
+            },
+            {
+                "id": 1066,
+                "value": "Prix HTVA"
+            },
+            {
+                "id": 1067,
+                "value": "Prix"
+            },
+            {
+                "id": 1068,
+                "value": "Total HTVA"
+            },
+            {
+                "id": 1069,
+                "value": "Total TVAC"
+            }
+        ]
+    },
+    {
+        "name": "core\\setting\\SettingValue",
+        "lang": "nl",
+        "data": [
+            {
+                "id": 1050,
+                "value": "Factuur"
+            },
+            {
+                "id": 1051,
+                "value": "Kredietwaardigheid"
+            },
+            {
+                "id": 1052,
+                "value": "Naam"
+            },
+            {
+                "id": 1053,
+                "value": "Adres"
+            },
+            {
+                "id": 1054,
+                "value": "Registratienummer"
+            },
+            {
+                "id": 1055,
+                "value": "BTW n°"
+            },
+            {
+                "id": 1056,
+                "value": "N°"
+            },
+            {
+                "id": 1057,
+                "value": "Datum"
+            },
+            {
+                "id": 1058,
+                "value": "Toestand"
+            },
+            {
+                "id": 1059,
+                "value": "Etiket"
+            },
+            {
+                "id": 1060,
+                "value": "Hoev."
+            },
+            {
+                "id": 1061,
+                "value": "Vrij"
+            },
+            {
+                "id": 1062,
+                "value": "Een. prijs"
+            },
+            {
+                "id": 1063,
+                "value": "Afn."
+            },
+            {
+                "id": 1064,
+                "value": "BTW"
+            },
+            {
+                "id": 1065,
+                "value": "Belasting"
+            },
+            {
+                "id": 1066,
+                "value": "Prijs ex. BTW"
+            },
+            {
+                "id": 1067,
+                "value": "Prijs"
+            },
+            {
+                "id": 1068,
+                "value": "Totaal ex. BTW"
+            },
+            {
+                "id": 1069,
+                "value": "Totaal incl. BTW"
+            }
+        ]
+    }
+]

@@ -34,6 +34,12 @@ list($params, $providers) = announce([
             'description' => 'View id of the template to use.',
             'type'        => 'string',
             'default'     => 'template'
+        ],
+
+        'lang' =>  [
+            'description' => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
+            'type'        => 'string',
+            'default'     => constant('DEFAULT_LANG')
         ]
     ],
     'access'        => [
@@ -183,53 +189,83 @@ $getOrganisationLogo = function($invoice) {
     return $organisation_logo;
 };
 
-$invoice_parties_fields = [
-    'name', 'address_street', 'address_dispatch', 'address_zip',
-    'address_city', 'address_country', 'has_vat', 'vat_number'
-];
+$getLabels = function($lang) {
+    return [
+        'invoice'             => Setting::get_value('sale', 'invoice', 'labels.invoice', 'Invoice', 0, $lang),
+        'credit_note'         => Setting::get_value('sale', 'invoice', 'labels.credit-note', 'Credit note', 0, $lang),
+        'customer_name'       => Setting::get_value('sale', 'invoice', 'labels.customer-name', 'Name', 0, $lang),
+        'customer_address'    => Setting::get_value('sale', 'invoice', 'labels.customer-address', 'Address', 0, $lang),
+        'registration_number' => Setting::get_value('sale', 'invoice', 'labels.registration-number', 'Registration n°', 0, $lang),
+        'vat_number'          => Setting::get_value('sale', 'invoice', 'labels.vat-number', 'VAT n°', 0, $lang),
+        'number'              => Setting::get_value('sale', 'invoice', 'labels.number', 'N°', 0, $lang),
+        'date'                => Setting::get_value('sale', 'invoice', 'labels.date', 'Date', 0, $lang),
+        'status'              => Setting::get_value('sale', 'invoice', 'labels.status', 'Status', 0, $lang),
+        'columns'             => [
+            'product'      => Setting::get_value('sale', 'invoice', 'labels.product-column', 'Product label', 0, $lang),
+            'qty'          => Setting::get_value('sale', 'invoice', 'labels.qty-column', 'Qty', 0, $lang),
+            'free'         => Setting::get_value('sale', 'invoice', 'labels.free-column', 'Free', 0, $lang),
+            'unit_price'   => Setting::get_value('sale', 'invoice', 'labels.unit-price-column', 'U. price', 0, $lang),
+            'discount'     => Setting::get_value('sale', 'invoice', 'labels.discount-column', 'Disc.', 0, $lang),
+            'vat'          => Setting::get_value('sale', 'invoice', 'labels.vat-column', 'VAT', 0, $lang),
+            'taxes'        => Setting::get_value('sale', 'invoice', 'labels.taxes-column', 'Taxes', 0, $lang),
+            'price_ex_vat' => Setting::get_value('sale', 'invoice', 'labels.price-ex-vat-column', 'Price ex. VAT', 0, $lang),
+            'price'        => Setting::get_value('sale', 'invoice', 'labels.price-column', 'Price', 0, $lang)
+        ],
+        'total_ex_vat'        => Setting::get_value('sale', 'invoice', 'labels.total-ex-vat', 'Total ex. VAT', 0, $lang),
+        'total_inc_vat'       => Setting::get_value('sale', 'invoice', 'labels.total-inc-vat', 'Total inc. VAT', 0, $lang)
+    ];
+};
 
-$invoice_organisation_fields = [
-    'legal_name', 'registration_number', 'bank_account_iban',
-    'website', 'email', 'phone', 'fax', 'invoice_image_type',
-    'invoice_image_document_id' => ['type', 'data']
-];
+$getInvoice = function($id) {
+    $invoice_parties_fields = [
+        'name', 'address_street', 'address_dispatch', 'address_zip',
+        'address_city', 'address_country', 'has_vat', 'vat_number'
+    ];
 
-$invoice_lines_fields = [
-    'product_id', 'description', 'qty', 'unit_price', 'discount',
-    'free_qty', 'vat_rate', 'total', 'price',
-    'downpayment_invoice_id' => ['status']
-];
+    $invoice_organisation_fields = [
+        'legal_name', 'registration_number', 'bank_account_iban',
+        'website', 'email', 'phone', 'fax', 'invoice_image_type',
+        'has_vat', 'vat_number',
+        'invoice_image_document_id' => ['type', 'data']
+    ];
 
-$invoice = Invoice::id($params['id'])
-    ->read([
-        'name', 'date', 'status', 'type', 'total', 'price',
-        'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
-        'customer_id'     => $invoice_parties_fields,
-        'invoice_lines_ids' => $invoice_lines_fields,
-        'invoice_line_groups_ids' => [
-            'name',
-            'invoice_lines_ids' => $invoice_lines_fields
-        ]
-    ])
-    ->first(true);
+    $invoice_lines_fields = [
+        'product_id', 'description', 'qty', 'unit_price', 'discount',
+        'free_qty', 'vat_rate', 'total', 'price',
+        'downpayment_invoice_id' => ['status']
+    ];
 
+    return Invoice::id($id)
+        ->read([
+            'name', 'date', 'status', 'type', 'total', 'price',
+            'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
+            'customer_id'     => $invoice_parties_fields,
+            'invoice_lines_ids' => $invoice_lines_fields,
+            'invoice_line_groups_ids' => [
+                'name',
+                'invoice_lines_ids' => $invoice_lines_fields
+            ]
+        ])
+        ->first(true);
+};
+
+$formatInvoice = function(&$invoice) {
+    $organisation_field_format = [
+        'bank_account_iban' => 'iban',
+        'phone'             => 'phone',
+        'fax'               => 'phone'
+    ];
+    foreach($organisation_field_format as $column => $usage) {
+        $invoice['organisation_id'][$column] = DataFormatter::format($invoice['organisation_id'][$column], $usage);
+    }
+};
+
+$invoice = $getInvoice($params['id']);
 if(empty($invoice)) {
     throw new Exception('invoice_unknown', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$organisation_field_format = [
-    'bank_account_iban' => 'iban',
-    'phone'             => 'phone',
-    'fax'               => 'phone'
-];
-foreach($organisation_field_format as $column => $usage) {
-    $invoice['organisation_id'][$column] = DataFormatter::format($invoice['organisation_id'][$column], $usage);
-}
-
-$lines = $generateInvoiceLines($invoice, $params['mode']);
-
-$date_format = Setting::get_value('core', 'locale', 'date_format', 'm/d/Y');
-$currency = $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€'));
+$formatInvoice($invoice);
 
 $loader = new TwigFilesystemLoader(QN_BASEDIR.'/packages/sale/views/accounting/invoice');
 $twig = new TwigEnvironment($loader);
@@ -242,12 +278,13 @@ $template = $twig->load($params['view_id'].'.html.twig');
 
 $html = $template->render([
     'invoice'           => $invoice,
-    'lines'             => $lines,
+    'lines'             => $generateInvoiceLines($invoice, $params['mode']),
     'organisation_logo' => $getOrganisationLogo($invoice),
     'timezone'          => constant('L10N_TIMEZONE'),
     'locale'            => constant('L10N_LOCALE'),
-    'date_format'       => $date_format,
-    'currency'          => $currency
+    'date_format'       => Setting::get_value('core', 'locale', 'date_format', 'm/d/Y'),
+    'currency'          => $getTwigCurrency(Setting::get_value('core', 'units', 'currency', '€')),
+    'labels'            => $getLabels($params['lang'])
 ]);
 
 $context->httpResponse()

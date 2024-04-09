@@ -35,6 +35,246 @@
                 "description":"Number of days of validity of an option.",
                 "help": "",
                 "type": "integer"
+            },
+            {
+                "id": 1050,
+                "code": "labels.invoice",
+                "title": "Invoice title",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice title.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang": true
+            },
+            {
+                "id": 1051,
+                "code": "labels.credit-note",
+                "title": "Credit note title",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Credit note title.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1052,
+                "code": "labels.customer-name",
+                "title": "Customer name label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Customer name label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1053,
+                "code": "labels.customer-address",
+                "title": "Customer address label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Customer address label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1054,
+                "code": "labels.registration-number",
+                "title": "Registration number label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Company registration number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1055,
+                "code": "labels.vat-number",
+                "title": "VAT number label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Company VAT number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1056,
+                "code": "labels.number",
+                "title": "Number label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Number label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1057,
+                "code": "labels.date",
+                "title": "Date label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Date label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1058,
+                "code": "labels.status",
+                "title": "Status label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Status label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1059,
+                "code": "labels.product-column",
+                "title": "Product column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Product column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1060,
+                "code": "labels.qty-column",
+                "title": "Quantity column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Quantity column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1061,
+                "code": "labels.free-column",
+                "title": "Free quantity column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Free quantity column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1062,
+                "code": "labels.unit-price-column",
+                "title": "Unit price column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Unit price column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1063,
+                "code": "labels.discount-column",
+                "title": "Discount column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Discount column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1064,
+                "code": "labels.vat-column",
+                "title": "VAT column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"VAT column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1065,
+                "code": "labels.taxes-column",
+                "title": "Taxes column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Taxes column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1066,
+                "code": "labels.price-ex-vat-column",
+                "title": "Price ex. VAT column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Price ex. VAT column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1067,
+                "code": "labels.price-column",
+                "title": "Price column label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Price column label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1068,
+                "code": "labels.total-ex-vat",
+                "title": "Total ex. VAT label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Total excluding VAT label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1069,
+                "code": "labels.total-inc-vat",
+                "title": "Total inc. VAT label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Total including VAT label for invoice lines table.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
             }
         ]
     },
@@ -59,6 +299,126 @@
                 "title": "Jours de validit\u00e9 d'une option",
                 "description":"Jours de validit\u00e9 d'une option",
                 "help": "Nombre de jours de validit\u00e9 d'une option."
+            },
+            {
+                "id": 1050,
+                "title": "Titre facture",
+                "description":"Libellé du titre de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1051,
+                "title": "Titre note de crédit",
+                "description":"Libellé du titre de note de crédit.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1052,
+                "title": "Libellé nom client",
+                "description":"Libellé nom client.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1053,
+                "title": "Libellé adresse client",
+                "description":"Libellé adresse client.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1054,
+                "title": "Libellé numéro de registre",
+                "description":"Libellé du numéro de registre de l'entreprise.",
+                "help": "Used in invoice pdf version."
+            },
+            {
+                "id": 1055,
+                "title": "Libellé numéro de TVA",
+                "description":"Libellé du numéro de TVA de l'entreprise.",
+                "help": "Used in invoice pdf version."
+            },
+            {
+                "id": 1056,
+                "title": "Libellé numéro",
+                "description":"Libellé du numéro de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1057,
+                "title": "Libellé date",
+                "description":"Libellé date de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1058,
+                "title": "Libellé status",
+                "description":"Libellé status de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1059,
+                "title": "Libellé colonne étiquette produit",
+                "description":"Libellé de la colonne produit pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1060,
+                "title": "Libellé colonne quantité",
+                "description":"Libellé de la colonne quantité pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1061,
+                "title": "Libellé colonne quantité gratuite",
+                "description":"Libellé de la colonne quantité gratuite pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1062,
+                "title": "Libellé colonne prix unitaire",
+                "description":"Libellé de la colonne prix unitaire pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1063,
+                "title": "Libellé colonne rabais",
+                "description":"Libellé de la colonne rabais pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1064,
+                "title": "Libellé colonne TVA",
+                "description":"Libellé de la colonne TVA pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1065,
+                "title": "Libellé colonne tax",
+                "description":"Libellé de la colonne tax pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1066,
+                "title": "Libellé colonne prix HTVA",
+                "description":"Libellé de la colonne prix HTVA pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1067,
+                "title": "Libellé colonne prix",
+                "description":"Libellé de la colonne prix pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1068,
+                "title": "Libellé prix total hors TVA",
+                "description":"Libellé prix total hors TVA pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1069,
+                "title": "Libellé prix total TVA comprise",
+                "description":"Libellé prix total TVA comprise pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
             }
         ]
     }
