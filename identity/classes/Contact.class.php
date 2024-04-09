@@ -39,5 +39,15 @@ class Contact extends Partner {
 
         ];
     }
+    public static function onafterupdate($self, $values) {
+        parent::onafterupdate($self, $values);
+
+        $self->read(['partner_identity_id' => ['id', 'contact_id']]);
+        foreach($self as $id => $customer) {
+            if(is_null($customer['partner_identity_id']['contact_id'])) {
+                Identity::id($customer['partner_identity_id']['id'])->update(['contact_id' => $id]);
+            }
+        }
+    }
 
 }
