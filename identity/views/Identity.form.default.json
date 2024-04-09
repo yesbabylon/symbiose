@@ -178,6 +178,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "User",
                                                 "value": "user_id",
                                                 "width": "100%"
                                             },
@@ -188,7 +189,32 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Parent",
                                                 "value": "parent_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Employee",
+                                                "value": "employee_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Supplier",
+                                                "value": "supplier_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Contact",
+                                                "value": "contact_id",
                                                 "width": "100%"
                                             }
                                         ]
