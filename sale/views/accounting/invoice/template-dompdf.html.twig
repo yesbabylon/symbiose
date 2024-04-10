@@ -119,8 +119,9 @@
     <footer>
         {%
             include 'components/organisation-footer-info.html.twig' with {
-                'class':        'organisation-footer-info',
-                'organisation': invoice.organisation_id
+                'class':         'organisation-footer-info',
+                'organisation':  invoice.organisation_id,
+                'footer_labels': labels.footer
             } only
         %}
     </footer>

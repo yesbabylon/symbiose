@@ -311,6 +311,78 @@
                 "help": "Used in invoice pdf version.",
                 "type": "string",
                 "is_multilang":  true
+            },
+            {
+                "id": 1073,
+                "code": "labels.footer-registration-number",
+                "title": "Footer registration number label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer registration number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1074,
+                "code": "labels.footer-iban",
+                "title": "Footer IBAN label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer IBAN label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1075,
+                "code": "labels.footer-email",
+                "title": "Footer email label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer email address label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1076,
+                "code": "labels.footer-web",
+                "title": "Footer web label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer website label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1077,
+                "code": "labels.footer-tel",
+                "title": "Footer tel label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer telephone number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1078,
+                "code": "labels.footer-fax",
+                "title": "Footer fax label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Invoice footer fax number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
             }
         ]
     },
@@ -472,6 +544,42 @@
                 "id": 1072,
                 "title": "Libellé prix total TVA comprise",
                 "description":"Libellé prix total TVA comprise pour le tableau des lignes de facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1073,
+                "title": "Libellé numéro registre pied de page",
+                "description":"Libellé du numéro de registre se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1074,
+                "title": "Libellé IBAN pied de page",
+                "description":"Libellé du numéro IBAN se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1075,
+                "title": "Libellé e-mail pied de page",
+                "description":"Libellé de l'adresse e-mail se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1076,
+                "title": "Libellé web pied de page",
+                "description":"Libellé du site web se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1077,
+                "title": "Libellé tel pied de page",
+                "description":"Libellé du numéro de téléphone se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1078,
+                "title": "Libellé fax pied de page",
+                "description":"Libellé du numéro de fax se trouvant en pied de page.",
                 "help": "Utilisé pour la version pdf de la facture."
             }
         ]

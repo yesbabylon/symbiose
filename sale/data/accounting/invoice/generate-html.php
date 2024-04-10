@@ -215,7 +215,15 @@ $getLabels = function($lang) {
             'price'        => Setting::get_value('sale', 'invoice', 'labels.price-column', 'Price', 0, $lang)
         ],
         'total_ex_vat'        => Setting::get_value('sale', 'invoice', 'labels.total-ex-vat', 'Total ex. VAT', 0, $lang),
-        'total_inc_vat'       => Setting::get_value('sale', 'invoice', 'labels.total-inc-vat', 'Total inc. VAT', 0, $lang)
+        'total_inc_vat'       => Setting::get_value('sale', 'invoice', 'labels.total-inc-vat', 'Total inc. VAT', 0, $lang),
+        'footer'              => [
+            'registration_number' => Setting::get_value('sale', 'invoice', 'labels.footer-registration-number', 'Registration number', 0, $lang),
+            'iban'                => Setting::get_value('sale', 'invoice', 'labels.footer-iban', 'IBAN', 0, $lang),
+            'email'               => Setting::get_value('sale', 'invoice', 'labels.footer-email', 'Email', 0, $lang),
+            'web'                 => Setting::get_value('sale', 'invoice', 'labels.footer-web', 'Web', 0, $lang),
+            'tel'                 => Setting::get_value('sale', 'invoice', 'labels.footer-tel', 'Tel', 0, $lang),
+            'fax'                 => Setting::get_value('sale', 'invoice', 'labels.footer-fax', 'Fax', 0, $lang),
+        ]
     ];
 };
 
