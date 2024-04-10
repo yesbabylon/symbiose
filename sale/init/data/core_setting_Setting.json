@@ -146,6 +146,42 @@
             },
             {
                 "id": 1059,
+                "code": "labels.status-paid",
+                "title": "Paid status label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Paid status label of invoice.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1060,
+                "code": "labels.status-to-pay",
+                "title": "To pay status label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"To pay status label of invoice.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1061,
+                "code": "labels.status-to-refund",
+                "title": "To refund status label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"To refund status label of invoice.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
+            },
+            {
+                "id": 1062,
                 "code": "labels.product-column",
                 "title": "Product column label",
                 "package": "sale",
@@ -157,7 +193,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1060,
+                "id": 1063,
                 "code": "labels.qty-column",
                 "title": "Quantity column label",
                 "package": "sale",
@@ -169,7 +205,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1061,
+                "id": 1064,
                 "code": "labels.free-column",
                 "title": "Free quantity column label",
                 "package": "sale",
@@ -181,7 +217,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1062,
+                "id": 1065,
                 "code": "labels.unit-price-column",
                 "title": "Unit price column label",
                 "package": "sale",
@@ -193,7 +229,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1063,
+                "id": 1066,
                 "code": "labels.discount-column",
                 "title": "Discount column label",
                 "package": "sale",
@@ -205,7 +241,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1064,
+                "id": 1067,
                 "code": "labels.vat-column",
                 "title": "VAT column label",
                 "package": "sale",
@@ -217,7 +253,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1065,
+                "id": 1068,
                 "code": "labels.taxes-column",
                 "title": "Taxes column label",
                 "package": "sale",
@@ -229,7 +265,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1066,
+                "id": 1069,
                 "code": "labels.price-ex-vat-column",
                 "title": "Price ex. VAT column label",
                 "package": "sale",
@@ -241,7 +277,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1067,
+                "id": 1070,
                 "code": "labels.price-column",
                 "title": "Price column label",
                 "package": "sale",
@@ -253,7 +289,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1068,
+                "id": 1071,
                 "code": "labels.total-ex-vat",
                 "title": "Total ex. VAT label",
                 "package": "sale",
@@ -265,7 +301,7 @@
                 "is_multilang":  true
             },
             {
-                "id": 1069,
+                "id": 1072,
                 "code": "labels.total-inc-vat",
                 "title": "Total inc. VAT label",
                 "package": "sale",
@@ -356,66 +392,84 @@
             },
             {
                 "id": 1059,
+                "title": "Status payé",
+                "description":"Libellé status payé de la facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1060,
+                "title": "Status à payer",
+                "description":"Libellé status à payer de la facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1061,
+                "title": "Status à rembourser",
+                "description":"Libellé status à rembourser de la facture.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1062,
                 "title": "Libellé colonne étiquette produit",
                 "description":"Libellé de la colonne produit pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1060,
+                "id": 1063,
                 "title": "Libellé colonne quantité",
                 "description":"Libellé de la colonne quantité pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1061,
+                "id": 1064,
                 "title": "Libellé colonne quantité gratuite",
                 "description":"Libellé de la colonne quantité gratuite pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1062,
+                "id": 1065,
                 "title": "Libellé colonne prix unitaire",
                 "description":"Libellé de la colonne prix unitaire pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1063,
+                "id": 1066,
                 "title": "Libellé colonne rabais",
                 "description":"Libellé de la colonne rabais pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1064,
+                "id": 1067,
                 "title": "Libellé colonne TVA",
                 "description":"Libellé de la colonne TVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1065,
+                "id": 1068,
                 "title": "Libellé colonne tax",
                 "description":"Libellé de la colonne tax pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1066,
+                "id": 1069,
                 "title": "Libellé colonne prix HTVA",
                 "description":"Libellé de la colonne prix HTVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1067,
+                "id": 1070,
                 "title": "Libellé colonne prix",
                 "description":"Libellé de la colonne prix pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1068,
+                "id": 1071,
                 "title": "Libellé prix total hors TVA",
                 "description":"Libellé prix total hors TVA pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."
             },
             {
-                "id": 1069,
+                "id": 1072,
                 "title": "Libellé prix total TVA comprise",
                 "description":"Libellé prix total TVA comprise pour le tableau des lignes de facture.",
                 "help": "Utilisé pour la version pdf de la facture."

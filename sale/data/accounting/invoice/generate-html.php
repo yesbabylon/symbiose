@@ -200,6 +200,9 @@ $getLabels = function($lang) {
         'number'              => Setting::get_value('sale', 'invoice', 'labels.number', 'N°', 0, $lang),
         'date'                => Setting::get_value('sale', 'invoice', 'labels.date', 'Date', 0, $lang),
         'status'              => Setting::get_value('sale', 'invoice', 'labels.status', 'Status', 0, $lang),
+        'status_paid'         => Setting::get_value('sale', 'invoice', 'labels.status-paid', 'Paid', 0, $lang),
+        'status_to_pay'       => Setting::get_value('sale', 'invoice', 'labels.status-to-pay', 'To pay', 0, $lang),
+        'status_to_refund'    => Setting::get_value('sale', 'invoice', 'labels.status-to-refund', 'To refund', 0, $lang),
         'columns'             => [
             'product'      => Setting::get_value('sale', 'invoice', 'labels.product-column', 'Product label', 0, $lang),
             'qty'          => Setting::get_value('sale', 'invoice', 'labels.qty-column', 'Qty', 0, $lang),
@@ -216,7 +219,7 @@ $getLabels = function($lang) {
     ];
 };
 
-$getInvoice = function($id) {
+$getInvoice = function($id, $lang) {
     $invoice_parties_fields = [
         'name', 'address_street', 'address_dispatch', 'address_zip',
         'address_city', 'address_country', 'has_vat', 'vat_number'
@@ -236,16 +239,19 @@ $getInvoice = function($id) {
     ];
 
     return Invoice::id($id)
-        ->read([
-            'name', 'date', 'status', 'type', 'total', 'price',
-            'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
-            'customer_id'     => $invoice_parties_fields,
-            'invoice_lines_ids' => $invoice_lines_fields,
-            'invoice_line_groups_ids' => [
-                'name',
-                'invoice_lines_ids' => $invoice_lines_fields
-            ]
-        ])
+        ->read(
+            [
+                'name', 'date', 'status', 'type', 'total', 'price', 'is_paid',
+                'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
+                'customer_id'     => $invoice_parties_fields,
+                'invoice_lines_ids' => $invoice_lines_fields,
+                'invoice_line_groups_ids' => [
+                    'name',
+                    'invoice_lines_ids' => $invoice_lines_fields
+                ]
+            ],
+            $lang
+        )
         ->first(true);
 };
 
@@ -260,7 +266,7 @@ $formatInvoice = function(&$invoice) {
     }
 };
 
-$invoice = $getInvoice($params['id']);
+$invoice = $getInvoice($params['id'], $params['lang']);
 if(empty($invoice)) {
     throw new Exception('invoice_unknown', QN_ERROR_UNKNOWN_OBJECT);
 }

@@ -93,19 +93,22 @@
 
         <table class="invoice-info">
             <tr valign="top">
-                <td style="width: 77%"></td>
-                <td style="width: 23%">
+                <td style="width: 75%"></td>
+                <td style="width: 25%">
                     {%
                         include 'components/invoice-info.html.twig' with {
-                            'class':         'invoice-info',
-                            'number_label':  'N°',
-                            'invoice':       invoice,
-                            'timezone':      timezone,
-                            'date_format':   date_format,
-                            'invoice_label': labels.invoice,
-                            'number_label':  labels.number,
-                            'date_label':    labels.date,
-                            'status_label':  labels.status
+                            'class':                  'invoice-info',
+                            'number_label':           'N°',
+                            'invoice':                invoice,
+                            'timezone':               timezone,
+                            'date_format':            date_format,
+                            'invoice_label':          labels.invoice,
+                            'number_label':           labels.number,
+                            'date_label':             labels.date,
+                            'status_label':           labels.status,
+                            'status_paid_label':      labels.status_paid,
+                            'status_to_pay_label':    labels.status_to_pay,
+                            'status_to_refund_label': labels.status_to_refund
                         } only
                     %}
                 </td>

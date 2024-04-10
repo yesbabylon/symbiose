@@ -68,78 +68,99 @@
             },
             {
                 "id": 1059,
-                "name": "invoice-labels.product-column",
+                "name": "invoice-labels.status-paid",
                 "setting_id": 1059,
+                "user_id": 0,
+                "value": "Paid"
+            },
+            {
+                "id": 1060,
+                "name": "invoice-labels.status-to-pay",
+                "setting_id": 1060,
+                "user_id": 0,
+                "value": "To pay"
+            },
+            {
+                "id": 1061,
+                "name": "invoice-labels.status-to-refund",
+                "setting_id": 1061,
+                "user_id": 0,
+                "value": "To refund"
+            },
+            {
+                "id": 1062,
+                "name": "invoice-labels.product-column",
+                "setting_id": 1062,
                 "user_id": 0,
                 "value": "Product label"
             },
             {
-                "id": 1060,
+                "id": 1063,
                 "name": "invoice-labels.qty-column",
-                "setting_id": 1060,
+                "setting_id": 1063,
                 "user_id": 0,
                 "value": "Qty"
             },
             {
-                "id": 1061,
+                "id": 1064,
                 "name": "invoice-labels.free-column",
-                "setting_id": 1061,
+                "setting_id": 1064,
                 "user_id": 0,
                 "value": "Free"
             },
             {
-                "id": 1062,
+                "id": 1065,
                 "name": "invoice-labels.unit-price-column",
-                "setting_id": 1062,
+                "setting_id": 1065,
                 "user_id": 0,
                 "value": "U. price"
             },
             {
-                "id": 1063,
+                "id": 1066,
                 "name": "invoice-labels.discount-column",
-                "setting_id": 1063,
+                "setting_id": 1066,
                 "user_id": 0,
                 "value": "Disc."
             },
             {
-                "id": 1064,
+                "id": 1067,
                 "name": "invoice-labels.vat-column",
-                "setting_id": 1064,
+                "setting_id": 1067,
                 "user_id": 0,
                 "value": "VAT"
             },
             {
-                "id": 1065,
+                "id": 1068,
                 "name": "invoice-labels.taxes-column",
-                "setting_id": 1065,
+                "setting_id": 1068,
                 "user_id": 0,
                 "value": "Taxes"
             },
             {
-                "id": 1066,
+                "id": 1069,
                 "name": "invoice-labels.price-ex-vat-column",
-                "setting_id": 1066,
+                "setting_id": 1069,
                 "user_id": 0,
                 "value": "Price ex. VAT"
             },
             {
-                "id": 1067,
+                "id": 1070,
                 "name": "invoice-labels.price-column",
-                "setting_id": 1067,
+                "setting_id": 1070,
                 "user_id": 0,
                 "value": "Price"
             },
             {
-                "id": 1068,
+                "id": 1071,
                 "name": "invoice-labels.total-ex-vat",
-                "setting_id": 1068,
+                "setting_id": 1071,
                 "user_id": 0,
                 "value": "Total ex. VAT"
             },
             {
-                "id": 1069,
+                "id": 1072,
                 "name": "invoice-labels.total-inc-vat",
-                "setting_id": 1069,
+                "setting_id": 1072,
                 "user_id": 0,
                 "value": "Total inc. VAT"
             }
@@ -187,46 +208,58 @@
             },
             {
                 "id": 1059,
-                "value": "Libellé produit"
+                "value": "Payée"
             },
             {
                 "id": 1060,
-                "value": "Qté"
+                "value": "À payer"
             },
             {
                 "id": 1061,
-                "value": "Grat."
+                "value": "À rembourser"
             },
             {
                 "id": 1062,
-                "value": "Prix u."
+                "value": "Libellé produit"
             },
             {
                 "id": 1063,
-                "value": "Réd."
+                "value": "Qté"
             },
             {
                 "id": 1064,
-                "value": "TVA"
+                "value": "Grat."
             },
             {
                 "id": 1065,
-                "value": "Tax"
+                "value": "Prix u."
             },
             {
                 "id": 1066,
-                "value": "Prix HTVA"
+                "value": "Réd."
             },
             {
                 "id": 1067,
-                "value": "Prix"
+                "value": "TVA"
             },
             {
                 "id": 1068,
-                "value": "Total HTVA"
+                "value": "Tax"
             },
             {
                 "id": 1069,
+                "value": "Prix HTVA"
+            },
+            {
+                "id": 1070,
+                "value": "Prix"
+            },
+            {
+                "id": 1071,
+                "value": "Total HTVA"
+            },
+            {
+                "id": 1072,
                 "value": "Total TVAC"
             }
         ]
@@ -273,46 +306,58 @@
             },
             {
                 "id": 1059,
-                "value": "Etiket"
+                "value": "Betaald"
             },
             {
                 "id": 1060,
-                "value": "Hoev."
+                "value": "Te betalen"
             },
             {
                 "id": 1061,
-                "value": "Vrij"
+                "value": "Te vergoeden"
             },
             {
                 "id": 1062,
-                "value": "Een. prijs"
+                "value": "Etiket"
             },
             {
                 "id": 1063,
-                "value": "Afn."
+                "value": "Hoev."
             },
             {
                 "id": 1064,
-                "value": "BTW"
+                "value": "Vrij"
             },
             {
                 "id": 1065,
-                "value": "Belasting"
+                "value": "Een. prijs"
             },
             {
                 "id": 1066,
-                "value": "Prijs ex. BTW"
+                "value": "Afn."
             },
             {
                 "id": 1067,
-                "value": "Prijs"
+                "value": "BTW"
             },
             {
                 "id": 1068,
-                "value": "Totaal ex. BTW"
+                "value": "Belasting"
             },
             {
                 "id": 1069,
+                "value": "Prijs ex. BTW"
+            },
+            {
+                "id": 1070,
+                "value": "Prijs"
+            },
+            {
+                "id": 1071,
+                "value": "Totaal ex. BTW"
+            },
+            {
+                "id": 1072,
                 "value": "Totaal incl. BTW"
             }
         ]
