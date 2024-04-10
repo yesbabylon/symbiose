@@ -402,7 +402,7 @@ class Identity extends Model {
 
             'contact_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\contact',
+                'foreign_object'    => 'identity\Contact',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Contact associated to this identity, if any.'
             ],

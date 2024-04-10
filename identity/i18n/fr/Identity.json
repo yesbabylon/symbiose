@@ -211,6 +211,26 @@
             "label": "BIC",
             "description": "Identifiant BIC lié au compte.",
             "help": ""
+        },
+        "contact_id": {
+            "label": "Contact",
+            "description": "Contact associé à cette identité.",
+            "help": ""
+        },
+        "employee_id": {
+            "label": "Employé",
+            "description": "Employé associé à cette identité.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Client associé à cette identité.",
+            "help": ""
+        },
+        "supplier_id": {
+            "label": "Fournisseur",
+            "description": "Fournisseur associé à cette identité.",
+            "help": ""
         }
     },
     "view": {
