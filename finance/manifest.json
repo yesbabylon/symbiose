@@ -3,5 +3,25 @@
     "depends_on": [
         "core"
     ],
-    "apps": ["accounting"]
+    "apps":[
+        {
+            "id": "finance",
+            "name": "Finance",
+            "extends": "app",
+            "description": "Manage finance and accounting.",
+            "icon": "paid",
+            "color": "#EB6323",
+            "access": {
+                "groups": [
+                    "users"
+                ]
+            },
+            "params": {
+                "menus": {
+                    "left": "accounting.left",
+                    "top": "accounting.top"
+                }
+            }
+        }
+    ]
 }
