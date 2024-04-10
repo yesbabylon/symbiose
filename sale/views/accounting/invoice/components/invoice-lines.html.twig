@@ -35,8 +35,9 @@
         </thead>
         <tbody>
         {% for line in lines %}
+            {% set column_style = 'border-right: 1px solid black; border-bottom: 1px solid ' ~ (loop.index == loop.last ? 'black' : 'lightgrey') ~ ';' %}
             <tr valign="top">
-                <td style="width: 45%; border-left: 1px solid black;  border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 45%; border-left: 1px solid black;  {{ column_style }}">
                     {% if line.is_group %}
                         <b>{{ line.name }}</b> <br />
                         {{ line.description }}
@@ -44,28 +45,28 @@
                         {{ line.name }}
                     {% endif %}
                 </td>
-                <td style="width: 8%; text-align: center; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 8%; text-align: center; {{ column_style }}">
                     {{ line.qty }}
                 </td>
-                <td style="width: 8%; text-align: center; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 8%; text-align: center; {{ column_style }}">
                     {{ line.free_qty }}
                 </td>
-                <td style="width: 10%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 10%; text-align: right; {{ column_style }}">
                     {% if line.unit_price is not null %}
                         {{ line.unit_price | format_currency(currency, [], locale) }}
                     {% endif %}
                 </td>
-                <td style="width: 8%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 8%; text-align: right; {{ column_style }}">
                     {% if line.discount is not null and line.discount > 0 %}
                         {{ line.discount | format_number(style='percent') }}
                     {% endif %}
                 </td>
-                <td style="width: 8%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 8%; text-align: right; {{ column_style }}">
                     {% if line.vat_rate is not null and invoice.organisation_id.has_vat %}
                         {{ line.vat_rate | format_number(style='percent') }}
                     {% endif %}
                 </td>
-                <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid {{ loop.index == loop.last ? 'black' : 'lightgrey' }};">
+                <td style="width: 13%; text-align: right; {{ column_style }}">
                     {% if line.total is not null %}
                         {{ line.total | format_currency(currency, [], locale) }}
                     {% endif %}
