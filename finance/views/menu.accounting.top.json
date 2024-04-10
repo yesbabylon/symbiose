@@ -13,8 +13,8 @@
                 "type": "entry",
                 "route": "/",
                 "context": {
-                    "entity": "lodging\\sale\\booking\\Invoice",
-                    "view": "dashboard.default"
+                    "entity": "finance\\accounting\\Invoice",
+                    "view": "list.dashboard"
                 }
             },
             {
@@ -25,13 +25,12 @@
                 "type": "entry",
                 "route": "/invoices",
                 "context": {
-                    "entity": "lodging\\sale\\booking\\Invoice",
+                    "entity": "finance\\accounting\\Invoice",
                     "view": "list.default",
                     "order": "id",
-                    "sort": "desc",
-                    "domain": ["status", "=", "quote"]
+                    "sort": "desc"
                 }
-            }                          
+            }
         ]
     }
 }
