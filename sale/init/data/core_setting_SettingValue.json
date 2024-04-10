@@ -237,11 +237,11 @@
             },
             {
                 "id": 1054,
-                "value": "N° registre"
+                "value": "N° d'entreprise"
             },
             {
                 "id": 1055,
-                "value": "N° TVA"
+                "value": "N° de TVA"
             },
             {
                 "id": 1056,
@@ -313,7 +313,7 @@
             },
             {
                 "id": 1073,
-                "value": "Numéro registre"
+                "value": "Numéro d'entreprise"
             },
             {
                 "id": 1074,
