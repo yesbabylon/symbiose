@@ -383,6 +383,18 @@
                 "help": "Used in invoice pdf version.",
                 "type": "string",
                 "is_multilang":  true
+            },
+            {
+                "id": 1079,
+                "code": "labels.pdf-page",
+                "title": "Pdf page label",
+                "package": "sale",
+                "form_control": "string",
+                "section_id": 5,
+                "description":"Pdf document page number label.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
             }
         ]
     },
@@ -580,6 +592,12 @@
                 "id": 1078,
                 "title": "Libellé fax pied de page",
                 "description":"Libellé du numéro de fax se trouvant en pied de page.",
+                "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1079,
+                "title": "Libellé page pdf",
+                "description":"Libellé du numéro de page pour le document pdf.",
                 "help": "Utilisé pour la version pdf de la facture."
             }
         ]

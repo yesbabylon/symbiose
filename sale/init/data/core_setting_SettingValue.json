@@ -205,6 +205,13 @@
                 "setting_id": 1078,
                 "user_id": 0,
                 "value": "Fax"
+            },
+            {
+                "id": 1079,
+                "name": "sale.invoice.labels.pdf-page",
+                "setting_id": 1079,
+                "user_id": 0,
+                "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
             }
         ]
     },
@@ -327,6 +334,10 @@
             {
                 "id": 1078,
                 "value": "Fax"
+            },
+            {
+                "id": 1079,
+                "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
             }
         ]
     },
@@ -449,6 +460,10 @@
             {
                 "id": 1078,
                 "value": "Fax"
+            },
+            {
+                "id": 1079,
+                "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
             }
         ]
     }

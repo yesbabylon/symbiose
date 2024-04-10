@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use core\setting\Setting;
 use Dompdf\Dompdf;
 use Dompdf\Options as DompdfOptions;
 use sale\accounting\invoice\Invoice;
@@ -72,8 +73,14 @@ $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
 
 $dompdf->setPaper('A4');
-$dompdf->loadHtml($html);
+$dompdf->loadHtml($html, 'UTF-8');
 $dompdf->render();
+
+$page_label = Setting::get_value('sale', 'invoice', 'labels.pdf-page', 'p. {PAGE_NUM} / {PAGE_COUNT}', 0, $params['lang']);
+
+$canvas = $dompdf->getCanvas();
+$font = $dompdf->getFontMetrics()->getFont('helvetica', 'regular');
+$canvas->page_text(530, $canvas->get_height() - 35, $page_label, $font, 9);
 
 $output = $dompdf->output();
 
