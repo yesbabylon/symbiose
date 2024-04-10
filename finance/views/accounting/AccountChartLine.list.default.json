@@ -18,6 +18,7 @@
             },
             {
                 "type": "field",
+                "label": "Analytic Section",
                 "value": "analytic_section_id",
                 "width": "20%"
             },
@@ -33,6 +34,7 @@
             },
             {
                 "type": "field",
+                "label": "Visible",
                 "value": "is_visible",
                 "width": "10%"
             }

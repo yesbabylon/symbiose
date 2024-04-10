@@ -3,7 +3,8 @@
     "description": "This view is intented for displaying the invoices.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
-     },
+    },
+    "controller": "finance_accounting_invoice-collect",
     "layout": {
         "items": [
             {

@@ -6,69 +6,6 @@
     "layout": {
         "items": [
             {
-                "id": "item.bank_statements",
-                "label": "Statements",
-                "description": "",
-                "icon": "list_alt",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.bank_statements.ready",
-                        "type": "entry",
-                        "label": "Statements to export",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
-                            "view": "list.reconciled",
-                            "domain": [["status", "=", "reconciled"], ["is_exported", "=", false]]
-                        }
-                    },
-                    {
-                        "id": "item.bank_statements.all",
-                        "type": "entry",
-                        "label": "All statements",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatement",
-                            "view": "list.default"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "item.exports",
-                "label": "Exports",
-                "description": "",
-                "icon":"import_export",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.exports.downloads",
-                        "type": "entry",
-                        "label": "Exports to download",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\documents\\Export",
-                            "view": "list.downloads"
-                        }
-                    },
-                    {
-                        "id": "item.exports.all",
-                        "type": "entry",
-                        "label": "All exports",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\documents\\Export",
-                            "view": "list.default"
-                        }
-                    }
-                ]
-            },
-            {
                 "id": "item.invoices",
                 "label": "Invoices",
                 "description": "",
@@ -78,45 +15,13 @@
                     {
                         "id": "item.invoices.all",
                         "type": "entry",
-                        "label": "All invoices",
+                        "label": "Invoices",
+                        "icon": "receipt_long",
                         "description": "",
                         "route": "/invoices",
                         "context": {
-                            "entity": "lodging\\finance\\accounting\\Invoice",
+                            "entity": "finance\\accounting\\Invoice",
                             "view": "list.default"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "item.fundings",
-                "label": "Payments",
-                "description": "",
-                "icon": "attach_money",
-                "type": "parent",
-                "children": [
-                    {
-                        "id": "item.fundings.reimburse",
-                        "type": "entry",
-                        "label": "Fundings to reimburse",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\Funding",
-                            "view": "list.default",
-                            "domain": ["due_amount", "<", 0]
-                        }
-                    },
-                    {
-                        "id": "item.bank_statement_lines.reimburse",
-                        "type": "entry",
-                        "label": "Bank payments to reimburse",
-                        "description": "",
-                        "route": "/",
-                        "context": {
-                            "entity": "lodging\\sale\\booking\\BankStatementLine",
-                            "view": "list.default",
-                            "domain": ["status", "=", "to_refund"]
                         }
                     }
                 ]
@@ -125,7 +30,7 @@
                 "id": "item.settings",
                 "label": "Settings",
                 "description": "",
-                "icon": "menu_book",
+                "icon": "settings",
                 "type": "parent",
                 "children": [
                     {
@@ -144,7 +49,7 @@
                         "label": "Accounting rules",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\finance\\accounting\\AccountingRule",
+                            "entity": "finance\\accounting\\AccountingRule",
                             "view": "list.default"
                         }
                     },
@@ -155,8 +60,7 @@
                         "description": "",
                         "context": {
                             "entity": "finance\\accounting\\AccountChartLine",
-                            "view": "list.default",
-                            "domain": ["account_chart_id", "=", 1]
+                            "view": "list.default"
                         }
                     },
                     {
@@ -165,7 +69,7 @@
                         "label": "Accounting journals",
                         "description": "",
                         "context": {
-                            "entity": "lodging\\finance\\accounting\\AccountingJournal",
+                            "entity": "finance\\accounting\\AccountingJournal",
                             "view": "list.default"
                         }
                     }
