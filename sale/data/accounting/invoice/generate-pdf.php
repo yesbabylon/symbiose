@@ -41,7 +41,7 @@ list($params, $providers) = announce([
     ],
     'access'        => [
         'visibility' => 'protected',
-        'groups'     => ['sale.default.user'],
+        'groups'     => ['sale.default.users'],
     ],
     'response'      => [
         'accept-origin' => '*',
