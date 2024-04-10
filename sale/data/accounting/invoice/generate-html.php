@@ -242,8 +242,7 @@ $getInvoice = function($id, $lang) {
 
     $invoice_lines_fields = [
         'product_id', 'description', 'qty', 'unit_price', 'discount',
-        'free_qty', 'vat_rate', 'total', 'price',
-        'downpayment_invoice_id' => ['status']
+        'free_qty', 'vat_rate', 'total', 'price'
     ];
 
     return Invoice::id($id)
