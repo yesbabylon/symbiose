@@ -1,0 +1,36 @@
+{
+    "name": "Organisation",
+    "plural": "Organisations",
+    "description": "",
+    "model": {
+        "name":{
+            "label": "Nom",
+            "description": "Nom de l'organisation.",
+            "help": ""
+        },
+        "invoice_image_document_id": {
+            "label": "Image facture",
+            "description": "Logo de l'organisation affiché sur la facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Organisation",
+            "description": "",
+            "layout": {
+                "upload-info-label": {
+                    "label": "Téléverser le logo de l'organisation (dimensions recommandées 1660 x 480 pixels)"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Organisations",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {
+
+    }
+}

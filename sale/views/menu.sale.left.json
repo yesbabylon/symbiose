@@ -293,7 +293,7 @@
                                 "description": "",
                                 "context": {
                                     "entity": "sale\\identity\\Organisation",
-                                    "view": "list.sale-invoice",
+                                    "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
                                 }

@@ -13,15 +13,16 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "id": "upload-info-label",
                                                 "type": "label",
-                                                "value": "Upload your organisation logo (recommended dimensions 1660 x 480 pixels)",
+                                                "value": "Upload the organisation logo (recommended dimensions 1660 x 480 pixels)",
                                                 "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "invoice_image_document_id",
                                                 "label": "Invoice image",
-                                                "width": "100%"
+                                                "width": "50%"
                                             }
                                         ]
                                     }
