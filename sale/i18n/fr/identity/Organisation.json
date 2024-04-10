@@ -16,7 +16,7 @@
     },
     "view": {
         "form.default": {
-            "name": "Organisation",
+            "name": "Organisation image",
             "description": "",
             "layout": {
                 "upload-info-label": {
@@ -25,7 +25,7 @@
             }
         },
         "list.default": {
-            "name": "Organisations",
+            "name": "Organisations images",
             "description": "",
             "layout": {}
         }
