@@ -278,6 +278,16 @@ if(empty($invoice)) {
     throw new Exception('invoice_unknown', QN_ERROR_UNKNOWN_OBJECT);
 }
 
+if(
+    isset(
+        $invoice['organisation_id']['invoice_image_document_id']['type'],
+        $invoice['organisation_id']['invoice_image_document_id']['data']
+    ) &&
+    strpos($invoice['organisation_id']['invoice_image_document_id']['type'], 'image/') !== 0
+) {
+    throw new Exception('invalid_organisation_invoice_image', QN_ERROR_INVALID_PARAM);
+}
+
 $formatInvoice($invoice);
 
 $loader = new TwigFilesystemLoader(QN_BASEDIR.'/packages/sale/views/accounting/invoice');
