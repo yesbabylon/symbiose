@@ -11,7 +11,7 @@ use Dompdf\Options as DompdfOptions;
 use sale\accounting\invoice\Invoice;
 
 list($params, $providers) = announce([
-    'description'   => 'Generate an html view of given invoice.',
+    'description'   => 'Generate a pdf view of given invoice.',
     'params'        => [
         'id' => [
             'description' => 'Identifier of the targeted invoice.',
