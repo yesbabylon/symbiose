@@ -1,0 +1,27 @@
+{
+    "name": "Facture",
+    "plural": "Factures",
+    "description": "",
+    "model": {},
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "",
+            "routes": {
+                "route.print.pdf": {
+                    "label": "Imprimer facture"
+                },
+                "route.print-detailed.pdf": {
+                    "label": "Imprimer facture détaillée"
+                }
+            },
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

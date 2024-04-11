@@ -19,6 +19,13 @@ class Invoice extends \finance\accounting\Invoice {
     public static function getColumns() {
 
         return [
+            'organisation_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\identity\Organisation',
+                'description'       => "The organization that emitted the invoice.",
+                'default'           => 1
+            ],
+
             'invoice_lines_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\accounting\invoice\InvoiceLine',

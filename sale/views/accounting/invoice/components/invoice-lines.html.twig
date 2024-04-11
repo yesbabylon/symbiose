@@ -1,0 +1,100 @@
+<div class="{{ class }}">
+    <table width="100%" cellpadding="4" cellspacing="0" style="border-collapse: collapse; page-break-inside: auto;">
+        <thead style="border: solid 1px black;">
+        <tr>
+            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-left: 7px;">
+                {{ columns_labels['product'] }}
+            </th>
+            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                {{ columns_labels['qty'] }}
+            </th>
+            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                {{ columns_labels['free'] }}
+            </th>
+            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                {{ columns_labels['unit_price'] }}
+            </th>
+            <th style="font-weight: bold; text-align: right; border-right: solid 1px black; padding-right: 7px;">
+                {{ columns_labels['discount'] }}
+            </th>
+            <th style="font-weight: bold; text-align: right; border-right: solid 1px black; padding-right: 7px;">
+                {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
+                    {{ columns_labels['taxes'] }}
+                {% else %}
+                    {{ columns_labels['vat'] }}
+                {% endif %}
+            </th>
+            <th style="font-weight: bold; text-align: right; padding-right: 7px;">
+                {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
+                    {{ columns_labels['price'] }}
+                {% else %}
+                    {{ columns_labels['price_ex_vat'] }}
+                {% endif %}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for line in lines %}
+            {% set column_style = 'border-right: 1px solid black; border-bottom: 1px solid ' ~ (loop.index == loop.last ? 'black' : 'lightgrey') ~ ';' %}
+            <tr valign="top">
+                <td style="width: 45%; border-left: 1px solid black;  {{ column_style }}">
+                    {% if line.is_group %}
+                        <b>{{ line.name }}</b> <br />
+                        {{ line.description }}
+                    {% else %}
+                        {{ line.name }}
+                    {% endif %}
+                </td>
+                <td style="width: 8%; text-align: center; {{ column_style }}">
+                    {{ line.qty }}
+                </td>
+                <td style="width: 8%; text-align: center; {{ column_style }}">
+                    {{ line.free_qty }}
+                </td>
+                <td style="width: 10%; text-align: right; {{ column_style }}">
+                    {% if line.unit_price is not null %}
+                        {{ line.unit_price | format_currency(currency, [], locale) }}
+                    {% endif %}
+                </td>
+                <td style="width: 8%; text-align: right; {{ column_style }}">
+                    {% if line.discount is not null and line.discount > 0 %}
+                        {{ line.discount | format_number(style='percent') }}
+                    {% endif %}
+                </td>
+                <td style="width: 8%; text-align: right; {{ column_style }}">
+                    {% if line.vat_rate is not null and invoice.organisation_id.has_vat %}
+                        {{ line.vat_rate | format_number(style='percent') }}
+                    {% endif %}
+                </td>
+                <td style="width: 13%; text-align: right; {{ column_style }}">
+                    {% if line.total is not null %}
+                        {{ line.total | format_currency(currency, [], locale) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table width="100%" cellpadding="4" cellspacing="0" style="border-collapse: collapse; page-break-inside: avoid">
+        <tbody>
+        <tr valign="top">
+            <td style="width: 87%; text-align: right; padding-right: 10px;">
+                {{ total_ex_vat }}
+            </td>
+            <td style="width: 13%; text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
+                {{ invoice.total | format_currency(currency, [], locale) }}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align: right; padding-right: 10px;">
+                <b>{{ total_inc_vat }}</b>
+            </td>
+            <td style="text-align: right; border-right: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
+                <b>{{ invoice.price | format_currency(currency, [], locale) }}</b>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -279,6 +279,28 @@
                         ]
                     },
                     {
+                        "id": "settings.invoices",
+                        "type": "parent",
+                        "label": "Invoices",
+                        "icon": "receipt_long",
+                        "description": "Invoices settings",
+                        "children": [
+                            {
+                                "id": "settings.invoices.organisations-images",
+                                "type": "entry",
+                                "label": "Org. images",
+                                "icon": "image",
+                                "description": "",
+                                "context": {
+                                    "entity": "sale\\identity\\Organisation",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
                         "id": "settings.time-entries",
                         "type": "parent",
                         "label": "Time entries",

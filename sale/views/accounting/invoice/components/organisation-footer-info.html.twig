@@ -1,0 +1,5 @@
+<p class="{{ class }}" style="text-align: center;">
+    {{ organisation.legal_name }} - {{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}<br/>
+    {{ footer_labels.registration_number }}: {{ organisation.registration_number }} - {{ footer_labels.iban }}: {{ organisation.bank_account_iban }}<br/>
+    {{ footer_labels.email }}: {{ organisation.email }} - {{ footer_labels.web }}: {{ organisation.website }} - {{ footer_labels.tel }}: {{ organisation.phone }}{% if organisation.fax %} - {{ footer_labels.fax }}: {{ organisation.fax }}{% endif %}
+</p>

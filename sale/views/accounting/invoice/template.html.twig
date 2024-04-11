@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>
+        {% if invoice.type == 'invoice' %}
+            {{ labels.invoice }}
+        {% else %}
+            {{ labels.credit_note }}
+        {% endif %}
+    </title>
+
+    <style type="text/css">
+        @media print {
+            @page {
+                margin: 1.5cm;
+            }
+        }
+
+        @media screen {
+            body {
+                width: 100%;
+            }
+
+            .container {
+                position: relative;
+                width: 800px;
+                margin: auto;
+            }
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.7em;
+            text-align: justify;
+        }
+
+        header {
+            width: 100%;
+            height: 280px;
+        }
+
+        header .organisation-info {
+            position: absolute;
+            height: 150px;
+            width: 350px;
+            z-index: -1;
+        }
+
+        header .customer-info {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            width: 350px;
+            height: 123px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        header .invoice-info {
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: separate;
+        }
+
+        main {
+            width: 100%;
+        }
+
+        footer {
+            width: 100%;
+            height: 50px;
+            margin-top: 100px;
+            overflow: visible;
+            z-index: 200;
+            font-size: 0.8em !important;
+        }
+
+        footer p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            {%
+                include 'components/organisation-info.html.twig' with {
+                    'class':                     'organisation-info',
+                    'registration_number_label': labels.registration_number,
+                    'vat_number_label':          labels.vat_number,
+                    'organisation':              invoice.organisation_id,
+                    'organisation_logo':         organisation_logo
+                } only
+            %}
+
+            {%
+                include 'components/customer-info.html.twig' with {
+                    'class':         'customer-info',
+                    'name_label':    labels.customer_name,
+                    'address_label': labels.customer_address,
+                    'vat_label':     labels.vat_number,
+                    'customer':      invoice.customer_id
+                } only
+            %}
+
+            <div style="position: relative; height: 165px; width: 100%;"></div>
+
+            <table class="invoice-info">
+                <tr valign="top">
+                    <td style="width: 77%"></td>
+                    <td style="width: 23%">
+                        {%
+                            include 'components/invoice-info.html.twig' with {
+                                'class':                  'invoice-info',
+                                'number_label':           'N°',
+                                'invoice':                invoice,
+                                'timezone':               timezone,
+                                'date_format':            date_format,
+                                'invoice_label':          labels.invoice ,
+                                'number_label':           labels.number,
+                                'date_label':             labels.date,
+                                'status_label':           labels.status,
+                                'status_paid_label':      labels.status_paid,
+                                'status_to_pay_label':    labels.status_to_pay,
+                                'status_to_refund_label': labels.status_to_refund
+                            } only
+                        %}
+                    </td>
+                </tr>
+            </table>
+        </header>
+
+        <main>
+            {%
+                include 'components/invoice-lines.html.twig' with {
+                    'class':          'invoice-lines',
+                    'invoice':        invoice,
+                    'lines':          lines,
+                    'currency':       currency,
+                    'locale':         locale,
+                    'total_ex_vat':   labels.total_ex_vat,
+                    'total_inc_vat':  labels.total_inc_vat,
+                    'columns_labels': labels.columns
+                } only
+            %}
+        </main>
+
+        <footer>
+            {%
+                include 'components/organisation-footer-info.html.twig' with {
+                    'class':         'organisation-footer-info',
+                    'organisation':  invoice.organisation_id,
+                    'footer_labels': labels.footer
+                } only
+            %}
+        </footer>
+    </div>
+</body>
+
+</html>
