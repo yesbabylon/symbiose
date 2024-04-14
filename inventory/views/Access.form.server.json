@@ -95,7 +95,7 @@
                                                 "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "usage": "string/text"
                                                 }
