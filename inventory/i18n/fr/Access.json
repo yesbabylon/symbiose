@@ -15,7 +15,7 @@
         },
         "type":{
             "label": "Type",
-            "description": "Protocols.",
+            "description": "Type de connexion, selon le protocole.",
             "selection": {
                 "www": "www",
                 "ssh": "ssh",
@@ -28,7 +28,7 @@
                 "http" :"http",
                 "https": "https"
             },
-            "help": "Protocols."
+            "help": "Le protocole permet d'identifier le port par défaut à utiliser pour la connexion."
         },
         "host": {
             "label": "Hôte",
@@ -41,14 +41,14 @@
             "help": "Port de l'accès."
         },
         "username":{
-            "label": "Identifiant",
-            "description": "Identifiant de l'accès.",
-            "help": "Identifiant de l'accès."
+            "label": "Utilisateur",
+            "description": "Nom d'utilisateur.",
+            "help": "Le nom d'utilisateur ou l'identifiant de l'accès."
         },
         "password":{
             "label": "Mot de passe",
             "description": "Mot de passe de l'accès.",
-            "help": "Mot de passe de l'accès."
+            "help": "Mot de passe correspondant à l'identifiant de l'accès."
         },
         "server_id":{
             "label": "Serveur",
@@ -74,12 +74,12 @@
                 "section.access_info": {
                     "label": "Infos Accès"
                 }
-        }
+            }
         },
         "list.default": {
             "name": "Liste des accès",
             "description": "Liste des accès.",
             "layout": {}
-            }
+        }
     }
 }
