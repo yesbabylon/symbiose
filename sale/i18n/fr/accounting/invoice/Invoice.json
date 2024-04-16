@@ -7,6 +7,14 @@
         "form.default": {
             "name": "Facture",
             "description": "",
+            "actions": {
+                "action.download-pdf": {
+                    "label": "Télécharger pdf"
+                },
+                "action.download-detailed-pdf": {
+                    "label": "Télécharger pdf détaillé"
+                }
+            },
             "routes": {
                 "route.print.pdf": {
                     "label": "Imprimer facture"

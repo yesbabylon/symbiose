@@ -29,6 +29,28 @@
                 "transition": "cancel",
                 "ids": []
             }
+        },
+        {
+            "id": "action.download-pdf",
+            "label": "Download pdf",
+            "description": "Download invoice pdf version.",
+            "controller": "sale_accounting_invoice_download-pdf",
+            "confirm": false,
+            "params": {
+                "id": "object.id",
+                "mode": "grouped"
+            }
+        },
+        {
+            "id": "action.download-detailed-pdf",
+            "label": "Download detailed pdf",
+            "description": "Download detailed invoice pdf version.",
+            "controller": "sale_accounting_invoice_download-pdf",
+            "confirm": false,
+            "params": {
+                "id": "object.id",
+                "mode": "detailed"
+            }
         }
     ],
     "routes": [
