@@ -85,7 +85,14 @@
                                                 "label": "Receivable",
                                                 "readonly": true,
                                                 "width": "50%",
-                                                "visible": ["state", "<>", "draft"]
+                                                "visible": ["state", "<>", "draft"],
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
