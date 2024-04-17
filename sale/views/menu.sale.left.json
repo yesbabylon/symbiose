@@ -84,7 +84,7 @@
                     {
                         "id": "receivables.queues",
                         "type": "entry",
-                        "label": "Receivable Queues",
+                        "label": "Queues",
                         "icon": "queue",
                         "description": "",
                         "context": {
@@ -97,7 +97,7 @@
                     {
                         "id": "receivables.receivables",
                         "type": "entry",
-                        "label": "All Receivables",
+                        "label": "All",
                         "icon": "list",
                         "description": "",
                         "context": {
@@ -110,7 +110,7 @@
                     {
                         "id": "item.receivable.pending",
                         "type": "entry",
-                        "label": "Pending Receivables",
+                        "label": "Pending",
                         "icon": "pending_actions",
                         "description": "",
                         "context": {

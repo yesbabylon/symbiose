@@ -19,15 +19,14 @@ class ReceivablesQueue extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer the queue refers to.',
-                'unique'            => true,
                 'required'          => true
             ],
 
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'calcName',
                 'description'       => 'The name of the receivables queue.',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 

@@ -10,20 +10,22 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "id",
-                                                "width": "15%",
-                                                "readonly":true
+                                                "value": "name",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "30%"
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -36,7 +38,7 @@
             {
                 "sections": [
                     {
-                        "label": "Receivables",
+                        "label": "Pending receivables",
                         "id": "section.receivables_id_receivables",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
@@ -51,7 +53,8 @@
                                                 "value": "receivables_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection",
+                                                    "view": "list.queue-selection",
+                                                    "domain": ["status", "=", "pending"],
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
