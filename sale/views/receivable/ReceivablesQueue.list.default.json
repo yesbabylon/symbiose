@@ -34,6 +34,12 @@
                 "value": "customer_id",
                 "label": "Customer",
                 "width": "40%"
+            },
+            {
+                "type": "field",
+                "value": "pending_receivables_count",
+                "label": "Pending receivables",
+                "width": "40%"
             }
         ]
     }
