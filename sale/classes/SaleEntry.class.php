@@ -63,7 +63,7 @@ class SaleEntry extends Model {
             'is_billable' => [
                 'type'              => 'boolean',
                 'description'       => 'Can be billed to the customer.',
-                'default'           => false
+                'default'           => true
             ],
 
             'customer_id' => [
