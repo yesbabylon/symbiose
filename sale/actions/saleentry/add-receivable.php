@@ -134,7 +134,7 @@ if(is_null($receivable)) {
     ])
         ->first();
 
-    SaleEntry::ids($sale_entry['id'])
+    SaleEntry::id($sale_entry['id'])
         ->update([
             'has_receivable' => true,
             'receivable_id'  => $receivable['id']
