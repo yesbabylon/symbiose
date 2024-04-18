@@ -18,6 +18,20 @@ list($params, $providers) = eQual::announce([
             'default'           => 'sale\SaleEntry'
         ],
 
+        'customer_id'=> [
+            'type'              => 'many2one',
+            'foreign_object'    => 'sale\customer\Customer',
+            'description'       => 'The Customer to who refers the item.',
+            'min'               => 1
+        ],
+
+        'product_id'=> [
+            'type'              => 'many2one',
+            'foreign_object'    => 'sale\catalog\Product',
+            'description'       => 'Product of the catalog sale.',
+            'min'               => 1
+        ],
+
         'is_billable' => [
             'type'              => 'boolean',
             'description'       => 'Can be billed to the customer.',
@@ -28,20 +42,6 @@ list($params, $providers) = eQual::announce([
             'type'              => 'boolean',
             'description'       => 'The entry is linked to a receivable entry.',
             'default'           => null
-        ],
-
-        'product_id'=> [
-            'type'              => 'many2one',
-            'foreign_object'    => 'sale\catalog\Product',
-            'description'       => 'Product of the catalog sale.',
-            'min'               => 1
-        ],
-
-        'customer_id'=> [
-            'type'              => 'many2one',
-            'foreign_object'    => 'sale\customer\Customer',
-            'description'       => 'The Customer to who refers the item.',
-            'min'               => 1
         ]
 
     ],
@@ -58,20 +58,20 @@ $context = $providers['context'];
 
 $domain = [];
 
-if(!is_null($params['is_billable'])) {
-    $domain[] = ['is_billable', '=', $params['is_billable']];
-}
-
-if(!is_null($params['has_receivable'])) {
-    $domain[] = ['has_receivable', '=', $params['has_receivable']];
+if(isset($params['customer_id'])) {
+    $domain[] = ['customer_id', '=', $params['customer_id']];
 }
 
 if(isset($params['product_id'])) {
     $domain[] = ['product_id', '=', $params['product_id']];
 }
 
-if(isset($params['customer_id'])) {
-    $domain[] = ['customer_id', '=', $params['customer_id']];
+if(!is_null($params['is_billable'])) {
+    $domain[] = ['is_billable', '=', $params['is_billable']];
+}
+
+if(!is_null($params['has_receivable'])) {
+    $domain[] = ['has_receivable', '=', $params['has_receivable']];
 }
 
 $params['domain'] = (new Domain($params['domain']))
