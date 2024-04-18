@@ -14,8 +14,8 @@ list($params, $providers) = eQual::announce([
     'params'        => [
 
         'entity' =>  [
-            'description'       => 'name',
             'type'              => 'string',
+            'description'       => 'Full name (including namespace) of the class to return.',
             'default'           => 'sale\receivable\Receivable'
         ],
 

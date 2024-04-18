@@ -16,8 +16,8 @@ list($params, $providers) = eQual::announce([
 
         'entity' => [
             'type'        => 'string',
-            'default'     => 'sale\customer\Customer',
-            'description' => 'Full name (including namespace) of the class to return.'
+            'description' => 'Full name (including namespace) of the class to return.',
+            'default'     => 'sale\customer\Customer'
         ],
 
         'type' => [
