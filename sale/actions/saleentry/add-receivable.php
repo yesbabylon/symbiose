@@ -15,7 +15,7 @@ list($params, $providers) = announce([
     'params'        => [
         'id' =>  [
             'type'           => 'integer',
-            'description'    => 'ID of the sale entry.',
+            'description'    => 'Identifier of the targeted sale entry.',
             'required'       => true
         ],
 
