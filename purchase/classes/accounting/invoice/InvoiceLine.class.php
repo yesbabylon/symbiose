@@ -22,6 +22,7 @@ class InvoiceLine extends \finance\accounting\InvoiceLine {
                 'foreign_object'    => 'purchase\accounting\invoice\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
+                'onupdate'          => 'onupdateInvoiceId',
                 'ondelete'          => 'cascade'
             ]
         ];
