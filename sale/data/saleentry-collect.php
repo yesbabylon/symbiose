@@ -8,7 +8,7 @@
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Receivables: returns a collection of Reports according to extra parameters.',
+    'description'   => 'Advanced search for Sale Entry: returns a collection of Sale Entries according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -21,32 +21,27 @@ list($params, $providers) = eQual::announce([
         'is_billable' => [
             'type'              => 'boolean',
             'description'       => 'Can be billed to the customer.',
-            'default'           => false
+            'default'           => null
         ],
 
         'has_receivable' => [
             'type'              => 'boolean',
             'description'       => 'The entry is linked to a receivable entry.',
-            'default'           => false
-        ],
-
-        'receivable_id' => [
-            'type'              => 'many2one',
-            'foreign_object'    => 'sale\receivable\Receivable',
-            'description'       => 'The receivable entry the sale entry is linked to.',
-            'visible'           => ['has_receivable', '=', true]
+            'default'           => null
         ],
 
         'product_id'=> [
             'type'              => 'many2one',
             'foreign_object'    => 'sale\catalog\Product',
-            'description'       => 'The product (SKU) the line relates to.'
+            'description'       => 'Product of the catalog sale.',
+            'min'               => 1
         ],
 
         'customer_id'=> [
             'type'              => 'many2one',
             'foreign_object'    => 'sale\customer\Customer',
-            'description'       => 'Customer of the subscription.'
+            'description'       => 'The Customer to who refers the item.',
+            'min'               => 1
         ]
 
     ],
@@ -55,38 +50,34 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'     => ['context']
 ]);
-/**
- * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
- */
-list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 
-//   Add conditions to the domain to consider advanced parameters
-$domain = $params['domain'];
+/** @var \equal\php\Context $context */
+$context = $providers['context'];
 
-if(isset($params['is_billable']) && strlen($params['is_billable']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['is_billable', '=', $params['is_billable']]);
+$domain = [];
+
+if(!is_null($params['is_billable'])) {
+    $domain[] = ['is_billable', '=', $params['is_billable']];
 }
 
-if(isset($params['has_receivable']) && strlen($params['has_receivable']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['has_receivable', '=', $params['has_receivable']]);
+if(!is_null($params['has_receivable'])) {
+    $domain[] = ['has_receivable', '=', $params['has_receivable']];
 }
 
-if(isset($params['receivable_id']) && $params['receivable_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['receivable_id', '=', $params['receivable_id']]);
+if(isset($params['product_id'])) {
+    $domain[] = ['product_id', '=', $params['product_id']];
 }
 
-if(isset($params['product_id']) && $params['product_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['product_id', '=', $params['product_id']]);
+if(isset($params['customer_id'])) {
+    $domain[] = ['customer_id', '=', $params['customer_id']];
 }
 
-if(isset($params['customer_id']) && $params['customer_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['customer_id', '=', $params['customer_id']]);
-}
+$params['domain'] = (new Domain($params['domain']))
+    ->merge(new Domain($domain))
+    ->toArray();
 
-$params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);
 
 $context->httpResponse()
