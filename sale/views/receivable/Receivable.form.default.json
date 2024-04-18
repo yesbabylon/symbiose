@@ -14,31 +14,43 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "status",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "name",
                                                 "width": "50%",
-                                                "readonly": " true",
+                                                "readonly": true,
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "label": "Total inc. VAT",
+                                                "width": "15%",
+                                                "readonly": true,
                                                 "widget": {
                                                     "heading": true
                                                 }
                                             },
                                             {
                                                 "type": "field",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price",
-                                                "width": "15%",
-                                                "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "receivables_queue_id",
-                                                "label": "Customer",
+                                                "label": "Customer receivable queue",
                                                 "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date",
+                                                "label": "Date",
+                                                "width": "20%"
                                             }
                                         ]
                                     }
@@ -51,30 +63,22 @@
             {
                 "sections": [
                     {
-                        "label": "Receivable Infos",
-                        "id": "section.receivable_info",
+                        "id": "section.sale",
+                        "label": "Sale",
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "50%",
-                                        "align": "left",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "date",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%",
-                                                "readonly": true
-                                            },
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {
@@ -84,38 +88,26 @@
                                                 "width": "50%"
                                             },
                                             {
-                                                "type": "field",
-                                                "value": "unit_price",
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "vat_rate",
-                                                "readonly": true,
-                                                "width": "50%"
+                                                "value": "unit_price",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Free Quantity",
-                                                "value": "free_qty",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "discount",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Price Ex VAT",
+                                                "label": "Total ex. VAT",
                                                 "value": "total",
-                                                "width": "50%"
+                                                "width": "33%",
+                                                "readonly": true
                                             }
                                         ]
                                     },
@@ -123,12 +115,55 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Free Quantity",
+                                                "value": "free_qty",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Discount",
+                                                "value": "discount",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "75%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rate",
+                                                "readonly": true,
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "align": "left",
+                                        "items": [
+                                            {
                                                 "type": "field",
                                                 "value": "description",
-                                                "width": "50%",
-                                                "widget":{
-                                                    "usage": "text/plain"
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }

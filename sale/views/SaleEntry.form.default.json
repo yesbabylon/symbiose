@@ -8,8 +8,8 @@
             "controller": "sale_saleentry_add-receivable",
             "visible": [
                 ["state", "<>", "draft"],
-                ["has_receivable", "=", false],
-                ["is_billable", "=", true]
+                ["is_billable", "=", true],
+                ["has_receivable", "=", false]
             ]
         }
     ],
@@ -22,62 +22,104 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "description",
                                                 "label": "Description",
-                                                "width": "100%",
+                                                "width": "50%",
                                                 "widget": {
                                                     "heading": true
                                                 }
                                             },
                                             {
+                                                "type": "label",
+                                                "width": "50%"
+                                            },
+                                            {
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
-                                                "width": "100%"
-                                            },
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.sale",
+                        "label": "Sale",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
-                                                "width": "40%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "readonly": true,
-                                                "width": "30%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "unit_price",
-                                                "label": "Unit price amount",
-                                                "width": "30%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
-                                                "width": "50%"
-                                            },
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.billing",
+                        "label": "Billing",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "is_billable",
-                                                "label": "is Billable",
+                                                "label": "Is billable",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_receivable",
-                                                "label": "Has Receivable",
-                                                "readonly": true,
+                                                "label": "Has receivable",
                                                 "width": "50%",
-                                                "visible": ["state", "<>", "draft"]
+                                                "visible": ["is_billable", "=", true]
                                             },
                                             {
                                                 "type": "field",
@@ -85,7 +127,7 @@
                                                 "label": "Receivable",
                                                 "readonly": true,
                                                 "width": "50%",
-                                                "visible": ["state", "<>", "draft"],
+                                                "visible": ["has_receivable", "=", true],
                                                 "widget": {
                                                     "header": {
                                                         "actions": {

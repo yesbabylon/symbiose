@@ -62,8 +62,8 @@
                     {
                         "id": "sale_entries.entries",
                         "type": "entry",
-                        "label": "Sale Entries",
-                        "icon": "label",
+                        "label": "All",
+                        "icon": "list",
                         "description": "",
                         "context": {
                             "entity": "sale\\SaleEntry",
