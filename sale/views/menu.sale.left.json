@@ -60,7 +60,7 @@
                 "description": "",
                 "children": [
                     {
-                        "id": "sale_entries.entries",
+                        "id": "sale_entries.all",
                         "type": "entry",
                         "label": "All",
                         "icon": "list",
