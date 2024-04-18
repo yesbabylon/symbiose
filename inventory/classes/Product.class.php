@@ -53,7 +53,7 @@ class Product extends Model {
 
             'instances_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\service\Instance',
+                'foreign_object'    => 'inventory\server\Instance',
                 'foreign_field'     => 'product_id',
                 'description'       => 'Instances used by product.'
             ],

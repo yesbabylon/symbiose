@@ -40,7 +40,6 @@
                 "has_vat": true,
                 "vat_number": "BE123456789",
                 "legal_name": "Belgian Investment Company",
-                "short_name": "BIC",
                 "lang_id": 1,
                 "address_street": "Rue de la reine",
                 "address_city": "Bruxelles",
