@@ -7,25 +7,13 @@
 
 namespace inventory\service;
 
-use equal\orm\Model;
+use purchase\supplier\Supplier;
 
-class ServiceProvider extends Model {
+class ServiceProvider extends Supplier {
 
     public static function getColumns()
     {
         return [
-            'name' => [
-                'type'              => 'string',
-                'unique'            => true,
-                'required'          => true,
-                'description'       => 'Unique identifier of the service provider.'
-            ],
-
-            'description' => [
-                'type'              => 'string',
-                'description'       => 'Short presentation of the Service Provider.'
-            ],
-
             'login_url'   => [
                 'type'              => 'string',
                 'description'       => 'Url for signing in.'

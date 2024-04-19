@@ -1,63 +1,38 @@
 {
     "name": "Service Provider",
-    "description": "Default form for Service Provider",
-    "actions": [],
+    "description": "Form holding basic information about a provider (Partner).",
     "layout": {
-        "groups": [
-            {
-                "sections": [
+        "extends": {
+            "entity": "identity\\Partner",
+            "view": "form.default"
+        },
+        "remove": [
+            "group.partner_info"
+        ],
+        "update": {
+            "section.identity_info": {
+                "after": [
                     {
-                        "label": "Infos Service Provider",
-                        "id": "section.services_provider_info",
+                        "id": "section.provider",
+                        "label": "Provider specifics",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "75%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "name",
-                                                "width": "30%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
                                             {
                                                 "type": "field",
                                                 "value": "service_provider_category_id",
-                                                "label": "Provider Category",
-                                                "width": "30%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
+                                                "width": "50%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "login_url",
                                                 "label": "Url login",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "widget": {
                                                     "usage": "url"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Description",
-                                                "value": "description",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "usage": "string/text"
                                                 }
                                             }
                                         ]
@@ -67,8 +42,8 @@
                         ]
                     },
                     {
+                        "id": "section.product.services",
                         "label": "Services",
-                        "id": "section.product_services",
                         "visible": [
                             "state",
                             "<>",
@@ -79,14 +54,15 @@
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "services_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection"
+                                                    "header": {
+                                                        "view": "list.selection"
+                                                    }
                                                 }
                                             }
                                         ]
@@ -97,6 +73,6 @@
                     }
                 ]
             }
-        ]
+        }
     }
 }
