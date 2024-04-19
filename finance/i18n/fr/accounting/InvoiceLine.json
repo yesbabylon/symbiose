@@ -1,7 +1,7 @@
 {
 	"name": "Ligne de facture",
-	"plural": "Ligne de factures",
-	"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
+	"plural": "Lignes de factures",
+	"description": "Les lignes de factures décrivent les produits et les quantités qui font partie d'une facture.",
 	"model": {
 		"invoice_id": {
 			"label": "Facture",
@@ -29,7 +29,7 @@
 			"help": ""
 		},
         "unit_price": {
-            "label": "P.U. ",
+            "label": "Prix unitaire",
             "description": "Le prix unitaire du produit lié à la ligne.",
             "help": ""
         },
@@ -49,7 +49,7 @@
             "help": ""
         },
         "free_qty": {
-            "label": "Gratuité",
+            "label": "Qté gratuite",
             "description": "Nombre d'unités accordées gratuitement.",
             "help": ""
         },
@@ -57,20 +57,25 @@
             "label": "Remise",
             "description": "La remise appliquée au total.",
             "help": ""
-        }
+        },
+		"receivable_id": {
+			"label": "Percevable",
+			"description": "Le percevable qui a généré la ligne de facture.",
+			"help": ""
+		}
 	},
 	"view": {
 		"form.default": {
-			"name": "Line de facture",
+			"name": "Ligne de facture",
 			"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
 			"layout": {
-				"section.general": {
+				"section.details": {
 					"label": "Détails"
 				}
 			}
 		},
 		"list.default": {
-			"name": "Lines de facture",
+			"name": "Lignes de facture",
 			"description": "Cette vue est destinée à afficher les lignes de facture.",
 			"layout": {}
 		}
