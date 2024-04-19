@@ -54,6 +54,12 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Product",
+                                                "value": "product_id",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Instance",
                                                 "value": "instance_id",
                                                 "width": "20%"

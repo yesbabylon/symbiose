@@ -33,6 +33,12 @@
                                                 "value": "service_id",
                                                 "label": "Service",
                                                 "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "instance_id",
+                                                "label": "Instance",
+                                                "width": "20%"
                                             }
                                         ]
                                     },
@@ -59,8 +65,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "instance_id",
-                                                "label": "Instance",
+                                                "value": "product_id",
+                                                "label": "Product",
                                                 "width": "20%"
                                             }
                                         ]

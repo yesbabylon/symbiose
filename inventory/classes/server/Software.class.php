@@ -8,6 +8,7 @@
 namespace inventory\server;
 
 use equal\orm\Model;
+use inventory\service\Service;
 
 class Software extends Model {
     public static function getColumns()
@@ -50,13 +51,20 @@ class Software extends Model {
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
-                'description'       => 'Service of the software.'
+                'description'       => 'Service of the software.',
+                'dependencies'      => ['product_id'],
             ],
 
             'customer_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'Owner of the software.',
+            ],
+
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\Product',
+                'description'       => 'The product to which the software.'
             ],
 
             'accesses_ids' => [
@@ -67,4 +75,5 @@ class Software extends Model {
             ]
         ];
     }
+
 }
