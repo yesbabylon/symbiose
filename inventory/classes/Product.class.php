@@ -66,6 +66,14 @@ class Product extends Model {
                 'description'       => 'Services used by product.'
             ],
 
+            'softwares_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'inventory\server\Software',
+                'foreign_field'     => 'product_id',
+                'description'       => 'Softwares used by product.'
+            ],
+
+
 
         ];
     }

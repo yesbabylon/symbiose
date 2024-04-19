@@ -130,6 +130,40 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "label": "Softwares",
+                        "id": "section.product.softwares",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "softwares_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
