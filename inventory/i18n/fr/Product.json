@@ -29,18 +29,26 @@
             "name": "Produit",
             "description": "Le vue des produits",
             "layout": {
-                "section.product_info": {
+                "section.product": {
                     "label": "Infos Produit"
                 },
-                "section.product_servers": {
+                "section.product.servers": {
                     "label": "Serveurs"
                 },
-                "section.product_services": {
+                "section.product.services": {
                     "label": "Services"
+                },
+                "section.product.softwares": {
+                    "label": "Logiciels"
                 }
             }
         },
         "list.default": {
+            "name": "Liste des produits",
+            "description": "Liste des produits.",
+            "layout": {}
+        },
+        "list.selection": {
             "name": "Liste des produits",
             "description": "Liste des produits.",
             "layout": {}
