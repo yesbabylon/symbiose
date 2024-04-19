@@ -1,7 +1,11 @@
 {
     "name": "Services selected",
     "description": "Default listing of services selected.",
-    "order": "name",
+    "order": "id",
+    "actions": {
+        "ACTION.SELECT": false,
+        "ACTION.CREATE": false
+    },
     "operations": {
         "total": {
             "name": {
