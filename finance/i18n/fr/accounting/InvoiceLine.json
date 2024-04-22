@@ -1,33 +1,33 @@
 {
-	"name": "Ligne de facture",
-	"plural": "Lignes de factures",
-	"description": "Les lignes de factures décrivent les produits et les quantités qui font partie d'une facture.",
-	"model": {
-		"invoice_id": {
-			"label": "Facture",
-			"description": "Facture à laquelle la ligne est liée.",
-			"help": ""
-		},
-		"invoice_line_group_id": {
-			"label": "Groupe",
-			"description": "Groupe de lignes de facture.",
-			"help": ""
-		},
-		"product_id": {
-			"label": "Produit",
-			"description": "Le produit (SKU) auquel la ligne se rapporte.",
-			"help": ""
-		},
-		"price": {
-			"label": "Prix TVAC",
-			"description": "Montant TTC associé à la ligne.",
-			"help": ""
-		},
-		"total": {
-			"label": "Total HTVA",
-			"description": "Montant HT associé à la ligne.",
-			"help": ""
-		},
+    "name": "Ligne de facture",
+    "plural": "Lignes de factures",
+    "description": "Les lignes de factures décrivent les produits et les quantités qui font partie d'une facture.",
+    "model": {
+        "invoice_id": {
+            "label": "Facture",
+            "description": "Facture à laquelle la ligne est liée.",
+            "help": ""
+        },
+        "invoice_line_group_id": {
+            "label": "Groupe",
+            "description": "Groupe de lignes de facture.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Le produit (SKU) auquel la ligne se rapporte.",
+            "help": ""
+        },
+        "price": {
+            "label": "Prix TVAC",
+            "description": "Montant TTC associé à la ligne.",
+            "help": ""
+        },
+        "total": {
+            "label": "Total HTVA",
+            "description": "Montant HT associé à la ligne.",
+            "help": ""
+        },
         "unit_price": {
             "label": "Prix unitaire",
             "description": "Le prix unitaire du produit lié à la ligne.",
@@ -58,27 +58,27 @@
             "description": "La remise appliquée au total.",
             "help": ""
         },
-		"receivable_id": {
-			"label": "Percevable",
-			"description": "Le percevable qui a généré la ligne de facture.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Ligne de facture",
-			"description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
-			"layout": {
-				"section.details": {
-					"label": "Détails"
-				}
-			}
-		},
-		"list.default": {
-			"name": "Lignes de facture",
-			"description": "Cette vue est destinée à afficher les lignes de facture.",
-			"layout": {}
-		}
-	},
-	"error": {}
+        "receivable_id": {
+            "label": "Percevable",
+            "description": "Le percevable qui a généré la ligne de facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Ligne de facture",
+            "description": "Les lignes de facture décrivent les produits et les quantités qui font partie d'une facture.",
+            "layout": {
+                "section.details": {
+                    "label": "Détails"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Lignes de facture",
+            "description": "Cette vue est destinée à afficher les lignes de facture.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }
