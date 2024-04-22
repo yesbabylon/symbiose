@@ -96,28 +96,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "id": "item.advanced",
-                "type": "parent",
-                "label": "Advanced",
-                "icon": "settings",
-                "description": "",
-                "children": [
-                    {
-                        "id": "item.time-entry-sale-models",
-                        "type": "entry",
-                        "label": "Sale models",
-                        "icon": "calculate",
-                        "description": "Time entry sale models",
-                        "context": {
-                            "entity": "timetrack\\TimeEntrySaleModel",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "desc"
-                        }
-                    }
-                ]
             }
         ]
     }
