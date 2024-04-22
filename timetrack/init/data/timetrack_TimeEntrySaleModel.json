@@ -1,0 +1,41 @@
+[
+    {
+        "name": "timetrack\\TimeEntrySaleModel",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Backlog default",
+                "origin": "backlog"
+            },
+            {
+                "id": 2,
+                "name": "Email default",
+                "origin": "email"
+            },
+            {
+                "id": 3,
+                "name": "Support default",
+                "origin": "support"
+            }
+        ]
+    },
+    {
+        "name": "timetrack\\TimeEntrySaleModel",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Backlog défaut"
+            },
+            {
+                "id": 2,
+                "name": "E-mail défaut"
+            },
+            {
+                "id": 3,
+                "name": "Support défaut"
+            }
+        ]
+    }
+]
