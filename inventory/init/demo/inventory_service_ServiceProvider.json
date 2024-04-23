@@ -5,30 +5,62 @@
         "data": [
             {
                 "id": 1,
-                "name": "Google Analytics",
+                "organisation_id": 1,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 11,
+                "relationship": "supplier",
+                "type_id": 3,
+                "has_vat": false,
+                "legal_name": "Google Analytics",
+                "address_country": "BE",
                 "login_url": "https://analytics.google.com",
                 "service_provider_category_id": 3
             },
             {
                 "id": 2,
-                "name": "Microsoft 365",
+                "organisation_id": 1,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 12,
+                "relationship": "supplier",
+                "type_id": 3,
+                "has_vat": false,
+                "legal_name": "Microsoft 365",
                 "login_url": "https://admin.microsoft.com",
                 "service_provider_category_id": 1
             },
             {
                 "id": 3,
-                "name": "WPML",
+                "organisation_id": 1,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 15,
+                "relationship": "supplier",
+                "type_id": 3,
+                "legal_name": "WPML",
                 "login_url": "https://wpml.org",
                 "service_provider_category_id": 2
             },
             {
                 "id": 4,
-                "name": "FPDF provider",
+                "organisation_id": 1,
+                "owner_identity_id": 1,
+                "partner_identity_id": 16,
+                "relationship": "supplier",
+                "legal_name": "FPDF provider",
+                "type_id": 3,
                 "service_provider_category_id": 1
             },
             {
                 "id": 5,
-                "name": "Google drive",
+                "organisation_id": 1,
+                "is_internal": true,
+                "owner_identity_id": 1,
+                "partner_identity_id": 17,
+                "relationship": "supplier",
+                "legal_name": "Google drive",
+                "type_id": 3,
                 "service_provider_category_id": 3
             }
         ]

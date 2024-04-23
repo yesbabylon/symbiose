@@ -6,7 +6,8 @@
         "core",
         "finance",
         "identity",
-        "sale"
+        "sale",
+        "purchase"
     ],
     "apps": [
         {
