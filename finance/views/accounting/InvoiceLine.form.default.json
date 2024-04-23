@@ -9,19 +9,13 @@
             {
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "section.general",
                         "rows": [
                             {
                                 "columns": [
                                     {
+                                        "id": "column.invoice-and-line-group",
                                         "width": "50%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "invoice_line_group_id",
-                                                "width": "50%"
-                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Invoice",
@@ -30,8 +24,37 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Group",
+                                                "value": "invoice_line_group_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {
@@ -41,31 +64,52 @@
                                                 "width": "50%"
                                             },
                                             {
-                                                "type": "field",
-                                                "value": "unit_price",
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "vat_rate",
-                                                "width": "50%"
+                                                "value": "unit_price",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Free Quantity",
                                                 "value": "free_qty",
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "discount",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "75%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "vat_rate",
+                                                "width": "25%"
                                             }
                                         ]
                                     }

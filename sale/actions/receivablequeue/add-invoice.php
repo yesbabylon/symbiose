@@ -5,9 +5,9 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use finance\accounting\Invoice;
-use finance\accounting\InvoiceLine;
-use finance\accounting\InvoiceLineGroup;
+use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\InvoiceLine;
+use sale\accounting\invoice\InvoiceLineGroup;
 use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
@@ -88,6 +88,7 @@ foreach($receivables_queues as $receivables_queue) {
             'qty'                   => $receivable['qty'],
             'free_qty'              => $receivable['free_qty'],
             'discount'              => $receivable['discount'],
+            'receivable_id'         => $receivable['id']
         ])
             ->first();
 

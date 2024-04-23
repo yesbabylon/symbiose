@@ -22,6 +22,12 @@ class InvoiceLine extends \finance\accounting\InvoiceLine {
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
                 'ondelete'          => 'cascade'
+            ],
+
+            'receivable_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\receivable\Receivable',
+                'description'       => 'Receivable at the origin of the invoice line.'
             ]
         ];
     }
