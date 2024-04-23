@@ -30,6 +30,35 @@ class SubscriptionEntry extends \sale\SaleEntry {
                 'dependencies'   => ['subscription_id']
             ],
 
+            'product_id' => [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'sale\catalog\Product',
+                'description'    => 'Product of the catalog sale.',
+                'store'          => true,
+                'instant'        => true,
+                'function'       => 'calcProductId'
+            ],
+
+            'customer_id' => [
+                'type'           => 'computed',
+                'result_type'    => 'many2one',
+                'foreign_object' => 'sale\customer\Customer',
+                'description'    => 'The Customer to who refers the item.',
+                'store'          => true,
+                'instant'        => true,
+                'function'       => 'calcCustomerId'
+            ],
+
+            'is_billable' => [
+                'type'           => 'computed',
+                'result_type'    => 'boolean',
+                'description'    => 'Can be billed to the customer.',
+                'store'          => true,
+                'instant'        => true,
+                'function'       => 'calcIsBillable'
+            ],
+
             /**
              * Specific SubscriptionEntry columns
              */
