@@ -274,7 +274,7 @@ class Partner extends Model {
             ]);
 
         foreach($self as $id => $partner) {
-            if(is_null($partner['partner_identity_id'])) {
+            if(is_null($partner['partner_identity_id']) && $partner['state'] !== 'draft') {
                 $identity = Identity::create([
                         'type_id'           => $partner['type_id'],
                         'has_vat'           => $partner['has_vat'],
