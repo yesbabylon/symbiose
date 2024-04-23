@@ -27,7 +27,8 @@ class TimeEntrySaleModel extends Model {
                 'type'            => 'string',
                 'description'     => 'Name of the sale model.',
                 'required'        => true,
-                'unique'          => true
+                'unique'          => true,
+                'multilang'       => true
             ],
 
             'origin' => [

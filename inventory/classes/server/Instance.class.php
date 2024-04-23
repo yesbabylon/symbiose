@@ -76,7 +76,6 @@ class Instance extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'inventory\Product',
-                'ondelete'          => 'cascade',
                 'description'       => 'Product the instance belongs to.',
                 'store'             => true,
                 'instant'           => true,

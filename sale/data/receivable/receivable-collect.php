@@ -1,21 +1,20 @@
 <?php
 /*
     This file is part of the Discope property management software.
-    Author: Yesbabylon SRL, 2020-2022
+    Author: Yesbabylon SRL, 2020-2024
     License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Receivables: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Receivables: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
         'entity' =>  [
-            'description'       => 'name',
             'type'              => 'string',
+            'description'       => 'Full name (including namespace) of the class to return.',
             'default'           => 'sale\receivable\Receivable'
         ],
 

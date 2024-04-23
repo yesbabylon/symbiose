@@ -44,6 +44,7 @@ class InvoiceLine extends Model {
                 'foreign_object'    => 'finance\accounting\Invoice',
                 'description'       => 'Invoice the line is related to.',
                 'required'          => true,
+                'onupdate'          => 'onupdateInvoiceId',
                 'ondelete'          => 'cascade'
             ],
 
@@ -162,10 +163,6 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    /**
-     * Get total tax-excluded price of the line.
-     *
-     */
     public static function calcTotal($self) {
         $result = [];
         $self->read(['qty','unit_price','free_qty','discount']);
@@ -175,10 +172,6 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    /**
-     * Get final tax-included price of the line.
-     *
-     */
     public static function calcPrice($self) {
         $result = [];
         $self->read(['total','vat_rate']);
@@ -188,6 +181,11 @@ class InvoiceLine extends Model {
             $result[$id] = round($total * (1.0 + $vat), 2);
         }
         return $result;
+    }
+
+    public static function onupdateInvoiceId($om, $ids, $values, $lang) {
+        // reset parent invoice computed values
+        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
     public static function onupdatePriceId($om, $ids, $values, $lang) {
@@ -227,5 +225,4 @@ class InvoiceLine extends Model {
             $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
         }
     }
-
 }

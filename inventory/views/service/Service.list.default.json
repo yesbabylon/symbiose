@@ -1,7 +1,7 @@
 {
     "name": "Services",
     "description": "Default listing of all services.",
-    "order": "name",
+    "order": "id",
     "sort": "asc",
     "controller": "inventory_service_service-collect",
     "operations": {

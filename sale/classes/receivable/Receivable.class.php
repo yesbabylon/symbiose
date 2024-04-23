@@ -68,6 +68,7 @@ class Receivable extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Complementary description of the line.'
             ],
 

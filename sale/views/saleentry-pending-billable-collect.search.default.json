@@ -1,6 +1,6 @@
 {
-    "name": "Sales entries search",
-    "description": "Advanced collector for sales entries",
+    "name": "Pending billable sales entries search",
+    "description": "Advanced collector for pending billable sales entries",
     "layout": {
         "groups": [
             {
@@ -23,22 +23,6 @@
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "25%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "width": "10%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_billable",
-                                                "label": "Is billable",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_receivable",
-                                                "label": "Has receivable",
-                                                "width": "20%"
                                             }
                                         ]
                                     }
