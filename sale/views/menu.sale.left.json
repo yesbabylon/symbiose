@@ -10,14 +10,14 @@
                 "type": "parent",
                 "label": "Customers",
                 "icon": "face",
-                "description": "Customers",
+                "description": "Customers parent menu.",
                 "children": [
                     {
                         "id": "customers.new",
                         "type": "entry",
                         "label": "New",
                         "icon": "add",
-                        "description": "Add new customer",
+                        "description": "Add new customer.",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "form.create",
@@ -29,7 +29,7 @@
                         "type": "entry",
                         "label": "All",
                         "icon": "list",
-                        "description": "All customers",
+                        "description": "Display all customers.",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "list.default",
@@ -42,7 +42,7 @@
                         "type": "entry",
                         "label": "Archived",
                         "icon": "inventory",
-                        "description": "Archived customers",
+                        "description": "Display archived customers.",
                         "context": {
                             "entity": "sale\\customer\\Customer",
                             "view": "list.archived",
@@ -57,17 +57,30 @@
                 "type": "parent",
                 "label": "Sale entries",
                 "icon": "label",
-                "description": "",
+                "description": "Sale entries parent menu.",
                 "children": [
                     {
-                        "id": "sale_entries.entries",
+                        "id": "sale_entries.all",
                         "type": "entry",
-                        "label": "Sale Entries",
-                        "icon": "label",
-                        "description": "",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "Display all sale entries.",
                         "context": {
                             "entity": "sale\\SaleEntry",
                             "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "sale_entries.pending-billable",
+                        "type": "entry",
+                        "label": "Pending billable",
+                        "icon": "receipt_long",
+                        "description": "Display pending billable sale entries of specific customer.",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.pending-billable",
                             "order": "id",
                             "sort": "asc"
                         }
@@ -79,14 +92,14 @@
                 "type": "parent",
                 "label": "Receivables",
                 "icon": "note",
-                "description": "",
+                "description": "Receivables parent menu.",
                 "children": [
                     {
                         "id": "receivables.queues",
                         "type": "entry",
-                        "label": "Receivable Queues",
+                        "label": "Queues",
                         "icon": "queue",
-                        "description": "",
+                        "description": "Display all receivables queues.",
                         "context": {
                             "entity": "sale\\receivable\\ReceivablesQueue",
                             "view": "list.default",
@@ -97,9 +110,9 @@
                     {
                         "id": "receivables.receivables",
                         "type": "entry",
-                        "label": "All Receivables",
+                        "label": "All",
                         "icon": "list",
-                        "description": "",
+                        "description": "Display all receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
                             "view": "list.default",
@@ -110,9 +123,9 @@
                     {
                         "id": "item.receivable.pending",
                         "type": "entry",
-                        "label": "Pending Receivables",
+                        "label": "Pending",
                         "icon": "pending_actions",
-                        "description": "",
+                        "description": "Display pending receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
                             "view": "list.pending",
@@ -127,14 +140,14 @@
                 "type": "parent",
                 "label": "Invoices",
                 "icon": "receipt_long",
-                "description": "",
+                "description": "Invoices parent menu.",
                 "children": [
                     {
-                        "id": "invoices.invoices",
+                        "id": "invoices.all",
                         "type": "entry",
-                        "label": "Invoices",
-                        "icon": "receipt_long",
-                        "description": "",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "Display all invoices.",
                         "context": {
                             "entity": "sale\\accounting\\invoice\\Invoice",
                             "view": "list.default",
@@ -149,14 +162,14 @@
                 "type": "parent",
                 "label": "Catalog",
                 "icon": "collections_bookmark",
-                "description": "",
+                "description": "Catalog parent menu.",
                 "children": [
                     {
                         "id": "catalog.products",
                         "type": "entry",
                         "label": "Products",
                         "icon": "book",
-                        "description": "",
+                        "description": "Display all catalog products.",
                         "context": {
                             "entity": "sale\\catalog\\Product",
                             "view": "list.default",
@@ -169,7 +182,7 @@
                         "type": "entry",
                         "label": "Product models",
                         "icon": "bookmark",
-                        "description": "",
+                        "description": "Display all catalog product models",
                         "context": {
                             "entity": "sale\\catalog\\ProductModel",
                             "view": "list.default",
@@ -182,7 +195,7 @@
                         "type": "entry",
                         "label": "Categories",
                         "icon": "category",
-                        "description": "",
+                        "description": "Display all catalog product categories.",
                         "context": {
                             "entity": "sale\\catalog\\Category",
                             "view": "list.default",
@@ -195,7 +208,7 @@
                         "type": "entry",
                         "label": "Families",
                         "icon": "list",
-                        "description": "",
+                        "description": "Display all catalog product families.",
                         "context": {
                             "entity": "sale\\catalog\\Family",
                             "view": "list.default",
@@ -210,14 +223,14 @@
                 "type": "parent",
                 "label": "Prices",
                 "icon": "price_check",
-                "description": "",
+                "description": "Pries parent menu.",
                 "children": [
                     {
-                        "id": "prices.prices",
+                        "id": "prices.all",
                         "type": "entry",
-                        "label": "All Prices",
+                        "label": "Prices",
                         "icon": "attach_money",
-                        "description": "",
+                        "description": "Display all prices.",
                         "context": {
                             "entity": "sale\\price\\Price",
                             "view": "list.default",
@@ -230,7 +243,7 @@
                         "type": "entry",
                         "label": "Price Lists",
                         "icon": "list",
-                        "description": "",
+                        "description": "Display all price lists.",
                         "context": {
                             "entity": "sale\\price\\PriceList",
                             "view": "list.default",
@@ -245,20 +258,21 @@
                 "type": "parent",
                 "label": "Settings",
                 "icon": "settings",
-                "description": "",
+                "description": "Settings parent menu.",
                 "children": [
                     {
                         "id": "settings.customers",
                         "type": "parent",
                         "label": "Customers",
                         "icon": "work",
-                        "description": "",
+                        "description": "Settings customers parent menu.",
                         "children": [
                             {
                                 "id": "settings.customers.types",
                                 "type": "entry",
-                                "label": "Customers types",
-                                "description": "",
+                                "label": "Types",
+                                "icon": "list",
+                                "description": "Display all customer types.",
                                 "route": "/",
                                 "context": {
                                     "entity": "sale\\customer\\CustomerType",
@@ -268,8 +282,9 @@
                             {
                                 "id": "settings.customers.natures",
                                 "type": "entry",
-                                "label": "Customer natures",
-                                "description": "",
+                                "label": "Natures",
+                                "icon": "list",
+                                "description": "Display all customer natures.",
                                 "route": "/",
                                 "context": {
                                     "entity": "sale\\customer\\CustomerNature",
@@ -283,14 +298,14 @@
                         "type": "parent",
                         "label": "Invoices",
                         "icon": "receipt_long",
-                        "description": "Invoices settings",
+                        "description": "Settings invoices parent menu.",
                         "children": [
                             {
                                 "id": "settings.invoices.organisations-images",
                                 "type": "entry",
                                 "label": "Org. images",
                                 "icon": "image",
-                                "description": "",
+                                "description": "Display all organisation invoice images.",
                                 "context": {
                                     "entity": "sale\\identity\\Organisation",
                                     "view": "list.default",
@@ -305,14 +320,14 @@
                         "type": "parent",
                         "label": "Time entries",
                         "icon": "timer",
-                        "description": "Time entries sale settings",
+                        "description": "Settings time entries parent menu.",
                         "children": [
                             {
                                 "id": "settings.time-entries.sale-models",
                                 "type": "entry",
                                 "label": "Sale models",
                                 "icon": "calculate",
-                                "description": "Time entries sale models",
+                                "description": "Display all time entry sale models.",
                                 "context": {
                                     "entity": "timetrack\\TimeEntrySaleModel",
                                     "view": "list.default",

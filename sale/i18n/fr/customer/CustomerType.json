@@ -26,8 +26,8 @@
 			"layout": {}
 		},
 		"list.default": {
-			"name": "Liste de Types de client",
-			"description": "Liste des types de client.",
+			"name": "Types client",
+			"description": "Liste des types de clients.",
 			"layout": {}
 		}
 	},

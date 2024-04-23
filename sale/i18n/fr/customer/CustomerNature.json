@@ -36,8 +36,8 @@
             "layout": {}
         },
         "list.default": {
-            "name": "Liste de Nature client",
-            "description": "Liste des natures de clients.",
+            "name": "Natures client",
+            "description": "Liste des natures des clients.",
             "layout": {}
         }
     },

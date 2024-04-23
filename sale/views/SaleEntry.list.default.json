@@ -48,6 +48,7 @@
                 "sortable": true
             },
             {
+                "id": "item.is_billable",
                 "type": "field",
                 "value": "is_billable",
                 "label": "Is billable",
@@ -56,6 +57,7 @@
                 "readonly": true
             },
             {
+                "id": "item.has_receivable",
                 "type": "field",
                 "value": "has_receivable",
                 "label": "Has receivable",
@@ -64,6 +66,7 @@
                 "readonly": true
             },
             {
+                "id": "item.receivable_id",
                 "type": "field",
                 "value": "receivable_id",
                 "label": "Receivable",

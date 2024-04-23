@@ -1,21 +1,22 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use finance\accounting\Invoice;
-use finance\accounting\InvoiceLine;
-use finance\accounting\InvoiceLineGroup;
+use sale\accounting\invoice\Invoice;
+use sale\accounting\invoice\InvoiceLine;
+use sale\accounting\invoice\InvoiceLineGroup;
 use sale\receivable\ReceivablesQueue;
 use sale\receivable\Receivable;
 
 list($params, $providers) = announce([
-    'description'   => 'Create invoices for all pending receivables of selected queues.',
+    'description'   => 'Invoice pending receivables of selected queues.',
+    'help'          => 'Create invoice lines from pending receivables of selected queues. Create new invoice if no pending proforma found for customer.',
     'params'        => [
         'ids' =>  [
-            'description'    => 'Identifier of the targeted reports.',
+            'description'    => 'Identifier of the targeted receivable queues.',
             'type'           => 'one2many',
             'foreign_object' => 'sale\receivable\ReceivablesQueue',
             'required'       => true
@@ -26,10 +27,11 @@ list($params, $providers) = announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => ['context', 'orm']
+    'providers'     => ['context']
 ]);
 
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/** @var \equal\php\Context $context */
+$context = $providers['context'];
 
 $receivables_queues = ReceivablesQueue::ids($params['ids'])
     ->read(['id', 'customer_id']);
@@ -60,7 +62,7 @@ foreach($receivables_queues as $receivables_queue) {
         ['customer_id', '=', $receivables_queue['customer_id']],
         ['status', '=', 'proforma']
     ])
-        ->read(['status'])
+        ->read(['id'])
         ->first();
 
     if(!$invoice){
@@ -70,14 +72,14 @@ foreach($receivables_queues as $receivables_queue) {
             ->first();
     }
 
-    foreach($receivables as $receivable) {
-        $invoice_line_group = InvoiceLineGroup::create([
-            'name'       => 'Additional Services ('.date('Y-m-d').')',
-            'invoice_id' => $invoice['id']
-        ])
-            ->first();
+    $invoice_line_group = InvoiceLineGroup::create([
+        'name'       => 'Additional Services ('.date('Y-m-d').')',
+        'invoice_id' => $invoice['id']
+    ])
+        ->first();
 
-        $invoiceLine = InvoiceLine::create([
+    foreach($receivables as $receivable) {
+        $invoice_line = InvoiceLine::create([
             'description'           => $receivable['description'],
             'invoice_line_group_id' => $invoice_line_group['id'],
             'invoice_id'            => $invoice['id'],
@@ -94,11 +96,10 @@ foreach($receivables_queues as $receivables_queue) {
         Receivable::ids($receivable['id'])
             ->update([
                 'invoice_id'      => $invoice['id'],
-                'invoice_line_id' => $invoiceLine['id'],
+                'invoice_line_id' => $invoice_line['id'],
                 'status'          => 'invoiced'
             ]);
     }
-
 }
 
 $context->httpResponse()

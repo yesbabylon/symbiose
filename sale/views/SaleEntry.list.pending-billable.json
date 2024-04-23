@@ -1,0 +1,34 @@
+{
+    "name": "Pending billable",
+    "description": "Listing of pending billable sale entries.",
+    "help": "List sale entries that are billable but have no receivable generated yet.",
+    "controller": "sale_saleentry-pending-billable-collect",
+    "sort": "desc",
+    "header": {
+        "actions":{
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.add_receivables",
+                    "label": "Receivables",
+                    "icon": "note",
+                    "controller": "sale_saleentry_add-receivables"
+                }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "sale\\SaleEntry",
+            "view": "list.default"
+        },
+        "remove": [
+            "item.is_billable",
+            "item.has_receivable",
+            "item.receivable_id"
+        ]
+    }
+}

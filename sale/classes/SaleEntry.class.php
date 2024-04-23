@@ -63,7 +63,7 @@ class SaleEntry extends Model {
             'is_billable' => [
                 'type'              => 'boolean',
                 'description'       => 'Can be billed to the customer.',
-                'default'           => false
+                'default'           => true
             ],
 
             'customer_id' => [
@@ -160,6 +160,10 @@ class SaleEntry extends Model {
             ])
                 ->read(['id', 'name', 'price', 'vat_rate'])
                 ->first();
+
+            if(isset($result['price_id']['price'])) {
+                $result['unit_price'] = $result['price_id']['price'];
+            }
         }
 
         return $result;

@@ -54,6 +54,14 @@
             },
             {
                 "type": "field",
+                "value": "receivables_queue_id",
+                "label": "Receivable Queue",
+                "readonly": true,
+                "width": "20%",
+                "visible": false
+            },
+            {
+                "type": "field",
                 "value": "unit_price",
                 "width": "15%"
             },

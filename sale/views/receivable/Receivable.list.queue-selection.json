@@ -36,19 +36,6 @@
             },
             {
                 "type": "field",
-                "value": "status",
-                "readonly": true,
-                "width": "10%"
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "readonly": true,
-                "width": "15%"
-            },
-            {
-                "type": "field",
                 "value": "unit_price",
                 "width": "5%"
             },

@@ -8,7 +8,7 @@
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Sale Entry: returns a collection of Sale Entries according to extra parameters.',
+    'description'   => 'Advanced search for pending billable Sale Entry: returns a collection of pending billable Sale Entries according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -30,18 +30,6 @@ list($params, $providers) = eQual::announce([
             'foreign_object'    => 'sale\catalog\Product',
             'description'       => 'Product of the catalog sale.',
             'min'               => 1
-        ],
-
-        'is_billable' => [
-            'type'              => 'boolean',
-            'description'       => 'Can be billed to the customer.',
-            'default'           => null
-        ],
-
-        'has_receivable' => [
-            'type'              => 'boolean',
-            'description'       => 'The entry is linked to a receivable entry.',
-            'default'           => null
         ]
 
     ],
@@ -56,7 +44,10 @@ list($params, $providers) = eQual::announce([
 /** @var \equal\php\Context $context */
 $context = $providers['context'];
 
-$domain = [];
+$domain = [
+    ['is_billable', '=', true],
+    ['has_receivable', '=', false]
+];
 
 if(isset($params['customer_id'])) {
     $domain[] = ['customer_id', '=', $params['customer_id']];
@@ -64,14 +55,6 @@ if(isset($params['customer_id'])) {
 
 if(isset($params['product_id'])) {
     $domain[] = ['product_id', '=', $params['product_id']];
-}
-
-if(!is_null($params['is_billable'])) {
-    $domain[] = ['is_billable', '=', $params['is_billable']];
-}
-
-if(!is_null($params['has_receivable'])) {
-    $domain[] = ['has_receivable', '=', $params['has_receivable']];
 }
 
 $params['domain'] = (new Domain($params['domain']))

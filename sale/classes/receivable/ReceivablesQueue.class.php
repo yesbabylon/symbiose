@@ -19,15 +19,14 @@ class ReceivablesQueue extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'The Customer the queue refers to.',
-                'unique'            => true,
                 'required'          => true
             ],
 
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'function'          => 'calcName',
                 'description'       => 'The name of the receivables queue.',
+                'function'          => 'calcName',
                 'store'             => true
             ],
 
@@ -36,6 +35,20 @@ class ReceivablesQueue extends Model {
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
                 'description'       => 'The Receivables attached to the queue.'
+            ],
+
+            'pending_receivables_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\receivable\Receivable',
+                'foreign_field'     => 'receivables_queue_id',
+                'description'       => 'The Receivables attached to the queue.',
+                'domain'            => ['status', '=', 'pending']
+            ],
+
+            'pending_receivables_count' => [
+                'type'              => 'computed',
+                'result_type'       => 'integer',
+                'function'          => 'calcPendingReceivablesCount'
             ]
         ];
     }
@@ -46,6 +59,17 @@ class ReceivablesQueue extends Model {
         foreach($self as $id => $receivables_queue) {
             $result[$id] = $receivables_queue['customer_id']['name'];
         }
+        return $result;
+    }
+
+    public static function calcPendingReceivablesCount($self): array {
+        $result = [];
+        $self->read(['pending_receivables_ids']);
+
+        foreach($self as $id => $queue) {
+            $result[$id] = count($queue['pending_receivables_ids']);
+        }
+
         return $result;
     }
 
