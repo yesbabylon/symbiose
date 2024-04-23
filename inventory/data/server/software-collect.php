@@ -42,6 +42,12 @@ list($params, $providers) = eQual::announce([
             'description'       => 'Service of the software.'
         ],
 
+        'product_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'inventory\Product',
+            'description'       => 'The product to which the software.'
+        ],
+
         'subscription_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'inventory\service\Subscription',
@@ -98,6 +104,10 @@ if(isset($params['server_id']) && $params['server_id'] > 0) {
 
 if(isset($params['service_id']) && $params['service_id'] > 0) {
     $domain = Domain::conditionAdd($domain, ['service_id', '=', $params['service_id']]);
+}
+
+if(isset($params['product_id']) && $params['product_id'] > 0) {
+    $domain = Domain::conditionAdd($domain, ['product_id', '=', $params['product_id']]);
 }
 
 if(isset($params['subscription_id']) && $params['subscription_id'] > 0) {

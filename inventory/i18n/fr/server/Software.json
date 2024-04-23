@@ -37,6 +37,11 @@
             "label": "Serveur",
             "description": "Serveur sur lequel le logiciel est installé.",
             "help": "Nom du logiciel."
+        },
+        "product_id":{
+            "label": "Produit",
+            "description": "Produit sur lequel le logiciel est installé.",
+            "help": "Nom du logiciel."
         }
     },
     "view": {
@@ -50,6 +55,11 @@
         }
         },
         "list.default": {
+            "name": "Liste des logiciels",
+            "description": "Liste des logiciels.",
+            "layout": {}
+        },
+        "list.selection": {
             "name": "Liste des logiciels",
             "description": "Liste des logiciels.",
             "layout": {}
