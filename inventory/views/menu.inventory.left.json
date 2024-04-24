@@ -182,50 +182,6 @@
                                     "entity": "inventory\\service\\Subscription",
                                     "view": "list.default"
                                 }
-                            },
-                            {
-                                "id": "inventory.services.provider",
-                                "type": "entry",
-                                "label": "Providers",
-                                "icon": "wifi",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\ServiceProvider",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.services.provider.category",
-                                "type": "entry",
-                                "label": "Provider Categories",
-                                "icon": "settings_remote",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\ServiceProviderCategory",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.services.detail",
-                                "type": "entry",
-                                "label": "Details",
-                                "icon": "book",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\Detail",
-                                    "view": "list.default"
-                                }
-                            },
-                            {
-                                "id": "inventory.services.detail.category",
-                                "type": "entry",
-                                "label": "Detail Categories",
-                                "icon": "library_books",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\service\\DetailCategory",
-                                    "view": "list.default"
-                                }
                             }
                         ]
                     },
@@ -309,7 +265,7 @@
                                 }
                             },
                             {
-                                "id": "item.Price",
+                                "id": "item.price",
                                 "type": "entry",
                                 "label": "Prices",
                                 "icon": "attach_money",
@@ -332,6 +288,68 @@
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.settings.detail",
+                        "type": "parent",
+                        "label": "Details",
+                        "icon": "book",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "inventory.settings.detail.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\Detail",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.settings.detail.category",
+                                "type": "entry",
+                                "label": "Categories",
+                                "icon": "library_books",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\DetailCategory",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.settings.providers",
+                        "type": "parent",
+                        "label": "Providers",
+                        "icon": "wifi",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.settings.providers.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\ServiceProvider",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "inventory.services.providers.category",
+                                "type": "entry",
+                                "label": "Categories",
+                                "icon": "settings_remote",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\service\\ServiceProviderCategory",
+                                    "view": "list.default"
                                 }
                             }
                         ]
