@@ -11,6 +11,7 @@ use equal\orm\Model;
 use sale\customer\Customer;
 use sale\price\Price;
 use sale\price\PriceList;
+use inventory\service\ServiceProvider;
 
 class Subscription extends Model  {
 
@@ -130,6 +131,16 @@ class Subscription extends Model  {
                 'function'          => 'calcHasExternalProvider'
             ],
 
+            'service_provider_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'inventory\service\ServiceProvider',
+                'description'       => 'The service provider to which the service belongs.',
+                'store'             => true,
+                'visible'           => ['has_external_provider','=', true],
+                'function'          => 'calcServiceProviderId'
+            ],
+
             'product_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',
@@ -182,7 +193,7 @@ class Subscription extends Model  {
 
         if(isset($event['service_id']) && strlen($event['service_id']) > 0 ){
             $service = Service::search(['id', '=', $event['service_id']])
-                ->read(['has_external_provider', 'is_billable', 'is_internal', 'customer_id'])
+                ->read(['has_external_provider', 'is_billable', 'is_internal', 'customer_id', 'service_provider_id'])
                 ->first();
 
             $result['has_external_provider'] = $service['has_external_provider'];
@@ -193,6 +204,11 @@ class Subscription extends Model  {
                 ->read(['id', 'name'])
                 ->first();
             $result['customer_id'] = $customer;
+
+            $service_provider = ServiceProvider::ids([$service['service_provider_id']])
+                ->read(['id', 'name'])
+                ->first();
+            $result['service_provider_id'] = $service_provider;
         }
 
         if(isset($event['date_from']) || isset($event['duration'])){
@@ -331,6 +347,15 @@ class Subscription extends Model  {
         $self->read(['service_id' => ['has_external_provider']]);
         foreach($self as $id => $subscription) {
             $result[$id] = $subscription['service_id']['has_external_provider'];
+        }
+        return $result;
+    }
+
+    public static function calcServiceProviderId($self) {
+        $result = [];
+        $self->read(['service_id' => ['service_provider_id']]);
+        foreach($self as $id => $subscription) {
+            $result[$id] = $subscription['service_id']['service_provider_id'];
         }
         return $result;
     }

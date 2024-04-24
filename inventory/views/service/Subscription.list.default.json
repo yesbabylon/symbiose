@@ -73,6 +73,14 @@
             },
             {
                 "type": "field",
+                "value": "service_provider_id",
+                "label": "Provider",
+                "width": "20%",
+                "readonly": true,
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "is_billable",
                 "label": "Billable",
                 "width": "15%",
