@@ -79,6 +79,26 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "value": "is_billable",
+                                                "label": "is Billable",
+                                                "width": "50%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_external_provider",
+                                                "label": "Has external provider",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "label": "Provider",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "has_receivable",
                                                 "label": "Has Receivable",
                                                 "readonly": true,
