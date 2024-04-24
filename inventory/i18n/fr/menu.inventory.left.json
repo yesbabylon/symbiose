@@ -1,6 +1,129 @@
 {
     "description": "",
     "view": {
-      "item.all_Product": {"label": "Tous les produits", "help": ""}
+        "item.product": {
+            "label": "Produits",
+            "help": ""
+        },
+        "item.customer": {
+            "label": "Clients",
+            "help": ""
+        },
+        "item.customer-new": {
+            "label": "Nouveau",
+            "help": ""
+        },
+        "item.customers-all": {
+            "label": "Tous",
+            "help": ""
+        },
+        "item.customers-archived": {
+            "label": "Archivés",
+            "help": ""
+        },
+        "item.sale": {
+            "label": "Ventes",
+            "help": ""
+        },
+        "item.all.receivables": {
+            "label": "Receivables",
+            "help": ""
+        },
+        "item.receivablesqueue": {
+            "label": "Queues",
+            "help": ""
+        },
+        "item.receivable": {
+            "label": "Tous",
+            "help": ""
+        },
+        "item.receivable.pending": {
+            "label": "En attente",
+            "help": ""
+        },
+        "item.sale.entry": {
+            "label": "Entrées de vente",
+            "help": ""
+        },
+        "item.serves": {
+            "label": "Advanced",
+            "help": ""
+        },
+        "item.services": {
+            "label": "Tous les services",
+            "help": ""
+        },
+        "inventory.services.services": {
+            "label": "Services",
+            "help": ""
+        },
+        "item.software": {
+            "label": "Logiciels",
+            "help": ""
+        },
+        "inventory.services.subscription": {
+            "label": "Subscriptions",
+            "help": ""
+        },
+        "item.server": {
+            "label": "Serveurs",
+            "help": ""
+        },
+        "item.access": {
+            "label": "Accès",
+            "help": ""
+        },
+        "item.instance": {
+            "label": "Instances",
+            "help": ""
+        },
+        "item.ips": {
+            "label": "Ip Addresses",
+            "help": ""
+        },
+        "item.settings": {
+            "label": "Paramètres",
+            "help": ""
+        },
+        "item.prices": {
+            "label": "Tous les prix",
+            "help": ""
+        },
+        "item.product.catalog": {
+            "label": "Produits (Catalogue)",
+            "help": ""
+        },
+        "item.price": {
+            "label": "Prix",
+            "help": ""
+        },
+        "item.price.list": {
+            "label": "Listes de prix",
+            "help": ""
+        },
+        "item.settings.detail": {
+            "label": "Détails",
+            "help": ""
+        },
+        "inventory.settings.detail.all": {
+            "label": "Tous",
+            "help": ""
+        },
+        "inventory.settings.detail.category": {
+            "label": "Catégories",
+            "help": ""
+        },
+        "item.settings.providers": {
+            "label": "Fournisseurs",
+            "help": ""
+        },
+        "item.settings.providers.all": {
+            "label": "Tous",
+            "help": ""
+        },
+        "inventory.services.providers.category": {
+            "label": "Catégories",
+            "help": ""
+        }
     }
 }

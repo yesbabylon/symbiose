@@ -1,6 +1,29 @@
 {
     "description": "",
     "view": {
-      "item.home": {"label": "home", "help": ""}
+        "item.home": {
+            "label": "Home",
+            "help": ""
+        },
+        "item.customer": {
+            "label": "Clients",
+            "help": ""
+        },
+        "item.product": {
+            "label": "Produits",
+            "help": ""
+        },
+        "item.services.subscription": {
+            "label": "Abonnements",
+            "help": ""
+        },
+        "item.sale.receivables": {
+            "label": "Receivables",
+            "help": ""
+        },
+        "item.finance.accounting.invoice": {
+            "label": "Factures",
+            "help": ""
+        }
     }
 }
