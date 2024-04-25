@@ -26,11 +26,11 @@
             "help": ""
         },
         "item.all.receivables": {
-            "label": "Receivables",
+            "label": "Percevables",
             "help": ""
         },
         "item.receivablesqueue": {
-            "label": "Queues",
+            "label": "Files d'attente",
             "help": ""
         },
         "item.receivable": {
@@ -46,7 +46,7 @@
             "help": ""
         },
         "item.serves": {
-            "label": "Advanced",
+            "label": "Avancé",
             "help": ""
         },
         "item.services": {
@@ -62,7 +62,7 @@
             "help": ""
         },
         "inventory.services.subscription": {
-            "label": "Subscriptions",
+            "label": "Abonnements",
             "help": ""
         },
         "item.server": {
@@ -78,7 +78,7 @@
             "help": ""
         },
         "item.ips": {
-            "label": "Ip Addresses",
+            "label": "Adresses IP",
             "help": ""
         },
         "item.settings": {
