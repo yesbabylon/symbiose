@@ -23,7 +23,7 @@
             },
             "help": ""
         },
-        "type": {
+        "invoice_type": {
             "label": "Type",
             "description": "Type de document comptable.",
             "selection": {
@@ -32,7 +32,7 @@
             },
             "help": ""
         },
-        "number": {
+        "invoice_number": {
             "label": "Numéro de la facture",
             "description": "Numéro de la facture, selon la logique d'organisation.",
             "help": "Numéro de la facture, selon la logique d'organisation."
@@ -42,7 +42,7 @@
             "description": "Indicateur pour marquer la facture comme entièrement payée.",
             "help": ""
         },
-        "date": {
+        "emission_date": {
             "label": "Date",
             "description": "Date de création de la facture.",
             "help": ""
