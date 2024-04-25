@@ -16,12 +16,12 @@
             {
                 "label": "Total Notes de crédit TVAC",
                 "operation": ["SUM", "object.total"],
-                "domaine": [[["type", "=", "credit_note"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+                "domaine": [[["invoice_type", "=", "credit_note"], ["emission_date", ">=", "date.this.month.first"], ["emission_date", "<=", "date.this.month.last"]]]
             },
             {
                 "label": "Total Notes de crédit HTVA",
                 "operation": ["SUM", "object.price"],
-                "domaine": [[["type", "=", "credit_note"], ["date", ">=", "date.this.month.first"], ["date", "<=", "date.this.month.last"]]]
+                "domaine": [[["invoice_type", "=", "credit_note"], ["emission_date", ">=", "date.this.month.first"], ["emission_date", "<=", "date.this.month.last"]]]
             }
         ]
     }

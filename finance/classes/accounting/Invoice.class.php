@@ -24,7 +24,7 @@ class Invoice extends Model {
         return [
             'name' => [
                 'type'              => 'alias',
-                'alias'             => "number"
+                'alias'             => "invoice_number"
             ],
 
             'customer_ref' => [
@@ -55,7 +55,7 @@ class Invoice extends Model {
                 'default'           => 'proforma'
             ],
 
-            'type' => [
+            'invoice_type' => [
                 'type'              => 'string',
                 'selection'         => [
                     'invoice',
@@ -64,11 +64,11 @@ class Invoice extends Model {
                 'default'           => 'invoice'
             ],
 
-            'number' => [
+            'invoice_number' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => "Number of the invoice, according to organization logic (@see config/invoicing).",
-                'function'          => 'calcNumber',
+                'description'       => "Number of the invoice, according to organization logic.",
+                'function'          => 'calcInvoiceNumber',
                 'store'             => true
             ],
 
@@ -109,11 +109,11 @@ class Invoice extends Model {
                 'store'             => true
             ],
 
-            'date' => [
+            'emission_date' => [
                 'type'              => 'datetime',
                 'description'       => 'Emission date of the invoice.',
                 'default'           => time(),
-                'dependencies'      =>['number']
+                'dependencies'      =>['invoice_number']
             ],
 
             'customer_id' => [
@@ -121,7 +121,7 @@ class Invoice extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => "The counter party organization the invoice relates to.",
                 'required'          => true,
-                'dependencies'      => ['number']
+                'dependencies'      => ['invoice_number']
             ],
 
             'price' => [
@@ -224,12 +224,12 @@ class Invoice extends Model {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['id','date', 'number','status','customer_id']);
+        $self->read(['id','emission_date', 'invoice_number','status','customer_id']);
         foreach($self as $id => $invoice) {
             Invoice::ids($id)
                 ->update([
-                    'number'      => null,
-                    'date'        => time()
+                    'invoice_number'           => null,
+                    'emission_date'    => time()
                 ]);
             // generate accounting entries
             // create new entries objects
@@ -238,7 +238,7 @@ class Invoice extends Model {
     }
     public static function onafterInvoice($self) {
         // force computing the invoice number
-        $self->read(['number']);
+        $self->read(['invoice_number']);
     }
 
     public static function onchange($event,$values) {
@@ -247,7 +247,7 @@ class Invoice extends Model {
             $customer = Customer::search(['id', '=', $event['customer_id']])
                 ->read(['name'])
                 ->first();
-            $result['number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
+            $result['invoice_number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
         }
 
         return $result;
@@ -276,17 +276,17 @@ class Invoice extends Model {
 
     public static function calcPaymentReference($self) {
         $result = [];
-        $self->read(['number']);
+        $self->read(['invoice_number']);
         foreach($self as $oid => $invoice) {
-            $number = intval($invoice['number']);
+            $invoice_number = intval($invoice['invoice_number']);
             // arbitrary value for balance (final) invoice
             $code_ref = 200;
-            $result[$oid] = self::_get_payment_reference($code_ref, $number);
+            $result[$oid] = self::_get_payment_reference($code_ref, $invoice_number);
         }
         return $result;
     }
 
-    public static function calcNumber($self) {
+    public static function calcInvoiceNumber($self) {
         $result = [];
         $self->read(['status', 'organisation_id','customer_id'=> ['name']]);
         foreach($self as $id => $invoice) {
@@ -371,9 +371,9 @@ class Invoice extends Model {
     public static function onupdateStatus($om, $oids, $values, $lang) {
         if(isset($values['status']) && $values['status'] == 'invoice') {
             // reset invoice number and set emission date
-            $om->update(__CLASS__, $oids, ['number' => null, 'date' => time()], $lang);
+            $om->update(__CLASS__, $oids, ['invoice_number' => null, 'emission_date' => time()], $lang);
             // generate an invoice number (force immediate recomuting)
-            $om->read(__CLASS__, $oids, ['number'], $lang);
+            $om->read(__CLASS__, $oids, ['invoice_number'], $lang);
             // generate accounting entries
             $invoices_accounting_entries = self::_generateAccountingEntries($om, $oids, [], $lang);
             // create new entries objects
@@ -451,7 +451,7 @@ class Invoice extends Model {
     public static function _generateAccountingEntries($om, $oids, $values, $lang) {
         $result = [];
         // generate the accounting entries
-        $invoices = $om->read(self::getType(), $oids, ['status', 'type', 'organisation_id', 'invoice_lines_ids'], $lang);
+        $invoices = $om->read(self::getType(), $oids, ['status', 'invoice_type', 'organisation_id', 'invoice_lines_ids'], $lang);
         if($invoices > 0) {
             // retrieve specific accounts numbers
             $account_sales = Setting::get_value('finance', 'invoice', 'account.sales', 'not_found');
@@ -519,8 +519,8 @@ class Invoice extends Model {
                                 'invoice_id'        => $oid,
                                 'invoice_line_id'   => $lid,
                                 'account_id'        => $account_sales_id,
-                                'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
+                                'debit'             => ($invoice['invoice_type'] == 'invoice')?$debit:$credit,
+                                'credit'            => ($invoice['invoice_type'] == 'invoice')?$credit:$debit
                             ];
                         }
                         // line is a regular product line
@@ -552,8 +552,8 @@ class Invoice extends Model {
                                         'invoice_id'        => $oid,
                                         'invoice_line_id'   => $lid,
                                         'account_id'        => $rline['account_id'],
-                                        'debit'             => ($invoice['type'] == 'invoice')?$debit:$credit,
-                                        'credit'            => ($invoice['type'] == 'invoice')?$credit:$debit
+                                        'debit'             => ($invoice['invoice_type'] == 'invoice')?$debit:$credit,
+                                        'credit'            => ($invoice['invoice_type'] == 'invoice')?$credit:$debit
                                     ];
                                 }
                             }
@@ -570,8 +570,8 @@ class Invoice extends Model {
                             'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
-                            'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                            'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                            'debit'         => ($invoice['invoice_type'] == 'invoice')?$debit:$credit,
+                            'credit'        => ($invoice['invoice_type'] == 'invoice')?$credit:$debit
                         ];
                     }
 
@@ -585,8 +585,8 @@ class Invoice extends Model {
                             'has_invoice'   => true,
                             'invoice_id'    => $oid,
                             'account_id'    => $account_sales_taxes_id,
-                            'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                            'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                            'debit'         => ($invoice['invoice_type'] == 'invoice')?$debit:$credit,
+                            'credit'        => ($invoice['invoice_type'] == 'invoice')?$credit:$debit
                         ];
                     }
 
@@ -599,8 +599,8 @@ class Invoice extends Model {
                         'has_invoice'   => true,
                         'invoice_id'    => $oid,
                         'account_id'    => $account_trade_debtors_id,
-                        'debit'         => ($invoice['type'] == 'invoice')?$debit:$credit,
-                        'credit'        => ($invoice['type'] == 'invoice')?$credit:$debit
+                        'debit'         => ($invoice['invoice_type'] == 'invoice')?$debit:$credit,
+                        'credit'        => ($invoice['invoice_type'] == 'invoice')?$credit:$debit
                     ];
 
                     // append generated entries to result

@@ -15,7 +15,7 @@
             {
                 "label": "Total Financements",
                 "operation": ["COUNT", "object.id"],
-                "domain": [["type", "=", "invoice"]]
+                "domain": [["invoice_type", "=", "invoice"]]
             }
         ]
     }
