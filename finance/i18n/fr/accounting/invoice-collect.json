@@ -1,0 +1,44 @@
+{
+    "model": {
+        "price_min": {
+            "label": "Prix minimal",
+            "description": "Prix minimal pour la facture.",
+            "help": ""
+        },
+        "price_max": {
+            "label": "Prix maximal",
+            "description": "Prix maximal pour la facture.",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Date de début",
+            "description": "Date de début de l'intervalle de temps.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Date de fin ",
+            "description": "Date de fin de l'intervalle de temps.",
+            "help": ""
+        },
+        "status": {
+            "label": "Statut",
+            "description": "La situation à un moment donné au cours d'un processus.",
+            "selection": {
+                "all": "Toutes",
+                "proforma": "pro forma",
+                "invoice": "facture",
+                "cancelled": "annulée"
+            },
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Destinataire",
+            "description": "Organisation responsable de payer la facture.",
+            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
+        }
+    },
+    "view": {
+    },
+    "error": {
+    }
+}

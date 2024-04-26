@@ -44,7 +44,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "number",
+                                                "value": "invoice_number",
                                                 "width": "50%",
                                                 "widget": {
                                                     "heading": true,
@@ -64,7 +64,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "value": "invoice_type",
                                                 "width": "25%"
                                             },
                                             {
@@ -112,7 +112,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date",
+                                                "value": "emission_date",
                                                 "width": "50%"
                                             }
                                         ]

@@ -1,0 +1,16 @@
+[
+    {
+        "name": "identity\\Organisation",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "type_id": 3,
+                "type": "C",
+                "legal_name": "Your organisation name Inc.",
+                "short_name": "Your organisation",
+                "has_parent": false
+            }
+        ]
+    }
+]
