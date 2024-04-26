@@ -35,23 +35,28 @@
             "help": ""
         },
         "is_internal": {
-            "label": "Est expiré",
+            "label": "Est interne",
             "description": "L'abonnement utilisé par l'entreprise en interne.",
             "help": ""
         },
         "is_billable": {
-            "label": "Est expiré",
+            "label": "Est facturable",
             "description": "L'abonnement peut être facturé au client.",
             "help": ""
         },
         "has_upcoming_expiry": {
-            "label": "Est expiré",
+            "label": "Expiration à venir",
             "description": "L'abonnement va arriver à expiriration.",
             "help": ""
         },
         "has_external_provider": {
-            "label": "Est expiré",
+            "label": "Fournisseur externe",
             "description": "L'abonnement à un fournisseur externe.",
+            "help": ""
+        },
+        "service_provider_id":{
+            "label": "Fournisseur",
+            "description": "Fournisseur de service",
             "help": ""
         },
         "ref_order": {
