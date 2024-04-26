@@ -39,7 +39,7 @@
                 "sections": [
                     {
                         "label": "Pending receivables",
-                        "id": "section.receivables_id_receivables",
+                        "id": "section.pending_receivables_ids",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -50,15 +50,45 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "receivables_ids",
+                                                "value": "pending_receivables_ids",
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.queue-selection",
-                                                    "domain": ["status", "=", "pending"],
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
                                                             "ACTION.SELECT": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Invoiced receivables",
+                        "id": "section.invoiced_receivables_ids",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "invoiced_receivables_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.queue-selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false,
+                                                            "ACTION.SELECT": false
                                                         }
                                                     }
                                                 }
