@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace finance\accounting;
+use core\setting\SettingValue;
 use equal\orm\Model;
 use core\setting\Setting;
 use sale\customer\Customer;
@@ -300,13 +301,13 @@ class Invoice extends Model {
 
             $organisation_id = $invoice['organisation_id'];
 
-            $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
-            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year', date('Y'));
-            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
+            $format = Setting::get_value('finance', 'invoice', 'sequence_format', '%05d{sequence}');
+            $year = Setting::get_value('finance', 'invoice', 'fiscal_year', date('Y'));
+            $sequence = Setting::get_value('finance', 'invoice', 'sequence.'.$organisation_id,1);
 
             if($sequence) {
                 // #todo - user ORM fetchAndAdd()
-                Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
+                Setting::set_value('finance', 'invoice', 'sequence.'.$organisation_id, $sequence + 1);
                 $result[$id] = Setting::parse_format($format, [
                     'year'      => $year,
                     'org'       => $organisation_id,

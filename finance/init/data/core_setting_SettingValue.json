@@ -1,0 +1,29 @@
+[
+    {
+        "name": "core\\setting\\SettingValue",
+        "lang": "en",
+        "data": [
+            {
+                "id": 2011,
+                "name": "finance.invoice.sequence_format",
+                "setting_id": 2011,
+                "user_id": 0,
+                "value": "%05d{sequence}"
+            },
+            {
+                "id": 2012,
+                "name": "finance.invoice.fiscal_year",
+                "setting_id": 2012,
+                "user_id": 0,
+                "value": "2024"
+            },
+            {
+                "id": 2013,
+                "name": "finance.invoice.sequence.1",
+                "setting_id": 2013,
+                "user_id": 0,
+                "value": "1"
+            }
+        ]
+    }
+]

@@ -5,25 +5,36 @@
         "data": [
             {
                 "id": 2011,
-                "code": "invoice.sequence_format",
+                "code": "sequence_format",
                 "title": "Invoices sequence format",
                 "package": "finance",
-                "form_control": "string",
+                "form_control": "input",
                 "section_id": 5,
                 "description":"Format for invoices sequence (number).",
                 "help": "Format for the sequence of the invoices (according to accounting conventions).",
                 "type": "string"
-            }
-        ]
-    },
-    {
-        "name": "core\\setting\\Setting",
-        "lang": "fr",
-        "data": [
+            },
             {
-                "id": 2011,
-                "description":"Format de sequence des factures",
-                "help": "Format de sequence pour les factures (selon les conventions comptables)."
+                "id": 2012,
+                "code": "fiscal_year",
+                "title": "Invoices fiscal year",
+                "package": "finance",
+                "form_control": "select",
+                "section_id": 5,
+                "description":"Fiscal year for the invoice.",
+                "help": "Fiscal year for the invoice.",
+                "type": "integer"
+            },
+            {
+                "id": 2013,
+                "code": "sequence",
+                "title": "Invoices sequence",
+                "package": "finance",
+                "form_control": "input",
+                "section_id": 5,
+                "description":"Sequence for the invoice.",
+                "help": "Sequence for the invoice.",
+                "type": "integer"
             }
         ]
     }
