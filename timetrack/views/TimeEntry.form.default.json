@@ -101,7 +101,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Realised by",
+                                                "label": "Performed by",
                                                 "value": "user_id",
                                                 "width": "30%"
                                             },
