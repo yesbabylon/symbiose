@@ -122,22 +122,36 @@
                                             {
                                                 "type": "field",
                                                 "value": "address_street",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "address_dispatch",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "City",
                                                 "value": "address_city",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Zip",
                                                 "value": "address_zip",
-                                                "width": "16%"
+                                                "width": "16%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "label",
@@ -146,13 +160,21 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "State",
                                                 "value": "address_state",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Country",
                                                 "value": "address_country",
-                                                "width": "16%"
+                                                "width": "16%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
@@ -172,17 +194,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "email",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "phone",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "mobile",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }
