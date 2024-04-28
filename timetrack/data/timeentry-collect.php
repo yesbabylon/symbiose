@@ -40,7 +40,13 @@ $filters = [
     'origin' => [
         'description'    => 'Display only entries of selected origin',
         'type'           => 'string',
-        'selection'      => array_merge(['all'], array_keys(TimeEntry::ORIGIN_MAP)),
+        'selection'      => [
+            'all',
+            'project',
+            'backlog',
+            'email',
+            'support'
+        ],
         'default'        => 'all'
     ],
     'has_receivable' => [

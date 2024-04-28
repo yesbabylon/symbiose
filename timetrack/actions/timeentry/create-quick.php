@@ -29,7 +29,12 @@ list($params, $providers) = eQual::announce([
 
         'origin'     => [
             'type'           => 'string',
-            'selection'      => array_keys(TimeEntry::ORIGIN_MAP),
+            'selection'      => [
+                'project',
+                'backlog',
+                'email',
+                'support'
+            ],
             'description'    => 'Time entry origin.',
             'required'       => true
         ]
