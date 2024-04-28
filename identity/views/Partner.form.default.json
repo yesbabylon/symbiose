@@ -18,6 +18,7 @@
                                                 "value": "legal_name",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -26,6 +27,7 @@
                                                 "value": "firstname",
                                                 "width": "50%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -34,6 +36,7 @@
                                                 "value": "lastname",
                                                 "width": "50%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -42,12 +45,18 @@
                                                 "value": "has_vat",
                                                 "width": "50%",
                                                 "label": "Subject to VAT",
-                                                "help": "Do the company have a VAT number?"
+                                                "help": "Do the company have a VAT number?",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "vat_number",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
