@@ -3,14 +3,26 @@
     "layout": {
         "items": [
             {
-                "id": "item.time-entries",
+                "id": "time_entries",
                 "type": "entry",
                 "label": "Time entries",
                 "icon": "timer",
-                "description": "Time entries",
+                "description": "Time entries.",
                 "children": [
                     {
-                        "id": "item.time-entries-all",
+                        "id": "time_entries.new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new entry.",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
+                        "id": "time_entries.all",
                         "type": "entry",
                         "label": "All",
                         "icon": "list",
@@ -23,7 +35,7 @@
                         }
                     },
                     {
-                        "id": "item.time-entries-billable",
+                        "id": "time_entries.billable",
                         "type": "entry",
                         "label": "Billable",
                         "icon": "payments",
@@ -36,7 +48,7 @@
                         }
                     },
                     {
-                        "id": "item.time-entries-billed",
+                        "id": "time_entries.billed",
                         "type": "entry",
                         "label": "Billed",
                         "icon": "receipt_long",
@@ -51,14 +63,14 @@
                 ]
             },
             {
-                "id": "item.projects",
+                "id": "projects",
                 "type": "parent",
                 "label": "Projects",
                 "icon": "dataset",
                 "description": "Projects",
                 "children": [
                     {
-                        "id": "item.project-new",
+                        "id": "projects.new",
                         "type": "entry",
                         "label": "New",
                         "icon": "add",
@@ -70,7 +82,7 @@
                         }
                     },
                     {
-                        "id": "item.projects-all",
+                        "id": "projects.all",
                         "type": "entry",
                         "label": "All",
                         "icon": "list",
@@ -83,7 +95,7 @@
                         }
                     },
                     {
-                        "id": "item.projects-archived",
+                        "id": "projects.archived",
                         "type": "entry",
                         "label": "Archived",
                         "icon": "inventory",
