@@ -122,16 +122,11 @@
                                             {
                                                 "type": "field",
                                                 "value": "address_street",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "address_dispatch",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
@@ -149,7 +144,6 @@
                                                 "value": "",
                                                 "width": "50%"
                                             },
-
                                             {
                                                 "type": "field",
                                                 "value": "address_state",

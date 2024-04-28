@@ -21,7 +21,7 @@
                         "type": "field",
                         "label": "Identity of Customer",
                         "value": "partner_identity_id",
-                        "width": "50%"
+                        "width": "100%"
                     }
                 ]
             },

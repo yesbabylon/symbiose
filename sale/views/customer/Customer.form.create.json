@@ -17,6 +17,7 @@
             "view": "form.create"
         },
         "remove": [
+            "section.advanced",
             "group.partner_info"
         ],
         "update": {
