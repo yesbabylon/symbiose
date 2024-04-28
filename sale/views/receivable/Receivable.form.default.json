@@ -41,7 +41,7 @@
                                         ]
                                     },
                                     {
-                                        "width": "20%",
+                                        "width": "30%",
                                         "items": []
                                     },
                                     {
@@ -60,7 +60,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoice_id",
-                                                "label": "Total inc. VAT",
+                                                "label": "Invoice",
                                                 "width": "100%",
                                                 "visible": ["status", "=", "invoiced"],
                                                 "widget": {
