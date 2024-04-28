@@ -10,7 +10,9 @@
             "view": "form.default"
         },
         "remove": [
-            "group.partner_info"
+            "group.partner_info",
+            "field.type_id",
+            "field.is_internal"
         ],
         "update": {
             "section.identity_info": {
