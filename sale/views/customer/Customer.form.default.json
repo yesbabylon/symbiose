@@ -10,11 +10,21 @@
             "view": "form.default"
         },
         "remove": [
+            "section.advanced",
             "group.partner_info",
-            "field.type_id",
-            "field.is_internal"
+            "field.type_id"
         ],
         "update": {
+            "field.lang_id": {
+                "after": [
+                    {
+                        "type": "field",
+                        "label": "Identity of Customer",
+                        "value": "partner_identity_id",
+                        "width": "50%"
+                    }
+                ]
+            },
             "section.identity_info": {
                 "after": [
                     {
