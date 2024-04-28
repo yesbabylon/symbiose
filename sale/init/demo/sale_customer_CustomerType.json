@@ -5,33 +5,28 @@
         "data": [
             {
                 "id": 1,
-                "name": "Individual",
-                "code": "I",
+                "name": "B2C - Individual",
                 "description": "Natural person acting in his/her own name."
             },
             {
                 "id": 2,
-                "name": "Self-Employed",
-                "code": "SE",
+                "name": "B2B - Self-Employed",
                 "description": "Self-Employed / Entrepreneur"
             },
             {
                 "id": 3,
-                "name": "Company",
-                "code": "C",
+                "name": "B2B - Company",
                 "description": "Privately help company (legal person)."
             },
             {
                 "id": 4,
-                "name": "Non-profit organizations",
-                "code": "NP",
-                "description": "Public schools and nonprofit organizations"
+                "name": "B2B - Non-profit organizations",
+                "description": "Non-Profit organizations / Public School (legal person)."
             },
             {
                 "id": 5,
-                "name": "Public Administration",
-                "code": "PA",
-                "description": "Public Administration"
+                "name": "B2G - Public Administration",
+                "description": "Public Administration."
             }
         ]
     },
@@ -41,27 +36,28 @@
         "data": [
             {
                 "id": 1,
-                "name": "Particulier (personne physique)",
-                "description": "Particulier (personne physique)"
+                "name": "B2C - Particulier",
+                "description": "Particulier (personne physique)."
             },
             {
                 "id": 2,
-                "name": "Ind\u00e9pendant",
-                "description": "Ind\u00e9pendant"
+                "name": "B2B - Indépendant",
+                "description": "Travailleur Indépendant."
             },
             {
                 "id": 3,
-                "name": "Soci\u00e9t\u00e9",
-                "description": "Soci\u00e9t\u00e9"
+                "name": "B2B - Société",
+                "description": "Société privée."
             },
             {
                 "id": 4,
-                "description": "Association ou \u00c9cole (asbl, association de fait ou autre)"
+                "name": "B2B - Associatif",
+                "description": "Association / école (asbl, association de fait ou autre)."
             },
             {
                 "id": 5,
-                "name": "Administration publique",
-                "description": "Administration publique"
+                "name": "B2G - Administration publique",
+                "description": "Administration publique."
             }
         ]
     }
