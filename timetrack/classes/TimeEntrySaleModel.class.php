@@ -33,9 +33,14 @@ class TimeEntrySaleModel extends Model {
 
             'origin' => [
                 'type'            => 'string',
-                'selection'       => TimeEntry::ORIGIN_MAP,
+                'selection'       => [
+                    'project' => 'Project',
+                    'backlog' => 'Backlog',
+                    'email'   => 'E-mail',
+                    'support' => 'Support ticket',
+                ],
                 'description'     => 'Origin of the this time entry creation.',
-                'default'         => TimeEntry::ORIGIN_EMAIL
+                'default'         => 'project'
             ],
 
             'product_id' => [
