@@ -64,10 +64,12 @@
                                         "width": "25%",
                                         "items": [
                                             {
+                                                "id": "field.type_id",
                                                 "type": "field",
                                                 "value": "type_id",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
@@ -191,6 +193,7 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "id": "field.is_internal",
                                                 "type": "field",
                                                 "value": "is_internal",
                                                 "width": "100%"
