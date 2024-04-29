@@ -59,6 +59,19 @@
             },
             {
                 "type": "field",
+                "value": "has_external_provider",
+                "label": "Has external provider",
+                "width": "10%"
+            },
+            {
+                "type": "field",
+                "value": "service_provider_id",
+                "label": "Provider",
+                "readonly": true,
+                "width": "10%"
+            },
+            {
+                "type": "field",
                 "value": "has_receivable",
                 "label": "Has receivable",
                 "width": "10%"

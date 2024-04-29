@@ -6,6 +6,42 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "readonly": true,
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "30%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "label": "Service Infos",
                         "id": "section.service_info",
                         "rows": [
@@ -17,35 +53,16 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "name",
-                                                "width": "25%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product",
-                                                "width": "25%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
                                                 "value": "is_internal",
                                                 "label": "Is internal",
                                                 "readonly": true,
-                                                "width": "15%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
+                                                "readonly": true,
                                                 "width": "25%"
                                             }
                                         ]
@@ -58,12 +75,14 @@
                                                 "type": "field",
                                                 "value": "has_external_provider",
                                                 "label": "Has external provider",
+                                                "readonly": true,
                                                 "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "service_provider_id",
                                                 "label": "Provider",
+                                                "readonly": true,
                                                 "width": "25%"
                                             }
                                         ]

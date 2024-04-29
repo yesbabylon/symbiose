@@ -45,6 +45,14 @@ class ReceivablesQueue extends Model {
                 'domain'            => ['status', '=', 'pending']
             ],
 
+            'invoiced_receivables_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\receivable\Receivable',
+                'foreign_field'     => 'receivables_queue_id',
+                'description'       => 'The Receivables attached to the queue.',
+                'domain'            => ['status', '=', 'invoiced']
+            ],
+
             'pending_receivables_count' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',

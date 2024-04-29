@@ -5,33 +5,28 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\customer;
+use equal\orm\Model;
 
-class CustomerType extends \identity\IdentityType {
+class CustomerType extends Model {
 
     public static function getColumns() {
         return [
             'name' => [
-                'type'              => 'alias',
-                'alias'             => 'description'
-            ],
-
-            'code' => [
                 'type'              => 'string',
-                'description'       => "Mnemonic of the customer type.",
-                'required'          => true
+                'multilang'         => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'description'       => "Short description of the customer type.",
-                "multilang"         => true
+                'multilang'         => true
             ],
 
             'rate_class_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\RateClass',
                 'description'       => "The rate class that applies to this type of customer.",
-                // when using Natures, the rate class to apply is set in CustomerNature
+                // #memo - when using Natures, the rate class to apply is set in CustomerNature
                 'required'          => false
             ],
         ];

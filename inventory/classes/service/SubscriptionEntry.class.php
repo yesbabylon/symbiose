@@ -75,6 +75,24 @@ class SubscriptionEntry extends \sale\SaleEntry {
                 'required'       => true
             ],
 
+            'has_external_provider' => [
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'description'       => 'The subscriptionEntry has external provider.',
+                'store'             => true,
+                'instance'          => true,
+                'function'          => 'calcHasExternalProvider'
+            ],
+
+            'service_provider_id' => [
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'foreign_object'    => 'inventory\service\ServiceProvider',
+                'description'       => 'The service provider to which the subscription belongs.',
+                'store'             => true,
+                'instance'          => true,
+                'function'          => 'calcServiceProviderId'
+            ],
         ];
     }
 
@@ -101,6 +119,24 @@ class SubscriptionEntry extends \sale\SaleEntry {
         $self->read(['subscription_id' => ['product_id']]);
         foreach($self as $id => $subscription_entry) {
             $result[$id] = $subscription_entry['subscription_id']['product_id'];
+        }
+        return $result;
+    }
+
+    public static function calcHasExternalProvider($self) {
+        $result = [];
+        $self->read(['subscription_id' => ['has_external_provider']]);
+        foreach($self as $id => $subscription_entry) {
+            $result[$id] = $subscription_entry['subscription_id']['has_external_provider'];
+        }
+        return $result;
+    }
+
+    public static function calcServiceProviderId($self) {
+        $result = [];
+        $self->read(['subscription_id' => ['service_provider_id']]);
+        foreach($self as $id => $subscription_entry) {
+            $result[$id] = $subscription_entry['subscription_id']['service_provider_id'];
         }
         return $result;
     }

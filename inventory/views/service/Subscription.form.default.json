@@ -133,21 +133,28 @@
                                                 "value": "is_billable",
                                                 "label": "is Billable",
                                                 "readonly": true,
-                                                "width": "35%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_internal",
                                                 "label": "Is Internal",
                                                 "readonly": true,
-                                                "width": "35%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_external_provider",
                                                 "label": "Has external provider",
                                                 "readonly": true,
-                                                "width": "35%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "label": "Provider",
+                                                "readonly": true,
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",

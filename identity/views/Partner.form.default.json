@@ -18,6 +18,7 @@
                                                 "value": "legal_name",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -26,6 +27,7 @@
                                                 "value": "firstname",
                                                 "width": "50%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -34,6 +36,7 @@
                                                 "value": "lastname",
                                                 "width": "50%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": false
                                                 }
                                             },
@@ -42,12 +45,18 @@
                                                 "value": "has_vat",
                                                 "width": "50%",
                                                 "label": "Subject to VAT",
-                                                "help": "Do the company have a VAT number?"
+                                                "help": "Do the company have a VAT number?",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "vat_number",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
@@ -64,10 +73,12 @@
                                         "width": "25%",
                                         "items": [
                                             {
+                                                "id": "field.type_id",
                                                 "type": "field",
                                                 "value": "type_id",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
@@ -82,11 +93,13 @@
                                                 "visible": false
                                             },
                                             {
+                                                "id": "field.lang_id",
                                                 "type": "field",
                                                 "label": "Language",
                                                 "value": "lang_id",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "readonly": true,
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.CREATE": false,
@@ -118,32 +131,59 @@
                                             {
                                                 "type": "field",
                                                 "value": "address_street",
-                                                "width": "100%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "address_dispatch",
-                                                "width": "100%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "City",
                                                 "value": "address_city",
-                                                "width": "50%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Zip",
                                                 "value": "address_zip",
+                                                "width": "16%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "State",
                                                 "value": "address_state",
-                                                "width": "50%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Country",
                                                 "value": "address_country",
-                                                "width": "50%"
+                                                "width": "16%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     },
@@ -163,17 +203,26 @@
                                             {
                                                 "type": "field",
                                                 "value": "email",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "phone",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "mobile",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }
@@ -191,6 +240,7 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "id": "field.is_internal",
                                                 "type": "field",
                                                 "value": "is_internal",
                                                 "width": "100%"

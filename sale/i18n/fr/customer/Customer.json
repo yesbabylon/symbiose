@@ -15,8 +15,13 @@
         },
         "partner_identity_id": {
             "label": "Identité",
-            "description": "L'identité ciblée.",
+            "description": "L'identité associée au client.",
             "help": ""
+        },
+        "customer_external_ref": {
+            "label": "Référence externe",
+            "description": "Identifiant du client via référence externe.",
+            "help": "Identifiant du client via référence externe (fournisseur ou autre)."
         },
         "partner_organisation_id": {
             "label": "Organisation",
@@ -61,6 +66,11 @@
         "is_tour_operator": {
             "label": "Tour opérateur",
             "description": "Le client est un Tour Opérateur ou une OTA.",
+            "help": ""
+        },
+        "invoices_ids": {
+            "label": "Factures",
+            "description": "Liste des factures émises au nom du client.",
             "help": ""
         }
     },

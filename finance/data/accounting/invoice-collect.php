@@ -31,13 +31,13 @@ list($params, $providers) = eQual::announce([
 
         'date_from' => [
             'type'               => 'date',
-            'description'        => "Last date of the time interval.",
+            'description'        => "First date of the time interval.",
             'default'            => strtotime("-20 Years")
         ],
 
         'date_to' => [
             'type'              => 'date',
-            'description'       => "First date of the time interval.",
+            'description'       => "Last date of the time interval.",
             'default'           => strtotime("+10 Years")
         ],
 
@@ -84,11 +84,11 @@ if(isset($params['price_max']) && $params['price_max'] > 0) {
 }
 
 if(isset($params['date_from']) && $params['date_from'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['date', '>=', $params['date_from']]);
+    $domain = Domain::conditionAdd($domain, ['emission_date', '>=', $params['date_from']]);
 }
 
 if(isset($params['date_to']) && $params['date_to'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['date', '<=', $params['date_to']]);
+    $domain = Domain::conditionAdd($domain, ['emission_date', '<=', $params['date_to']]);
 }
 
 if(isset($params['status']) && strlen($params['status']) > 0 && $params['status']!= 'all') {

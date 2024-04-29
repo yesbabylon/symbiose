@@ -28,10 +28,10 @@
             "description": "Rôle du contact au sein de l'organisation.",
             "help": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional)."
         },
-        "customer_external_ref": {
-            "label": "Référence externe",
-            "description": "Identifiant du client via référence externe.",
-            "help": "Identifiant du client via référence externe (fournisseur ou autre)."
+        "type_id": {
+            "label": "Type",
+            "description": "Type de identité.",
+            "help": "cette information provient de l'identitié ciblée."
         },
         "relationship": {
             "label": "Relation",

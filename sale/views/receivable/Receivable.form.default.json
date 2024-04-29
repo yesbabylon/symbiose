@@ -10,7 +10,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -20,21 +20,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
-                                                "readonly": true,
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "label",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price",
-                                                "label": "Total inc. VAT",
-                                                "width": "15%",
+                                                "width": "100%",
                                                 "readonly": true,
                                                 "widget": {
                                                     "heading": true
@@ -44,13 +30,42 @@
                                                 "type": "field",
                                                 "value": "receivables_queue_id",
                                                 "label": "Customer receivable queue",
-                                                "width": "25%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "date",
                                                 "label": "Date",
-                                                "width": "20%"
+                                                "width": "40%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "30%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "20%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "price",
+                                                "label": "Total inc. VAT",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "readonly": true,
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "invoice_id",
+                                                "label": "Invoice",
+                                                "width": "100%",
+                                                "visible": ["status", "=", "invoiced"],
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }

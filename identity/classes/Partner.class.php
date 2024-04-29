@@ -71,7 +71,6 @@ class Partner extends Model {
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
-                'onupdate'          => 'onupdateTypeId',
                 'default'           => 1,
                 'dependencies'      => ['type', 'name'],
                 'description'       => 'Type of identity.'

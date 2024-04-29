@@ -1,6 +1,6 @@
 {
     "name": "Invoices",
-    "description": "This view is intented for displaying the invoices.",
+    "description": "This view is intended for displaying the invoices.",
     "access": {
         "groups": ["finance.default.user", "sale.default.user"]
      },
@@ -18,7 +18,7 @@
             },
             {
                 "type": "field",
-                "value": "date",
+                "value": "emission_date",
                 "width": "20%"
             },
             {

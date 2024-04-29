@@ -161,32 +161,41 @@
                                             {
                                                 "type": "field",
                                                 "value": "address_street",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "address_dispatch",
-                                                "width": "100%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "City",
                                                 "value": "address_city",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Zip",
                                                 "value": "address_zip",
+                                                "width": "16%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "State",
                                                 "value": "address_state",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Country",
                                                 "value": "address_country",
-                                                "width": "50%"
+                                                "width": "16%"
                                             }
                                         ]
                                     },

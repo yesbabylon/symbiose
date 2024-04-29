@@ -4,7 +4,6 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-
 namespace timetrack;
 
 use DateTime;
@@ -17,16 +16,6 @@ use eQual;
 use Exception;
 
 class TimeEntry extends SaleEntry {
-
-    const ORIGIN_BACKLOG = 'backlog';
-    const ORIGIN_EMAIL = 'email';
-    const ORIGIN_SUPPORT = 'support';
-
-    const ORIGIN_MAP = [
-        self::ORIGIN_BACKLOG => 'Backlog',
-        self::ORIGIN_EMAIL   => 'E-mail',
-        self::ORIGIN_SUPPORT => 'Support ticket',
-    ];
 
     const STATUS_PENDING = 'pending';
     const STATUS_READY = 'ready';
@@ -64,6 +53,13 @@ class TimeEntry extends SaleEntry {
             /**
              * Override SaleEntry columns
              */
+            'name' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => 'Short readable identifier of the entry.',
+                'store'             => true,
+                'function'          => 'calcName'
+            ],
 
             'project_id' => [
                 'type'           => 'many2one',
@@ -156,21 +152,26 @@ class TimeEntry extends SaleEntry {
             'user_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'core\User',
-                'description'    => 'User the time entry was realised by.'
+                'description'    => 'User the time entry was performed by.'
             ],
 
             'origin' => [
                 'type'           => 'string',
-                'selection'      => self::ORIGIN_MAP,
+                'selection'      => [
+                    'project' => 'Project',
+                    'backlog' => 'Backlog',
+                    'email'   => 'E-mail',
+                    'support' => 'Support ticket',
+                ],
                 'description'    => 'Origin of the this time entry creation.',
-                'default'        => self::ORIGIN_EMAIL
+                'default'        => 'project'
             ],
 
             'ticket_id' => [
                 'type'           => 'integer',
                 'description'    => 'Support ticket id from project Symbiose instance.',
                 'dependencies'   => ['ticket_link'],
-                'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
+                'visible'        => ['origin', '=', 'support']
             ],
 
             'ticket_link' => [
@@ -180,13 +181,13 @@ class TimeEntry extends SaleEntry {
                 'usage'          => 'uri/url',
                 'function'       => 'calcTicketLink',
                 'store'          => true,
-                'visible'        => ['origin', '=', self::ORIGIN_SUPPORT]
+                'visible'        => ['origin', '=', 'support']
             ],
 
             'reference' => [
                 'type'           => 'string',
                 'description'    => 'Email or backlog reference.',
-                'visible'        => ['origin', 'in', [self::ORIGIN_EMAIL, self::ORIGIN_BACKLOG]]
+                'visible'        => ['origin', 'not in', ['project']]
             ],
 
             'status' => [
@@ -254,8 +255,7 @@ class TimeEntry extends SaleEntry {
     public static function onchange($event, $values): array {
         $result = [];
 
-        if(
-            isset($event['project_id'], $values['origin'])
+        if( isset($event['project_id'], $values['origin'])
             || isset($event['origin'], $values['project_id'])
         ) {
             $sale_model = TimeEntrySaleModel::getModelToApply(
@@ -288,7 +288,7 @@ class TimeEntry extends SaleEntry {
         }
 
         if(isset($event['origin'])) {
-            if($event['origin'] === self::ORIGIN_SUPPORT) {
+            if($event['origin'] === 'support') {
                 $result['reference'] = null;
             }
             else {
@@ -305,14 +305,18 @@ class TimeEntry extends SaleEntry {
             $result['customer_id'] = $project['customer_id'];
         }
 
-        if(
-            isset($event['time_start'], $values['time_end'])
+        if( isset($event['time_start'], $values['time_end'])
             || isset($event['time_end'], $values['time_start'])
         ) {
             $time_start = $event['time_start'] ?? $values['time_start'];
             $time_end = $event['time_end'] ?? $values['time_end'];
 
-            $result['duration'] = $time_end - $time_start;
+            if($time_end < $time_start) {
+                $result['time_end'] = $time_start + ($values['duration'] ?? 0);
+            }
+            else {
+                $result['duration'] = $time_end - $time_start;
+            }
         }
         elseif(isset($event['duration'], $values['time_start'])) {
             $result['time_end'] = $values['time_start'] + $event['duration'];
@@ -331,27 +335,42 @@ class TimeEntry extends SaleEntry {
 
     public static function onupdateProjectId($self): void {
         $self->read(['object_id', 'project_id']);
-        foreach($self as $id => $time_entry) {
-            if($time_entry['object_id'] === $time_entry['project_id']) {
+        foreach($self as $id => $entry) {
+            if($entry['object_id'] === $entry['project_id']) {
                 continue;
             }
 
             TimeEntry::id($id)
-                ->update(['object_id' => $time_entry['project_id']]);
+                ->update(['object_id' => $entry['project_id']]);
         }
+    }
+
+    public static function calcName($self) {
+        $result = [];
+        $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
+        foreach($self as $id => $entry) {
+            $result[$id] = $entry['project_id']['name'];
+            if($entry['origin'] != 'project') {
+                $result[$id] .= ' - '.$entry['origin'].' ['.$entry['reference'].']';
+            }
+            if(isset($entry['description']) && strlen($entry['description']) > 0) {
+                $result[$id] .= ' - '.$entry['description'];
+            }
+        }
+        return $result;
     }
 
     public static function calcProductId($self): array {
         $result = [];
         $self->read(['project_id', 'origin']);
-        foreach($self as $id => $time_entry) {
-            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['origin'], $entry['project_id'])) {
                 continue;
             }
 
             $sale_model = TimeEntrySaleModel::getModelToApply(
-                $time_entry['origin'],
-                $time_entry['project_id']
+                $entry['origin'],
+                $entry['project_id']
             );
             if(is_null($sale_model['product_id'])) {
                 continue;
@@ -366,14 +385,14 @@ class TimeEntry extends SaleEntry {
     public static function calcPriceId($self): array {
         $result = [];
         $self->read(['project_id', 'origin']);
-        foreach($self as $id => $time_entry) {
-            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['origin'], $entry['project_id'])) {
                 continue;
             }
 
             $sale_model = TimeEntrySaleModel::getModelToApply(
-                $time_entry['origin'],
-                $time_entry['project_id']
+                $entry['origin'],
+                $entry['project_id']
             );
             if(is_null($sale_model['price_id'])) {
                 continue;
@@ -388,21 +407,21 @@ class TimeEntry extends SaleEntry {
     public static function calcUnitPrice($self): array {
         $result = [];
         $self->read(['project_id', 'origin', 'price_id' => ['price']]);
-        foreach($self as $id => $time_entry) {
-            if(!isset($time_entry['origin'], $time_entry['project_id'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['origin'], $entry['project_id'])) {
                 continue;
             }
 
             $sale_model = TimeEntrySaleModel::getModelToApply(
-                $time_entry['origin'],
-                $time_entry['project_id']
+                $entry['origin'],
+                $entry['project_id']
             );
 
             if(isset($sale_model['unit_price'])) {
                 $result[$id] = $sale_model['unit_price'];
             }
-            elseif(isset($time_entry['price_id']['price'])) {
-                $result[$id] = $time_entry['price_id']['price'];
+            elseif(isset($entry['price_id']['price'])) {
+                $result[$id] = $entry['price_id']['price'];
             }
         }
 
@@ -412,12 +431,12 @@ class TimeEntry extends SaleEntry {
     public static function calcDuration($self): array {
         $result = [];
         $self->read(['time_start', 'time_end']);
-        foreach($self as $id => $time_entry) {
-            if(!isset($time_entry['time_start'], $time_entry['time_end'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['time_start'], $entry['time_end'])) {
                 continue;
             }
 
-            $result[$id] = $time_entry['time_end'] - $time_entry['time_start'];
+            $result[$id] = $entry['time_end'] - $entry['time_start'];
         }
 
         return $result;
@@ -425,18 +444,18 @@ class TimeEntry extends SaleEntry {
 
     public static function onupdateDuration($self): void {
         $self->read(['time_start', 'time_end', 'duration', 'qty']);
-        foreach($self as $id => $time_entry) {
+        foreach($self as $id => $entry) {
             $updates = ['qty' => 0];
 
-            if(isset($time_entry['duration'])) {
-                $updates['qty'] = $time_entry['duration'] / 3600;
+            if(isset($entry['duration'])) {
+                $updates['qty'] = $entry['duration'] / 3600;
             }
 
             if(
-                isset($time_entry['duration'], $time_entry['time_start'], $time_entry['time_end'])
-                && $time_entry['duration'] !== ($time_entry['time_end'] - $time_entry['time_start'])
+                isset($entry['duration'], $entry['time_start'], $entry['time_end'])
+                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])
             ) {
-                $updates['time_end'] = $time_entry['time_start'] + $time_entry['duration'];
+                $updates['time_end'] = $entry['time_start'] + $entry['duration'];
             }
 
             TimeEntry::id($id)->update($updates);
@@ -446,12 +465,12 @@ class TimeEntry extends SaleEntry {
     public static function calcCustomerId($self): array {
         $result = [];
         $self->read(['project_id' => ['customer_id']]);
-        foreach($self as $id => $time_entry) {
-            if(!isset($time_entry['project_id']['customer_id'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['project_id']['customer_id'])) {
                 continue;
             }
 
-            $result[$id] = $time_entry['project_id']['customer_id'];
+            $result[$id] = $entry['project_id']['customer_id'];
         }
 
         return $result;
@@ -460,21 +479,21 @@ class TimeEntry extends SaleEntry {
     public static function calcTicketLink($self): array {
         $result = [];
         $self->read(['origin', 'ticket_id', 'project_id' => ['instance_id' => ['url']]]);
-        foreach($self as $id => $time_entry) {
+        foreach($self as $id => $entry) {
             if(
-                $time_entry['origin'] !== self::ORIGIN_SUPPORT
-                || is_null($time_entry['ticket_id'])
-                || empty($time_entry['project_id']['instance_id']['url'])
+                $entry['origin'] !== 'support'
+                || is_null($entry['ticket_id'])
+                || empty($entry['project_id']['instance_id']['url'])
             ) {
                 continue;
             }
 
-            $instance_url = $time_entry['project_id']['instance_id']['url'];
+            $instance_url = $entry['project_id']['instance_id']['url'];
             if(substr($instance_url, -1) !== '/') {
                 $instance_url .= '/';
             }
 
-            $result[$id] = $instance_url.'support/#/ticket/'.$time_entry['ticket_id'];
+            $result[$id] = $instance_url.'support/#/ticket/'.$entry['ticket_id'];
         }
 
         return $result;
@@ -496,10 +515,10 @@ class TimeEntry extends SaleEntry {
     public static function isReadyForValidation($self, $user_id): array {
         $result = [];
         $self->read(['project_id', 'user_id', 'origin', 'duration']);
-        foreach($self as $id => $time_entry) {
+        foreach($self as $id => $entry) {
             if(
-                !isset($time_entry['project_id'], $time_entry['user_id'], $time_entry['origin'], $time_entry['duration'])
-                || $time_entry['duration'] <= 0
+                !isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
+                || $entry['duration'] <= 0
             ) {
                 $result[$id] = false;
             }
@@ -511,10 +530,10 @@ class TimeEntry extends SaleEntry {
     public static function isBillable($self, $user_id): array {
         $result = [];
         $self->read(['product_id', 'price_id', 'unit_price', 'is_billable']);
-        foreach($self as $id => $time_entry) {
+        foreach($self as $id => $entry) {
             if(
-                !isset($time_entry['product_id'], $time_entry['price_id'], $time_entry['unit_price'])
-                || !$time_entry['is_billable']
+                !isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
+                || !$entry['is_billable']
             ) {
                 $result[$id] = false;
             }
@@ -525,14 +544,14 @@ class TimeEntry extends SaleEntry {
 
     public static function addReceivable($self): void {
         $self->read(['id']);
-        foreach($self as $time_entry) {
+        foreach($self as $entry) {
             try {
-                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $time_entry['id']]);
+                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $entry['id']]);
             }
             catch (Exception $e) {
-                trigger_error("PHP::Failed sale\saleentry\add-receivable for time entry {$time_entry['id']}", QN_REPORT_ERROR);
+                trigger_error("PHP::Failed sale\\saleentry\\add-receivable for time entry {$entry['id']}", QN_REPORT_ERROR);
 
-                TimeEntry::id($time_entry['id'])
+                TimeEntry::id($entry['id'])
                     ->update(['status' => self::STATUS_VALIDATED]);
             }
         }

@@ -10,8 +10,7 @@
                 "partner_identity_id": 4,
                 "relationship": "customer",
                 "partner_organisation_id": null,
-                "partner_position": null,
-                "customer_external_ref": null
+                "partner_position": null
             },
             {
                 "id": 5,
@@ -20,8 +19,7 @@
                 "partner_identity_id": 5,
                 "relationship": "customer",
                 "partner_organisation_id": null,
-                "partner_position": null,
-                "customer_external_ref": null
+                "partner_position": null
             },
             {
                 "id": 6,
@@ -30,9 +28,8 @@
                 "partner_identity_id": 6,
                 "relationship": "customer",
                 "partner_organisation_id": null,
-                "partner_position": null,
-                "customer_external_ref": null
-            }            
+                "partner_position": null
+            }
         ]
     }
 ]

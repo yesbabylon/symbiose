@@ -5,7 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale;
-use \equal\orm\Model;
+use equal\orm\Model;
 use sale\price\Price;
 use sale\price\PriceList;
 
@@ -13,7 +13,7 @@ class SaleEntry extends Model {
 
     public static function getDescription() {
         return "Sale entries are used to describe sales (the action of selling a good or a service).
-            In addition, this class is meant to be used as `interface` (OO) for entities meant to describe something that can be sold.";
+            In addition, this class is meant to be used as an OOP interface for entities meant to describe something that can be sold.";
     }
 
     public static function getColumns() {
@@ -146,18 +146,18 @@ class SaleEntry extends Model {
 
         if(isset($event['product_id'])) {
             $price_lists_ids = PriceList::search([
-                [
-                    ['date_from', '<=', time()],
-                    ['date_to', '>=', time()],
-                    ['status', '=', 'published'],
-                ]
-            ])
+                    [
+                        ['date_from', '<=', time()],
+                        ['date_to', '>=', time()],
+                        ['status', '=', 'published'],
+                    ]
+                ])
                 ->ids();
 
             $result['price_id'] = Price::search([
-                ['product_id', '=', $event['product_id']],
-                ['price_list_id', 'in', $price_lists_ids]
-            ])
+                    ['product_id', '=', $event['product_id']],
+                    ['price_list_id', 'in', $price_lists_ids]
+                ])
                 ->read(['id', 'name', 'price', 'vat_rate'])
                 ->first();
 
@@ -171,8 +171,7 @@ class SaleEntry extends Model {
 
     public static function calcCode($self) {
         $result = [];
-        $self->read(['id']);
-        foreach($self as $id => $sale_entry) {
+        foreach($self->ids() as $id) {
             $result[$id] = str_pad($id, 5, '0', STR_PAD_LEFT);
         }
         return $result;
@@ -181,13 +180,13 @@ class SaleEntry extends Model {
     public static function calcName($self) {
         $result = [];
         $self->read(['code', 'description']);
-        foreach($self as $id => $sale_entry) {
-            $result[$id] = '['.$sale_entry['code'].']';
+        foreach($self as $id => $entry) {
+            $result[$id] = '['.$entry['code'].']';
             if(
-                isset($sale_entry['description'])
-                && strlen($sale_entry['description']) > 0
+                isset($entry['description'])
+                && strlen($entry['description']) > 0
             ) {
-                $result[$id] .= ' '.$sale_entry['description'];
+                $result[$id] .= ' '.$entry['description'];
             }
         }
         return $result;
@@ -196,12 +195,12 @@ class SaleEntry extends Model {
     public static function calcUnitPrice($self) {
         $result = [];
         $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $sale_entry) {
-            if(!isset($sale_entry['price_id']['price'])) {
+        foreach($self as $id => $entry) {
+            if(!isset($entry['price_id']['price'])) {
                 continue;
             }
 
-            $result[$id] = $sale_entry['price_id']['price'];
+            $result[$id] = $entry['price_id']['price'];
         }
         return $result;
     }
@@ -209,12 +208,12 @@ class SaleEntry extends Model {
     public static function calcSubscriptionId($self) {
         $result = [];
         $self->read(['object_class', 'object_id']);
-        foreach($self as $id => $sale_entry) {
-            if($sale_entry['object_class'] !== 'inventory\service\Subscription') {
+        foreach($self as $id => $entry) {
+            if($entry['object_class'] !== 'inventory\service\Subscription') {
                 continue;
             }
 
-            $result[$id] = $sale_entry['object_id'];
+            $result[$id] = $entry['object_id'];
         }
         return $result;
     }
@@ -222,12 +221,12 @@ class SaleEntry extends Model {
     public static function calcProjectId($self) {
         $result = [];
         $self->read(['object_class', 'object_id']);
-        foreach($self as $id => $sale_entry) {
-            if($sale_entry['object_class'] !== 'timetrack\Project') {
+        foreach($self as $id => $entry) {
+            if($entry['object_class'] !== 'timetrack\Project') {
                 continue;
             }
 
-            $result[$id] = $sale_entry['object_id'];
+            $result[$id] = $entry['object_id'];
         }
         return $result;
     }
@@ -236,10 +235,10 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['object_class', 'description', 'product_id' => ['name']]);
 
-        foreach($self as $id => $sale_entry) {
-            $receivable_name = $sale_entry['product_id']['name'];
-            if($sale_entry['object_class'] === 'timetrack\Project') {
-                $receivable_name .= ' ' . $sale_entry['description'];
+        foreach($self as $id => $entry) {
+            $receivable_name = $entry['product_id']['name'];
+            if($entry['object_class'] === 'timetrack\Project') {
+                $receivable_name .= ' ' . $entry['description'];
             }
 
             $result[$id] = trim($receivable_name);

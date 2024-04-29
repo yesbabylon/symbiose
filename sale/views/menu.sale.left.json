@@ -56,7 +56,7 @@
                 "id": "sale_entries",
                 "type": "parent",
                 "label": "Sale entries",
-                "icon": "label",
+                "icon": "done",
                 "description": "Sale entries parent menu.",
                 "children": [
                     {
