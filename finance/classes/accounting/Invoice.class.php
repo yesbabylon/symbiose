@@ -72,15 +72,6 @@ class Invoice extends Model {
                 'store'             => true
             ],
 
-            'is_paid' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => "Indicator of the invoice payment status.",
-                'visible'           => ['status', '=', 'invoice'],
-                'function'          => 'calcIsPaid',
-                'store'             => true
-            ],
-
             'reversed_invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\Invoice',
@@ -250,27 +241,6 @@ class Invoice extends Model {
             $result['invoice_number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
         }
 
-        return $result;
-    }
-
-    public static function calcIsPaid($self) {
-        $result = [];
-        $self->read(['status', 'price', 'funding_id' => ['paid_amount']]);
-        foreach($self as $id => $invoice) {
-            $result[$id] = false;
-            if($invoice['status'] != 'invoice') {
-                // proforma invoices cannot be marked as paid
-                continue;
-            }
-            if(round($invoice['price'], 2) == 0) {
-                // mark the invoice as paid, whatever its funding
-                $result[$id] = true;
-                continue;
-            }
-            if(isset($invoice['funding_id']['paid_amount']) && round($invoice['funding_id']['paid_amount'], 2) == round($invoice['price'], 2)) {
-                $result[$id] = true;
-            }
-        }
         return $result;
     }
 

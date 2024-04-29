@@ -54,16 +54,6 @@
                                                 "width": "100%"
                                             }
                                         ]
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "is_paid",
-                                                "width": "100%"
-                                            }
-                                        ]
                                     }
                                 ]
                             }
