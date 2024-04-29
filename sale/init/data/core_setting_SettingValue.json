@@ -464,6 +464,20 @@
             {
                 "id": 1079,
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
+            },
+            {
+                "id": 1080,
+                "name": "sale.invoice.sequence_format",
+                "setting_id": 1080,
+                "user_id": 0,
+                "value": "%2d{year}-%02d{org}-%05d{sequence}"
+            },
+            {
+                "id": 1081,
+                "name": "sale.invoice.fiscal_year",
+                "setting_id": 1081,
+                "user_id": 0,
+                "value": "2024"
             }
         ]
     }

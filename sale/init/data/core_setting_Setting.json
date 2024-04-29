@@ -599,6 +599,39 @@
                 "title": "Libellé page pdf",
                 "description":"Libellé du numéro de page pour le document pdf.",
                 "help": "Utilisé pour la version pdf de la facture."
+            },
+            {
+                "id": 1080,
+                "code": "sequence_format",
+                "title": "Invoices sequence format",
+                "package": "sale",
+                "form_control": "input",
+                "section_id": 6,
+                "description":"Format for invoices sequence (number).",
+                "help": "Format for the sequence of the invoices (according to accounting conventions).",
+                "type": "string"
+            },
+            {
+                "id": 1081,
+                "code": "fiscal_year",
+                "title": "Invoices fiscal year",
+                "package": "sale",
+                "form_control": "select",
+                "section_id": 6,
+                "description":"Fiscal year for the invoice.",
+                "help": "Fiscal year for the invoice.",
+                "type": "integer"
+            },
+            {
+                "id": 1082,
+                "code": "sequence",
+                "title": "Invoices sequence",
+                "package": "sale",
+                "form_control": "input",
+                "section_id": 6,
+                "description":"Sequence for the invoice.",
+                "help": "Sequence for the invoice.",
+                "type": "integer"
             }
         ]
     }
