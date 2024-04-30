@@ -1,0 +1,11 @@
+{
+    "name": "Invoice",
+    "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
+    "domain" : ["supplier_id" ,"<>" , 0],
+    "layout": {
+        "extends": {
+            "entity": "finance\\accounting\\Invoice",
+            "view": "list.default"
+        }
+    }
+}
