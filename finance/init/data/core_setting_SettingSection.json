@@ -1,0 +1,25 @@
+[
+	{
+        "name": "core\\setting\\SettingSection",
+        "lang": "en",
+        "data": [
+            {
+                "id": 5,
+                "code": "invoice",
+                "name": "Invoice",
+                "description": "Settings for invoice creation"
+            }
+       ]
+    },
+    {
+        "name": "core\\setting\\SettingSection",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 5,
+                "name": "Facturation",
+                "description": "Paramètres pour la création des factures"
+            }
+       ]
+    }
+]
