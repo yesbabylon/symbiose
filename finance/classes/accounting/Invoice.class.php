@@ -248,16 +248,16 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function calcPrice($om, $oids, $lang) {
+    public static function calcPrice($self) {
         $result = [];
-
-        $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.price'], $lang);
-
-        foreach($invoices as $oid => $invoice) {
+        $self->read(['invoice_lines_ids' => ['price']]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
+        foreach($self as $id => $invoice) {
             $price = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
                 return $c + $a['price'];
             }, 0.0);
-            $result[$oid] = round($price, 2);
+
+            $result[$id] = round($price, $currency_decimal_precision);
         }
         return $result;
     }
