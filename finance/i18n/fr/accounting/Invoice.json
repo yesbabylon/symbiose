@@ -37,11 +37,6 @@
             "description": "Numéro de la facture, selon la logique d'organisation.",
             "help": "Numéro de la facture, selon la logique d'organisation."
         },
-        "is_paid": {
-            "label": "Payée",
-            "description": "Indicateur pour marquer la facture comme entièrement payée.",
-            "help": ""
-        },
         "emission_date": {
             "label": "Date",
             "description": "Date de création de la facture.",

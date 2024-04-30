@@ -65,20 +65,9 @@ class Invoice extends Model {
             ],
 
             'invoice_number' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
+                'type'              => 'string',
                 'description'       => "Number of the invoice, according to organization logic.",
-                'function'          => 'calcInvoiceNumber',
-                'store'             => true
-            ],
-
-            'is_paid' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => "Indicator of the invoice payment status.",
-                'visible'           => ['status', '=', 'invoice'],
-                'function'          => 'calcIsPaid',
-                'store'             => true
+                'required'          => true
             ],
 
             'reversed_invoice_id' => [
@@ -228,7 +217,7 @@ class Invoice extends Model {
         foreach($self as $id => $invoice) {
             Invoice::ids($id)
                 ->update([
-                    'invoice_number'           => null,
+                    'invoice_number'   => null,
                     'emission_date'    => time()
                 ]);
             // generate accounting entries
@@ -253,27 +242,6 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function calcIsPaid($self) {
-        $result = [];
-        $self->read(['status', 'price', 'funding_id' => ['paid_amount']]);
-        foreach($self as $id => $invoice) {
-            $result[$id] = false;
-            if($invoice['status'] != 'invoice') {
-                // proforma invoices cannot be marked as paid
-                continue;
-            }
-            if(round($invoice['price'], 2) == 0) {
-                // mark the invoice as paid, whatever its funding
-                $result[$id] = true;
-                continue;
-            }
-            if(isset($invoice['funding_id']['paid_amount']) && round($invoice['funding_id']['paid_amount'], 2) == round($invoice['price'], 2)) {
-                $result[$id] = true;
-            }
-        }
-        return $result;
-    }
-
     public static function calcPaymentReference($self) {
         $result = [];
         $self->read(['invoice_number']);
@@ -282,37 +250,6 @@ class Invoice extends Model {
             // arbitrary value for balance (final) invoice
             $code_ref = 200;
             $result[$oid] = self::_get_payment_reference($code_ref, $invoice_number);
-        }
-        return $result;
-    }
-
-    public static function calcInvoiceNumber($self) {
-        $result = [];
-        $self->read(['status', 'organisation_id','customer_id'=> ['name']]);
-        foreach($self as $id => $invoice) {
-            // no code is generated for proforma
-            if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]'. '['.$invoice['customer_id']['name'].']'.'['.date('Y-m-d').']';
-                continue;
-            }
-
-            $result[$id] = '';
-
-            $organisation_id = $invoice['organisation_id'];
-
-            $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
-            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year', date('Y'));
-            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
-
-            if($sequence) {
-                // #todo - user ORM fetchAndAdd()
-                Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
-                $result[$id] = Setting::parse_format($format, [
-                    'year'      => $year,
-                    'org'       => $organisation_id,
-                    'sequence'  => $sequence
-                ]);
-            }
         }
         return $result;
     }

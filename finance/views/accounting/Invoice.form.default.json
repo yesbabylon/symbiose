@@ -75,11 +75,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_paid",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "reversed_invoice_id",
                                                 "width": "33%",
                                                 "visible": ["status", "=", "cancelled"]
