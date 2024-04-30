@@ -52,11 +52,6 @@ list($params, $providers) = eQual::announce([
             'type'              => 'many2one',
             'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the subscription.'
-        ],
-
-        'is_paid' => [
-            'type'              => 'boolean',
-            'description'       => "Indicator of the invoice payment status.",
         ]
     ],
     'response'      => [
@@ -99,9 +94,6 @@ if(isset($params['customer_id']) && $params['customer_id'] > 0) {
     $domain = Domain::conditionAdd($domain, ['customer_id', '=', $params['customer_id']]);
 }
 
-if(isset($params['is_paid']) && strlen($params['is_paid']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['is_paid', '=', $params['is_paid']]);
-}
 
 $params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);

@@ -28,11 +28,6 @@
             },
             {
                 "type": "field",
-                "value": "is_paid",
-                "width": "20%"
-            },
-            {
-                "type": "field",
                 "value": "total",
                 "width": "15%"
             }
