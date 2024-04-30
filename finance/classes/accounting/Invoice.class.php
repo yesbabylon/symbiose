@@ -177,13 +177,7 @@ class Invoice extends Model {
                 'description'       => "Deadline for the payment is expected, from payment terms.",
                 'function'          => 'calcDueDate',
                 'store'             => true
-            ],
-
-            'is_exported' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
-                'default'           => false
-            ],
+            ]
 
         ];
     }
@@ -346,7 +340,7 @@ class Invoice extends Model {
                 if($odata['status'] == 'invoice') {
                     if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
                         // only allow modifiable fields
-                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status','is_exported'])) ) {
+                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status'])) ) {
                             return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
                         }
                     }
