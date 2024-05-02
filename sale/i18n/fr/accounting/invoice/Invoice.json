@@ -2,7 +2,13 @@
     "name": "Facture",
     "plural": "Factures",
     "description": "",
-    "model": {},
+    "model": {
+        "customer_id": {
+            "label": "Destinataire",
+            "description": "Organisation responsable de payer la facture.",
+            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
+        }
+    },
     "view": {
         "form.default": {
             "name": "Facture",
