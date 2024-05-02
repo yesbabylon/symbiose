@@ -105,13 +105,6 @@ class Invoice extends Model {
                 'dependencies'      =>['invoice_number']
             ],
 
-            'customer_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
-                'description'       => "The counter party organization the invoice relates to.",
-                'required'          => true,
-                'dependencies'      => ['invoice_number']
-            ],
 
             'price' => [
                 'type'              => 'computed',
@@ -207,7 +200,7 @@ class Invoice extends Model {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['id','emission_date', 'invoice_number','status','customer_id']);
+        $self->read(['id','emission_date', 'invoice_number','status']);
         foreach($self as $id => $invoice) {
             Invoice::ids($id)
                 ->update([
@@ -223,19 +216,6 @@ class Invoice extends Model {
         // force computing the invoice number
         $self->read(['invoice_number']);
     }
-
-    public static function onchange($event,$values) {
-        $result = [];
-        if(isset($event['customer_id']) && isset($values['status']) && $values['status'] == 'proforma'){
-            $customer = Customer::search(['id', '=', $event['customer_id']])
-                ->read(['name'])
-                ->first();
-            $result['invoice_number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
-        }
-
-        return $result;
-    }
-
     public static function calcPaymentReference($self) {
         $result = [];
         $self->read(['invoice_number']);
@@ -253,11 +233,11 @@ class Invoice extends Model {
         $self->read(['invoice_lines_ids' => ['price']]);
         $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
         foreach($self as $id => $invoice) {
-            $price = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
+            $price = array_reduce($invoice['invoice_lines_ids'], function ($c, $a) {
                 return $c + $a['price'];
             }, 0.0);
 
-            $result[$id] = round($price, $currency_decimal_precision);
+            $result[$id] = $price ;
         }
         return $result;
     }
