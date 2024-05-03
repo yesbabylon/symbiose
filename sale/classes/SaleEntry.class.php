@@ -115,7 +115,7 @@ class SaleEntry extends Model {
             'subscription_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
-                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_object'    => 'sale\subscription\Subscription',
                 'function'          => 'calcSubscriptionId',
                 'description'       => 'Identifier of the subscription the sale entry originates from.',
                 'store'             => true

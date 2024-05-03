@@ -117,7 +117,7 @@
                                                 "value": "services_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection",
+                                                    "view": "list.product-selection",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": false

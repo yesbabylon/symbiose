@@ -11,13 +11,13 @@ use equal\orm\Model;
 
 class Product extends Model {
 
-    public static function getDescription()
-    {
+    public static function getDescription() {
         return "Products are softwares or projects that are either owned by the company or by a Customer.";
     }
-    public static function getColumns()
-    {
+
+    public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'unique'            => true,
@@ -71,11 +71,8 @@ class Product extends Model {
                 'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'product_id',
                 'description'       => 'Softwares used by product.'
-            ],
-
-
+            ]
 
         ];
     }
-
 }

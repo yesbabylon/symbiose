@@ -24,6 +24,7 @@ class Service extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Information about a service.',
             ],
 
@@ -43,7 +44,7 @@ class Service extends Model {
 
             'is_auto_renew' => [
                 'type'              => 'boolean',
-                'description'       => 'The service is auto renew .',
+                'description'       => 'The service is auto renew.',
                 'visible'           => ['has_subscription', '=', true],
                 'default'           => false
             ],
@@ -60,18 +61,18 @@ class Service extends Model {
             'is_internal' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
-                'description'       => 'The service is internal.',
+                'description'       => 'The product of the service is internal.',
                 'visible'           => ['product_id', '<>', null],
                 'function'          => 'calcIsInternal',
                 'store'             => true,
                 'instant'           => true
             ],
 
-            'customer_id'=> [
+            'customer_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'Customer of the service.',
+                'description'       => 'The customer of the service product.',
                 'function'          => 'calcCustomerId',
                 'visible'           => ['is_internal', '=', false],
                 'store'             => true,
@@ -88,7 +89,7 @@ class Service extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\ServiceProvider',
                 'description'       => 'The service provider to which the service belongs.',
-                'visible'           => ['has_external_provider','=', true]
+                'visible'           => ['has_external_provider', '=', true]
             ],
 
             'details_ids' => [

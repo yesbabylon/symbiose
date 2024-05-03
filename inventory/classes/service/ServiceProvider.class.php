@@ -14,10 +14,12 @@ class ServiceProvider extends Supplier {
     public static function getColumns()
     {
         return [
+
             'login_url'   => [
                 'type'              => 'string',
                 'description'       => 'Url for signing in.'
             ],
+
             'service_provider_category_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\ServiceProviderCategory',
