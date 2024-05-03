@@ -6,20 +6,29 @@
             {
                 "sections": [
                     {
-                        "label": "Infos Product",
-                        "id": "section.product",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "75%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "25%"
-                                            },
+                                                "width": "33%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Internal",
@@ -43,34 +52,18 @@
                                                 }
                                             }
                                         ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Description",
-                                                "value": "description",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "usage": "text/plain"
-                                                }
-                                            }
-                                        ]
                                     }
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "sections": [
                     {
-                        "label": "Servers",
-                        "id": "section.product.servers",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "id": "section.description",
+                        "label": "Description",
                         "rows": [
                             {
                                 "columns": [
@@ -80,16 +73,9 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "servers_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false
-                                                        }
-                                                    }
-                                                }
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -98,8 +84,8 @@
                         ]
                     },
                     {
+                        "id": "section.services",
                         "label": "Services",
-                        "id": "section.product.services",
                         "visible": [
                             "state",
                             "<>",
@@ -132,8 +118,42 @@
                         ]
                     },
                     {
+                        "id": "section.servers",
+                        "label": "Servers",
+                        "visible": [
+                            "state",
+                            "<>",
+                            "draft"
+                        ],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "servers_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "label": "Softwares",
-                        "id": "section.product.softwares",
+                        "id": "section.softwares",
                         "visible": [
                             "state",
                             "<>",

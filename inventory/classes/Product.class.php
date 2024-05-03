@@ -26,6 +26,7 @@ class Product extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Short presentation of the product.'
             ],
 

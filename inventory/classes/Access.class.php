@@ -25,6 +25,7 @@ class Access extends Model {
 
     public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => 'Name of the access.',
@@ -103,11 +104,10 @@ class Access extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
                 'description'       => 'Service to which the access belongs.'
-            ],
+            ]
 
         ];
     }
-
 
     public static function calUrl($self) {
         $result = [];
