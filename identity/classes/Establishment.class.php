@@ -127,6 +127,19 @@ class Establishment extends Model {
         ];
     }
 
+    public function onchange($event, $values): array {
+        $result = [];
+        if(
+            isset($event['name'])
+            && isset($values['legal_name'])
+            && $values['legal_name'] === ''
+        ) {
+            $result['legal_name'] = $event['name'];
+        }
+
+        return $result;
+    }
+
     public static function getConstraints() {
         return [
             'bank_account_iban' =>  [

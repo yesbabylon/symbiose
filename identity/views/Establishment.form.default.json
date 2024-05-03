@@ -18,10 +18,15 @@
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "25%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "legal_name",
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
