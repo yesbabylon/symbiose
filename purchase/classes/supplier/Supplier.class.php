@@ -42,7 +42,8 @@ class Supplier extends Partner {
                 'foreign_object'    => 'identity\IdentityType',
                 'default'           => 3,
                 'dependencies'      => ['type', 'name'],
-                'description'       => 'Type of identity, default Company.'
+                'description'       => 'Type of identity.',
+                'help'              => 'Default value is Company.'
             ],
 
             /**
