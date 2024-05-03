@@ -1,5 +1,13 @@
 {
     "name": "Talent Lead",
-    "depends_on": ["core","identity","sale"],
+    "description": "Talentlead package.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": [
+        "core",
+        "identity",
+        "sale"
+    ],
     "apps": ["talentlead"]
 }

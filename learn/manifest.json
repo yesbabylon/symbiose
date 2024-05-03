@@ -1,10 +1,10 @@
 {
     "name": "learn",
+    "description": "Learn package.",
     "version": "1.0",
-    "author": "Yesbabylon",
-    "depends_on": [
-        "core"
-    ],
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": ["core"],
     "lang": ["en", "fr"],
     "apps": ["learn", "learning", "qursus"]
 }

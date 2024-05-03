@@ -1,8 +1,10 @@
 {
     "name": "finance",
-    "depends_on": [
-        "core"
-    ],
+    "description": "Manage invoices, vat rules and accounting.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": ["core"],
     "apps":[
         {
             "id": "finance",

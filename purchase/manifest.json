@@ -1,7 +1,9 @@
 {
     "name": "purchase",
+    "description": "Manage suppliers and their invoices.",
     "version": "1.0",
-    "author": "Yesbabylon",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
     "depends_on": [
         "core",
         "finance"

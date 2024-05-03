@@ -1,11 +1,11 @@
 {
     "name": "inventory",
+    "description": "Manage your IT inventory, including products, services, software, and servers, while billing customers subscription-based.",
     "version": "1.0",
-    "author": "Yesbabylon",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
     "depends_on": [
         "core",
-        "finance",
-        "identity",
         "sale",
         "purchase"
     ],
