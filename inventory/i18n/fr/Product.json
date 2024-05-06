@@ -29,16 +29,16 @@
             "name": "Produit",
             "description": "Le vue des produits",
             "layout": {
-                "section.product": {
-                    "label": "Infos Produit"
+                "section.description": {
+                    "label": "Description"
                 },
-                "section.product.servers": {
+                "section.servers": {
                     "label": "Serveurs"
                 },
-                "section.product.services": {
+                "section.services": {
                     "label": "Services"
                 },
-                "section.product.softwares": {
+                "section.softwares": {
                     "label": "Logiciels"
                 }
             }

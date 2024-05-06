@@ -118,20 +118,15 @@
                                         "width": "66%",
                                         "items": [
                                             {
-                                                "type": "label",
-                                                "width": "33%"
-                                            },
-                                            {
                                                 "type": "field",
-                                                "value": "service_id",
-                                                "label": "Service",
-                                                "width": "33%"
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "40%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_billable",
-                                                "width": "33%",
-                                                "readonly": true
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -146,95 +141,13 @@
                                                 "type": "field",
                                                 "value": "license_key",
                                                 "width": "75%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "25%"
                                             }
                                         ]
                                     },
-                                    {
-                                        "width": "66%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_external_provider",
-                                                "width": "33%",
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_provider_id",
-                                                "width": "33%",
-                                                "readonly": true
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "33%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "66%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_internal",
-                                                "width": "33%",
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "width": "33%",
-                                                "readonly": true
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "label",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
                                     {
                                         "width": "66%",
                                         "items": [
@@ -243,16 +156,7 @@
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "66%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
@@ -261,7 +165,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "price",
+                                                "value": "unit_price",
                                                 "width": "15%"
                                             }
                                         ]

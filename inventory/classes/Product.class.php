@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2021
+    Some Rights Reserved, Cedric Francoys, 2010-2024
     Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -11,13 +11,13 @@ use equal\orm\Model;
 
 class Product extends Model {
 
-    public static function getDescription()
-    {
-        return "Products are softwares or projects that are either owned by the company or by a Customer.";
+    public static function getDescription() {
+        return 'Inventory products are composed of services, softwares, servers and instances. They are either owned by a company or by a customer.';
     }
-    public static function getColumns()
-    {
+
+    public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'unique'            => true,
@@ -26,13 +26,14 @@ class Product extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Short presentation of the product.'
             ],
 
-            'is_internal' =>[
+            'is_internal' => [
                 'type'              => 'boolean',
                 'description'       => 'The product is internal.',
-                'help'              => "Internal products are used by the company. Information relating to external products are kept so that the company is work on those.",
+                'help'              => 'Internal products are used by own organisation. Information relating to external products are kept so that the company can work on those.',
                 'default'           => false
             ],
 
@@ -40,7 +41,7 @@ class Product extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'description'       => 'Owner of the product.',
-                'visible'           => ['is_internal','=', false]
+                'visible'           => ['is_internal', '=', false]
             ],
 
             'servers_ids' => [
@@ -71,11 +72,8 @@ class Product extends Model {
                 'foreign_object'    => 'inventory\server\Software',
                 'foreign_field'     => 'product_id',
                 'description'       => 'Softwares used by product.'
-            ],
-
-
+            ]
 
         ];
     }
-
 }

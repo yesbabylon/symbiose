@@ -1,0 +1,105 @@
+
+{
+    "name": "Abonnement",
+    "plural": "Abonnements",
+    "description": "Vue par défaut pour la liste des abonnements.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'abonnement.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'abonnement.",
+            "help": ""
+        },
+        "date_from": {
+            "label": "Du",
+            "description": "Date de début.",
+            "help": ""
+        },
+        "date_to": {
+            "label": "Au",
+            "description": "Date de fin.",
+            "help": ""
+        },
+        "duration": {
+            "label": "Durée",
+            "description": "Type de durée.",
+            "help": ""
+        },
+        "is_expired": {
+            "label": "Est expiré",
+            "description": "L'abonnement est-il expiré.",
+            "help": ""
+        },
+        "has_upcoming_expiry": {
+            "label": "Prochainement expiré",
+            "description": "L'abonnement va-t-il arriver à expiriration.",
+            "help": ""
+        },
+        "ref_order": {
+            "label": "Référence de commande",
+            "description": "Information à propos de la commande.",
+            "help": ""
+        },
+        "license_key": {
+            "label": "Clé de license",
+            "description": "Clé de license pour l'activation de l'abonnement.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client à qui est destiné cet abonnement.",
+            "help": ""
+        },
+        "is_billable": {
+            "label": "Est facturable",
+            "description": "L'abonnement peut-il être facturé au client.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit (Catalogue)",
+            "description": "Le produit du catalogue lié à l'abonnement.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Le prix du produit lié à l'abonnement.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Le montant du prix d'une période de l'abonnement.",
+            "help": ""
+        },
+        "subscription_entries_ids": {
+            "label": "Entrées",
+            "description": "Les entrées qui détails les périodes d'abonnement.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Abonnement",
+            "description": "",
+            "layout": {
+                "section.details": {
+                    "label": "Details"
+                },
+                "section.entries":{
+                    "label": "Entrées"
+                },
+                "section.description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Abonnements",
+            "description": "Liste des abonnements.",
+            "layout": {}
+        }
+    }
+}

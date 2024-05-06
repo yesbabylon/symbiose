@@ -1,0 +1,153 @@
+{
+    "name": "Service",
+    "description": "Creation form for Service.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "60%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "column.product",
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_external_provider",
+                                                "label": "Has external provider",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "label": "Provider",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "column.product-details",
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "is_internal",
+                                                "label": "Is internal",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "readonly": true,
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_subscription",
+                                                "label": "Subscription",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_auto_renew",
+                                                "label": "Auto renew",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Billable",
+                                                "value": "is_billable",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
