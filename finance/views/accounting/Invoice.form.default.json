@@ -43,6 +43,7 @@
                                         "width": "50%",
                                         "items": [
                                             {
+                                                "id": "item.invoice_number",
                                                 "type": "field",
                                                 "value": "invoice_number",
                                                 "width": "50%",
@@ -50,12 +51,6 @@
                                                     "heading": true,
                                                     "readonly": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -130,6 +125,7 @@
                                         "width": "100%",
                                         "items": [
                                             {
+                                                "id": "sections.invoice.lines.ids",
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
                                                 "width": "100%",

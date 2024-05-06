@@ -14,6 +14,12 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "status",
                                                 "width": "100%"
                                             }

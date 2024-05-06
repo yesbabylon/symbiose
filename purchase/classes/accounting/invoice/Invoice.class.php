@@ -34,6 +34,13 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
                 'dependencies'      => ['total', 'price']
+            ],
+
+            'supplier_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'purchase\supplier\Supplier',
+                'description'       => "The supplier the invoice relates to.",
+                'required'          => true,
             ]
         ];
     }

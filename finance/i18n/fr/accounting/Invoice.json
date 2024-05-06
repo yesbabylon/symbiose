@@ -42,11 +42,6 @@
             "description": "Date de création de la facture.",
             "help": ""
         },
-        "customer_id": {
-            "label": "Destinataire",
-            "description": "Organisation responsable de payer la facture.",
-            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
-        },
         "organisation_id": {
             "label": "Organisation émettrice",
             "description": "Organisation à l'origine de la facture.",

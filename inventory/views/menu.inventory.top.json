@@ -72,7 +72,7 @@
                 "label": "Invoices",
                 "description": "",
                 "context": {
-                    "entity": "finance\\accounting\\Invoice",
+                    "entity": "sale\\accounting\\invoice\\Invoice",
                     "view": "list.default",
                     "order": "id",
                     "sort": "asc"

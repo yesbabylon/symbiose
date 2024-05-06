@@ -16,7 +16,7 @@ list($params, $providers) = eQual::announce([
         'entity' =>  [
             'description'       => 'name',
             'type'              => 'string',
-            'default'           => 'finance\accounting\Invoice'
+            'default'           => 'sale\accounting\invoice\Invoice'
         ],
 
         'price_min' => [
@@ -46,8 +46,13 @@ list($params, $providers) = eQual::announce([
             'description'       => 'Version of the invoice.',
             'selection'         => ['all','proforma','invoice','cancelled'],
             'default'           => 'all'
-        ]
+        ],
 
+        'supplier_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'purchase\supplier\Supplier',
+            'description'       => "The supplier the invoice relates to."
+        ]
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -85,6 +90,9 @@ if(isset($params['status']) && strlen($params['status']) > 0 && $params['status'
     $domain = Domain::conditionAdd($domain, ['status', '=', $params['status']]);
 }
 
+if(isset($params['supplier_id']) && $params['supplier_id'] > 0) {
+    $domain = Domain::conditionAdd($domain, ['supplier_id', '=', $params['supplier_id']]);
+}
 
 $params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);

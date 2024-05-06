@@ -6,6 +6,7 @@
 */
 namespace sale\accounting\invoice;
 use core\setting\Setting;
+use sale\customer\Customer;
 
 class Invoice extends \finance\accounting\Invoice {
 
@@ -53,8 +54,28 @@ class Invoice extends \finance\accounting\Invoice {
                 'description'       => 'Groups of lines of the invoice.',
                 'ondetach'          => 'delete',
                 'dependencies'      => ['total', 'price']
-            ]
+            ],
+            
+            'customer_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\customer\Customer',
+                'description'       => "The counter party organization the invoice relates to.",
+                'required'          => true,
+                'dependencies'      => ['invoice_number']
+            ],
         ];
+    }
+
+    public static function onchange($event,$values) {
+        $result = [];
+        if(isset($event['customer_id']) && isset($values['status']) && $values['status'] == 'proforma'){
+            $customer = Customer::search(['id', '=', $event['customer_id']])
+                ->read(['name'])
+                ->first();
+            $result['invoice_number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
+        }
+
+        return $result;
     }
 
     public static function calcInvoiceNumber($self) {
