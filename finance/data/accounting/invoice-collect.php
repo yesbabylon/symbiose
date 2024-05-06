@@ -46,18 +46,8 @@ list($params, $providers) = eQual::announce([
             'description'       => 'Version of the invoice.',
             'selection'         => ['all','proforma','invoice','cancelled'],
             'default'           => 'all'
-        ],
-
-        'customer_id'=> [
-            'type'              => 'many2one',
-            'foreign_object'    => 'sale\customer\Customer',
-            'description'       => 'Customer of the subscription.'
-        ],
-
-        'is_paid' => [
-            'type'              => 'boolean',
-            'description'       => "Indicator of the invoice payment status.",
         ]
+
     ],
     'response'      => [
         'content-type'  => 'application/json',
@@ -95,13 +85,6 @@ if(isset($params['status']) && strlen($params['status']) > 0 && $params['status'
     $domain = Domain::conditionAdd($domain, ['status', '=', $params['status']]);
 }
 
-if(isset($params['customer_id']) && $params['customer_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['customer_id', '=', $params['customer_id']]);
-}
-
-if(isset($params['is_paid']) && strlen($params['is_paid']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['is_paid', '=', $params['is_paid']]);
-}
 
 $params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);

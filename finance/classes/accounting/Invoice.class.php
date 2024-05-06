@@ -65,20 +65,9 @@ class Invoice extends Model {
             ],
 
             'invoice_number' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
+                'type'              => 'string',
                 'description'       => "Number of the invoice, according to organization logic.",
-                'function'          => 'calcInvoiceNumber',
-                'store'             => true
-            ],
-
-            'is_paid' => [
-                'type'              => 'computed',
-                'result_type'       => 'boolean',
-                'description'       => "Indicator of the invoice payment status.",
-                'visible'           => ['status', '=', 'invoice'],
-                'function'          => 'calcIsPaid',
-                'store'             => true
+                'required'          => true
             ],
 
             'reversed_invoice_id' => [
@@ -116,13 +105,6 @@ class Invoice extends Model {
                 'dependencies'      =>['invoice_number']
             ],
 
-            'customer_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\Customer',
-                'description'       => "The counter party organization the invoice relates to.",
-                'required'          => true,
-                'dependencies'      => ['invoice_number']
-            ],
 
             'price' => [
                 'type'              => 'computed',
@@ -188,13 +170,7 @@ class Invoice extends Model {
                 'description'       => "Deadline for the payment is expected, from payment terms.",
                 'function'          => 'calcDueDate',
                 'store'             => true
-            ],
-
-            'is_exported' => [
-                'type'              => 'boolean',
-                'description'       => 'Mark the invoice as exported (part of an export to elsewhere).',
-                'default'           => false
-            ],
+            ]
 
         ];
     }
@@ -224,11 +200,11 @@ class Invoice extends Model {
     }
 
     public static function onbeforeInvoice($self) {
-        $self->read(['id','emission_date', 'invoice_number','status','customer_id']);
+        $self->read(['id','emission_date', 'invoice_number','status']);
         foreach($self as $id => $invoice) {
             Invoice::ids($id)
                 ->update([
-                    'invoice_number'           => null,
+                    'invoice_number'   => null,
                     'emission_date'    => time()
                 ]);
             // generate accounting entries
@@ -240,40 +216,6 @@ class Invoice extends Model {
         // force computing the invoice number
         $self->read(['invoice_number']);
     }
-
-    public static function onchange($event,$values) {
-        $result = [];
-        if(isset($event['customer_id']) && isset($values['status']) && $values['status'] == 'proforma'){
-            $customer = Customer::search(['id', '=', $event['customer_id']])
-                ->read(['name'])
-                ->first();
-            $result['invoice_number']='[proforma]'. '['.$customer['name'].']'.'['.date('Y-m-d').']';
-        }
-
-        return $result;
-    }
-
-    public static function calcIsPaid($self) {
-        $result = [];
-        $self->read(['status', 'price', 'funding_id' => ['paid_amount']]);
-        foreach($self as $id => $invoice) {
-            $result[$id] = false;
-            if($invoice['status'] != 'invoice') {
-                // proforma invoices cannot be marked as paid
-                continue;
-            }
-            if(round($invoice['price'], 2) == 0) {
-                // mark the invoice as paid, whatever its funding
-                $result[$id] = true;
-                continue;
-            }
-            if(isset($invoice['funding_id']['paid_amount']) && round($invoice['funding_id']['paid_amount'], 2) == round($invoice['price'], 2)) {
-                $result[$id] = true;
-            }
-        }
-        return $result;
-    }
-
     public static function calcPaymentReference($self) {
         $result = [];
         $self->read(['invoice_number']);
@@ -286,47 +228,16 @@ class Invoice extends Model {
         return $result;
     }
 
-    public static function calcInvoiceNumber($self) {
+    public static function calcPrice($self) {
         $result = [];
-        $self->read(['status', 'organisation_id','customer_id'=> ['name']]);
+        $self->read(['invoice_lines_ids' => ['price']]);
+        $currency_decimal_precision = Setting::get_value('core', 'locale', 'currency.decimal_precision');
         foreach($self as $id => $invoice) {
-            // no code is generated for proforma
-            if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]'. '['.$invoice['customer_id']['name'].']'.'['.date('Y-m-d').']';
-                continue;
-            }
-
-            $result[$id] = '';
-
-            $organisation_id = $invoice['organisation_id'];
-
-            $format = Setting::get_value('finance', 'invoice', 'invoice.sequence_format', '%05d{sequence}');
-            $year = Setting::get_value('finance', 'invoice', 'invoice.fiscal_year', date('Y'));
-            $sequence = Setting::get_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id,1);
-
-            if($sequence) {
-                // #todo - user ORM fetchAndAdd()
-                Setting::set_value('sale', 'invoice', 'invoice.sequence.'.$organisation_id, $sequence + 1);
-                $result[$id] = Setting::parse_format($format, [
-                    'year'      => $year,
-                    'org'       => $organisation_id,
-                    'sequence'  => $sequence
-                ]);
-            }
-        }
-        return $result;
-    }
-
-    public static function calcPrice($om, $oids, $lang) {
-        $result = [];
-
-        $invoices = $om->read(get_called_class(), $oids, ['invoice_lines_ids.price'], $lang);
-
-        foreach($invoices as $oid => $invoice) {
-            $price = array_reduce($invoice['invoice_lines_ids.price'], function ($c, $a) {
+            $price = array_reduce($invoice['invoice_lines_ids'], function ($c, $a) {
                 return $c + $a['price'];
             }, 0.0);
-            $result[$oid] = round($price, 2);
+
+            $result[$id] = $price ;
         }
         return $result;
     }
@@ -409,7 +320,7 @@ class Invoice extends Model {
                 if($odata['status'] == 'invoice') {
                     if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
                         // only allow modifiable fields
-                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status','is_exported'])) ) {
+                        if( count(array_diff(array_keys($values), ['customer_ref','payment_status'])) ) {
                             return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
                         }
                     }

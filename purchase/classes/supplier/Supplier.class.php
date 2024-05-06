@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace purchase\supplier;
@@ -27,11 +27,28 @@ class Supplier extends Partner {
 
         return [
 
+            /**
+             * Override Partner columns
+             */
+
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'supplier',
-                'description'       => 'Force relationship to Supplier'
+                'description'       => 'Force relationship to Supplier.'
             ],
+
+            'type_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\IdentityType',
+                'default'           => 3,
+                'dependencies'      => ['type', 'name'],
+                'description'       => 'Type of identity.',
+                'help'              => 'Default value is Company.'
+            ],
+
+            /**
+             * Specific Supplier columns
+             */
 
             'invoices_ids' => [
                 'type'              => 'one2many',
@@ -47,9 +64,9 @@ class Supplier extends Partner {
         parent::onafterupdate($self, $values);
 
         $self->read(['partner_identity_id' => ['id', 'supplier_id']]);
-        foreach($self as $id => $customer) {
-            if(is_null($customer['partner_identity_id']['supplier_id'])) {
-                Identity::id($customer['partner_identity_id']['id'])->update(['supplier_id' => $id]);
+        foreach($self as $id => $supplier) {
+            if(is_null($supplier['partner_identity_id']['supplier_id'])) {
+                Identity::id($supplier['partner_identity_id']['id'])->update(['supplier_id' => $id]);
             }
         }
     }

@@ -88,6 +88,28 @@
                 ]
             },
             {
+                "id": "subscriptions",
+                "type": "parent",
+                "label": "Subscriptions",
+                "icon": "subscriptions",
+                "description": "Subscriptions parent menu.",
+                "children": [
+                    {
+                        "id": "subscriptions.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "Display all subscriptions.",
+                        "context": {
+                            "entity": "sale\\subscription\\Subscription",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "receivables",
                 "type": "parent",
                 "label": "Receivables",

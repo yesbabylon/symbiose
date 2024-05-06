@@ -37,20 +37,10 @@
             "description": "Numéro de la facture, selon la logique d'organisation.",
             "help": "Numéro de la facture, selon la logique d'organisation."
         },
-        "is_paid": {
-            "label": "Payée",
-            "description": "Indicateur pour marquer la facture comme entièrement payée.",
-            "help": ""
-        },
         "emission_date": {
             "label": "Date",
             "description": "Date de création de la facture.",
             "help": ""
-        },
-        "customer_id": {
-            "label": "Destinataire",
-            "description": "Organisation responsable de payer la facture.",
-            "help": "Client ou organisation responsable de payer les biens et services liés à la vente."
         },
         "organisation_id": {
             "label": "Organisation émettrice",

@@ -4,6 +4,7 @@
     "controller": "inventory_service_subscription-collect",
     "order": "date_from,date_to,name",
     "sort": "asc",
+    "domain": ["service_id", "<>", null],
     "operations": {
         "total": {
             "price": {
@@ -14,92 +15,48 @@
             }
         }
     },
+    "header": {
+        "actions": {
+            "ACTION.CREATE": [
+                {
+                    "view": "form.create",
+                    "description": "Overload form to use for subscription creation."
+                }
+            ]
+        }
+    },
     "layout": {
-        "items": [
-            {
-                "type": "field",
-                "value": "id",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "name",
-                "width": "20%",
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "date_to",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "is_expired",
-                "label": "Expired",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "has_upcoming_expiry",
-                "label": "Upcoming expiry",
-                "width": "20%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "service_id",
-                "label": "Service",
-                "width": "30%"
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "has_external_provider",
-                "label": "Has external provider",
-                "width": "20%",
-                "readonly": true,
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "service_provider_id",
-                "label": "Provider",
-                "width": "20%",
-                "readonly": true,
-                "sortable": true
-            },
-            {
-                "type": "field",
-                "value": "is_billable",
-                "label": "Billable",
-                "width": "15%",
-                "sortable": true,
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "is_internal",
-                "label": "Internal",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "price",
-                "width": "10%",
-                "sortable": true
+        "extends": {
+            "entity": "sale\\subscription\\Subscription",
+            "view": "list.default"
+        },
+        "update": {
+            "item.customer": {
+                "before": [
+                    {
+                        "type": "field",
+                        "value": "service_id",
+                        "label": "Service",
+                        "width": "30%"
+                    },
+                    {
+                        "type": "field",
+                        "value": "has_external_provider",
+                        "label": "Has external provider",
+                        "width": "20%",
+                        "readonly": true,
+                        "sortable": true
+                    },
+                    {
+                        "type": "field",
+                        "value": "service_provider_id",
+                        "label": "Provider",
+                        "width": "20%",
+                        "readonly": true,
+                        "sortable": true
+                    }
+                ]
             }
-        ]
+        }
     }
 }

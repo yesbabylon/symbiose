@@ -29,21 +29,30 @@
             "name": "Service",
             "description": "",
             "layout": {
-                "section.service-info": {
-                    "label": "Infos Service"
+                "section.information": {
+                    "label": "Information"
                 },
-                "section.service_access":{
+                "section.accesses":{
                     "label": "Accès"
                 },
-                "section.service_details":{
+                "section.details":{
                     "label": "Détails"
+                },
+                "section.softwares":{
+                    "label": "Logiciels"
+                },
+                "section.subscriptions":{
+                    "label": "Abonnements"
+                },
+                "section.description":{
+                    "label": "Description"
                 }
-        }
+            }
         },
         "list.default": {
             "name": "Liste des Services",
             "description": "Liste des Services.",
             "layout": {}
-            }
+        }
     }
 }

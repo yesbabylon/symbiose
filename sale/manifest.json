@@ -1,7 +1,9 @@
 {
     "name": "sale",
+    "description": "Manage products and prices to invoice customers.",
     "version": "1.0",
-    "author": "Yesbabylon",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
     "depends_on": [
         "core",
         "identity",

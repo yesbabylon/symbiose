@@ -73,7 +73,8 @@ class Partner extends Model {
                 'foreign_object'    => 'identity\IdentityType',
                 'default'           => 1,
                 'dependencies'      => ['type', 'name'],
-                'description'       => 'Type of identity.'
+                'description'       => 'Type of identity.',
+                'help'              => 'Default value is Individual.'
             ],
 
             'type' => [
@@ -296,4 +297,7 @@ class Partner extends Model {
         }
     }
 
+    public static function getConstraints() {
+        return Identity::getConstraints();
+    }
 }

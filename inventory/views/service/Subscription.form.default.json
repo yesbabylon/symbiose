@@ -1,22 +1,16 @@
 {
     "name": "Subscription",
-    "description": "Subscription of a service.",
+    "description": "This form holds the fields for modifying a Subscription.",
     "actions": [
         {
             "id": "action.shift-subscription",
             "label": "Shift Period",
-            "controller": "inventory_service_subscription_shift-period",
-            "visible": [
-                ["state", "<>", "draft"]
-            ]
+            "controller": "sale_subscription_shift-period"
         },
         {
             "id": "action.add-subscription-entry",
             "label": "Create Entry",
-            "controller": "inventory_service_subscription_add-subscriptionentry",
-            "visible": [
-                ["state", "<>", "draft"]
-            ]
+            "controller": "sale_subscription_add-subscriptionentry"
         }
     ],
     "layout": {
@@ -24,43 +18,24 @@
             {
                 "sections": [
                     {
-                        "label": "Subscription Infos",
-                        "id": "section.subscription-info",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "price",
-                                                "width": "15%",
+                                                "width": "75%",
                                                 "widget": {
                                                     "heading": true
                                                 }
                                             }
                                         ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
+                                    },
                                     {
-                                        "width": "40%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -77,135 +52,245 @@
                                                 "value": "date_to",
                                                 "width": "33%",
                                                 "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Is expired",
-                                                "value": "is_expired",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Upcoming expiry",
-                                                "value": "has_upcoming_expiry",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "ref_order",
-                                                "label": "Reference",
-                                                "width": "80%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "license_key",
-                                                "label": "License Key",
-                                                "width": "80%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "row.expirations",
+                                "columns": [
                                     {
-                                        "width": "5%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": []
                                     },
                                     {
                                         "width": "50%",
-                                        "align": "left",
                                         "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_upcoming_expiry",
+                                                "width": "33%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_expired",
+                                                "width": "33%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.details",
+                        "label": "Details",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "ref_order",
+                                                "label": "Reference",
+                                                "width": "75%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "service_id",
                                                 "label": "Service",
-                                                "width": "50%"
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_billable",
+                                                "width": "33%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "license_key",
+                                                "width": "75%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_external_provider",
+                                                "width": "33%",
+                                                "readonly": true
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_provider_id",
+                                                "width": "33%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_internal",
+                                                "width": "33%",
+                                                "readonly": true
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
+                                                "width": "33%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
-                                                "type": "field",
-                                                "value": "is_billable",
-                                                "label": "is Billable",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
+                                                "type": "label",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
-                                                "type": "field",
-                                                "value": "is_internal",
-                                                "label": "Is Internal",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_external_provider",
-                                                "label": "Has external provider",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "service_provider_id",
-                                                "label": "Provider",
-                                                "readonly": true,
-                                                "width": "50%"
-                                            },
+                                                "type": "label",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "readonly": true,
-                                                "width": "50%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "has_receivable",
-                                                "label": "Has Receivable",
-                                                "readonly": true,
-                                                "visible": [
-                                                    "state",
-                                                    "<>",
-                                                    "draft"
-                                                ],
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "receivable_id",
-                                                "label": "Receivable",
-                                                "visible": [
-                                                    "state",
-                                                    "<>",
-                                                    "draft"
-                                                ],
-                                                "readonly": true,
-                                                "width": "50%"
+                                                "value": "price",
+                                                "width": "15%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.entries",
+                        "label": "entries",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
-                                        "width": "80%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Description",
-                                                "value": "description",
-                                                "width": "50%",
+                                                "value": "subscription_entries_ids",
+                                                "width": "100%",
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "view": "list.selection",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
@@ -215,23 +300,18 @@
                         ]
                     },
                     {
-                        "label": "Entries",
-                        "id": "section.subscription-entries",
-                        "visible": ["state", "<>", "draft"],
+                        "id": "section.description",
+                        "label": "description",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "subscription_entries_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.selection"
-                                                }
+                                                "value": "description",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

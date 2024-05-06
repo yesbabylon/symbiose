@@ -14,12 +14,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "status",
                                                 "width": "100%"
                                             }
@@ -51,16 +45,6 @@
                                             {
                                                 "type": "field",
                                                 "value": "price_max",
-                                                "width": "100%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "25%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "is_paid",
                                                 "width": "100%"
                                             }
                                         ]

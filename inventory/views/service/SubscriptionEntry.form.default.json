@@ -88,6 +88,7 @@
                                                 "type": "field",
                                                 "value": "has_external_provider",
                                                 "label": "Has external provider",
+                                                "readonly": true,
                                                 "width": "50%"
                                             },
                                             {

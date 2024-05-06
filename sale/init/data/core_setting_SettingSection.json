@@ -1,0 +1,25 @@
+[
+	{
+        "name": "core\\setting\\SettingSection",
+        "lang": "en",
+        "data": [
+            {
+                "id": 6,
+                "code": "sale",
+                "name": "Sale",
+                "description": "Settings for sale creation."
+            }
+       ]
+    },
+    {
+        "name": "core\\setting\\SettingSection",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 6,
+                "name": "Ventes",
+                "description": "Paramètres pour la création des ventes."
+            }
+       ]
+    }
+]
