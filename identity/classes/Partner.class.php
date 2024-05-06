@@ -105,10 +105,6 @@ class Partner extends Model {
                 'dependencies'      => ['name']
             ],
 
-            /*
-                Contact details.
-                For individuals, these are the contact details of the person herself.
-            */
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
