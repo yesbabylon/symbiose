@@ -1,0 +1,28 @@
+{
+    "name": "symbiose",
+    "description": "Initialise all Symbiose packages.",
+    "version": "2.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": [
+        "core",
+        "identity",
+        "finance",
+        "documents",
+        "calendar",
+        "stats",
+        "support",
+        "learn",
+        "hr",
+        "communication",
+        "purchase",
+        "realestate",
+        "sale",
+        "inventory",
+        "timetrack",
+        "talentlead"
+    ],
+    "requires": {
+        "twig/twig": "^3.0"
+    }
+}

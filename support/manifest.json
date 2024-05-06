@@ -1,5 +1,13 @@
 {
     "name": "support",
-    "depends_on": ["core"],
-    "apps": ["support"]
+    "description": "Manage Symbiose user queries and needs.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": [
+        "core"
+    ],
+    "apps": [
+        "support"
+    ]
 }

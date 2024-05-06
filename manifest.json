@@ -6,6 +6,20 @@
     "license": "LGPL-3",
     "depends_on": ["core"],
     "packages": [
-        "communication", "documents", "finance", "hr", "identity", "inventory", "realestate", "sale", "stats", "support"
+        "calendar",
+        "communication",
+        "documents",
+        "finance",
+        "hr",
+        "identity",
+        "inventory",
+        "learn",
+        "purchase",
+        "realestate",
+        "sale",
+        "stats",
+        "support",
+        "talentlead",
+        "timetrack"
     ]
 }

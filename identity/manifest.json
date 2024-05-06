@@ -1,10 +1,10 @@
 {
     "name": "identity",
+    "description": "Manage all identities, individuals, companies and other.",
     "version": "1.0",
-    "author": "Yesbabylon",
-    "depends_on": [
-        "core"
-    ],
+    "authors": ["Yesbabylon"],
+    "depends_on": ["core"],
+    "license": "LGPL-3",
     "apps": [
         {
             "id": "identity",

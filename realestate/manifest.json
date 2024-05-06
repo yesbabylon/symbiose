@@ -1,6 +1,11 @@
 {
     "name": "realestate",
+    "description": "Realestate package.",
+    "version": "1.0",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
     "depends_on": [
+        "core",
         "identity"
     ]
 }

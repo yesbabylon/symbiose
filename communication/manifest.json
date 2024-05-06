@@ -1,8 +1,13 @@
 {
     "name": "communication",
+    "description": "Communication package.",
     "version": "1.0",
-    "author": "Yesbabylon",
-    "depends_on": ["core", "documents"],
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
+    "depends_on": [
+        "core",
+        "documents"
+    ],
     "apps": [
         {
             "id": "communication",

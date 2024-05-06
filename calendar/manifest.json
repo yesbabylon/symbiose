@@ -1,7 +1,9 @@
 {
     "name": "calendar",
+    "description": "Calendar package.",
     "version": "1.0",
-    "author": "Yesbabylon",
+    "authors": ["Yesbabylon"],
+    "license": "LGPL-3",
     "depends_on": ["core"],
     "apps": [
         {
