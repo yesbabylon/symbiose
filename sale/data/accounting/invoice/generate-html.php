@@ -88,8 +88,8 @@ $generateInvoiceLines = function($invoice, $mode) {
 
             $group_lines[] = [
                 'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-                'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-                'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+                'price'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
+                'total'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
                 'unit_price' => $line['unit_price'],
                 'vat_rate'   => $line['vat_rate'],
                 'qty'        => $line['qty'],
@@ -146,8 +146,8 @@ $generateInvoiceLines = function($invoice, $mode) {
     foreach($invoice['invoice_lines_ids'] as $line) {
         $lines[] = [
             'name'       => (strlen($line['description']) > 0) ? $line['description'] : $line['name'],
-            'price'      => round(($invoice['type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
-            'total'      => round(($invoice['type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
+            'price'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['price']) : $line['price'], 2),
+            'total'      => round(($invoice['invoice_type'] == 'credit_note') ? (-$line['total']) : $line['total'], 2),
             'unit_price' => $line['unit_price'],
             'vat_rate'   => $line['vat_rate'],
             'qty'        => $line['qty'],
@@ -252,7 +252,7 @@ $getInvoice = function($id, $lang) {
     return Invoice::id($id)
         ->read(
             [
-                'name', 'date', 'status', 'type', 'total', 'price', 'is_paid',
+                'name', 'date', 'status', 'invoice_type', 'total', 'price', 'is_paid',
                 'organisation_id' => array_merge($invoice_parties_fields, $invoice_organisation_fields),
                 'customer_id'     => $invoice_parties_fields,
                 'invoice_lines_ids' => $invoice_lines_fields,

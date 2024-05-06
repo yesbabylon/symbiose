@@ -17,7 +17,7 @@
             {% if invoice.is_paid %}
                 {{ status_paid_label }}
             {% else %}
-                {% if invoice.type == 'invoice' %}
+                {% if invoice.invoice_type == 'invoice' %}
                     {{ status_to_pay_label }}
                 {% else %}
                     {{ status_to_refund_label }}
