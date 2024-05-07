@@ -5,16 +5,21 @@
         "data": [
             {
                 "id": 1,
+                "name": "Project default",
+                "origin": "project"
+            },
+            {
+                "id": 2,
                 "name": "Backlog default",
                 "origin": "backlog"
             },
             {
-                "id": 2,
+                "id": 3,
                 "name": "Email default",
                 "origin": "email"
             },
             {
-                "id": 3,
+                "id": 4,
                 "name": "Support default",
                 "origin": "support"
             }
@@ -26,14 +31,18 @@
         "data": [
             {
                 "id": 1,
-                "name": "Backlog défaut"
+                "name": "Projet défaut"
             },
             {
                 "id": 2,
-                "name": "E-mail défaut"
+                "name": "Backlog défaut"
             },
             {
                 "id": 3,
+                "name": "E-mail défaut"
+            },
+            {
+                "id": 4,
                 "name": "Support défaut"
             }
         ]

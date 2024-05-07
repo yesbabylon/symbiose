@@ -187,7 +187,7 @@ class TimeEntry extends SaleEntry {
             'reference' => [
                 'type'           => 'string',
                 'description'    => 'Email or backlog reference.',
-                'visible'        => ['origin', 'not in', ['project']]
+                'visible'        => ['origin', 'in', ['backlog', 'email']]
             ],
 
             'status' => [
@@ -288,10 +288,10 @@ class TimeEntry extends SaleEntry {
         }
 
         if(isset($event['origin'])) {
-            if($event['origin'] === 'support') {
+            if(!in_array($event['origin'], ['backlog', 'email'])) {
                 $result['reference'] = null;
             }
-            else {
+            if($event['origin'] !== 'support') {
                 $result['ticket_id'] = null;
                 $result['ticket_link'] = null;
             }
