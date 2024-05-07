@@ -7,17 +7,17 @@
 
 use equal\orm\Domain;
 use identity\Identity;
-use sale\customer\Customer;
+use purchase\supplier\Supplier;
 
 list($params, $providers) = eQual::announce([
-    'description' => 'Advanced search for Customer: returns a collection of Reports according to extra parameters.',
+    'description' => 'Advanced search for Supplier: returns a collection of Reports according to extra parameters.',
     'extends'     => 'core_model_collect',
     'params'      => [
 
         'entity' => [
             'type'        => 'string',
             'description' => 'Full name (including namespace) of the class to return.',
-            'default'     => 'sale\customer\Customer'
+            'default'     => 'purchase\supplier\Supplier'
         ],
 
         'type' => [
@@ -25,7 +25,7 @@ list($params, $providers) = eQual::announce([
             'description' => 'Code of the type of identity.',
             'selection'   => ['all', 'I', 'SE', 'C', 'NP', 'PA'],
             'readonly'    => true,
-            'default'     => 'all'
+            'default'     => 'C'
         ],
 
         'registration_number' => [
@@ -108,11 +108,11 @@ foreach($columns as $column) {
     }
 
     $identities_ids = Identity::search([$column, 'ilike', '%' . $params[$column] . '%'])->ids();
-    $customers_ids = Customer::search(['partner_identity_id', 'in', $identities_ids])->ids();
+    $suppliers_ids = Supplier::search(['partner_identity_id', 'in', $identities_ids])->ids();
 
     $params['domain'] = Domain::conditionAdd(
         $params['domain'],
-        ['id', 'in', $customers_ids]
+        ['id', 'in', $suppliers_ids]
     );
 }
 

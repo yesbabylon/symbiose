@@ -165,7 +165,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "unit_price",
+                                                "value": "price",
                                                 "width": "15%"
                                             }
                                         ]

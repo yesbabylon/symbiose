@@ -1,7 +1,19 @@
 {
-    "name": "Employees list",
+    "name": "Employees",
     "description": "List of all employees.",
-    "domain": ["relationship", "=", "employee"],
+    "access": {
+        "groups": ["hr.default.user"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "Simplified form to ease creation."
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {

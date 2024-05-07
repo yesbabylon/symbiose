@@ -1,0 +1,13 @@
+{
+    "description": "Menu d'achat",
+    "view": {
+        "item.suppliers": {
+            "label": "Fournisseurs",
+            "help": ""
+        },
+        "item.invoices": {
+            "label": "Factures",
+            "help": ""
+        }
+    }
+}

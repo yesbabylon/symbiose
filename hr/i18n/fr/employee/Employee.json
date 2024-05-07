@@ -1,0 +1,70 @@
+{
+    "name": "Employé",
+    "plural": "Employés",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom complet de l'employé (lié à l'identité).",
+            "help": ""
+        },
+        "owner_identity_id": {
+            "label": "Employé par",
+            "description": "L'organisation dont l'identité ciblée est partenaire.",
+            "help": ""
+        },
+        "partner_identity_id": {
+            "label": "Identité",
+            "description": "L'identité associée à l'employé.",
+            "help": ""
+        },
+        "relationship": {
+            "label": "Partenariat",
+            "description": "Le partenariat est fixé à 'employé'.",
+            "help": ""
+        },
+        "address": {
+            "label": "Adresse",
+            "description": "Adresse principale de l'employé.",
+            "help": ""
+        },
+        "ref_account": {
+            "label": "Compte de référence",
+            "description": "IBAN arbitraire associé à l'employé",
+            "help": ""
+        },
+        "date_start": {
+            "label": "Date de début",
+            "description": "Date de la première journée de travail.",
+            "help": ""
+        },
+        "date_end": {
+            "label": "Date de fin",
+            "description": "Date à laquelle le contrat se termine.",
+            "help": ""
+        },
+        "is_active": {
+            "label": "Est actif",
+            "description": "Marque l'employé comme actuellement actif dans l'organisation.",
+            "help": ""
+        },
+        "absences_ids": {
+            "label": "Absences",
+            "description": "Liste des absences de l'employé.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Employé",
+            "description": "Formulaire de base pour afficher un employé (Partenaire).",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Employés",
+            "description": "Liste de base des employés existants.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

@@ -1,0 +1,56 @@
+{
+    "name": "Customer",
+    "description": "This form holds the fields for creating a new Customer.",
+    "access": {
+        "groups": ["hr.default.user"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
+    "layout": {
+        "extends": {
+            "entity": "identity\\Partner",
+            "view": "form.create"
+        },
+        "remove": [
+            "field.has_vat"
+        ],
+        "update": {
+            "section.identity_info": {
+                "after": [
+                    {
+                        "id": "section.employee",
+                        "label": "Employee specifics",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items":[
+                                            {
+                                                "type": "field",
+                                                "label": "Role",
+                                                "value": "role_id",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Date start",
+                                                "value": "date_start",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
