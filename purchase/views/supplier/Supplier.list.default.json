@@ -1,0 +1,45 @@
+{
+    "name": "Suppliers",
+    "description": "This view is intended for displaying basic listing of existing Suppliers.",
+    "controller": "purchase_supplier_supplier-collect",
+    "access": {
+        "groups": ["purchase.default.user"]
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "Simplified form to ease creation."
+                }
+            ]
+        }
+    },
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%"
+            },
+            {
+                "type": "field",
+                "label": "Address",
+                "value": "address",
+                "width": "35%"
+            },
+            {
+                "type": "field",
+                "label": "VAT number",
+                "value": "vat_number",
+                "width": "35%"
+            },
+            {
+                "type": "field",
+                "label": "Lang",
+                "value": "lang_id",
+                "width": "10%"
+            }
+        ]
+    }
+}

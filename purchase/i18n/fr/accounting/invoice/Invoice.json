@@ -1,0 +1,25 @@
+{
+    "name": "Facture",
+    "plural": "Factures",
+    "description": "",
+    "model": {
+        "supplier_id": {
+            "label": "Fournisseur",
+            "description": "Organisation émettrice de la facture.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Facture",
+            "description": "",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Factures",
+            "description": "",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

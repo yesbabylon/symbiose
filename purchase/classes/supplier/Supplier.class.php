@@ -46,6 +46,12 @@ class Supplier extends Partner {
                 'help'              => 'Default value is Company.'
             ],
 
+            'has_vat' => [
+                'type'              => 'boolean',
+                'description'       => 'Does the organization have a VAT number?',
+                'default'           => true
+            ],
+
             /**
              * Specific Supplier columns
              */
@@ -53,8 +59,15 @@ class Supplier extends Partner {
             'invoices_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'purchase\accounting\invoice\Invoice',
-                'foreign_field'     => 'customer_id',
+                'foreign_field'     => 'supplier_id',
                 'description'       => 'Purchase invoices from the supplier.'
+            ],
+
+            'address' => [
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'function'          => 'calcAddress',
+                'description'       => 'Main address from related Identity.'
             ]
 
         ];
@@ -69,5 +82,14 @@ class Supplier extends Partner {
                 Identity::id($supplier['partner_identity_id']['id'])->update(['supplier_id' => $id]);
             }
         }
+    }
+
+    public static function calcAddress($self) {
+        $result = [];
+        $self->read(['address_street', 'address_city']);
+        foreach($self as $id => $supplier) {
+            $result[$id] = "{$supplier['address_street']} {$supplier['address_city']}";
+        }
+        return $result;
     }
 }
