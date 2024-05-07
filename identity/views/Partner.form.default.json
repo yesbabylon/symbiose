@@ -41,6 +41,7 @@
                                                 }
                                             },
                                             {
+                                                "id": "field.has_vat",
                                                 "type": "field",
                                                 "value": "has_vat",
                                                 "width": "50%",

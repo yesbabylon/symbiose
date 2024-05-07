@@ -6,7 +6,7 @@
     "sort": "asc",
     "operations": {
         "total": {
-            "unit_price": {
+            "price": {
                 "id": "operations.total.price",
                 "label": "Total price",
                 "usage": "amount/money:2",
@@ -78,7 +78,7 @@
             },
             {
                 "type": "field",
-                "value": "unit_price",
+                "value": "price",
                 "width": "10%",
                 "sortable": true
             }

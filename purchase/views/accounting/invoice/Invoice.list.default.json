@@ -5,7 +5,7 @@
         "groups": ["purchase.default.user"]
     },
     "controller": "purchase_accounting_invoice_collect",
-    "domain" : ["supplier_id" ,">" , 0],
+    "domain" : ["supplier_id" , ">", 0],
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\Invoice",

@@ -1,0 +1,65 @@
+{
+    "name": "Fournisseur",
+    "plural": "Fournisseurs",
+    "description": "",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom complet du fournisseur (lié à l'identité).",
+            "help": ""
+        },
+        "owner_identity_id": {
+            "label": "Fournisseur de",
+            "description": "L'organisation dont l'identité ciblée est partenaire.",
+            "help": ""
+        },
+        "partner_identity_id": {
+            "label": "Identité",
+            "description": "L'identité associée au fournisseur.",
+            "help": ""
+        },
+        "relationship": {
+            "label": "Partenariat",
+            "description": "Le partenariat est fixé à 'fournisseur'.",
+            "help": ""
+        },
+        "rate_class_id": {
+            "label": "Catégorie tarifaire",
+            "description": "Catégorie tarifaire qui s'applique au fournisseur.",
+            "help": ""
+        },
+        "address": {
+            "label": "Adresse",
+            "description": "Adresse principale du fournisseur'.",
+            "help": ""
+        },
+        "ref_account": {
+            "label": "Compte de référence",
+            "description": "IBAN arbitraire associé au fournisseur.",
+            "help": ""
+        },
+        "is_tour_operator": {
+            "label": "Tour opérateur",
+            "description": "Le fournisseur est un Tour Opérateur ou une OTA.",
+            "help": ""
+        },
+        "invoices_ids": {
+            "label": "Factures",
+            "description": "Liste des factures émises par le fournisseur.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Fournisseur",
+            "description": "Formulaire de base pour afficher un fournisseur (Partenaire).",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Fournisseurs",
+            "description": "Liste de base des fournisseurs existants.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}
