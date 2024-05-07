@@ -6,26 +6,22 @@
             {
                 "id": 1,
                 "value": "BE",
-                "campaign_criteria_id": 1,
-                "criteria_id": 1
+                "campaign_criteria_id": 1
             },
             {
                 "id": 5,
                 "value": "bachelier",
-                "campaign_criteria_id": 2,
-                "criteria_id": 2
+                "campaign_criteria_id": 2
             },
             {
                 "id": 8,
                 "value": "sur site",
-                "campaign_criteria_id": 3,
-                "criteria_id": 3
+                "campaign_criteria_id": 3
             },
             {
                 "id": 12,
-                "campaign_criteria_id": 4,
-                "criteria_id": 4,
-                "value": "mois prochain"
+                "value": "mois prochain",
+                "campaign_criteria_id": 4
             }
         ]
     },
