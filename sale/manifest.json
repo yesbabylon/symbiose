@@ -31,5 +31,12 @@
                 }
             }
         }
-    ]
+    ],
+    "requires": {
+        "dompdf/dompdf": "^2.0.8",
+        "endroid/qr-code": "^3.9.0",
+        "smhg/sepa-qr-data": "^1.2.0",
+        "twig/intl-extra": "^3.9.2",
+        "twig/twig": "^3.9.3"
+    }
 }

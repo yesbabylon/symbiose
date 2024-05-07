@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
     <title>
-        {% if invoice.type == 'invoice' %}
+        {% if invoice.invoice_type == 'invoice' %}
             {{ labels.invoice }}
         {% else %}
             {{ labels.credit_note }}
@@ -32,6 +32,7 @@
         }
 
         body {
+            margin: 8px 0;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 0.7em;
             text-align: justify;
@@ -67,6 +68,17 @@
 
         main {
             width: 100%;
+        }
+
+        main .invoice-lines {
+            margin-top: 20px;
+        }
+
+        main .invoice-payment-info {
+            position: relative;
+            margin-top: 40px;
+            page-break-inside: avoid;
+            border: solid 2px black;
         }
 
         footer {
@@ -147,6 +159,22 @@
                     'columns_labels': labels.columns
                 } only
             %}
+
+            {% if invoice.payment_status not in ['balanced', 'credit_balance'] and invoice.price > 0.0 and invoice.status != 'proforma' and invoice.invoice_type != 'credit_note' %}
+                {%
+                    include 'components/payment-qr-code.html.twig' with {
+                        'class':                                'invoice-payment-info',
+                        'invoice':                              invoice,
+                        'payment_qr_code_uri':                  payment_qr_code_uri,
+                        'currency':                             currency,
+                        'locale':                               locale,
+                        'timezone':                             timezone,
+                        'date_format':                          date_format,
+                        'balance_of_must_be_paid_before_label': labels.balance_of_must_be_paid_before,
+                        'communication_label':                  labels.communication
+                    } only
+                %}
+            {% endif %}
         </main>
 
         <footer>
