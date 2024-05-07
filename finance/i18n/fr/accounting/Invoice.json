@@ -43,8 +43,8 @@
             "help": ""
         },
         "organisation_id": {
-            "label": "Organisation émettrice",
-            "description": "Organisation à l'origine de la facture.",
+            "label": "Organisation émettrice/réceptrice",
+            "description": "Organisation émettrice/réceptrice de la facture.",
             "help": ""
         },
         "price": {

@@ -3,6 +3,11 @@
     "plural": "Factures",
     "description": "",
     "model": {
+        "organisation_id": {
+            "label": "Organisation émettrice",
+            "description": "Organisation émettrice de la facture.",
+            "help": ""
+        },
         "customer_id": {
             "label": "Destinataire",
             "description": "Organisation responsable de payer la facture.",
