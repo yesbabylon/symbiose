@@ -1,0 +1,9 @@
+{
+    "description": "Menu resources humaines",
+    "view": {
+        "item.employees": {
+            "label": "Employés",
+            "help": ""
+        }
+    }
+}

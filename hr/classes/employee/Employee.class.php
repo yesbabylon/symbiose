@@ -6,7 +6,10 @@
 */
 namespace hr\employee;
 
-class Employee extends \identity\Partner {
+use identity\Identity;
+use identity\Partner;
+
+class Employee extends Partner {
 
     public function getTable() {
         return 'hr_employee_employee';
@@ -35,7 +38,7 @@ class Employee extends \identity\Partner {
             'relationship' => [
                 'type'              => 'string',
                 'default'           => 'employee',
-                'description'       => 'Force relationship to Employee'
+                'description'       => 'Force relationship to Employee.'
             ],
 
             'date_start' => [
@@ -70,6 +73,17 @@ class Employee extends \identity\Partner {
         return [
             ['owner_identity_id', 'partner_identity_id', 'role_id']
         ];
+    }
+
+    public static function onafterupdate($self, $values) {
+        parent::onafterupdate($self, $values);
+
+        $self->read(['partner_identity_id' => ['id', 'employee_id']]);
+        foreach($self as $id => $employee) {
+            if(is_null($employee['partner_identity_id']['employee_id'])) {
+                Identity::id($employee['partner_identity_id']['id'])->update(['employee_id' => $id]);
+            }
+        }
     }
 
 }

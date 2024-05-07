@@ -1,77 +1,90 @@
 {
     "name": "Employee",
-    "description": "",
+    "description": "Form holding basic information about an employee (Partner).",
+    "access": {
+        "groups": ["hr.default.user"]
+    },
     "layout": {
-        "groups": [
-            {
-                "sections": [
+        "extends": {
+            "entity": "identity\\Partner",
+            "view": "form.default"
+        },
+        "remove": [
+            "section.advanced",
+            "group.partner_info",
+            "field.type_id",
+            "field.has_vat"
+        ],
+        "update": {
+            "field.lang_id": {
+                "after": [
                     {
+                        "type": "field",
+                        "label": "Identity of Employee",
+                        "value": "partner_identity_id",
+                        "width": "100%"
+                    }
+                ]
+            },
+            "section.identity_info": {
+                "after": [
+                    {
+                        "id": "section.employee",
+                        "label": "Employee specifics",
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "50%",
-                                        "items": [
+                                        "items":[
                                             {
                                                 "type": "field",
-                                                "label": "Name",
-                                                "value": "name",
-                                                "width": "33%",
-                                                "widget": {
-                                                    "heading": true,
-                                                    "readonly": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Identity",
-                                                "value": "partner_identity_id",
-                                                "width": "66%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "code",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
+                                                "label": "Role",
                                                 "value": "role_id",
-                                                "width": "33%"
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_start",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_end",
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_active",
-                                                "width": "33%"
+                                                "width": "50%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.absences",
+                        "label": "Absences",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
-                                                "type": "label",
-                                                "value": "",
-                                                "width": "50%"
-                                            },
-                                            {
                                                 "type": "field",
-                                                "value": "email",
-                                                "width": "50%",
+                                                "value": "absences_ids",
+                                                "width": "100%",
                                                 "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "label",
-                                                "value": "",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "mobile",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "heading": true
+                                                    "header": {
+                                                        "view": "list.default",
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
                                                 }
                                             }
                                         ]
@@ -82,7 +95,6 @@
                     }
                 ]
             }
-        ]
+        }
     }
 }
-

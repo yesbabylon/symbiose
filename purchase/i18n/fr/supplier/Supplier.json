@@ -52,7 +52,7 @@
     "view": {
         "form.default": {
             "name": "Fournisseur",
-            "description": "Formulaire de base pour afficher un client (Partenaire).",
+            "description": "Formulaire de base pour afficher un fournisseur (Partenaire).",
             "layout": {}
         },
         "list.default": {
