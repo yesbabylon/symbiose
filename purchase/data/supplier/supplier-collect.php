@@ -69,7 +69,7 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'   => ['context', 'orm']
+    'providers'   => ['context']
 ]);
 
 /** @var \equal\php\Context $context */

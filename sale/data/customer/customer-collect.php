@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of the Discope property management software.
-    Author: Yesbabylon SRL, 2020-2022
+    Author: Yesbabylon SRL, 2020-2024
     License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -69,14 +69,11 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'   => ['context', 'orm']
+    'providers'   => ['context']
 ]);
 
-/**
- * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
- */
-list($context, $orm) = [$providers['context'], $providers['orm']];
+/** @var \equal\php\Context $context */
+$context = $providers['context'];
 
 // Remove filter params of hidden fields
 if(!empty($params['type'])) {

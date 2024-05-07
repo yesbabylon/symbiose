@@ -10,7 +10,7 @@
         },
         "supplier_id": {
             "label": "Fournisseur",
-            "description": "Organisation émettrice de la facture.",
+            "description": "Fournisseur émetteur de la facture.",
             "help": ""
         }
     },
