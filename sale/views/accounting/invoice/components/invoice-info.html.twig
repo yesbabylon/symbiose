@@ -8,13 +8,13 @@
     </div>
 
     <div style="margin-bottom: 5px; text-transform: uppercase; font-size: 13px;">
-        {{ date_label }}: <b>{{ invoice.date|date(date_format, timezone) }}</b>
+        {{ date_label }}: <b>{{ invoice.date | date(date_format, timezone) }}</b>
     </div>
 
     <div style="margin-bottom: 5px; text-transform: uppercase; font-size: 13px;">
         {{ status_label }}:
         <b style="font-size: 13px">
-            {% if invoice.is_paid %}
+            {% if invoice.payment_status in ['balanced', 'credit_balance'] %}
                 {{ status_paid_label }}
             {% else %}
                 {% if invoice.invoice_type == 'invoice' %}

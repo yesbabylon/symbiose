@@ -212,6 +212,20 @@
                 "setting_id": 1079,
                 "user_id": 0,
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
+            },
+            {
+                "id": 1080,
+                "name": "labels.balance-of-must-be-paid-before",
+                "setting_id": 1080,
+                "user_id": 0,
+                "value": "Balance of %price% must be paid before %due_date%"
+            },
+            {
+                "id": 1081,
+                "name": "labels.communication",
+                "setting_id": 1081,
+                "user_id": 0,
+                "value": "Communication"
             }
         ]
     },
@@ -338,6 +352,14 @@
             {
                 "id": 1079,
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
+            },
+            {
+                "id": 1080,
+                "value": "Le solde de %price% doit être réglé avant le %due_date%"
+            },
+            {
+                "id": 1081,
+                "value": "Communication"
             }
         ]
     },
@@ -467,17 +489,11 @@
             },
             {
                 "id": 1080,
-                "name": "sale.invoice.sequence_format",
-                "setting_id": 1080,
-                "user_id": 0,
-                "value": "%2d{year}-%02d{org}-%05d{sequence}"
+                "value": "Saldo van %price% moet betaald zijn voor %due_date%"
             },
             {
                 "id": 1081,
-                "name": "sale.invoice.fiscal_year",
-                "setting_id": 1081,
-                "user_id": 0,
-                "value": "2024"
+                "value": "Communicatie"
             }
         ]
     }
