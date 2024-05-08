@@ -168,7 +168,7 @@ class Product extends Model {
 
             'subscriptions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_object'    => 'sale\subscription\Subscription',
                 'foreign_field'     => 'product_id',
                 'description'       => 'The subscriptions needed for the product.'
             ],
