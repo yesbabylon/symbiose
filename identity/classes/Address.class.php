@@ -33,25 +33,16 @@ class Address extends Model {
                 'description'       => 'The display name of the address.'
             ],
 
-            'identity_name' => [
-                'type'              => 'computed',
-                'function'          => 'calcIdentityName',
-                'result_type'       => 'string',
-                'store'             => true,
-                'description'       => 'The display name of the related identity.'
-            ],
-
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The identity that the address relates to.',
-                'onupdate'          => 'onupdateIdentityId'
+                'description'       => 'The identity that the address relates to.'
             ],
 
             'role' => [
                 'type'              => 'string',
                 'selection'         => [ 'legal', 'invoice', 'delivery', 'other' ],
-                'description'       => 'The main purpose for which the address is to be preferred.' 
+                'description'       => 'The main purpose for which the address is to be preferred.'
             ],
 
             /*
@@ -74,7 +65,7 @@ class Address extends Model {
                 'description'       => 'City.',
                 'onupdate'          => 'onupdateAddress'
             ],
-            
+
             'address_zip' => [
                 'type'              => 'string',
                 'description'       => 'Postal code.',
@@ -97,15 +88,6 @@ class Address extends Model {
 
         ];
     }
-    
-    public static function calcIdentityName($om, $oids, $lang) {
-        $result = [];
-        $res = $om->read(__CLASS__, $oids, ['identity_id.name']);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = $odata['identity_id.name'];
-        }
-        return $result;
-    }
 
     public static function calcName($om, $oids, $lang) {
         $result = [];
@@ -116,11 +98,8 @@ class Address extends Model {
         return $result;
     }
 
-    public static function onupdateIdentityId($om, $oids, $values, $lang) {
-        $om->write(__CLASS__, $oids, [ 'identity_name' => null ], $lang);
-    }
 
     public static function onupdateAddress($om, $oids, $values, $lang) {
         $om->write(__CLASS__, $oids, [ 'display_name' => null ], $lang);
-    }    
+    }
 }

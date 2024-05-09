@@ -4,12 +4,7 @@
     "description": "Une Identité est soit une personne morale soit une personne physique : les organisations sont des personnes morales et les utilisateurs, les contacts et les employés sont des personnes physiques.",
     "model": {
         "name": {
-            "label": "Nom d'affichage",
-            "description": "Nom d'affichage de l'identité.",
-            "help": ""
-        },
-        "display_name": {
-            "label": "Nom d'affichage",
+            "label": "Nom",
             "description": "Nom d'affichage de l'identité.",
             "help": ""
         },

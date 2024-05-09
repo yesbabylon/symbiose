@@ -32,17 +32,6 @@
                         }
                     },
                     {
-                        "id": "item.partners",
-                        "type": "entry",
-                        "label": "Partners",
-                        "icon": "group",
-                        "description": "",
-                        "context": {
-                            "entity": "identity\\Partner",
-                            "view": "list.default"
-                        }
-                    },
-                    {
                         "id": "item.addresses",
                         "type": "entry",
                         "label": "Addresses",

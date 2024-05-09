@@ -1,81 +1,76 @@
 {
-	"name": "Addresse",
-	"plural": "Addresses",
-	"description": "Une adresse est un emplacement physique auquel une identité peut être contactée.",
-	"model": {
-		"name": {
-			"label": "Nom",
-			"description": "Nom de l'utilisateur.",
-			"help": ""
-		},
-		"display_name": {
-			"label": "Nom d'affichage",
-			"description": "Le nom d'affichage de l'adresse.",
-			"help": ""
-		},
-		"identity_name": {
-			"label": "Nom d'affichage de l'identité",
-			"description": "Nom d'affichage de l'identité associée.",
-			"help": ""
-		},
-		"identity_id": {
-			"label": "Identité",
-			"description": "L'identité à laquelle l'adresse se rapporte.",
-			"help": ""
-		},
-		"role": {
-			"label": "Role",
-			"description": "L'objectif principal pour lequel l'adresse doit être préférée.",
-			"selection": {
-				"legal": "légal",
-				"invoice": "facture",
-				"delivery": "livraison",
-				"other": "autre"
-			},
-			"help": ""
-		},
-		"address_street": {
-			"label": "Rue d'adresse",
-			"description": "Rue et numéro.",
-			"help": ""
-		},
-		"address_dispatch": {
-			"label": "Complément d'adresse",
-			"description": "Infos optionnelles pour l'envoi du courrier.",
-			"help": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."
-		},
-		"address_city": {
-			"label": "Ville",
-			"description": "Ville.",
-			"help": ""
-		},
-		"address_zip": {
-			"label": "Code Postal",
-			"description": "Code Postal.",
-			"help": ""
-		},
-		"address_state": {
-			"label": "État ou région",
-			"description": "État ou région.",
-			"help": ""
-		},
-		"address_country": {
-			"label": "Pays",
-			"description": "Pays.",
-			"help": ""
-		}
-	},
-	"view": {
-		"form.default": {
-			"name": "Addresse",
-			"description": "Formulaire de base pour afficher les informations d'un partenaire",
-			"layout": {}
-		},
-		"list.default": {
-			"name": "Addresses",
-			"description": "This view is intended for displaying basic listing of existing Addresses.",
-			"layout": {}
-		}
-	},
-	"error": {}
+    "name": "Addresse",
+    "plural": "Addresses",
+    "description": "Une adresse est un emplacement physique auquel une identité peut être contactée.",
+    "model": {
+        "name": {
+            "label": "Adresse",
+            "description": "Adresse complète.",
+            "help": ""
+        },
+        "display_name": {
+            "label": "Adresse",
+            "description": "Adresse complète.",
+            "help": ""
+        },
+        "identity_id": {
+            "label": "Identité",
+            "description": "L'identité à laquelle l'adresse se rapporte.",
+            "help": ""
+        },
+        "role": {
+            "label": "Role",
+            "description": "L'objectif principal pour lequel l'adresse doit être préférée.",
+            "selection": {
+                "legal": "légal",
+                "invoice": "facture",
+                "delivery": "livraison",
+                "other": "autre"
+            },
+            "help": ""
+        },
+        "address_street": {
+            "label": "Rue d'adresse",
+            "description": "Rue et numéro.",
+            "help": ""
+        },
+        "address_dispatch": {
+            "label": "Complément d'adresse",
+            "description": "Infos optionnelles pour l'envoi du courrier.",
+            "help": "Infos optionnelles pour l'envoi du courrier (appartement, box, étage, ...)."
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville.",
+            "help": ""
+        },
+        "address_zip": {
+            "label": "Code Postal",
+            "description": "Code Postal.",
+            "help": ""
+        },
+        "address_state": {
+            "label": "État ou région",
+            "description": "État ou région.",
+            "help": ""
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Addresse",
+            "description": "Formulaire de base pour afficher les informations d'un partenaire",
+            "layout": {}
+        },
+        "list.default": {
+            "name": "Addresses",
+            "description": "This view is intended for displaying basic listing of existing Addresses.",
+            "layout": {}
+        }
+    },
+    "error": {}
 }
