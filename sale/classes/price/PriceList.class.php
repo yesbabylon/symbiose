@@ -14,7 +14,7 @@ class PriceList extends Model {
             'name' => [
                 'type'              => 'string',
                 'description'       => "Short label to ease identification of the list.",
-                'onupdate'          => 'onupdateName'
+                'dependents'        => ['prices_ids' => 'name']
             ],
 
             'date_from' => [
@@ -47,7 +47,7 @@ class PriceList extends Model {
                     'closed'                // can no longer be used (similar to archive)
                 ],
                 'description'       => 'Status of the list.',
-                'onupdate'          => 'onupdateStatus',
+                'dependents'        => ['is_active', 'prices_ids' => 'is_active'],
                 'default'           => 'pending'
             ],
 
@@ -87,69 +87,34 @@ class PriceList extends Model {
         ];
     }
 
-    public static function calcDuration($om, $oids, $lang) {
+    public static function calcDuration($self) {
         $result = [];
-        $lists = $om->read(self::getType(), $oids, ['date_from', 'date_to']);
-
-        if($lists > 0 && count($lists)) {
-            foreach($lists as $lid => $list) {
-                $result[$lid] = round( ($list['date_to'] - $list['date_from']) / (60 * 60 * 24));
-            }
+        $self->read(['date_from', 'date_to']);
+        foreach($self as $id => $list) {
+            $result[$id] = round( ($list['date_to'] - $list['date_from']) / (60 * 60 * 24));
         }
         return $result;
     }
 
-    public static function calcIsActive($om, $ids, $lang) {
+    public static function calcIsActive($self) {
         $result = [];
-        $lists = $om->read(self::getType(), $ids, ['date_from', 'date_to', 'status']);
+        $self->read(['prices_ids', 'date_from', 'date_to', 'status']);
         $now = time();
-        if($lists > 0 && count($lists)) {
-            foreach($lists as $lid => $list) {
-                $result[$lid] = boolval( $list['date_to'] > $now && $list['status'] == 'published' );
-            }
+        foreach($self as $id => $list) {
+            $result[$id] = boolval( $list['date_from'] <= $now && $list['date_to'] >= $now && $list['status'] == 'published' );
+            Price::ids($list['prices_ids'])->update(['is_active' => null]);
         }
         return $result;
     }
 
 
-    public static function calcPricesCount($om, $oids, $lang) {
+    public static function calcPricesCount($self) {
         $result = [];
-        $lists = $om->read(self::getType(), $oids, ['prices_ids']);
-
-        if($lists > 0 && count($lists)) {
-            foreach($lists as $lid => $list) {
-                $result[$lid] = count($list['prices_ids']);
-            }
+        $self->read(['prices_ids']);
+        foreach($self as $id => $list) {
+            $result[$id] = count($list['prices_ids']);
         }
         return $result;
-    }
-
-    /**
-     * Invalidate related prices names.
-     */
-    public static function onupdateName($om, $oids, $values, $lang) {
-        $lists = $om->read(self::getType(), $oids, ['prices_ids'], $lang);
-
-        if($lists > 0) {
-            foreach($lists as $lid => $list) {
-                $om->update('sale\price\Price', $list['prices_ids'], ['name' => null]);
-            }
-        }
-    }
-
-    public static function onupdateStatus($om, $oids, $values, $lang) {
-        $pricelists = $om->read(self::getType(), $oids, ['status', 'prices_ids']);
-        $om->update(self::getType(), $oids, ['is_active' => null]);
-        // immediate re-compute (required by subsequent re-computations of prices is_active flag)
-        $om->read(self::getType(), $oids, ['is_active']);
-
-        if($pricelists > 0) {
-            foreach($pricelists as $pid => $pricelist) {
-                // immediate re-compute prices is_active flag
-                $om->update('sale\price\Price', $pricelist['prices_ids'], ['is_active' => null]);
-                $om->read('sale\price\Price', $pricelist['prices_ids'], ['is_active']);
-            }
-        }
     }
 
 }
