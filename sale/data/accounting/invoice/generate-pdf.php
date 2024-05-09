@@ -10,7 +10,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options as DompdfOptions;
 use sale\accounting\invoice\Invoice;
 
-list($params, $providers) = announce([
+list($params, $providers) = eQual::announce([
     'description'   => 'Generate a pdf view of given invoice.',
     'params'        => [
         'id' => [
