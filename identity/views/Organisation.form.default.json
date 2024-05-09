@@ -10,13 +10,13 @@
             "column.description": {
                 "prepend": [
                     {
-                        "type": "field",
-                        "value": "image_document_id",
+                        "type": "label",
+                        "value": "",
                         "width": "50%"
                     },
                     {
-                        "type": "label",
-                        "value": "",
+                        "type": "field",
+                        "value": "image_document_id",
                         "width": "50%"
                     }
                 ]
