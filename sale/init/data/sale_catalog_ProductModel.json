@@ -5,7 +5,7 @@
         "data": [
             {
                 "id": 1,
-                "name": "Product ERP  Symbiose",
+                "name": "Default Product Model",
                 "family_id": 1,
                 "buying_accounting_rule_id": 1,
                 "can_buy": false,
