@@ -3,48 +3,69 @@
     "layout": {
         "items": [
             {
-                "id": "item.identity",
-                "type": "entry",
-                "label": "Identities",
-                "icon": "manage",
+                "id": "base",
+                "label": "Base",
                 "description": "",
-                "context": {
-                    "entity": "identity\\Identity",
-                    "view": "list.default"
-                }
-            },
-            {
-                "id": "item.partner",
-                "type": "entry",
-                "label": "Partners",
-                "icon": "group",
-                "description": "",
-                "context": {
-                    "entity": "identity\\Partner",
-                    "view": "list.default"
-                }
-            },
-            {
-                "id": "item.address",
-                "type": "entry",
-                "label": "Addresses",
-                "icon": "place",
-                "description": "",
-                "context": {
-                    "entity": "identity\\Address",
-                    "view": "list.default"
-                }
-            },
-            {
-                "id": "item.establishment",
-                "type": "entry",
-                "label": "Establishments",
-                "icon": "apartment",
-                "description": "",
-                "context": {
-                    "entity": "identity\\Establishment",
-                    "view": "list.default"
-                }
+                "icon": "now_widgets",
+                "type": "parent",
+                "route": "/settings/core",
+                "children": [
+                    {
+                        "id": "item.organisation",
+                        "type": "entry",
+                        "label": "Organizations",
+                        "icon": "business",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Organisation",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.identity",
+                        "type": "entry",
+                        "label": "Identities",
+                        "icon": "manage",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Identity",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.partner",
+                        "type": "entry",
+                        "label": "Partners",
+                        "icon": "group",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Partner",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.address",
+                        "type": "entry",
+                        "label": "Addresses",
+                        "icon": "place",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Address",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.establishment",
+                        "type": "entry",
+                        "label": "Establishments",
+                        "icon": "apartment",
+                        "description": "",
+                        "context": {
+                            "entity": "identity\\Establishment",
+                            "view": "list.default"
+                        }
+                    }
+                ]
             },
             {
                 "id": "item.sale",
