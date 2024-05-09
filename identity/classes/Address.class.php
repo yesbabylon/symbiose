@@ -89,11 +89,11 @@ class Address extends Model {
         ];
     }
 
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['address_street', 'address_city', 'address_zip', 'address_country' ]);
-        foreach($res as $oid => $odata) {
-            $result[$oid] = "{$odata['address_street']} {$odata['address_zip']} {$odata['address_city']}";
+        $self->read(['address_street', 'address_city', 'address_zip', 'address_country' ]);
+        foreach($self as $id => $address) {
+            $result[$id] = "{$address['address_street']} {$address['address_zip']} {$address['address_city']}";
         }
         return $result;
     }
