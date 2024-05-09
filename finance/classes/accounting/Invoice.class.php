@@ -27,6 +27,12 @@ class Invoice extends Model {
                 'alias'             => "invoice_number"
             ],
 
+            'reference' => [
+                'type'              => 'string',
+                'description'       => 'Note or comments to be addressed to the customer.',
+                'help'              => 'This is an arbitrary text field (to be added at the top of invoices), such as customer reference or any comments to be addressed to the customer.'
+            ],
+
             'customer_ref' => [
                 'type'              => 'string',
                 'description'       => 'Reference that must appear on invoice (requested by customer).'
