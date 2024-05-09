@@ -65,6 +65,7 @@ class Price extends Model {
                 'result_type'       => 'boolean',
                 'function'          => 'calcIsActive',
                 'store'             => true,
+                'instant'           => true,
                 'description'       => "Is the price currently applicable?"
             ],
 
