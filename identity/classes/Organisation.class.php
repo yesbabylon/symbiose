@@ -27,8 +27,8 @@ class Organisation extends Identity {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
                 'onupdate'          => 'onupdateTypeId',
-                'default'           => 3,
-                'description'       => 'Type of identity.'
+                'description'       => 'Type of identity.',
+                'default'           => 3
             ],
 
             'type' => [
