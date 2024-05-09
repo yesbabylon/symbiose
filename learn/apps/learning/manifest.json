@@ -2,7 +2,7 @@
     "name": "learning",
     "description": "",
     "url": "/learning",
-    "icon": "",
+    "icon": "school",
     "color": "#ff0000",
     "access": {
         "groups": [
