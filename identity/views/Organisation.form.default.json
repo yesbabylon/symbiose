@@ -8,10 +8,15 @@
         },
         "update": {
             "column.description": {
-                "append": [
+                "prepend": [
                     {
                         "type": "field",
                         "value": "image_document_id",
+                        "width": "50%"
+                    },
+                    {
+                        "type": "label",
+                        "value": "",
                         "width": "50%"
                     }
                 ]
