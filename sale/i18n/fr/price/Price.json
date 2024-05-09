@@ -22,8 +22,8 @@
             "label": "Taux TVA",
             "description": "Taux de TVA appliqué au prix.",
             "help": ""
-        },        
-        "type": {
+        },
+        "price_type": {
             "label": "Type",
             "description": "Type de prix.",
             "selection": {
