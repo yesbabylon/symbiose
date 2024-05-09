@@ -10,7 +10,7 @@
                 "sections": [
                     {
                         "label": "General info",
-                        "id": "section.products_Section",
+                        "id": "section.description",
                         "rows": [
                             {
                                 "columns": [
@@ -35,11 +35,6 @@
                                                 "label": "Product Model",
                                                 "value": "product_model_id",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "description",
-                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -54,12 +49,26 @@
                                         ]
                                     }
                                 ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     },
                     {
                         "label": "Prices",
-                        "id": "section.prices_section",
+                        "id": "section.prices",
                         "visible": [ [["is_pack", "=", false], ["state", "<>", "draft"]], [["has_own_price", "=", true], ["state", "<>", "draft"]] ],
                         "rows": [
                             {
@@ -148,8 +157,8 @@
                         ]
                     },
                     {
-                        "label": "Subscriptions",
-                        "id": "section.attributes",
+                        "label": "Prices",
+                        "id": "section.prices",
                         "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
@@ -159,7 +168,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "subscriptions_ids",
+                                                "value": "prices_ids",
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.default"

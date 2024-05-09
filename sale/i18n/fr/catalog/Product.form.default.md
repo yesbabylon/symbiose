@@ -1,5 +1,5 @@
 # Fiche d'édition d'un produit
-La fiche d'édition permet d'éditer certaines informations d'un produit.
+Formulaire d'édition standard pour un produit du catalogue.
 
 ### Informations générales
 
