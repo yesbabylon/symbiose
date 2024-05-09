@@ -3,15 +3,14 @@
     "layout": {
         "items": [
             {
-                "id": "base",
-                "label": "Base",
+                "id": "item.corporate",
+                "label": "Corporate",
                 "description": "",
                 "icon": "now_widgets",
                 "type": "parent",
-                "route": "/settings/core",
                 "children": [
                     {
-                        "id": "item.organisation",
+                        "id": "item.organizations",
                         "type": "entry",
                         "label": "Organizations",
                         "icon": "business",
@@ -33,7 +32,7 @@
                         }
                     },
                     {
-                        "id": "item.partner",
+                        "id": "item.partners",
                         "type": "entry",
                         "label": "Partners",
                         "icon": "group",
@@ -44,7 +43,7 @@
                         }
                     },
                     {
-                        "id": "item.address",
+                        "id": "item.addresses",
                         "type": "entry",
                         "label": "Addresses",
                         "icon": "place",
@@ -55,7 +54,7 @@
                         }
                     },
                     {
-                        "id": "item.establishment",
+                        "id": "item.establishments",
                         "type": "entry",
                         "label": "Establishments",
                         "icon": "apartment",
@@ -68,14 +67,25 @@
                 ]
             },
             {
-                "id": "item.sale",
-                "type": "parent",
-                "label": "Settings",
-                "icon": "settings",
+                "id": "item.groups_users",
+                "label": "Groups & Users",
                 "description": "",
+                "icon": "people",
+                "type": "parent",
                 "children": [
                     {
-                        "id": "item.user",
+                        "id": "item.groups",
+                        "type": "entry",
+                        "label": "Groups",
+                        "icon": "group",
+                        "description": "",
+                        "context": {
+                            "entity": "core\\Group",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "item.users",
                         "type": "entry",
                         "label": "Users",
                         "icon": "person",
@@ -84,7 +94,16 @@
                             "entity": "identity\\User",
                             "view": "list.default"
                         }
-                    },
+                    }
+                ]
+            },
+            {
+                "id": "item.settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "",
+                "children": [
                     {
                         "id": "item.identityType",
                         "type": "entry",
