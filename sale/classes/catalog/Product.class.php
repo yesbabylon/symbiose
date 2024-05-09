@@ -34,7 +34,7 @@ class Product extends Model {
                 'type'              => 'string',
                 'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
                 'required'          => true,
-                'onupdate'          => 'onupdateLabel'
+                'dependents'        => ['name']
             ],
 
             'sku' => [
@@ -42,7 +42,7 @@ class Product extends Model {
                 'description'       => "Stock Keeping Unit code for internal reference. Must be unique.",
                 'required'          => true,
                 'unique'            => true,
-                'onupdate'          => 'onupdateSku'
+                'dependents'        => ['name']
             ],
 
             'ean' => [
@@ -114,13 +114,12 @@ class Product extends Model {
                 'visible'           => [ ['is_pack', '=', true] ]
             ],
 
-            // if the organisation uses price-lists, the price to use depends on the applicable
-
             'prices_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\price\Price',
                 'foreign_field'     => 'product_id',
                 'description'       => "Prices that are related to this product.",
+                'help'              => "If the organisation uses price-lists, the price to use depends on the applicable price list at the moment of the sale.",
                 'ondetach'          => 'delete'
             ],
 
@@ -130,17 +129,17 @@ class Product extends Model {
                 'description'       => 'Statistics section (overloads the model one, if any).'
             ],
 
-            /* can_buy and can_sell are adapted when related values are changed in parent product_model */
-
             'can_buy' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be purchassed?",
+                'help'              => "Field can_buy is adapted when related value is changed in parent ProductModel.",
                 'default'           => false
             ],
 
             'can_sell' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be sold?",
+                'help'              => "Field can_sell is adapted when related value is changed in parent ProductModel.",
                 'default'           => true
             ],
 
@@ -180,72 +179,56 @@ class Product extends Model {
      * Computes the display name of the product as a concatenation of Label and SKU.
      *
      */
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $res = $om->read(get_called_class(), $oids, ['label', 'sku'], $lang);
-        foreach($res as $oid => $odata) {
-            if( (isset($odata['label']) && strlen($odata['label']) > 0 ) || (isset($odata['sku']) && strlen($odata['sku']) > 0) ) {
-                $result[$oid] = "{$odata['label']} ({$odata['sku']})";
+        $self->read(['label', 'sku']);
+        foreach($self as $id => $product) {
+            $result[$id] = '';
+            if( isset($product['label']) && strlen($product['label']) ){
+                $result[$id] .= $product['label'];
+            }
+            if( isset($product['sku']) && strlen($product['sku']) ) {
+                if(strlen($result[$id])) {
+                    $result[$id] .= ' ';
+                }
+                $result[$id] .= "[{$product['sku']}]";
             }
         }
         return $result;
     }
 
-    public static function calcIsPack($om, $oids, $lang) {
+    public static function calcIsPack($self) {
         $result = [];
-
-        $res = $om->read(get_called_class(), $oids, ['product_model_id.is_pack']);
-
-        if($res > 0 && count($res)) {
-            foreach($res as $oid => $odata) {
-                $result[$oid] = $odata['product_model_id.is_pack'];
-            }
+        $self->read(['product_model_id' => 'is_pack']);
+        foreach($self as $id => $product) {
+            $result[$id] = $product['product_model_id']['is_pack'];
         }
-
         return $result;
     }
 
-    public static function calcHasOwnPrice($om, $oids, $lang) {
+    public static function calcHasOwnPrice($self) {
         $result = [];
-
-        $res = $om->read(get_called_class(), $oids, ['product_model_id.has_own_price']);
-
-        if($res > 0 && count($res)) {
-            foreach($res as $oid => $odata) {
-                $result[$oid] = (bool) $odata['product_model_id.has_own_price'];
-            }
+        $self->read(['product_model_id' => 'has_own_price']);
+        foreach($self as $id => $product) {
+            $result[$id] = (bool) $product['product_model_id']['has_own_price'];
         }
-
         return $result;
     }
 
-    public static function onupdateLabel($om, $oids, $values, $lang) {
-        $om->update(__CLASS__, $oids, ['name' => null], $lang);
-    }
-
-    public static function onupdateSku($om, $oids, $values, $lang) {
-        $products = $om->read(__CLASS__, $oids, ['prices_ids']);
-        if($products > 0 && count($products)) {
-            $prices_ids = [];
-            foreach($products as $product) {
-                $prices_ids = array_merge($prices_ids, $product['prices_ids']);
-            }
-            $om->update('sale\price\Price', $prices_ids, ['name' => null], $lang);
-        }
-        $om->update(__CLASS__, $oids, ['name' => null], $lang);
-    }
-
-    public static function onupdateProductModelId($om, $oids, $values, $lang) {
-        $products = $om->read(get_called_class(), $oids, ['product_model_id.can_sell', 'product_model_id.groups_ids', 'product_model_id.family_id']);
-        foreach($products as $pid => $product) {
-            $om->write(get_called_class(), $pid, [
-                'is_pack'       => null,
-                'can_sell'      => $product['product_model_id.can_sell'],
-                'groups_ids'    => $product['product_model_id.groups_ids'],
-                'family_id'     => $product['product_model_id.family_id']
-            ]);
+    public static function onupdateProductModelId($self) {
+        $self->read(['groups_ids', 'product_model_id' => ['can_sell', 'groups_ids', 'family_id']]);
+        foreach($self as $id => $product) {
+            self::id($id)
+                // remove current groups
+                ->update(['groups_ids' => array_map(function ($a) { return -$a; }, $product['groups_ids'])])
+                // set values according to assigned model
+                ->update([
+                    'is_pack'       => null,
+                    'can_sell'      => $product['product_model_id']['can_sell'],
+                    'groups_ids'    => $product['product_model_id']['groups_ids'],
+                    'family_id'     => $product['product_model_id']['family_id']
+                ]);
         }
     }
-
 
 }
