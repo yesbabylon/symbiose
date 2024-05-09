@@ -99,10 +99,10 @@
             "name": "Produit",
             "description": "Un produit est une variante de modèle de produit (template). Il y a toujours au moins un produit pour un modèle de produit donné.",
             "layout": {
-                "section.products_Section": {
+                "section.description": {
                     "label": "Détails"
                 },
-                "section.prices_section": {
+                "section.prices": {
                     "label": "Prix"
                 },
                 "section.attributes": {
