@@ -1,0 +1,21 @@
+{
+    "name": "Organisation",
+    "description": "Form holding basic information about an Organisation.",
+    "layout": {
+        "extends": {
+            "entity": "identity\\Identity",
+            "view": "form.default"
+        },
+        "update": {
+            "column.description": {
+                "append": [
+                    {
+                        "type": "field",
+                        "value": "image_document_id",
+                        "width": "50%"
+                    }
+                ]
+            }
+        }
+    }
+}

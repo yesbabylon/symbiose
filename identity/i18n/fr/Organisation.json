@@ -1,0 +1,42 @@
+{
+    "name": "Organisation",
+    "plural": "Organisations",
+    "description": "Une organisation correspond à une des entités légales utilisant le logiciel.",
+    "model": {
+        "image_document_id": {
+            "label": "Image ou Logo",
+            "description": "Image de l'organisation affiché dans les en-têtes officiels.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Organisation",
+            "description": "Formulaire de base pour l'affichage d'une organisation'.",
+            "layout": {
+                "section.identity_info": {
+                    "label": "Infos générales"
+                },
+                "section.settings": {
+                    "label": "Paramètres"
+                },
+                "section.identity_main_address": {
+                    "label": "Adresse principale"
+                },
+                "section.identity_addresses": {
+                    "label": "Autres adresses"
+                },
+                "section.identity_description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Liste d'Identité",
+            "description": "Liste de base des identités existantes.",
+            "layout": {}
+        }
+    },
+    "error": {
+    }
+}

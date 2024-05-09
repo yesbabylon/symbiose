@@ -35,7 +35,15 @@ class Organisation extends Identity {
                 'type'              => 'string',
                 'default'           => 'C',
                 'readonly'          => true
+            ],
+
+            'image_document_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'documents\Document',
+                'description'    => 'Organisation logo or picture.',
+                'help'           => 'This image is used for organisation profile and witin the invoice header.'
             ]
+
         ];
     }
 }

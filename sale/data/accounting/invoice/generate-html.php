@@ -178,18 +178,18 @@ $getOrganisationLogo = function($invoice) {
     $organisation_logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=';
     if(
         isset(
-            $invoice['organisation_id']['invoice_image_document_id']['type'],
-            $invoice['organisation_id']['invoice_image_document_id']['data']
+            $invoice['organisation_id']['image_document_id']['type'],
+            $invoice['organisation_id']['image_document_id']['data']
         )
     ) {
-        if(strpos($invoice['organisation_id']['invoice_image_document_id']['type'], 'image/') !== 0) {
+        if(strpos($invoice['organisation_id']['image_document_id']['type'], 'image/') !== 0) {
             throw new Exception('invalid_organisation_invoice_image', QN_ERROR_INVALID_PARAM);
         }
 
         $organisation_logo = sprintf(
             'data:%s;base64,%s',
-            $invoice['organisation_id']['invoice_image_document_id']['type'],
-            base64_encode($invoice['organisation_id']['invoice_image_document_id']['data'])
+            $invoice['organisation_id']['image_document_id']['type'],
+            base64_encode($invoice['organisation_id']['image_document_id']['data'])
         );
     }
 
@@ -245,7 +245,7 @@ $getInvoice = function($id, $lang) {
     $invoice_organisation_fields = [
         'legal_name', 'registration_number', 'bank_account_iban', 'bank_account_bic',
         'website', 'email', 'phone', 'fax', 'has_vat', 'vat_number',
-        'invoice_image_document_id' => ['type', 'data']
+        'image_document_id' => ['type', 'data']
     ];
 
     $invoice_lines_fields = [

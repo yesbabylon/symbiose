@@ -21,7 +21,7 @@ class Invoice extends \finance\accounting\Invoice {
     public static function getColumns() {
 
         return [
-            
+
             'invoice_number' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -33,7 +33,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => "The organization that emitted the invoice.",
                 'default'           => 1
             ],
@@ -55,7 +55,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'ondetach'          => 'delete',
                 'dependencies'      => ['total', 'price']
             ],
-            
+
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
@@ -96,7 +96,7 @@ class Invoice extends \finance\accounting\Invoice {
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%02d{org}-%05d{sequence}');
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
             $sequence = Setting::get_value('sale', 'invoice', 'sequence.'.$organisation_id,1);
-            
+
             if($sequence) {
                 // #todo - user ORM fetchAndAdd()
                 Setting::set_value('sale', 'invoice', 'sequence.'.$organisation_id, $sequence + 1);
