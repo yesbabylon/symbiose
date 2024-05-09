@@ -114,7 +114,7 @@ class Customer extends \identity\Partner {
 
             'subscriptions_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\service\Subscription',
+                'foreign_object'    => 'sale\subscription\Subscription',
                 'foreign_field'     => 'customer_id',
                 'description'       => 'List subscriptions of the customers.'
             ],

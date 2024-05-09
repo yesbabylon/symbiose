@@ -1,10 +1,12 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale;
+
 use equal\orm\Model;
 use sale\price\Price;
 use sale\price\PriceList;
@@ -209,7 +211,8 @@ class SaleEntry extends Model {
         $result = [];
         $self->read(['object_class', 'object_id']);
         foreach($self as $id => $entry) {
-            if($entry['object_class'] !== 'inventory\service\Subscription') {
+            $subscription_classes = ['sale\subscription\Subscription', 'inventory\service\Subscription'];
+            if(!in_array($entry['object_class'], $subscription_classes)) {
                 continue;
             }
 
