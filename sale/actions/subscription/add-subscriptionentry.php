@@ -1,12 +1,12 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-use inventory\service\Subscription;
-use inventory\service\SubscriptionEntry;
+use sale\subscription\Subscription;
+use sale\subscription\SubscriptionEntry;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Create an entry from a subscription.',
@@ -25,9 +25,7 @@ list($params, $providers) = eQual::announce([
     'providers'   => ['context']
 ]);
 
-/**
- * @var \equal\php\Context $context
- */
+/** @var \equal\php\Context $context */
 $context = $providers['context'];
 
 $subscription = Subscription::id($params['id'])
