@@ -249,8 +249,8 @@ $getInvoice = function($id, $lang) {
     ];
 
     $invoice_lines_fields = [
-        'product_id', 'description', 'qty', 'unit_price', 'discount',
-        'free_qty', 'vat_rate', 'total', 'price'
+        'name', 'product_id', 'description', 'qty', 'unit_price',
+        'discount', 'free_qty', 'vat_rate', 'total', 'price'
     ];
 
     $invoice_line_groups_fields = [
@@ -273,24 +273,32 @@ $getInvoice = function($id, $lang) {
 };
 
 $createInvoicePaymentQrCodeUri = function($invoice) {
+    $payment_qr_code_uri = '';
+
     if(!isset($invoice['payment_reference'])) {
         throw new Exception('no payment ref');
     }
 
     $payment_reference = DataFormatter::format($invoice['payment_reference'], 'scor');
-    $payment_data = Data::create()
-        ->setServiceTag('BCD')
-        ->setIdentification('SCT')
-        ->setName($invoice['organisation_id']['legal_name'])
-        ->setIban(str_replace(' ', '', $invoice['organisation_id']['bank_account_iban']))
-        ->setBic(str_replace(' ', '', $invoice['organisation_id']['bank_account_bic']))
-        ->setRemittanceReference($payment_reference)
-        ->setAmount($invoice['price']);
+    try {
+        $payment_data = Data::create()
+            ->setServiceTag('BCD')
+            ->setIdentification('SCT')
+            ->setName($invoice['organisation_id']['legal_name'])
+            ->setIban(str_replace(' ', '', $invoice['organisation_id']['bank_account_iban']))
+            ->setBic(str_replace(' ', '', $invoice['organisation_id']['bank_account_bic']))
+            ->setRemittanceReference($payment_reference)
+            ->setAmount($invoice['price']);
 
-    $qr_code = new QrCode($payment_data);
-    $qr_code->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM()); // required by EPC standard
+        $qr_code = new QrCode($payment_data);
+        $qr_code->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM()); // required by EPC standard
 
-    return $qr_code->writeDataUri();
+        $payment_qr_code_uri = $qr_code->writeDataUri();
+    } catch(Exception $e) {
+        trigger_error("Unable to generate payment QR code: {$e->getMessage()}", EQ_REPORT_WARNING);
+    }
+
+    return $payment_qr_code_uri;
 };
 
 $formatInvoice = function(&$invoice) {

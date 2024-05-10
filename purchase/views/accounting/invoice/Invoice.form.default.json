@@ -4,6 +4,33 @@
     "access": {
         "groups": ["purchase.default.user"]
     },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "purchase\\accounting\\invoice\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "Cancel invoice.",
+            "controller": "core_model_transition",
+            "confirm": true,
+            "visible": ["status", "=", "invoice"],
+            "params": {
+                "entity": "purchase\\accounting\\invoice\\Invoice",
+                "transition": "cancel",
+                "ids": []
+            }
+        }
+    ],
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\Invoice",
@@ -28,6 +55,13 @@
                         "width": "50%"
                     }
                 ]
+            },
+            "item.invoice_lines_ids": {
+                "attributes": {
+                    "widget": {
+                        "view": "list.default"
+                    }
+                }
             }
         }
     }

@@ -12,7 +12,7 @@
             "controller": "core_model_transition",
             "visible": ["status", "=", "proforma"],
             "params": {
-                "entity": "finance\\accounting\\Invoice",
+                "entity": "sale\\accounting\\invoice\\Invoice",
                 "transition": "invoice",
                 "ids": []
             }
@@ -25,7 +25,7 @@
             "confirm": true,
             "visible": ["status", "=", "invoice"],
             "params": {
-                "entity": "finance\\accounting\\Invoice",
+                "entity": "sale\\accounting\\invoice\\Invoice",
                 "transition": "cancel",
                 "ids": []
             }
@@ -100,6 +100,13 @@
                         "width": "33%"
                     }
                 ]
+            },
+            "item.invoice_lines_ids": {
+                "attributes": {
+                    "widget": {
+                        "view": "list.default"
+                    }
+                }
             }
         }
     }
