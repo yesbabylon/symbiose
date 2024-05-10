@@ -9,6 +9,9 @@
             "entity": "finance\\accounting\\Invoice",
             "view": "form.default"
         },
+        "remove": [
+            "item.invoice_purpose"
+        ],
         "update": {
             "item.invoice_number": {
                 "attributes": {
@@ -25,18 +28,6 @@
                         "width": "50%"
                     }
                 ]
-            },
-            "sections.invoice.lines.ids": {
-                "attributes": {
-                    "widget": {
-                        "header": {
-                            "actions": {
-                                "ACTION.SELECT": true,
-                                "ACTION.CREATE": true
-                            }
-                        }
-                    }
-                }
             }
         }
     }

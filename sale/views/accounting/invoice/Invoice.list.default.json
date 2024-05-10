@@ -5,12 +5,15 @@
         "groups": ["sale.default.user"]
     },
     "controller": "sale_accounting_invoice_collect",
-    "domain" : ["customer_id" ,">" , 0],
+    "domain" : ["customer_id", ">", 0],
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\Invoice",
             "view": "list.default"
         },
+        "remove": [
+            "item.invoice_purpose"
+        ],
         "update": {
             "item.name": {
                 "after": [

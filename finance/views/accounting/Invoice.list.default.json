@@ -2,9 +2,14 @@
     "name": "Invoices",
     "description": "This view is intended for displaying the invoices.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
     "controller": "finance_accounting_invoice-collect",
+    "header": {
+        "actions": {
+            "ACTION.CREATE": false
+        }
+    },
     "layout": {
         "items": [
             {
@@ -26,6 +31,12 @@
             {
                 "type": "field",
                 "value": "status",
+                "width": "20%"
+            },
+            {
+                "id": "item.invoice_purpose",
+                "type": "field",
+                "value": "invoice_purpose",
                 "width": "20%"
             },
             {

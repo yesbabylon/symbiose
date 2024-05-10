@@ -1,0 +1,28 @@
+{
+    "name": "Invoice Lines",
+    "description": "Displays invoice lines.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "extends": {
+            "entity": "finance\\accounting\\InvoiceLine",
+            "view": "list.default"
+        },
+        "remove": [
+            "item.name"
+        ],
+        "update": {
+            "item.group": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "product_id",
+                        "label": "Product",
+                        "width": "25%"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@
     "name": "Invoice",
     "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
     "actions": [
         {
@@ -63,21 +63,23 @@
                                                 "width": "25%"
                                             },
                                             {
+                                                "id": "item.invoice_purpose",
+                                                "type": "field",
+                                                "value": "invoice_purpose",
+                                                "width": "25%"
+                                            },
+                                            {
                                                 "type": "field",
                                                 "value": "due_date",
                                                 "width": "25%",
                                                 "visible": ["status", "<>", "cancelled"]
                                             },
                                             {
+                                                "id": "item.reversed_invoice_id",
                                                 "type": "field",
                                                 "value": "reversed_invoice_id",
                                                 "width": "33%",
                                                 "visible": ["status", "=", "cancelled"]
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_ref",
-                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -128,15 +130,7 @@
                                                 "id": "sections.invoice.lines.ids",
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false,
-                                                            "ACTION.CREATE": false
-                                                        }
-                                                    }
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }

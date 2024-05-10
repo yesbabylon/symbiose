@@ -2,7 +2,7 @@
     "name": "Invoice Accounting Entry",
     "description": "Invoice Accounting Entries.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
     "layout": {
         "groups": [

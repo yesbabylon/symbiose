@@ -8,16 +8,16 @@
             {
                 "id": "item.invoices",
                 "label": "Invoices",
-                "description": "",
+                "description": "Invoices parent menu.",
                 "icon": "receipt_long",
                 "type": "parent",
                 "children": [
                     {
-                        "id": "item.invoices.all",
+                        "id": "invoices.all",
                         "type": "entry",
-                        "label": "Invoices",
-                        "icon": "receipt_long",
-                        "description": "",
+                        "label": "All",
+                        "icon": "list",
+                        "description": "Display all invoices.",
                         "route": "/invoices",
                         "context": {
                             "entity": "finance\\accounting\\Invoice",

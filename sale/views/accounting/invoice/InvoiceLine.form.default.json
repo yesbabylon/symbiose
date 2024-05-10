@@ -10,6 +10,11 @@
             "view": "form.default"
         },
         "update": {
+            "item.name": {
+                "attributes": {
+                    "readonly": true
+                }
+            },
             "column.invoice-and-line-group": {
                 "after": [
                     {
@@ -28,6 +33,22 @@
                                 "visible": ["receivable_id", "<>", null]
                             }
                         ]
+                    }
+                ]
+            },
+            "item.unit_price": {
+                "before": [
+                    {
+                        "type": "field",
+                        "label": "Product",
+                        "value": "product_id",
+                        "width": "50%"
+                    },
+                    {
+                        "type": "field",
+                        "label": "Price",
+                        "value": "price_id",
+                        "width": "50%"
                     }
                 ]
             }

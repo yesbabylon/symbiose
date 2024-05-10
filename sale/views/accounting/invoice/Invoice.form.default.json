@@ -78,6 +78,9 @@
             "entity": "finance\\accounting\\Invoice",
             "view": "form.default"
         },
+        "remove": [
+            "item.invoice_purpose"
+        ],
         "update": {
             "item.invoice_number": {
                 "after": [
@@ -86,6 +89,15 @@
                         "label": "Customer",
                         "value": "customer_id",
                         "width": "50%"
+                    }
+                ]
+            },
+            "item.reversed_invoice_id": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "customer_ref",
+                        "width": "33%"
                     }
                 ]
             }
