@@ -33,7 +33,7 @@ class Invoice extends FinanceInvoice {
 
             'organisation_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'sale\identity\Organisation',
+                'foreign_object'    => 'identity\Organisation',
                 'description'       => 'The organization that emitted the invoice.',
                 'default'           => 1
             ],
