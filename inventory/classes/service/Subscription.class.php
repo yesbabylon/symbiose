@@ -12,14 +12,8 @@ use sale\subscription\Subscription as SaleSubscription;
 
 class Subscription extends SaleSubscription  {
 
-    public static function getColumns(): array
-    {
+    public static function getColumns(): array {
         return [
-
-            /**
-             * Override Subscription columns
-             */
-
             'customer_id' => [
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
@@ -51,10 +45,6 @@ class Subscription extends SaleSubscription  {
                 'ondetach'          => 'delete',
                 'description'       => 'Subscription entries of the subscription.'
             ],
-
-            /**
-             * Specific Inventory Subscription columns
-             */
 
             'service_id' => [
                 'type'              => 'many2one',
