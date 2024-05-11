@@ -8,6 +8,7 @@
 namespace timetrack;
 
 use equal\orm\Model;
+use sale\price\Price;
 
 class TimeEntrySaleModel extends Model {
 
@@ -16,8 +17,8 @@ class TimeEntrySaleModel extends Model {
     }
 
     public static function getDescription(): string {
-        return 'A time entry sale model allows to auto set a time entry sale related fields (product_id, price_id and unit_price),'
-            .' when the time entry origin and project are matching a sale model.';
+        return "A time entry sale model allows to auto set a time entry sale fields (product_id, price_id and unit_price),
+            when the time entry origin and project are matching a sale model.";
     }
 
     public static function getColumns(): array {
@@ -114,4 +115,12 @@ class TimeEntrySaleModel extends Model {
         return $sale_model_to_apply;
     }
 
+    public static function onchange($event) {
+        $result = [];
+        if(isset($event['price_id'])) {
+            $price = Price::id($event['price_id'])->read(['price'])->first();
+            $result['unit_price'] = $price['price'];
+        }
+        return $result;
+    }
 }
