@@ -47,7 +47,7 @@
                                                         "actions": {
                                                             "ACTION.SELECT": true,
                                                             "ACTION.CREATE": false
-                                                        }    
+                                                        }
                                                     }
                                                 }
                                             }
