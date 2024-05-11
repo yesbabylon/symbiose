@@ -210,15 +210,6 @@ class Partner extends Model {
         ];
     }
 
-    /*
-    // #memo - we must allow duplicates since the identity might be created afterward (partner_identity_id = NULL)
-    public function getUnique() {
-        return [
-            ['owner_identity_id', 'partner_identity_id', 'relationship']
-        ];
-    }
-    */
-
     public static function calcType($self) {
         $result = [];
         $self->read(['type_id' => ['code']]);
@@ -263,14 +254,17 @@ class Partner extends Model {
 
     public static function onafterupdate($self, $values) {
         $self->read([
-                'partner_identity_id',
+                'partner_identity_id', 'state',
                 'type_id', 'has_vat', 'vat_number', 'legal_name', 'firstname', 'lastname',
                 'email', 'phone', 'mobile', 'fax',
                 'address_street', 'address_dispatch', 'address_zip', 'address_city', 'address_state', 'address_country'
             ]);
 
         foreach($self as $id => $partner) {
-            if(is_null($partner['partner_identity_id']) && $partner['state'] !== 'draft') {
+            if($partner['state'] == 'draft') {
+                continue;
+            }
+            if(is_null($partner['partner_identity_id'])) {
                 $identity = Identity::create([
                         'type_id'           => $partner['type_id'],
                         'has_vat'           => $partner['has_vat'],
@@ -293,6 +287,11 @@ class Partner extends Model {
                     ->first();
 
                 self::id($id)->update(['partner_identity_id' => $identity['id']]);
+            }
+            else {
+                foreach($values as $field => $value) {
+                    Identity::id($partner['partner_identity_id'])->update([$field => $value]);
+                }
             }
         }
     }

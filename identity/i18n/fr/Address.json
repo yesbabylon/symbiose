@@ -30,8 +30,8 @@
             "help": ""
         },
         "address_street": {
-            "label": "Rue d'adresse",
-            "description": "Rue et numéro.",
+            "label": "Rue",
+            "description": "Rue et numéro de l'adresse.",
             "help": ""
         },
         "address_dispatch": {
@@ -41,7 +41,7 @@
         },
         "address_city": {
             "label": "Ville",
-            "description": "Ville.",
+            "description": "Ville de l'adresse (agglomération).",
             "help": ""
         },
         "address_zip": {
@@ -56,7 +56,7 @@
         },
         "address_country": {
             "label": "Pays",
-            "description": "Pays.",
+            "description": "Code ISO 3166 du pays.",
             "help": ""
         }
     },
