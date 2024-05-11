@@ -92,7 +92,7 @@
                 "sections": [
                     {
                         "id": "section.time-entry-details",
-                        "label": "Details",
+                        "label": "Info",
                         "rows": [
                             {
                                 "columns": [

@@ -19,16 +19,10 @@
         "items": [
             {
                 "type": "field",
-                "value": "id",
+                "value": "name",
                 "width": "5%",
                 "sortable": true,
                 "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "description",
-                "width": "15%",
-                "sortable": true
             },
             {
                 "type": "field",
