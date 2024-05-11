@@ -69,14 +69,14 @@
                                                 "label": "Price",
                                                 "value": "price_id",
                                                 "width": "100%",
-                                                "visible": ["product_id", "is not", null]
+                                                "visible": ["product_id", "<>", null]
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Unit price",
                                                 "value": "unit_price",
                                                 "width": "100%",
-                                                "visible": ["price_id", "is not", null]
+                                                "visible": ["price_id", "<>", null]
                                             }
                                         ]
                                     }
