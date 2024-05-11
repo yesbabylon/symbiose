@@ -32,7 +32,7 @@ class SaleEntry extends Model {
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Description of the entry.',
-                'dependencies'      => ['name']
+                'dependents'      => ['name']
             ],
 
             'name' => [

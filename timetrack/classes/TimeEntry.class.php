@@ -38,6 +38,12 @@ class TimeEntry extends SaleEntry {
                 'function'          => 'calcName'
             ],
 
+            'description' => [
+                'type'              => 'string',
+                'description'       => 'Short description of the task performed.',
+                'dependents'        => ['name']
+            ],
+
             'project_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
@@ -466,22 +472,14 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['origin', 'ticket_id', 'project_id' => ['instance_id' => ['url']]]);
         foreach($self as $id => $entry) {
-            if(
-                $entry['origin'] !== 'support'
-                || is_null($entry['ticket_id'])
-                || empty($entry['project_id']['instance_id']['url'])
-            ) {
-                continue;
+            if($entry['origin'] == 'support') {
+                $instance_url = $entry['project_id']['instance_id']['url'] ?? '';
+                if(substr($instance_url, -1) !== '/') {
+                    $instance_url .= '/';
+                }
+                $result[$id] = $instance_url.'support/#/ticket/'.$entry['ticket_id'];
             }
-
-            $instance_url = $entry['project_id']['instance_id']['url'];
-            if(substr($instance_url, -1) !== '/') {
-                $instance_url .= '/';
-            }
-
-            $result[$id] = $instance_url.'support/#/ticket/'.$entry['ticket_id'];
         }
-
         return $result;
     }
 
