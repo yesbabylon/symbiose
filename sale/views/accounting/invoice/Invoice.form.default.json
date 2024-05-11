@@ -12,7 +12,7 @@
             "controller": "core_model_transition",
             "visible": ["status", "=", "proforma"],
             "params": {
-                "entity": "finance\\accounting\\Invoice",
+                "entity": "sale\\accounting\\invoice\\Invoice",
                 "transition": "invoice",
                 "ids": []
             }
@@ -25,7 +25,7 @@
             "confirm": true,
             "visible": ["status", "=", "invoice"],
             "params": {
-                "entity": "finance\\accounting\\Invoice",
+                "entity": "sale\\accounting\\invoice\\Invoice",
                 "transition": "cancel",
                 "ids": []
             }
@@ -78,6 +78,9 @@
             "entity": "finance\\accounting\\Invoice",
             "view": "form.default"
         },
+        "remove": [
+            "item.invoice_purpose"
+        ],
         "update": {
             "item.invoice_number": {
                 "after": [
@@ -88,6 +91,22 @@
                         "width": "50%"
                     }
                 ]
+            },
+            "item.reversed_invoice_id": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "customer_ref",
+                        "width": "33%"
+                    }
+                ]
+            },
+            "item.invoice_lines_ids": {
+                "attributes": {
+                    "widget": {
+                        "view": "list.default"
+                    }
+                }
             }
         }
     }

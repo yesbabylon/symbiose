@@ -2,35 +2,13 @@
     "name": "Invoice",
     "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
-    "actions": [
-        {
-            "id": "action.invoice",
-            "label": "Invoice",
-            "description": "To Invoice.",
-            "controller": "core_model_transition",
-            "visible": ["status", "=", "proforma"],
-            "params": {
-                "entity": "finance\\accounting\\Invoice",
-                "transition": "invoice",
-                "ids": []
-            }
-        },
-        {
-            "id": "action.cancel",
-            "label": "Cancel",
-            "description": "Cancel invoice.",
-            "controller": "core_model_transition",
-            "confirm": true,
-            "visible": ["status", "=", "invoice"],
-            "params": {
-                "entity": "finance\\accounting\\Invoice",
-                "transition": "cancel",
-                "ids": []
-            }
+    "header": {
+        "actions": {
+            "ACTION.EDIT": false
         }
-    ],
+    },
     "layout": {
         "groups": [
             {
@@ -63,21 +41,23 @@
                                                 "width": "25%"
                                             },
                                             {
+                                                "id": "item.invoice_purpose",
+                                                "type": "field",
+                                                "value": "invoice_purpose",
+                                                "width": "25%"
+                                            },
+                                            {
                                                 "type": "field",
                                                 "value": "due_date",
                                                 "width": "25%",
                                                 "visible": ["status", "<>", "cancelled"]
                                             },
                                             {
+                                                "id": "item.reversed_invoice_id",
                                                 "type": "field",
                                                 "value": "reversed_invoice_id",
                                                 "width": "33%",
                                                 "visible": ["status", "=", "cancelled"]
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_ref",
-                                                "width": "100%"
                                             }
                                         ]
                                     },
@@ -125,11 +105,12 @@
                                         "width": "100%",
                                         "items": [
                                             {
-                                                "id": "sections.invoice.lines.ids",
+                                                "id": "item.invoice_lines_ids",
                                                 "type": "field",
                                                 "value": "invoice_lines_ids",
                                                 "width": "100%",
                                                 "widget": {
+                                                    "view": "list.default",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": false,

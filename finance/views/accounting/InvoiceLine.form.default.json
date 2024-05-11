@@ -2,7 +2,7 @@
     "name": "Invoice Line",
     "description": "Invoice lines describe the products and quantities that are part of an invoice.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
      },
     "layout": {
         "groups": [
@@ -14,19 +14,33 @@
                                 "columns": [
                                     {
                                         "id": "column.invoice-and-line-group",
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
+                                            {
+                                                "id": "item.name",
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "33%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "15%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Invoice",
                                                 "value": "invoice_id",
-                                                "width": "50%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Group",
                                                 "value": "invoice_line_group_id",
-                                                "width": "50%"
+                                                "width": "25%",
+                                                "domain": ["invoice_id", "=", "object.invoice_id"]
                                             }
                                         ]
                                     }
@@ -48,35 +62,16 @@
                                         "width": "50%",
                                         "items": [
                                             {
-                                                "type": "field",
-                                                "label": "Product",
-                                                "value": "product_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Price",
-                                                "value": "price_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "width": "50%"
-                                            },
-                                            {
+                                                "id": "item.unit_price",
                                                 "type": "field",
                                                 "value": "unit_price",
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
-                                                "width": "33%"
+                                                "width": "50%"
                                             }
                                         ]
                                     },

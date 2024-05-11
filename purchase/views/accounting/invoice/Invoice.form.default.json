@@ -4,11 +4,41 @@
     "access": {
         "groups": ["purchase.default.user"]
     },
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "To Invoice.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "purchase\\accounting\\invoice\\Invoice",
+                "transition": "invoice",
+                "ids": []
+            }
+        },
+        {
+            "id": "action.cancel",
+            "label": "Cancel",
+            "description": "Cancel invoice.",
+            "controller": "core_model_transition",
+            "confirm": true,
+            "visible": ["status", "=", "invoice"],
+            "params": {
+                "entity": "purchase\\accounting\\invoice\\Invoice",
+                "transition": "cancel",
+                "ids": []
+            }
+        }
+    ],
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\Invoice",
             "view": "form.default"
         },
+        "remove": [
+            "item.invoice_purpose"
+        ],
         "update": {
             "item.invoice_number": {
                 "attributes": {
@@ -26,15 +56,10 @@
                     }
                 ]
             },
-            "sections.invoice.lines.ids": {
+            "item.invoice_lines_ids": {
                 "attributes": {
                     "widget": {
-                        "header": {
-                            "actions": {
-                                "ACTION.SELECT": true,
-                                "ACTION.CREATE": true
-                            }
-                        }
+                        "view": "list.default"
                     }
                 }
             }

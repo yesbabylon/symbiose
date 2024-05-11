@@ -2,7 +2,7 @@
     "name": "Accounting entries",
     "description": "Invoice accounting entries.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
     "operations": {
         "total": {

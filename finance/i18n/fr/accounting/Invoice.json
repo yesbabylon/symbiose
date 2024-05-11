@@ -32,6 +32,15 @@
             },
             "help": ""
         },
+        "invoice_purpose": {
+            "label": "Objet",
+            "description": "Objet de la facture (vente ou achat).",
+            "selection": {
+                "sell": "vente",
+                "buy": "achat"
+            },
+            "help": ""
+        },
         "invoice_number": {
             "label": "Numéro de la facture",
             "description": "Numéro de la facture, selon la logique d'organisation.",

@@ -1,13 +1,15 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
-namespace sale\booking;
-use core\setting\Setting;
 
-class Invoice extends \finance\accounting\Invoice {
+namespace sale\booking;
+
+use sale\accounting\invoice\Invoice as SaleInvoice;
+
+class Invoice extends SaleInvoice {
 
     public static function getColumns() {
 

@@ -1,30 +1,30 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace finance\accounting;
+
 use equal\orm\Model;
 
 class InvoiceLine extends Model {
 
     public static function getName() {
-        return "Invoice line";
+        return 'Invoice line';
     }
 
     public static function getDescription() {
-        return "Invoice lines describe the products and quantities that are part of an invoice.";
+        return 'Invoice lines describe the products and quantities that are part of an invoice.';
     }
 
     public static function getColumns() {
         return [
             'name' => [
-                'type'              => 'computed',
-                'result_type'       => 'string',
-                'description'       => 'Default label of the line, based on product (computed).',
-                'function'          => 'calcName',
-                'store'             => true
+                'type'              => 'string',
+                'description'       => 'Default label of the line.',
+                'required'          => true
             ],
 
             'description' => [
@@ -36,7 +36,8 @@ class InvoiceLine extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\InvoiceLineGroup',
                 'description'       => 'Group related (to their invoice) for lines.',
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'cascade',
+                'domain'            => ['invoice_id', '=', 'object.invoice_id']
             ],
 
             'invoice_id' => [
@@ -48,28 +49,10 @@ class InvoiceLine extends Model {
                 'ondelete'          => 'cascade'
             ],
 
-            'product_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\catalog\Product',
-                'description'       => 'The product (SKU) the line relates to.',
-                'required'          => true,
-                'dependencies'      => ['name']
-            ],
-
-            'price_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\price\Price',
-                'description'       => 'The price the line relates to (assigned at line creation).',
-                'onupdate'          => 'onupdatePriceId'
-            ],
-
             'unit_price' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
+                'type'              => 'float',
                 'usage'             => 'amount/money:4',
-                'description'       => 'Unit price of the product related to the line.',
-                'function'          => 'finance\accounting\InvoiceLine::calcUnitPrice',
-                'store'             => true
+                'description'       => 'Unit price of the product related to the line.'
             ],
 
             'vat_rate' => [
@@ -133,24 +116,6 @@ class InvoiceLine extends Model {
         ];
     }
 
-    public static function calcName($self) {
-        $result = [];
-        $self->read(['product_id' => ['name']]);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['product_id']['name'];
-        }
-        return $result;
-    }
-
-    public static function calcUnitPrice($self) {
-        $result = [];
-        $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $line) {
-            $result[$id] = $line['price_id']['price'];
-        }
-        return $result;
-    }
-
     public static function calcVatRate($self) {
         $result = [];
         $self->read(['price_id' => ['accounting_rule_id' => ['vat_rule_id' => ['rate']]]]);
@@ -188,12 +153,6 @@ class InvoiceLine extends Model {
         $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
     }
 
-    public static function onupdatePriceId($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
-    }
-
     public static function onupdateVatRate($om, $ids, $values, $lang) {
         $om->update(get_called_class(), $ids, ['price' => null]);
         // reset parent invoice computed values
@@ -224,5 +183,44 @@ class InvoiceLine extends Model {
             $invoices_ids = array_map(function($a) {return $a['invoice_id'];}, $lines);
             $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
         }
+    }
+
+    public function canupdate($orm, $ids = [], $values = [], $lang = 'en'): array {
+        $res = $orm->read(self::getType(), $ids, ['invoice_id']);
+
+        if($res > 0) {
+            foreach($res as $invoice_line) {
+                if(
+                    isset($invoice_line['invoice_id'], $values['invoice_id'])
+                    && $invoice_line['invoice_id'] !== $values['invoice_id']
+                ) {
+                    return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
+                }
+
+                $invoice_id = $invoice_line['invoice_id'] ?? $values['invoice_id'];
+                if(isset($invoice_id)) {
+                    $invoice = Invoice::id($invoice_id)
+                        ->read(['status'])
+                        ->first();
+
+                    if($invoice['status'] !== 'proforma') {
+                        return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
+                    }
+                }
+
+                $group_id = $invoice_line['invoice_line_group_id'] ?? $values['invoice_line_group_id'];
+                if(isset($group_id)) {
+                    $group = InvoiceLineGroup::id($group_id)
+                        ->read(['invoice_id'])
+                        ->first();
+
+                    if($group['invoice_id'] !== $invoice_line['invoice_id']) {
+                        return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
+                    }
+                }
+            }
+        }
+
+        return parent::canupdate($orm, $ids, $values, $lang);
     }
 }

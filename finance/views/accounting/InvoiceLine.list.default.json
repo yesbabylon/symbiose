@@ -1,8 +1,8 @@
 {
     "name": "Invoice Lines",
-    "description": "This view is intented for displaying the invoice lines.",
+    "description": "This view is intended for displaying the invoice lines.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
     },
     "operations": {
         "total": {
@@ -16,15 +16,16 @@
     "layout": {
         "items": [
             {
+                "id": "item.group",
                 "type": "field",
                 "label": "Group",
                 "value": "invoice_line_group_id",
                 "width": "25%"
             },
             {
+                "id": "item.name",
                 "type": "field",
-                "label": "Product",
-                "value": "product_id",
+                "value": "name",
                 "width": "25%"
             },
             {

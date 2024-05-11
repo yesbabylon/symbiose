@@ -1,8 +1,8 @@
 {
     "name": "Invoice Line Groups",
-    "description": "This view is intented for displaying the invoice line groups.",
+    "description": "This view is intended for displaying the invoice line groups.",
     "access": {
-        "groups": ["finance.default.user", "sale.default.user"]
+        "groups": ["finance.default.user"]
      },
     "layout": {
         "items": [

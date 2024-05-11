@@ -1,12 +1,15 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace purchase\accounting\invoice;
 
-class InvoiceLine extends \finance\accounting\InvoiceLine {
+use finance\accounting\InvoiceLine as FinanceInvoiceLine;
+
+class InvoiceLine extends FinanceInvoiceLine {
 
     public static function getColumns() {
         return [
@@ -14,7 +17,8 @@ class InvoiceLine extends \finance\accounting\InvoiceLine {
                 'type'              => 'many2one',
                 'foreign_object'    => 'purchase\accounting\invoice\InvoiceLineGroup',
                 'description'       => 'Group the line relates to (in turn, groups relate to their invoice).',
-                'ondelete'          => 'cascade'
+                'ondelete'          => 'cascade',
+                'domain'            => ['invoice_id', '=', 'object.invoice_id']
             ],
 
             'invoice_id' => [
