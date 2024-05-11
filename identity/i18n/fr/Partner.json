@@ -28,6 +28,18 @@
             "description": "Rôle du contact au sein de l'organisation.",
             "help": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional)."
         },
+        "type": {
+            "label": "Type",
+            "description": "Type d'organisation.",
+            "selection": {
+                "I": "Particulier",
+                "SE": "Travailleur indépendant",
+                "C": "Entreprise",
+                "NP": "Association à but non lucratif",
+                "PA": "Administration publique"
+            },
+            "help": ""
+        },
         "type_id": {
             "label": "Type",
             "description": "Type de identité.",
@@ -49,6 +61,66 @@
         "lang_id": {
             "label": "Langue",
             "description": "Langue du client (en lien avec son identité).",
+            "help": ""
+        },
+        "firstname": {
+            "label": "Prénom",
+            "description": "Nom complet du contact (doit être une personne, pas un rôle).",
+            "help": ""
+        },
+        "lastname": {
+            "label": "Nom",
+            "description": "Nom.",
+            "help": ""
+        },
+        "legal_name": {
+            "label": "Nom légal",
+            "description": "Nom complet de l'Identité.",
+            "help": ""
+        },
+        "short_name": {
+            "label": "Nom usuel",
+            "description": "Nom utilisé en interne pour identifier l'organisation.",
+            "help": "Le nom usuel n'est jamais présenté au client et peut contenir tout caractère ou mot permettant de faciliter l'identification de l'organisation (acronyme ou nom abrégé)."
+        },
+        "address_street": {
+            "label": "Rue",
+            "description": "Rue et numéro.",
+            "help": ""
+        },
+        "address_dispatch": {
+            "label": "Complément d'adresse",
+            "description": "Infos optionnelles pour l'envoi du courrier.",
+            "help": "Infos optionnelles pour l'envoi du courrier (appartement, boite, étage, ...)."
+        },
+        "address_city": {
+            "label": "Ville",
+            "description": "Ville.",
+            "help": ""
+        },
+        "address_zip": {
+            "label": "Code Postal",
+            "description": "Code Postal.",
+            "help": ""
+        },
+        "address_state": {
+            "label": "État",
+            "description": "État ou région.",
+            "help": ""
+        },
+        "address_country": {
+            "label": "Pays",
+            "description": "Pays.",
+            "help": ""
+        },
+        "email": {
+            "label": "Email",
+            "description": "Adresse e-mail principale.",
+            "help": ""
+        },
+        "phone": {
+            "label": "Numéro de téléphone",
+            "description": "Numéro de téléphone.",
             "help": ""
         }
     },
