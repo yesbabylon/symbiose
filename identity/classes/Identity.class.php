@@ -5,18 +5,16 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace identity;
+
 use equal\orm\Model;
 use hr\employee\Employee;
-use purchase\supplier\Supplier;
 use sale\customer\Customer;
+use purchase\supplier\Supplier;
 
 /**
  * This class is meant to be used as an interface for other entities (organisation and partner).
  */
 class Identity extends Model {
-
-    // Identity id of the company who uses this instance of Symbiose
-    const OWNER_IDENTITY_ID = 1;
 
     public static function getName() {
         return "Identity";
@@ -383,35 +381,40 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity, if any.',
-                'visible'           => ['type', '=', 'I']
+                'visible'           => ['type', '=', 'I'],
+                'onupdate'          => 'onupdateUserId'
             ],
 
             'customer_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Customer associated to this identity, if any.'
+                'description'       => 'Customer associated to this identity, if any.',
+                'onupdate'          => 'onupdateCustomerId'
             ],
 
             'supplier_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'purchase\supplier\Supplier',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Supplier associated to this identity, if any.'
+                'description'       => 'Supplier associated to this identity, if any.',
+                'onupdate'          => 'onupdateSupplierId'
             ],
 
             'contact_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Contact',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Contact associated to this identity, if any.'
+                'description'       => 'Contact associated to this identity, if any.',
+                'onupdate'          => 'onupdateContactId'
             ],
 
             'employee_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'hr\employee\Employee',
                 'foreign_field'     => 'partner_identity_id',
-                'description'       => 'Employee associated to this identity, if any.'
+                'description'       => 'Employee associated to this identity, if any.',
+                'onupdate'          => 'onupdateEmployeeId'
             ]
 
         ];
@@ -541,22 +544,53 @@ class Identity extends Model {
         self::_updateField($self, 'address_country');
     }
 
-    /**
-     * When a reference partner is given, add it to the identity's contacts list.
-     */
-    public static function onupdateReferencePartnerId($om, $oids, $values, $lang) {
-        $identities = $om->read(self::getType(), $oids, ['reference_partner_id', 'reference_partner_id.partner_identity_id', 'contacts_ids.partner_identity_id'], $lang);
+    public static function onupdateUserId($self) {
+        $self->read(['user_id']);
+        foreach($self as $id => $identity) {
+            User::id($identity['user_id'])->update(['identity_id' => $id]);
+        }
+    }
 
-        if($identities > 0) {
-            foreach($identities as $oid => $identity) {
-                if(!in_array($identity['reference_partner_id.partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $identity['contacts_ids.partner_identity_id']))) {
-                    // create a contact with the customer as 'booking' contact
-                    $om->create('identity\Partner', [
-                        'owner_identity_id'     => $oid,
-                        'partner_identity_id'   => $identity['reference_partner_id.partner_identity_id'],
-                        'relationship'          => 'contact'
+    public static function onupdateContactId($self) {
+        $self->read(['contact_id']);
+        foreach($self as $id => $identity) {
+            Contact::id($identity['contact_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    public static function onupdateEmployeeId($self) {
+        $self->read(['employee_id']);
+        foreach($self as $id => $identity) {
+            Employee::id($identity['employee_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    public static function onupdateSupplierId($self) {
+        $self->read(['supplier_id']);
+        foreach($self as $id => $identity) {
+            Supplier::id($identity['supplier_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    public static function onupdateCustomerId($self) {
+        $self->read(['customer_id']);
+        foreach($self as $id => $identity) {
+            Customer::id($identity['customer_id'])->update(['partner_identity_id' => $id]);
+        }
+    }
+
+    /**
+     * When a reference partner is given, add it to the identity's contacts, if not already present
+     */
+    public static function onupdateReferencePartnerId($self) {
+        $self->read(['reference_partner_id', 'reference_partner_id' => 'partner_identity_id', 'contacts_ids' => 'partner_identity_id']);
+        foreach($self as $id => $identity) {
+            if(!in_array($identity['reference_partner_id']['partner_identity_id'], array_map( function($a) { return $a['partner_identity_id']; }, $identity['contacts_ids']))) {
+                // create a contact with the customer as 'booking' contact
+                Contact::create([
+                        'owner_identity_id'     => $id,
+                        'partner_identity_id'   => $identity['reference_partner_id']['partner_identity_id']
                     ]);
-                }
             }
         }
     }
@@ -588,14 +622,14 @@ class Identity extends Model {
      * This method can be overridden to define a more precise set of tests.
      *
      * @param  object   $om         ObjectManager instance.
-     * @param  array    $oids       List of objects identifiers.
+     * @param  array    $ids       List of objects identifiers.
      * @param  array    $values     Associative array holding the new values to be assigned.
      * @param  string   $lang       Language in which multilang fields are being updated.
      * @return array    Returns an associative array mapping fields with their error messages. En empty array means that object has been successfully processed and can be updated.
      */
-    public static function canupdate($om, $oids, $values, $lang='en') {
+    public static function canupdate($om, $ids, $values, $lang='en') {
         if(isset($values['type_id'])) {
-            $identities = $om->read(get_called_class(), $oids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
+            $identities = $om->read(get_called_class(), $ids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
             foreach($identities as $oid => $identity) {
                 if($values['type_id'] == 1) {
                     $firstname = '';
@@ -634,7 +668,7 @@ class Identity extends Model {
                 }
             }
         }
-        return parent::canupdate($om, $oids, $values, $lang);
+        return parent::canupdate($om, $ids, $values, $lang);
     }
 
     public static function getConstraints() {
