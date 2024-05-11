@@ -50,7 +50,8 @@ class Project extends Model {
             'time_entry_sale_model_id' => [
                 'type'            => 'many2one',
                 'foreign_object'  => 'timetrack\TimeEntrySaleModel',
-                'foreign_field'   => 'projects_ids'
+                'foreign_field'   => 'projects_ids',
+                'required'        => true
             ]
 
         ];

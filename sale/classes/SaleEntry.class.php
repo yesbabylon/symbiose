@@ -111,7 +111,7 @@ class SaleEntry extends Model {
             'object_id' => [
                 'type'              => 'integer',
                 'description'       => 'Identifier of the object the sale entry originates from.',
-                'dependencies'      => ['subscription_id', 'project_id']
+                'dependents'        => ['subscription_id', 'project_id']
             ],
 
             'subscription_id' => [
@@ -209,13 +209,8 @@ class SaleEntry extends Model {
 
     public static function calcSubscriptionId($self) {
         $result = [];
-        $self->read(['object_class', 'object_id']);
+        $self->read(['object_id']);
         foreach($self as $id => $entry) {
-            $subscription_classes = ['sale\subscription\Subscription', 'inventory\service\Subscription'];
-            if(!in_array($entry['object_class'], $subscription_classes)) {
-                continue;
-            }
-
             $result[$id] = $entry['object_id'];
         }
         return $result;
@@ -223,12 +218,8 @@ class SaleEntry extends Model {
 
     public static function calcProjectId($self) {
         $result = [];
-        $self->read(['object_class', 'object_id']);
+        $self->read(['object_id']);
         foreach($self as $id => $entry) {
-            if($entry['object_class'] !== 'timetrack\Project') {
-                continue;
-            }
-
             $result[$id] = $entry['object_id'];
         }
         return $result;

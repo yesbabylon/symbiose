@@ -22,7 +22,7 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function getDescription(): string {
-        return 'A time entry records a duration of time an employee spent on a task related to a customer\'s project.';
+        return 'Time entries are used to log the tasks performed by employees on customers projects, and the duration spent on it.';
     }
 
     public static function getColumns(): array {
@@ -48,7 +48,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependents'     => ['ticket_link'],
+                'dependents'     => ['ticket_link', 'product_id', 'price_id', 'unit_price'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -201,7 +201,7 @@ class TimeEntry extends SaleEntry {
                 $current_hour = (int) $dateTime->format('H');
             }
             catch(Exception $e) {
-                trigger_error('PHP::error getting time zone current hour', EQ_REPORT_DEBUG);
+                trigger_error('PHP::error getting time zone current hour', EQ_REPORT_WARNING);
             }
         }
 
@@ -244,38 +244,6 @@ class TimeEntry extends SaleEntry {
     public static function onchange($event, $values): array {
         $result = [];
 
-        if( isset($event['project_id'], $values['origin'])
-            || isset($event['origin'], $values['project_id'])
-        ) {
-            $sale_model = TimeEntrySaleModel::getModelToApply(
-                $event['origin'] ?? $values['origin'],
-                $event['project_id'] ?? $values['project_id']
-            );
-
-            if(!is_null($sale_model)) {
-                $product = null;
-                if(!is_null($sale_model['product_id'])) {
-                    $product = Product::id($sale_model['product_id'])
-                        ->read(['id', 'name'])
-                        ->first();
-                }
-
-                $price = null;
-                if(!is_null($sale_model['price_id'])) {
-                    $price = Price::id($sale_model['price_id'])
-                        ->read(['id', 'name'])
-                        ->first();
-                }
-
-                $result = [
-                    'product_id'  => $product,
-                    'price_id'    => $price,
-                    'unit_price'  => $sale_model['unit_price'],
-                    'is_billable' => true
-                ];
-            }
-        }
-
         if(isset($event['origin'])) {
             if(!in_array($event['origin'], ['backlog', 'email'])) {
                 $result['reference'] = null;
@@ -295,8 +263,7 @@ class TimeEntry extends SaleEntry {
         }
 
         if( isset($event['time_start'], $values['time_end'])
-            || isset($event['time_end'], $values['time_start'])
-        ) {
+            || isset($event['time_end'], $values['time_start']) ) {
             $time_start = $event['time_start'] ?? $values['time_start'];
             $time_end = $event['time_end'] ?? $values['time_end'];
 
@@ -311,26 +278,18 @@ class TimeEntry extends SaleEntry {
             $result['time_end'] = $values['time_start'] + $event['duration'];
         }
 
-        if(isset($event['price_id'])) {
-            $price = Price::id($event['price_id'])
-                ->read(['price'])
-                ->first();
-
-            $result['unit_price'] = $price['price'];
-        }
-
         return $result;
     }
 
     public static function onupdateProjectId($self): void {
-        $self->read(['object_id', 'project_id']);
+        $self->read(['object_id', 'object_class', 'project_id']);
         foreach($self as $id => $entry) {
-            if($entry['object_id'] === $entry['project_id']) {
-                continue;
+            if($entry['object_id'] != $entry['project_id'] || $entry['object_id'] != Project::getType()) {
+                self::id($id)->update([
+                        'object_id'     => $entry['project_id'],
+                        'object_class'  => Project::getType()
+                    ]);
             }
-
-            TimeEntry::id($id)
-                ->update(['object_id' => $entry['project_id']]);
         }
     }
 
@@ -354,69 +313,28 @@ class TimeEntry extends SaleEntry {
 
     public static function calcProductId($self): array {
         $result = [];
-        $self->read(['project_id', 'origin']);
+        $self->read(['project_id' => ['time_entry_sale_model_id' => 'product_id']]);
         foreach($self as $id => $entry) {
-            if(!isset($entry['origin'], $entry['project_id'])) {
-                continue;
-            }
-
-            $sale_model = TimeEntrySaleModel::getModelToApply(
-                $entry['origin'],
-                $entry['project_id']
-            );
-            if(is_null($sale_model['product_id'])) {
-                continue;
-            }
-
-            $result[$id] = $sale_model['product_id'];
+            $result[$id] = $entry['project_id']['time_entry_sale_model_id']['product_id'] ?? null;
         }
-
         return $result;
     }
 
     public static function calcPriceId($self): array {
         $result = [];
-        $self->read(['project_id', 'origin']);
+        $self->read(['project_id' => ['time_entry_sale_model_id' => 'price_id']]);
         foreach($self as $id => $entry) {
-            if(!isset($entry['origin'], $entry['project_id'])) {
-                continue;
-            }
-
-            $sale_model = TimeEntrySaleModel::getModelToApply(
-                $entry['origin'],
-                $entry['project_id']
-            );
-            if(is_null($sale_model['price_id'])) {
-                continue;
-            }
-
-            $result[$id] = $sale_model['price_id'];
+            $result[$id] = $entry['project_id']['time_entry_sale_model_id']['price_id'] ?? null;
         }
-
         return $result;
     }
 
     public static function calcUnitPrice($self): array {
         $result = [];
-        $self->read(['project_id', 'origin', 'price_id' => ['price']]);
+        $self->read(['project_id' => ['time_entry_sale_model_id' => 'unit_price']]);
         foreach($self as $id => $entry) {
-            if(!isset($entry['origin'], $entry['project_id'])) {
-                continue;
-            }
-
-            $sale_model = TimeEntrySaleModel::getModelToApply(
-                $entry['origin'],
-                $entry['project_id']
-            );
-
-            if(isset($sale_model['unit_price'])) {
-                $result[$id] = $sale_model['unit_price'];
-            }
-            elseif(isset($entry['price_id']['price'])) {
-                $result[$id] = $entry['price_id']['price'];
-            }
+            $result[$id] = $entry['project_id']['time_entry_sale_model_id']['unit_price'] ?? null;
         }
-
         return $result;
     }
 
@@ -490,7 +408,7 @@ class TimeEntry extends SaleEntry {
                 'function'    => 'isReadyForValidation'
             ],
             'billable' => [
-                'description' => 'Verifies that time entry is billable.',
+                'description' => 'Verifies that time entry holds all information required for invoicing.',
                 'function'    => 'isBillable'
             ]
         ];
@@ -500,10 +418,8 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {
-            if(
-                !isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
-                || $entry['duration'] <= 0
-            ) {
+            if(!isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
+                || $entry['duration'] <= 0) {
                 $result[$id] = false;
             }
         }
@@ -515,10 +431,8 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['product_id', 'price_id', 'unit_price', 'is_billable']);
         foreach($self as $id => $entry) {
-            if(
-                !isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
-                || !$entry['is_billable']
-            ) {
+            if(!isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
+                || !$entry['is_billable']) {
                 $result[$id] = false;
             }
         }
@@ -534,9 +448,6 @@ class TimeEntry extends SaleEntry {
             }
             catch (Exception $e) {
                 trigger_error("PHP::Failed adding receivable for time entry {$entry['id']}", EQ_REPORT_ERROR);
-
-                TimeEntry::id($entry['id'])
-                    ->update(['status' => 'validated']);
             }
         }
     }

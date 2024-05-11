@@ -239,7 +239,10 @@
                                                 "type": "field",
                                                 "value": "product_id",
                                                 "label": "Product (Catalog)",
-                                                "width": "75%"
+                                                "width": "75%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }
@@ -254,13 +257,19 @@
                                                 "type": "field",
                                                 "value": "price_id",
                                                 "label": "Price",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "unit_price",
                                                 "label": "Unit price",
-                                                "width": "25%"
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }

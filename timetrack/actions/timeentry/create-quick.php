@@ -16,7 +16,7 @@ list($params, $providers) = eQual::announce([
         'user_id'    => [
             'type'           => 'many2one',
             'foreign_object' => 'core\User',
-            'description'    => 'User who realised the time entry.',
+            'description'    => 'User who performed the time entry.',
             'required'       => true
         ],
 
@@ -57,7 +57,7 @@ $user = User::id($params['user_id'])
     ->first();
 
 if(!isset($user)) {
-    throw new Exception('unknown_user', QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception('unknown_user', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
 $project = Project::id($params['project_id'])
@@ -65,7 +65,7 @@ $project = Project::id($params['project_id'])
     ->first();
 
 if(!isset($project)) {
-    throw new Exception('unknown_project', QN_ERROR_UNKNOWN_OBJECT);
+    throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
 $sale_model = null;
@@ -79,15 +79,10 @@ if(isset($params['origin'], $params['project_id'])) {
 TimeEntry::create([
     'description' => 'New entry '.date('Y-m-d H:m:s', time()),
     'user_id'     => $params['user_id'],
-    'object_id'   => $params['project_id'],
     'project_id'  => $params['project_id'],
-    'origin'      => $params['origin'],
-    'product_id'  => $sale_model['product_id'] ?? null,
-    'price_id'    => $sale_model['price_id'] ?? null,
-    'unit_price'  => $sale_model['unit_price'] ?? null,
-    'is_billable' => !is_null($sale_model)
+    'origin'      => $params['origin']
 ]);
 
 $context->httpResponse()
-        ->status(204)
+        ->status(201)
         ->send();
