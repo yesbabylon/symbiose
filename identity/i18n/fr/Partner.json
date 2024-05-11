@@ -28,6 +28,16 @@
             "description": "Rôle du contact au sein de l'organisation.",
             "help": "Rôle du contact au sein de l'organisation (ex. directeur, PDG, responsable régional)."
         },
+        "has_vat": {
+            "label": "Assujetti TVA",
+            "description": "Cette organisation a-t-elle un numéro de TVA ?",
+            "help": ""
+        },
+        "vat_number": {
+            "label": "Numéro de TVA",
+            "description": "Numéro d'identification à la TVA.",
+            "help": ""
+        },
         "type": {
             "label": "Type",
             "description": "Type d'organisation.",
