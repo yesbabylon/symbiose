@@ -29,15 +29,16 @@ class Identity extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'calcName',
                 'result_type'       => 'string',
+                'function'          => 'calcName',
                 'store'             => true,
                 'instant'           => true,
+                'dependents'        => ['user_id' => 'name', 'contact_id' => 'name', 'employee_id' => 'name'],
                 'description'       => 'The display name of the identity.',
                 'help'              => "
                     The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
                     For instance, 'name', for a company with \"My Company\" as legal name will return \"My Company\". \n
-                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it returns \"John Smith\".
+                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\".
                 "
             ],
 
@@ -47,7 +48,7 @@ class Identity extends Model {
                 'onupdate'          => 'onupdateTypeId',
                 // default is 'I' individual
                 'default'           => 1,
-                'dependencies'      => ['type', 'name'],
+                'dependents  '      => ['type', 'name'],
                 'description'       => 'Type of identity.'
             ],
 
@@ -94,7 +95,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'dependencies'      => ['name'],
+                'dependents  '      => ['name'],
                 'onupdate'          => 'onupdateLegalName'
             ],
 
@@ -102,7 +103,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Usual name to be used as a memo for identifying the organization (acronym or short name).',
                 'visible'           => [ ['type', '<>', 'I'] ],
-                'dependencies'      => ['name']
+                'dependents'        => ['name']
             ],
 
             'has_vat' => [
@@ -220,7 +221,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
                 'visible'           => ['type', '=', 'I'],
-                'dependencies'      => ['name'],
+                'dependents'        => ['name'],
                 'onupdate'          => 'onupdateFirstname'
             ],
 
@@ -228,7 +229,7 @@ class Identity extends Model {
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
                 'visible'           => ['type', '=', 'I'],
-                'dependencies'      => ['name'],
+                'dependents'        => ['name'],
                 'onupdate'          => 'onupdateLastname'
             ],
 
@@ -374,9 +375,6 @@ class Identity extends Model {
                 'visible'           => [ ['type', '<>', 'I'], ['type', '<>', 'SE'] ]
             ],
 
-            /*
-                For individuals, the identity might be related to a user.
-            */
             'user_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',

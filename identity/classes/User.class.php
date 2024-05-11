@@ -62,4 +62,15 @@ class User extends \core\User {
         return $result;
     }
 
+    public static function onafterupdate($self, $values) {
+        parent::onafterupdate($self, $values);
+
+        $self->read(['identity_id' => ['id', 'user_id']]);
+        foreach($self as $id => $user) {
+            if(is_null($user['identity_id']['user_id'])) {
+                Identity::id($user['identity_id']['id'])->update(['user_id' => $id]);
+            }
+        }
+    }
+
 }

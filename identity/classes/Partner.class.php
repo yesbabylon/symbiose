@@ -22,8 +22,8 @@ class Partner extends Model {
 
             'name' => [
                 'type'              => 'computed',
-                'function'          => 'calcName',
                 'result_type'       => 'string',
+                'function'          => 'calcName',
                 'store'             => true,
                 'instant'           => true,
                 'description'       => 'The display name of the partner (related organisation name).'
@@ -53,6 +53,7 @@ class Partner extends Model {
             'partner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
+                'dependents'        => ['name'],
                 'description'       => 'The targeted identity (the partner).'
             ],
 
@@ -71,8 +72,8 @@ class Partner extends Model {
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
+                'dependents'        => ['type'],
                 'default'           => 1,
-                'dependencies'      => ['type', 'name'],
                 'description'       => 'Type of identity.',
                 'help'              => 'Default value is Individual.'
             ],
@@ -102,22 +103,19 @@ class Partner extends Model {
             'legal_name' => [
                 'type'              => 'string',
                 'description'       => 'Full name of the Identity.',
-                'visible'           => [ ['type', '<>', 'I'] ],
-                'dependencies'      => ['name']
+                'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
             'firstname' => [
                 'type'              => 'string',
                 'description'       => "Full name of the contact (must be a person, not a role).",
-                'visible'           => ['type', '=', 'I'],
-                'dependencies'      => ['name']
+                'visible'           => ['type', '=', 'I']
             ],
 
             'lastname' => [
                 'type'              => 'string',
                 'description'       => 'Reference contact surname.',
-                'visible'           => ['type', '=', 'I'],
-                'dependencies'      => ['name']
+                'visible'           => ['type', '=', 'I']
             ],
 
             'gender' => [
