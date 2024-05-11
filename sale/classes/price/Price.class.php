@@ -93,11 +93,6 @@ class Price extends Model {
                 'store'             => true,
                 'readonly'          => true,
                 'visible'           => ['price_type', '=', 'direct']
-            ],
-
-            'test' => [
-                'type'              => 'integer',
-                'default'           => 5
             ]
 
         ];

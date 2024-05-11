@@ -3,7 +3,7 @@
     "description": "",
     "access": {
         "groups": ["sale.default.user"]
-     },
+    },
     "layout": {
         "groups": [
             {
@@ -37,7 +37,7 @@
                                                 "type": "field",
                                                 "value": "price_vat",
                                                 "width": "33%"
-                                            }                                            
+                                            }
                                         ]
                                     },
                                     {
@@ -53,12 +53,6 @@
                                                 "type": "field",
                                                 "label": "Accounting Rule",
                                                 "value": "accounting_rule_id",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Type",
-                                                "value": "type",
                                                 "width": "100%"
                                             }
                                         ]
