@@ -6,7 +6,7 @@
             {
                 "sections": [
                     {
-                        "id": "section.time-entry-sale-model",
+                        "id": "section.main",
                         "rows": [
                             {
                                 "columns": [
@@ -24,19 +24,21 @@
                                                 }
                                             }
                                         ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Projects",
-                                                "value": "projects_ids",
-                                                "width": "50%",
-                                                "align": "left"
-                                            }
-                                        ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.info",
+                        "label": "Info",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
                                         "width": "100%",
                                         "items": [
@@ -76,6 +78,28 @@
                                                 "label": "Unit price",
                                                 "value": "unit_price",
                                                 "width": "25%",
+                                                "align": "left"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.projects",
+                        "label": "Projects",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Projects",
+                                                "value": "projects_ids",
+                                                "width": "50%",
                                                 "align": "left"
                                             }
                                         ]
