@@ -97,7 +97,15 @@
                                                 "type": "field",
                                                 "label": "Projects",
                                                 "value": "projects_ids",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
