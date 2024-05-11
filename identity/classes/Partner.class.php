@@ -32,8 +32,8 @@ class Partner extends Model {
             'organisation_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Organisation',
-                'description'       => 'Organisation of the current installation the partner belongs to.',
-                'default'           => Identity::OWNER_IDENTITY_ID
+                'description'       => 'Organisation of the current installation the partner belongs to (defaults to current).',
+                'default'           => 1
             ],
 
             'is_internal' => [
@@ -45,9 +45,9 @@ class Partner extends Model {
             'owner_identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
-                'description'       => 'The identity organisation which the targeted identity is a partner of.',
+                'description'       => 'The identity which the targeted identity is partner of.',
                 'visible'           => ['is_internal', '=', false],
-                'default'           => Identity::OWNER_IDENTITY_ID
+                'default'           => 1
             ],
 
             'partner_identity_id' => [
