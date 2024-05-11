@@ -54,7 +54,8 @@ class TimeEntrySaleModel extends Model {
                 'type'            => 'many2one',
                 'foreign_object'  => 'sale\price\Price',
                 'description'     => 'The price to assign to TimeEntry.',
-                'onupdate'        => 'onupdatePriceId'
+                'onupdate'        => 'onupdatePriceId',
+                'domain'           => ['product_id', '=', 'object.product_id']
             ],
 
             'unit_price' => [
