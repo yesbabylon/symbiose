@@ -47,13 +47,10 @@ class Project extends Model {
                 'description'     => 'The instance hosting the project.'
             ],
 
-            'time_entry_sale_models_ids' => [
-                'type'            => 'many2many',
+            'time_entry_sale_model_id' => [
+                'type'            => 'many2one',
                 'foreign_object'  => 'timetrack\TimeEntrySaleModel',
-                'foreign_field'   => 'projects_ids',
-                'rel_table'       => 'timetrack_project_rel_time_entry_sale_model',
-                'rel_foreign_key' => 'time_entry_sale_model_id',
-                'rel_local_key'   => 'project_id'
+                'foreign_field'   => 'projects_ids'
             ]
 
         ];

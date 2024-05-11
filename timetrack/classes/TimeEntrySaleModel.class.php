@@ -17,8 +17,7 @@ class TimeEntrySaleModel extends Model {
     }
 
     public static function getDescription(): string {
-        return "A time entry sale model allows to auto set a time entry sale fields (product_id, price_id and unit_price),
-            when the time entry origin and project are matching a sale model.";
+        return "A (time entry) sale model allows to define which price (and product) should be used for time entries of a given project.";
     }
 
     public static function getColumns(): array {
@@ -65,12 +64,9 @@ class TimeEntrySaleModel extends Model {
             ],
 
             'projects_ids' => [
-                'type'            => 'many2many',
+                'type'            => 'one2many',
                 'foreign_object'  => 'timetrack\Project',
-                'foreign_field'   => 'time_entry_sale_models_ids',
-                'rel_table'       => 'timetrack_project_rel_time_entry_sale_model',
-                'rel_foreign_key' => 'project_id',
-                'rel_local_key'   => 'time_entry_sale_model_id'
+                'foreign_field'   => 'time_entry_sale_model_id'
             ]
 
         ];

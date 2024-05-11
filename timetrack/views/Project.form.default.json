@@ -1,6 +1,6 @@
 {
     "name": "Project",
-    "description": "Default form for project",
+    "description": "Default form for project.",
     "layout": {
         "groups": [
             {
@@ -11,23 +11,18 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Name",
                                                 "value": "name",
-                                                "width": "50%",
+                                                "width": "100%",
                                                 "align": "left",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
@@ -38,17 +33,31 @@
                                         ]
                                     },
                                     {
-                                        "width": "100%",
+                                        "width": "25%",
                                         "items": [
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Sale model",
+                                                "value": "time_entry_sale_model_id",
+                                                "width": "100%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Instance",
                                                 "value": "instance_id",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "width": "100%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
                                     {
                                         "width": "100%",
                                         "items": [
@@ -56,10 +65,9 @@
                                                 "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%",
-                                                "align": "left",
+                                                "width": "100%",
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "usage": "text/plain"
                                                 }
                                             }
                                         ]
