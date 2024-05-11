@@ -40,45 +40,43 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Origin",
                                                 "value": "origin",
-                                                "width": "50%",
-                                                "align": "left"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "100%",
-                                        "items": [
+                                                "width": "100%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Product (Catalog)",
                                                 "value": "product_id",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "width": "100%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "100%",
+                                        "width": "25%",
+                                        "items": [
+                                        ]
+                                    },
+                                    {
+                                        "width": "25%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Price",
                                                 "value": "price_id",
-                                                "width": "25%",
-                                                "align": "left"
+                                                "width": "100%",
+                                                "visible": ["product_id", "is not", null]
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Unit price",
                                                 "value": "unit_price",
-                                                "width": "25%",
-                                                "align": "left"
+                                                "width": "100%",
+                                                "visible": ["price_id", "is not", null]
                                             }
                                         ]
                                     }
@@ -99,8 +97,7 @@
                                                 "type": "field",
                                                 "label": "Projects",
                                                 "value": "projects_ids",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "width": "100%"
                                             }
                                         ]
                                     }
