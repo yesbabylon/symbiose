@@ -108,6 +108,25 @@
                         }
                     }
                 ]
+            },
+            {
+                "id": "settings",
+                "type": "parent",
+                "label": "Settings",
+                "icon": "settings",
+                "description": "Timetrack settings.",
+                "children": [
+                    {
+                        "id": "settings.time_entry_sale_model",
+                        "type": "entry",
+                        "label": "Sale Models",
+                        "icon": "list",
+                        "context": {
+                            "entity": "timetrack\\TimeEntrySaleModel",
+                            "view": "list.default"
+                        }
+                    }
+                ]
             }
         ]
     }
