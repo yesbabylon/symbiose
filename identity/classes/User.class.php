@@ -15,14 +15,6 @@ class User extends \core\User {
     public static function getColumns() {
         return [
 
-            'name' => [
-                'type'              => 'computed',
-                'function'          => 'calcName',
-                'result_type'       => 'string',
-                'store'             => true,
-                'description'       => 'The display name of the user.'
-            ],
-
             'identity_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\Identity',
@@ -46,20 +38,6 @@ class User extends \core\User {
                 'default'           => 1
             ]
         ];
-    }
-
-    public static function calcName($self) {
-        $result = [];
-        $self->read(['login', 'identity_id' => ['name']]);
-        foreach($self as $id => $user) {
-            if(isset($user['identity_id']['name']) && strlen($user['identity_id']['name']) ) {
-                $result[$id] = $user['identity_id']['name'];
-            }
-            else {
-                $result[$id] = $user['login'];
-            }
-        }
-        return $result;
     }
 
     public static function onafterupdate($self, $values) {
