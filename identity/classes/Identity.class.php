@@ -33,13 +33,11 @@ class Identity extends Model {
                 'function'          => 'calcName',
                 'store'             => true,
                 'instant'           => true,
-                'dependents'        => ['user_id' => 'name', 'contact_id' => 'name', 'employee_id' => 'name'],
+                'dependents'        => ['user_id' => 'name', 'contact_id' => 'name', 'employee_id' => 'name', 'customer_id' => 'name', 'supplier_id' => 'name'],
                 'description'       => 'The display name of the identity.',
-                'help'              => "
-                    The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
+                'help'              => "The display name is a computed field that returns a concatenated string containing either the firstname+lastname, or the legal name of the Identity, based on the kind of Identity.\n
                     For instance, 'name', for a company with \"My Company\" as legal name will return \"My Company\". \n
-                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\".
-                "
+                    Whereas, for an individual having \"John\" as firstname and \"Smith\" as lastname, it will return \"John Smith\"."
             ],
 
             'type_id' => [
