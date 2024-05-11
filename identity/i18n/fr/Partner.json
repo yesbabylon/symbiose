@@ -54,8 +54,6 @@
     },
     "view": {
         "form.default": {
-            "name": "Relation",
-            "description": "Formulaire de base pour afficher un partenaire",
             "layout": {
                 "section.identity_info": {
                     "label": "Infos de contact"
@@ -63,8 +61,6 @@
             }
         },
         "form.create": {
-            "name": "Relation",
-            "description": "Formulaire de base pour créer un partenaire",
             "layout": {
                 "section.identity_info": {
                     "label": "Infos de contact"
@@ -72,8 +68,6 @@
             }
         },
         "list.default": {
-            "name": "Relations",
-            "description": "Liste de base des partenaires existants.",
             "layout": {}
         }
     },
