@@ -53,16 +53,14 @@ class TimeEntrySaleModel extends Model {
             'price_id' => [
                 'type'            => 'many2one',
                 'foreign_object'  => 'sale\price\Price',
-                'description'     => 'The price to assign to TimeEntry.'
+                'description'     => 'The price to assign to TimeEntry.',
+                'onupdate'        => 'onupdatePriceId'
             ],
 
             'unit_price' => [
-                'type'            => 'computed',
-                'result_type'     => 'float',
+                'type'            => 'float',
                 'usage'           => 'amount/money:4',
-                'description'     => 'Unit price to assign to TimeEntry.',
-                'function'        => 'calcUnitPrice',
-                'store'           => true
+                'description'     => 'Change to assign a custom unit price.'
             ],
 
             'projects_ids' => [
@@ -77,18 +75,13 @@ class TimeEntrySaleModel extends Model {
         ];
     }
 
-    public static function calcUnitPrice($self): array {
-        $result = [];
-        $self->read(['price_id' => ['price']]);
-        foreach($self as $id => $sale_model) {
-            if(!isset($sale_model['price_id']['price'])) {
-                continue;
+    public static function onupdatePriceId($self) {
+        $self->read(['unit_price', 'price_id' => ['price']]);
+        foreach($self as $id => $model) {
+            if(is_null($model['unit_price'])) {
+                self::id($id)->update(['unit_price' => $model['price_id']['price']]);
             }
-
-            $result[$id] = $sale_model['price_id']['price'];
         }
-
-        return $result;
     }
 
     public static function getModelToApply(string $origin, int $project_id): ?self {
