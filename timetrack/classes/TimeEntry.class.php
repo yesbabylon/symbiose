@@ -17,26 +17,6 @@ use Exception;
 
 class TimeEntry extends SaleEntry {
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_READY = 'ready';
-    const STATUS_VALIDATED = 'validated';
-    const STATUS_BILLED = 'billed';
-
-    const STATUS_MAP = [
-        self::STATUS_PENDING   => 'Pending',
-        self::STATUS_READY     => 'Ready for validation',
-        self::STATUS_VALIDATED => 'Validated',
-        self::STATUS_BILLED    => 'Billed',
-    ];
-
-    const TRANSITION_REQUEST_VALIDATION = 'request-validation';
-    const TRANSITION_REFUSE = 'refuse';
-    const TRANSITION_VALIDATE = 'validate';
-    const TRANSITION_BILL = 'bill';
-
-    const POLICY_READY_FOR_VALIDATION = 'ready-for-validation';
-    const POLICY_BILLABLE = 'billable';
-
     public static function getName(): string {
         return 'Time entry';
     }
@@ -50,9 +30,6 @@ class TimeEntry extends SaleEntry {
 
         return [
 
-            /**
-             * Override SaleEntry columns
-             */
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -65,7 +42,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependencies'   => ['ticket_link'],
+                'dependents'     => ['ticket_link'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -84,7 +61,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'string',
                 'description'    => 'Class of the object object_id points to.',
                 'default'        => 'timetrack\Project',
-                'dependencies'   => ['project_id']
+                'dependents'     => ['project_id']
             ],
 
             'product_id' => [
@@ -103,7 +80,7 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'Price of the sale.',
                 'function'       => 'calcPriceId',
                 'store'          => true,
-                'dependencies'   => ['unit_price']
+                'dependents'     => ['unit_price']
             ],
 
             'unit_price' => [
@@ -129,14 +106,14 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'time',
                 'description'    => 'Start time of the entry.',
                 'default'        => $current_hour * 3600,
-                'dependencies'   => ['duration']
+                'dependents'     => ['duration']
             ],
 
             'time_end' => [
                 'type'           => 'time',
                 'description'    => 'End time of the entry.',
                 'default'        => ($current_hour + 1) * 3600,
-                'dependencies'   => ['duration']
+                'dependents'     => ['duration']
             ],
 
             'duration' => [
@@ -163,6 +140,7 @@ class TimeEntry extends SaleEntry {
                     'email'   => 'E-mail',
                     'support' => 'Support ticket',
                 ],
+                'dependents'     => ['name'],
                 'description'    => 'Origin of the this time entry creation.',
                 'default'        => 'project'
             ],
@@ -170,7 +148,7 @@ class TimeEntry extends SaleEntry {
             'ticket_id' => [
                 'type'           => 'integer',
                 'description'    => 'Support ticket id from project Symbiose instance.',
-                'dependencies'   => ['ticket_link'],
+                'dependents'     => ['name', 'ticket_link'],
                 'visible'        => ['origin', '=', 'support']
             ],
 
@@ -186,33 +164,38 @@ class TimeEntry extends SaleEntry {
 
             'reference' => [
                 'type'           => 'string',
+                'dependents'     => ['name'],
                 'description'    => 'Email or backlog reference.',
                 'visible'        => ['origin', 'in', ['backlog', 'email']]
             ],
 
             'status' => [
                 'type'           => 'string',
-                'selection'      => array_keys(self::STATUS_MAP),
+                'selection'      => [
+                    'pending'   => 'Pending',
+                    'ready'     => 'Ready for validation',
+                    'validated' => 'Validated',
+                    'billed'    => 'Billed'
+                ],
                 'description'    => 'Status of the time entry',
-                'default'        => self::STATUS_PENDING
+                'default'        => 'pending'
             ]
 
         ];
     }
 
     private static function getTimeZoneCurrentHour(): int {
-        $time_zone = Setting::get_value('core', 'locale', 'time_zone');
-
         $current_hour = (int) date('H');
+
+        $time_zone = Setting::get_value('core', 'locale', 'time_zone');
         if(!is_null($time_zone)) {
             try {
                 $timezone = new DateTimeZone($time_zone);
                 $dateTime = new DateTime('now', $timezone);
-
                 $current_hour = (int) $dateTime->format('H');
             }
             catch(Exception $e) {
-                trigger_error('PHP::error getting time zone current hour', QN_REPORT_DEBUG);
+                trigger_error('PHP::error getting time zone current hour', EQ_REPORT_DEBUG);
             }
         }
 
@@ -223,13 +206,13 @@ class TimeEntry extends SaleEntry {
         $res = $om->read(self::class, $oids, ['status']);
 
         foreach($res as $odata) {
-            if(in_array($odata['status'], [self::STATUS_PENDING, self::STATUS_READY])) {
+            if(in_array($odata['status'], ['pending', 'ready'])) {
                 continue;
             }
 
             $editable_fields = ['description', 'detailed_description', 'status'];
             $sale_fields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
-            if($odata['status'] === self::STATUS_VALIDATED) {
+            if($odata['status'] === 'validated') {
                 $editable_fields = array_merge($editable_fields, $sale_fields);
             }
 
@@ -240,8 +223,8 @@ class TimeEntry extends SaleEntry {
                             'non_editable' => sprintf(
                                 'Time entry %s can only be updated from %s to %s.',
                                 $field,
-                                self::STATUS_PENDING,
-                                !in_array($field, $sale_fields) ? self::STATUS_READY : self::STATUS_VALIDATED
+                                'pending',
+                                !in_array($field, $sale_fields) ? 'ready' : 'validated'
                             )
                         ]
                     ];
@@ -349,8 +332,11 @@ class TimeEntry extends SaleEntry {
         $result = [];
         $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['project_id']['name'];
-            if($entry['origin'] != 'project') {
+            $result[$id] = '';
+            if($entry['origin'] == 'project') {
+                $result[$id] .= $entry['project_id']['name'];
+            }
+            else {
                 $result[$id] .= ' - '.$entry['origin'].' ['.$entry['reference'].']';
             }
             if(isset($entry['description']) && strlen($entry['description']) > 0) {
@@ -549,10 +535,10 @@ class TimeEntry extends SaleEntry {
                 eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $entry['id']]);
             }
             catch (Exception $e) {
-                trigger_error("PHP::Failed sale\\saleentry\\add-receivable for time entry {$entry['id']}", QN_REPORT_ERROR);
+                trigger_error("PHP::Failed adding receivable for time entry {$entry['id']}", EQ_REPORT_ERROR);
 
                 TimeEntry::id($entry['id'])
-                    ->update(['status' => self::STATUS_VALIDATED]);
+                    ->update(['status' => 'validated']);
             }
         }
     }
