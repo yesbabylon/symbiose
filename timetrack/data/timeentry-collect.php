@@ -100,19 +100,19 @@ if(isset($params['description']) && strlen($params['description']) > 0) {
     $domain[] = ['description', 'ilike', '%'.$params['description'].'%'];
 }
 
-if(isset($params['user_id'])) {
+if(isset($params['user_id']) && $params['user_id'] > 0) {
     $domain[] = ['user_id', '=', $params['user_id']];
 }
 
-if(isset($params['customer_id'])) {
+if(isset($params['customer_id']) && $params['customer_id'] > 0) {
     $domain[] = ['customer_id', '=', $params['customer_id']];
 }
 
-if(isset($params['date'])) {
+if(isset($params['date']) && $params['date'] > 0) {
     $domain[] = ['date', '=', $params['date']];
 }
 
-if(isset($params['project_id'])) {
+if(isset($params['project_id']) && $params['project_id'] > 0) {
     $domain[] = ['project_id', '=', $params['project_id']];
 }
 
