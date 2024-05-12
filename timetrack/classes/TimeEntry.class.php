@@ -185,10 +185,10 @@ class TimeEntry extends SaleEntry {
             'status' => [
                 'type'           => 'string',
                 'selection'      => [
-                    'pending'   => 'Draft',
-                    'ready'     => 'Ready',
-                    'validated' => 'Validated',
-                    'billed'    => 'Billed'
+                    'pending',
+                    'ready',
+                    'validated',
+                    'billed'
                 ],
                 'description'    => 'Status of the time entry',
                 'default'        => 'pending'
