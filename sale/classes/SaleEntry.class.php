@@ -185,10 +185,8 @@ class SaleEntry extends Model {
         $self->read(['code', 'description']);
         foreach($self as $id => $entry) {
             $result[$id] = '['.$entry['code'].']';
-            if(
-                isset($entry['description'])
-                && strlen($entry['description']) > 0
-            ) {
+            if(isset($entry['description'])
+                && strlen($entry['description']) > 0) {
                 $result[$id] .= ' '.$entry['description'];
             }
         }
@@ -210,30 +208,39 @@ class SaleEntry extends Model {
 
     public static function calcSubscriptionId($self) {
         $result = [];
-        $self->read(['object_id']);
+        $self->read(['object_class', 'object_id']);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['object_id'];
+            $result[$id] = null;
+            if($entry['object_class'] == 'sale\subscription\Subscription') {
+                $result[$id] = $entry['object_id'];
+            }
         }
         return $result;
     }
 
     public static function calcProjectId($self) {
         $result = [];
-        $self->read(['object_id']);
+        $self->read(['object_class', 'object_id']);
         foreach($self as $id => $entry) {
-            $result[$id] = $entry['object_id'];
+            $result[$id] = null;
+            if($entry['object_class'] == 'timetrack\Project') {
+                $result[$id] = $entry['object_id'];
+            }
         }
         return $result;
     }
 
+    /**
+     * #todo - unsure that this field is necessary
+     */
     public static function calcReceivableName($self): array {
         $result = [];
-        $self->read(['object_class', 'description', 'product_id' => ['name']]);
+        $self->read(['object_class', 'name', 'product_id' => ['name']]);
 
         foreach($self as $id => $entry) {
             $receivable_name = $entry['product_id']['name'];
             if($entry['object_class'] === 'timetrack\Project') {
-                $receivable_name .= ' ' . $entry['description'];
+                $receivable_name = $entry['name'];
             }
 
             $result[$id] = trim($receivable_name);
