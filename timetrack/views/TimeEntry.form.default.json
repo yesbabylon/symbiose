@@ -124,12 +124,6 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Performed by",
-                                                "value": "user_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "50%",
@@ -143,6 +137,12 @@
                                     {
                                         "width": "30%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Performed by",
+                                                "value": "user_id",
+                                                "width": "100%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Date",
@@ -172,7 +172,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Ticket identifier",
+                                                "label": "Ticket ID",
                                                 "value": "ticket_id",
                                                 "width": "33%"
                                             },
