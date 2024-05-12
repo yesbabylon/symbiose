@@ -74,9 +74,8 @@ if(!isset($project)) {
 }
 
 // compute start time according to received duration
-$begin = time() - $params['duration'];
-$minutes = (intval(date('i', $begin)) + intval(date('s', $begin))) / 60.0;
-$start = mktime(date('H', $begin), (floor($minutes / 15) * 15) - 15, 0);
+$begin = time() - strtotime("today midnight") - $params['duration'];
+$start = floor($begin / 60.0 / 15) * 15 * 60;
 
 TimeEntry::create([
         'description' => $params['description'],
