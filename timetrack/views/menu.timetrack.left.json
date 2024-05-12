@@ -38,14 +38,14 @@
                         "id": "time_entries.ready",
                         "type": "entry",
                         "label": "To validate",
-                        "icon": "list",
+                        "icon": "task_alt",
                         "description": "Entries waiting to be validated.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.default",
                             "order": "created",
                             "sort": "asc",
-                            "domain": [ ["status", "=", "ready"], ["object_class", "=", "timetrack\\Project"] ]
+                            "domain": [ ["status", "=", "ready"] ]
                         }
                     },
                     {
@@ -69,9 +69,10 @@
                         "description": "Archived entries",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
-                            "view": "list.archived",
+                            "view": "list.default",
                             "order": "created",
-                            "sort": "desc"
+                            "sort": "desc",
+                            "domain": [ ["state", "=", "archive"] ]
                         }
                     }
                 ]

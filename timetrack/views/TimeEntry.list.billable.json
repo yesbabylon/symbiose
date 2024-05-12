@@ -10,6 +10,7 @@
             "ACTION.CREATE": false
         },
         "selection": {
+            "default": false,
             "actions" : [
                 {
                     "id": "header.selection.actions.bill",
