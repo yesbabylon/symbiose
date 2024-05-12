@@ -32,6 +32,11 @@ list($params, $providers) = eQual::announce([
             'required'       => true
         ],
 
+        'reference'     => [
+            'type'           => 'string',
+            'description'    => 'Reference completing the origin.'
+        ],
+
         'description'     => [
             'type'           => 'string',
             'description'    => 'Short description.',
@@ -87,11 +92,12 @@ $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
 $end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
 
 TimeEntry::create([
+        'project_id'  => $params['project_id'],
+        'origin'      => $params['origin'],
+        'reference'   => $params['reference'] ?? '',
         'description' => $params['description'],
         'time_start'  => $start,
-        'time_end'    => $end,
-        'project_id'  => $params['project_id'],
-        'origin'      => $params['origin']
+        'time_end'    => $end
     ]);
 
 $context->httpResponse()
