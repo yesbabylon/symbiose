@@ -179,7 +179,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Related ticket id",
+                                                "label": "Ticket identifier",
                                                 "value": "ticket_id",
                                                 "width": "66%"
                                             },
