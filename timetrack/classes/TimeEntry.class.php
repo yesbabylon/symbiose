@@ -216,7 +216,11 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function generateTicketLink($instance_url, $ticket_id): string {
-        return $instance_url.'support/#/ticket/'.$ticket_id;
+        $url = $instance_url ?? '';
+        if(substr($url, -1) !== '/') {
+            $url .= '/';
+        }
+        return $url.'support/#/ticket/'.$ticket_id;
     }
 
     public static function defaultUserId($auth) {
@@ -411,11 +415,7 @@ class TimeEntry extends SaleEntry {
         $self->read(['origin', 'ticket_id', 'project_id' => ['instance_id' => ['url']]]);
         foreach($self as $id => $entry) {
             if($entry['origin'] == 'support') {
-                $instance_url = $entry['project_id']['instance_id']['url'] ?? '';
-                if(substr($instance_url, -1) !== '/') {
-                    $instance_url .= '/';
-                }
-                $result[$id] = self::generateTicketLink($instance_url, $entry['ticket_id']);
+                $result[$id] = self::generateTicketLink($entry['project_id']['instance_id']['url'], $entry['ticket_id']);
             }
         }
         return $result;
