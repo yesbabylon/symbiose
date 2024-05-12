@@ -79,6 +79,12 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "0%",
+                                                "visible": false
                                             }
                                         ]
                                     },
@@ -124,10 +130,28 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%",
-                                                "visible": ["project_id", "<>", null]
+                                                "label": "Origin",
+                                                "value": "origin",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Ticket ID",
+                                                "value": "ticket_id",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Reference",
+                                                "value": "reference",
+                                                "width": "66%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Ticket link",
+                                                "value": "ticket_link",
+                                                "width": "100%",
+                                                "readonly": true
                                             }
                                         ]
                                     },
@@ -154,64 +178,13 @@
                                                 "label": "Duration",
                                                 "value": "duration",
                                                 "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "33%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Origin",
-                                                "value": "origin",
-                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Ticket ID",
-                                                "value": "ticket_id",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Reference",
-                                                "value": "reference",
-                                                "width": "66%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "33%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Ticket link",
-                                                "value": "ticket_link",
+                                                "label": "Customer",
+                                                "value": "customer_id",
                                                 "width": "100%",
-                                                "readonly": true
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "25%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "status",
-                                                "width": "50%",
-                                                "visible": false
+                                                "visible": ["project_id", "<>", null]
                                             }
                                         ]
                                     }
