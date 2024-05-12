@@ -74,8 +74,8 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'computed',
                 'result_type'    => 'many2one',
                 'foreign_object' => 'sale\catalog\Product',
-                'description'    => 'Product of the catalog sale.',
-                'help'           => 'This is a reference to a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
+                'description'    => 'Product of the sale catalog.',
+                'help'           => 'This field references a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
                 'function'       => 'calcProductId',
                 'store'          => true
             ],

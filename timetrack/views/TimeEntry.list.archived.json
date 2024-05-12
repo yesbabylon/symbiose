@@ -1,7 +1,7 @@
 {
     "name": "Archived time entries (billed)",
     "description": "Default listing of all time entries.",
-    "controller": "timetrack_timeentry-billed-collect",
+    "controller": "timetrack_timeentry-collect",
     "domain": [
         ["object_class", "=", "timetrack\\Project"],
         ["state", "=", "archive"]

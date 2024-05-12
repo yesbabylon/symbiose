@@ -25,10 +25,9 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "50%",
-                                                "align": "left"
+                                                "label": "Instance",
+                                                "value": "instance_id",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
@@ -48,8 +47,8 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Instance",
-                                                "value": "instance_id",
+                                                "label": "Customer",
+                                                "value": "customer_id",
                                                 "width": "100%"
                                             }
                                         ]
