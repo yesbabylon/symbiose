@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
+use core\setting\Setting;
 use core\User;
 use timetrack\Project;
 use timetrack\TimeEntry;
@@ -73,13 +74,22 @@ if(!isset($project)) {
     throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-// compute start time according to received duration
-$begin = time() - strtotime("today midnight") - $params['duration'];
+// compute start time according to received duration and timezone set in config
+$time_zone = Setting::get_value('core', 'locale', 'time_zone');
+if(!is_null($time_zone)) {
+    $tz = new DateTimeZone($time_zone);
+    // timezone offset in seconds to apply, depending on the date of the time entry
+    $tz_offset = $tz->getOffset(new DateTime());
+}
+
+$begin = time() - strtotime("today midnight") - $params['duration'] + $tz_offset;
 $start = (int) (floor(floatval($begin) / 60 / 15) * 15 * 60);
+$end = $start + intval(ceil($params['duration'] / 60 / 15) * 15 * 60);
 
 TimeEntry::create([
         'description' => $params['description'],
         'time_start'  => $start,
+        'time_end'    => $end,
         'project_id'  => $params['project_id'],
         'origin'      => $params['origin']
     ]);
