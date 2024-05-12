@@ -181,7 +181,7 @@
                                                 "type": "field",
                                                 "label": "Ticket identifier",
                                                 "value": "ticket_id",
-                                                "width": "66%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
@@ -322,7 +322,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",
