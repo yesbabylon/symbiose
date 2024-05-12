@@ -215,6 +215,10 @@ class TimeEntry extends SaleEntry {
         return $current_hour;
     }
 
+    public static function generateTicketLink($instance_url, $ticket_id): string {
+        return $instance_url.'support/#/ticket/'.$ticket_id;
+    }
+
     public static function defaultUserId($auth) {
         return $auth->userId();
     }
@@ -259,10 +263,15 @@ class TimeEntry extends SaleEntry {
             if(!in_array($event['origin'], ['backlog', 'email'])) {
                 $result['reference'] = null;
             }
-            if($event['origin'] !== 'support') {
+            if($event['origin'] != 'support') {
                 $result['ticket_id'] = null;
                 $result['ticket_link'] = null;
             }
+        }
+
+        if(isset($event['ticket_id'])) {
+            $entry = self::id($values['id'])->read(['project_id' => ['instance_id' => ['url']]])->first();
+            $result['ticket_link'] = self::generateTicketLink($entry['project_id']['instance_id']['url'], $event['ticket_id']);
         }
 
         if(isset($event['project_id'])) {
@@ -406,7 +415,7 @@ class TimeEntry extends SaleEntry {
                 if(substr($instance_url, -1) !== '/') {
                     $instance_url .= '/';
                 }
-                $result[$id] = $instance_url.'support/#/ticket/'.$entry['ticket_id'];
+                $result[$id] = self::generateTicketLink($instance_url, $entry['ticket_id']);
             }
         }
         return $result;
