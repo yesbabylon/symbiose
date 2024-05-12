@@ -74,11 +74,34 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Description",
                                                 "value": "description",
+                                                "width": "100%",
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Project",
+                                                "value": "project_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Start",
+                                                "value": "time_start",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "End",
+                                                "value": "time_end",
+                                                "width": "25%"
                                             }
                                         ]
                                     }
@@ -103,19 +126,13 @@
                                                 "type": "field",
                                                 "label": "Performed by",
                                                 "value": "user_id",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Project",
-                                                "value": "project_id",
-                                                "width": "30%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Customer",
                                                 "value": "customer_id",
-                                                "width": "30%",
+                                                "width": "50%",
                                                 "visible": ["project_id", "<>", null]
                                             }
                                         ]
@@ -136,30 +153,6 @@
                                                 "type": "field",
                                                 "label": "Duration",
                                                 "value": "duration",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "65%"
-                                    },
-                                    {
-                                        "width": "30%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Start",
-                                                "value": "time_start",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "End",
-                                                "value": "time_end",
                                                 "width": "50%"
                                             }
                                         ]
