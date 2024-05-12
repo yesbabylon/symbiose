@@ -7,11 +7,8 @@
         {
             "id": "action.create-empty",
             "label": "Quick create",
-            "description": "Quick creation of time entry that is destined to be modified inline.",
+            "description": "Quickly create a time entry to be modified afterward.",
             "controller": "timetrack_timeentry_create-quick",
-            "params": {
-                "user_id": "user.id"
-            },
             "confirm": true
         }
     ],

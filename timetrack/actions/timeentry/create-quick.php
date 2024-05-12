@@ -12,13 +12,6 @@ use timetrack\TimeEntry;
 list($params, $providers) = eQual::announce([
     'description'    => 'Quick create a time entry with minimal information.',
     'params'         => [
-        'user_id'    => [
-            'type'           => 'many2one',
-            'foreign_object' => 'core\User',
-            'description'    => 'User who performed the time entry.',
-            'required'       => true
-        ],
-
         'project_id' => [
             'type'           => 'many2one',
             'foreign_object' => 'timetrack\Project',
@@ -36,7 +29,20 @@ list($params, $providers) = eQual::announce([
             ],
             'description'    => 'Time entry origin.',
             'required'       => true
+        ],
+
+        'description'     => [
+            'type'           => 'string',
+            'description'    => 'Short description.',
+            'required'       => true
+        ],
+
+        'duration'        => [
+            'type'           => 'time',
+            'description'    => 'Task duration.',
+            'required'       => true
         ]
+
     ],
     'response'       => [
         'content-type'  => 'application/json',
@@ -61,16 +67,15 @@ if($user_id <= 0) {
     throw new Exception('unknown_user', EQ_ERROR_NOT_ALLOWED);
 }
 
-$project = Project::id($params['project_id'])
-    ->read(['id'])
-    ->first();
+$project = Project::id($params['project_id'])->first();
 
 if(!isset($project)) {
     throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
 TimeEntry::create([
-        'description' => 'New entry '.date('Y-m-d H:m:s', time()),
+        'description' => $params['description'],
+        'duration'    => $params['duration'],
         'project_id'  => $params['project_id'],
         'origin'      => $params['origin']
     ]);
