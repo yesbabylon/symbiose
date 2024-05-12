@@ -106,7 +106,7 @@ class TimeEntry extends SaleEntry {
             'date'       => [
                 'type'           => 'date',
                 'description'    => 'Date of the entry',
-                'default'        => time(),
+                'default'        => function() { return time(); },
             ],
 
             'time_start' => [
@@ -136,7 +136,8 @@ class TimeEntry extends SaleEntry {
             'user_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'core\User',
-                'description'    => 'User the time entry was performed by.'
+                'description'    => 'User the time entry was performed by.',
+                'default'        => 'defaultUserId'
             ],
 
             'origin' => [
@@ -212,6 +213,10 @@ class TimeEntry extends SaleEntry {
         }
 
         return $current_hour;
+    }
+
+    public static function defaultUserId($auth) {
+        return $auth->userId();
     }
 
     public static function canupdate($om, $oids, $values, $lang = 'en'): array {
