@@ -64,7 +64,8 @@ class SaleEntry extends Model {
 
             'is_billable' => [
                 'type'              => 'boolean',
-                'description'       => 'Can be billed to the customer.',
+                'description'       => 'Flag telling if the entry can be billed to the customer.',
+                'help'              => 'Under certain circumstances, a task relates to a customer but cannot be billed (from a commercial perspective). Most of the time this cannot be known in advance and this flag is intended to be set manually.',
                 'default'           => true
             ],
 

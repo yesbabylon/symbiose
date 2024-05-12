@@ -48,7 +48,7 @@ class TimeEntry extends SaleEntry {
                 'type'           => 'many2one',
                 'foreign_object' => 'timetrack\Project',
                 'description'    => 'Identifier of the Project the sale entry originates from.',
-                'dependents'     => ['ticket_link', 'product_id', 'price_id', 'unit_price'],
+                'dependents'     => ['name', 'ticket_link', 'product_id', 'price_id', 'unit_price'],
                 'onupdate'       => 'onupdateProjectId'
             ],
 
@@ -75,6 +75,7 @@ class TimeEntry extends SaleEntry {
                 'result_type'    => 'many2one',
                 'foreign_object' => 'sale\catalog\Product',
                 'description'    => 'Product of the catalog sale.',
+                'help'           => 'This is a reference to a Product from the catalog. This field is not to be mistaken with the Product (software) of the customer.',
                 'function'       => 'calcProductId',
                 'store'          => true
             ],
@@ -141,20 +142,25 @@ class TimeEntry extends SaleEntry {
             'origin' => [
                 'type'           => 'string',
                 'selection'      => [
-                    'project' => 'Project',
-                    'backlog' => 'Backlog',
-                    'email'   => 'E-mail',
+                    'project' => 'Project management',
+                    'backlog' => 'Backlog entry',
+                    'email'   => 'E-mail conversation',
                     'support' => 'Support ticket',
                 ],
                 'dependents'     => ['name'],
-                'description'    => 'Origin of the this time entry creation.',
+                'description'    => 'Origin of the time entry: what the task performed is a response to.',
+                'help'           => "Project: refers to a Project Management task.\n
+                                     Backlog: refers to one (or more) entry from the backlog associated with the project.\n
+                                     E-mail: refers to a specific email conversation\n
+                                     Support: refers to a specific support ticket.",
                 'default'        => 'project'
             ],
 
             'ticket_id' => [
                 'type'           => 'integer',
-                'description'    => 'Support ticket id from project Symbiose instance.',
+                'description'    => 'Identifier of the support ticket (number).',
                 'dependents'     => ['name', 'ticket_link'],
+                'onupdate'       => 'onupdateTicketId',
                 'visible'        => ['origin', '=', 'support']
             ],
 
@@ -178,8 +184,8 @@ class TimeEntry extends SaleEntry {
             'status' => [
                 'type'           => 'string',
                 'selection'      => [
-                    'pending'   => 'Pending',
-                    'ready'     => 'Ready for validation',
+                    'pending'   => 'Draft',
+                    'ready'     => 'Ready',
                     'validated' => 'Validated',
                     'billed'    => 'Billed'
                 ],
@@ -293,17 +299,20 @@ class TimeEntry extends SaleEntry {
         }
     }
 
+    public static function onupdateTicketId($self) : void {
+        $self->read(['ticket_id']);
+        foreach($self as $id => $entry) {
+            self::id($id)->update(['reference' => 'ticket '.$entry['ticket_id']]);
+        }
+    }
+
     public static function calcName($self) {
         $result = [];
         $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
         foreach($self as $id => $entry) {
-            $result[$id] = '';
-            if($entry['origin'] == 'project') {
-                $result[$id] .= $entry['project_id']['name'];
-            }
-            else {
-                $result[$id] .= ' - '.$entry['origin'].' ['.$entry['reference'].']';
-            }
+            $result[$id] = $entry['project_id']['name'];
+            $result[$id] .= ' - '.$entry['origin'].' ['.$entry['reference'].']';
+
             if(isset($entry['description']) && strlen($entry['description']) > 0) {
                 $result[$id] .= ' - '.$entry['description'];
             }
@@ -361,10 +370,8 @@ class TimeEntry extends SaleEntry {
                 $updates['qty'] = $entry['duration'] / 3600;
             }
 
-            if(
-                isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])
-            ) {
+            if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
+                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
                 $updates['time_end'] = $entry['time_start'] + $entry['duration'];
             }
 
@@ -455,6 +462,7 @@ class TimeEntry extends SaleEntry {
     public static function getWorkflow(): array {
         return [
             'pending'   => [
+                'description' => 'Time entry is still a draft an waiting to be completed.',
                 'transitions' => [
                     'request-validation' => [
                         'description' => 'Sets time entry as ready for validation.',
@@ -465,6 +473,7 @@ class TimeEntry extends SaleEntry {
             ],
 
             'ready'     => [
+                'description' => 'All required information have been completed and time entry is waiting to be validated.',
                 'transitions' => [
                     'refuse'   => [
                         'description' => 'Refuse time entry, sets its status back to pending.',
@@ -478,6 +487,7 @@ class TimeEntry extends SaleEntry {
             ],
 
             'validated' => [
+                'description' => 'Time entry has been validated and is waiting to be invoiced.',
                 'transitions' => [
                     'bill' => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
