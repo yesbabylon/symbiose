@@ -43,6 +43,9 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
+    'access' => [
+        'visibility'        => 'protected'
+    ],
     'providers'      => ['context', 'auth']
 ]);
 
@@ -52,7 +55,7 @@ list($params, $providers) = eQual::announce([
  */
 list($context, $auth) = [ $providers['context'], $providers['auth'] ];
 
-$user_id = $aut->userId();
+$user_id = $auth->userId();
 
 if($user_id <= 0) {
     throw new Exception('unknown_user', EQ_ERROR_NOT_ALLOWED);
