@@ -371,7 +371,6 @@ class TimeEntry extends SaleEntry {
             if(!isset($entry['time_start'], $entry['time_end'])) {
                 continue;
             }
-
             $result[$id] = $entry['time_end'] - $entry['time_start'];
         }
 

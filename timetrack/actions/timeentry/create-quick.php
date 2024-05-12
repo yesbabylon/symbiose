@@ -40,7 +40,7 @@ list($params, $providers) = eQual::announce([
         'duration'        => [
             'type'           => 'time',
             'description'    => 'Task duration.',
-            'required'       => true
+            'default'        => 900
         ]
 
     ],
@@ -73,9 +73,14 @@ if(!isset($project)) {
     throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
+// compute start time according to received duration
+$begin = time() - $params['duration'];
+$minutes = (intval(date('i', $begin)) + intval(date('s', $begin))) / 60.0;
+$start = mktime(date('H', $begin), (floor($minutes / 15) * 15) - 15, 0);
+
 TimeEntry::create([
         'description' => $params['description'],
-        'duration'    => $params['duration'],
+        'time_start'  => $start,
         'project_id'  => $params['project_id'],
         'origin'      => $params['origin']
     ]);
