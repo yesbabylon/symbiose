@@ -20,7 +20,7 @@
             {
                 "type": "field",
                 "value": "name",
-                "width": "5%",
+                "width": "25%",
                 "sortable": true,
                 "readonly": true
             },
