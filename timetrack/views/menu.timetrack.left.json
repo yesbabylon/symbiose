@@ -35,27 +35,41 @@
                         }
                     },
                     {
+                        "id": "time_entries.ready",
+                        "type": "entry",
+                        "label": "To validate",
+                        "icon": "list",
+                        "description": "Entries waiting to be validated.",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "asc",
+                            "domain": [ ["status", "=", "ready"], ["object_class", "=", "timetrack\\Project"] ]
+                        }
+                    },
+                    {
                         "id": "time_entries.billable",
                         "type": "entry",
-                        "label": "Billable",
+                        "label": "To bill",
                         "icon": "payments",
-                        "description": "Billable time entries",
+                        "description": "Entries waiting to be invoiced.",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
                             "view": "list.billable",
                             "order": "created",
-                            "sort": "desc"
+                            "sort": "asc"
                         }
                     },
                     {
-                        "id": "time_entries.billed",
+                        "id": "time_entries.archived",
                         "type": "entry",
-                        "label": "Billed",
+                        "label": "Archived",
                         "icon": "receipt_long",
-                        "description": "Billed time entries",
+                        "description": "Archived entries",
                         "context": {
                             "entity": "timetrack\\TimeEntry",
-                            "view": "list.billed",
+                            "view": "list.archived",
                             "order": "created",
                             "sort": "desc"
                         }
