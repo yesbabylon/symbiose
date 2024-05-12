@@ -8,7 +8,6 @@
 use core\User;
 use timetrack\Project;
 use timetrack\TimeEntry;
-use timetrack\TimeEntrySaleModel;
 
 list($params, $providers) = eQual::announce([
     'description'    => 'Quick create a time entry with minimal information.',
@@ -44,20 +43,19 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'      => ['context']
+    'providers'      => ['context', 'auth']
 ]);
 
 /**
  * @var \equal\php\Context $context
+ * @var \equal\auth\AuthenticationManager $auth
  */
-$context = $providers['context'];
+list($context, $auth) = [ $providers['context'], $providers['auth'] ];
 
-$user = User::id($params['user_id'])
-    ->read(['id'])
-    ->first();
+$user_id = $aut->userId();
 
-if(!isset($user)) {
-    throw new Exception('unknown_user', EQ_ERROR_UNKNOWN_OBJECT);
+if($user_id <= 0) {
+    throw new Exception('unknown_user', EQ_ERROR_NOT_ALLOWED);
 }
 
 $project = Project::id($params['project_id'])
@@ -68,20 +66,11 @@ if(!isset($project)) {
     throw new Exception('unknown_project', EQ_ERROR_UNKNOWN_OBJECT);
 }
 
-$sale_model = null;
-if(isset($params['origin'], $params['project_id'])) {
-    $sale_model = TimeEntrySaleModel::getModelToApply(
-        $params['origin'],
-        $params['project_id']
-    );
-}
-
 TimeEntry::create([
-    'description' => 'New entry '.date('Y-m-d H:m:s', time()),
-    'user_id'     => $params['user_id'],
-    'project_id'  => $params['project_id'],
-    'origin'      => $params['origin']
-]);
+        'description' => 'New entry '.date('Y-m-d H:m:s', time()),
+        'project_id'  => $params['project_id'],
+        'origin'      => $params['origin']
+    ]);
 
 $context->httpResponse()
         ->status(201)
