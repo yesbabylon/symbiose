@@ -109,7 +109,8 @@ class RentalUnit extends Model {
                 'type'              => 'many2one',
                 'description'       => "Rental Unit which current unit belongs to, if any.",
                 'foreign_object'    => 'realestate\RentalUnit',
-                'onupdate'          => 'onupdateParentId'
+                'onupdate'          => 'onupdateParentId',
+                'domain'            => ['center_id', '=', 'object.center_id']
             ],
 
             'repairs_ids' => [
