@@ -79,7 +79,8 @@
             "view": "form.default"
         },
         "remove": [
-            "item.invoice_purpose"
+            "item.invoice_purpose",
+            "section.accounting_entries"
         ],
         "update": {
             "item.invoice_number": {
