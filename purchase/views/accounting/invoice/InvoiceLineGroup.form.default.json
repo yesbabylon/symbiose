@@ -1,0 +1,13 @@
+{
+    "name": "Invoice Line Group",
+    "description": "Invoice line groups are related to an invoice and are meant to join several invoice lines.",
+    "access": {
+        "groups": ["purchase.default.user"]
+    },
+    "layout": {
+        "extends": {
+            "entity": "finance\\accounting\\InvoiceLineGroup",
+            "view": "form.default"
+        }
+    }
+}

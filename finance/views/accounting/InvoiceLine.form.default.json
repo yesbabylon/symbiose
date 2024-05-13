@@ -4,6 +4,11 @@
     "access": {
         "groups": ["finance.default.user"]
      },
+    "header": {
+        "actions": {
+            "ACTION.EDIT": false
+        }
+    },
     "layout": {
         "groups": [
             {
