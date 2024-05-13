@@ -138,7 +138,7 @@
                                                 "type": "field",
                                                 "label": "Zip",
                                                 "value": "address_zip",
-                                                "width": "16%"
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "label",
@@ -155,7 +155,7 @@
                                                 "type": "field",
                                                 "label": "Country",
                                                 "value": "address_country",
-                                                "width": "16%"
+                                                "width": "25%"
                                             }
                                         ]
                                     },
