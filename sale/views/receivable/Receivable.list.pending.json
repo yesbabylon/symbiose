@@ -21,7 +21,7 @@
     "domain": ["status", "=", "pending"],
     "actions" : [
         {
-            "id": "header.pending.actions.bulk_invoice",
+            "id": "actions.bulk_invoice",
             "label": "Invoice all",
             "icon": "list",
             "controller": "sale_receivable_bulk-invoice"
