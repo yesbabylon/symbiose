@@ -3,20 +3,6 @@
     "description": "This view is intended for displaying the Receivables.",
     "access": {
     },
-    "header": {
-        "selection": {
-            "default" : false,
-            "actions" : [
-                {
-                    "id": "header.selection.actions.add_invoice",
-                    "label": "Add to invoice",
-                    "icon": "list",
-                    "controller": "sale_receivable_add-invoice",
-                    "confirm": true
-                }
-            ]
-        }
-    },
     "operations": {
         "total": {
             "total": {

@@ -148,41 +148,58 @@ class InvoiceLine extends Model {
         return $result;
     }
 
-    public static function onupdateInvoiceId($om, $ids, $values, $lang) {
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdateInvoiceId($self) {
+        $self->do('reset_invoice_prices');
     }
 
-    public static function onupdateVatRate($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['price' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdateVatRate($self) {
+        $self->do('reset_prices');
     }
 
-    public static function onupdateQty($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdateQty($self) {
+        $self->do('reset_prices');
     }
 
-    public static function onupdateFreeQty($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdateFreeQty($self) {
+        $self->do('reset_prices');
     }
 
-    public static function onupdateDiscount($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['price' => null, 'total' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdateDiscount($self) {
+        $self->do('reset_prices');
     }
 
-    public static function _resetInvoice($om, $ids, $values, $lang) {
-        $lines = $om->read(get_called_class(), $ids, ['invoice_id']);
-        if($lines > 0)  {
-            $invoices_ids = array_map(function($a) {return $a['invoice_id'];}, $lines);
-            $om->update('finance\accounting\Invoice', $invoices_ids, ['price' => null, 'total' => null]);
-        }
+    public static function getActions() {
+        return [
+            'reset_prices' => [
+                'description'   => 'Resets price and total computed fields of the invoice line and the invoice.',
+                'policies'      => [],
+                'function'      => 'doResetPrices'
+            ],
+            'reset_invoice_prices' => [
+                'description'   => 'Resets price and total computed fields of the invoice.',
+                'policies'      => [],
+                'function'      => 'doResetInvoicePrices'
+            ]
+        ];
+    }
+
+    public static function doResetPrices($self) {
+        $self->update([
+            'price' => null,
+            'total' => null
+        ]);
+
+        $self->do('reset_invoice_prices');
+    }
+
+    public static function doResetInvoicePrices($self) {
+        $self->read(['invoice_id']);
+
+        Invoice::ids(array_column($self->get(true), 'invoice_id'))
+            ->update([
+                'price' => null,
+                'total' => null
+            ]);
     }
 
     public function canupdate($orm, $ids = [], $values = [], $lang = 'en'): array {

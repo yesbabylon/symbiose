@@ -94,7 +94,7 @@ foreach($receivables_queues as $receivables_queue) {
         ])
             ->first();
 
-        Receivable::ids($receivable['id'])
+        Receivable::id($receivable['id'])
             ->update([
                 'invoice_id'      => $invoice['id'],
                 'invoice_line_id' => $invoice_line['id'],

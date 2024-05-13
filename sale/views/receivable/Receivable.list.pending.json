@@ -6,15 +6,25 @@
     "header": {
         "actions": {
             "ACTION.CREATE" : false
+        },
+        "selection": {
+            "actions" : [
+                {
+                    "id": "header.selection.actions.invoice",
+                    "label": "Invoice",
+                    "icon": "receipt_long",
+                    "controller": "sale_receivable_invoice"
+                }
+            ]
         }
     },
     "domain": ["status", "=", "pending"],
     "actions" : [
         {
-            "id": "header.pending.actions.bulk_add_invoice",
-            "label": "Add to invoice",
+            "id": "header.pending.actions.bulk_invoice",
+            "label": "Invoice all",
             "icon": "list",
-            "controller": "sale_receivable_bulk-add-invoice"
+            "controller": "sale_receivable_bulk-invoice"
         }
     ],
     "operations": {
