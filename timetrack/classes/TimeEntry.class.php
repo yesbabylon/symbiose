@@ -329,7 +329,10 @@ class TimeEntry extends SaleEntry {
         $self->read(['project_id' => ['name'], 'origin', 'reference', 'description']);
         foreach($self as $id => $entry) {
             $result[$id] = $entry['project_id']['name'];
-            $result[$id] .= ' - '.ucfirst($entry['origin']).' ['.$entry['reference'].']';
+            $result[$id] .= ' - '.ucfirst($entry['origin']);
+            if($entry['origin'] != 'project' && isset($entry['reference']) && strlen($entry['reference']) > 0) {
+                $result[$id] .=  ' ['.$entry['reference'].']';
+            }
             if(isset($entry['description']) && strlen($entry['description']) > 0) {
                 $result[$id] .= ' - '.$entry['description'];
             }
