@@ -1,33 +1,53 @@
 {
     "name": "Produit",
     "plural": "Produits",
-    "description": "Vue par défaut pour la liste des produit.",
+    "description": "Un produit inventaire est composé de services, logiciels, serveurs et instances. Il peut être interne ou appartenir à un client.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom",
             "description": "Nom du produit.",
-            "help": "Nom du produit."
+            "help": ""
         },
-        "description":{
+        "description": {
             "label": "Description",
             "description": "Description du produit.",
-            "help": "Description du produit."
+            "help": ""
         },
-        "is_internal":{
+        "is_internal": {
             "label": "Interne",
             "description": "Le produit est interne à l'entreprise.",
             "help": "Le produit fait partie de l'infrasture de l'entreprise (et pas de celle d'un client)."
         },
-        "customer_id":{
+        "customer_id": {
             "label": "Client",
-            "description": "Le client du produit.",
-            "help": "Le client du produit."
+            "description": "Client à qui appartient le produit.",
+            "help": ""
+        },
+        "servers_ids": {
+            "label": "Serveurs",
+            "description": "Serveurs utilisés afin de proposer le produit.",
+            "help": ""
+        },
+        "instances_ids": {
+            "label": "Instances",
+            "description": "Instances utilisées afin de proposer le produit.",
+            "help": ""
+        },
+        "services_ids": {
+            "label": "Services",
+            "description": "Services qui composent le produit.",
+            "help": ""
+        },
+        "softwares_ids": {
+            "label": "Logiciels",
+            "description": "Logiciels qui composent le produit.",
+            "help": ""
         }
     },
     "view": {
         "form.default": {
             "name": "Produit",
-            "description": "Le vue des produits",
+            "description": "Formulaire de modification d'un produit.",
             "layout": {
                 "section.description": {
                     "label": "Description"
@@ -44,12 +64,12 @@
             }
         },
         "list.default": {
-            "name": "Liste des produits",
+            "name": "Produits",
             "description": "Liste des produits.",
             "layout": {}
         },
         "list.selection": {
-            "name": "Liste des produits",
+            "name": "Produits",
             "description": "Liste des produits.",
             "layout": {}
         }
