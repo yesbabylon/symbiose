@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -34,6 +34,7 @@ class Access extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Short description of the access.'
             ],
 
@@ -49,6 +50,7 @@ class Access extends Model {
             'url' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'usage'             => 'url',
                 'description'       => 'The URL to access.',
                 'function'          => 'calUrl',
                 'store'             => true,
@@ -85,37 +87,36 @@ class Access extends Model {
             'server_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Server',
-                'description'       => 'Server to which the instance belongs.'
+                'description'       => 'Server to which the access belongs.',
+                'readonly'          => true,
+                'visible'           => ['server_id', '<>', null]
             ],
 
             'software_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Software',
-                'description'       => 'Software to which the access belongs.'
+                'foreign_object'    => 'inventory\Software',
+                'description'       => 'Software to which the access belongs.',
+                'readonly'          => true,
+                'visible'           => ['software_id', '<>', null]
             ],
 
             'instance_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Instance',
-                'description'       => 'Instance to which the access belongs.'
+                'description'       => 'Instance to which the access belongs.',
+                'readonly'          => true,
+                'visible'           => ['instance_id', '<>', null]
             ],
 
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
-                'description'       => 'Service to which the access belongs.'
+                'description'       => 'Service to which the access belongs.',
+                'readonly'          => true,
+                'visible'           => ['service_id', '<>', null]
             ]
 
         ];
-    }
-
-    public static function calUrl($self) {
-        $result = [];
-        $self->read(['port', 'host', 'type', 'username', 'password']);
-        foreach($self as $id => $access) {
-            $result[$id] = $access['type'].'://'.$access['username'].':'.$access['password'].'@'.$access['host'].($access['port']?':'.$access['port']:'');
-        }
-        return $result;
     }
 
     public static function onupdateType($self) {
@@ -130,27 +131,57 @@ class Access extends Model {
         }
     }
 
-    public static function onchange($event,$values) {
+    public static function calUrl($self) {
         $result = [];
-        $port = null;
-        if(isset($event['type'])) {
-            if(isset(self::MAP_PORTS[$event['type']])) {
-                $port=self::MAP_PORTS[$event['type']];
-                $result['port'] = $port;
-            }
+        $self->read(['port', 'host', 'type', 'username', 'password']);
+        foreach($self as $id => $access) {
+            $result[$id] = self::createUrl($access);
+        }
+        return $result;
+    }
 
+    public static function onchange($event, $values) {
+        $result = [];
+
+        if(isset($event['type'], self::MAP_PORTS[$event['type']])) {
+            $result['port'] = self::MAP_PORTS[$event['type']];
         }
 
-        if(isset($event['type']) || isset($event['username']) || isset($event['password']) || isset($event['host']) ) {
-
-            $type = (string) (isset($event['type']))?$event['type']:$values['type'];
-            $username = (string) (isset($event['username']))?$event['username']:$values['username'];
-            $password = (string) (isset($event['password']))?$event['password']:$values['password'];
-            $host = (string) (isset($event['host']))?$event['host']:$values['host'];
-            $port = ($port?':'.$port:'');
-            $result['url']=$type.'://'.$username.':'.$password.'@'.$host. $port;
+        if(
+            isset($event['type'])
+            || isset($event['username'])
+            || isset($event['password'])
+            || isset($event['host'])
+            || isset($event['port'])
+        ) {
+            $result['url'] = self::createUrl([
+                'type'     => $event['type'] ?? $values['type'],
+                'username' => $event['username'] ?? $values['username'],
+                'password' => $event['password'] ?? $values['password'],
+                'host'     => $event['host'] ?? $values['host'],
+                'port'     => $result['port'] ?? $event['port'] ?? $values['port']
+            ]);
         }
 
         return $result;
+    }
+
+    private static function createUrl($access) {
+        return sprintf(
+            '%s://%s:%s@%s',
+            $access['type'],
+            $access['username'],
+            $access['password'],
+            self::createAuthority($access)
+        );
+    }
+
+    private static function createAuthority($access) {
+        $authority = $access['host'];
+        if(!empty($access['port'])) {
+            $authority .= ':'.$access['port'];
+        }
+
+        return $authority;
     }
 }

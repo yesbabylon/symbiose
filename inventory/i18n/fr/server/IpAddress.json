@@ -1,0 +1,58 @@
+{
+    "name": "Adresse IP",
+    "plural": "Adresses IP",
+    "description": "Adresse IP d'un serveur.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom de l'adresse IP.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'adresse IP.",
+            "help": ""
+        },
+        "ip_v4": {
+            "label": "IPV4",
+            "description": "Adresse IP sous format IPV4 (32 bits).",
+            "help": ""
+        },
+        "ip_v6": {
+            "label": "IPV6",
+            "description": "Adresse IP sous format IPV6 (128 bits).",
+            "help": ""
+        },
+        "server_id": {
+            "label": "Serveur",
+            "description": "Serveur cible de cet adresse IP.",
+            "help": ""
+        },
+        "visibility": {
+            "label": "Visibilité",
+            "selection": {
+                "public": "Publique",
+                "private": "Privée",
+                "protected": "Protégée"
+            },
+            "description": "Type de visivilité de l'adresse IP.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Adresse IP",
+            "description": "Formulaire de modification d'une adresse IP.",
+            "layout": {
+                "section.description": {
+                    "label": "Description"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Adresses IP",
+            "description": "Liste des adresses IP.",
+            "layout": {}
+        }
+    }
+}

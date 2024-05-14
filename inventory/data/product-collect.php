@@ -10,7 +10,7 @@ use equal\orm\Domain;
 use inventory\Product;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Products: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Products: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 

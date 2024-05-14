@@ -8,29 +8,36 @@
             {
                 "type": "field",
                 "value": "id",
-                "width": "15%",
+                "width": "10%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "name",
-                "width": "25%",
+                "width": "33%",
                 "sortable": true,
                 "readonly": true
             },
             {
                 "type": "field",
                 "value": "type",
-                "width": "25%",
+                "width": "33%",
                 "sortable": true
             },
             {
                 "type": "field",
-                "value": "product_id",
-                "label": "Product",
-                "width": "25%",
-                "sortable": true
+                "value": "products_count",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "type": "field",
+                "value": "instances_count",
+                "width": "33%",
+                "sortable": true,
+                "readonly": true
             }
         ]
     }
