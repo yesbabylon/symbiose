@@ -135,21 +135,21 @@
                 ]
             },
             {
-                "id": "item.serves",
+                "id": "item.advanced",
                 "type": "parent",
                 "label": "Advanced",
                 "icon": "tune",
                 "description": "",
                 "children": [
                     {
-                        "id": "item.services",
+                        "id": "item.advanced.all-services",
                         "type": "parent",
                         "label": "All Services",
                         "icon": "work",
                         "description": "",
                         "children": [
                             {
-                                "id": "inventory.services.services",
+                                "id": "item.advanced.all-services.services",
                                 "type": "entry",
                                 "label": "Services",
                                 "icon": "support_agent",
@@ -160,20 +160,7 @@
                                 }
                             },
                             {
-                                "id": "item.software",
-                                "type": "entry",
-                                "label": "Softwares",
-                                "icon": "apps",
-                                "description": "",
-                                "context": {
-                                    "entity": "inventory\\server\\Software",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            },
-                            {
-                                "id": "inventory.services.subscription",
+                                "id": "item.advanced.all-services.subscription",
                                 "type": "entry",
                                 "label": "Subscriptions",
                                 "icon": "subscriptions",
@@ -186,50 +173,72 @@
                         ]
                     },
                     {
-                        "id": "item.server",
+                        "id": "item.advanced.all-servers",
+                        "type": "parent",
+                        "label": "All Servers",
+                        "icon": "lan",
+                        "description": "",
+                        "children": [
+                            {
+                                "id": "item.advanced.all-servers.servers",
+                                "type": "entry",
+                                "label": "Servers",
+                                "icon": "storage",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\server\\Server",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "item.advanced.all-servers.instances",
+                                "type": "entry",
+                                "label": "Instances",
+                                "icon": "article",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\server\\Instance",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "item.advanced.all-servers.ip-addresses",
+                                "type": "entry",
+                                "label": "IP addresses",
+                                "icon": "location_on",
+                                "description": "",
+                                "context": {
+                                    "entity": "inventory\\server\\IpAddress",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "item.advanced.softwares",
                         "type": "entry",
-                        "label": "Servers",
-                        "icon": "storage",
+                        "label": "Softwares",
+                        "icon": "apps",
                         "description": "",
                         "context": {
-                            "entity": "inventory\\server\\Server",
-                            "view": "list.default"
+                            "entity": "inventory\\server\\Software",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
                         }
                     },
                     {
-                        "id": "item.access",
+                        "id": "item.advanced.accesses",
                         "type": "entry",
                         "label": "Accesses",
-                        "icon": "person",
+                        "icon": "key",
                         "description": "",
                         "context": {
                             "entity": "inventory\\Access",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.instance",
-                        "type": "entry",
-                        "label": "Instances",
-                        "icon": "article",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\server\\Instance",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
-                        "id": "item.ips",
-                        "type": "entry",
-                        "label": "Ip Addresses",
-                        "icon": "location_on",
-                        "description": "",
-                        "context": {
-                            "entity": "inventory\\server\\IpAddress",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"

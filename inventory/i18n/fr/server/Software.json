@@ -1,68 +1,68 @@
 {
     "name": "Logiciel",
     "plural": "Logiciels",
-    "description": "Vue par défaut pour la liste des logiciels.",
+    "description": "Logiciel installé sur un serveur, une instance ou lié à un produit client/interne.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom",
             "description": "Nom du logiciel.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "description":{
+        "description": {
             "label": "Description",
             "description": "Description du logiciel.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "edition":{
+        "edition": {
             "label": "Édition",
             "description": "Édition du logiciel.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "version":{
+        "version": {
             "label": "Version",
             "description": "Version du logiciel.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "customer_id":{
+        "customer_id": {
             "label": "Client",
-            "description": "Client du logiciel.",
-            "help": "Nom du logiciel."
+            "description": "Client propriétaire du logiciel.",
+            "help": ""
         },
-        "instance_id":{
+        "instance_id": {
             "label": "Instance",
             "description": "Instance sur laquelle le logiciel est installé.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "server_id":{
+        "server_id": {
             "label": "Serveur",
             "description": "Serveur sur lequel le logiciel est installé.",
-            "help": "Nom du logiciel."
+            "help": ""
         },
-        "product_id":{
+        "product_id": {
             "label": "Produit",
-            "description": "Produit sur lequel le logiciel est installé.",
-            "help": "Nom du logiciel."
+            "description": "Produit duquel le logiciel fait partie.",
+            "help": ""
         }
     },
     "view": {
         "form.default": {
-            "name": "logiciel",
-            "description": "Les vue des logiciels",
+            "name": "Logiciel",
+            "description": "Formulaire de modification d'un logiciel.",
             "layout": {
                 "section.software_info": {
                     "label": "Infos Logiciel"
                 }
-        }
+            }
         },
         "list.default": {
-            "name": "Liste des logiciels",
+            "name": "Logiciels",
             "description": "Liste des logiciels.",
             "layout": {}
         },
         "list.selection": {
-            "name": "Liste des logiciels",
+            "name": "Logiciels",
             "description": "Liste des logiciels.",
             "layout": {}
-            }
+        }
     }
 }

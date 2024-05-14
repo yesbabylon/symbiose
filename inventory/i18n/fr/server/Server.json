@@ -85,7 +85,7 @@
             }
         },
         "list.default": {
-            "name": "Liste des serveurs",
+            "name": "Serveurs",
             "description": "Liste des serveurs.",
             "layout": {}
         }
