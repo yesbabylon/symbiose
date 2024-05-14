@@ -152,13 +152,14 @@ class Access extends Model {
             || isset($event['username'])
             || isset($event['password'])
             || isset($event['host'])
+            || isset($event['port'])
         ) {
             $result['url'] = self::createUrl([
                 'type'     => $event['type'] ?? $values['type'],
                 'username' => $event['username'] ?? $values['username'],
                 'password' => $event['password'] ?? $values['password'],
                 'host'     => $event['host'] ?? $values['host'],
-                'port'     => $result['port'] ?? ''
+                'port'     => $result['port'] ?? $event['port'] ?? $values['port']
             ]);
         }
 

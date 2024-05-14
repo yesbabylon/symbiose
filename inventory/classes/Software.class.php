@@ -11,7 +11,6 @@ use equal\orm\Model;
 
 class Software extends Model {
 
-
     public static function getColumns()
     {
         return [
