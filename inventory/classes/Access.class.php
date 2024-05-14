@@ -94,7 +94,7 @@ class Access extends Model {
 
             'software_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Software',
+                'foreign_object'    => 'inventory\Software',
                 'description'       => 'Software to which the access belongs.',
                 'readonly'          => true,
                 'visible'           => ['software_id', '<>', null]

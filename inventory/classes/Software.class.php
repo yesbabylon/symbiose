@@ -1,19 +1,21 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
-namespace inventory\server;
+namespace inventory;
 
 use equal\orm\Model;
-use inventory\service\Service;
 
 class Software extends Model {
+
+
     public static function getColumns()
     {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the software.",
@@ -73,7 +75,7 @@ class Software extends Model {
                 'foreign_field'     => 'software_id',
                 'description'       => 'Access information to the server.'
             ]
+
         ];
     }
-
 }

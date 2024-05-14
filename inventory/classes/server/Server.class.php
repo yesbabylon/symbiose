@@ -83,7 +83,7 @@ class Server extends Model {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\server\Software',
+                'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'server_id',
                 'ondetach'          => 'delete',
                 'description'       => 'Softwares installed on the server.'

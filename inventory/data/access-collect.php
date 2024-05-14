@@ -6,7 +6,6 @@
 */
 
 use equal\orm\Domain;
-use inventory\Access;
 
 list($params, $providers) = eQual::announce([
     'description'   => 'Advanced search for Accesses: returns a collection of Reports according to extra paramaters.',
@@ -49,7 +48,7 @@ list($params, $providers) = eQual::announce([
 
         'software_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\server\Software',
+            'foreign_object'    => 'inventory\Software',
             'description'       => 'Software to which the access belongs.'
         ],
 

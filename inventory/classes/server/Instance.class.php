@@ -80,7 +80,7 @@ class Instance extends Model {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\server\Software',
+                'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'instance_id',
                 'description'       => 'Information about softwares running on the instance.'
             ]
