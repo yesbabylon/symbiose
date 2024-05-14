@@ -10,7 +10,7 @@ use inventory\service\Service;
 use inventory\Software;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Accesses: returns a collection of Reports according to extra parameters.',
+    'description'   => 'Advanced search for Software: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
