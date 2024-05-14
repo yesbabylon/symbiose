@@ -48,6 +48,12 @@
             },
             {
                 "type": "field",
+                "value": "is_auto_renew",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
                 "value": "is_expired",
                 "label": "Expired",
                 "width": "20%",
