@@ -24,6 +24,7 @@ class Server extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Short description of the Server.',
             ],
 

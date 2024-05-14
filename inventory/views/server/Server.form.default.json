@@ -41,8 +41,56 @@
             {
                 "sections": [
                     {
-                        "id": "section.details",
-                        "label": "Details",
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
+                                                "value": "description",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.accesses",
+                        "label": "Accesses",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "accesses_ids",
+                                                "width": "100%",
+                                                "label": "Accesses",
+                                                "widget": {
+                                                    "view": "list.server"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.ip-addresses",
+                        "label": "IP Addresses",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -51,11 +99,11 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Description",
-                                                "value": "description",
+                                                "value": "ip_address_ids",
                                                 "width": "100%",
+                                                "label": "IP Address",
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]
@@ -94,32 +142,6 @@
                         ]
                     },
                     {
-                        "id": "section.accesses",
-                        "label": "Accesses",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "accesses_ids",
-                                                "width": "100%",
-                                                "label": "Accesses",
-                                                "widget": {
-                                                    "view": "list.server"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "id": "section.instances",
                         "label": "Instances",
                         "visible": ["state", "<>", "draft"],
@@ -134,31 +156,6 @@
                                                 "value": "instances_ids",
                                                 "width": "100%",
                                                 "label": "Instances",
-                                                "widget": {
-                                                    "view": "list.selection"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "section.ip-addresses",
-                        "label": "IP Addresses",
-                        "visible": ["state", "<>", "draft"],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "ip_address_ids",
-                                                "width": "100%",
-                                                "label": "IP Address",
                                                 "widget": {
                                                     "view": "list.selection"
                                                 }
