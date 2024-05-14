@@ -11,6 +11,11 @@
             "id": "action.add-subscription-entry",
             "label": "Create Entry",
             "controller": "sale_subscription_add-subscriptionentry"
+        },
+        {
+            "id": "action.check-subscription-expiration",
+            "label": "Check expiration",
+            "controller": "inventory_service_check-expiration"
         }
     ],
     "layout": {
