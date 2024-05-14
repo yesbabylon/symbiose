@@ -11,7 +11,6 @@
                                 "columns": [
                                     {
                                         "width": "75%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -25,17 +24,10 @@
                                     },
                                     {
                                         "width": "25%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "type",
-                                                "width": "100%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product",
                                                 "width": "100%"
                                             }
                                         ]
@@ -49,14 +41,13 @@
             {
                 "sections": [
                     {
-                        "label": "Server Infos",
-                        "id": "section.server_info",
+                        "id": "section.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -74,13 +65,38 @@
                         ]
                     },
                     {
+                        "id": "section.products",
+                        "label": "Products",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%",
+                                                "label": "Products",
+                                                "widget": {
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.accesses",
                         "label": "Accesses",
-                        "id": "section.server_access",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -104,19 +120,14 @@
                         ]
                     },
                     {
+                        "id": "section.instances",
                         "label": "Instances",
-                        "id": "section.server_instances",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -134,19 +145,14 @@
                         ]
                     },
                     {
-                        "label": "IP Address",
-                        "id": "section.server_IpAddress",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "id": "section.ip-addresses",
+                        "label": "IP Addresses",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
@@ -164,19 +170,14 @@
                         ]
                     },
                     {
+                        "id": "section.softwares",
                         "label": "Softwares",
-                        "id": "section.server_software",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
