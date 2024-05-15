@@ -8,7 +8,7 @@
 
 // announce script and fetch parameters values
 list($params, $providers) = announce([
-    'description'	=>	"Bulk check subscription expiration.",
+    'description'	=>	"Bulk verify subscription expiration.",
     'params' 		=>	[
         'ids' => [
             'description'       => 'List of Subscription identifiers the check against emptyness.',
