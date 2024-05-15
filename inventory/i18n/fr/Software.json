@@ -42,6 +42,16 @@
             "label": "Produit",
             "description": "Produit duquel le logiciel fait partie.",
             "help": ""
+        },
+        "service_id": {
+            "label": "Service",
+            "description": "Service duquel le logiciel fait partie.",
+            "help": ""
+        },
+        "accesses_ids": {
+            "label": "Accès",
+            "description": "Accès au logiciel.",
+            "help": ""
         }
     },
     "view": {
@@ -49,8 +59,11 @@
             "name": "Logiciel",
             "description": "Formulaire de modification d'un logiciel.",
             "layout": {
-                "section.software_info": {
-                    "label": "Infos Logiciel"
+                "section.description": {
+                    "label": "Description"
+                },
+                "section.accesses": {
+                    "label": "Accès"
                 }
             }
         },

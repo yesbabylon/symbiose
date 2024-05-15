@@ -23,6 +23,7 @@ class Software extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Information about a software.'
             ],
 
