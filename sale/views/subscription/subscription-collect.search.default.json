@@ -13,31 +13,26 @@
                                         "width": "100%",
                                         "items": [
                                             {
+                                                "id": "item.product",
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "20%"
+                                            },
+                                            {
                                                 "type": "field",
                                                 "value": "date_from",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date_to",
+                                                "value": "price_min",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Expired",
                                                 "value": "is_expired",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Coming expiry",
-                                                "value": "has_upcoming_expiry",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
                                                 "width": "20%"
                                             }
                                         ]
@@ -47,7 +42,13 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "price_min",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
                                                 "width": "20%"
                                             },
                                             {
@@ -56,10 +57,9 @@
                                                 "width": "20%"
                                             },
                                             {
-                                                "id": "item.product",
                                                 "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product (Catalog)",
+                                                "label": "Coming expiry",
+                                                "value": "has_upcoming_expiry",
                                                 "width": "20%"
                                             }
                                         ]

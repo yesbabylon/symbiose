@@ -14,7 +14,14 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "edition",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "service_id",
+                                                "label": "Service",
                                                 "width": "20%"
                                             },
                                             {
@@ -30,12 +37,6 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "service_id",
-                                                "label": "Service",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "instance_id",
                                                 "label": "Instance",
                                                 "width": "20%"
@@ -47,26 +48,25 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "subscription_id",
                                                 "label": "Subscription",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "customer_id",
-                                                "label": "Customer",
+                                                "value": "edition",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "access_id",
                                                 "label": "Access",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product",
                                                 "width": "20%"
                                             }
                                         ]
