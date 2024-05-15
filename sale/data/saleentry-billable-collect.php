@@ -8,7 +8,7 @@
 use equal\orm\Domain;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for pending billable Sale Entry: returns a collection of pending billable Sale Entries according to extra parameters.',
+    'description'   => 'Advanced search for billable Sale Entry: returns a collection of billable Sale Entries according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -45,16 +45,36 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 $domain = [
-    ['is_billable', '=', true],
-    ['has_receivable', '=', false]
+    [
+        ['object_class', '=', null],
+        ['status', '=', 'pending'],
+        ['is_billable', '=', true],
+        ['has_receivable', '=', false]
+    ],
+    [
+        ['object_class', '=', 'sale\subscription\Subscription'],
+        ['status', '=', 'pending'],
+        ['is_billable', '=', true],
+        ['has_receivable', '=', false]
+    ],
+    [
+        ['object_class', '=', 'timetrack\Project'],
+        ['status', '=', 'validated'],
+        ['is_billable', '=', true],
+        ['has_receivable', '=', false]
+    ]
 ];
 
-if(isset($params['customer_id'])) {
-    $domain[] = ['customer_id', '=', $params['customer_id']];
+if(isset($params['customer_id']) && $params['customer_id'] > 0) {
+    for($i = 0; $i < 3; $i++) {
+        $domain[$i][] = ['customer_id', '=', $params['customer_id']];
+    }
 }
 
-if(isset($params['product_id'])) {
-    $domain[] = ['product_id', '=', $params['product_id']];
+if(isset($params['product_id']) && $params['product_id'] > 0) {
+    for($i = 0; $i < 3; $i++) {
+        $domain[$i][] = ['product_id', '=', $params['product_id']];
+    }
 }
 
 $params['domain'] = (new Domain($params['domain']))

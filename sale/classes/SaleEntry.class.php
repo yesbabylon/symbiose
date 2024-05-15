@@ -7,6 +7,7 @@
 
 namespace sale;
 
+use eQual;
 use equal\orm\Model;
 use sale\price\Price;
 use sale\price\PriceList;
@@ -139,6 +140,133 @@ class SaleEntry extends Model {
                 'description'       => 'Name given to the generated receivable.',
                 'function'          => 'calcReceivableName',
                 'store'             => false
+            ],
+
+            'status' => [
+                'type'              => 'string',
+                'selection'         => [
+                    'pending',
+                    'ready',
+                    'validated',
+                    'billed'
+                ],
+                'description'       => 'Status of the sale entry.',
+                'default'           => 'pending'
+            ]
+
+        ];
+    }
+
+    public static function getPolicies(): array {
+        return [
+            'ready-for-validation' => [
+                'description' => 'Verifies that the sale entry can enter validation process (Used in timetrack\TimeEntry).',
+                'function'    => 'policyReadyForValidation'
+            ],
+            'billable' => [
+                'description' => 'Verifies that sale entry holds all information required for billing.',
+                'function'    => 'policyBillable'
+            ]
+        ];
+    }
+
+    /**
+     * Method to override when extending class, by default no validation process for sale entry
+     *
+     * @param $self
+     * @return array
+     */
+    public static function policyReadyForValidation($self): array {
+        $result = [];
+        $self->read(['id']);
+        foreach($self as $id => $entry) {
+            $result[$id] = false;
+        }
+
+        return $result;
+    }
+
+    public static function policyBillable($self): array {
+        $result = [];
+        $self->read(['status', 'object_class', 'customer_id', 'product_id', 'price_id', 'unit_price', 'qty', 'is_billable']);
+        foreach($self as $id => $entry) {
+            if( ($entry['object_class'] === 'timetrack\Project' && $entry['status'] !== 'validated')
+                || !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price'])
+                || $entry['qty'] <= 0
+                || !$entry['is_billable']
+            ) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function addReceivable($self): void {
+        $self->read(['id']);
+        foreach($self as $entry) {
+            try {
+                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $entry['id']]);
+            }
+            catch(\Exception $e) {
+                trigger_error("PHP::Failed adding receivable for sale entry {$entry['id']}", EQ_REPORT_ERROR);
+            }
+        }
+    }
+
+    public static function getWorkflow() {
+        return [
+
+            'pending' => [
+                'description' => 'Sale entry is still a draft and waiting to be completed.',
+                'transitions' => [
+                    'request-validation' => [
+                        'description' => 'Sets sale entry as ready for validation.',
+                        'help'        => 'Can only be applied if '.get_called_class().' has a validation process.',
+                        'status'      => 'ready',
+                        'policies'    => ['ready-for-validation']
+                    ],
+                    'bill' => [
+                        'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
+                        'help'        => 'Can only be applied if '.get_called_class().' does not have a validation process.',
+                        'status'      => 'billed',
+                        'policies'    => ['billable'],
+                        'onafter'     => 'addReceivable'
+                    ]
+                ]
+            ],
+
+            'ready' => [
+                'description' => 'Sale entry submitted for approval.',
+                'help'        => 'This status can be used by children of this class to check the completed specific information (Used by timetrack\TimeEntry).',
+                'transitions' => [
+                    'refuse'   => [
+                        'description' => 'Refuse sale entry, sets its status back to pending.',
+                        'status'      => 'pending'
+                    ],
+                    'validate' => [
+                        'description' => 'Validate sale entry.',
+                        'status'      => 'validated'
+                    ]
+                ]
+            ],
+
+            'validated' => [
+                'description' => 'Sale entry validated, now sale information must be completed to bill the sale entry.',
+                'help'        => 'To bill the sale entry the sale information (product, price, unit price) must be completed.',
+                'transitions' => [
+                    'bill' => [
+                        'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
+                        'status'      => 'billed',
+                        'policies'    => ['billable'],
+                        'onafter'     => 'addReceivable'
+                    ]
+                ]
+            ],
+
+            'billed' => [
+                'description' => 'A receivable was generated, it can be invoiced to the customer.',
+                'help'        => 'Sale entry life cycle is over, its data cannot be modified.'
             ]
 
         ];

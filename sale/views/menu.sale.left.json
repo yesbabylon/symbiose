@@ -60,6 +60,18 @@
                 "description": "Sale entries parent menu.",
                 "children": [
                     {
+                        "id": "sale_entries.new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new entry.",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
                         "id": "sale_entries.all",
                         "type": "entry",
                         "label": "All",
@@ -73,16 +85,44 @@
                         }
                     },
                     {
-                        "id": "sale_entries.pending-billable",
+                        "id": "sale_entries.to-bill",
                         "type": "entry",
-                        "label": "Pending billable",
-                        "icon": "receipt_long",
-                        "description": "Display pending billable sale entries of specific customer.",
+                        "label": "To bill",
+                        "icon": "payments",
+                        "description": "Display sale entries ready to be billed.",
                         "context": {
                             "entity": "sale\\SaleEntry",
-                            "view": "list.pending-billable",
+                            "view": "list.billable",
                             "order": "id",
                             "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "sale_entries.billed",
+                        "type": "entry",
+                        "label": "Billed",
+                        "icon": "receipt_long",
+                        "description": "Display billed sale entries.",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": [ ["status", "=", "billed"] ]
+                        }
+                    },
+                    {
+                        "id": "sale_entries.archived",
+                        "type": "entry",
+                        "label": "Archived",
+                        "icon": "inventory",
+                        "description": "Archived entries",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "desc",
+                            "domain": [ ["state", "=", "archive"] ]
                         }
                     }
                 ]

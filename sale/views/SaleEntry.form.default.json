@@ -1,15 +1,20 @@
 {
     "name": "Sale Entry",
-    "description": "Sale entry.",
+    "description": "Sale entry modification form.",
     "actions": [
         {
-            "id": "action.receivable",
-            "label": "Receivable",
-            "controller": "sale_saleentry_add-receivable",
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "sale\\SaleEntry",
+                "transition": "bill",
+                "ids": []
+            },
             "visible": [
                 ["state", "<>", "draft"],
-                ["is_billable", "=", true],
-                ["has_receivable", "=", false]
+                ["status", "in", ["pending", "validated"]],
+                ["is_billable", "=", true]
             ]
         }
     ],
@@ -24,6 +29,12 @@
                                     {
                                         "width": "100%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "width": "25%",
+                                                "visible": false
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "description",

@@ -3,12 +3,17 @@
     "description": "Subscription entry.",
     "actions": [
         {
-            "id": "action.receivable",
-            "label": "Receivable",
-            "controller": "sale_saleentry_add-receivable",
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "sale\\subscription\\SubscriptionEntry",
+                "transition": "bill",
+                "ids": []
+            },
             "visible": [
                 ["state", "<>", "draft"],
-                ["has_receivable", "=", false],
+                ["status", "=", "pending"],
                 ["is_billable", "=", true]
             ]
         }
