@@ -6,91 +6,103 @@
             {
                 "sections": [
                     {
-                        "label": "Software Infos",
-                        "id": "section.software",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "id",
-                                                "width": "15%",
-                                                "sortable": true,
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "name",
-                                                "width": "30%",
+                                                "width": "75%",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "edition",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "version",
-                                                "width": "20%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "100%",
-                                        "align": "left",
+                                        "width": "50%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "label": "Customer",
-                                                "value": "customer_id",
-                                                "width": "20%"
-                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Product",
                                                 "value": "product_id",
-                                                "width": "20%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer",
+                                                "value": "customer_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "edition",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "version",
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Server",
+                                                "value": "server_id",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Instance",
                                                 "value": "instance_id",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Server",
-                                                "value": "server_id",
-                                                "width": "20%"
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Service",
                                                 "value": "service_id",
-                                                "width": "20%"
+                                                "width": "33%"
                                             }
                                         ]
-                                    },
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%",
-                                                "usage": "string/text",
-                                                "widget": {
-                                                    "usage": "string/text"
-                                                }
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -99,19 +111,14 @@
                         ]
                     },
                     {
+                        "id": "section.accesses",
                         "label": "Accesses",
-                        "id": "section.software.accesses",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "100%",
-                                        "align": "left",
                                         "items": [
                                             {
                                                 "type": "field",

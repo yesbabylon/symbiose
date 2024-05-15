@@ -225,7 +225,7 @@
                         "icon": "apps",
                         "description": "",
                         "context": {
-                            "entity": "inventory\\server\\Software",
+                            "entity": "inventory\\Software",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
