@@ -7,17 +7,17 @@
 
 use equal\orm\Domain;
 use inventory\service\Service;
-use inventory\server\Software;
+use inventory\Software;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Accesses: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Software: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
         'entity' =>  [
             'description'   => 'name',
             'type'          => 'string',
-            'default'       => 'inventory\server\Software'
+            'default'       => 'inventory\Software'
         ],
 
         'edition' => [

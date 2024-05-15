@@ -3,29 +3,59 @@
     "plural": "Serveurs",
     "description": "Vue par défaut pour la liste des serveurs.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom d'hôte",
             "description": "Nom du serveur (hostname).",
             "help": ""
         },
-        "type":{
-            "label": "Type",
-            "description": "Type du serveur.",
-            "selection": {
-                "front": "front",
-                "node": "noeud",
-                "storage": "stockage"
-            },
-            "help": ""
-        },
-        "description":{
+        "description": {
             "label": "Description",
             "description": "Description du serveur.",
             "help": ""
         },
-        "product_id":{
-            "label": "Produit",
-            "description": "Produit auquel appartient le serveur.",
+        "type": {
+            "label": "Type",
+            "description": "Type du serveur.",
+            "selection": {
+                "front": "Front",
+                "node": "Nœud",
+                "storage": "Stockage"
+            },
+            "help": ""
+        },
+        "accesses_ids": {
+            "label": "Accès",
+            "description": "Accès au serveur.",
+            "help": ""
+        },
+        "instances_ids": {
+            "label": "Instances",
+            "description": "Instances executées sur le serveur",
+            "help": ""
+        },
+        "instances_count": {
+            "label": "Nombre d'instances",
+            "description": "Nombre d'instances executées sur le serveur.",
+            "help": ""
+        },
+        "products_ids": {
+            "label": "Produits",
+            "description": "Liste des produits qui utilisent ce serveur.",
+            "help": ""
+        },
+        "products_count": {
+            "label": "Nombre de produits",
+            "description": "Nombre de produits utilisant ce serveur.",
+            "help": ""
+        },
+        "ip_address_ids": {
+            "label": "Adresses IP",
+            "description": "Adresses IP du serveur.",
+            "help": ""
+        },
+        "softwares_ids": {
+            "label": "Logiciels",
+            "description": "Logiciels installé sur le serveur.",
             "help": ""
         }
     },
@@ -34,27 +64,30 @@
             "name": "serveur",
             "description": "",
             "layout": {
-                "section.server_info": {
-                    "label": "Infos Serveur"
+                "section.description": {
+                    "label": "Description"
                 },
-                "section.server_access":{
+                "section.accesses": {
                     "label": "Accès"
                 },
-                "section.server_software":{
-                    "label": "Logiciels"
+                "section.ip-addresses": {
+                    "label": "Adresses IP"
                 },
-                "section.server_instances":{
+                "section.products": {
+                    "label": "Produits"
+                },
+                "section.instances": {
                     "label": "Instances"
                 },
-                "section.server_IpAdress":{
-                    "label": "Adresses IP"
+                "section.softwares": {
+                    "label": "Logiciels"
                 }
-        }
+            }
         },
         "list.default": {
-            "name": "Liste des serveurs",
+            "name": "Serveurs",
             "description": "Liste des serveurs.",
             "layout": {}
-            }
+        }
     }
 }

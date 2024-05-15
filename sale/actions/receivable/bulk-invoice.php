@@ -23,7 +23,7 @@ $context = $providers['context'];
 
 $pending_receivables_ids = Receivable::search(['status', '=', 'pending'])->ids();
 
-eQual::run('do', 'sale_receivable_add-invoice', ['ids' => $pending_receivables_ids]);
+eQual::run('do', 'sale_receivable_invoice', ['ids' => $pending_receivables_ids]);
 
 $context->httpResponse()
         ->status(204)

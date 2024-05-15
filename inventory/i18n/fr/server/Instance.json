@@ -1,77 +1,94 @@
 {
     "name": "Instance",
     "plural": "Instances",
-    "description": "Vue par défaut pour la liste des instances.",
+    "description": "Instance exécutée sur un serveur, par exemple une instance Docker.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom",
-            "description": "Nom de l'instance.",
+            "description": "Nom unique de l'instance.",
             "help": ""
         },
-        "version":{
-            "label": "Version",
-            "description": "Version de l'instance.",
-            "selection": {
-                "production": "production",
-                "preview": "aperçu",
-                "staging": "stage",
-                "development": "développement"
-            },
-            "help": ""
-        },
-        "description":{
+        "description": {
             "label": "Description",
-            "description": "Description de l'instance.",
+            "description": "Courte description de l'instance.",
             "help": ""
         },
-        "type":{
+        "type": {
             "label": "Type",
-            "description": "Type de l'instance.",
+            "description": "Type d'instance.",
             "selection": {
-                "dev": "développement",
-                "staging": "staging",
-                "prod": "production",
-                "replica": "réplique"
+                "dev": "Développement",
+                "staging": "Staging",
+                "prod": "Production",
+                "replica": "Réplique"
             },
             "help": ""
-
         },
-        "branch":{
+        "version": {
+            "label": "Version",
+            "description": "Version de la branche.",
+            "selection": {
+                "development": "Développement",
+                "staging": "Staging",
+                "preview": "Aperçu",
+                "production": "Production"
+            },
+            "help": ""
+        },
+        "branch": {
             "label": "Branche",
-            "description": "Branche de l'instance.",
+            "description": "Branche installée sur l'instance.",
             "help": ""
         },
-        "url":{
+        "url": {
             "label": "Url",
-            "description": "Nom de l'instance.",
+            "description": "URL d'accueil du frontend.",
             "help": ""
         },
-        "server_id":{
+        "server_id": {
             "label": "Serveur",
-            "description": "Hôte de l'instance.",
+            "description": "Serveur sur lequel l'instance s'exécute.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit auquel appartient l’instance.",
+            "help": ""
+        },
+        "accesses_ids": {
+            "label": "Logiciels",
+            "description": "Informations sur la façon d'accéder à l'instance.",
+            "help": ""
+        },
+        "softwares_ids": {
+            "label": "Logiciels",
+            "description": "Informations sur les logiciels exécutés sur l'instance.",
             "help": ""
         }
     },
     "view": {
         "form.default": {
             "name": "Instance",
-            "description": "",
+            "description": "Affiche le formulaire de modification d'une instance.",
             "layout": {
-                "section.instance info": {
-                    "label": "Infos Instance"
+                "section.details": {
+                    "label": "Details"
                 },
-                "section.instance_access":{
+                "section.description": {
+                    "label": "Description"
+                },
+                "section.accesses": {
                     "label": "Accès"
                 },
-                "section.instance_software":{
+                "section.softwares": {
                     "label": "Logiciels"
                 }
-        }
+            }
         },
         "list.default": {
-            "name": "Liste des Instances",
-            "description": "Liste des instances.",
+            "name": "Instances",
+            "description": "Affiche la liste des instances.",
             "layout": {}
-            }
+        }
     }
 }

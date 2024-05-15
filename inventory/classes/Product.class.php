@@ -45,11 +45,14 @@ class Product extends Model {
             ],
 
             'servers_ids' => [
-                'type'              => 'one2many',
+                'type'              => 'many2many',
                 'foreign_object'    => 'inventory\server\Server',
-                'foreign_field'     => 'product_id',
-                'ondetach'          => 'delete',
-                'description'       => 'Server used by product.'
+                'foreign_field'     => 'products_ids',
+                'rel_table'         => 'inventory_rel_product_server',
+                'rel_foreign_key'   => 'server_id',
+                'rel_local_key'     => 'product_id',
+                'ondelete'          => 'cascade',
+                'description'       => 'List of server that are used by the product.'
             ],
 
             'instances_ids' => [
@@ -69,7 +72,7 @@ class Product extends Model {
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\server\Software',
+                'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'product_id',
                 'description'       => 'Softwares used by product.'
             ]

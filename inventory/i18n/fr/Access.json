@@ -1,19 +1,19 @@
 {
     "name": "Accès",
     "plural": "Accès",
-    "description": "Vue par défaut pour la liste des accès.",
+    "description": "Description d'un accès à un service, un serveur, une instance ou un logiciel.",
     "model": {
-        "name":{
+        "name": {
             "label": "Nom",
             "description": "Nom de l'accès.",
-            "help": "Nom de l'accès."
+            "help": ""
         },
-        "description":{
+        "description": {
             "label": "Description",
-            "description": "Description de la catégorie de fournisseur de service.",
-            "help": "Description de la catégorie de fournisseur de service."
+            "description": "Courte description de l'accès.",
+            "help": ""
         },
-        "type":{
+        "type": {
             "label": "Type",
             "description": "Type de connexion, selon le protocole.",
             "selection": {
@@ -25,7 +25,7 @@
                 "smtp": "smtp",
                 "git": "git",
                 "docker": "docker",
-                "http" :"http",
+                "http": "http",
                 "https": "https"
             },
             "help": "Le protocole permet d'identifier le port par défaut à utiliser pour la connexion."
@@ -35,32 +35,37 @@
             "description": "Hôte de l'accès.",
             "help": "Hôte de l'accès."
         },
-        "port":{
+        "port": {
             "label": "Port",
             "description": "Port de l'accès.",
             "help": "Port de l'accès."
         },
-        "username":{
+        "username": {
             "label": "Utilisateur",
-            "description": "Nom d'utilisateur.",
+            "description": "Nom d'utilisateur pour identification.",
             "help": "Le nom d'utilisateur ou l'identifiant de l'accès."
         },
-        "password":{
+        "password": {
             "label": "Mot de passe",
-            "description": "Mot de passe de l'accès.",
+            "description": "Mot de passe pour sécurisation.",
             "help": "Mot de passe correspondant à l'identifiant de l'accès."
         },
-        "server_id":{
+        "server_id": {
             "label": "Serveur",
-            "description": "Serveur.",
-            "help": "Serveur de l'accès."
+            "description": "Serveur de l'accès.",
+            "help": ""
         },
-        "instance_id":{
+        "instance_id": {
             "label": "Instance",
-            "description": "Instance.",
-            "help": "Intance de l'accès."
+            "description": "Instance de l'accès.",
+            "help": ""
         },
-        "service_id":{
+        "software_id": {
+            "label": "Logiciel",
+            "description": "Logiciel de l'accès.",
+            "help": ""
+        },
+        "service_id": {
             "label": "Service",
             "description": "Service.",
             "help": "Service de l'accès."
@@ -69,15 +74,18 @@
     "view": {
         "form.default": {
             "name": "Accès",
-            "description": "La vue des accès. ",
+            "description": "Formulaire de modification de l'accès.",
             "layout": {
-                "section.access_info": {
-                    "label": "Infos Accès"
+                "section.details": {
+                    "label": "Details"
+                },
+                "section.description": {
+                    "label": "Description"
                 }
             }
         },
         "list.default": {
-            "name": "Liste des accès",
+            "name": "Accès",
             "description": "Liste des accès.",
             "layout": {}
         }

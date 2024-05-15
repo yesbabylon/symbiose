@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2021
+    Some Rights Reserved, Cedric Francoys, 2010-2024
     Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -11,9 +11,14 @@ use equal\orm\Model;
 
 class Instance extends Model {
 
+    public static function getDescription() {
+        return 'Instance running on a server, for example a Docker instance.';
+    }
+
     public static function getColumns()
     {
         return [
+
             'name'    => [
                 'type'              => 'string',
                 'unique'            => true,
@@ -21,76 +26,65 @@ class Instance extends Model {
                 'description'       => 'Unique identifier of the instance.'
             ],
 
-            'version' => [
-                'type'              => 'string',
-                'description'       => 'Version of the instance.',
-                'selection'         => ['production', 'preview', 'staging', 'development'],
-                'default'           => 'development'
-            ],
-
             'description' => [
                 'type'              => 'string',
-                'description'       => 'Short presentation of the instance.'
+                'usage'             => 'text/plain',
+                'description'       => 'Short description of the instance.'
             ],
 
             'type' => [
                 'type'              => 'string',
                 'selection'         => ['dev', 'staging', 'prod', 'replica'],
-                'default'           => 'dev',
-                'description'       => "Type of instance."
+                'description'       => 'Type of instance.',
+                'default'           => 'dev'
+            ],
+
+            'version' => [
+                'type'              => 'string',
+                'selection'         => ['development', 'staging', 'preview', 'production'],
+                'description'       => 'Branch version.',
+                'default'           => 'development'
             ],
 
             'branch' => [
                 'type'              => 'string',
-                'description'       => 'Branch on which the instance resides.'
+                'description'       => 'Branch used by the instance.'
             ],
 
             'url' => [
                 'type'              => 'string',
-                'description'       => "Home URL for front-end."
+                'description'       => 'Front-end home URL.'
+            ],
+
+            'product_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\Product',
+                'description'       => 'Product the instance belongs to.',
+                'required'          => true
+            ],
+
+            'server_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\server\Server',
+                'description'       => 'Server on which the instance runs.',
+                'ondelete'          => 'cascade',
+                'required'          => true
             ],
 
             'accesses_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Access',
                 'foreign_field'     => 'instance_id',
-                'description'       => 'Access information to the server.'
+                'description'       => 'Information about how to access the instance.'
             ],
 
             'softwares_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'inventory\server\Software',
+                'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'instance_id',
-                "description"       => 'Softwares installed on the Instance.'
-            ],
-
-            'server_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'inventory\server\Server',
-                'ondelete'          => 'cascade',
-                'description'       => 'Server to which the instance belongs.',
-                'dependencies'      => ['product_id']
-            ],
-
-            'product_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'many2one',
-                'foreign_object'    => 'inventory\Product',
-                'description'       => 'Product the instance belongs to.',
-                'store'             => true,
-                'instant'           => true,
-                'function'          => 'calcProductId'
-            ],
+                'description'       => 'Information about softwares running on the instance.'
+            ]
 
         ];
-    }
-
-    public static function calcProductId($self) {
-        $result = [];
-        $self->read(['server_id' => ['product_id']]);
-        foreach($self as $id => $instance) {
-            $result[$id] = $instance['server_id']['product_id'] ?? null;
-        }
-        return $result;
     }
 }

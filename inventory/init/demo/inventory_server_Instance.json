@@ -6,8 +6,8 @@
             {
                 "id": 1,
                 "name": "YB website",
-                "version": "production",
                 "type": "prod",
+                "version": "production",
                 "branch": "1.0",
                 "url": "https://yesbabylon.com",
                 "server_id": 1
@@ -15,8 +15,8 @@
             {
                 "id": 2,
                 "name": "YB website staging",
-                "version": "staging",
                 "type": "prod",
+                "version": "staging",
                 "branch": "dev-1.1",
                 "url": "https://dev.yesbabylon.com",
                 "server_id": 1
