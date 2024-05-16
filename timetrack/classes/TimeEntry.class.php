@@ -424,52 +424,57 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function getWorkflow(): array {
+    public static function getWorkflow() {
         return [
-
-            'pending'   => [
+            'pending' => [
                 'description' => 'Time entry is still a draft and waiting to be completed.',
+                'icon' => 'edit',
                 'transitions' => [
                     'request-validation' => [
                         'description' => 'Sets time entry as ready for validation.',
-                        'status'      => 'ready',
-                        'policies'    => ['ready-for-validation']
-                    ]
-                ]
+                        'policies' => [
+                            'ready-for-validation',
+                        ],
+                        'status' => 'ready',
+                    ],
+                ],
             ],
-
-            'ready'     => [
+            'ready' => [
                 'description' => 'Time entry required information are waiting for approval.',
-                'help'        => 'Specific information about time entry (project, user, origin and duration) have been completed and time entry is waiting for approval.',
+                'help' => 'Specific information about time entry (project, user, origin and duration) have been completed and time entry is waiting for approval.',
+                'icon' => 'pending',
                 'transitions' => [
-                    'refuse'   => [
+                    'refuse' => [
                         'description' => 'Refuse time entry, sets its status back to pending.',
-                        'status'      => 'pending'
+                        'status' => 'pending',
                     ],
                     'validate' => [
                         'description' => 'Validate time entry.',
-                        'status'      => 'validated'
-                    ]
-                ]
+                        'status' => 'validated',
+                    ],
+                ],
             ],
-
             'validated' => [
                 'description' => 'Sale information must be completed to bill the sale entry.',
-                'help'        => 'Time entry information have been validated, product and prices information must be completed to be billable.',
+                'help' => 'Time entry information have been validated, product and prices information must be completed to be billable.',
+                'icon' => 'check_circled',
                 'transitions' => [
                     'bill' => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
-                        'status'      => 'billed',
-                        'policies'    => ['billable'],
-                        'onafter'     => 'addReceivable'
-                    ]
-                ]
+                        'onafter' => 'addReceivable',
+                        'policies' => [
+                            'billable',
+                        ],
+                        'status' => 'billed',
+                    ],
+                ],
             ],
-
             'billed' => [
-                'description' => 'A receivable was generated, it can be invoiced to the customer.'
-            ]
-
+                'description' => 'A receivable was generated, it can be invoiced to the customer.',
+                'icon' => 'receipt_long',
+                'transitions' => [
+                ],
+            ],
         ];
     }
 }
