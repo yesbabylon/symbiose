@@ -100,7 +100,21 @@ class SaleEntry extends Model {
             'qty' => [
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
+                'default'           => 1.0
+            ],
+
+            'free_qty' => [
+                'type'              => 'integer',
+                'description'       => 'Free quantity of product, if any.',
                 'default'           => 0
+            ],
+
+            // #memo - important: to allow maximum flexibility, percent values can hold 4 decimal digits (must not be rounded, except for display)
+            'discount' => [
+                'type'              => 'float',
+                'usage'             => 'amount/rate',
+                'description'       => 'Total amount of discount to apply, if any.',
+                'default'           => 0.0
             ],
 
             'object_class' => [

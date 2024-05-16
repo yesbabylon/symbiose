@@ -94,6 +94,26 @@
                                                 "width": "33%"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Free Quantity",
+                                                "value": "free_qty",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "discount",
+                                                "width": "33%"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
