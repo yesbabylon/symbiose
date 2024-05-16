@@ -97,7 +97,7 @@
                                                 "value": "description",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "usage": "string/text"
+                                                    "usage": "text/plain"
                                                 }
                                             }
                                         ]
