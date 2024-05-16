@@ -216,59 +216,66 @@ class SaleEntry extends Model {
 
     public static function getWorkflow() {
         return [
-
             'pending' => [
                 'description' => 'Sale entry is still a draft and waiting to be completed.',
+                'icon' => 'edit',
                 'transitions' => [
                     'request-validation' => [
                         'description' => 'Sets sale entry as ready for validation.',
-                        'help'        => 'Can only be applied if '.get_called_class().' has a validation process.',
-                        'status'      => 'ready',
-                        'policies'    => ['ready-for-validation']
+                        'help' => 'Can only be applied if sale\\SaleEntry has a validation process.',
+                        'policies' => [
+                            'ready-for-validation',
+                        ],
+                        'status' => 'ready',
                     ],
                     'bill' => [
                         'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
-                        'help'        => 'Can only be applied if '.get_called_class().' does not have a validation process.',
-                        'status'      => 'billed',
-                        'policies'    => ['billable'],
-                        'onafter'     => 'addReceivable'
-                    ]
-                ]
+                        'help' => 'Can only be applied if sale\\SaleEntry does not have a validation process.',
+                        'onafter' => 'addReceivable',
+                        'policies' => [
+                            'billable',
+                        ],
+                        'status' => 'billed',
+                    ],
+                ],
             ],
-
             'ready' => [
                 'description' => 'Sale entry submitted for approval.',
-                'help'        => 'This status can be used by children of this class to check the completed specific information (Used by timetrack\TimeEntry).',
+                'help' => 'This status can be used by children of this class to check the completed specific information (Used by timetrack\\TimeEntry).',
+                'icon' => 'pending',
                 'transitions' => [
-                    'refuse'   => [
+                    'refuse' => [
                         'description' => 'Refuse sale entry, sets its status back to pending.',
-                        'status'      => 'pending'
+                        'status' => 'pending',
                     ],
                     'validate' => [
                         'description' => 'Validate sale entry.',
-                        'status'      => 'validated'
-                    ]
-                ]
+                        'status' => 'validated',
+                    ],
+                ],
             ],
-
             'validated' => [
                 'description' => 'Sale entry validated, now sale information must be completed to bill the sale entry.',
-                'help'        => 'To bill the sale entry the sale information (product, price, unit price) must be completed.',
+                'help' => 'To bill the sale entry the sale information (product, price, unit price) must be completed.',
+                'icon' => 'check_circle',
                 'transitions' => [
                     'bill' => [
                         'description' => 'Create receivable, from sale entry, who will be invoiced to the customer.',
-                        'status'      => 'billed',
-                        'policies'    => ['billable'],
-                        'onafter'     => 'addReceivable'
-                    ]
-                ]
+                        'onafter' => 'addReceivable',
+                        'policies' => [
+                            'billable',
+                        ],
+                        'status' => 'billed',
+                    ],
+                ],
             ],
-
             'billed' => [
                 'description' => 'A receivable was generated, it can be invoiced to the customer.',
-                'help'        => 'Sale entry life cycle is over, its data cannot be modified.'
-            ]
-
+                'help' => 'Sale entry life cycle is over, its data cannot be modified.',
+                'icon' => 'receipt_long',
+                'transitions' => [
+                ],
+            ],
         ];
     }
 
