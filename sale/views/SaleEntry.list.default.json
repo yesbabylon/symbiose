@@ -89,6 +89,15 @@
                 "width": "20%",
                 "sortable": true,
                 "readonly": true
+            },
+            {
+                "id": "item.status",
+                "type": "field",
+                "label": "Status",
+                "value": "status",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
             }
         ]
     }

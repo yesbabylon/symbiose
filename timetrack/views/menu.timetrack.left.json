@@ -62,10 +62,24 @@
                         }
                     },
                     {
+                        "id": "time_entries.billed",
+                        "type": "entry",
+                        "label": "Billed",
+                        "icon": "receipt_long",
+                        "description": "Billed entries",
+                        "context": {
+                            "entity": "timetrack\\TimeEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "desc",
+                            "domain": [ ["status", "=", "billed"] ]
+                        }
+                    },
+                    {
                         "id": "time_entries.archived",
                         "type": "entry",
                         "label": "Archived",
-                        "icon": "receipt_long",
+                        "icon": "inventory",
                         "description": "Archived entries",
                         "context": {
                             "entity": "timetrack\\TimeEntry",

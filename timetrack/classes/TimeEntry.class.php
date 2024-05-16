@@ -4,15 +4,13 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace timetrack;
 
 use DateTime;
 use DateTimeZone;
 use sale\SaleEntry;
-use sale\catalog\Product;
-use sale\price\Price;
 use core\setting\Setting;
-use eQual;
 use Exception;
 
 class TimeEntry extends SaleEntry {
@@ -180,18 +178,6 @@ class TimeEntry extends SaleEntry {
                 'dependents'     => ['name'],
                 'description'    => 'Email or backlog reference.',
                 'visible'        => ['origin', 'in', ['backlog', 'email']]
-            ],
-
-            'status' => [
-                'type'           => 'string',
-                'selection'      => [
-                    'pending',
-                    'ready',
-                    'validated',
-                    'billed'
-                ],
-                'description'    => 'Status of the time entry',
-                'default'        => 'pending'
             ]
 
         ];
@@ -383,14 +369,15 @@ class TimeEntry extends SaleEntry {
     public static function onupdateDuration($self): void {
         $self->read(['time_start', 'time_end', 'duration', 'qty']);
         foreach($self as $id => $entry) {
-            $updates = ['qty' => 0];
+            $updates = ['qty' => 0.0];
 
             if(isset($entry['duration'])) {
-                $updates['qty'] = $entry['duration'] / 3600;
+                $updates['qty'] = (float) ($entry['duration'] / 3600);
             }
 
-            if(isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
+            if( isset($entry['duration'], $entry['time_start'], $entry['time_end'])
+                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])
+            ) {
                 $updates['time_end'] = $entry['time_start'] + $entry['duration'];
             }
 
@@ -423,25 +410,13 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function getPolicies(): array {
-        return [
-            'ready-for-validation' => [
-                'description' => 'Verifies that time entry is ready for validation.',
-                'function'    => 'isReadyForValidation'
-            ],
-            'billable' => [
-                'description' => 'Verifies that time entry holds all information required for invoicing.',
-                'function'    => 'isBillable'
-            ]
-        ];
-    }
-
-    public static function isReadyForValidation($self, $user_id): array {
+    public static function policyReadyForValidation($self): array {
         $result = [];
         $self->read(['project_id', 'user_id', 'origin', 'duration']);
         foreach($self as $id => $entry) {
-            if(!isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
-                || $entry['duration'] <= 0) {
+            if( !isset($entry['project_id'], $entry['user_id'], $entry['origin'], $entry['duration'])
+                || $entry['duration'] <= 0
+            ) {
                 $result[$id] = false;
             }
         }
@@ -449,69 +424,57 @@ class TimeEntry extends SaleEntry {
         return $result;
     }
 
-    public static function isBillable($self, $user_id): array {
-        $result = [];
-        $self->read(['product_id', 'price_id', 'unit_price', 'is_billable']);
-        foreach($self as $id => $entry) {
-            if(!isset($entry['product_id'], $entry['price_id'], $entry['unit_price'])
-                || !$entry['is_billable']) {
-                $result[$id] = false;
-            }
-        }
-
-        return $result;
-    }
-
-    public static function addReceivable($self): void {
-        $self->read(['id']);
-        foreach($self as $entry) {
-            try {
-                eQual::run('do', 'sale_saleentry_add-receivable', ['id' => $entry['id']]);
-            }
-            catch (Exception $e) {
-                trigger_error("PHP::Failed adding receivable for time entry {$entry['id']}", EQ_REPORT_ERROR);
-            }
-        }
-    }
-
-    public static function getWorkflow(): array {
+    public static function getWorkflow() {
         return [
-            'pending'   => [
-                'description' => 'Time entry is still a draft an waiting to be completed.',
+            'pending' => [
+                'description' => 'Time entry is still a draft and waiting to be completed.',
+                'icon' => 'edit',
                 'transitions' => [
                     'request-validation' => [
                         'description' => 'Sets time entry as ready for validation.',
-                        'status'      => 'ready',
-                        'policies'    => ['ready-for-validation']
-                    ]
-                ]
+                        'policies' => [
+                            'ready-for-validation',
+                        ],
+                        'status' => 'ready',
+                    ],
+                ],
             ],
-
-            'ready'     => [
-                'description' => 'All required information have been completed and time entry is waiting to be validated.',
+            'ready' => [
+                'description' => 'Time entry required information are waiting for approval.',
+                'help' => 'Specific information about time entry (project, user, origin and duration) have been completed and time entry is waiting for approval.',
+                'icon' => 'pending',
                 'transitions' => [
-                    'refuse'   => [
+                    'refuse' => [
                         'description' => 'Refuse time entry, sets its status back to pending.',
-                        'status'      => 'pending'
+                        'status' => 'pending',
                     ],
                     'validate' => [
                         'description' => 'Validate time entry.',
-                        'status'      => 'validated'
-                    ]
-                ]
+                        'status' => 'validated',
+                    ],
+                ],
             ],
-
             'validated' => [
-                'description' => 'Time entry has been validated and is waiting to be invoiced.',
+                'description' => 'Sale information must be completed to bill the sale entry.',
+                'help' => 'Time entry information have been validated, product and prices information must be completed to be billable.',
+                'icon' => 'check_circled',
                 'transitions' => [
                     'bill' => [
                         'description' => 'Create receivable, from time entry, who will be billed to the customer.',
-                        'status'      => 'billed',
-                        'policies'    => ['billable'],
-                        'onafter'     => 'addReceivable'
-                    ]
-                ]
-            ]
+                        'onafter' => 'addReceivable',
+                        'policies' => [
+                            'billable',
+                        ],
+                        'status' => 'billed',
+                    ],
+                ],
+            ],
+            'billed' => [
+                'description' => 'A receivable was generated, it can be invoiced to the customer.',
+                'icon' => 'receipt_long',
+                'transitions' => [
+                ],
+            ],
         ];
     }
 }

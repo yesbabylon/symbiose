@@ -85,12 +85,18 @@ if(isset($params['price_max']) && $params['price_max'] > 0) {
     $domain[] = ['unit_price', '<=', $params['price_max']];
 }
 
-if(isset($params['date_from']) && $params['date_from'] > 0) {
-    $domain[] = ['date_from', '>=', $params['date_from']];
+if(isset($params['date_from'], $params['date_to']) && $params['date_from'] > 0 && $params['date_to'] > 0) {
+    $domain[] = ['date_to', '>=', $params['date_from']];
+    $domain[] = ['date_from', '<=', $params['date_to']];
 }
+else {
+    if(isset($params['date_from']) && $params['date_from'] > 0) {
+        $domain[] = ['date_from', '>=', $params['date_from']];
+    }
 
-if(isset($params['date_to']) && $params['date_to'] > 0) {
-    $domain[] = ['date_to', '<=', $params['date_to']];
+    if(isset($params['date_to']) && $params['date_to'] > 0) {
+        $domain[] = ['date_to', '<=', $params['date_to']];
+    }
 }
 
 if(isset($params['is_expired'])) {
