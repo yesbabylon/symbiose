@@ -25,14 +25,14 @@
                     {
                         "rows": [
                             {
+                                "id": "row.main-info-first",
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "status",
-                                                "width": "25%",
                                                 "visible": false
                                             },
                                             {
@@ -43,16 +43,22 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
-                                                "type": "label",
-                                                "width": "50%"
-                                            },
-                                            {
+                                                "id": "item.customer_id",
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
-                                                "width": "25%"
+                                                "width": "50%"
                                             }
                                         ]
                                     }
