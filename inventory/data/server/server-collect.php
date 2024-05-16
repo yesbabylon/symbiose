@@ -9,7 +9,7 @@ use equal\orm\Domain;
 use inventory\server\Server;
 
 list($params, $providers) = eQual::announce([
-    'description'   => 'Advanced search for Servers: returns a collection of Reports according to extra paramaters.',
+    'description'   => 'Advanced search for Servers: returns a collection of Reports according to extra parameters.',
     'extends'       => 'core_model_collect',
     'params'        => [
 
@@ -45,7 +45,7 @@ list($params, $providers) = eQual::announce([
 
         'software_id' => [
             'type'              => 'many2one',
-            'foreign_object'    => 'inventory\server\Software',
+            'foreign_object'    => 'inventory\Software',
             'description'       => 'Software to which the server belongs.'
         ],
 

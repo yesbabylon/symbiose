@@ -21,7 +21,6 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "100%",
-                                                "readonly": true,
                                                 "widget": {
                                                     "heading": true
                                                 }

@@ -1,0 +1,40 @@
+{
+    "name": "Billable subscription entries",
+    "description": "Listing of billable subscription entries.",
+    "help": "List subscription entries that are billable but have no receivable generated yet.",
+    "controller": "sale_subscription_subscriptionentry-billable-collect",
+    "sort": "desc",
+    "header": {
+        "actions":{
+            "ACTION.CREATE": false
+        },
+        "selection": {
+            "default" : false,
+            "actions" : [
+                {
+                    "id": "header.selection.actions.bill",
+                    "label": "Bill",
+                    "icon": "receipt_long",
+                    "controller": "core_model_transition",
+                    "params": {
+                        "entity": "sale\\subscription\\SubscriptionEntry",
+                        "transition": "bill"
+                    }
+                }
+            ]
+        }
+    },
+    "domain": ["object_class", "=", "sale\\subscription\\Subscription"],
+    "layout": {
+        "extends": {
+            "entity": "sale\\subscription\\SubscriptionEntry",
+            "view": "list.default"
+        },
+        "remove": [
+            "item.is_billable",
+            "item.has_receivable",
+            "item.receivable_id",
+            "item.status"
+        ]
+    }
+}

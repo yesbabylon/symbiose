@@ -1,15 +1,20 @@
 {
     "name": "Sale Entry",
-    "description": "Sale entry.",
+    "description": "Sale entry modification form.",
     "actions": [
         {
-            "id": "action.receivable",
-            "label": "Receivable",
-            "controller": "sale_saleentry_add-receivable",
+            "id": "action.transition.bill",
+            "label": "Bill",
+            "controller": "model_transition",
+            "params": {
+                "entity": "sale\\SaleEntry",
+                "transition": "bill",
+                "ids": []
+            },
             "visible": [
                 ["state", "<>", "draft"],
-                ["is_billable", "=", true],
-                ["has_receivable", "=", false]
+                ["status", "in", ["pending", "validated"]],
+                ["is_billable", "=", true]
             ]
         }
     ],
@@ -20,10 +25,16 @@
                     {
                         "rows": [
                             {
+                                "id": "row.main-info-first",
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "width": "50%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "status",
+                                                "visible": false
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "description",
@@ -32,16 +43,22 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
-                                                "type": "label",
-                                                "width": "50%"
-                                            },
-                                            {
+                                                "id": "item.customer_id",
                                                 "type": "field",
                                                 "value": "customer_id",
                                                 "label": "Customer",
-                                                "width": "25%"
+                                                "width": "50%"
                                             }
                                         ]
                                     }
@@ -91,6 +108,26 @@
                                                 "type": "field",
                                                 "label": "Quantity",
                                                 "value": "qty",
+                                                "width": "33%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Free Quantity",
+                                                "value": "free_qty",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "discount",
                                                 "width": "33%"
                                             }
                                         ]

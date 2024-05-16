@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2021
+    Some Rights Reserved, Cedric Francoys, 2010-2024
     Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
 */
 
@@ -13,6 +13,7 @@ class IpAddress extends Model {
 
     public static function getColumns() {
         return [
+
             'ip_v4' => [
                 'type'              => 'string',
                 'description'       => 'IPV4 address of the server (32 bits).',
@@ -36,6 +37,7 @@ class IpAddress extends Model {
 
             'description' => [
                 'type'              => 'string',
+                'usage'             => 'text/plain',
                 'description'       => 'Short presentation of the IP address element.'
             ],
 
@@ -54,6 +56,7 @@ class IpAddress extends Model {
                 'description'       => 'Server attached to the Ip address.',
                 'required'          => true,
             ]
+
         ];
     }
 
@@ -61,9 +64,14 @@ class IpAddress extends Model {
         $result = [];
         $self->read(['ip_v4', 'ip_v6']);
         foreach($self as $id => $address) {
-            $result[$id] = (string) (strlen($address['ip_v4']))?$address['ip_v4']:$address['ip_v6'];
+            if(isset($address['ip_v4']) && strlen($address['ip_v4'] > 0)) {
+                $result[$id] = $address['ip_v4'];
+            }
+            elseif(isset($address['ip_v6']) && strlen($address['ip_v6'] > 0)) {
+                $result[$id] = $address['ip_v6'];
+            }
         }
+
         return $result;
     }
-
 }

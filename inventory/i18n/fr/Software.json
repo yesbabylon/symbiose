@@ -1,0 +1,81 @@
+{
+    "name": "Logiciel",
+    "plural": "Logiciels",
+    "description": "Logiciel installé sur un serveur, une instance ou lié à un produit client/interne.",
+    "model": {
+        "name": {
+            "label": "Nom",
+            "description": "Nom du logiciel.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description du logiciel.",
+            "help": ""
+        },
+        "edition": {
+            "label": "Édition",
+            "description": "Édition du logiciel.",
+            "help": ""
+        },
+        "version": {
+            "label": "Version",
+            "description": "Version du logiciel.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Client propriétaire du logiciel.",
+            "help": ""
+        },
+        "instance_id": {
+            "label": "Instance",
+            "description": "Instance sur laquelle le logiciel est installé.",
+            "help": ""
+        },
+        "server_id": {
+            "label": "Serveur",
+            "description": "Serveur sur lequel le logiciel est installé.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit duquel le logiciel fait partie.",
+            "help": ""
+        },
+        "service_id": {
+            "label": "Service",
+            "description": "Service duquel le logiciel fait partie.",
+            "help": ""
+        },
+        "accesses_ids": {
+            "label": "Accès",
+            "description": "Accès au logiciel.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Logiciel",
+            "description": "Formulaire de modification d'un logiciel.",
+            "layout": {
+                "section.description": {
+                    "label": "Description"
+                },
+                "section.accesses": {
+                    "label": "Accès"
+                }
+            }
+        },
+        "list.default": {
+            "name": "Logiciels",
+            "description": "Liste des logiciels.",
+            "layout": {}
+        },
+        "list.selection": {
+            "name": "Logiciels",
+            "description": "Liste des logiciels.",
+            "layout": {}
+        }
+    }
+}

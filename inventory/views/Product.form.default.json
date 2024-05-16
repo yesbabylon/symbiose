@@ -1,6 +1,6 @@
 {
     "name": "Product",
-    "description": "Default form for Product",
+    "description": "Default form for Product.",
     "layout": {
         "groups": [
             {
@@ -86,11 +86,7 @@
                     {
                         "id": "section.services",
                         "label": "Services",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -120,11 +116,7 @@
                     {
                         "id": "section.servers",
                         "label": "Servers",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -137,12 +129,32 @@
                                                 "value": "servers_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection",
-                                                    "header": {
-                                                        "actions": {
-                                                            "ACTION.SELECT": false
-                                                        }
-                                                    }
+                                                    "view": "list.selection"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.instances",
+                        "label": "Instances",
+                        "visible": ["state", "<>", "draft"],
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "instances_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.selection"
                                                 }
                                             }
                                         ]
@@ -154,11 +166,7 @@
                     {
                         "label": "Softwares",
                         "id": "section.softwares",
-                        "visible": [
-                            "state",
-                            "<>",
-                            "draft"
-                        ],
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
