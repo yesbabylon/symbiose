@@ -1,0 +1,28 @@
+[
+    {
+        "name": "core\\alert\\MessageModel",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "sale.subscription.check.expiration",
+                "label": "Subscription expired",
+                "description": "Subscription expired or upcoming expiration.",
+                "type": "sale"
+            }
+        ]
+    },
+    {
+        "name": "core\\alert\\MessageModel",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "sale.subscription.check.expiration",
+                "label": "Abonnement expiré",
+                "description": "Abonnement expiré ou sur le point d'expirer.",
+                "type": "sale"
+            }
+        ]
+    }
+]

@@ -15,6 +15,18 @@
         }
     },
     "header": {
+        "selection": {
+            "default": false,
+            "actions" : [
+                {
+                    "id": "action.bulk_expiration",
+                    "label": "Update expiration columns",
+                    "icon": "update",
+                    "controller": "sale_subscription_bulk-expirations",
+                    "confirm": true
+                }
+            ]
+        },
         "actions": {
             "ACTION.CREATE": [
                 {
