@@ -29,12 +29,6 @@
         "form.default": {
             "name": "Abonnement",
             "description": "",
-            "actions": {
-                "action.check-subscription-expiration": {
-                    "label": "Mettre à jour l'expiration",
-                    "description": "Mettre à jour l'expiration et vérifier l'expiration de l'abonnement."
-                }
-            },
             "layout": {}
         }
     }
