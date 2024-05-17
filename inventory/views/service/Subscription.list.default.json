@@ -20,10 +20,10 @@
             "default": false,
             "actions" : [
                 {
-                    "id": "action.bulk_check_expiration",
+                    "id": "action.bulk_expiration",
                     "label": "Update expiration columns",
                     "icon": "update",
-                    "controller": "inventory_service_bulk-check-expirations",
+                    "controller": "inventory_service_bulk-expirations",
                     "confirm": true
                 }
             ]

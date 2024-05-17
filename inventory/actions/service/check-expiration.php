@@ -30,15 +30,7 @@ list($params, $providers) = eQual::announce([
  */
 list($context, $dispatch) = [ $providers['context'], $providers['dispatch']];
 
-$subscription_id = Subscription::id($params['id'])->ids();
-if(!$subscription_id) {
-    throw new Exception('unknown_subscription', QN_ERROR_UNKNOWN_OBJECT);
-}
-$subscription_id = reset($subscription_id);
-
-eQual::run('do', 'sale_subscription_update-expiration', ['id' => $subscription_id]);
-
-$subscription = Subscription::id($subscription_id)
+$subscription = Subscription::id($params['id'])
     ->read([
         'id',
         'is_expired',
@@ -49,14 +41,17 @@ $subscription = Subscription::id($subscription_id)
 $result = [];
 $httpResponse = $context->httpResponse()->status(200);
 
-if($subscription['is_expired'] || $subscription['has_upcoming_expiry']) {
-    $result = $subscription['id'];
-    $dispatch->dispatch('inventory.subscription.check.expiration', 'inventory\service\Subscription', $subscription['id'], 'important', 'inventory_service_check-expiration', ['id' => $params['id']], [], null, null);
-    $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
+if ($subscription){
+    if($subscription['is_expired'] || $subscription['has_upcoming_expiry']) {
+        $result = $subscription['id'];
+        $dispatch->dispatch('inventory.subscription.check.expiration', 'inventory\service\Subscription', $subscription['id'], 'important', 'inventory_service_check-expiration', ['id' => $params['id']], [], null, null);
+        $httpResponse->status(qn_error_http(QN_ERROR_NOT_ALLOWED));
+    }
+    else {
+        $dispatch->cancel('inventory.subscription.check.expiration', 'inventory\service\Subscription', $subscription['id']);
+    }
 }
-else {
-    $dispatch->cancel('inventory.subscription.check.expiration', 'inventory\service\Subscription', $subscription['id']);
-}
+
 
 $httpResponse->body($result)
              ->send();
