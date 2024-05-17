@@ -21,14 +21,9 @@
             "id": "action.cancel",
             "label": "Cancel",
             "description": "Cancel invoice.",
-            "controller": "core_model_transition",
+            "controller": "sale_accounting_invoice_cancel",
             "confirm": true,
-            "visible": ["status", "=", "invoice"],
-            "params": {
-                "entity": "sale\\accounting\\invoice\\Invoice",
-                "transition": "cancel",
-                "ids": []
-            }
+            "visible": ["status", "=", "invoice"]
         },
         {
             "id": "action.download-pdf",

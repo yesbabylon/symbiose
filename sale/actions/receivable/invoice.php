@@ -14,11 +14,17 @@ list($params, $providers) = announce([
     'description'   => 'Invoice given receivables.',
     'help'          => 'A default invoice can be selected, all receivables from that invoice\'s customer will be added to it.',
     'params'        => [
+        'id' =>  [
+            'description'       => 'identifier of the targeted receivable.',
+            'type'              => 'integer',
+            'default'           => 0
+        ],
+
         'ids' =>  [
-            'description'       => 'Identifier of the targeted reports.',
+            'description'       => 'Identifiers of the targeted receivables.',
             'type'              => 'one2many',
             'foreign_object'    => 'sale\receivable\Receivable',
-            'required'          => true
+            'default'           => []
         ],
 
         'invoice_id' => [
@@ -46,7 +52,11 @@ list($params, $providers) = announce([
 $context = $providers['context'];
 
 if(empty($params['ids'])) {
-    throw new Exception('empty_ids', QN_ERROR_INVALID_PARAM);
+    if(!isset($params['id']) || $params['id'] <= 0) {
+        throw new Exception('receivable_invalid_id', QN_ERROR_INVALID_PARAM);
+    }
+
+    $params['ids'][] = $params['id'];
 }
 
 $receivables = Receivable::search([
