@@ -18,7 +18,7 @@ $tests = [
         },
         'act'         => function() {
             // Run action
-            eQual::run('do', 'inventory_service_subscription_update-expirations');
+            eQual::run('do', 'inventory_service_bulk-expirations');
         },
         'assert'      => function() {
             // Assert that subscription is now expired
@@ -50,7 +50,7 @@ $tests = [
         },
         'act'         => function() {
             // Run action
-            eQual::run('do', 'inventory_service_subscription_update-expirations');
+            eQual::run('do', 'inventory_service_bulk-expirations');
         },
         'assert'      => function() {
             // Assert that subscription is still not expired
@@ -82,7 +82,7 @@ $tests = [
         },
         'act'         => function() {
             // Run action
-            eQual::run('do', 'inventory_service_subscription_update-expirations');
+            eQual::run('do', 'inventory_service_bulk-expirations');
         },
         'assert'      => function() {
             // Assert that subscription is now expired
@@ -114,7 +114,7 @@ $tests = [
         },
         'act'         => function() {
             // Run action
-            eQual::run('do', 'inventory_service_subscription_update-expirations');
+            eQual::run('do', 'inventory_service_bulk-expirations');
         },
         'assert'      => function() {
             // Assert that subscription is still not upcoming expiry
