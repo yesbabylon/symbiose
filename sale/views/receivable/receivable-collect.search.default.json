@@ -24,17 +24,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "date_to",
-                                                "width": "20%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "price_total_min",
                                                 "width": "20%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "price_total_max",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
                                                 "width": "20%"
                                             }
                                         ]
@@ -50,8 +46,12 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "product_id",
-                                                "label": "Product (Catalog)",
+                                                "value": "date_to",
+                                                "width": "20%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "price_total_max",
                                                 "width": "20%"
                                             },
                                             {

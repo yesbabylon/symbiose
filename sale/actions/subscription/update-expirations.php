@@ -9,7 +9,12 @@ use sale\subscription\Subscription;
 
 list($params, $providers) = eQual::announce([
     'description' => 'Update subscriptions expiration columns.',
-    'params'      => [],
+    'params'      => [
+        'ids' => [
+            'description'       => 'List of Subscription identifiers the check against emptyness.',
+            'type'              => 'array'
+        ]
+    ],
     'response'    => [
         'content-type'  => 'application/json',
         'charset'       => 'utf-8',
@@ -21,22 +26,30 @@ list($params, $providers) = eQual::announce([
 /** @var \equal\php\Context $context */
 $context = $providers['context'];
 
-$should_be_expired_ids = Subscription::search([
-    ['date_to', '<', date('Y-m-d', time())],
-    ['is_expired', '<>', true]
-])
-    ->ids();
+$should_be_expired_ids  = [];
+$should_be_upcoming_expiry_ids = [];
+
+if($params['ids']){
+    $should_be_expired_ids = Subscription::search([
+            ['id', 'in', $params['ids']],
+            ['date_to', '<', date('Y-m-d', time())],
+            ['is_expired', '=', false]
+        ])
+        ->ids();
+
+    $should_be_upcoming_expiry_ids = Subscription::search([
+            ['id', 'in', $params['ids']],
+            ['date_to', '<', date('Y-m-d', strtotime('+30 days'))],
+            ['has_upcoming_expiry', '=', false]
+        ])
+        ->ids();
+}
+
 
 if(!empty($should_be_expired_ids)) {
     Subscription::ids($should_be_expired_ids)
         ->update(['is_expired' => null]);
 }
-
-$should_be_upcoming_expiry_ids = Subscription::search([
-    ['date_to', '<', date('Y-m-d', strtotime('+30 days'))],
-    ['has_upcoming_expiry', '<>', true]
-])
-    ->ids();
 
 if(!empty($should_be_upcoming_expiry_ids)) {
     Subscription::ids($should_be_upcoming_expiry_ids)

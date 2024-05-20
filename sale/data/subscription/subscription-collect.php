@@ -41,15 +41,15 @@ list($params, $providers) = eQual::announce([
         ],
 
         'is_expired' => [
-            'type'              => 'boolean',
-            'description'       => 'The subscription is expired.',
-            'default'           => false
+            'type'              => 'string',
+            'selection'         => ['all','yes', 'no'],
+            'description'       => 'The subscription is expired'
         ],
 
         'has_upcoming_expiry' => [
-            'type'              => 'boolean',
-            'description'       => 'The subscription is  up coming expiry.',
-            'default'           => false
+            'type'              => 'string',
+            'selection'         => ['all','yes', 'no'],
+            'description'       => 'The subscription is  up coming expiry.'
         ],
 
         'product_id' => [
@@ -99,12 +99,14 @@ else {
     }
 }
 
-if(isset($params['is_expired'])) {
-    $domain[] = ['is_expired', '=', $params['is_expired']];
+if(isset($params['is_expired']) && $params['is_expired']!= 'all') {
+    $is_expired = $params['is_expired'] == 'yes' ? true : false;
+    $domain[] = ['is_expired', '=', $is_expired];
 }
 
-if(isset($params['has_upcoming_expiry'])) {
-    $domain[] = ['has_upcoming_expiry', '=', $params['has_upcoming_expiry']];
+if(isset($params['has_upcoming_expiry']) && $params['has_upcoming_expiry']!= 'all') {
+    $has_upcoming_expiry = $params['has_upcoming_expiry'] == 'yes' ? true : false;
+    $domain[] = ['has_upcoming_expiry', '=', $has_upcoming_expiry];
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {

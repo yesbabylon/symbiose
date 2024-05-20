@@ -64,6 +64,13 @@ class Subscription extends Model  {
                 'default'           => 'yearly'
             ],
 
+            'is_auto_renew' => [
+                'type'              => 'boolean',
+                'description'       => 'The subscription is auto renew.',
+                'default'           => false,
+                'onupdate'          =>'onupdateIsAutoRenew'
+            ],
+
             'is_expired' => [
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
@@ -278,4 +285,27 @@ class Subscription extends Model  {
 
         return $result;
     }
+
+    /**
+     *
+     * @param  \equal\orm\ObjectManager     $om
+     * @param  array                        $ids
+     * @return void
+     */
+    public static function onupdateIsAutoRenew($om, $ids, $values, $lang) {
+        $subscriptions = $om->read(self::getType(), $ids, ['date_to','is_auto_renew']);
+        $cron = $om->getContainer()->get('cron');
+
+        foreach($subscriptions as $id => $subscription) {
+            if($subscription['is_auto_renew']) {
+                $cron->schedule(
+                    "subscription.{$id}.create.subscriptionEntry",
+                     $subscription['date_to'],
+                    'sale_subscription_add-subscriptionentry',
+                    [ 'id' => $id ]
+                );
+            }
+        }
+    }
+
 }
