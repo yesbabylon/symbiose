@@ -1,0 +1,39 @@
+{
+    "name": "Software Models",
+    "description": "Default listing of all softwares.",
+    "order": "id",
+    "layout": {
+        "items": [
+            {
+                "type": "field",
+                "value": "id",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "name",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "description",
+                "width": "33%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "version",
+                "width": "20%",
+                "sortable": true
+            },
+            {
+                "type": "field",
+                "value": "edition",
+                "width": "20%",
+                "sortable": true
+            }
+        ]
+    }
+}

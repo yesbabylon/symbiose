@@ -19,6 +19,31 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "software_model_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "edition",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "version",
+                                                "width": "25%"
                                             }
                                         ]
                                     },
@@ -36,31 +61,7 @@
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "edition",
-                                                "width": "50%"
                                             },
-                                            {
-                                                "type": "field",
-                                                "value": "version",
-                                                "width": "33%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Server",
@@ -102,7 +103,7 @@
                                                 "type": "field",
                                                 "label": "Description",
                                                 "value": "description",
-                                                "width": "50%"
+                                                "width": "100%"
                                             }
                                         ]
                                     }
