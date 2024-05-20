@@ -171,8 +171,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",

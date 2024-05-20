@@ -8,6 +8,7 @@
             "ACTION.CREATE" : false
         },
         "selection": {
+            "default": false,
             "actions" : [
                 {
                     "id": "header.selection.actions.invoice",
@@ -44,79 +45,9 @@
         }
     },
     "layout": {
-        "items": [
-            {
-                "type": "field",
-                "value": "id",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "name",
-                "width": "25%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "date",
-                "width": "25%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "status",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "customer_id",
-                "label": "Customer",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "unit_price",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "qty",
-                "label": "Quantity",
-                "width": "10%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "total",
-                "label": "Price Ex VAT",
-                "width": "15%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "vat_rate",
-                "label": "VAT",
-                "width": "10%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "label": "Price total",
-                "value": "price",
-                "width": "10%",
-                "readonly": true
-            },
-            {
-                "type": "field",
-                "value": "invoice_id",
-                "label": "Invoice",
-                "width": "30%",
-                "readonly": true
-            }
-        ]
+        "extends": {
+            "entity": "sale\\receivable\\Receivable",
+            "view": "list.default"
+        }
     }
 }

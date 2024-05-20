@@ -220,19 +220,6 @@
                 "description": "Receivables parent menu.",
                 "children": [
                     {
-                        "id": "receivables.queues",
-                        "type": "entry",
-                        "label": "Queues",
-                        "icon": "queue",
-                        "description": "Display all receivables queues.",
-                        "context": {
-                            "entity": "sale\\receivable\\ReceivablesQueue",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "receivables.receivables",
                         "type": "entry",
                         "label": "All",
@@ -240,6 +227,19 @@
                         "description": "Display all receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "receivables.queues",
+                        "type": "entry",
+                        "label": "Queues",
+                        "icon": "queue",
+                        "description": "Display all receivables queues.",
+                        "context": {
+                            "entity": "sale\\receivable\\ReceivablesQueue",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
@@ -256,6 +256,20 @@
                             "view": "list.pending",
                             "order": "id",
                             "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.receivable.invoiced",
+                        "type": "entry",
+                        "label": "Invoiced",
+                        "icon": "receipt_long",
+                        "description": "Invoiced receivables.",
+                        "context": {
+                            "entity": "sale\\receivable\\Receivable",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": ["status", "=", "invoiced"]
                         }
                     }
                 ]

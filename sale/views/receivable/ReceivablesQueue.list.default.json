@@ -2,7 +2,7 @@
     "name": "Receivable Queues",
     "description": "This view is intended for displaying the Receivable Queues.",
     "access": {
-     },
+    },
     "header": {
         "selection": {
             "default" : false,
@@ -15,6 +15,16 @@
                     "confirm": true
                 }
             ]
+        }
+    },
+    "operations": {
+        "total": {
+            "pending_receivables_count": {
+                "id": "operations.total-receivables",
+                "label": "Total",
+                "usage":"number/integer",
+                "operation": "SUM"
+            }
         }
     },
     "layout": {
@@ -38,7 +48,7 @@
             {
                 "type": "field",
                 "value": "pending_receivables_count",
-                "label": "Pending receivables",
+                "label": "# Pending receivables",
                 "width": "40%"
             }
         ]
