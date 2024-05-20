@@ -24,5 +24,12 @@
             "description": "Fournisseur de service.",
             "help": ""
         }
+    },
+    "view": {
+        "form.default": {
+            "name": "Abonnement",
+            "description": "",
+            "layout": {}
+        }
     }
 }

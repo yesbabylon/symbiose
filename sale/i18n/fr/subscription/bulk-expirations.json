@@ -1,0 +1,14 @@
+{
+    "name": "Mise à jour et vérification des expirations",
+    "description": "Mise à jour en masse de l'expiration et vérification de l'expiration de l'abonnement.",
+    "model": {
+        "id": {
+            "label": "Identifiant",
+            "description": "Identifiant de l'abonnement.",
+            "help": ""
+        }
+    },
+    "error": {
+        "errors": {}
+    }
+}

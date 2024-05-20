@@ -1,7 +1,7 @@
 {
     "name": "Softwares",
     "description": "Default listing of all softwares.",
-    "controller": "inventory_server_software-collect",
+    "controller": "inventory_software-collect",
     "order": "id",
     "operations": {
         "total": {

@@ -1,7 +1,7 @@
 {
     "name": "Subscriptions",
     "description": "Default listing of all subscriptions.",
-    "controller": "inventory_service_subscription-collect",
+    "controller": "sale_subscription_subscription-collect",
     "order": "date_from,date_to,name",
     "sort": "asc",
     "domain": ["service_id", "<>", null],
@@ -16,6 +16,18 @@
         }
     },
     "header": {
+        "selection": {
+            "default": false,
+            "actions" : [
+                {
+                    "id": "action.bulk_expiration",
+                    "label": "Update expiration columns",
+                    "icon": "update",
+                    "controller": "inventory_service_bulk-expirations",
+                    "confirm": true
+                }
+            ]
+        },
         "actions": {
             "ACTION.CREATE": [
                 {
