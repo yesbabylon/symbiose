@@ -3,14 +3,6 @@
     "layout": {
         "items": [
             {
-                "id": "item.home",
-                "label": "Home",
-                "description": "",
-                "icon": "menu_book",
-                "type": "entry",
-                "route": "/"
-            },
-            {
                 "id": "item.customer",
                 "type": "entry",
                 "label": "Customers",
