@@ -80,6 +80,8 @@ if(!isset($project)) {
 }
 
 // compute start time according to received duration and timezone set in config
+$tz_offset = 0;
+
 $time_zone = Setting::get_value('core', 'locale', 'time_zone');
 if(!is_null($time_zone)) {
     $tz = new DateTimeZone($time_zone);
