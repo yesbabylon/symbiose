@@ -28,6 +28,10 @@
                 "menus": {
                     "left": "sale.left",
                     "top": "sale.top"
+                },
+                "context": {
+                    "entity": "sale\\pay\\Payment",
+                    "view": "dashboard.default"
                 }
             }
         }
