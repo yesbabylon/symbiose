@@ -37,6 +37,13 @@ class Software extends Model {
                 'description'       => "Installed version of the software."
             ],
 
+            'software_model_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'inventory\SoftwareModel',
+                'description'       => 'Model of the software.',
+                'onupdate'          => 'onupdateSoftwareModelId'
+            ],
+
             'instance_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Instance',
@@ -78,4 +85,32 @@ class Software extends Model {
 
         ];
     }
+
+    public static function onupdateSoftwareModelId($self) {
+        $self->read(['software_model_id' => ['name', 'description', 'edition', 'version']]);
+        foreach($self as $id => $software) {
+            self::id($id)->update([
+                    'name'          => $software['software_model_id']['name'],
+                    'description'   => $software['software_model_id']['description'],
+                    'edition'       => $software['software_model_id']['edition'],
+                    'version'       => $software['software_model_id']['version'],
+                ]);
+        }
+    }
+
+
+    public static function onchange($self, $event) {
+        $result = [];
+        if(isset($event['software_model_id'])) {
+            $softwareModel = SoftwareModel::id($event['software_model_id'])->read(['name', 'description', 'edition', 'version'])->first();
+            $result = [
+                    'name'          => $softwareModel['name'],
+                    'description'   => $softwareModel['description'],
+                    'edition'       => $softwareModel['edition'],
+                    'version'       => $softwareModel['version']
+                ];
+        }
+        return $result;
+    }
+
 }

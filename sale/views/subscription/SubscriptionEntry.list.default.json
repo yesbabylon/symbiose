@@ -1,6 +1,8 @@
 {
     "name": "Subscription Entries",
     "description": "Default listing of all subscription entries.",
+    "domain": ["object_class", "=", "sale\\subscription\\Subscription"],
+    "controller": "sale_subscription_subscriptionentry-collect",
     "sort": "desc",
     "layout": {
         "items": [
@@ -50,6 +52,7 @@
                 "width": "10%"
             },
             {
+                "id": "item.is_billable",
                 "type": "field",
                 "value": "is_billable",
                 "label": "Is Billable",
@@ -58,16 +61,31 @@
                 "readonly": true
             },
             {
+                "id": "item.has_receivable",
                 "type": "field",
                 "value": "has_receivable",
                 "label": "Has receivable",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
             },
             {
+                "id": "item.receivable_id",
                 "type": "field",
                 "value": "receivable_id",
                 "label": "Receivable",
-                "width": "10%"
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
+            },
+            {
+                "id": "item.status",
+                "type": "field",
+                "label": "Status",
+                "value": "status",
+                "width": "10%",
+                "sortable": true,
+                "readonly": true
             }
         ]
     }

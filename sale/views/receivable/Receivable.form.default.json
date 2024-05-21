@@ -21,7 +21,6 @@
                                                 "type": "field",
                                                 "value": "name",
                                                 "width": "100%",
-                                                "readonly": true,
                                                 "widget": {
                                                     "heading": true
                                                 }
@@ -172,8 +171,7 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
-                                        "align": "left",
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",

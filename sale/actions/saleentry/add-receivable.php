@@ -47,6 +47,8 @@ $getSaleEntry = function($id) {
             'price_id' => ['id', 'vat_rate'],
             'unit_price',
             'qty',
+            'free_qty',
+            'discount',
             'has_receivable',
             'receivable_name'
         ])
@@ -123,14 +125,17 @@ if(is_null($receivable)) {
 
     $receivable = Receivable::create([
         'receivables_queue_id' => $receivables_queue['id'],
+        'customer_id'          => $sale_entry['customer_id'],
         'date'                 => time(),
+        'name'                 => $sale_entry['receivable_name'],
+        'description'          => "Reference $object_name entry product.",
         'product_id'           => $sale_entry['product_id'],
         'price_id'             => $sale_entry['price_id']['id'],
         'unit_price'           => $sale_entry['unit_price'],
         'vat_rate'             => $sale_entry['price_id']['vat_rate'],
         'qty'                  => $sale_entry['qty'],
-        'name'                 => $sale_entry['receivable_name'],
-        'description'          => "Reference $object_name entry product.",
+        'free_qty'             => $sale_entry['free_qty'],
+        'discount'             => $sale_entry['discount']
     ])
         ->first();
 

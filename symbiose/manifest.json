@@ -1,6 +1,6 @@
 {
     "name": "symbiose",
-    "description": "Initialise all Symbiose packages.",
+    "description": "This package is used in order to group all packages forming Symbiose ERP.",
     "version": "2.0",
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",

@@ -41,15 +41,15 @@ list($params, $providers) = eQual::announce([
         ],
 
         'is_expired' => [
-            'type'              => 'boolean',
-            'description'       => 'The subscription is expired.',
-            'default'           => false
+            'type'              => 'string',
+            'selection'         => ['all','yes', 'no'],
+            'description'       => 'The subscription is expired'
         ],
 
         'has_upcoming_expiry' => [
-            'type'              => 'boolean',
-            'description'       => 'The subscription is  up coming expiry.',
-            'default'           => false
+            'type'              => 'string',
+            'selection'         => ['all','yes', 'no'],
+            'description'       => 'The subscription is  up coming expiry.'
         ],
 
         'product_id' => [
@@ -85,20 +85,28 @@ if(isset($params['price_max']) && $params['price_max'] > 0) {
     $domain[] = ['unit_price', '<=', $params['price_max']];
 }
 
-if(isset($params['date_from']) && $params['date_from'] > 0) {
-    $domain[] = ['date_from', '>=', $params['date_from']];
+if(isset($params['date_from'], $params['date_to']) && $params['date_from'] > 0 && $params['date_to'] > 0) {
+    $domain[] = ['date_to', '>=', $params['date_from']];
+    $domain[] = ['date_from', '<=', $params['date_to']];
+}
+else {
+    if(isset($params['date_from']) && $params['date_from'] > 0) {
+        $domain[] = ['date_from', '>=', $params['date_from']];
+    }
+
+    if(isset($params['date_to']) && $params['date_to'] > 0) {
+        $domain[] = ['date_to', '<=', $params['date_to']];
+    }
 }
 
-if(isset($params['date_to']) && $params['date_to'] > 0) {
-    $domain[] = ['date_to', '<=', $params['date_to']];
+if(isset($params['is_expired']) && $params['is_expired']!= 'all') {
+    $is_expired = $params['is_expired'] == 'yes' ? true : false;
+    $domain[] = ['is_expired', '=', $is_expired];
 }
 
-if(isset($params['is_expired'])) {
-    $domain[] = ['is_expired', '=', $params['is_expired']];
-}
-
-if(isset($params['has_upcoming_expiry'])) {
-    $domain[] = ['has_upcoming_expiry', '=', $params['has_upcoming_expiry']];
+if(isset($params['has_upcoming_expiry']) && $params['has_upcoming_expiry']!= 'all') {
+    $has_upcoming_expiry = $params['has_upcoming_expiry'] == 'yes' ? true : false;
+    $domain[] = ['has_upcoming_expiry', '=', $has_upcoming_expiry];
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {

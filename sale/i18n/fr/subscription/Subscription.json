@@ -78,12 +78,27 @@
             "label": "Entrées",
             "description": "Les entrées qui détails les périodes d'abonnement.",
             "help": ""
+        },
+        "is_auto_renew": {
+            "label": "Auto renouvellement",
+            "description": "L'abonnement peut-il être auto-renouvelé.",
+            "help": ""
         }
     },
     "view": {
         "form.default": {
             "name": "Abonnement",
             "description": "",
+            "actions": {
+                "action.shift-subscription": {
+                    "label": "Période de décalage",
+                    "description": "Décaler les dates d'abonnement en fonction de la durée."
+                },
+                "action.add-subscription-entry": {
+                    "label": "Créer une entrée",
+                    "description": "Créer une entrée à partir d'un abonnement"
+                }
+            },
             "layout": {
                 "section.details": {
                     "label": "Details"

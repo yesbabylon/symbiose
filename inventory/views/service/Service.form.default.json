@@ -38,25 +38,37 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "15%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "has_subscription",
                                                 "label": "Subscription",
-                                                "width": "100%"
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_auto_renew",
+                                                "label": "Auto renew",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Billable",
+                                                "value": "is_billable",
+                                                "width": "50%"
                                             }
                                         ]
                                     },
                                     {
-                                        "width": "50%",
+                                        "width": "33%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "has_external_provider",
                                                 "label": "Has external provider",
                                                 "readonly": true,
-                                                "width": "33%"
+                                                "width": "50%"
                                             },
                                             {
                                                 "type": "field",
@@ -202,27 +214,6 @@
                         "label": "Subscriptions",
                         "id": "section.subscriptions",
                         "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "is_auto_renew",
-                                                "label": "Auto renew",
-                                                "width": "15%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Billable",
-                                                "value": "is_billable",
-                                                "width": "15%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
                             {
                                 "visible": ["has_subscription", "=", true],
                                 "columns": [

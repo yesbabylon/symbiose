@@ -57,8 +57,7 @@
                 "value": "receivables_queue_id",
                 "label": "Receivable Queue",
                 "readonly": true,
-                "width": "20%",
-                "visible": false
+                "width": "20%"
             },
             {
                 "type": "field",

@@ -16,6 +16,7 @@
             "description": "Application timetrack",
             "icon": "timer",
             "color": "#27ab4f",
+            "text_color": "black",
             "access": {
                 "groups": [
                     "users"
@@ -24,6 +25,11 @@
             "params": {
                 "menus": {
                     "left": "timetrack.left"
+                },
+                "context": {
+                    "description": "Timetrack App root context.",
+                    "entity": "timetrack\\TimeEntry",
+                    "view": "list.default"
                 }
             }
         }

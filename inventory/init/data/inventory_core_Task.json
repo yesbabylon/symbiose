@@ -4,8 +4,8 @@
         "lang": "en",
         "data": [
             {
-                "name": "Update subscriptions expiration columns",
-                "controller": "inventory_service_subscription_update-expirations",
+                "name": "Check subscriptions expiration columns in Inventory",
+                "controller": "inventory_service_bulk-expirations",
                 "is_active": true,
                 "is_recurring": true,
                 "is_exclusive": false,

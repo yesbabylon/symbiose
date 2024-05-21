@@ -89,6 +89,18 @@
                 "description": "Sale entries parent menu.",
                 "children": [
                     {
+                        "id": "sale_entries.new",
+                        "type": "entry",
+                        "label": "New",
+                        "icon": "add",
+                        "description": "Add new entry.",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "form.create",
+                            "purpose": "create"
+                        }
+                    },
+                    {
                         "id": "sale_entries.all",
                         "type": "entry",
                         "label": "All",
@@ -102,16 +114,44 @@
                         }
                     },
                     {
-                        "id": "sale_entries.pending-billable",
+                        "id": "sale_entries.to-bill",
                         "type": "entry",
-                        "label": "Pending billable",
-                        "icon": "receipt_long",
-                        "description": "Display pending billable sale entries of specific customer.",
+                        "label": "To bill",
+                        "icon": "payments",
+                        "description": "Display sale entries ready to be billed.",
                         "context": {
                             "entity": "sale\\SaleEntry",
-                            "view": "list.pending-billable",
+                            "view": "list.billable",
                             "order": "id",
                             "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "sale_entries.billed",
+                        "type": "entry",
+                        "label": "Billed",
+                        "icon": "receipt_long",
+                        "description": "Display billed sale entries.",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": [ ["status", "=", "billed"] ]
+                        }
+                    },
+                    {
+                        "id": "sale_entries.archived",
+                        "type": "entry",
+                        "label": "Archived",
+                        "icon": "inventory",
+                        "description": "Archived entries",
+                        "context": {
+                            "entity": "sale\\SaleEntry",
+                            "view": "list.default",
+                            "order": "created",
+                            "sort": "desc",
+                            "domain": [ ["state", "=", "archive"] ]
                         }
                     }
                 ]
@@ -135,6 +175,69 @@
                             "order": "id",
                             "sort": "asc"
                         }
+                    },
+                    {
+                        "id": "subscriptions.entries",
+                        "type": "parent",
+                        "label": "Entries",
+                        "icon": "check",
+                        "description": "Subscription entries parent menu.",
+                        "children": [
+                            {
+                                "id": "subscriptions.entries.all",
+                                "type": "entry",
+                                "label": "All",
+                                "icon": "list",
+                                "description": "Display all subscription entries.",
+                                "context": {
+                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "subscriptions.entries.to-bill",
+                                "type": "entry",
+                                "label": "To bill",
+                                "icon": "payments",
+                                "description": "Display subscription entries ready to be billed.",
+                                "context": {
+                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "view": "list.billable",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "subscriptions.entries.billed",
+                                "type": "entry",
+                                "label": "Billed",
+                                "icon": "receipt_long",
+                                "description": "Display billed subscription entries.",
+                                "context": {
+                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc",
+                                    "domain": [ ["status", "=", "billed"] ]
+                                }
+                            },
+                            {
+                                "id": "subscriptions.entries.archived",
+                                "type": "entry",
+                                "label": "Archived",
+                                "icon": "inventory",
+                                "description": "Archived entries",
+                                "context": {
+                                    "entity": "sale\\subscription\\SubscriptionEntry",
+                                    "view": "list.default",
+                                    "order": "created",
+                                    "sort": "desc",
+                                    "domain": [ ["state", "=", "archive"] ]
+                                }
+                            }
+                        ]
                     }
                 ]
             },
@@ -146,19 +249,6 @@
                 "description": "Receivables parent menu.",
                 "children": [
                     {
-                        "id": "receivables.queues",
-                        "type": "entry",
-                        "label": "Queues",
-                        "icon": "queue",
-                        "description": "Display all receivables queues.",
-                        "context": {
-                            "entity": "sale\\receivable\\ReceivablesQueue",
-                            "view": "list.default",
-                            "order": "id",
-                            "sort": "asc"
-                        }
-                    },
-                    {
                         "id": "receivables.receivables",
                         "type": "entry",
                         "label": "All",
@@ -166,6 +256,19 @@
                         "description": "Display all receivables.",
                         "context": {
                             "entity": "sale\\receivable\\Receivable",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "receivables.queues",
+                        "type": "entry",
+                        "label": "Queues",
+                        "icon": "queue",
+                        "description": "Display all receivables queues.",
+                        "context": {
+                            "entity": "sale\\receivable\\ReceivablesQueue",
                             "view": "list.default",
                             "order": "id",
                             "sort": "asc"
@@ -182,6 +285,20 @@
                             "view": "list.pending",
                             "order": "id",
                             "sort": "asc"
+                        }
+                    },
+                    {
+                        "id": "item.receivable.invoiced",
+                        "type": "entry",
+                        "label": "Invoiced",
+                        "icon": "receipt_long",
+                        "description": "Invoiced receivables.",
+                        "context": {
+                            "entity": "sale\\receivable\\Receivable",
+                            "view": "list.default",
+                            "order": "id",
+                            "sort": "asc",
+                            "domain": ["status", "=", "invoiced"]
                         }
                     }
                 ]
