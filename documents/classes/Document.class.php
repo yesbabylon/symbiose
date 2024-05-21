@@ -399,20 +399,20 @@ class Document extends Model {
                 $src_width = imageSX($src_image);
                 $src_height = imageSY($src_image);
 
+                $dst_image = imagecreatetruecolor($target_width, $target_height);
+
                 // preserve transparency
                 if ($image_type == IMAGETYPE_PNG || $image_type == IMAGETYPE_GIF) {
-                    imagealphablending($src_image, false);
-                    imagesavealpha($src_image, true);
-                    $transparent = imagecolorallocatealpha($src_image, 255, 255, 255, 127);
-                    imagefilledrectangle($src_image, 0, 0, $target_width, $target_height, $transparent);
+                    imagealphablending($dst_image, false);
+                    imagesavealpha($dst_image, true);
+                    $transparent = imagecolorallocatealpha($dst_image, 255, 255, 255, 127);
+                    imagefilledrectangle($dst_image, 0, 0, $target_width, $target_height, $transparent);
                 }
                 else {
                     // fill background with white for non-transparent images
-                    $white = imagecolorallocate($src_image, 255, 255, 255);
-                    imagefilledrectangle($src_image, 0, 0, $target_width, $target_height, $white);
+                    $white = imagecolorallocate($dst_image, 255, 255, 255);
+                    imagefilledrectangle($dst_image, 0, 0, $target_width, $target_height, $white);
                 }
-
-                $dst_image = imagecreatetruecolor($target_width, $target_height);
 
                 if( ($src_width / $src_height) < ($target_width / $target_height) ) {
                     $new_height = $target_height;
