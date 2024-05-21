@@ -12,7 +12,6 @@ use finance\accounting\AccountChartLine;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingRuleLine;
 use finance\accounting\Invoice as FinanceInvoice;
-use finance\accounting\InvoiceLine;
 use inventory\Product;
 use sale\customer\Customer;
 use sale\receivable\Receivable;
@@ -250,6 +249,11 @@ class Invoice extends FinanceInvoice {
                         'onafter' => 'onafterInvoice',
                         'status' => 'invoice',
                     ],
+                    'cancel-proforma' => [
+                        'description' => 'Delete the proforma and set receivables statuses back to pending.',
+                        'onafter' => 'onafterCancelProforma',
+                        'status' => 'proforma',
+                    ]
                 ],
             ],
             'invoice' => [
@@ -265,7 +269,7 @@ class Invoice extends FinanceInvoice {
                         'description' => 'Set the invoice status as cancelled and set receivables statuses back to pending.',
                         'onafter' => 'onafterCancelKeepReceivables',
                         'status' => 'cancelled',
-                    ]
+                    ],
                 ],
             ],
             'cancelled' => [
@@ -300,6 +304,27 @@ class Invoice extends FinanceInvoice {
         $self->read(['invoice_number']);
     }
 
+    public static function onafterCancelProforma($self) {
+        $self->read(['id']);
+        foreach($self as $invoice) {
+            $receivables_ids = Receivable::search([
+                ['status', '=', 'invoiced'],
+                ['invoice_id', '=', $invoice['id']],
+            ])
+                ->ids();
+
+            Receivable::ids($receivables_ids)
+                ->update([
+                    'status'          => 'pending',
+                    'invoice_id'      => null,
+                    'invoice_line_id' => null
+                ]);
+
+            Invoice::id($invoice['id'])
+                ->delete();
+        }
+    }
+
     public static function onafterCancel($self) {
         $self->read(['id']);
         foreach($self as $invoice) {
@@ -312,6 +337,8 @@ class Invoice extends FinanceInvoice {
             Receivable::ids($receivables_ids)
                 ->update(['status' => 'cancelled']);
         }
+
+        $self->do('reverse');
     }
 
     public static function onafterCancelKeepReceivables($self) {
@@ -330,6 +357,8 @@ class Invoice extends FinanceInvoice {
                     'invoice_line_id' => null
                 ]);
         }
+
+        $self->do('reverse');
     }
 
     public static function getActions() {
@@ -344,6 +373,12 @@ class Invoice extends FinanceInvoice {
                 'help'          => 'Returns generated accounting entries mapped by invoice lines.',
                 'policies'      => [],
                 'function'      => 'doGenerateAccountingEntries'
+            ],
+            'reverse' => [
+                'description'   => 'Creates a new invoice of type credit note to reverse invoice.',
+                'help'          => 'Reversing an invoice can only be done when status is "invoice".',
+                'policies'      => [],
+                'function'      => 'doReverseInvoice'
             ]
         ];
     }
@@ -535,5 +570,93 @@ class Invoice extends FinanceInvoice {
         }
 
         return $result;
+    }
+
+    /**
+     * Creates a new invoice of type credit note to reverse invoice.
+     */
+    public static function doReverseInvoice($self) {
+        $self->read([
+            'status',
+            'invoice_type',
+            'reversed_invoice_id',
+            'organisation_id',
+            'customer_id',
+            'is_deposit',
+            'invoice_line_groups_ids' => [
+                'name',
+                'invoice_lines_ids' => [
+                    'product_id',
+                    'price_id',
+                    'qty',
+                    'free_qty',
+                    'discount',
+                    'downpayment_invoice_id',
+                    'vat_rate',
+                    'unit_price',
+                    'total',
+                    'price'
+                ]
+            ]
+        ]);
+
+        foreach($self as $invoice) {
+            if( $invoice['status'] !== 'cancelled'
+                || $invoice['invoice_type'] !== 'invoice'
+                || isset($invoice['reversed_invoice_id'])
+            ) {
+                continue;
+            }
+
+            $reversed_invoice = Invoice::create([
+                'invoice_type'        => 'credit_note',
+                'status'              => 'proforma',
+                'emission_date'       => time(),
+                'organisation_id'     => $invoice['organisation_id'],
+                'customer_id'         => $invoice['customer_id'],
+                'is_deposit'          => $invoice['is_deposit'],
+                'reversed_invoice_id' => $invoice['id']
+            ])
+                ->first();
+
+            foreach($invoice['invoice_line_groups_ids'] as $invoice_line_group) {
+                $reversed_group = InvoiceLineGroup::create([
+                    'name'       => $invoice_line_group['name'],
+                    'invoice_id' => $reversed_invoice['id']
+                ])
+                    ->first(true);
+
+                foreach($invoice_line_group['invoice_lines_ids'] as $line) {
+                    InvoiceLine::create([
+                        'description'            => $line['description'],
+                        'invoice_id'             => $reversed_invoice['id'],
+                        'invoice_line_group_id'  => $reversed_group['id'],
+                        'product_id'             => $line['product_id'],
+                        'price_id'               => $line['price_id'],
+                        'qty'                    => $line['qty'],
+                        'free_qty'               => $line['free_qty'],
+                        'discount'               => $line['discount'],
+                        'downpayment_invoice_id' => $line['downpayment_invoice_id']
+                    ])
+                        ->update([
+                            'vat_rate'   => $line['vat_rate'],
+                            'unit_price' => $line['unit_price'],
+                            'total'      => $line['total'],
+                            'price'      => $line['price']
+                        ]);
+                }
+            }
+
+            if(in_array($invoice['payment_status'], ['pending', 'overdue'])) {
+                Invoice::id($reversed_invoice['id'])->update(['payment_status' => 'balanced']);
+                Invoice::id($invoice['id'])->update(['payment_status' => 'balanced']);
+            }
+            else {
+                // TODO: Alert finance_accounting reimbursement needed
+            }
+
+            Invoice::id($invoice['id'])
+                ->update(['reversed_invoice_id' => $reversed_invoice['id']]);
+        }
     }
 }

@@ -18,6 +18,18 @@
             }
         },
         {
+            "id": "action.cancel-proforma",
+            "label": "Cancel",
+            "description": "Cancel proforma.",
+            "controller": "core_model_transition",
+            "visible": ["status", "=", "proforma"],
+            "params": {
+                "entity": "sale\\accounting\\invoice\\Invoice",
+                "transition": "cancel-proforma",
+                "ids": []
+            }
+        },
+        {
             "id": "action.cancel",
             "label": "Cancel",
             "description": "Cancel invoice.",

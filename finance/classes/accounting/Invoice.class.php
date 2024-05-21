@@ -173,6 +173,10 @@ class Invoice extends Model {
                         'description' => 'Invoice the drafted proforma.',
                         'status' => 'invoice',
                     ],
+                    'cancel' => [
+                        'description' => 'Cancel the invoice.',
+                        'status' => 'cancelled',
+                    ],
                 ],
             ],
             'invoice' => [
@@ -182,7 +186,7 @@ class Invoice extends Model {
                     'cancel' => [
                         'description' => 'Cancel the invoice.',
                         'status' => 'cancelled',
-                    ]
+                    ],
                 ],
             ],
             'cancelled' => [
