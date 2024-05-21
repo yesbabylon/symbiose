@@ -1,6 +1,16 @@
 {
     "name": "Document list",
-    "description": "This view is intended for displaying the list of bookings.",
+    "description": "This view is intended for displaying the list of documents.",
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for document creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
@@ -32,12 +42,12 @@
                 "type": "field",
                 "value": "link",
                 "width": "35%",
-                "readonly": true       
+                "readonly": true
             },
             {
                 "type": "field",
                 "value": "public",
-                "width": "5%"        
+                "width": "5%"
             },
             {
                 "type": "field",

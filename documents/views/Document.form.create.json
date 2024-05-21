@@ -46,59 +46,8 @@
                                             }
                                         ]
                                     }
-
                                 ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "sections": [
-                    {
-                        "label":"Document details",
-                        "id": "section.document_info",
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "align": "left",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "readable_size",
-                                                "width": "30%",
-                                                "readonly": true
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type",
-                                                "width": "30%",
-                                                "readonly": true
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "align": "right",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "preview_image",
-                                                "width": "100%",
-                                                "readonly": true
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "label":"Tags",
-                        "id": "section.document_tag",
-                        "rows": [
+                            },
                             {
                                 "columns": [
                                     {
