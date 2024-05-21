@@ -369,6 +369,8 @@ class Document extends Model {
      */
     public static function calcPreviewImage($self) {
         $result = [];
+        $target_width = 150;
+        $target_height = 150;
         $self->read(['name', 'type', 'data']);
         foreach($self as $id => $document) {
             try {
@@ -397,8 +399,18 @@ class Document extends Model {
                 $src_width = imageSX($src_image);
                 $src_height = imageSY($src_image);
 
-                $target_width = 150;
-                $target_height = 150;
+                // preserve transparency
+                if ($image_type == IMAGETYPE_PNG || $image_type == IMAGETYPE_GIF) {
+                    imagealphablending($src_image, false);
+                    imagesavealpha($src_image, true);
+                    $transparent = imagecolorallocatealpha($src_image, 255, 255, 255, 127);
+                    imagefilledrectangle($src_image, 0, 0, $target_width, $target_height, $transparent);
+                }
+                else {
+                    // fill background with white for non-transparent images
+                    $white = imagecolorallocate($src_image, 255, 255, 255);
+                    imagefilledrectangle($src_image, 0, 0, $target_width, $target_height, $white);
+                }
 
                 $dst_image = imagecreatetruecolor($target_width, $target_height);
 
@@ -413,7 +425,7 @@ class Document extends Model {
 
                 $offset_x  = round( ($target_width - $new_width) / 2 );
                 $offset_y  = round( ($target_height - $new_height) / 2 );
-                imagecopyresized($dst_image, $src_image, $offset_x, $offset_y, 0, 0, $new_width, $new_height, $src_width, $src_height);
+                imagecopyresampled($dst_image, $src_image, $offset_x, $offset_y, 0, 0, $new_width, $new_height, $src_width, $src_height);
 
                 // get binary value of generated image
                 ob_start();
