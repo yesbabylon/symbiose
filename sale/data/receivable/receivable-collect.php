@@ -62,6 +62,13 @@ list($params, $providers) = eQual::announce([
             'type'              => 'many2one',
             'foreign_object'    => 'sale\customer\Customer',
             'description'       => 'Customer of the subscription.'
+        ],
+
+        'receivables_queue_id' => [
+            'type'              => 'many2one',
+            'foreign_object'    => 'sale\receivable\ReceivablesQueue',
+            'description'       => 'The Queue the receivable is attached to.',
+
         ]
     ],
     'response'      => [

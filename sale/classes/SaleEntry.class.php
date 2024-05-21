@@ -207,8 +207,7 @@ class SaleEntry extends Model {
             if( ($entry['object_class'] === 'timetrack\Project' && $entry['status'] !== 'validated')
                 || !isset($entry['customer_id'], $entry['product_id'], $entry['price_id'], $entry['unit_price'])
                 || $entry['qty'] <= 0
-                || !$entry['is_billable']
-            ) {
+                || !$entry['is_billable'] ) {
                 $result[$id] = false;
             }
         }

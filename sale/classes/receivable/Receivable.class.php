@@ -27,8 +27,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\receivable\ReceivablesQueue',
                 'description'       => 'The parent Queue the receivable is attached to.',
                 'required'          => true,
-                'dependencies'      => ['customer_id'],
-                'readonly'          => true
+                'dependents'        => ['customer_id']
             ],
 
             'customer_id' => [
@@ -46,7 +45,7 @@ class Receivable extends Model {
                 'description'       => 'Creation date of the receivable.',
                 'required'          => true,
                 'default'           => time(),
-                'dependencies'      => ['price_id'],
+                'dependents'        => ['price_id'],
                 'readonly'          => true
             ],
 
@@ -82,7 +81,7 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'description'       => 'The product (SKU) the receivable relates to.',
                 'required'          => true,
-                'dependencies'      => ['price_id'],
+                'dependents'        => ['price_id'],
                 'readonly'          => true
             ],
 
@@ -91,7 +90,7 @@ class Receivable extends Model {
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\price\Price',
                 'description'       => 'The price the receivable relates to.',
-                'dependencies'      => ['unit_price'],
+                'dependents'        => ['unit_price'],
                 'function'          => 'calcPriceId',
                 'store'             => true,
                 'readonly'          => true
@@ -102,7 +101,7 @@ class Receivable extends Model {
                 'result_type'       => 'float',
                 'usage'             => 'amount/money:4',
                 'description'       => 'Unit price of the product related to the receivable.',
-                'dependencies'      => ['total', 'price'],
+                'dependents'        => ['total', 'price'],
                 'function'          => 'calcUnitPrice',
                 'store'             => true,
                 'readonly'          => true
@@ -113,7 +112,7 @@ class Receivable extends Model {
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
                 'default'           => 0.0,
-                'dependencies'      => ['total', 'price'],
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -121,7 +120,7 @@ class Receivable extends Model {
                 'type'              => 'float',
                 'description'       => 'Quantity of product.',
                 'default'           => 1.0,
-                'dependencies'      => ['total', 'price'],
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -129,7 +128,7 @@ class Receivable extends Model {
                 'type'              => 'integer',
                 'description'       => 'Free quantity of product, if any.',
                 'default'           => 0,
-                'dependencies'      => ['total', 'price'],
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
@@ -139,7 +138,7 @@ class Receivable extends Model {
                 'usage'             => 'amount/rate',
                 'description'       => 'Total amount of discount to apply, if any.',
                 'default'           => 0.0,
-                'dependencies'      => ['total', 'price'],
+                'dependents'        => ['total', 'price'],
                 'readonly'          => true
             ],
 
