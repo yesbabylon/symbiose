@@ -402,7 +402,7 @@ class Document extends Model {
                 $dst_image = imagecreatetruecolor($target_width, $target_height);
 
                 // preserve transparency
-                if ($image_type == IMAGETYPE_PNG || $image_type == IMAGETYPE_GIF) {
+                if ($image_type == 'png' || $image_type == 'gif') {
                     imagealphablending($dst_image, false);
                     imagesavealpha($dst_image, true);
                     $transparent = imagecolorallocatealpha($dst_image, 255, 255, 255, 127);
