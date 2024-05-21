@@ -402,26 +402,27 @@ class Document extends Model {
 
                 $dst_image = imagecreatetruecolor($target_width, $target_height);
 
-                if( ($src_width/$src_height) < ($target_width/$target_height) ){
-                    $new_height = $src_height * $target_width / $src_width;
-                    $new_width = $target_width;
+                if( ($src_width / $src_height) < ($target_width / $target_height) ) {
+                    $new_height = $target_height;
+                    $new_width  = $src_width * $target_height / $src_height;
                 }
                 else {
-                    $new_height = $target_height;
-                    $new_width = $src_width * $target_height/$src_height;
+                    $new_height = $src_height * $target_width / $src_width;
+                    $new_width  = $target_width;
                 }
 
-                $min = min($src_width, $src_height);
-
-                $offset_x  = round( ($src_width - $min) / 2 );
-                $offset_y  = round( ($src_height - $min) / 2 );
-
-                imagecopyresized($dst_image, $src_image, 0, 0, $offset_x, $offset_y, $new_width, $new_height, $src_width, $src_height);
+                $offset_x  = round( ($target_width - $new_width) / 2 );
+                $offset_y  = round( ($target_height - $new_height) / 2 );
+                imagecopyresized($dst_image, $src_image, $offset_x, $offset_y, 0, 0, $new_width, $new_height, $src_width, $src_height);
 
                 // get binary value of generated image
                 ob_start();
                 imagejpeg($dst_image, null, 80);
                 $buffer = ob_get_clean();
+
+                // free mem
+                imagedestroy($dst_image);
+                imagedestroy($src_image);
 
                 $result[$id] = $buffer;
             }
