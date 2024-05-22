@@ -22,7 +22,7 @@ list($params, $providers) = eQual::announce([
 
         'mode' => [
             'description' => 'Mode in which document has to be rendered: simple, grouped or detailed.',
-            'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat.',
+            'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat rate.',
             'type'        => 'string',
             'selection'   => ['simple', 'grouped', 'detailed'],
             'default'     => 'simple'

@@ -33,6 +33,9 @@
                 },
                 "action.download-detailed-pdf": {
                     "label": "Télécharger pdf détaillé"
+                },
+                "action.download-grouped-pdf": {
+                    "label": "Télécharger pdf groupé"
                 }
             },
             "routes": {
@@ -41,6 +44,9 @@
                 },
                 "route.print-detailed.pdf": {
                     "label": "Imprimer facture détaillée"
+                },
+                "route.print-grouped.pdf": {
+                    "label": "Imprimer facture groupée"
                 }
             },
             "layout": {}
