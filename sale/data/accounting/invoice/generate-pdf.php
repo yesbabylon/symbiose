@@ -20,11 +20,12 @@ list($params, $providers) = eQual::announce([
             'required'    => true
         ],
 
-        'mode' =>  [
-            'description' => 'Mode in which document has to be rendered: grouped (default) or detailed.',
+        'mode' => [
+            'description' => 'Mode in which document has to be rendered: simple, grouped or detailed.',
+            'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat.',
             'type'        => 'string',
-            'selection'   => ['grouped', 'detailed'],
-            'default'     => 'grouped'
+            'selection'   => ['simple', 'grouped', 'detailed'],
+            'default'     => 'simple'
         ],
 
         'filename' => [

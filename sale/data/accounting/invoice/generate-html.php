@@ -26,11 +26,12 @@ list($params, $providers) = eQual::announce([
             'required'    => true
         ],
 
-        'mode' =>  [
+        'mode' => [
             'description' => 'Mode in which document has to be rendered: grouped (default) or detailed.',
+            'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat.',
             'type'        => 'string',
-            'selection'   => ['grouped', 'detailed'],
-            'default'     => 'grouped'
+            'selection'   => ['simple', 'grouped', 'detailed'],
+            'default'     => 'simple'
         ],
 
         'view_id' => [
@@ -69,16 +70,18 @@ $generateInvoiceLines = function($invoice, $mode) {
             continue;
         }
 
-        $lines[] = [
-            'name'       => $group['name'] ?? '',
-            'price'      => null,
-            'total'      => null,
-            'unit_price' => null,
-            'vat_rate'   => null,
-            'qty'        => null,
-            'free_qty'   => null,
-            'is_group'   => true
-        ];
+        if($mode !== 'simple') {
+            $lines[] = [
+                'name'       => $group['name'] ?? '',
+                'price'      => null,
+                'total'      => null,
+                'unit_price' => null,
+                'vat_rate'   => null,
+                'qty'        => null,
+                'free_qty'   => null,
+                'is_group'   => true
+            ];
+        }
 
         $group_lines = [];
         foreach($group['invoice_lines_ids'] as $line) {
@@ -103,6 +106,7 @@ $generateInvoiceLines = function($invoice, $mode) {
         }
 
         switch($mode) {
+            case 'simple':
             case 'detailed':
                 $lines = array_merge($lines, $group_lines);
                 break;
