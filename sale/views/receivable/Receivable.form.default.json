@@ -1,6 +1,15 @@
 {
     "name": "Receivable",
-    "description": "Default form for Receivable",
+    "description": "Default form for Receivable.",
+    "actions": [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "Create a new invoice line from the receivable.",
+            "controller": "sale_receivable_invoice",
+            "visible": ["status", "=", "pending"]
+        }
+    ],
     "layout": {
         "groups": [
             {
