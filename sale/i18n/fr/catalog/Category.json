@@ -29,8 +29,8 @@
 			"name": "Catégorie",
 			"description": "Les catégories ne sont pas liées aux familles et permettent une manière différente de regrouper les produits.",
 			"layout": {
-				"section.categories_id": {
-					"label": "Détails"
+				"section.Description": {
+					"label": "Description"
 				},
 				"section.product_models": {
 					"label": "Modèles de produit"

@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
@@ -32,7 +32,7 @@ class Product extends Model {
 
             'label' => [
                 'type'              => 'string',
-                'description'       => 'Human readable mnemo for identifying the product. Allows duplicates.',
+                'description'       => 'Human readable memo for identifying the product. Allows duplicates.',
                 'required'          => true,
                 'dependents'        => ['name']
             ],
@@ -66,9 +66,13 @@ class Product extends Model {
             ],
 
             'family_id' => [
-                'type'              => 'many2one',
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'function'          => 'calcFamilyId',
                 'foreign_object'    => 'sale\catalog\Family',
-                'description'       => "Product Family which current product belongs to."
+                'description'       => "Product Family which current product belongs to.",
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'is_pack' => [
@@ -107,13 +111,6 @@ class Product extends Model {
                 'ondetach'          => 'delete'
             ],
 
-            'is_locked' => [
-                'type'              => 'boolean',
-                'description'       => 'Is the pack static? (cannot be modified).',
-                'default'           => false,
-                'visible'           => [ ['is_pack', '=', true] ]
-            ],
-
             'prices_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\price\Price',
@@ -130,17 +127,23 @@ class Product extends Model {
             ],
 
             'can_buy' => [
-                'type'              => 'boolean',
-                'description'       => "Can this product be purchassed?",
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'calcCanBuy',
+                'description'       => "Can this product be purchassed? (from model)",
                 'help'              => "Field can_buy is adapted when related value is changed in parent ProductModel.",
-                'default'           => false
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'can_sell' => [
-                'type'              => 'boolean',
-                'description'       => "Can this product be sold?",
+                'type'              => 'computed',
+                'result_type'       => 'boolean',
+                'function'          => 'calcCanSell',
+                'description'       => "Can this product be sold? (from model)",
                 'help'              => "Field can_sell is adapted when related value is changed in parent ProductModel.",
-                'default'           => true
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'groups_ids' => [
@@ -150,19 +153,6 @@ class Product extends Model {
                 'rel_table'         => 'sale_catalog_product_rel_product_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'product_id'
-            ],
-
-            'has_age_range' => [
-                'type'              => 'boolean',
-                'description'       => "Applies on a specific age range?",
-                'default'           => false
-            ],
-
-            'age_range_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\customer\AgeRange',
-                'description'       => 'Customers age range the product is intended for.',
-                'visible'           => [ ['has_age_range', '=', true] ]
             ],
 
             'subscriptions_ids' => [
@@ -197,26 +187,40 @@ class Product extends Model {
         return $result;
     }
 
-    public static function calcIsPack($self) {
-        $result = [];
-        $self->read(['product_model_id' => 'is_pack']);
-        foreach($self as $id => $product) {
-            $result[$id] = $product['product_model_id']['is_pack'];
-        }
-        return $result;
+    public static function calcIsPack($self): array {
+        return self::calcFromProductModel($self, 'is_pack');
     }
 
-    public static function calcHasOwnPrice($self) {
+    public static function calcHasOwnPrice($self): array {
+        return self::calcFromProductModel($self, 'has_own_price');
+    }
+
+    public static function calcCanBuy($self): array {
+        return self::calcFromProductModel($self, 'can_buy');
+    }
+
+    public static function calcCanSell($self): array {
+        return self::calcFromProductModel($self, 'can_sell');
+    }
+
+    public static function calcFamilyId($self): array {
+        return self::calcFromProductModel($self, 'family_id');
+    }
+
+    private static function calcFromProductModel($self, $column): array {
         $result = [];
-        $self->read(['product_model_id' => 'has_own_price']);
+        $self->read(['product_model_id' => [$column]]);
         foreach($self as $id => $product) {
-            $result[$id] = (bool) $product['product_model_id']['has_own_price'];
+            if(isset($product['product_model_id'][$column])) {
+                $result[$id] = $product['product_model_id'][$column];
+            }
         }
+
         return $result;
     }
 
     public static function onupdateProductModelId($self) {
-        $self->read(['groups_ids', 'product_model_id' => ['can_sell', 'groups_ids', 'family_id']]);
+        $self->read(['groups_ids', 'product_model_id' => ['is_pack', 'has_own_price','can_sell','can_buy' , 'groups_ids', 'family_id']]);
         foreach($self as $id => $product) {
             self::id($id)
                 // remove current groups
@@ -224,9 +228,11 @@ class Product extends Model {
                 // set values according to assigned model
                 ->update([
                     'is_pack'       => null,
-                    'can_sell'      => $product['product_model_id']['can_sell'],
+                    'has_own_price' => null,
+                    'can_sell'      => null,
+                    'can_buy'       => null,
                     'groups_ids'    => $product['product_model_id']['groups_ids'],
-                    'family_id'     => $product['product_model_id']['family_id']
+                    'family_id'     => null
                 ]);
         }
     }

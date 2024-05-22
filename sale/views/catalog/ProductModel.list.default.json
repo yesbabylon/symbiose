@@ -3,7 +3,17 @@
     "description": "This view is intended for displaying the list of product models.",
     "access": {
         "groups": ["pos.default.user", "sale.default.user"]
-     },
+    },
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "overload form to use for product model creation"
+                }
+            ]
+        }
+    },
     "layout": {
         "items": [
             {
@@ -35,8 +45,7 @@
                 "type": "field",
                 "value": "stat_section_id",
                 "width": "5%"
-            }            
-            
+            }
         ]
     }
 }

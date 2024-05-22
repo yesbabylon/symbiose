@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
@@ -54,7 +54,8 @@ class ProductModel extends Model {
             'can_buy' => [
                 'type'              => 'boolean',
                 'description'       => "Can this product be purchassed?",
-                'default'           => false
+                'default'           => false,
+                'onupdate'          => 'onupdateCanBuy'
             ],
 
             'can_sell' => [
@@ -62,12 +63,6 @@ class ProductModel extends Model {
                 'description'       => "Can this product be sold?",
                 'default'           => true,
                 'onupdate'          => 'onupdateCanSell'
-            ],
-
-            'cost' => [
-                'type'              => 'boolean',
-                'description'       => 'Buying cost.',
-                'visible'           => ['can_buy', '=', true]
             ],
 
             'is_pack' => [
@@ -192,52 +187,49 @@ class ProductModel extends Model {
         ];
     }
 
-    /**
-     *
-     * Update related products is_pack
-     */
-    public static function onupdateIsPack($om, $oids, $values, $lang) {
-        $models = $om->read(get_called_class(), $oids, ['products_ids', 'is_pack']);
-        foreach($models as $mid => $model) {
-            $om->write('sale\catalog\Product', $model['products_ids'], ['is_pack' => $model['is_pack']]);
+    public static function onupdateIsPack($self) {
+        $self->read(['products_ids', 'is_pack']);
+        foreach($self as $id => $model) {
+            Product::ids($model['products_ids'])->update(['is_pack' => $model['is_pack']]);
         }
     }
 
-
-    public static function onupdateHasOwnPrice($om, $oids, $values, $lang) {
-        $models = $om->read(get_called_class(), $oids, ['products_ids', 'has_own_price']);
-        foreach($models as $mid => $model) {
-            $om->write('sale\catalog\Product', $model['products_ids'], ['has_own_price' => $model['has_own_price']]);
+    public static function onupdateHasOwnPrice($self) {
+        $self->read(['products_ids', 'has_own_price']);
+        foreach($self as $id => $model) {
+            Product::ids($model['products_ids'])->update(['has_own_price' => $model['has_own_price']]);
         }
     }
 
-
-    /**
-     *
-     * Update related products can_sell
-     */
-    public static function onupdateCanSell($om, $oids, $values, $lang) {
-        $models = $om->read(get_called_class(), $oids, ['products_ids', 'can_sell']);
-        foreach($models as $mid => $model) {
-            $om->write('sale\catalog\Product', $model['products_ids'], ['can_sell' => $model['can_sell']]);
+    public static function onupdateCanSell($self) {
+        $self->read(['products_ids', 'can_sell']);
+        foreach($self as $id => $model) {
+            Product::ids($model['products_ids'])->update(['can_sell' => $model['can_sell']]);
         }
     }
 
-    public static function onupdateFamilyId($om, $oids, $values, $lang) {
-        $models = $om->read(get_called_class(), $oids, ['products_ids', 'family_id']);
-        foreach($models as $mid => $model) {
-            $om->write('sale\catalog\Product', $model['products_ids'], ['family_id' => $model['family_id']]);
+    public static function onupdateCanBuy($self) {
+        $self->read(['products_ids', 'can_buy']);
+        foreach($self as $id => $model) {
+            Product::ids($model['products_ids'])->update(['can_buy' => $model['can_buy']]);
         }
     }
 
-    public static function onupdateGroupsIds($om, $oids, $values, $lang) {
-        $models = $om->read(get_called_class(), $oids, ['products_ids', 'groups_ids']);
-        foreach($models as $mid => $model) {
-            $products = $om->read('sale\catalog\Product', $model['products_ids'], ['groups_ids']);
+    public static function onupdateFamilyId($self) {
+        $self->read(['products_ids', 'family_id']);
+        foreach($self as $id => $model) {
+            Product::ids($model['products_ids'])->update(['family_id' => $model['family_id']]);
+        }
+    }
+
+    public static function onupdateGroupsIds($self) {
+        $self->read(['products_ids', 'groups_ids']);
+        foreach($self as $mid => $model) {
+            $products = Product::ids($model['products_ids'])->read('groups_ids')->get();
             foreach($products as $pid => $product) {
                 $groups_ids = array_map(function($a) {return "-$a";}, $product['groups_ids']);
                 $groups_ids = array_merge($groups_ids, $model['groups_ids']);
-                $om->write('sale\catalog\Product', $pid, ['groups_ids' => $groups_ids]);
+                Product::id($pid)->update(['groups_ids' => $groups_ids]);
             }
         }
     }
