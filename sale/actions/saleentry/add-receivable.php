@@ -42,6 +42,7 @@ $getSaleEntry = function($id) {
         ->read([
             'id',
             'object_class',
+            'object_id',
             'customer_id',
             'product_id',
             'price_id' => ['id', 'vat_rate'],
@@ -65,11 +66,19 @@ $getSaleEntry = function($id) {
     return $sale_entry;
 };
 
-$getReceivablesQueue = function($customer_id, $receivable_queue_id) {
-    if(isset($receivable_queue_id)) {
+$getReceivablesQueue = function($sale_entry, $receivable_queue_id) {
+    if(is_null($receivable_queue_id) && $sale_entry['object_class'] === 'timetrack\Project') {
+        $project = Project::id($sale_entry['object_id'])
+            ->read(['receivable_queue_id'])
+            ->first();
+
+        $receivable_queue_id = $project['receivable_queue_id'];
+    }
+
+    if(!is_null($receivable_queue_id)) {
         $receivables_queue = ReceivablesQueue::search([
             ['id', '=', $receivable_queue_id],
-            ['customer_id', '=', $customer_id]
+            ['customer_id', '=', $sale_entry['customer_id']]
         ])
             ->read(['id'])
             ->first();
@@ -80,14 +89,14 @@ $getReceivablesQueue = function($customer_id, $receivable_queue_id) {
     }
     else {
         $receivables_queue = ReceivablesQueue::search(
-            ['customer_id', '=', $customer_id]
+            ['customer_id', '=', $sale_entry['customer_id']]
         )
             ->read(['id'])
             ->first();
 
         if(!$receivables_queue) {
             $receivables_queue = ReceivablesQueue::create([
-                'customer_id' => $customer_id
+                'customer_id' => $sale_entry['customer_id']
             ])
                 ->first();
         }
@@ -99,7 +108,7 @@ $getReceivablesQueue = function($customer_id, $receivable_queue_id) {
 $sale_entry = $getSaleEntry($params['id']);
 
 $receivables_queue = $getReceivablesQueue(
-    $sale_entry['customer_id'],
+    $sale_entry,
     $params['receivables_queue_id'] ?? null
 );
 

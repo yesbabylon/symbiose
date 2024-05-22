@@ -57,6 +57,12 @@ class ReceivablesQueue extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'integer',
                 'function'          => 'calcPendingReceivablesCount'
+            ],
+
+            'projects_ids' => [
+                'type'            => 'one2many',
+                'foreign_object'  => 'timetrack\Project',
+                'foreign_field'   => 'receivable_queue_id'
             ]
         ];
     }
