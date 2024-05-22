@@ -25,7 +25,51 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Product Model",
+                                                "value": "family_id",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "group.tabs",
+                "sections": [
+                    {
+                        "label": "Products",
+                        "id": "section.products",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "products_ids",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Products Models",
+                        "id": "section.products.models",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
                                                 "value": "product_models_ids",
                                                 "width": "100%"
                                             }

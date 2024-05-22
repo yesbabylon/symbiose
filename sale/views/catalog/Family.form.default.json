@@ -9,37 +9,49 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "label": "General Info",
                         "id": "section.family_section",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "100%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Parent",
                                                 "value": "parent_id",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
+                                                "width": "25%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "path",
-                                                "width": "100%",
+                                                "width": "25%",
                                                 "widget": {
                                                     "readonly": true
                                                 }
@@ -53,6 +65,7 @@
                     {
                         "label": "Children",
                         "id": "section.children_section",
+                        "visible" : ["state" , "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -73,6 +86,7 @@
                     {
                         "label": "Products",
                         "id": "section.product_models",
+                        "visible" : ["state" , "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -85,7 +99,7 @@
                                                 "width": "100%",
                                                 "widget": {
                                                     "domain": ["can_sell", "=", true]
-                                                }                                                
+                                                }
                                             }
                                         ]
                                     }

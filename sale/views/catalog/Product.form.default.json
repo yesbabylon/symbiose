@@ -37,50 +37,6 @@
                                         ]
                                     }
                                 ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "sku",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "columns": [
-                                    {
-                                        "id" :"row.product.model",
-                                        "width": "70%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "can_sell",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "can_buy",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_pack",
-                                                "width": "25%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_own_price",
-                                                "width": "25%"
-                                            }
-                                        ]
-                                    }
-                                ]
                             }
                         ]
                     }
@@ -90,13 +46,59 @@
                 "id": "group.tabs",
                 "sections": [
                     {
-                        "id": "section.description",
-                        "label": "Description",
+                        "label": "General info",
+                        "id": "section.product",
                         "rows": [
                             {
                                 "columns": [
                                     {
                                         "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "sku",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Family",
+                                                "value": "family_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_sell",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_buy",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Description",
+                        "id": "section.Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
                                         "items": [
                                             {
                                                 "type": "field",

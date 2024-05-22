@@ -4,21 +4,13 @@
     "access": {
         "groups": ["pos.default.user", "sale.default.user"]
     },
-    "header": {
-        "actions": {
-            "ACTION.SAVE": [
-                { "id": "SAVE_AND_CONTINUE" },
-                { "id": "SAVE_AND_CLOSE" }
-            ]
-        }
-    },
     "layout": {
         "extends": {
             "entity": "sale\\catalog\\Product",
             "view": "form.default"
         },
         "remove": [
-            "row.product.model",
+            "section.product",
             "section.attributes",
             "section.groups",
             "section.pack_lines",
