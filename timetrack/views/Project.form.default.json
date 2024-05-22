@@ -50,6 +50,13 @@
                                                 "label": "Customer",
                                                 "value": "customer_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Receivable queue",
+                                                "value": "receivable_queue_id",
+                                                "width": "100%",
+                                                "visible": ["customer_id", "<>", null]
                                             }
                                         ]
                                     }

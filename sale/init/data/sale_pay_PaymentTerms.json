@@ -1,0 +1,30 @@
+[
+    {
+        "name": "sale\\pay\\PaymentTerms",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "15 days invoice",
+                "description": "Payment within 15 days from the date of issuance",
+                "delay_from": "created",
+                "delay_count": 15,
+                "is_active": true
+            }
+        ]
+    },
+    {
+        "name": "sale\\pay\\PaymentTerms",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "15 jours facture",
+                "description": "Paiement endéans 15 jours depuis la date d'émission.",
+                "delay_from": "created",
+                "delay_count": 15,
+                "is_active": true
+            }
+        ]
+    }
+]
