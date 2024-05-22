@@ -6,6 +6,35 @@
     "layout": {
         "items": [
             {
+                "id": "bank_statements",
+                "label": "Statements",
+                "description": "",
+                "icon": "list_alt",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "bank_statements.all",
+                        "type": "entry",
+                        "label": "All",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\pay\\BankStatement",
+                            "view": "list.default"
+                        }
+                    },
+                    {
+                        "id": "bank_statements.lines.all",
+                        "type": "entry",
+                        "label": "All Lines",
+                        "description": "",
+                        "context": {
+                            "entity": "sale\\pay\\BankStatementLine",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "customers",
                 "type": "parent",
                 "label": "Customers",
@@ -469,6 +498,28 @@
                                 "description": "Display all time entry sale models.",
                                 "context": {
                                     "entity": "timetrack\\TimeEntrySaleModel",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.payments",
+                        "type": "parent",
+                        "label": "Payment",
+                        "icon": "paid",
+                        "description": "Settings payments parent menu.",
+                        "children": [
+                            {
+                                "id": "settings.payment.terms",
+                                "type": "entry",
+                                "label": "Payments terms",
+                                "icon": "analytics",
+                                "description": "Display all payments terms.",
+                                "context": {
+                                    "entity": "sale\\pay\\PaymentTerms",
                                     "view": "list.default",
                                     "order": "id",
                                     "sort": "asc"
