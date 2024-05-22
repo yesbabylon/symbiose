@@ -8,6 +8,7 @@
 namespace timetrack;
 
 use equal\orm\Model;
+use sale\receivable\ReceivablesQueue;
 
 class Project extends Model {
 
@@ -17,7 +18,7 @@ class Project extends Model {
 
     public static function getDescription(): string {
         return 'A project is linked to a customer and time entries.'
-            .' It organizes time entries and allows to configure sale models to auto apply sale related fields of a time entry.';
+            .' It organises time entries and allows to configure sale models to auto apply sale related fields of a time entry.';
     }
 
     public static function getColumns(): array {
@@ -52,8 +53,58 @@ class Project extends Model {
                 'foreign_object'  => 'timetrack\TimeEntrySaleModel',
                 'foreign_field'   => 'projects_ids',
                 'required'        => true
+            ],
+
+            'receivable_queue_id' => [
+                'type'            => 'many2one',
+                'foreign_object'  => 'sale\receivable\ReceivablesQueue',
+                'foreign_field'   => 'projects_ids',
+                'domain'          => ['customer_id', '=', 'object.customer_id']
             ]
 
         ];
+    }
+
+    public static function onchange($event, $values) {
+        $result = [];
+
+        if(isset($event['customer_id'])) {
+            $queues_ids = ReceivablesQueue::search(['customer_id', '=', $event['customer_id']])->ids();
+
+            if( isset($values['receivable_queue_id'])
+                && !in_array($values['receivable_queue_id'], $queues_ids)
+            ) {
+                $result['receivable_queue_id'] = 0;
+            }
+        }
+
+        return $result;
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['customer_id', 'receivable_queue_id']);
+        foreach($self as $project) {
+            if(!isset($values['customer_id']) && !isset($values['receivable_queue_id'])) {
+                continue;
+            }
+
+            $customer_id = $values['customer_id'] ?? $project['customer_id'];
+            $receivable_queue_id = $values['receivable_queue_id'] ?? $project['receivable_queue_id'];
+            if($receivable_queue_id) {
+                if(!$customer_id) {
+                    return ['customer_id' => ['missing' => 'Customer must be set to set receivable queue.']];
+                }
+
+                $queue = ReceivablesQueue::id($receivable_queue_id)
+                    ->read(['customer_id'])
+                    ->first();
+
+                if($customer_id !== $queue['customer_id']) {
+                    return ['receivable_queue_id' => ['invalid' => 'Receivable queue not matching customer.']];
+                }
+            }
+        }
+
+        return parent::canupdate($self, $values);
     }
 }
