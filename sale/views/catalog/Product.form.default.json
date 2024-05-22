@@ -9,9 +9,35 @@
             {
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "section.description",
                         "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "label",
+                                                "width": "60%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Product Model",
+                                                "value": "product_model_id",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
                             {
                                 "columns": [
                                     {
@@ -19,31 +45,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "label",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "sku",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Product Model",
-                                                "value": "product_model_id",
-                                                "width": "50%"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "width": "50%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "can_sell",
                                                 "width": "50%"
                                             }
                                         ]
@@ -53,10 +55,52 @@
                             {
                                 "columns": [
                                     {
-                                        "width": "100%",
+                                        "id" :"row.product.model",
+                                        "width": "70%",
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "can_sell",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_buy",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
+                                                "width": "25%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "group.tabs",
+                "sections": [
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "100%"
                                             }
@@ -67,33 +111,8 @@
                         ]
                     },
                     {
-                        "label": "Prices",
-                        "id": "section.prices",
-                        "visible": [ [["is_pack", "=", false], ["state", "<>", "draft"]], [["has_own_price", "=", true], ["state", "<>", "draft"]] ],
-                        "rows": [
-                            {
-                                "columns": [
-                                    {
-                                        "width": "100%",
-                                        "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "prices_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "domain": ["is_active", "=", true]
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
                         "label": "Attributes",
                         "id": "section.attributes",
-                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -117,7 +136,6 @@
                     {
                         "label": "Groups",
                         "id": "section.groups",
-                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -138,7 +156,7 @@
                     {
                         "label": "Pack Products",
                         "id": "section.pack_lines",
-                        "visible": [ ["is_pack", "=", true], ["state", "<>", "draft"]],
+                        "visible": ["is_pack", "=", true],
                         "rows": [
                             {
                                 "columns": [
@@ -159,7 +177,7 @@
                     {
                         "label": "Prices",
                         "id": "section.prices",
-                        "visible": ["state", "<>", "draft"],
+                        "visible": [ [["is_pack", "=", false]], [["has_own_price", "=", true]] ],
                         "rows": [
                             {
                                 "columns": [
@@ -169,6 +187,29 @@
                                             {
                                                 "type": "field",
                                                 "value": "prices_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.default"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "label": "Subscriptions",
+                        "id": "section.attributes",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscriptions_ids",
                                                 "width": "100%",
                                                 "widget": {
                                                     "view": "list.default"
