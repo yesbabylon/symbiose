@@ -1,7 +1,7 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
@@ -66,9 +66,13 @@ class Product extends Model {
             ],
 
             'family_id' => [
-                'type'              => 'many2one',
+                'type'              => 'computed',
+                'result_type'       => 'many2one',
+                'function'          => 'calcFamilyId',
                 'foreign_object'    => 'sale\catalog\Family',
-                'description'       => "Product Family which current product belongs to."
+                'description'       => "Product Family which current product belongs to.",
+                'store'             => true,
+                'readonly'          => true
             ],
 
             'is_pack' => [
@@ -199,6 +203,10 @@ class Product extends Model {
         return self::calcFromProductModel($self, 'can_sell');
     }
 
+    public static function calcFamilyId($self): array {
+        return self::calcFromProductModel($self, 'family_id');
+    }
+
     private static function calcFromProductModel($self, $column): array {
         $result = [];
         $self->read(['product_model_id' => [$column]]);
@@ -224,7 +232,7 @@ class Product extends Model {
                     'can_sell'      => null,
                     'can_buy'       => null,
                     'groups_ids'    => $product['product_model_id']['groups_ids'],
-                    'family_id'     => $product['product_model_id']['family_id']
+                    'family_id'     => null
                 ]);
         }
     }
