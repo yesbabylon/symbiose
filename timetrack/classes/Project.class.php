@@ -65,22 +65,6 @@ class Project extends Model {
         ];
     }
 
-    public static function onchange($event, $values) {
-        $result = [];
-
-        if(isset($event['customer_id'])) {
-            $queues_ids = ReceivablesQueue::search(['customer_id', '=', $event['customer_id']])->ids();
-
-            if( isset($values['receivable_queue_id'])
-                && !in_array($values['receivable_queue_id'], $queues_ids)
-            ) {
-                $result['receivable_queue_id'] = 0;
-            }
-        }
-
-        return $result;
-    }
-
     public static function canupdate($self, $values) {
         $self->read(['customer_id', 'receivable_queue_id']);
         foreach($self as $project) {
