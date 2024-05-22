@@ -15,11 +15,17 @@ list($params, $providers) = announce([
     'description'   => 'Invoice pending receivables of selected queues.',
     'help'          => 'Create invoice lines from pending receivables of selected queues. Create new invoice if no pending proforma found for customer.',
     'params'        => [
+        'id' =>  [
+            'description'   => 'Unique identifier of the targeted receivables queue.',
+            'type'          => 'integer',
+            'default'       => 0
+        ],
+
         'ids' =>  [
-            'description'    => 'Identifier of the targeted receivable queues.',
+            'description'    => 'Identifier of the targeted receivables queues.',
             'type'           => 'one2many',
             'foreign_object' => 'sale\receivable\ReceivablesQueue',
-            'required'       => true
+            'default'        => []
         ]
     ],
     'response'      => [
@@ -32,6 +38,13 @@ list($params, $providers) = announce([
 
 /** @var \equal\php\Context $context */
 $context = $providers['context'];
+
+if(empty($params['ids'])) {
+    if( !isset($params['id']) || $params['id'] <= 0 ) {
+        throw new Exception('object_invalid_id', QN_ERROR_INVALID_PARAM);
+    }
+    $params['ids'][] = $params['id'];
+}
 
 $receivables_queues = ReceivablesQueue::ids($params['ids'])
     ->read(['id', 'customer_id']);

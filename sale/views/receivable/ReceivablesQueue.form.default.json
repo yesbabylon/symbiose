@@ -1,6 +1,14 @@
 {
     "name": "Receivables Queue",
     "description": "Default form for Receivables Queue",
+    "actions" : [
+        {
+            "id": "action.invoice",
+            "label": "Invoice",
+            "description": "Invoice all pending receivables of the queue.",
+            "controller": "sale_receivablequeue_invoice"
+        }
+    ],
     "layout": {
         "groups": [
             {
