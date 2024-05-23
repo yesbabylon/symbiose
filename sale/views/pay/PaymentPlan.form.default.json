@@ -9,32 +9,68 @@
             {
                 "sections": [
                     {
-                        "id": "section.details",
-                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "100%"
-                                            },
+                                                "width": "60%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Class Rate",
                                                 "value": "rate_class_id",
-                                                "width": "50%",
-                                                "widget": {
-                                                    "limit": 10
-                                                }
-                                            },
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "label": "Booking Type",
                                                 "value": "booking_type_id",
+                                                "width": "40%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Description",
+                        "id": "section.description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "description",
                                                 "width": "50%"
                                             }
                                         ]
@@ -45,7 +81,8 @@
                     },
                     {
                         "id": "section.deadlines",
-                        "label": "Deadlines",                        
+                        "label": "Deadlines",
+                        "visible": ["state", "<>" , "draft"],
                         "rows": [
                             {
                                 "columns": [

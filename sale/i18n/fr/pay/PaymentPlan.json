@@ -24,8 +24,8 @@
             "name": "Plan de Paiement",
             "description": "",
             "layout": {
-                "section.details":{
-                    "label": "Détails"
+                "section.description":{
+                    "label": "Description"
                 },
                 "section.deadlines":{
                     "label": "Échéances"

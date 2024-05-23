@@ -13,14 +13,14 @@
             },
             {
                 "type": "field",
-                "value": "type",
+                "value": "payment_deadline_type",
                 "width": "20%"
             },
             {
                 "type": "field",
                 "value": "is_balance_invoice",
                 "width": "15%"
-            },            
+            },
             {
                 "type": "field",
                 "value": "delay_count",

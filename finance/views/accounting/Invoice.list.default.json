@@ -24,6 +24,7 @@
                 "width": "20%"
             },
             {
+                "id": "item.emission.date",
                 "type": "field",
                 "value": "emission_date",
                 "width": "20%"
