@@ -20,10 +20,7 @@
             {
                 "id": 1,
                 "name": "15 jours facture",
-                "description": "Paiement endéans 15 jours depuis la date d'émission.",
-                "delay_from": "created",
-                "delay_count": 15,
-                "is_active": true
+                "description": "Paiement endéans 15 jours depuis la date d'émission."
             }
         ]
     }
