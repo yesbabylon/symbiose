@@ -213,37 +213,38 @@ class TimeEntry extends SaleEntry {
         return $auth->userId();
     }
 
-    public static function canupdate($om, $oids, $values, $lang = 'en'): array {
-        $res = $om->read(self::class, $oids, ['status']);
+    public static function canupdate($self, $values): array {
+        $self->read(['status']);
 
-        foreach($res as $odata) {
-            if(in_array($odata['status'], ['pending', 'ready'])) {
+        foreach($self as $id => $entry) {
+            if(in_array($entry['status'], ['pending', 'ready'])) {
                 continue;
             }
 
             $editable_fields = ['description', 'detailed_description', 'status'];
             $sale_fields = ['product_id', 'price_id', 'unit_price', 'is_billable'];
-            if($odata['status'] === 'validated') {
+
+            if($entry['status'] === 'validated') {
                 $editable_fields = array_merge($editable_fields, $sale_fields);
             }
 
             foreach($values as $field => $value) {
                 if(!in_array($field, $editable_fields)) {
                     return [
-                        $field => [
-                            'non_editable' => sprintf(
-                                'Time entry %s can only be updated from %s to %s.',
-                                $field,
-                                'pending',
-                                !in_array($field, $sale_fields) ? 'ready' : 'validated'
-                            )
-                        ]
-                    ];
+                            $field => [
+                                'non_editable' => sprintf(
+                                    'Time entry %s can only be updated from %s to %s.',
+                                    $field,
+                                    'pending',
+                                    !in_array($field, $sale_fields) ? 'ready' : 'validated'
+                                )
+                            ]
+                        ];
                 }
             }
         }
 
-        return parent::canupdate($om, $oids, $values, $lang);
+        return parent::canupdate($self, $values);
     }
 
     public static function onchange($event, $values): array {
