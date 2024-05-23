@@ -76,6 +76,13 @@ class Receivable extends Model {
                 'default'           => 'pending'
             ],
 
+            'sale_entry_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\SaleEntry',
+                'description'       => 'The sale entry at the origin of the receivable.',
+                'readonly'          => true
+            ],
+
             'product_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Product',

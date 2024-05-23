@@ -33,7 +33,7 @@ class SaleEntry extends Model {
             'description' => [
                 'type'              => 'string',
                 'description'       => 'Description of the entry.',
-                'dependents'      => ['name']
+                'dependents'        => ['name']
             ],
 
             'name' => [
@@ -395,5 +395,16 @@ class SaleEntry extends Model {
         }
 
         return $result;
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['has_receivable']);
+        foreach($self as $sale_entry) {
+            if($sale_entry['has_receivable']) {
+                return ['has_receivable' => ['non_editable' => 'Billed sale entry cannot be modified.']];
+            }
+        }
+
+        return parent::canupdate($self, $values);
     }
 }

@@ -135,6 +135,7 @@ if(is_null($receivable)) {
     $receivable = Receivable::create([
         'receivables_queue_id' => $receivables_queue['id'],
         'customer_id'          => $sale_entry['customer_id'],
+        'sale_entry_id'        => $sale_entry['id'],
         'date'                 => time(),
         'name'                 => $sale_entry['receivable_name'],
         'description'          => "Reference $object_name entry product.",
