@@ -187,8 +187,8 @@ class InvoiceLine extends Model {
             ]);
     }
 
-    public function canupdate($self, $values): array {
-        $self->read(['invoice_id' => ['status']]);
+    public static function canupdate($self, $values): array {
+        $self->read(['invoice_id' => ['status'], 'qty', 'free_qty']);
         foreach($self as $invoice_line) {
             if(
                 isset($invoice_line['invoice_id']['id'], $values['invoice_id'])
@@ -208,6 +208,41 @@ class InvoiceLine extends Model {
 
                 if($group['invoice_id'] !== $invoice_line['invoice_id']['id']) {
                     return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
+                }
+            }
+
+            if(isset($values['qty'])) {
+                if($values['qty'] <= 0) {
+                    return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
+                }
+
+                $free_qty = $values['free_qty'] ?? $invoice_line['free_qty'];
+                if($values['qty'] <= $free_qty) {
+                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
+                }
+            }
+
+            if(isset($values['free_qty'])) {
+                if($values['free_qty'] < 0) {
+                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
+                }
+
+                $qty = $values['qty'] ?? $invoice_line['qty'];
+                if($values['free_qty'] >= $qty) {
+                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
+                }
+            }
+
+            if(isset($values['unit_price']) && $values['unit_price'] <= 0) {
+                return ['unit_price' => ['must_be_greater_than_zero' => 'Unit price must be greater than 0.']];
+            }
+
+            if(isset($values['discount'])) {
+                if($values['discount'] < 0) {
+                    return ['discount' => ['must_be_greater_than_zero' => 'Discount must be greater than or equal to 0%.']];
+                }
+                if($values['discount'] > 0.99) {
+                    return ['discount' => ['must_be_lower_than_one' => 'Discount must be lower than 100%.']];
                 }
             }
         }
