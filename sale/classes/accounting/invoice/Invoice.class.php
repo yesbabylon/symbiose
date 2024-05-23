@@ -14,6 +14,7 @@ use finance\accounting\AccountingRuleLine;
 use finance\accounting\Invoice as FinanceInvoice;
 use inventory\Product;
 use sale\customer\Customer;
+use sale\pay\Funding;
 use sale\receivable\Receivable;
 
 class Invoice extends FinanceInvoice {
@@ -123,11 +124,10 @@ class Invoice extends FinanceInvoice {
                 'default'           => 1
             ],
 
-            'fundings_ids' => [
-                'type'              => 'one2many',
+            'funding_id' => [
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
-                'foreign_field'     => 'invoice_id',
-                'description'       => 'Fundings related to the invoice (should be max. 1).'
+                'description'       => 'The funding related to the invoice.'
             ]
         ];
     }
@@ -296,12 +296,17 @@ class Invoice extends FinanceInvoice {
             } catch(\Exception $e) {
                 trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
             }
+            try {
+                $self->do('create_funding');
+            } catch(\Exception $e) {
+                trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
+            }
         }
     }
 
     public static function onafterInvoice($self) {
         // Force computing the invoice number that was set to null in onbeforeInvoice
-        $self->read(['invoice_number']);
+        $self->read(['invoice_number', 'funding_id']);
     }
 
     public static function onafterCancelProforma($self) {
@@ -379,7 +384,12 @@ class Invoice extends FinanceInvoice {
                 'help'          => 'Reversing an invoice can only be done when status is "invoice".',
                 'policies'      => [],
                 'function'      => 'doReverseInvoice'
-            ]
+            ],
+            'create_funding' => [
+                'description'   => 'Create the funding according to the invoice.',
+                'policies'      => [],
+                'function'      => 'doCreateFunding'
+            ],
         ];
     }
 
@@ -658,5 +668,29 @@ class Invoice extends FinanceInvoice {
             Invoice::id($invoice['id'])
                 ->update(['reversed_invoice_id' => $reversed_invoice['id']]);
         }
+    }
+
+    /**
+     * Create the funding according to the invoice.
+     */
+    public static function doCreateFunding($self) {
+        $self->read(['id', 'price', 'payment_reference', 'due_date','funding_id']);
+        foreach($self as $invoice) {
+
+            $funding = Funding::create([
+                'description'         => 'Sold Invoice',
+                'invoice_id'          => $invoice['id'],
+                'due_amount'          => round($invoice['price'], 2),
+                'is_paid'             => false,
+                'funding_type'        => 'invoice',
+                'payment_reference'   => $invoice['payment_reference'],
+                'due_date'            => $invoice['due_date']
+            ])
+            ->first();
+
+            Invoice::id($invoice['id'])
+                ->update(['funding_id' => $funding['id']]);
+        }
+
     }
 }
