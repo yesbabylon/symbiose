@@ -10,25 +10,24 @@
             "view": "form.default"
         },
         "update": {
-            "item.name": {
-                "attributes": {
-                    "readonly": true
-                }
-            },
             "column.invoice-and-line-group": {
                 "after": [
+                    {
+                        "width": "50%",
+                        "items": []
+                    },
                     {
                         "width": "50%",
                         "items": [
                             {
                                 "type": "label",
-                                "width": "50%"
+                                "width": "33%"
                             },
                             {
                                 "type": "field",
                                 "label": "Receivable",
                                 "value": "receivable_id",
-                                "width": "50%",
+                                "width": "66%",
                                 "readonly": true,
                                 "visible": ["receivable_id", "<>", null]
                             }
