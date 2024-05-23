@@ -1,0 +1,30 @@
+{
+    "name": "Recherche avancé de finacement",
+    "description": "Contrôleur proposant une recherche avancée de financement..",
+    "model": {
+        "invoice_id": {
+            "label": "Facture",
+            "description": "La facture est liée au financement.",
+            "help": ""
+        },
+        "due_amount_min": {
+            "label": "Montant minimal",
+            "description": "Montant minimal attendu pour le financement.",
+            "help": ""
+        },
+        "due_amount_max": {
+            "label": "Montant maximum",
+            "description": "Montant maximum attendu pour le financement.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client est liée au financement",
+            "help": ""
+        },
+        "payment_reference": {
+            "label": "Réréference",
+            "description": "Message permettant d'identifier la raison de la transaction"
+        }
+    }
+}

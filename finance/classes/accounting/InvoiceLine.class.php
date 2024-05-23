@@ -56,12 +56,9 @@ class InvoiceLine extends Model {
             ],
 
             'vat_rate' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
+                'type'              => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'function'          => 'calcVatRate',
-                'store'             => true,
                 'default'           => 0.0,
                 'onupdate'          => 'onupdateVatRate'
             ],
@@ -114,18 +111,6 @@ class InvoiceLine extends Model {
             ]
 
         ];
-    }
-
-    public static function calcVatRate($self) {
-        $result = [];
-        $self->read(['price_id' => ['accounting_rule_id' => ['vat_rule_id' => ['rate']]]]);
-        foreach($self as $id => $line) {
-            $result[$id] = 0.0;
-            if(isset($line['price_id']['accounting_rule_id']['vat_rule_id']['rate'])) {
-                $result[$id] = floatval($line['price_id']['accounting_rule_id']['vat_rule_id']['rate']);
-            }
-        }
-        return $result;
     }
 
     public static function calcTotal($self) {
@@ -202,42 +187,66 @@ class InvoiceLine extends Model {
             ]);
     }
 
-    public function canupdate($orm, $ids = [], $values = [], $lang = 'en'): array {
-        $res = $orm->read(self::getType(), $ids, ['invoice_id']);
+    public static function canupdate($self, $values): array {
+        $self->read(['invoice_id' => ['status'], 'qty', 'free_qty']);
+        foreach($self as $invoice_line) {
+            if(
+                isset($invoice_line['invoice_id']['id'], $values['invoice_id'])
+                && $invoice_line['invoice_id']['id'] !== $values['invoice_id']
+            ) {
+                return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
+            }
 
-        if($res > 0) {
-            foreach($res as $invoice_line) {
-                if(
-                    isset($invoice_line['invoice_id'], $values['invoice_id'])
-                    && $invoice_line['invoice_id'] !== $values['invoice_id']
-                ) {
-                    return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
+            if($invoice_line['invoice_id']['status'] !== 'proforma') {
+                return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
+            }
+
+            if(isset($values['invoice_line_group_id'])) {
+                $group = InvoiceLineGroup::id($values['invoice_line_group_id'])
+                    ->read(['invoice_id'])
+                    ->first();
+
+                if($group['invoice_id'] !== $invoice_line['invoice_id']['id']) {
+                    return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
+                }
+            }
+
+            if(isset($values['qty'])) {
+                if($values['qty'] <= 0) {
+                    return ['qty' => ['must_be_greater_than_zero' => 'Quantity must be greater than 0.']];
                 }
 
-                $invoice_id = $invoice_line['invoice_id'] ?? $values['invoice_id'];
-                if(isset($invoice_id)) {
-                    $invoice = Invoice::id($invoice_id)
-                        ->read(['status'])
-                        ->first();
+                $free_qty = $values['free_qty'] ?? $invoice_line['free_qty'];
+                if($values['qty'] <= $free_qty) {
+                    return ['qty' => ['must_be_greater_than_free_qty' => 'Quantity must be greater than free quantity.']];
+                }
+            }
 
-                    if($invoice['status'] !== 'proforma') {
-                        return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
-                    }
+            if(isset($values['free_qty'])) {
+                if($values['free_qty'] < 0) {
+                    return ['free_qty' => ['must_be_greater_than_or_equal_to_zero' => 'Free quantity must be greater than or equal to 0.']];
                 }
 
-                $group_id = $invoice_line['invoice_line_group_id'] ?? $values['invoice_line_group_id'];
-                if(isset($group_id)) {
-                    $group = InvoiceLineGroup::id($group_id)
-                        ->read(['invoice_id'])
-                        ->first();
+                $qty = $values['qty'] ?? $invoice_line['qty'];
+                if($values['free_qty'] >= $qty) {
+                    return ['free_qty' => ['must_be_lower_than_qty' => 'Free quantity must be lower than quantity.']];
+                }
+            }
 
-                    if($group['invoice_id'] !== $invoice_line['invoice_id']) {
-                        return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
-                    }
+            if(isset($values['unit_price']) && $values['unit_price'] <= 0) {
+                return ['unit_price' => ['must_be_greater_than_zero' => 'Unit price must be greater than 0.']];
+            }
+
+            if(isset($values['discount'])) {
+                if($values['discount'] < 0) {
+                    return ['discount' => ['must_be_greater_than_zero' => 'Discount must be greater than or equal to 0%.']];
+                }
+                if($values['discount'] > 0.99) {
+                    return ['discount' => ['must_be_lower_than_one' => 'Discount must be lower than 100%.']];
                 }
             }
         }
 
-        return parent::canupdate($orm, $ids, $values, $lang);
+        return parent::canupdate($self, $values);
     }
 }

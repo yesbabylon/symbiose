@@ -144,6 +144,9 @@
                 "section.product_model": {
                     "label": "Détails"
                 },
+                "section.description":{
+                    "label": "Description"
+                },
                 "section.products": {
                     "label": "Variantes"
                 },

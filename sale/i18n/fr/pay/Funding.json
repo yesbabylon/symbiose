@@ -13,7 +13,7 @@
             "description": "Liste de paiements.",
             "help": ""
         },
-        "type": {
+        "funding_type": {
             "label": "Type",
             "description": "Les délais sont échelonnés sauf le dernier : facture définitive.",
             "selection": {

@@ -9,29 +9,52 @@
             {
                 "sections": [
                     {
-                        "label": "Categories",
-                        "id": "section.categories_id",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "name",
-                                                "width": "75%",
+                                                "width": "60%",
                                                 "widget": {
                                                     "heading": true
                                                 }
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "code",
-                                                "width": "25%"
-                                            },
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "label": "Description",
+                        "id": "section.Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Description",
                                                 "value": "description",
                                                 "width": "100%"
                                             }
@@ -44,6 +67,7 @@
                     {
                         "label": "Product Models",
                         "id": "section.product_models",
+                        "visible" : ["state" , "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -64,6 +88,7 @@
                     {
                         "label": "Booking Types",
                         "id": "section.booking_types",
+                        "visible" : ["state" , "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [

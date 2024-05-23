@@ -82,16 +82,6 @@
             "label": "Groupes",
             "description": "Groupes de produits.",
             "help": ""
-        },
-        "has_age_range": {
-            "label": "Tranche d'âge?",
-            "description": "Assigné à une tranche d'âge spécifique.",
-            "help": ""
-        },
-        "age_range_id": {
-            "label": "Age (tranche)",
-            "description": "Tranche d'âge cible du produit.",
-            "help": ""
         }
     },
     "view": {
@@ -99,6 +89,9 @@
             "name": "Produit",
             "description": "Un produit est une variante de modèle de produit (template). Il y a toujours au moins un produit pour un modèle de produit donné.",
             "layout": {
+                "section.product": {
+                    "label": "Détails"
+                },
                 "section.description": {
                     "label": "Détails"
                 },

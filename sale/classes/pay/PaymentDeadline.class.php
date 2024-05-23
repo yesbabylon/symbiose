@@ -21,15 +21,18 @@ class PaymentDeadline extends Model {
 
             'code' => [
                 'type'              => 'string',
-                'usage'             => 'numeric/integer:3',
+                'usage'             => 'text/plain:3',
+                'pattern'           => '/[0-9]{3}/',
                 'description'       => '3 digits code to serve in payment references.',
-                'required'          => true
+                'required'          => true,
+                'default'           => '000'
             ],
 
             'delay_from_event' => [
                 'type'              => 'string',
-                'selection'         => ['booking','checkin', 'checkout'],
-                'description'       => "Start event date of the deadline counter."
+                'selection'         => ['order', 'delivery'],
+                'description'       => "Start event date of the deadline counter.",
+                'default'           => 'order'
             ],
 
             'delay_from_event_offset' => [
@@ -43,7 +46,7 @@ class PaymentDeadline extends Model {
                 'description'       => "Number of days before reaching the deadline."
             ],
 
-            'type' => [
+            'payment_deadline_type' => [
                 'type'              => 'string',
                 'selection'         => [
                     'installment',                 // pre-payment (can be converted to invoice): there can be many of those

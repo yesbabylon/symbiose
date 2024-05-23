@@ -18,15 +18,6 @@ list($params, $providers) = eQual::announce([
             'default'           => 'sale\receivable\Receivable'
         ],
 
-        'price_total_min' => [
-            'type'              => 'integer',
-            'description'       => 'Minimal price for the receivable.'
-        ],
-        'price_total_max' => [
-            'type'              => 'integer',
-            'description'       => 'Maximal price for the receivable.'
-        ],
-
         'date_from' => [
             'type'              => 'date',
             'description'       => "Last date of the time interval.",
@@ -37,19 +28,6 @@ list($params, $providers) = eQual::announce([
             'type'              => 'date',
             'description'       => "First date of the time interval.",
             'default'           => strtotime("+10 Years")
-        ],
-
-        'status' => [
-            'type'              => 'string',
-            'description'       => 'Version of the receivable.',
-            'selection'         => ['all','pending', 'invoiced', 'cancelled'],
-            'default'           => 'all'
-        ],
-
-        'invoice_id' => [
-            'type'              => 'many2one',
-            'foreign_object'    => 'sale\accounting\invoice\Invoice',
-            'description'       => 'Invoice the line is related to.'
         ],
 
         'product_id' => [
@@ -67,7 +45,7 @@ list($params, $providers) = eQual::announce([
         'receivables_queue_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'sale\receivable\ReceivablesQueue',
-            'description'       => 'The Queue the receivable is attached to.'
+            'description'       => 'The Queue the receivable is attached to.',
         ]
 
     ],
@@ -84,28 +62,12 @@ list('context' => $context) = $providers;
 
 $domain = [];
 
-if(isset($params['price_total_min']) && $params['price_total_min'] > 0) {
-    $domain[] = ['price', '>=', $params['price_total_min']];
-}
-
-if(isset($params['price_total_max']) && $params['price_total_max'] > 0) {
-    $domain[] = ['price', '<=', $params['price_total_max']];
-}
-
 if(isset($params['date_from']) && $params['date_from'] > 0) {
     $domain[] = ['date', '>=', $params['date_from']];
 }
 
 if(isset($params['date_to']) && $params['date_to'] > 0) {
     $domain[] = ['date', '<=', $params['date_to']];
-}
-
-if(isset($params['status']) && strlen($params['status']) > 0 && $params['status']!= 'all') {
-    $domain[] = ['status', '=', $params['status']];
-}
-
-if(isset($params['invoice_id']) && $params['invoice_id'] > 0) {
-    $domain[] = ['invoice_id', '=', $params['invoice_id']];
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {

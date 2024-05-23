@@ -12,9 +12,8 @@
             "label": "À partir de",
             "description": "Événement de départ du délai avant échéance.",
             "selection": {
-                "booking": "Prise de réservation",
-                "checkin": "Arrivée (checkin)",
-                "checkout": "Départ (checkout)"
+                "order": "Commande",
+                "delivery": "Livraison"
             },
             "help": ""
         },
@@ -28,7 +27,7 @@
             "description": "Nombre de jours avant échéance.",
             "help": ""
         },
-        "type": {
+        "payment_deadline_type": {
             "label": "Type d'échéance",
             "description": "Les délais sont échelonnés sauf le dernier (facture définitive).",
             "selection": {
@@ -45,6 +44,11 @@
         "amount_share": {
             "label": "Part du paiement",
             "description": "Part du paiement sur le montant total dû.",
+            "help": ""
+        },
+        "payment_plan_id": {
+            "label": "Plan de paiement",
+            "description": "Le plan de paiement auquel s'applique la date limite.",
             "help": ""
         }
     },

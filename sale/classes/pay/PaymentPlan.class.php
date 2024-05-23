@@ -22,8 +22,7 @@ class PaymentPlan extends Model {
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'The name of the plan.',
-                'required'          => true
+                'description'       => 'The name of the plan.'
             ],
 
             'rate_class_id' => [

@@ -9,6 +9,31 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "label": "General info",
                         "id": "section.product_model",
                         "rows": [
@@ -17,19 +42,6 @@
                                     {
                                         "width": "50%",
                                         "items": [
-                                            {
-                                                "type": "field",
-                                                "value": "name",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "heading": true
-                                                }
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "type",
-                                                "width": "50%"
-                                            },
                                             {
                                                 "type": "field",
                                                 "label": "Family",
@@ -50,27 +62,27 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "can_buy",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "can_sell",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "is_pack",
-                                                "width": "30%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "has_own_price",
+                                                "value": "stat_section_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "stat_section_id",
+                                                "value": "can_buy",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "can_sell",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_pack",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_own_price",
                                                 "width": "50%"
                                             }
                                         ]
@@ -78,6 +90,11 @@
                                     {
                                         "width": "50%",
                                         "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "type",
+                                                "width": "50%"
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "consumable_type",

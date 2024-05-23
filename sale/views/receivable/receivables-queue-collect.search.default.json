@@ -1,0 +1,41 @@
+{
+    "name": "Receivables Queues search",
+    "description": "Advanced collector for receivables queues.",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "20%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "20%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "has_pending_receivables",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -6,11 +6,8 @@
 */
 
 use core\setting\Setting;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\QrCode;
 use equal\data\DataFormatter;
 use sale\accounting\invoice\Invoice;
-use SepaQr\Data;
 use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
@@ -26,11 +23,12 @@ list($params, $providers) = eQual::announce([
             'required'    => true
         ],
 
-        'mode' =>  [
+        'mode' => [
             'description' => 'Mode in which document has to be rendered: grouped (default) or detailed.',
+            'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat rate.',
             'type'        => 'string',
-            'selection'   => ['grouped', 'detailed'],
-            'default'     => 'grouped'
+            'selection'   => ['simple', 'grouped', 'detailed'],
+            'default'     => 'simple'
         ],
 
         'view_id' => [
@@ -69,16 +67,18 @@ $generateInvoiceLines = function($invoice, $mode) {
             continue;
         }
 
-        $lines[] = [
-            'name'       => $group['name'] ?? '',
-            'price'      => null,
-            'total'      => null,
-            'unit_price' => null,
-            'vat_rate'   => null,
-            'qty'        => null,
-            'free_qty'   => null,
-            'is_group'   => true
-        ];
+        if($mode !== 'simple') {
+            $lines[] = [
+                'name'       => $group['name'] ?? '',
+                'price'      => null,
+                'total'      => null,
+                'unit_price' => null,
+                'vat_rate'   => null,
+                'qty'        => null,
+                'free_qty'   => null,
+                'is_group'   => true
+            ];
+        }
 
         $group_lines = [];
         foreach($group['invoice_lines_ids'] as $line) {
@@ -103,6 +103,7 @@ $generateInvoiceLines = function($invoice, $mode) {
         }
 
         switch($mode) {
+            case 'simple':
             case 'detailed':
                 $lines = array_merge($lines, $group_lines);
                 break;
@@ -273,32 +274,19 @@ $getInvoice = function($id, $lang) {
 };
 
 $createInvoicePaymentQrCodeUri = function($invoice) {
-    $payment_qr_code_uri = '';
-
     if(!isset($invoice['payment_reference'])) {
         throw new Exception('no payment ref');
     }
 
     $payment_reference = DataFormatter::format($invoice['payment_reference'], 'scor');
-    try {
-        $payment_data = Data::create()
-            ->setServiceTag('BCD')
-            ->setIdentification('SCT')
-            ->setName($invoice['organisation_id']['legal_name'])
-            ->setIban(str_replace(' ', '', $invoice['organisation_id']['bank_account_iban']))
-            ->setBic(str_replace(' ', '', $invoice['organisation_id']['bank_account_bic']))
-            ->setRemittanceReference($payment_reference)
-            ->setAmount($invoice['price']);
 
-        $qr_code = new QrCode($payment_data);
-        $qr_code->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM()); // required by EPC standard
-
-        $payment_qr_code_uri = $qr_code->writeDataUri();
-    } catch(Exception $e) {
-        trigger_error("Unable to generate payment QR code: {$e->getMessage()}", EQ_REPORT_WARNING);
-    }
-
-    return $payment_qr_code_uri;
+    return eQual::run('get', 'finance_payment_generate-qr-code', [
+        'recipient_name'    => $invoice['organisation_id']['legal_name'],
+        'recipient_iban'    => $invoice['organisation_id']['bank_account_iban'],
+        'recipient_bic'     => $invoice['organisation_id']['bank_account_bic'],
+        'payment_reference' => $payment_reference,
+        'payment_amount'    => $invoice['price']
+    ]);
 };
 
 $formatInvoice = function(&$invoice) {
