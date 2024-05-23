@@ -4,6 +4,8 @@
     "controller": "sale_receivable_receivable-collect",
     "access": {
     },
+    "order": "created",
+    "sort": "desc",
     "operations": {
         "total": {
             "total": {
@@ -91,6 +93,7 @@
                 "readonly": true
             },
             {
+                "id": "item.invoice_id",
                 "type": "field",
                 "value": "invoice_id",
                 "label": "Invoice",

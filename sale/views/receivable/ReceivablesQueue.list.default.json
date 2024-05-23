@@ -1,6 +1,7 @@
 {
     "name": "Receivable Queues",
     "description": "This view is intended for displaying the Receivable Queues.",
+    "controller": "sale_receivable_receivables-queue-collect",
     "access": {
     },
     "header": {

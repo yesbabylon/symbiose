@@ -1,0 +1,77 @@
+{
+    "name": "Receivables search",
+    "description": "Advanced collector for receivables",
+    "layout": {
+        "groups": [
+            {
+                "sections": [
+                    {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "15%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "date_from",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "date_to",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": []
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "product_id",
+                                                "label": "Product (Catalog)",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "customer_id",
+                                                "label": "Customer",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "15%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "receivables_queue_id",
+                                                "label": "Receivable queue",
+                                                "width": "100%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
