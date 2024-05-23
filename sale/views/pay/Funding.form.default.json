@@ -19,7 +19,23 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "label": "Invoice",
+                                                "value": "invoice_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "payment_reference",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "funding_type",
                                                 "width": "50%"
                                             },
                                             {
@@ -42,12 +58,6 @@
                                                 "type": "field",
                                                 "label": "Payment Deadline",
                                                 "value": "payment_deadline_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Invoice",
-                                                "value": "invoice_id",
                                                 "width": "50%"
                                             }
                                         ]
