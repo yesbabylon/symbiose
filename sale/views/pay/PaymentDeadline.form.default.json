@@ -27,7 +27,7 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "value": "payment_deadline_type",
                                                 "width": "50%"
                                             },
                                             {
