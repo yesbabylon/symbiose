@@ -186,10 +186,15 @@ class InvoiceLine extends FinanceInvoiceLine {
         return $result;
     }
 
-    public static function onupdatePriceId($om, $ids, $values, $lang) {
-        $om->update(get_called_class(), $ids, ['vat_rate' => null, 'unit_price' => null, 'total' => null, 'price' => null]);
-        // reset parent invoice computed values
-        $om->callonce(self::getType(), '_resetInvoice', $ids, [], $lang);
+    public static function onupdatePriceId($self) {
+        $self->update([
+            'vat_rate'   => null,
+            'unit_price' => null,
+            'total'      => null,
+            'price'      => null
+        ]);
+
+        $self->do('reset_invoice_prices');
     }
 
     public static function canupdate($self, $values): array {
