@@ -27,16 +27,13 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\receivable\ReceivablesQueue',
                 'description'       => 'The parent Queue the receivable is attached to.',
                 'required'          => true,
-                'dependents'        => ['customer_id']
+                'domain'            => ['customer_id', '=', 'object.customer_id']
             ],
 
             'customer_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'many2one',
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The Customer to who refers the item (from ReceivableQueue).',
-                'store'             => true,
-                'function'          => 'calcCustomerId',
+                'description'       => 'The Customer to who refers the item.',
                 'readonly'          => true
             ],
 
@@ -74,6 +71,13 @@ class Receivable extends Model {
                     'cancelled'
                 ],
                 'default'           => 'pending'
+            ],
+
+            'sale_entry_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\SaleEntry',
+                'description'       => 'The sale entry at the origin of the receivable.',
+                'readonly'          => true
             ],
 
             'product_id' => [
@@ -191,18 +195,6 @@ class Receivable extends Model {
         return $result;
     }
 
-    public static function calcCustomerId($self) {
-        $result = [];
-        $self->read(['receivables_queue_id' => ['customer_id']]);
-        foreach($self as $id => $receivable) {
-            if(isset($receivable['receivables_queue_id']['customer_id'])) {
-                $result[$id] = $receivable['receivables_queue_id']['customer_id'];
-            }
-        }
-
-        return $result;
-    }
-
     public static function calcPriceId($self) {
         $result = [];
         $self->read(['date', 'product_id']);
@@ -268,5 +260,22 @@ class Receivable extends Model {
         }
 
         return $result;
+    }
+
+    public static function canupdate($self, $values) {
+        $self->read(['status']);
+        foreach($self as $receivable) {
+            if(array_key_exists('receivables_queue_id', $values)) {
+                if($receivable['status'] !== 'pending') {
+                    return ['receivables_queue_id' => ['not_allowed' => 'Queue can be modified only when status pending.']];
+                }
+
+                if(is_null($values['receivables_queue_id'])) {
+                    return ['receivables_queue_id' => ['not_allowed' => 'A receivable must be linked to a queue.']];
+                }
+            }
+        }
+
+        return parent::canupdate($self, $values);
     }
 }
