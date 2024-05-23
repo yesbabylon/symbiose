@@ -67,8 +67,7 @@ list($params, $providers) = eQual::announce([
         'receivables_queue_id' => [
             'type'              => 'many2one',
             'foreign_object'    => 'sale\receivable\ReceivablesQueue',
-            'description'       => 'The Queue the receivable is attached to.',
-
+            'description'       => 'The Queue the receivable is attached to.'
         ]
     ],
     'response'      => [
@@ -76,52 +75,54 @@ list($params, $providers) = eQual::announce([
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
-    'providers'     => [ 'context', 'orm' ]
+    'providers'     => [ 'context' ]
 ]);
-/**
- * @var \equal\php\Context $context
- * @var \equal\orm\ObjectManager $orm
- */
-list($context, $orm) = [ $providers['context'], $providers['orm'] ];
 
-//   Add conditions to the domain to consider advanced parameters
-$domain = $params['domain'];
+/** @var \equal\php\Context $context */
+list('context' => $context) = $providers;
+
+$domain = [];
 
 if(isset($params['price_total_min']) && $params['price_total_min'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['price', '>=', $params['price_total_min']]);
+    $domain[] = ['price', '>=', $params['price_total_min']];
 }
 
 if(isset($params['price_total_max']) && $params['price_total_max'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['price', '<=', $params['price_total_max']]);
+    $domain[] = ['price', '<=', $params['price_total_max']];
 }
 
 if(isset($params['date_from']) && $params['date_from'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['date', '>=', $params['date_from']]);
+    $domain[] = ['date', '>=', $params['date_from']];
 }
 
 if(isset($params['date_to']) && $params['date_to'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['date', '<=', $params['date_to']]);
+    $domain[] = ['date', '<=', $params['date_to']];
 }
 
 if(isset($params['status']) && strlen($params['status']) > 0 && $params['status']!= 'all') {
-    $domain = Domain::conditionAdd($domain, ['status', '=', $params['status']]);
+    $domain[] = ['status', '=', $params['status']];
 }
 
 if(isset($params['invoice_id']) && $params['invoice_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['invoice_id', '=', $params['invoice_id']]);
+    $domain[] = ['invoice_id', '=', $params['invoice_id']];
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['product_id', '=', $params['product_id']]);
+    $domain[] = ['product_id', '=', $params['product_id']];
 }
 
 if(isset($params['customer_id']) && $params['customer_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['customer_id', '=', $params['customer_id']]);
+    $domain[] = ['customer_id', '=', $params['customer_id']];
 }
 
+if(isset($params['receivables_queue_id']) && $params['receivables_queue_id'] > 0) {
+    $domain[] = ['receivables_queue_id', '=', $params['receivables_queue_id']];
+}
 
+$params['domain'] = (new Domain($params['domain']))
+    ->merge(new Domain($domain))
+    ->toArray();
 
-$params['domain'] = $domain;
 $result = eQual::run('get', 'model_collect', $params, true);
 
 $context->httpResponse()
