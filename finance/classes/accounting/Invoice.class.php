@@ -163,6 +163,27 @@ class Invoice extends Model {
         ];
     }
 
+    public static function getPolicies(): array {
+        return [
+            'can-be-invoiced' => [
+                'description' => 'Verifies that the proforma can be invoiced.',
+                'function'    => 'policyCanBeInvoiced'
+            ]
+        ];
+    }
+
+    public static function policyCanBeInvoiced($self): array {
+        $result = [];
+        $self->read(['invoice_lines_ids']);
+        foreach($self as $id => $invoice) {
+            if(count($invoice['invoice_lines_ids']) === 0) {
+                $result[$id] = false;
+            }
+        }
+
+        return $result;
+    }
+
     public static function getWorkflow() {
         return [
             'proforma' => [
@@ -171,6 +192,9 @@ class Invoice extends Model {
                 'transitions' => [
                     'invoice' => [
                         'description' => 'Invoice the drafted proforma.',
+                        'policies' => [
+                            'can-be-invoiced',
+                        ],
                         'status' => 'invoice',
                     ],
                     'cancel' => [

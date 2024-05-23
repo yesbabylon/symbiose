@@ -245,6 +245,9 @@ class Invoice extends FinanceInvoice {
                     'invoice' => [
                         'description' => 'Update the invoice status based on the `invoice` field.',
                         'help' => 'The `invoice` field is set by a dedicated controller that manages invoice approval requests.',
+                        'policies' => [
+                            'can-be-invoiced',
+                        ],
                         'onbefore' => 'onbeforeInvoice',
                         'onafter' => 'onafterInvoice',
                         'status' => 'invoice',

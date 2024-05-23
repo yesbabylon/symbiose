@@ -31,7 +31,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "invoice_id",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "readonly": true
                                             }
                                         ]
                                     }
