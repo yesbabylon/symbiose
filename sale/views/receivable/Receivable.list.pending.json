@@ -48,6 +48,9 @@
         "extends": {
             "entity": "sale\\receivable\\Receivable",
             "view": "list.default"
-        }
+        },
+        "remove": [
+            "item.invoice_id"
+        ]
     }
 }
