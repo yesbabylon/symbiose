@@ -27,16 +27,13 @@ class Receivable extends Model {
                 'foreign_object'    => 'sale\receivable\ReceivablesQueue',
                 'description'       => 'The parent Queue the receivable is attached to.',
                 'required'          => true,
-                'dependents'        => ['customer_id']
+                'domain'            => ['customer_id', '=', 'object.customer_id']
             ],
 
             'customer_id' => [
-                'type'              => 'computed',
-                'result_type'       => 'many2one',
+                'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The Customer to who refers the item (from ReceivableQueue).',
-                'store'             => true,
-                'function'          => 'calcCustomerId',
+                'description'       => 'The Customer to who refers the item.',
                 'readonly'          => true
             ],
 
@@ -192,18 +189,6 @@ class Receivable extends Model {
         foreach($self as $id => $receivable) {
             if(isset($receivable['product_id']['name'])) {
                 $result[$id] = $receivable['product_id']['name'];
-            }
-        }
-
-        return $result;
-    }
-
-    public static function calcCustomerId($self) {
-        $result = [];
-        $self->read(['receivables_queue_id' => ['customer_id']]);
-        foreach($self as $id => $receivable) {
-            if(isset($receivable['receivables_queue_id']['customer_id'])) {
-                $result[$id] = $receivable['receivables_queue_id']['customer_id'];
             }
         }
 
