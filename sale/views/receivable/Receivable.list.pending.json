@@ -1,6 +1,7 @@
 {
     "name": "Pending Receivables",
     "description": "This view is intended for displaying the Pending Receivables.",
+    "controller": "sale_receivable_receivable-pending-collect",
     "access": {
     },
     "header": {
