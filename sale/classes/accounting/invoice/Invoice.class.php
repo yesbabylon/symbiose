@@ -290,17 +290,16 @@ class Invoice extends FinanceInvoice {
                     'invoice_number' => null,
                     'emission_date'  => time()
                 ]);
-
-            try {
-                $self->do('create_accounting_entries');
-            } catch(\Exception $e) {
-                trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
-            }
-            try {
-                $self->do('create_funding');
-            } catch(\Exception $e) {
-                trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
-            }
+        }
+        try {
+            $self->do('create_accounting_entries');
+        } catch(\Exception $e) {
+            trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
+        }
+        try {
+            $self->do('create_funding');
+        } catch(\Exception $e) {
+            trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
         }
     }
 
