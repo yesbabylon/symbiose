@@ -56,6 +56,17 @@ class InvoiceLine extends FinanceInvoiceLine {
                 'store'             => true
             ],
 
+            'vat_rate' => [
+                'type'              => 'computed',
+                'result_type'       => 'float',
+                'usage'             => 'amount/rate',
+                'description'       => 'VAT rate to be applied.',
+                'function'          => 'calcVatRate',
+                'store'             => true,
+                'default'           => 0.0,
+                'onupdate'          => 'onupdateVatRate'
+            ],
+
             /**
              * Specific Sale InvoiceLine columns
              */
@@ -115,6 +126,10 @@ class InvoiceLine extends FinanceInvoiceLine {
             if(isset($result['price_id']['price'])) {
                 $result['unit_price'] = $result['price_id']['price'];
             }
+
+            if(isset($result['price_id']['vat_rate'])) {
+                $result['vat_rate'] = $result['price_id']['vat_rate'];
+            }
         }
 
         return $result;
@@ -135,6 +150,19 @@ class InvoiceLine extends FinanceInvoiceLine {
         $self->read(['price_id' => ['price']]);
         foreach($self as $id => $line) {
             $result[$id] = $line['price_id']['price'];
+        }
+
+        return $result;
+    }
+
+    public static function calcVatRate($self): array {
+        $result = [];
+        $self->read(['price_id' => ['vat_rate']]);
+        foreach($self as $id => $line) {
+            $result[$id] = 0.0;
+            if(isset($line['price_id']['vat_rate'])) {
+                $result[$id] = floatval($line['price_id']['vat_rate']);
+            }
         }
 
         return $result;

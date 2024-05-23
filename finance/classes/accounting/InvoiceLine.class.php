@@ -56,12 +56,9 @@ class InvoiceLine extends Model {
             ],
 
             'vat_rate' => [
-                'type'              => 'computed',
-                'result_type'       => 'float',
+                'type'              => 'float',
                 'usage'             => 'amount/rate',
                 'description'       => 'VAT rate to be applied.',
-                'function'          => 'calcVatRate',
-                'store'             => true,
                 'default'           => 0.0,
                 'onupdate'          => 'onupdateVatRate'
             ],
@@ -114,18 +111,6 @@ class InvoiceLine extends Model {
             ]
 
         ];
-    }
-
-    public static function calcVatRate($self) {
-        $result = [];
-        $self->read(['price_id' => ['accounting_rule_id' => ['vat_rule_id' => ['rate']]]]);
-        foreach($self as $id => $line) {
-            $result[$id] = 0.0;
-            if(isset($line['price_id']['accounting_rule_id']['vat_rule_id']['rate'])) {
-                $result[$id] = floatval($line['price_id']['accounting_rule_id']['vat_rule_id']['rate']);
-            }
-        }
-        return $result;
     }
 
     public static function calcTotal($self) {
