@@ -261,4 +261,21 @@ class Receivable extends Model {
 
         return $result;
     }
+
+    public static function canupdate($self, $values) {
+        $self->read(['status']);
+        foreach($self as $receivable) {
+            if(array_key_exists('receivables_queue_id', $values)) {
+                if($receivable['status'] !== 'pending') {
+                    return ['receivables_queue_id' => ['not_allowed' => 'Queue can be modified only when status pending.']];
+                }
+
+                if(is_null($values['receivables_queue_id'])) {
+                    return ['receivables_queue_id' => ['not_allowed' => 'A receivable must be linked to a queue.']];
+                }
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
 }
