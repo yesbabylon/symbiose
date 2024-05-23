@@ -326,6 +326,24 @@
                 ]
             },
             {
+                "id": "fundings",
+                "type": "parent",
+                "label": "Fundings",
+                "icon": "person",
+                "children": [
+                    {
+                        "id": "fundings.all",
+                        "type": "entry",
+                        "label": "All",
+                        "icon": "list",
+                        "context": {
+                            "entity": "sale\\pay\\Funding",
+                            "view": "list.default"
+                        }
+                    }
+                ]
+            },
+            {
                 "id": "catalog",
                 "type": "parent",
                 "label": "Catalog",
@@ -513,9 +531,35 @@
                         "description": "Settings payments parent menu.",
                         "children": [
                             {
+                                "id": "settings.payment.deadline",
+                                "type": "entry",
+                                "label": "Deadline",
+                                "icon": "alarm",
+                                "description": "Display all payments deadlines.",
+                                "context": {
+                                    "entity": "sale\\pay\\PaymentDeadline",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
+                                "id": "settings.payment.plan",
+                                "type": "entry",
+                                "label": "Plans",
+                                "icon": "book",
+                                "description": "Display all payments palns.",
+                                "context": {
+                                    "entity": "sale\\pay\\PaymentPlan",
+                                    "view": "list.default",
+                                    "order": "id",
+                                    "sort": "asc"
+                                }
+                            },
+                            {
                                 "id": "settings.payment.terms",
                                 "type": "entry",
-                                "label": "Payments terms",
+                                "label": "Terms",
                                 "icon": "analytics",
                                 "description": "Display all payments terms.",
                                 "context": {
