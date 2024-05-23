@@ -187,42 +187,31 @@ class InvoiceLine extends Model {
             ]);
     }
 
-    public function canupdate($orm, $ids = [], $values = [], $lang = 'en'): array {
-        $res = $orm->read(self::getType(), $ids, ['invoice_id']);
+    public function canupdate($self, $values): array {
+        $self->read(['invoice_id' => ['status']]);
+        foreach($self as $invoice_line) {
+            if(
+                isset($invoice_line['invoice_id']['id'], $values['invoice_id'])
+                && $invoice_line['invoice_id']['id'] !== $values['invoice_id']
+            ) {
+                return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
+            }
 
-        if($res > 0) {
-            foreach($res as $invoice_line) {
-                if(
-                    isset($invoice_line['invoice_id'], $values['invoice_id'])
-                    && $invoice_line['invoice_id'] !== $values['invoice_id']
-                ) {
-                    return ['invoice_id' => ['non_editable' => 'Line cannot be linked to another invoice after creation.']];
-                }
+            if($invoice_line['invoice_id']['status'] !== 'proforma') {
+                return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
+            }
 
-                $invoice_id = $invoice_line['invoice_id'] ?? $values['invoice_id'];
-                if(isset($invoice_id)) {
-                    $invoice = Invoice::id($invoice_id)
-                        ->read(['status'])
-                        ->first();
+            if(isset($values['invoice_line_group_id'])) {
+                $group = InvoiceLineGroup::id($values['invoice_line_group_id'])
+                    ->read(['invoice_id'])
+                    ->first();
 
-                    if($invoice['status'] !== 'proforma') {
-                        return ['status' => ['non_editable' => 'Invoice Line can only be updated while its invoice\'s status is proforma.']];
-                    }
-                }
-
-                $group_id = $invoice_line['invoice_line_group_id'] ?? $values['invoice_line_group_id'];
-                if(isset($group_id)) {
-                    $group = InvoiceLineGroup::id($group_id)
-                        ->read(['invoice_id'])
-                        ->first();
-
-                    if($group['invoice_id'] !== $invoice_line['invoice_id']) {
-                        return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
-                    }
+                if($group['invoice_id'] !== $invoice_line['invoice_id']['id']) {
+                    return ['invoice_line_group_id' => ['invalid_param' => 'Group must be linked to same invoice.']];
                 }
             }
         }
 
-        return parent::canupdate($orm, $ids, $values, $lang);
+        return parent::canupdate($self, $values);
     }
 }
