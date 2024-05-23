@@ -65,6 +65,16 @@ class Project extends Model {
         ];
     }
 
+    public static function onchange($event, $values) {
+        $result = [];
+        if(key_exists('customer_id', $event)) {
+            if(is_null($event['customer_id'])) {
+                $result['receivable_queue_id'] = null;
+            }
+        }
+        return $result;
+    }
+
     public static function canupdate($self, $values) {
         $self->read(['customer_id', 'receivable_queue_id']);
         foreach($self as $project) {
