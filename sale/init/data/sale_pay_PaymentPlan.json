@@ -1,0 +1,24 @@
+[
+    {
+        "name": "sale\\pay\\PaymentPlan",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Default payment plan",
+                "rate_class_id": 1
+            }
+        ]
+    },
+    {
+        "name": "sale\\pay\\PaymentPlan",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Plan de paiement par défaut",
+                "rate_class_id": 1
+            }
+        ]
+    }
+]
