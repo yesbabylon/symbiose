@@ -159,7 +159,7 @@ class Funding extends Model {
     }
 
     /**
-     * Update the description accordint to the deadline, when set.
+     * Update the description according to the deadline, when set.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $oids       List of objects identifiers.
@@ -177,7 +177,7 @@ class Funding extends Model {
 
     /**
      * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overriden to define a more precise set of tests.
+     * This method can be overridden to define a more precise set of tests.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $oids       List of objects identifiers.

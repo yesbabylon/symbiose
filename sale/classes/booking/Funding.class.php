@@ -136,7 +136,7 @@ class Funding extends \sale\pay\Funding {
     /**
      * Check wether an object can be created.
      * These tests come in addition to the unique constraints returned by method `getUnique()`.
-     * Checks wheter the sum of the fundings of a booking remains lower than the price of the booking itself.
+     * Checks whether the sum of the fundings of a booking remains lower than the price of the booking itself.
      *
      * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
      * @param  array                        $values     Associative array holding the values to be assigned to the new instance (not all fields might be set).
