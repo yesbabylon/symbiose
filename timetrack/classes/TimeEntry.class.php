@@ -261,8 +261,8 @@ class TimeEntry extends SaleEntry {
         }
 
         if(isset($event['ticket_id'])) {
-            $entry = self::id($values['id'])->read(['project_id' => ['instance_id' => ['url']]])->first();
-            $result['ticket_link'] = self::generateTicketLink($entry['project_id']['instance_id']['url'], $event['ticket_id']);
+            $project = Project::id($values['project_id'])->read(['instance_id' => 'url'])->first();
+            $result['ticket_link'] = self::generateTicketLink($project['instance_id']['url'], $event['ticket_id']);
         }
 
         if(isset($event['project_id'])) {
