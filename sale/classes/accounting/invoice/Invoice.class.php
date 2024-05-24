@@ -159,9 +159,9 @@ class Invoice extends FinanceInvoice {
 
             $organisation_id = $invoice['organisation_id'];
 
-            $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%02d{org}-%05d{sequence}');
+            $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}');
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
-            $sequence = Setting::get_value('sale', 'invoice', 'sequence.'.$organisation_id,1);
+            $sequence = Setting::get_value('sale', 'invoice', 'sequence.'.$organisation_id, 1);
 
             if($sequence) {
                 Setting::set_value('sale', 'invoice', 'sequence.'.$organisation_id, $sequence + 1);
