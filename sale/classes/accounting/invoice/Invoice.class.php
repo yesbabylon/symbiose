@@ -210,23 +210,23 @@ class Invoice extends FinanceInvoice {
 
     public static function calcDueDate($self): array {
         $result = [];
-        $self->read(['created', 'payment_terms_id' => ['delay_from', 'delay_count']]);
+        $self->read(['emission_date', 'payment_terms_id' => ['delay_from', 'delay_count']]);
         foreach($self as $id => $invoice) {
-            if(!isset($invoice['payment_terms_id']['delay_from'], $invoice['payment_terms_id']['delay_count'])) {
+            if(!isset($invoice['emission_date'], $invoice['payment_terms_id']['delay_from'], $invoice['payment_terms_id']['delay_count'])) {
                 continue;
             }
 
             $from = $invoice['payment_terms_id']['delay_from'];
             $delay = $invoice['payment_terms_id']['delay_count'];
-            $created = $invoice['created'];
+            $emission_date = $invoice['emission_date'];
 
             switch($from) {
                 case 'created':
-                    $due_date = $created + ($delay*24*3600);
+                    $due_date = $emission_date + ($delay * 24 * 3600);
                     break;
                 case 'next_month':
                 default:
-                    $due_date = strtotime(date('Y-m-t', $created)) + ($delay * 24 * 3600);
+                    $due_date = strtotime(date('Y-m-t', $emission_date)) + ($delay * 24 * 3600);
                     break;
             }
 
@@ -289,16 +289,15 @@ class Invoice extends FinanceInvoice {
         foreach($self as $id => $invoice) {
             // Data modified before status changed to "invoice" because fields can only be updated while invoice has status "proforma"
             self::id($id)
-                ->update([
-                    'invoice_number' => null,
-                    'emission_date'  => time()
-                ]);
+                ->update(['emission_date' => time()]);
         }
+
         try {
             $self->do('create_accounting_entries');
         } catch(\Exception $e) {
             trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
         }
+
         try {
             $self->do('create_funding');
         } catch(\Exception $e) {
@@ -308,7 +307,7 @@ class Invoice extends FinanceInvoice {
 
     public static function onafterInvoice($self) {
         // Force computing the invoice number that was set to null in onbeforeInvoice
-        $self->read(['invoice_number', 'funding_id']);
+        $self->read(['invoice_number', 'funding_id', 'due_date']);
     }
 
     public static function onafterCancelProforma($self) {

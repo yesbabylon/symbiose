@@ -42,11 +42,13 @@
                                                 "width": "50%"
                                             },
                                             {
+                                                "id": "item.invoice_type",
                                                 "type": "field",
                                                 "value": "invoice_type",
                                                 "width": "33%"
                                             },
                                             {
+                                                "id": "item.due_date",
                                                 "type": "field",
                                                 "value": "due_date",
                                                 "width": "33%",
