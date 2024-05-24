@@ -107,7 +107,8 @@
         },
         "remove": [
             "item.invoice_purpose",
-            "section.accounting_entries"
+            "section.accounting_entries",
+            "item.due_date"
         ],
         "update": {
             "item.invoice_number": {
@@ -117,6 +118,22 @@
                         "label": "Customer",
                         "value": "customer_id",
                         "width": "50%"
+                    }
+                ]
+            },
+            "item.invoice_type": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "due_date",
+                        "width": "33%",
+                        "visible": ["status", "=", "invoice"]
+                    },
+                    {
+                        "type": "field",
+                        "value": "payment_terms_id",
+                        "width": "33%",
+                        "visible": ["status", "<>", "invoice"]
                     }
                 ]
             },
