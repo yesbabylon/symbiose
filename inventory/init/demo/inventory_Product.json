@@ -7,13 +7,19 @@
                 "id": 1,
                 "state": "instance",
                 "name": "yesbabylon.com",
-                "is_internal": true
+                "is_internal": true,
+                "servers_ids": [
+                    "1"
+                ]
             },
             {
                 "id": 2,
                 "state": "instance",
                 "name": "Inventory",
-                "is_internal": true
+                "is_internal": true,
+                "servers_ids": [
+                    "2"
+                ]
             },
             {
                 "id": 3,

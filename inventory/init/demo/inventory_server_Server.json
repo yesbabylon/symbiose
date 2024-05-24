@@ -5,16 +5,20 @@
         "data": [
             {
                 "id": 1,
+                "state": "instance",
                 "name": "vps593447.ovh.net",
                 "type": "front",
-                "product_id": 1
+                "products_ids": [
+                    "1"
+                ]
             },
             {
                 "id": 2,
-                "state": "instance",
                 "name": "vpn123.123",
                 "type": "storage",
-                "product_id": 4
+                "products_ids": [
+                    "2"
+                ]
             }
         ]
     }
