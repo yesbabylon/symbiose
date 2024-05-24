@@ -47,210 +47,210 @@
             },
             {
                 "id": 1050,
-                "name": "sale.invoice.labels.invoice",
+                "name": "sale.locale.label_invoice",
                 "setting_id": 1050,
                 "user_id": 0,
                 "value": "Invoice"
             },
             {
                 "id": 1051,
-                "name": "sale.invoice.labels.credit-note",
+                "name": "sale.locale.label_credit-note",
                 "setting_id": 1051,
                 "user_id": 0,
                 "value": "Credit note"
             },
             {
                 "id": 1052,
-                "name": "sale.invoice.labels.customer-name",
+                "name": "sale.locale.label_customer-name",
                 "setting_id": 1052,
                 "user_id": 0,
                 "value": "Name"
             },
             {
                 "id": 1053,
-                "name": "sale.invoice.labels.customer-address",
+                "name": "sale.locale.label_customer-address",
                 "setting_id": 1053,
                 "user_id": 0,
                 "value": "Address"
             },
             {
                 "id": 1054,
-                "name": "sale.invoice.labels.registration-number",
+                "name": "sale.locale.label_registration-number",
                 "setting_id": 1054,
                 "user_id": 0,
                 "value": "Registration n°"
             },
             {
                 "id": 1055,
-                "name": "sale.invoice.labels.vat-number",
+                "name": "sale.locale.label_vat-number",
                 "setting_id": 1055,
                 "user_id": 0,
                 "value": "VAT n°"
             },
             {
                 "id": 1056,
-                "name": "sale.invoice.labels.number",
+                "name": "sale.locale.label_number",
                 "setting_id": 1056,
                 "user_id": 0,
                 "value": "N°"
             },
             {
                 "id": 1057,
-                "name": "sale.invoice.labels.date",
+                "name": "sale.locale.label_date",
                 "setting_id": 1057,
                 "user_id": 0,
                 "value": "Date"
             },
             {
                 "id": 1058,
-                "name": "sale.invoice.labels.status",
+                "name": "sale.locale.label_status",
                 "setting_id": 1058,
                 "user_id": 0,
                 "value": "Status"
             },
             {
                 "id": 1059,
-                "name": "sale.invoice.labels.status-paid",
+                "name": "sale.locale.label_status-paid",
                 "setting_id": 1059,
                 "user_id": 0,
                 "value": "Paid"
             },
             {
                 "id": 1060,
-                "name": "sale.invoice.labels.status-to-pay",
+                "name": "sale.locale.label_status-to-pay",
                 "setting_id": 1060,
                 "user_id": 0,
                 "value": "To pay"
             },
             {
                 "id": 1061,
-                "name": "sale.invoice.labels.status-to-refund",
+                "name": "sale.locale.label_status-to-refund",
                 "setting_id": 1061,
                 "user_id": 0,
                 "value": "To refund"
             },
             {
                 "id": 1062,
-                "name": "sale.invoice.labels.product-column",
+                "name": "sale.locale.label_product-column",
                 "setting_id": 1062,
                 "user_id": 0,
                 "value": "Product label"
             },
             {
                 "id": 1063,
-                "name": "sale.invoice.labels.qty-column",
+                "name": "sale.locale.label_qty-column",
                 "setting_id": 1063,
                 "user_id": 0,
                 "value": "Qty"
             },
             {
                 "id": 1064,
-                "name": "sale.invoice.labels.free-column",
+                "name": "sale.locale.label_free-column",
                 "setting_id": 1064,
                 "user_id": 0,
                 "value": "Free"
             },
             {
                 "id": 1065,
-                "name": "sale.invoice.labels.unit-price-column",
+                "name": "sale.locale.label_unit-price-column",
                 "setting_id": 1065,
                 "user_id": 0,
                 "value": "U. price"
             },
             {
                 "id": 1066,
-                "name": "sale.invoice.labels.discount-column",
+                "name": "sale.locale.label_discount-column",
                 "setting_id": 1066,
                 "user_id": 0,
                 "value": "Disc."
             },
             {
                 "id": 1067,
-                "name": "sale.invoice.labels.vat-column",
+                "name": "sale.locale.label_vat-column",
                 "setting_id": 1067,
                 "user_id": 0,
                 "value": "VAT"
             },
             {
                 "id": 1068,
-                "name": "sale.invoice.labels.taxes-column",
+                "name": "sale.locale.label_taxes-column",
                 "setting_id": 1068,
                 "user_id": 0,
                 "value": "Taxes"
             },
             {
                 "id": 1069,
-                "name": "sale.invoice.labels.price-ex-vat-column",
+                "name": "sale.locale.label_price-ex-vat-column",
                 "setting_id": 1069,
                 "user_id": 0,
                 "value": "Price ex. VAT"
             },
             {
                 "id": 1070,
-                "name": "sale.invoice.labels.price-column",
+                "name": "sale.locale.label_price-column",
                 "setting_id": 1070,
                 "user_id": 0,
                 "value": "Price"
             },
             {
                 "id": 1071,
-                "name": "sale.invoice.labels.total-ex-vat",
+                "name": "sale.locale.label_total-ex-vat",
                 "setting_id": 1071,
                 "user_id": 0,
                 "value": "Total ex. VAT"
             },
             {
                 "id": 1072,
-                "name": "sale.invoice.labels.total-inc-vat",
+                "name": "sale.locale.label_total-inc-vat",
                 "setting_id": 1072,
                 "user_id": 0,
                 "value": "Total inc. VAT"
             },
             {
                 "id": 1073,
-                "name": "sale.invoice.labels.footer-registration-number",
+                "name": "sale.locale.label_footer-registration-number",
                 "setting_id": 1073,
                 "user_id": 0,
                 "value": "Registration number"
             },
             {
                 "id": 1074,
-                "name": "sale.invoice.labels.footer-iban",
+                "name": "sale.locale.label_footer-iban",
                 "setting_id": 1074,
                 "user_id": 0,
                 "value": "IBAN"
             },
             {
                 "id": 1075,
-                "name": "sale.invoice.labels.footer-email",
+                "name": "sale.locale.label_footer-email",
                 "setting_id": 1075,
                 "user_id": 0,
                 "value": "Email"
             },
             {
                 "id": 1076,
-                "name": "sale.invoice.labels.footer-web",
+                "name": "sale.locale.label_footer-web",
                 "setting_id": 1076,
                 "user_id": 0,
                 "value": "Web"
             },
             {
                 "id": 1077,
-                "name": "sale.invoice.labels.footer-tel",
+                "name": "sale.locale.label_footer-tel",
                 "setting_id": 1077,
                 "user_id": 0,
                 "value": "Tel"
             },
             {
                 "id": 1078,
-                "name": "sale.invoice.labels.footer-fax",
+                "name": "sale.locale.label_footer-fax",
                 "setting_id": 1078,
                 "user_id": 0,
                 "value": "Fax"
             },
             {
                 "id": 1079,
-                "name": "sale.invoice.labels.pdf-page",
+                "name": "sale.locale.label_pdf-page",
                 "setting_id": 1079,
                 "user_id": 0,
                 "value": "p. {PAGE_NUM} / {PAGE_COUNT}"
