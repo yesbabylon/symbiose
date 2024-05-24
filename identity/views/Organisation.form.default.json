@@ -56,6 +56,11 @@
                                                 "type": "field",
                                                 "value": "type",
                                                 "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "has_parent",
+                                                "visible": false
                                             }
                                         ]
                                     }
