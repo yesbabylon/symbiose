@@ -5,9 +5,9 @@
         "data": [
             {
                 "id": 5,
-                "code": "invoice",
-                "name": "Invoice",
-                "description": "Settings for invoice creation"
+                "code": "currency",
+                "name": "Currencies",
+                "description": "Settings related to currencies"
             }
        ]
     },
@@ -17,8 +17,8 @@
         "data": [
             {
                 "id": 5,
-                "name": "Facturation",
-                "description": "Paramètres pour la création des factures"
+                "name": "Devises",
+                "description": "Paramètres des devises"
             }
        ]
     }
