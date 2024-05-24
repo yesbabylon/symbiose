@@ -7,11 +7,12 @@
                 "id": 1,
                 "type_id": 3,
                 "type": "C",
+                "identity_id": 1,
                 "legal_name": "Your organisation name Inc.",
                 "short_name": "Your organisation",
                 "has_parent": false,
                 "register_number": "0123231324",
-                "bank_account_iban": "BE11 2222 3333 5555",
+                "bank_account_iban": "BE11222233335555",
                 "bank_account_bic": "BBRUBEBB"
             }
         ]

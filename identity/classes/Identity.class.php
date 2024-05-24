@@ -179,9 +179,9 @@ class Identity extends Model {
 
             'users_ids' => [
                 'type'              => 'one2many',
-                'foreign_object'    => 'identity\Organisation',
-                'foreign_field'     => 'organisation_id',
-                'description'       => 'List of users of the organization, if any.' ,
+                'foreign_object'    => 'identity\User',
+                'foreign_field'     => 'owner_identity_id',
+                'description'       => 'List of users of the identity, if any.' ,
                 'visible'           => [ ['type', '<>', 'I'] ]
             ],
 
@@ -411,6 +411,27 @@ class Identity extends Model {
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Employee associated to this identity, if any.',
                 'onupdate'          => 'onupdateEmployeeId'
+            ],
+
+            'image_document_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'documents\Document',
+                'description'    => 'Logo or picture of the identity.',
+                'help'           => 'Company logo for organizations or profile image for natural person.'
+            ],
+
+            'is_organisation' => [
+                'type'           => 'boolean',
+                'default'        => false,
+                'description'    => 'The identity is an organisation.',
+                'onupdate'       => 'onupdateIsOrganisation'
+            ],
+
+            'organisation_id' => [
+                'type'           => 'many2one',
+                'foreign_object' => 'identity\Organisation',
+                'description'    => 'The organisation the identity refers to.',
+                'visible'        => ['is_organisation', '=', true]
             ]
 
         ];
@@ -728,5 +749,28 @@ class Identity extends Model {
                 ]
             ]
         ];
+    }
+
+    public static function onupdateIsOrganisation($self) {
+        $self->read(['is_organisation']);
+        foreach($self as $id => $organisation) {
+            if(!$organisation['is_organisation']) {
+                self::id($id)->update(['organisation_id' => null]);
+            }
+        }
+    }
+
+    /**
+     * Upon update, if an Identity relates to an Organisation, synchronize common fields with related Organisation
+     */
+    public static function onafterupdate($self, $values) {
+        $organisation_fields = Organisation::getColumns();
+        $self->read(['is_organisation', 'organisation_id']);
+        $organisation_values = array_intersect_key($values, $organisation_fields);
+        foreach($self as $id => $identity) {
+            if($identity['is_organisation']) {
+                Organisation::id($identity['organisation_id'])->update($organisation_values);
+            }
+        }
     }
 }

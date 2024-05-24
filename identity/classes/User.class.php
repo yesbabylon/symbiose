@@ -30,10 +30,9 @@ class User extends \core\User {
                 'description'       => 'List of settings that relate to the user.'
             ],
 
-            /* the organization the user is part of (multi-company support) */
-            'organisation_id' => [
+            'owner_identity_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'identity\Organisation',
+                'foreign_object'    => 'identity\Identity',
                 'description'       => "The organization the user relates to (defaults to current).",
                 'default'           => 1
             ]

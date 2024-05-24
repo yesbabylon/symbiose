@@ -6,17 +6,17 @@
             {
                 "id": 1,
                 "code": "I",
-				"description": "Individual person."
+				"description": "Individual - Natural person."
             },
             {
                 "id": 2,
                 "code": "SE",
-				"description": "Self-Employed worker."
+				"description": "Self-Employed / Entrepreneur."
             },
             {
                 "id": 3,
                 "code": "C",
-				"description": "Company (legal person)."
+				"description": "Company - Privately help company (legal person)."
             },
             {
                 "id": 4,
@@ -36,7 +36,7 @@
         "data": [
             {
                 "id": 1,
-				"description": "Particulier (individuel)"
+				"description": "Particulier - personne physique."
             },
             {
                 "id": 2,
@@ -44,11 +44,11 @@
             },
             {
                 "id": 3,
-				"description": "Entreprise privée."
+				"description": "Entreprise privée (personne morale)."
             },
             {
                 "id": 4,
-				"description": "Association (ASBL) / école."
+				"description": "Association (ASBL) / école (personne morale)."
             },
             {
                 "id": 5,

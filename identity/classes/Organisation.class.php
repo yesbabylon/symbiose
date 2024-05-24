@@ -23,11 +23,18 @@ class Organisation extends Identity {
 
     public static function getColumns() {
         return [
+            'identity_id' => [
+                'type'              => 'many2one',
+                'foreign_object'    => 'identity\Identity',
+                'description'       => 'Identity the organisation relates to.',
+                'onupdate'          => 'onupdateIdentityId'
+            ],
+
             'type_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\IdentityType',
-                'onupdate'          => 'onupdateTypeId',
                 'description'       => 'Type of identity.',
+                'domain'            => ['id', '<>', 1],
                 'default'           => 3
             ],
 
@@ -35,15 +42,27 @@ class Organisation extends Identity {
                 'type'              => 'string',
                 'default'           => 'C',
                 'readonly'          => true
-            ],
-
-            'image_document_id' => [
-                'type'           => 'many2one',
-                'foreign_object' => 'documents\Document',
-                'description'    => 'Organisation logo or picture.',
-                'help'           => 'This image is used for organisation profile and within the invoice header.'
             ]
 
         ];
+    }
+
+    public static function onupdateIdentityId($self) {
+        $self->read(['identity_id']);
+        foreach($self as $id => $organisation) {
+            Identity::id($organisation['identity_id'])->update(['is_organisation' => true, 'organisation_id' => $id]);
+        }
+    }
+
+    /**
+     * Upon update, synchronize common fields with related Identity
+     */
+    public static function onafterupdate($self, $values) {
+        $identity_fields = Identity::getColumns();
+        $self->read(['identity_id']);
+        $identity_values = array_intersect_key($values, $identity_fields);
+        foreach($self as $id => $organisation) {
+            Identity::id($organisation['identity_id'])->update($identity_values);
+        }
     }
 }

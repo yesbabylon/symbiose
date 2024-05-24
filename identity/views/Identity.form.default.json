@@ -236,6 +236,16 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "value": "image_document_id",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "value": "",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "value": "signature",
                                                 "width": "50%"
                                             },
