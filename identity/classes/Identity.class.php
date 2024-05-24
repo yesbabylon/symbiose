@@ -377,7 +377,7 @@ class Identity extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'identity\User',
                 'description'       => 'User associated to this identity, if any.',
-                'visible'           => ['type', '=', 'I'],
+                'visible'           => [['type', '=', 'I'], ['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateUserId'
             ],
 
@@ -386,6 +386,7 @@ class Identity extends Model {
                 'foreign_object'    => 'sale\customer\Customer',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Customer associated to this identity, if any.',
+                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateCustomerId'
             ],
 
@@ -394,6 +395,7 @@ class Identity extends Model {
                 'foreign_object'    => 'purchase\supplier\Supplier',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Supplier associated to this identity, if any.',
+                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateSupplierId'
             ],
 
@@ -402,6 +404,7 @@ class Identity extends Model {
                 'foreign_object'    => 'identity\Contact',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Contact associated to this identity, if any.',
+                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateContactId'
             ],
 
@@ -410,6 +413,7 @@ class Identity extends Model {
                 'foreign_object'    => 'hr\employee\Employee',
                 'foreign_field'     => 'partner_identity_id',
                 'description'       => 'Employee associated to this identity, if any.',
+                'visible'           => [['is_organisation', '=', false]],
                 'onupdate'          => 'onupdateEmployeeId'
             ],
 
