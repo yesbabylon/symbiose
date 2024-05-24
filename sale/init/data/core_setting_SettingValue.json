@@ -4,6 +4,48 @@
         "lang": "en",
         "data": [
             {
+                "id": 1011,
+                "setting_id": 1011,
+                "name": "sale.booking.sequence_format",
+                "user_id": 0,
+                "value": "%05d{sequence}"
+            },
+            {
+                "id": 1012,
+                "setting_id": 1012,
+                "name": "sale.booking.sequence",
+                "user_id": 0,
+                "value": 1
+            },
+            {
+                "id": 1013,
+                "setting_id": 1013,
+                "name": "sale.booking.option_validity",
+                "user_id": 0,
+                "value": 10
+            },
+            {
+                "id": 1014,
+                "setting_id": 1014,
+                "name": "sale.invoice.sequence_format",
+                "user_id": 0,
+                "value": "%2d{year}-%05d{sequence}"
+            },
+            {
+                "id": 1015,
+                "setting_id": 1015,
+                "name": "sale.invoice.fiscal_year",
+                "user_id": 0,
+                "value": 2024
+            },
+            {
+                "id": 1016,
+                "setting_id": 1016,
+                "code": "sale.invoice.sequence",
+                "user_id": 0,
+                "value": 1
+            },
+            {
                 "id": 1050,
                 "name": "sale.invoice.labels.invoice",
                 "setting_id": 1050,
