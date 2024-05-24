@@ -57,8 +57,8 @@ class Organisation extends Identity {
     /**
      * Upon update, synchronize common fields with related Identity
      */
-    public static function onafterupdate($self, $values) {
-        $identity_fields = Identity::getSchema();
+    public static function onafterupdate($self, $values, $orm) {
+        $identity_fields = $orm->getModel(Identity::getType())->getSchema();
         $self->read(['identity_id']);
         $identity_values = array_intersect_key($values, $identity_fields);
         foreach($self as $id => $organisation) {
