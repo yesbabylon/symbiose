@@ -260,7 +260,7 @@
                 "name": "labels.balance-of-must-be-paid-before",
                 "setting_id": 1080,
                 "user_id": 0,
-                "value": "Balance of %price% must be paid before %due_date%"
+                "value": "Balance of %price% to be paid before %due_date%"
             },
             {
                 "id": 1081,
