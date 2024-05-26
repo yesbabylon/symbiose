@@ -43,7 +43,7 @@ list($params, $providers) = eQual::announce([
         ]
     ],
     'response'      => [
-        'content-type'  => 'text/html',
+        'content-type'  => 'image/png',
         'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
@@ -63,10 +63,10 @@ $payment_data = Data::create()
     ->setAmount($params['payment_amount']);
 
 $qr_code = new QrCode($payment_data);
-$qr_code->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM()); // required by EPC standard
 
-$qr_code_data_uri = $qr_code->writeDataUri();
+// required by EPC standard
+$qr_code->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM());
 
 $context->httpResponse()
-        ->body($qr_code_data_uri)
+        ->body($qr_code->writeString())
         ->send();

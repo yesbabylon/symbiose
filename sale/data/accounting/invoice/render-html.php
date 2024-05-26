@@ -193,9 +193,9 @@ $getOrganisationLogo = function($invoice) {
             throw new Exception('empty_image', EQ_ERROR_INVALID_PARAM);
         }
         $result = sprintf('data:%s;base64,%s',
-            $invoice['organisation_id']['image_document_id']['type'],
-            base64_encode($invoice['organisation_id']['image_document_id']['data'])
-        );
+                $invoice['organisation_id']['image_document_id']['type'],
+                base64_encode($invoice['organisation_id']['image_document_id']['data'])
+            );
     }
     catch(Exception $e) {
         // ignore
@@ -251,13 +251,17 @@ $createInvoicePaymentQrCodeUri = function($invoice) {
             throw new Exception('missing_payment_reference', EQ_ERROR_INVALID_PARAM);
         }
         $payment_reference = DataFormatter::format($invoice['payment_reference'], 'scor');
-        $result = eQual::run('get', 'finance_payment_generate-qr-code', [
-            'recipient_name'    => $invoice['organisation_id']['legal_name'],
-            'recipient_iban'    => $invoice['organisation_id']['bank_account_iban'],
-            'recipient_bic'     => $invoice['organisation_id']['bank_account_bic'],
-            'payment_reference' => $payment_reference,
-            'payment_amount'    => $invoice['price']
-        ]);
+        $image = eQual::run('get', 'finance_payment_generate-qr-code', [
+                'recipient_name'    => $invoice['organisation_id']['legal_name'],
+                'recipient_iban'    => $invoice['organisation_id']['bank_account_iban'],
+                'recipient_bic'     => $invoice['organisation_id']['bank_account_bic'],
+                'payment_reference' => $payment_reference,
+                'payment_amount'    => $invoice['price']
+            ]);
+        $result = sprintf('data:%s;base64,%s',
+                'image/png',
+                base64_encode($image)
+            );
     }
     catch(Exception $e) {
         // ignore
