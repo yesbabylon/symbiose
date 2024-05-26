@@ -28,16 +28,23 @@
     },
     "apps": [
         {
-            "id": "settings",
             "name": "Settings",
+            "description": "Manage and configure global and App-specific options and parameters.",
             "extends": "settings",
             "icon": "settings",
+            "color": "#FF5F00",
+            "access": {
+                "groups": [
+                    "admins"
+                ]
+            },
             "params": {
                 "menus": {
                     "left": "settings.left",
                     "top": "settings.top"
                 }
-            }
+            },
+            "show_in_apps": true
         }
     ]
 }
