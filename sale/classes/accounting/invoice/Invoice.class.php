@@ -7,17 +7,16 @@
 
 namespace sale\accounting\invoice;
 
-use core\setting\Setting;
+use symbiose\setting\Setting;
 use finance\accounting\AccountChartLine;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingRuleLine;
-use finance\accounting\Invoice as FinanceInvoice;
 use inventory\Product;
 use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
 
-class Invoice extends FinanceInvoice {
+class Invoice extends \finance\accounting\Invoice {
 
     protected static $invoice_editable_fields = ['payment_status', 'customer_ref'];
 
@@ -32,10 +31,6 @@ class Invoice extends FinanceInvoice {
     public static function getColumns() {
 
         return [
-
-            /**
-             * Override Finance Invoice columns
-             */
 
             'organisation_id' => [
                 'type'              => 'many2one',
@@ -151,7 +146,7 @@ class Invoice extends FinanceInvoice {
         foreach($self as $id => $invoice) {
             // no code is generated for proforma
             if($invoice['status'] == 'proforma') {
-                $result[$id] = '[proforma]['.$invoice['customer_id']['name'].']['.date('Y-m-d').']';
+                $result[$id] = '[proforma]['.date('Y-m-d').']';
                 continue;
             }
 
@@ -161,10 +156,9 @@ class Invoice extends FinanceInvoice {
 
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}');
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
-            $sequence = Setting::get_value('sale', 'invoice', 'sequence.'.$organisation_id, 1);
+            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, $organisation_id);
 
             if($sequence) {
-                Setting::set_value('sale', 'invoice', 'sequence.'.$organisation_id, $sequence + 1);
                 $result[$id] = Setting::parse_format($format, [
                     'year'      => $year,
                     'org'       => $organisation_id,
@@ -192,11 +186,11 @@ class Invoice extends FinanceInvoice {
     }
 
     /**
-     * Compute a Structured Reference using belgian SCOR (StructuredCommunicationReference) reference format.
+     * Compute a Structured Reference using belgian SCOR (Structured COmmunication Reference) reference format.
      *
      * Note:
      *  format is aaa-bbbbbbb-XX
-     *  where Xaaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
+     *  where aaa is the prefix, bbbbbbb is the suffix, and XX is the control number, that must verify (aaa * 10000000 + bbbbbbb) % 97
      *  as 10000000 % 97 = 76
      *  we do (aaa * 76 + bbbbbbb) % 97
      */
