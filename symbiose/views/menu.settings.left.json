@@ -1,0 +1,121 @@
+{
+    "name": "Settings menu",
+    "access": {
+        "groups": ["setting.default.user"]
+    },
+    "search": true,
+    "layout": {
+        "items": [
+            {
+
+                "id": "base",
+                "label": "Base",
+                "description": "",
+                "icon": "now_widgets",
+                "type": "parent",
+                "route": "/settings/core",
+                "children": [
+                    {
+                        "id": "security",
+                        "label": "Security",
+                        "description": "",
+                        "icon": "lock_open",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "permissions",
+                                "type": "entry",
+                                "label": "Permissions",
+                                "icon": "how_to_reg",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\Permission",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "users",
+                                "type": "entry",
+                                "label": "Users",
+                                "icon": "person",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\User",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "groups",
+                                "type": "entry",
+                                "label": "Groups",
+                                "icon": "group",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\Group",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "settings",
+                "label": "Configuration",
+                "description": "",
+                "icon": "settings",
+                "type": "parent",
+                "children": [
+                    {
+                        "id": "settings.scheduler",
+                        "label": "Scheduler",
+                        "description": "",
+                        "icon": "schedule",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "settings.cron.tasks",
+                                "type": "entry",
+                                "label": "Scheduled tasks",
+                                "description": "",
+                                "context": {
+                                    "entity": "core\\Task",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "settings.settings",
+                        "label": "Settings",
+                        "description": "",
+                        "icon": "settings",
+                        "type": "parent",
+                        "children": [
+                            {
+                                "id": "settings.settings.settings_values",
+                                "type": "entry",
+                                "label": "Settings values",
+                                "description": "",
+                                "context": {
+                                    "entity": "symbiose\\setting\\SettingValue",
+                                    "view": "list.default"
+                                }
+                            },
+                            {
+                                "id": "settings.settings.settings",
+                                "type": "entry",
+                                "label": "Available Settings",
+                                "description": "",
+                                "context": {
+                                    "entity": "symbiose\\setting\\Setting",
+                                    "view": "list.default"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
