@@ -155,6 +155,30 @@
             border: solid 2px black;
         }
 
+        main .invoice-lines table {
+            border-collapse: collapse;
+        }
+
+        main .invoice-lines table.inner thead tr th {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            font-weight: bold;
+        }
+
+        main .invoice-lines table.inner thead tr th:first-child {
+            border-left: 1px solid black;
+        }
+
+        main .invoice-lines table.inner tbody tr td {
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        main .invoice-lines table.inner tbody tr td:first-child {
+            border-left: 1px solid black;
+        }
+
         footer {
             position: fixed;
             bottom: 0px;
@@ -180,20 +204,6 @@
         footer .organisation-info {
             text-align: center;
         }
-
-        .invoice-lines table {
-            border-collapse: collapse;
-        }
-
-        .invoice-lines table.inner tbody tr td {
-            border-bottom: 1px solid black;
-            border-right: 1px solid black;
-        }
-
-        .invoice-lines table.inner tbody tr td:first-child {
-            border-left: 1px solid black;
-        }
-
     </style>
 </head>
 
@@ -258,7 +268,6 @@
                 <!-- invoice-ref start -->
 
                 <!-- invoice-info start -->
-
                     <div class="invoice-info {{ debug ? 'debug':'' }}">
                         <h2 style="text-transform: capitalize;">
                             {{ labels.invoice }}
@@ -306,31 +315,31 @@
         <!-- invoice-lines start -->
             <div class="invoice-lines">
                 <table class="inner" width="100%" cellpadding="4" cellspacing="0" style="page-break-inside: auto;">
-                    <thead style="border: solid 1px black;">
+                    <thead>
                         <tr>
-                            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-left: 7px;">
+                            <th style="text-align: left; padding-left: 7px;">
                                 {{ labels.columns['product'] }}
                             </th>
-                            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                            <th style="text-align: center; padding-right: 7px;">
                                 {{ labels.columns['qty'] }}
                             </th>
-                            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                            <th style="text-align: center; padding-right: 7px;">
                                 {{ labels.columns['free'] }}
                             </th>
-                            <th style="font-weight: bold; text-align: left; border-right: solid 1px black; padding-right: 7px;">
+                            <th style="text-align: right; padding-right: 7px;">
                                 {{ labels.columns['unit_price'] }}
                             </th>
-                            <th style="font-weight: bold; text-align: right; border-right: solid 1px black; padding-right: 7px;">
+                            <th style="text-align: right; padding-right: 7px;">
                                 {{ labels.columns['discount'] }}
                             </th>
-                            <th style="font-weight: bold; text-align: right; border-right: solid 1px black; padding-right: 7px;">
+                            <th style="text-align: right; padding-right: 7px;">
                                 {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
                                     {{ labels.columns['taxes'] }}
                                 {% else %}
                                     {{ labels.columns['vat'] }}
                                 {% endif %}
                             </th>
-                            <th style="font-weight: bold; text-align: right; padding-right: 7px;">
+                            <th style="text-align: right; padding-right: 7px;">
                                 {% if (invoice.organisation_id.has_vat == false) or (invoice.organisation_id.vat_number is null) or (invoice.organisation_id.vat_number == '') %}
                                     {{ labels.columns['price'] }}
                                 {% else %}
