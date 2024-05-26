@@ -4,6 +4,21 @@
     "access": {
         "groups": ["sale.default.user"]
     },
+    "group_by": [
+        {
+            "field": "invoice_line_group_id",
+            "open": true
+        }
+    ],
+    "operations": {
+        "total": {
+            "price": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
+    "limit": 100,
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\InvoiceLine",
