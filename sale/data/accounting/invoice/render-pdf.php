@@ -19,7 +19,6 @@ list($params, $providers) = eQual::announce([
             'min'         => 1,
             'required'    => true
         ],
-
         'mode' => [
             'description' => 'Mode in which document has to be rendered: simple, grouped or detailed.',
             'help'        => 'Modes: "simple" displays all lines without groups, "detailed" displays all lines by group and "grouped" displays only groups by vat rate.',
@@ -27,17 +26,19 @@ list($params, $providers) = eQual::announce([
             'selection'   => ['simple', 'grouped', 'detailed'],
             'default'     => 'simple'
         ],
-
         'filename' => [
             'description' => 'Name given to the generated pdf file.',
             'type'        => 'string',
             'default'     => 'invoice'
         ],
-
         'lang' =>  [
             'description' => 'Language in which labels and multilang field have to be returned (2 letters ISO 639-1).',
             'type'        => 'string',
             'default'     => constant('DEFAULT_LANG')
+        ],
+        'debug' => [
+            'type'        => 'boolean',
+            'default'     => false
         ]
     ],
     'access'        => [
@@ -62,11 +63,12 @@ if(empty($invoice)) {
     throw new Exception('invoice_unknown', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$html = eQual::run('get', 'sale_accounting_invoice_generate-html', [
+$html = eQual::run('get', 'sale_accounting_invoice_render-html', [
     'id'      => $params['id'],
     'mode'    => $params['mode'],
-    'view_id' => 'template-dompdf',
-    'lang'    => $params['lang']
+    'view_id' => 'print.default',
+    'lang'    => $params['lang'],
+    'debug'   => $params['debug']
 ]);
 
 $options = new DompdfOptions();
