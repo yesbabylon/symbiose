@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
-
 <!--
     Conventions for html templates:
 
@@ -216,13 +215,17 @@
                 {% endif %}
                 <div style="margin-left: 8px;">
                     <h3>{{ organisation.legal_name }}</h3>
-                    <span>{{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}</span><br/>
-                    <span>{{ labels.registration_number }}: <b style="font-weight: 600">{{ organisation.registration_number }}</b></span><br/>
-                    {% if (organisation.has_vat == false) or (organisation.vat_number is null) or (organisation.vat_number == '') %}
-                        <span>N/A</span>
-                    {% else %}
-                        <span>{{ labels.vat_number }}: <b style="font-weight: 600">{{ organisation.vat_number }}</b></span>
-                    {% endif %}
+                    <div>{{ organisation.address_street }} {{ organisation.address_zip }} {{ organisation.address_city }}</div>
+                    <div>{{ labels.registration_number }}: <b>{{ organisation.registration_number }}</b></div>
+                    <div>{{ labels.vat_number }}:
+                        <strong>
+                        {% if (organisation.has_vat == true) %}
+                            {{ organisation.vat_number }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </strong>
+                    </div>
                 </div>
             </div>
         <!-- organisation-info end -->
@@ -232,12 +235,17 @@
                 <table>
                     <tr>
                         <td style="width: 70px; vertical-align: top;">
-                            <b>{{ labels.customer_name }}:</b><br/>
-                            <b>{{ labels.customer_address }}:</b><br/>
+                            <b>{{ labels.customer_name }}:</b>
                         </td>
                         <td>
-                            <div>{{ customer.name }}</div>
-
+                            {{ customer.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <b>{{ labels.customer_address }}:</b>
+                        </td>
+                        <td>
                             {% if customer.address_street|length > 0 %}
                                 <div>{{ customer.address_street }}</div>
                             {% endif %}
@@ -246,12 +254,18 @@
                                 <div>{{ customer.address_dispatch }}</div>
                             {% endif %}
 
-                            {% if address_zip_city_country|length > 0 %}
-                                <div>{{ customer.address_city }} {{ customer.address_zip }} {{  customer.address_country }}</div>
-                            {% endif %}
-
+                            <div>{{ customer.address_city }} {{ customer.address_zip }} {{ customer.address_country }}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <b>{{ labels.vat_number }}:</b>
+                        </td>
+                        <td>
                             {% if customer.has_vat and customer.vat_number|length > 0 %}
-                                <div>{{ labels.vat_number }} {{ customer.vat_number }}</div>
+                                {{ customer.vat_number }}
+                            {% else %}
+                                N/A
                             {% endif %}
                         </td>
                     </tr>
