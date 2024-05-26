@@ -23,6 +23,21 @@
         "talentlead"
     ],
     "requires": {
+        "twig/intl-extra": "^3.9.2",
         "twig/twig": "^3.0"
-    }
+    },
+    "apps": [
+        {
+            "id": "settings",
+            "name": "Settings",
+            "extends": "settings",
+            "icon": "settings",
+            "params": {
+                "menus": {
+                    "left": "settings.left",
+                    "top": "settings.top"
+                }
+            }
+        }
+    ]
 }
