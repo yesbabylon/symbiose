@@ -77,7 +77,7 @@
             "label": "Print invoice",
             "description": "Displays all lines but without group.",
             "icon": "print",
-            "route": "/?get=sale_accounting_invoice_generate-pdf&mode=simple&id=object.id",
+            "route": "/?get=sale_accounting_invoice_render-pdf&mode=simple&id=object.id",
             "target": "_blank",
             "absolute": true
         },
@@ -86,7 +86,7 @@
             "label": "Print detailed invoice",
             "description": "Displays all lines by group.",
             "icon": "print",
-            "route": "/?get=sale_accounting_invoice_generate-pdf&mode=detailed&id=object.id",
+            "route": "/?get=sale_accounting_invoice_render-pdf&mode=detailed&id=object.id",
             "target": "_blank",
             "absolute": true
         },
@@ -95,7 +95,7 @@
             "label": "Print grouped invoice",
             "description": "Displays only groups by vat.",
             "icon": "print",
-            "route": "/?get=sale_accounting_invoice_generate-pdf&mode=grouped&id=object.id",
+            "route": "/?get=sale_accounting_invoice_render-pdf&mode=grouped&id=object.id",
             "target": "_blank",
             "absolute": true
         }
