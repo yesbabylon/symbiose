@@ -4,6 +4,12 @@
     "access": {
         "groups": ["finance.default.user"]
     },
+    "group_by": [
+        {
+            "field": "invoice_line_group_id",
+            "open": true
+        }
+    ],
     "operations": {
         "total": {
             "price": {
