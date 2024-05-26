@@ -41,7 +41,7 @@ if(empty($invoice)) {
     throw new Exception('invoice_unknown', QN_ERROR_UNKNOWN_OBJECT);
 }
 
-$output = eQual::run('get', 'sale_accounting_invoice_generate-pdf', [
+$output = eQual::run('get', 'sale_accounting_invoice_render-pdf', [
     'id'   => $params['id'],
     'mode' => $params['mode']
 ]);
