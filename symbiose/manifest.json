@@ -28,6 +28,7 @@
     },
     "apps": [
         {
+            "id": "settings",
             "name": "Settings",
             "description": "Manage and configure global and App-specific options and parameters.",
             "extends": "settings",
