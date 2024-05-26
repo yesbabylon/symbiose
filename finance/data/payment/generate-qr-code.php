@@ -27,13 +27,13 @@ list($params, $providers) = eQual::announce([
         'recipient_bic' => [
             'type'        => 'string',
             'description' => 'Recipient bank account BIC number.',
-            'default'     => ''
+            'required'    => true
         ],
 
         'payment_reference' => [
             'type'        => 'string',
             'description' => 'Payment reference to identify it.',
-            'required'    => true
+            'default'     => ''
         ],
 
         'payment_amount' => [
@@ -44,7 +44,6 @@ list($params, $providers) = eQual::announce([
     ],
     'response'      => [
         'content-type'  => 'image/png',
-        'charset'       => 'utf-8',
         'accept-origin' => '*'
     ],
     'providers'     => ['context']
