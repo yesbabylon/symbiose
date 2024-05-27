@@ -24,7 +24,7 @@ class Setting extends \core\setting\Setting {
         ];
     }
 
-    public static function fetch_and_add(string $package, string $section, string $code, $increment=null, int $organisation_id=0, int $user_id=0, string $lang='en') {
+    public static function fetch_and_add(string $package, string $section, string $code, $increment=null, array $selector=[], string $lang='en') {
         $result = null;
 
         $providers = \eQual::inject(['orm']);
@@ -54,7 +54,8 @@ class Setting extends \core\setting\Setting {
                 $setting_values = $orm->read(SettingValue::getType(), $setting['setting_values_ids'], ['id', 'organisation_id', 'user_id'], $values_lang);
                 if($setting_values > 0) {
                     foreach($setting_values as $setting_value) {
-                        if($setting_value['user_id'] == $user_id && $setting_value['organisation_id'] == $organisation_id) {
+                        if(intval($setting_value['user_id']) == intval($selector['user_id'] ?? 0)
+                            && intval($setting_value['organisation_id']) == intval($selector['organisation_id'] ?? 0)) {
                             $setting_id = $setting_value['id'];
                             break;
                         }
