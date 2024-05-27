@@ -8,10 +8,9 @@
                 "organisation_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 3,
+                "partner_identity_id": 8,
                 "relationship": "customer",
                 "type_id": 1,
-                "has_vat": false,
                 "firstname": "Jean",
                 "lastname": "dubois",
                 "lang_id": 1,
@@ -23,18 +22,14 @@
                 "email": "jeandubois@gmail.com",
                 "phone": "0477777758",
                 "rate_class_id": 1,
-                "customer_type_id": 1,
-                "flag_latepayer": false,
-                "flag_damage": false,
-                "flag_nuisance": false,
-                "is_tour_operator": false
+                "customer_type_id": 1
             },
             {
                 "id": 2,
                 "organisation_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 4,
+                "partner_identity_id": 10,
                 "relationship": "customer",
                 "type_id": 3,
                 "has_vat": true,
@@ -47,35 +42,25 @@
                 "address_state": "Bruxelles",
                 "address_country": "BE",
                 "rate_class_id": 1,
-                "customer_type_id": 1,
-                "customer_external_ref": "",
-                "flag_latepayer": false,
-                "flag_damage": false,
-                "flag_nuisance": false,
-                "is_tour_operator": false
+                "customer_type_id": 1
             },
             {
                 "id": 3,
                 "organisation_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 5,
+                "partner_identity_id": 11,
                 "relationship": "customer",
                 "type_id": 1,
                 "has_vat": false,
                 "firstname": "Jean",
                 "lastname": "Martin",
                 "lang_id": 1,
-                "address_street": "rue achielle",
+                "address_street": "rue de palace",
                 "address_country": "BE",
-                "email": "jeand@gmail.com",
+                "email": "jeanmartinmartin@gmail.com",
                 "rate_class_id": 1,
-                "customer_type_id": 1,
-                "customer_external_ref": "",
-                "flag_latepayer": false,
-                "flag_damage": false,
-                "flag_nuisance": false,
-                "is_tour_operator": false
+                "customer_type_id": 1
             }
         ]
     }

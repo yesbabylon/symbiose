@@ -5,6 +5,10 @@
     "authors": ["Yesbabylon"],
     "license": "LGPL-3",
     "depends_on": ["core"],
+    "requires": {
+        "endroid/qr-code": "^3.9.0",
+        "smhg/sepa-qr-data": "^1.2.0"
+    },
     "apps":[
         {
             "id": "finance",

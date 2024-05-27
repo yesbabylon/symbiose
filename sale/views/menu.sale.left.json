@@ -480,28 +480,6 @@
                         ]
                     },
                     {
-                        "id": "settings.invoices",
-                        "type": "parent",
-                        "label": "Invoices",
-                        "icon": "receipt_long",
-                        "description": "Settings invoices parent menu.",
-                        "children": [
-                            {
-                                "id": "settings.invoices.organisations-images",
-                                "type": "entry",
-                                "label": "Org. images",
-                                "icon": "image",
-                                "description": "Display all organisation invoice images.",
-                                "context": {
-                                    "entity": "sale\\identity\\Organisation",
-                                    "view": "list.default",
-                                    "order": "id",
-                                    "sort": "asc"
-                                }
-                            }
-                        ]
-                    },
-                    {
                         "id": "settings.time-entries",
                         "type": "parent",
                         "label": "Time entries",

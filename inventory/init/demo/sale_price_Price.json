@@ -6,42 +6,42 @@
             {
                 "id": 1,
                 "price": 50,
-                "type": "direct",
-                "price_list_id": 4,
-                "accounting_rule_id": 1,
-                "product_id": 1
-            },
-            {
-                "id": 2,
-                "price": 10,
-                "type": "direct",
+                "price_type": "direct",
                 "price_list_id": 5,
                 "accounting_rule_id": 1,
                 "product_id": 1
             },
             {
+                "id": 2,
+                "price": 15,
+                "price_type": "direct",
+                "price_list_id": 5,
+                "accounting_rule_id": 1,
+                "product_id": 2
+            },
+            {
                 "id": 3,
-                "price": 10,
-                "type": "direct",
+                "price": 20,
+                "price_type": "direct",
                 "price_list_id": 5,
                 "accounting_rule_id": 1,
                 "product_id": 3
             },
             {
                 "id": 4,
-                "price": 15,
-                "type": "direct",
-                "price_list_id": 3,
+                "price": 25,
+                "price_type": "direct",
+                "price_list_id": 5,
                 "accounting_rule_id": 1,
-                "product_id": 2
+                "product_id": 4
             },
             {
                 "id": 5,
-                "price": 50,
-                "type": "direct",
+                "price": 30,
+                "price_type": "direct",
                 "price_list_id": 5,
                 "accounting_rule_id": 1,
-                "product_id": 7
+                "product_id": 5
             }
         ]
     }
