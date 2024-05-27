@@ -11,6 +11,7 @@
                 "status": "pending",
                 "description": "Reference Subscription entry product.",
                 "product_id": 3,
+                "customer_id": 2,
                 "vat_rate": 0.21,
                 "qty": 1,
                 "free_qty": 0,
