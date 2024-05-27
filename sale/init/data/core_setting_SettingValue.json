@@ -41,7 +41,7 @@
             {
                 "id": 1016,
                 "setting_id": 1016,
-                "code": "sale.invoice.sequence",
+                "name": "sale.invoice.sequence",
                 "user_id": 0,
                 "value": 1
             },
