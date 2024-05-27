@@ -10,6 +10,8 @@
                 "is_internal": true,
                 "owner_identity_id": 1,
                 "partner_identity_id": 2,
+                "firstname": "John",
+                "lastname": "Doe",
                 "relationship": "contact"
             }
         ]

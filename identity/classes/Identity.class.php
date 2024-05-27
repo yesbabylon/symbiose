@@ -651,7 +651,7 @@ class Identity extends Model {
     public static function canupdate($om, $ids, $values, $lang='en') {
         if(isset($values['type_id'])) {
             $identities = $om->read(get_called_class(), $ids, [ 'firstname', 'lastname', 'legal_name' ], $lang);
-            foreach($identities as $oid => $identity) {
+            foreach($identities as $id => $identity) {
                 if($values['type_id'] == 1) {
                     $firstname = '';
                     $lastname = '';
@@ -669,10 +669,10 @@ class Identity extends Model {
                     }
 
                     if(!strlen($firstname) ) {
-                        return ['firstname' => ['missing' => 'Firstname cannot be empty for natural person.']];
+                        return ['firstname' => ['missing' => "Firstname cannot be empty for natural person (identity $id)."]];
                     }
                     if(!strlen($lastname) ) {
-                        return ['lastname' => ['missing' => 'Lastname cannot be empty for natural person.']];
+                        return ['lastname' => ['missing' => "Lastname cannot be empty for natural person (identity $id)."]];
                     }
                 }
                 else {

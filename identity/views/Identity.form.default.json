@@ -63,6 +63,16 @@
                                                 "type": "field",
                                                 "value": "type",
                                                 "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_organisation",
+                                                "visible": false
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "organisation_id",
+                                                "visible": false
                                             }
                                         ]
                                     }

@@ -58,7 +58,7 @@ class AccountingRule extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\tax\VatRule',
                 'description'       => "VAT rule the line is related to.",
-                'onupdate'          => 'onupdateVatRuleId'
+                'dependents'        => ['prices_ids' => ['vat_rate']]
             ],
 
             'prices_ids' => [
@@ -69,14 +69,6 @@ class AccountingRule extends Model {
             ]
 
         ];
-    }
-
-
-    public static function onupdateVatRuleId($self) {
-        $self->read(['prices_ids']);
-        foreach($self as $id => $rule) {
-            \sale\price\Price::ids($rule['prices_ids'])->update(['vat_rate' => null]);
-        }
     }
 
 }
