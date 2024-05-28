@@ -85,7 +85,8 @@
                                             {
                                                 "type": "field",
                                                 "value": "emission_date",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["status", "<>", "proforma"]
                                             }
                                         ]
                                     }
