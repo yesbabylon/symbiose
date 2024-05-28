@@ -428,6 +428,7 @@
         <!-- invoice-lines end -->
 
 
+        {% invoice.status != 'proforma' %}
         <!-- payment-qr-code start -->
             <div class="invoice-payment-info" style="height: 180px;">
                 <div style="padding-left: 15px; padding-top: 15px;">
@@ -451,7 +452,10 @@
                     {% endif %}
                 </div>
             </div>
-        <!-- payment-qr-code ebd -->
+        <!-- payment-qr-code end -->
+        {% else %}
+            This is a proforma invoice.
+        {% endif %}
 
     </main>
 </body>
