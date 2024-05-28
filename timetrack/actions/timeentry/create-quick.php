@@ -100,7 +100,8 @@ TimeEntry::create([
         'description' => $params['description'],
         'time_start'  => $start,
         'time_end'    => $end
-    ]);
+    ])
+    ->transition('request-validation');
 
 $context->httpResponse()
         ->status(201)
