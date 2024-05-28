@@ -236,6 +236,14 @@
                                                 "widget": {
                                                     "readonly": true
                                                 }
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "qty",
+                                                "width": "25%",
+                                                "widget": {
+                                                    "readonly": true
+                                                }
                                             }
                                         ]
                                     }
