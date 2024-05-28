@@ -14,8 +14,7 @@
                     "controller": "model_transition",
                     "params": {
                         "entity": "timetrack\\TimeEntry",
-                        "transition": "request-validation",
-                        "ids": []
+                        "transition": "request-validation"
                     },
                     "visible": [
                         ["state", "<>", "draft"],
