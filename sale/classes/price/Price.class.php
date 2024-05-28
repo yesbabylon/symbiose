@@ -48,7 +48,7 @@ class Price extends Model {
             'calculation_method_id' => [
                 'type'              => 'string',
                 'description'       => "Method to use for price computation.",
-                'visible'           => ['type', '=', 'computed']
+                'visible'           => ['price_type', '=', 'computed']
             ],
 
             'price_list_id' => [
