@@ -31,7 +31,7 @@ class AccountingRule extends Model {
                 'description'       => "Short description of the rule to serve as memo."
             ],
 
-            'type' => [
+            'accounting_rule_type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",
                 'selection'         => [

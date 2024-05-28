@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "name": "Sale",
-                "type": "sale",
+                "accounting_rule_type": "sale",
                 "vat_rule_id": 4,
                 "description": "Default rule for sales."
             }
