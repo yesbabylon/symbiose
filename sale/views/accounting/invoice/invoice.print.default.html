@@ -428,7 +428,7 @@
         <!-- invoice-lines end -->
 
 
-        {% invoice.status != 'proforma' %}
+        {% if invoice.status != 'proforma' %}
         <!-- payment-qr-code start -->
             <div class="invoice-payment-info" style="height: 180px;">
                 <div style="padding-left: 15px; padding-top: 15px;">
