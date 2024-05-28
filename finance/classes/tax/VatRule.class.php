@@ -34,7 +34,7 @@ class VatRule extends Model {
                 'required'          => true
             ],
 
-            'type' => [
+            'vat_rule_type' => [
                 'type'              => 'string',
                 'description'       => "Kind of operation this rule relates to.",
                 'selection'         => [
