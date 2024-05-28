@@ -3,6 +3,28 @@
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
     "domain": ["object_class", "=", "timetrack\\Project"],
+    "header": {
+        "selection": {
+            "show_inline": ["action.transition.ready"],
+            "actions" : [
+                {
+                    "id": "action.transition.ready",
+                    "label": "Ready",
+                    "icon": "play_arrow",
+                    "controller": "model_transition",
+                    "params": {
+                        "entity": "timetrack\\TimeEntry",
+                        "transition": "request-validation",
+                        "ids": []
+                    },
+                    "visible": [
+                        ["state", "<>", "draft"],
+                        ["status", "=", "pending"]
+                    ]
+                }
+            ]
+        }
+    },
     "actions": [
         {
             "id": "action.create-empty",
