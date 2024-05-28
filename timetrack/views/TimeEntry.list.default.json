@@ -3,6 +3,9 @@
     "description": "Default listing of all time entries.",
     "controller": "timetrack_timeentry-collect",
     "domain": ["object_class", "=", "timetrack\\Project"],
+    "order": "created",
+    "sort": "desc",
+    "limit": 100,
     "header": {
         "selection": {
             "show_inline": ["action.transition.ready"],
