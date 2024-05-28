@@ -1,0 +1,23 @@
+[
+    {
+        "name": "finance\\accounting\\AccountChart",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Account Chart",
+                "organisation_id": 1
+            }
+        ]
+    },
+    {
+        "name": "finance\\accounting\\AccountChart",
+        "lang": "fr",
+        "data": [
+            {
+                "id": 1,
+                "name": "Plan comptable"
+            }
+        ]
+    }
+]
