@@ -454,7 +454,9 @@
             </div>
         <!-- payment-qr-code end -->
         {% else %}
-            This is a proforma invoice.
+            <div style="width: 100%; text-align: center;">
+                {{ labels.proforma_notice }}
+            </div>
         {% endif %}
 
     </main>
