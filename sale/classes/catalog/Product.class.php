@@ -150,6 +150,7 @@ class Product extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'products_ids',
+                'description'       => 'Linked groups.',
                 'rel_table'         => 'sale_catalog_product_rel_product_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'product_id'

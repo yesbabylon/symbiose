@@ -41,6 +41,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             'invoice_purpose' => [
                 'type'              => 'string',
+                'description'       => 'Is the invoice concerning a sale to a customer or a buy from a supplier.',
                 'default'           => 'sell',
                 'visible'           => false
             ],

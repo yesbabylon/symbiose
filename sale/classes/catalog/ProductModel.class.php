@@ -37,12 +37,14 @@ class ProductModel extends Model {
 
             'selling_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule',
+                'description'       => 'Accounting rule to use in case of sell.'
             ],
 
             'buying_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule',
+                'description'       => 'Accounting rule to use in case of purchase.'
             ],
 
             'stat_section_id' => [
@@ -82,6 +84,7 @@ class ProductModel extends Model {
 
             'type' => [
                 'type'              => 'string',
+                'description'       => 'Is the product a consumable or a service.',
                 'selection'         => [
                     'consumable',
                     'service'
@@ -92,6 +95,7 @@ class ProductModel extends Model {
 
             'consumable_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the consumable product storable.',
                 'selection'         => [
                     'simple',
                     'storable'
@@ -101,6 +105,7 @@ class ProductModel extends Model {
 
             'service_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the service product schedulable.',
                 'selection'         => [
                     'simple',
                     'schedulable'
@@ -111,6 +116,7 @@ class ProductModel extends Model {
 
             'schedule_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the service schedulable on a specific time or on a time range.',
                 'selection'         => [
                     'time',
                     'timerange'
@@ -134,6 +140,7 @@ class ProductModel extends Model {
 
             'tracking_type' => [
                 'type'              => 'string',
+                'description'       => 'How is the stored consumable product tracked.',
                 'selection'         => [
                     'none',
                     'batch',
@@ -162,6 +169,7 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'product_models_ids',
+                'description'       => 'Linked groups.',
                 'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id',
@@ -172,6 +180,7 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Category',
                 'foreign_field'     => 'product_models_ids',
+                'description'       => 'Linked categories',
                 'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',
                 'rel_local_key'     => 'productmodel_id'

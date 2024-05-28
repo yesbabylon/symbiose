@@ -46,6 +46,7 @@ class Invoice extends Model {
 
             'status' => [
                 'type'              => 'string',
+                'description'       => 'Current status of the invoice.',
                 'selection'         => [
                     'proforma',             // draft invoice (no number yet)
                     'invoice',              // final invoice (with unique number and accounting entries)
@@ -56,6 +57,7 @@ class Invoice extends Model {
 
             'invoice_type' => [
                 'type'              => 'string',
+                'description'       => 'Is it an invoice or a credit note (reversed invoice).',
                 'selection'         => [
                     'invoice',
                     'credit_note'
@@ -65,6 +67,7 @@ class Invoice extends Model {
 
             'invoice_purpose' => [
                 'type'              => 'string',
+                'description'       => 'Is the invoice concerning a sale to a customer or a buy from a supplier.',
                 'selection'         => [
                     'sell',
                     'buy'

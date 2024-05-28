@@ -41,7 +41,7 @@ class ReceivablesQueue extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
-                'description'       => 'The Receivables attached to the queue.',
+                'description'       => 'The pending Receivables attached to the queue.',
                 'domain'            => ['status', '=', 'pending']
             ],
 
@@ -49,20 +49,22 @@ class ReceivablesQueue extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'sale\receivable\Receivable',
                 'foreign_field'     => 'receivables_queue_id',
-                'description'       => 'The Receivables attached to the queue.',
+                'description'       => 'The invoiced Receivables attached to the queue.',
                 'domain'            => ['status', '=', 'invoiced']
             ],
 
             'pending_receivables_count' => [
                 'type'              => 'computed',
                 'result_type'       => 'integer',
+                'description'       => 'Quantity of pending receivables attached to the queue.',
                 'function'          => 'calcPendingReceivablesCount'
             ],
 
             'projects_ids' => [
                 'type'            => 'one2many',
                 'foreign_object'  => 'timetrack\Project',
-                'foreign_field'   => 'receivable_queue_id'
+                'foreign_field'   => 'receivable_queue_id',
+                'description'     => 'Timetrack Projects that use this queue for their Sale Entries.'
             ]
         ];
     }
