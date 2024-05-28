@@ -10,7 +10,7 @@ use equal\orm\Model;
 class OptionValue extends Model {
     public static function getColumns() {
         /**
-         * OptionValue objects are the possible values to which an option, for a given Product Attriubute, can be set to.
+         * OptionValue objects are the possible values to which an option, for a given Product Attribute, can be set to.
          */
         return [
             'name' => [

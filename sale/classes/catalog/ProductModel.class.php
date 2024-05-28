@@ -55,7 +55,7 @@ class ProductModel extends Model {
 
             'can_buy' => [
                 'type'              => 'boolean',
-                'description'       => "Can this product be purchassed?",
+                'description'       => "Can this product be purchased?",
                 'default'           => false,
                 'onupdate'          => 'onupdateCanBuy'
             ],
