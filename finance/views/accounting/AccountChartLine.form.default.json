@@ -32,12 +32,13 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Account Chart",
                                                 "value": "account_chart_id",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Analytic Section"
+                                                "label": "Analytic Section",
                                                 "value": "analytic_section_id",
                                                 "width": "50%"
                                             }
