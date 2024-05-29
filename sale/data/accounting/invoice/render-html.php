@@ -217,6 +217,7 @@ $getLabels = function($lang) {
         'status_paid'                    => Setting::get_value('sale', 'locale', 'label_status-paid', 'Paid', 0, $lang),
         'status_to_pay'                  => Setting::get_value('sale', 'locale', 'label_status-to-pay', 'To pay', 0, $lang),
         'status_to_refund'               => Setting::get_value('sale', 'locale', 'label_status-to-refund', 'To refund', 0, $lang),
+        'proforma_notice'                => Setting::get_value('sale', 'locale', 'label_proforma-notice', 'This is a proforma and must not be paid.', 0, $lang),
         'total_ex_vat'                   => Setting::get_value('sale', 'locale', 'label_total-ex-vat', 'Total ex. VAT', 0, $lang),
         'total_inc_vat'                  => Setting::get_value('sale', 'locale', 'label_total-inc-vat', 'Total inc. VAT', 0, $lang),
         'balance_of_must_be_paid_before' => Setting::get_value('sale', 'locale', 'label_balance-of-must-be-paid-before', 'Balance of %price% to be paid before %due_date%', 0, $lang),

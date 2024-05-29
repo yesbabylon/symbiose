@@ -257,17 +257,24 @@
             },
             {
                 "id": 1080,
-                "name": "labels.balance-of-must-be-paid-before",
+                "name": "sale.locale.label_balance-of-must-be-paid-before",
                 "setting_id": 1080,
                 "user_id": 0,
                 "value": "Balance of %price% to be paid before %due_date%"
             },
             {
                 "id": 1081,
-                "name": "labels.communication",
+                "name": "sale.locale.label_communication",
                 "setting_id": 1081,
                 "user_id": 0,
                 "value": "Communication"
+            },
+            {
+                "id": 1082,
+                "name": "sale.locale.label_proforma-notice",
+                "setting_id": 1082,
+                "user_id": 0,
+                "value": "This is a PROFORMA invoice, established to respond to an exact price request. This is a document for commercial use only, which has no legal value and should not be subject to payment. In the event of effective service, a final invoice will be established after the conclusion of the sale."
             }
         ]
     },
@@ -402,6 +409,10 @@
             {
                 "id": 1081,
                 "value": "Communication"
+            },
+            {
+                "id": 1082,
+                "value": "Ceci est une facture PROFORMA, établie pour répondre à une demande de prix exacte. Il s'agit d'un document à usage exclusivement commercial, qui n'a pas de valeur légale et ne doit pas faire l'objet d'un paiement. En cas de prise de service effective, une facture définitive sera établie après la conclusion de la vente."
             }
         ]
     },

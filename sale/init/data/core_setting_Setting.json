@@ -452,6 +452,18 @@
                 "help": "Used in invoice pdf version.",
                 "type": "string",
                 "is_multilang":  true
+            },
+            {
+                "id": 1082,
+                "code": "label_proforma-notice",
+                "title": "Invoice proforma notice",
+                "package": "sale",
+                "form_control": "textarea",
+                "section_id": 1,
+                "description":"Notice for avoiding confusion between invoices and proforma.",
+                "help": "Used in invoice pdf version.",
+                "type": "string",
+                "is_multilang":  true
             }
         ]
     },

@@ -24,7 +24,6 @@ class TimeEntry extends SaleEntry {
     }
 
     public static function getColumns(): array {
-        $current_hour = self::getTimeZoneCurrentHour();
 
         return [
 
@@ -110,15 +109,15 @@ class TimeEntry extends SaleEntry {
             'time_start' => [
                 'type'           => 'time',
                 'description'    => 'Start time of the entry.',
-                'default'        => $current_hour * 3600,
-                'dependents'     => ['duration']
+                'default'        => function () { return self::getTimeZoneCurrentHour() * 3600; },
+                'dependents'     => ['duration', 'qty']
             ],
 
             'time_end' => [
                 'type'           => 'time',
                 'description'    => 'End time of the entry.',
-                'default'        => ($current_hour + 1) * 3600,
-                'dependents'     => ['duration']
+                'default'        => function () { return (self::getTimeZoneCurrentHour() + 1) * 3600; },
+                'dependents'     => ['duration', 'qty']
             ],
 
             'duration' => [
@@ -129,6 +128,13 @@ class TimeEntry extends SaleEntry {
                 'store'          => true,
                 'instant'        => true,
                 'onupdate'       => 'onupdateDuration'
+            ],
+
+            'qty' => [
+                'type'           => 'computed',
+                'result_type'    => 'float',
+                'function'       => 'calcQty',
+                'description'    => 'Quantity in hours based on duration.'
             ],
 
             'user_id' => [
@@ -363,26 +369,31 @@ class TimeEntry extends SaleEntry {
             }
             $result[$id] = $entry['time_end'] - $entry['time_start'];
         }
+        return $result;
+    }
 
+    public static function calcQty($self): array {
+        $result = [];
+        $self->read(['duration']);
+        foreach($self as $id => $entry) {
+            $result[$id] = round(floatval($entry['duration']) / 3600, 2);
+        }
         return $result;
     }
 
     public static function onupdateDuration($self): void {
         $self->read(['time_start', 'time_end', 'duration', 'qty']);
         foreach($self as $id => $entry) {
-            $updates = ['qty' => 0.0];
-
-            if(isset($entry['duration'])) {
-                $updates['qty'] = (float) ($entry['duration'] / 3600);
-            }
+            $values = [
+                    'qty' => null
+                ];
 
             if( isset($entry['duration'], $entry['time_start'], $entry['time_end'])
-                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])
-            ) {
-                $updates['time_end'] = $entry['time_start'] + $entry['duration'];
+                && $entry['duration'] !== ($entry['time_end'] - $entry['time_start'])) {
+                $values['time_end'] = $entry['time_start'] + $entry['duration'];
             }
 
-            TimeEntry::id($id)->update($updates);
+            TimeEntry::id($id)->update($values);
         }
     }
 
