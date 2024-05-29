@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class Family extends Model {
@@ -13,13 +14,13 @@ class Family extends Model {
         return "Product Family";
     }
 
-    public static function getColumns() {
-        /**
-         * A Product Family is a group of goods produced under the same brand.
-         * Families support hierarchy.
-         */
+    public static function getDescription() {
+        return 'A Product Family is a group of goods produced under the same brand. Families support hierarchy.';
+    }
 
+    public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product family. A family is a group of goods produced under the same brand.",
@@ -30,7 +31,8 @@ class Family extends Model {
             'children_ids' => [ 
                 'type'              => 'one2many', 
                 'foreign_object'    => 'sale\catalog\Family', 
-                'foreign_field'     => 'parent_id'
+                'foreign_field'     => 'parent_id',
+                'description'       => 'Product families that belongs to current family, if any.'
             ],
 
             'parent_id' => [

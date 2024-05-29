@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class Product extends Model {
@@ -236,6 +237,12 @@ class Product extends Model {
                     'family_id'     => null
                 ]);
         }
+    }
+
+    public function getUnique() {
+        return [
+            ['label', 'product_model_id']
+        ];
     }
 
 }

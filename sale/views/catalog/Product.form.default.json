@@ -32,7 +32,8 @@
                                                 "type": "field",
                                                 "label": "Product Model",
                                                 "value": "product_model_id",
-                                                "width": "100%"
+                                                "width": "100%",
+                                                "readonly": true
                                             }
                                         ]
                                     }
@@ -46,44 +47,66 @@
                 "id": "group.tabs",
                 "sections": [
                     {
-                        "label": "General info",
-                        "id": "section.product",
+                        "id": "section.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
                                     {
-                                        "width": "50%",
+                                        "width": "66%",
                                         "items": [
                                             {
                                                 "type": "field",
                                                 "value": "sku",
                                                 "width": "50%"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "33%"
                                             },
                                             {
                                                 "type": "field",
                                                 "label": "Family",
                                                 "value": "family_id",
-                                                "width": "50%"
+                                                "width": "66%",
+                                                "visible": ["state", "<>", "draft"]
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
+                                            },
+                                            {
+                                                "type": "label",
+                                                "width": "100%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "can_sell",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["state", "<>", "draft"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "can_buy",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["state", "<>", "draft"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "is_pack",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": ["state", "<>", "draft"]
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "has_own_price",
-                                                "width": "50%"
+                                                "width": "50%",
+                                                "visible": [["state", "<>", "draft"], ["is_pack", "=", true]]
                                             }
                                         ]
                                     }
@@ -92,8 +115,8 @@
                         ]
                     },
                     {
-                        "label": "Description",
                         "id": "section.Description",
+                        "label": "Description",
                         "rows": [
                             {
                                 "columns": [
@@ -113,8 +136,9 @@
                         ]
                     },
                     {
-                        "label": "Attributes",
                         "id": "section.attributes",
+                        "label": "Attributes",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -124,10 +148,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "product_attributes_ids",
-                                                "width": "100%",
-                                                "widget": {
-                                                    "view": "list.product"
-                                                }
+                                                "width": "100%"
                                             }
                                         ]
                                     }
@@ -136,8 +157,9 @@
                         ]
                     },
                     {
-                        "label": "Groups",
                         "id": "section.groups",
+                        "label": "Groups",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -156,9 +178,12 @@
                         ]
                     },
                     {
-                        "label": "Pack Products",
                         "id": "section.pack_lines",
-                        "visible": ["is_pack", "=", true],
+                        "label": "Pack Products",
+                        "visible": [
+                            ["state", "<>", "draft"],
+                            ["is_pack", "=", true]
+                        ],
                         "rows": [
                             {
                                 "columns": [
@@ -177,9 +202,12 @@
                         ]
                     },
                     {
-                        "label": "Prices",
                         "id": "section.prices",
-                        "visible": [ [["is_pack", "=", false]], [["has_own_price", "=", true]] ],
+                        "label": "Prices",
+                        "visible": [
+                            [["state", "<>", "draft"], ["is_pack", "=", false]],
+                            [["state", "<>", "draft"], ["has_own_price", "=", true]]
+                        ],
                         "rows": [
                             {
                                 "columns": [
@@ -201,8 +229,9 @@
                         ]
                     },
                     {
+                        "id": "section.subscriptions",
                         "label": "Subscriptions",
-                        "id": "section.attributes",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [

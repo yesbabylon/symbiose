@@ -22,17 +22,66 @@
                                                 "widget": {
                                                     "heading": true
                                                 }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "50%"
                                             },
+                                            {
+                                                "type": "field",
+                                                "label": "Product model",
+                                                "value": "product_model_id",
+                                                "width": "50%",
+                                                "readonly": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
+                        "id": "section.description",
+                        "label": "Description",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "100%"
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.values",
+                        "label": "Values",
+                        "rows":[
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Family",
-                                                "value": "family_id",
-                                                "width": "50%"
+                                                "value": "option_values_ids",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

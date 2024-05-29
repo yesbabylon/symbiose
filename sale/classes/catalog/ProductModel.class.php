@@ -4,7 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class ProductModel extends Model {
@@ -191,6 +193,13 @@ class ProductModel extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'foreign_field'     => 'product_model_id',
                 'description'       => "Product variants that are related to this model.",
+            ],
+
+            'options_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\Option',
+                'foreign_field'     => 'product_model_id',
+                'description'       => "Product options that are related to this model.",
             ]
 
         ];

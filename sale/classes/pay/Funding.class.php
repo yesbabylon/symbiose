@@ -17,6 +17,7 @@ class Funding extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'description'       => 'Display name of funding.',
                 'function'          => 'calcName',
                 'store'             => true
             ],
@@ -29,7 +30,8 @@ class Funding extends Model {
             'payments_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => Payment::getType(),
-                'foreign_field'     => 'funding_id'
+                'foreign_field'     => 'funding_id',
+                'description'       => 'Customer payments of to the funding.'
             ],
 
             'funding_type' => [

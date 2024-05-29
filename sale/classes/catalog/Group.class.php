@@ -4,13 +4,15 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class Group extends Model {
     public static function getColumns() {
-
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product model group (used for all variants).",

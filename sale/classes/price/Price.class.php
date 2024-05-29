@@ -41,6 +41,7 @@ class Price extends Model {
 
             'price_type' => [
                 'type'              => 'string',
+                'description'       => 'If computed a calculation method is used to compute the price amount.',
                 'selection'         => ['direct', 'computed'],
                 'default'           => 'direct'
             ],

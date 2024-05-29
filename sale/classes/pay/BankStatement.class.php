@@ -15,6 +15,7 @@ class BankStatement extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'description'       => 'Display name of bank statement.',
                 'function'          => 'calcName',
                 'store'             => true
             ],

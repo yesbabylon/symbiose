@@ -23,7 +23,7 @@ class BankStatementLine extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'statement_line_id',
-                'description'       => 'The list of payments this line relates to .',
+                'description'       => 'The list of payments this line relates to.',
                 'onupdate'          => 'onupdatePaymentsIds',
                 'ondetach'          => 'delete'
             ],

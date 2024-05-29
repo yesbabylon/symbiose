@@ -82,7 +82,7 @@ class Payment extends Model {
             'funding_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\pay\Funding',
-                'description'       => 'The funding the payement relates to, if any.',
+                'description'       => 'The funding the payment relates to, if any.',
                 'onupdate'          => 'onupdateFundingId'
             ],
 
