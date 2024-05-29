@@ -13,7 +13,7 @@
 			"description": "Brève description de la règle pour servir de mémo.",
 			"help": ""
 		},
-		"type": {
+		"accounting_rule_type": {
 			"label": "Type",
 			"description": "Type d'opération auquel cette règle se rapporte.",
 			"selection": {
