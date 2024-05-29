@@ -29,7 +29,7 @@
                                                 "type": "field",
                                                 "value": "description",
                                                 "width": "50%"
-                                            },                                
+                                            },
                                             {
                                                 "type": "field",
                                                 "value": "account_chart_id",
@@ -37,6 +37,7 @@
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Analytic Section"
                                                 "value": "analytic_section_id",
                                                 "width": "50%"
                                             }
@@ -45,7 +46,7 @@
                                 ]
                             }
                         ]
-                    }                    
+                    }
                 ]
             }
         ]
