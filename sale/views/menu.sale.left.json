@@ -7,16 +7,17 @@
         "items": [
             {
                 "id": "bank_statements",
-                "label": "Statements",
-                "description": "",
+                "label": "Bank statements",
                 "icon": "list_alt",
+                "description": "Bank statements parent menu.",
                 "type": "parent",
                 "children": [
                     {
                         "id": "bank_statements.all",
                         "type": "entry",
                         "label": "All",
-                        "description": "",
+                        "description": "Display all bank statements.",
+                        "icon": "list",
                         "context": {
                             "entity": "sale\\pay\\BankStatement",
                             "view": "list.default"
@@ -25,8 +26,9 @@
                     {
                         "id": "bank_statements.lines.all",
                         "type": "entry",
-                        "label": "All Lines",
-                        "description": "",
+                        "label": "Lines",
+                        "icon": "list",
+                        "description": "Display all bank statements lines.",
                         "context": {
                             "entity": "sale\\pay\\BankStatementLine",
                             "view": "list.default"
