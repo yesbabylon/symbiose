@@ -10,7 +10,7 @@
                 "account_chart_id": 1,
                 "analytic_section_id": null,
                 "nature": "B",
-                "type": null,
+                "accounting_chart_line_type": null,
                 "is_visible": false
             },
             {
@@ -20,7 +20,7 @@
                 "account_chart_id": 1,
                 "analytic_section_id": null,
                 "nature": "B",
-                "type": null,
+                "accounting_chart_line_type": null,
                 "is_visible": false
             },
             {
@@ -30,7 +30,7 @@
                 "account_chart_id": 1,
                 "analytic_section_id": null,
                 "nature": "B",
-                "type": null,
+                "accounting_chart_line_type": null,
                 "is_visible": false
             },
             {
@@ -40,7 +40,7 @@
                 "account_chart_id": 1,
                 "analytic_section_id": null,
                 "nature": "B",
-                "type": null,
+                "accounting_chart_line_type": null,
                 "is_visible": false
             }
         ]
