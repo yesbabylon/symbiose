@@ -40,7 +40,7 @@ class Product extends Model {
             'customer_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'Owner of the product.',
+                'description'       => 'The client associated with the product.',
                 'visible'           => ['is_internal', '=', false]
             ],
 
@@ -74,7 +74,7 @@ class Product extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'product_id',
-                'description'       => 'Softwares used by product.'
+                'description'       => 'List of software associated with the product.'
             ]
 
         ];
