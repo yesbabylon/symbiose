@@ -39,7 +39,8 @@ class Family extends Model {
             'parent_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
-                'description'       => "Product Family which current family belongs to, if any."
+                'description'       => "Product Family which current family belongs to, if any.",
+                'dependents'        => ['path']
             ],
 
             'path' => [
@@ -83,5 +84,35 @@ class Family extends Model {
             $parent_family['name'].'/'.$path,
             $parent_family['parent_id']
         );
+    }
+
+    public static function canupdate($self, $values) {
+        if(isset($values['parent_id'])) {
+            $value_parent_ids = self::getParentIds($values['parent_id']);
+
+            $self->read(['parent_id']);
+            foreach($self as $id => $family) {
+                if($values['parent_id'] === $id || in_array($id, $value_parent_ids)) {
+                    return ['parent_id' => ['invalid' => 'A family cannot be parent of itself.']];
+                }
+            }
+        }
+
+        return parent::canupdate($self, $values);
+    }
+
+    public static function getParentIds($id, $ids = []) {
+        $family = self::id($id)
+            ->read(['parent_id'])
+            ->first();
+
+        if(!is_null($family['parent_id'])) {
+            return self::getParentIds(
+                $family['parent_id'],
+                array_merge([$family['parent_id']], $ids)
+            );
+        }
+
+        return $ids;
     }
 }
