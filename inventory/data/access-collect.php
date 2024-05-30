@@ -23,7 +23,7 @@ list($params, $providers) = eQual::announce([
             'description'       => 'username of the account related to this access',
         ],
 
-        'type' => [
+        'access_type' => [
             'type'              => 'string',
             'selection'         => ['all','http', 'https', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
             'description'       => 'Type of the access',
@@ -83,8 +83,8 @@ if(isset($params['username']) && strlen($params['username']) > 0 ) {
     $domain = Domain::conditionAdd($domain, ['username', 'ilike','%'.$params['username'].'%']);
 }
 
-if(isset($params['type']) && strlen($params['type']) > 0 && $params['type']!= 'all') {
-    $domain = Domain::conditionAdd($domain, ['type', '=', $params['type']]);
+if(isset($params['access_type']) && strlen($params['access_type']) > 0 && $params['access_type']!= 'all') {
+    $domain = Domain::conditionAdd($domain, ['access_type', '=', $params['access_type']]);
 }
 
 if(isset($params['host']) && strlen($params['host']) > 0 ) {

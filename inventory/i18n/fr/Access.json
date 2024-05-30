@@ -13,7 +13,7 @@
             "description": "Courte description de l'accès.",
             "help": ""
         },
-        "type": {
+        "access_type": {
             "label": "Type",
             "description": "Type de connexion, selon le protocole.",
             "selection": {
