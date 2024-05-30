@@ -26,7 +26,8 @@ class Family extends Model {
                 'type'              => 'string',
                 'description'       => "Name of the product family. A family is a group of goods produced under the same brand.",
                 'required'          => true,
-                'multilang'         => true
+                'multilang'         => true,
+                'unique'            => true
             ],
 
             'children_ids' => [ 
@@ -40,7 +41,8 @@ class Family extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current family belongs to, if any.",
-                'dependents'        => ['path']
+                'dependents'        => ['path'],
+                'onupdate'          => 'onupdateParentId'
             ],
 
             'path' => [
@@ -69,6 +71,17 @@ class Family extends Model {
         }
 
         return $result;
+    }
+
+    public static function onupdateParentId($self) {
+        $self->read(['name']);
+        foreach($self as $family) {
+            self::search([
+                [['path', 'like', $family['name'].'/%']],
+                [['path', 'like', '%/'.$family['name'].'/%']]
+            ])
+                ->update(['path' => null]);
+        }
     }
 
     public static function addParentPath($path, $parent_id = null) {
