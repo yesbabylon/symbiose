@@ -49,7 +49,7 @@ class Subscription extends SaleSubscription  {
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
-                'description'       => 'Detail attached to a service.',
+                'description'       => 'Service attached to a subscription.',
                 'required'          => true,
                 'onupdate'          => 'onupdateServiceId',
                 'dependents'        => ['has_external_provider', 'is_billable', 'is_internal', 'customer_id']
