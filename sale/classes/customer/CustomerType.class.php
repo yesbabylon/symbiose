@@ -13,6 +13,7 @@ class CustomerType extends Model {
         return [
             'name' => [
                 'type'              => 'string',
+                'description'       => 'Display name of the customer type.',
                 'multilang'         => true
             ],
 
