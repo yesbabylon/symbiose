@@ -292,17 +292,18 @@ class Invoice extends \finance\accounting\Invoice {
         } catch(\Exception $e) {
             trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
         }
-
-        try {
-            $self->do('create_funding');
-        } catch(\Exception $e) {
-            trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
-        }
     }
 
     public static function onafterInvoice($self) {
         // Force computing the invoice number that was set to null in onbeforeInvoice
         $self->read(['invoice_number', 'funding_id', 'due_date']);
+
+        // Funding must be created here because it needs the due_date force computed above
+        try {
+            $self->do('create_funding');
+        } catch(\Exception $e) {
+            trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
+        }
     }
 
     public static function onafterCancelProforma($self) {
@@ -670,9 +671,9 @@ class Invoice extends \finance\accounting\Invoice {
      * Create the funding according to the invoice.
      */
     public static function doCreateFunding($self) {
-        $self->read(['id', 'price', 'payment_reference', 'due_date','funding_id']);
-        foreach($self as $invoice) {
+        $self->read(['id', 'price', 'payment_reference', 'due_date', 'funding_id']);
 
+        foreach($self as $invoice) {
             $funding = Funding::create([
                 'description'         => 'Sold Invoice',
                 'invoice_id'          => $invoice['id'],
@@ -682,7 +683,7 @@ class Invoice extends \finance\accounting\Invoice {
                 'payment_reference'   => $invoice['payment_reference'],
                 'due_date'            => $invoice['due_date']
             ])
-            ->first();
+                ->first();
 
             Invoice::id($invoice['id'])
                 ->update(['funding_id' => $funding['id']]);
