@@ -27,7 +27,7 @@
             "description": "Type d'opération auquel cette règle se rapporte.",
             "help": ""
         },
-        "type": {
+        "accounting_chart_line_type": {
             "label": "Type",
             "description": "Type d'opération auquel cette règle se rapporte.",
             "selection": {

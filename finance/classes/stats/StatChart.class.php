@@ -8,7 +8,7 @@ namespace finance\stats;
 use equal\orm\Model;
 
 class StatChart extends Model {
-    
+
     public static function getName() {
         return "Chart of Accounts";
     }
@@ -38,7 +38,7 @@ class StatChart extends Model {
                 'foreign_object'    => 'finance\stats\StatSection',
                 'foreign_field'     => 'stat_chart_id',
                 'description'       => "Sections that are related to this stat chart."
-            ]            
+            ]
         ];
     }
 

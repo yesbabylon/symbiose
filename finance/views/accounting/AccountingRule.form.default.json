@@ -27,11 +27,13 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "label": "Type",
+                                                "value": "accounting_rule_type",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Vat Rule",
                                                 "value": "vat_rule_id",
                                                 "width": "50%"
                                             },

@@ -56,7 +56,7 @@ class AccountingEntry extends Model {
             'order_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\pos\Order::getType(),
-                'description'       => 'Invoice that the line relates to.',
+                'description'       => 'Order that the line relates to.',
                 'ondelete'          => 'cascade',
                 'visible'           => ['has_order', '=', true]
             ],
@@ -64,7 +64,7 @@ class AccountingEntry extends Model {
             'order_line_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => \sale\pos\OrderLine::getType(),
-                'description'       => 'Invoice line the entry relates to.',
+                'description'       => 'Order line the entry relates to.',
                 'ondelete'          => 'cascade',
                 'visible'           => ['has_invoice', '=', true]
             ],

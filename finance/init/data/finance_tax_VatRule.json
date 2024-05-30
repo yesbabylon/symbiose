@@ -7,25 +7,25 @@
                 "id": 1,
                 "name": "Sale VAT 0%",
                 "rate": 0.0,
-                "type": "sale"
+                "vat_rule_type": "sale"
             },
             {
                 "id": 2,
                 "name": "Sale VAT 6%",
                 "rate": 0.06,
-                "type": "sale"
+                "vat_rule_type": "sale"
             },
             {
                 "id": 3,
                 "name": "Sale VAT 12%",
                 "rate": 0.12,
-                "type": "sale"
+                "vat_rule_type": "sale"
             },
             {
                 "id": 4,
                 "name": "Sale VAT 21%",
                 "rate": 0.21,
-                "type": "sale"
+                "vat_rule_type": "sale"
             }
         ]
     },

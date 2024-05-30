@@ -18,11 +18,13 @@
             },
             {
                 "type": "field",
-                "value": "type",
+                "label": "Type",
+                "value": "vat_rule_type",
                 "width": "20%"
             },
             {
                 "type": "field",
+                "label": "Account Chart Line",
                 "value": "account_id",
                 "width": "20%"
             }

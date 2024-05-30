@@ -22,7 +22,7 @@ class AccountingRuleLine extends Model {
         return [
             'name' => [
                 'type'              => 'string',
-                'description'       => "Short string to serve as memo.",
+                'description'       => "Name of the accounting rule line",
                 'required'          => true
             ],
 
@@ -37,7 +37,7 @@ class AccountingRuleLine extends Model {
             'account_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'finance\accounting\AccountChartLine',
-                'description'       => "Code of the related account.",
+                'description'       => "Account which the tax amount relates to.",
             ],
 
             'share' => [
