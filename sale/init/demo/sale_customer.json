@@ -1,0 +1,86 @@
+[
+    {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1000,
+                "customer_id": 1000,
+                "firstname": "Jean",
+                "lastname": "Dupont",
+                "gender": "M",
+                "title": "Mr",
+                "date_of_birth": "1980-04-23",
+                "bank_account_iban": "BE68539007547034",
+                "bank_account_bic": "BBRUBEBB",
+                "address_street": "Rue de l'Église 10",
+                "address_city": "Bruxelles",
+                "address_zip": "1000",
+                "address_state": "Brussels",
+                "address_country": "BE",
+                "email": "jean.dupont@example.be",
+                "phone": "+3221234567",
+                "mobile": "+32471123456"
+            },
+            {
+                "id": 1001,
+                "customer_id": 1001,
+                "firstname": "Marie",
+                "lastname": "Lemaire",
+                "gender": "F",
+                "title": "Ms",
+                "date_of_birth": "1992-08-15",
+                "bank_account_iban": "BE62510007547023",
+                "bank_account_bic": "KREDBEBB",
+                "address_street": "Avenue Louise 200",
+                "address_city": "Bruxelles",
+                "address_zip": "1050",
+                "address_state": "Brussels",
+                "address_country": "BE",
+                "email": "marie.lemaire@example.be",
+                "phone": "+3227891234",
+                "mobile": "+32478789123"
+            }
+        ]
+    },
+    {
+        "name": "sale\\customer\\Customer",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1000,
+                "partner_identity_id": 1000,
+                "firstname": "Jean",
+                "lastname": "Dupont",
+                "gender": "M",
+                "title": "Mr",
+                "date_of_birth": "1980-04-23",
+                "address_street": "Rue de l'Église 10",
+                "address_city": "Bruxelles",
+                "address_zip": "1000",
+                "address_state": "Brussels",
+                "address_country": "BE",
+                "email": "jean.dupont@example.be",
+                "phone": "+3221234567",
+                "mobile": "+32471123456"
+            },
+            {
+                "id": 1001,
+                "partner_identity_id": 1001,
+                "firstname": "Marie",
+                "lastname": "Lemaire",
+                "gender": "F",
+                "title": "Ms",
+                "date_of_birth": "1992-08-15",
+                "address_street": "Avenue Louise 200",
+                "address_city": "Bruxelles",
+                "address_zip": "1050",
+                "address_state": "Brussels",
+                "address_country": "BE",
+                "email": "marie.lemaire@example.be",
+                "phone": "+3227891234",
+                "mobile": "+32478789123"
+            }
+        ]
+    }
+]
