@@ -27,7 +27,9 @@ class Family extends Model {
                 'description'       => "Name of the product family. A family is a group of goods produced under the same brand.",
                 'required'          => true,
                 'multilang'         => true,
-                'unique'            => true
+                'unique'            => true,
+                'onupdate'          => 'onupdateName',
+                'dependents'        => ['path']
             ],
 
             'children_ids' => [ 
@@ -41,8 +43,8 @@ class Family extends Model {
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\catalog\Family',
                 'description'       => "Product Family which current family belongs to, if any.",
-                'dependents'        => ['path'],
-                'onupdate'          => 'onupdateParentId'
+                'onupdate'          => 'onupdateParentId',
+                'dependents'        => ['path']
             ],
 
             'path' => [
@@ -73,17 +75,6 @@ class Family extends Model {
         return $result;
     }
 
-    public static function onupdateParentId($self) {
-        $self->read(['name']);
-        foreach($self as $family) {
-            self::search([
-                [['path', 'like', $family['name'].'/%']],
-                [['path', 'like', '%/'.$family['name'].'/%']]
-            ])
-                ->update(['path' => null]);
-        }
-    }
-
     public static function addParentPath($path, $parent_id = null) {
         if(is_null($parent_id)) {
             return $path;
@@ -99,6 +90,31 @@ class Family extends Model {
         );
     }
 
+    public static function onupdateName($self) {
+        foreach($self as $family) {
+            self::resetChildrenPath($family['id']);
+        }
+    }
+
+    public static function onupdateParentId($self) {
+        foreach($self as $family) {
+            self::resetChildrenPath($family['id']);
+        }
+    }
+
+    public static function resetChildrenPath($parent_id) {
+        $children_ids = self::search(['parent_id', '=', $parent_id])->ids();
+
+        self::ids($children_ids)
+            ->update(['path' => null]);
+
+        if(!empty($children_ids)) {
+            foreach($children_ids as $child_id) {
+                self::resetChildrenPath($child_id);
+            }
+        }
+    }
+
     public static function canupdate($self, $values) {
         if(isset($values['parent_id'])) {
             $value_parent_ids = self::getParentIds($values['parent_id']);
@@ -109,6 +125,10 @@ class Family extends Model {
                     return ['parent_id' => ['invalid' => 'A family cannot be parent of itself.']];
                 }
             }
+        }
+
+        if(isset($values['name']) && preg_match('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $values['name'])) {
+            return ['name' => ['invalid' => 'Special characters not allowed in name.']];
         }
 
         return parent::canupdate($self, $values);
