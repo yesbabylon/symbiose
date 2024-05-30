@@ -24,30 +24,38 @@ class Software extends Model {
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'Information about a software.'
+                'description'       => 'Short presentation of the software.'
             ],
 
             'edition' => [
-                'type'              => 'string',
-                'description'       => "Type of edition (CE/EE/Pro/...)."
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "Type of edition (CE/EE/Pro/...).",
+                'function'          => 'calcEdition',
+                'store'             => true,
+                'instant'           => true
             ],
 
             'version' => [
-                'type'              => 'string',
-                'description'       => "Installed version of the software."
+                'type'              => 'computed',
+                'result_type'       => 'string',
+                'description'       => "Installed version of the software.",
+                'function'          => 'calcVersion',
+                'store'             => true,
+                'instant'           => true
             ],
 
             'software_model_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\SoftwareModel',
-                'description'       => 'Model of the software.',
+                'description'       => 'Model of the software used by software.',
                 'onupdate'          => 'onupdateSoftwareModelId'
             ],
 
             'instance_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Instance',
-                'description'       => 'Instance of the software.'
+                'description'       => 'Instance contains the software.'
             ],
 
             'server_id' => [
@@ -60,14 +68,14 @@ class Software extends Model {
             'service_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\service\Service',
-                'description'       => 'Service of the software.',
+                'description'       => 'Service used by the software.',
                 'dependencies'      => ['product_id'],
             ],
 
             'customer_id'=> [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'Owner of the software.',
+                'description'       => 'Customer owning the software.',
             ],
 
             'product_id' => [
@@ -109,6 +117,24 @@ class Software extends Model {
                     'edition'       => $softwareModel['edition'],
                     'version'       => $softwareModel['version']
                 ];
+        }
+        return $result;
+    }
+
+    public static function calcEdition($self) {
+        $result = [];
+        $self->read(['software_model_id' => ['edition']]);
+        foreach($self as $id => $software) {
+            $result[$id] = $software['software_model_id']['edition'];
+        }
+        return $result;
+    }
+
+    public static function calcVersion($self) {
+        $result = [];
+        $self->read(['software_model_id' => ['version']]);
+        foreach($self as $id => $software) {
+            $result[$id] = $software['software_model_id']['version'];
         }
         return $result;
     }
