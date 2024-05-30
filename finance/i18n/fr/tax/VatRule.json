@@ -13,7 +13,7 @@
 			"description": "Taux de TVA de la règle.",
 			"help": ""
 		},
-		"type": {
+		"vat_rule_type": {
 			"label": "Type",
 			"description": "Type d'opération auquel la règle se rapporte.",
 			"selection": {

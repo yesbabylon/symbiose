@@ -60,7 +60,37 @@
                                                 "value": "services_ids",
                                                 "width": "100%",
                                                 "widget": {
-                                                    "view": "list.selection",
+                                                    "view": "list.default",
+                                                    "header": {
+                                                        "actions": {
+                                                            "ACTION.SELECT": false,
+                                                            "ACTION.CREATE": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "section.subscriptions",
+                        "label": "Subscriptions",
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "100%",
+                                        "align": "left",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "subscriptions_ids",
+                                                "width": "100%",
+                                                "widget": {
+                                                    "view": "list.default",
                                                     "header": {
                                                         "actions": {
                                                             "ACTION.SELECT": false,

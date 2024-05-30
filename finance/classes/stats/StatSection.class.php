@@ -8,7 +8,7 @@ namespace finance\stats;
 use equal\orm\Model;
 
 class StatSection extends Model {
-    
+
     public static function getName() {
         return "Statistics Section";
     }
@@ -38,7 +38,7 @@ class StatSection extends Model {
 
             'label' => [
                 'type'              => 'string',
-                'description'       => "Short description of the section."
+                'description'       => "The label of the section."
             ],
 
             /* parent chart of accounts */

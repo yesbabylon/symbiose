@@ -62,7 +62,7 @@ class AccountChartLine extends Model {
                 'default'   => 'M'
             ],
 
-            'type' => [
+            'accounting_chart_line_type' => [
                 'type'      => 'string',
                 'selection' => [
                     'debt'              => 'Balance sheet>Fixed assets>Debtor',

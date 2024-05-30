@@ -7,13 +7,14 @@
     "layout": {
         "items": [
             {
-                "type": "field",            
+                "type": "field",
                 "value": "name",
                 "width": "20%"
-            }, 
+            },
             {
-                "type": "field",            
-                "value": "type",
+                "type": "field",
+                "label": "Type",
+                "value": "accounting_rule_type",
                 "width": "20%"
             }
         ]
