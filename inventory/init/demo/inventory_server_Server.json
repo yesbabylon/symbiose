@@ -7,7 +7,7 @@
                 "id": 1,
                 "state": "instance",
                 "name": "vps593447.ovh.net",
-                "type": "front",
+                "server_type": "front",
                 "products_ids": [
                     "1"
                 ]
@@ -15,7 +15,7 @@
             {
                 "id": 2,
                 "name": "vpn123.123",
-                "type": "storage",
+                "server_type": "storage",
                 "products_ids": [
                     "2"
                 ]

@@ -28,7 +28,7 @@ class Server extends Model {
                 'description'       => 'Short description of the Server.',
             ],
 
-            'type' => [
+            'server_type' => [
                 'type'              => 'string',
                 'description'       => 'Type of the server.',
                 'selection'         => ['front', 'node', 'storage'],
@@ -86,7 +86,7 @@ class Server extends Model {
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'server_id',
                 'ondetach'          => 'delete',
-                'description'       => 'Softwares installed on the server.'
+                'description'       => 'List of Software installed on the server.'
             ]
 
         ];

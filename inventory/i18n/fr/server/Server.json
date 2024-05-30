@@ -13,7 +13,7 @@
             "description": "Description du serveur.",
             "help": ""
         },
-        "type": {
+        "server_type": {
             "label": "Type",
             "description": "Type du serveur.",
             "selection": {
