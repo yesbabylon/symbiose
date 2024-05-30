@@ -29,6 +29,7 @@
                                         "width": "33%",
                                         "items": [
                                             {
+                                                "id": "item.product_model_id",
                                                 "type": "field",
                                                 "label": "Product Model",
                                                 "value": "product_model_id",
