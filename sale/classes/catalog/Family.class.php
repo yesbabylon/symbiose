@@ -4,6 +4,7 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\catalog;
 
 use equal\orm\Model;
@@ -37,16 +38,16 @@ class Family extends Model {
 
             'parent_id' => [
                 'type'              => 'many2one',
-                'description'       => "Product Family which current family belongs to, if any.",
-                'foreign_object'    => 'sale\catalog\Family'
+                'foreign_object'    => 'sale\catalog\Family',
+                'description'       => "Product Family which current family belongs to, if any."
             ],
 
             'path' => [
                 'type'              => 'computed',
-                'function'          => 'sale\catalog\Family::getPath',
                 'result_type'       => 'string',
+                'description'       => 'Full path of the family with ancestors.',
                 'store'             => true,
-                'description'       => 'Full path of the family with ancestors.'
+                'function'          => 'calcPath'
             ],
 
             'product_models_ids' => [
@@ -59,18 +60,28 @@ class Family extends Model {
         ];
     }
 
-    public static function getPath($om, $oids, $lang) {
+    public static function calcPath($self): array {
         $result = [];
-        $res = $om->read(__CLASS__, $oids, ['name', 'parent_id']);
-        foreach($res as $oid => $odata) {
-            if($odata['parent_id']) {
-                $paths = self::getPath($om, (array) $odata['parent_id'], $lang);
-                $result[$oid] = $paths[$odata['parent_id']].'/'.$odata['name'];
-            }
-            else {
-                $result[$oid] = $odata['name'];
-            }
+        $self->read(['name', 'parent_id']);
+        foreach($self as $id => $family) {
+            $result[$id] = self::addParentPath($family['name'], $family['parent_id']);
         }
+
         return $result;
-    }    
+    }
+
+    public static function addParentPath($path, $parent_id = null) {
+        if(is_null($parent_id)) {
+            return $path;
+        }
+
+        $parent_family = self::id($parent_id)
+            ->read(['name', 'parent_id'])
+            ->first();
+
+        return self::addParentPath(
+            $parent_family['name'].'/'.$path,
+            $parent_family['parent_id']
+        );
+    }
 }
