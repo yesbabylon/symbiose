@@ -157,7 +157,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}');
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
-            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, $organisation_id);
+            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, compact('organisation_id'));
 
             if($sequence) {
                 $result[$id] = Setting::parse_format($format, [
