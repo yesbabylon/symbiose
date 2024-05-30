@@ -68,4 +68,8 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
     public static function calcServiceProviderId($self): array {
         return self::calcFromSubscription($self, 'service_provider_id');
     }
+
+    public static function calcSubscriptionId($self): array {
+        return self::calcFromSubscription($self, 'id');
+    }
 }
