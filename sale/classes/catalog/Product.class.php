@@ -241,8 +241,8 @@ class Product extends Model {
 
     public function getUnique() {
         return [
+            ['sku'],
             ['label', 'product_model_id']
         ];
     }
-
 }
