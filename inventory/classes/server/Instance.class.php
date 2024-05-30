@@ -32,7 +32,7 @@ class Instance extends Model {
                 'description'       => 'Short description of the instance.'
             ],
 
-            'type' => [
+            'instance_type' => [
                 'type'              => 'string',
                 'selection'         => ['dev', 'staging', 'prod', 'replica'],
                 'description'       => 'Type of instance.',

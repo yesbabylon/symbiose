@@ -37,7 +37,8 @@
             },
             {
                 "type": "field",
-                "value": "type",
+                "label" : "Type",
+                "value": "instance_type",
                 "width": "15%",
                 "sortable": true
             },
