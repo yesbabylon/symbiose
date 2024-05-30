@@ -6,6 +6,16 @@
     },
     "controller": "sale_accounting_invoice_collect",
     "domain" : ["customer_id", ">", 0],
+    "header": {
+        "actions": {
+            "ACTION.CREATE" : [
+                {
+                    "view": "form.create",
+                    "description": "Overload form to use for invoice creation."
+                }
+            ]
+        }
+    },
     "layout": {
         "extends": {
             "entity": "finance\\accounting\\Invoice",

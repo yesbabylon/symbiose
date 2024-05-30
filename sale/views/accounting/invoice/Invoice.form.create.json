@@ -1,0 +1,56 @@
+{
+    "name": "Invoice",
+    "description": "Invoice creation form.",
+    "access": {
+        "groups": ["sale.default.user"]
+    },
+    "layout": {
+        "extends": {
+            "entity": "finance\\accounting\\Invoice",
+            "view": "form.default"
+        },
+        "remove": [
+            "item.invoice_purpose",
+            "item.due_date",
+            "section.invoice_lines",
+            "section.accounting_entries"
+        ],
+        "update": {
+            "item.invoice_number": {
+                "after": [
+                    {
+                        "type": "field",
+                        "label": "Customer",
+                        "value": "customer_id",
+                        "width": "50%"
+                    }
+                ]
+            },
+            "item.invoice_type": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "due_date",
+                        "width": "33%",
+                        "visible": ["status", "=", "invoice"]
+                    },
+                    {
+                        "type": "field",
+                        "value": "payment_terms_id",
+                        "width": "33%",
+                        "visible": ["status", "<>", "invoice"]
+                    }
+                ]
+            },
+            "item.reversed_invoice_id": {
+                "after": [
+                    {
+                        "type": "field",
+                        "value": "customer_ref",
+                        "width": "33%"
+                    }
+                ]
+            }
+        }
+    }
+}
