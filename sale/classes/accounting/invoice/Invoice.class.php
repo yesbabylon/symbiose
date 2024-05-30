@@ -296,7 +296,7 @@ class Invoice extends \finance\accounting\Invoice {
 
     public static function onafterInvoice($self) {
         // Force computing the invoice number that was set to null in onbeforeInvoice
-        $self->read(['invoice_number', 'funding_id', 'due_date']);
+        $self->read(['invoice_number', 'due_date']);
 
         // Funding must be created here because it needs the due_date force computed above
         try {
@@ -688,6 +688,5 @@ class Invoice extends \finance\accounting\Invoice {
             Invoice::id($invoice['id'])
                 ->update(['funding_id' => $funding['id']]);
         }
-
     }
 }
