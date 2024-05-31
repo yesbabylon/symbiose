@@ -18,8 +18,6 @@ use sale\receivable\Receivable;
 
 class Invoice extends \finance\accounting\Invoice {
 
-    protected static $invoice_editable_fields = ['payment_status', 'customer_ref'];
-
     public static function getName() {
         return 'Sale invoice';
     }

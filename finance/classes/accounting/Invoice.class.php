@@ -9,11 +9,8 @@ namespace finance\accounting;
 
 use core\setting\Setting;
 use equal\orm\Model;
-use inventory\Product;
 
 class Invoice extends Model {
-
-    protected static $invoice_editable_fields = ['payment_status'];
 
     public static function getName() {
         return 'Invoice';
@@ -270,7 +267,10 @@ class Invoice extends Model {
                 if($odata['status'] == 'invoice') {
                     if(!isset($values['status']) || !in_array($values['status'], ['invoice', 'cancelled'])) {
                         // only allow editable fields
-                        if( count(array_diff(array_keys($values), get_called_class()::$invoice_editable_fields)) ) {
+                        $editable_fields = ['payment_status'];
+                        $sale_editable_fields = ['customer_ref']; // Editable fields of sale\accounting\Invoice
+
+                        if( count(array_diff(array_keys($values), array_merge($editable_fields, $sale_editable_fields))) ) {
                             return ['status' => ['non_editable' => 'Invoice can only be updated while its status is proforma.']];
                         }
                     }
