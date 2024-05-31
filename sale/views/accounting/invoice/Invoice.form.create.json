@@ -50,6 +50,11 @@
                         "width": "33%"
                     }
                 ]
+            },
+            "item.emission_date": {
+                "attributes": {
+                    "visible": ["status", "<>", "proforma"]
+                }
             }
         }
     }

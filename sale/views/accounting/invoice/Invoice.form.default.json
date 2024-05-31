@@ -146,6 +146,11 @@
                     }
                 ]
             },
+            "item.emission_date": {
+                "attributes": {
+                    "visible": ["status", "<>", "proforma"]
+                }
+            },
             "item.invoice_lines_ids": {
                 "attributes": {
                     "widget": {
