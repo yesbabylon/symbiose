@@ -15,9 +15,8 @@ class ProductAttribute extends Model {
     }
 
     public static function getDescription() {
-        return "A Product Attribute corresponds to the value of an attribute available for a Product of a given Family.\n
-            It is equivalent to the M2M table between Product and Option (the possible values for the attributes are limited by OptionValue).\n
-        ";
+        return "A Product Attribute corresponds to the value of an attribute available for a Product of a given Family."
+            ." It is equivalent to the M2M table between Product and Option (the possible values for the attributes are limited by OptionValue).";
     }
 
     public static function getColumns() {

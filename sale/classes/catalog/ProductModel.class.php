@@ -16,13 +16,14 @@ class ProductModel extends Model {
     }
 
     public static function getDescription() {
-        return "Product Models act as common denominator for products variants (referred to as \"Products\").\n
-         These objects are used for catalogs generation: for instance, if a picture is related to a Product, it is associated on the Product Model level.\n
-         A Product Model has at minimum one variant, which means at minimum one SKU.\n";
+        return "Product Models act as common denominator for products variants (referred to as \"Products\")."
+            ." These objects are used for catalogs generation: for instance, if a picture is related to a Product, it is associated on the Product Model level."
+            ." A Product Model has at minimum one variant, which means at minimum one SKU.";
     }
 
     public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product model (used for all variants).",
@@ -251,5 +252,4 @@ class ProductModel extends Model {
             }
         }
     }
-
 }

@@ -11,6 +11,11 @@ use equal\orm\Model;
 
 class CustomerNature extends Model {
 
+    public static function getDescription() {
+        return 'A customer nature is an additional way of classifying customers, they can be linked to a customer type.'
+            .' They are used to apply specific vat rate when items/services are sold to a type of user.';
+    }
+
     public static function getColumns() {
         return [
 

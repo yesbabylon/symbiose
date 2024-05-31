@@ -15,8 +15,8 @@ class Category extends Model {
     }
 
     public static function getDescription() {
-        return "Product categories allow to group products in arbitrary ways.\n
-         Categories are not related to Families nor Groups.\n";
+        return "Product categories allow to group products in arbitrary ways."
+            ." Categories are not related to Families nor Groups.";
     }
 
     public static function getColumns() {

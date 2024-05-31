@@ -1,13 +1,24 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\pay;
+
 use equal\orm\Model;
 
 class BankStatement extends Model {
+
+    public static function getName() {
+        return 'Bank statement';
+    }
+
+    public static function getDescription() {
+        return 'A bank statement summarizes a bank account financial transactions over a period.'
+            .' It includes details of deposits, withdrawals, fees, and the account balance.';
+    }
 
     public static function getColumns() {
 

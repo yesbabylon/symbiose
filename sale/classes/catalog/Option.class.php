@@ -10,6 +10,11 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class Option extends Model {
+
+    public static function getDescription() {
+        return 'A product option is a characteristic of the product to witch a value can be attributed.';
+    }
+
     public static function getColumns() {
         return [
 

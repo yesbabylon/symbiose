@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class OptionValue extends Model {
 
+    public static function getDescription() {
+        return 'Option values are the possible values to which an option, for a given product attribute, can be set to.';
+    }
+
     public static function getColumns() {
         return [
 

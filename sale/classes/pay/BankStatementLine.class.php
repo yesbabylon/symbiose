@@ -1,13 +1,23 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\pay;
+
 use equal\orm\Model;
 
 class BankStatementLine extends Model {
+
+    public static function getName() {
+        return 'Bank statement line';
+    }
+
+    public static function getDescription() {
+        return 'A bank statement line represents one financial transaction on a bank account. It is a part of a bank statement.';
+    }
 
     public static function getColumns() {
 

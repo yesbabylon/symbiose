@@ -15,9 +15,9 @@ class Product extends Model {
     }
 
     public static function getDescription() {
-        return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.\n
-         Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).\n
-         A SKU code identifies a single product with all its specific characteristics.\n";
+        return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model."
+            ." Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model)."
+            ." A SKU code identifies a single product with all its specific characteristics.";
     }
 
     public static function getColumns() {

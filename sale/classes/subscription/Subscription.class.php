@@ -13,6 +13,11 @@ use sale\price\PriceList;
 
 class Subscription extends Model  {
 
+    public static function getDescription() {
+        return 'A subscription is a recurring payment model where a customer pays regularly, typically monthly or annually, to access a product or service.'
+            .' An internal subscription is used by your business, so it can\'t be invoiced to customers.';
+    }
+
     const MAP_DURATION = [
         'monthly'      => '+1 month',
         'quarterly'    => '+3 month',

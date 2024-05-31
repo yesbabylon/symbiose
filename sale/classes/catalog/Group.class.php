@@ -10,6 +10,7 @@ namespace sale\catalog;
 use equal\orm\Model;
 
 class Group extends Model {
+
     public static function getColumns() {
         return [
 

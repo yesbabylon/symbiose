@@ -9,6 +9,11 @@ use equal\orm\Model;
 
 class CustomerType extends Model {
 
+    public static function getDescription() {
+        return 'Types of customer are for example: Individual, Self-Employed, Company, Non-profit organizations or Public Administration.'
+            .' They are used to apply specific vat rate when items/services are sold to a type of user.';
+    }
+
     public static function getColumns() {
         return [
             'name' => [
