@@ -11,7 +11,7 @@ use symbiose\setting\Setting;
 use finance\accounting\AccountChartLine;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingRuleLine;
-use inventory\Product;
+use sale\catalog\Product;
 use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
