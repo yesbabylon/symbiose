@@ -19,7 +19,7 @@ list($params, $providers) = eQual::announce([
             'default'       => 'inventory\server\Server'
         ],
 
-        'type' => [
+        'server_type' => [
             'type'              => 'string',
             'description'       => 'Type of the server.',
             'selection'         => ['all','front', 'node', 'storage']
@@ -71,8 +71,8 @@ $context = $providers['context'];
 $domain = $params['domain'];
 
 
-if(isset($params['type']) && strlen($params['type']) > 0 && $params['type']!= 'all') {
-    $domain = Domain::conditionAdd($domain, ['type', '=', $params['type']]);
+if(isset($params['server_type']) && strlen($params['server_type']) > 0 && $params['server_type']!= 'all') {
+    $domain = Domain::conditionAdd($domain, ['server_type', '=', $params['server_type']]);
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {

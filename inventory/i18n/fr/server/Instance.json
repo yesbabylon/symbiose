@@ -13,7 +13,7 @@
             "description": "Courte description de l'instance.",
             "help": ""
         },
-        "type": {
+        "instance_type": {
             "label": "Type",
             "description": "Type d'instance.",
             "selection": {

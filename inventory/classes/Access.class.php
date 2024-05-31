@@ -38,7 +38,7 @@ class Access extends Model {
                 'description'       => 'Short description of the access.'
             ],
 
-            'type' => [
+            'access_type' => [
                 'type'              => 'string',
                 'selection'         => ['http', 'https', 'ssh', 'ftp', 'sftp', 'pop', 'smtp', 'git', 'docker'],
                 'description'       => 'Type of the access.',
@@ -103,7 +103,7 @@ class Access extends Model {
             'instance_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'inventory\server\Instance',
-                'description'       => 'Instance to which the access belongs.',
+                'description'       => '    .',
                 'readonly'          => true,
                 'visible'           => ['instance_id', '<>', null]
             ],
@@ -120,10 +120,10 @@ class Access extends Model {
     }
 
     public static function onupdateType($self) {
-        $self->read(['type', 'port']);
+        $self->read(['access_type', 'port']);
         foreach($self as $id => $access) {
-            if(isset(self::MAP_PORTS[$access['type']])) {
-                $port = self::MAP_PORTS[$access['type']];
+            if(isset(self::MAP_PORTS[$access['access_type']])) {
+                $port = self::MAP_PORTS[$access['access_type']];
                 if($access['port'] != $port) {
                     self::id($id)->update(['port' => $port]);
                 }
@@ -133,7 +133,7 @@ class Access extends Model {
 
     public static function calUrl($self) {
         $result = [];
-        $self->read(['port', 'host', 'type', 'username', 'password']);
+        $self->read(['port', 'host', 'access_type', 'username', 'password']);
         foreach($self as $id => $access) {
             $result[$id] = self::createUrl($access);
         }
@@ -143,23 +143,23 @@ class Access extends Model {
     public static function onchange($event, $values) {
         $result = [];
 
-        if(isset($event['type'], self::MAP_PORTS[$event['type']])) {
-            $result['port'] = self::MAP_PORTS[$event['type']];
+        if(isset($event['access_type'], self::MAP_PORTS[$event['access_type']])) {
+            $result['port'] = self::MAP_PORTS[$event['access_type']];
         }
 
         if(
-            isset($event['type'])
+            isset($event['access_type'])
             || isset($event['username'])
             || isset($event['password'])
             || isset($event['host'])
             || isset($event['port'])
         ) {
             $result['url'] = self::createUrl([
-                'type'     => $event['type'] ?? $values['type'],
-                'username' => $event['username'] ?? $values['username'],
-                'password' => $event['password'] ?? $values['password'],
-                'host'     => $event['host'] ?? $values['host'],
-                'port'     => $result['port'] ?? $event['port'] ?? $values['port']
+                'access_type'   => $event['access_type'] ?? $values['access_type'],
+                'username'      => $event['username'] ?? $values['username'],
+                'password'      => $event['password'] ?? $values['password'],
+                'host'          => $event['host'] ?? $values['host'],
+                'port'          => $result['port'] ?? $event['port'] ?? $values['port']
             ]);
         }
 
@@ -169,7 +169,7 @@ class Access extends Model {
     private static function createUrl($access) {
         return sprintf(
             '%s://%s:%s@%s',
-            $access['type'],
+            $access['access_type'],
             $access['username'],
             $access['password'],
             self::createAuthority($access)

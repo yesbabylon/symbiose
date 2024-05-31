@@ -25,7 +25,7 @@ class DetailCategory extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\service\Detail',
                 'foreign_field'     => 'detail_category_id',
-                'description'       => 'The details of the detail category .'
+                'description'       => 'The details of the detail category.'
             ]
         ];
     }

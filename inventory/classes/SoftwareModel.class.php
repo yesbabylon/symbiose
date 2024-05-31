@@ -16,14 +16,14 @@ class SoftwareModel extends Model {
 
             'name' => [
                 'type'              => 'string',
-                'description'       => "Name of the software.",
+                'description'       => "Name of the software model.",
                 'required'          => true
             ],
 
             'description' => [
                 'type'              => 'string',
                 'usage'             => 'text/plain',
-                'description'       => 'Information about a software.'
+                'description'       => 'Information about a software model.'
             ],
 
             'edition' => [
@@ -33,7 +33,7 @@ class SoftwareModel extends Model {
 
             'version' => [
                 'type'              => 'string',
-                'description'       => "Installed version of the software."
+                'description'       => "Installed version of the software model."
             ]
 
         ];

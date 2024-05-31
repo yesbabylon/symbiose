@@ -74,7 +74,8 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "value": "type",
+                                                "label": "type",
+                                                "value": "access_type",
                                                 "width": "15%"
                                             },
                                             {
