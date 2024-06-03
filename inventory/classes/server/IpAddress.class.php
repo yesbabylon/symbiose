@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class IpAddress extends Model {
 
+    public static function getDescription() {
+        return 'The IP addresses (v4 or v6) associated with server.';
+    }
+
     public static function getColumns() {
         return [
 

@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class ServiceProviderCategory extends Model {
 
+    public static function getDescription() {
+        return 'ServiceProviderCategory organizes service providers into categories, aiding in system management and categorization';
+    }
+
     public static function getColumns()
     {
         return [

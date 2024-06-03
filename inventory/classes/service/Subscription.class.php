@@ -12,6 +12,10 @@ use sale\subscription\Subscription as SaleSubscription;
 
 class Subscription extends SaleSubscription  {
 
+    public static function getDescription() {
+        return 'The Subscription contains the relationship with a specific service, indicating whether it is for internal use or with an external provider, as well as billing information and the associated customer.';
+    }
+
     public static function getColumns(): array {
         return [
             'customer_id' => [

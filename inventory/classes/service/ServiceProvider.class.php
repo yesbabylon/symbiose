@@ -11,6 +11,10 @@ use purchase\supplier\Supplier;
 
 class ServiceProvider extends Supplier {
 
+    public static function getDescription() {
+        return 'ServiceProvider class extends Supplier, managing providers login URL, category, and associated services.';
+    }
+
     public static function getColumns()
     {
         return [

@@ -12,7 +12,7 @@ use equal\orm\Model;
 class Instance extends Model {
 
     public static function getDescription() {
-        return 'Instance running on a server, for example a Docker instance.';
+        return 'Instance manages service or product instances, detailing type, version, URL, access information, and running software.';
     }
 
     public static function getColumns()
@@ -82,7 +82,7 @@ class Instance extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'instance_id',
-                'description'       => 'Information about softwares running on the instance.'
+                'description'       => 'Information about the list of  software running on the instance.'
             ]
 
         ];

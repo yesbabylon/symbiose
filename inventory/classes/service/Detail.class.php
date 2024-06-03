@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class Detail extends Model {
 
+    public static function getDescription() {
+        return 'Detail manages specific elements related to services or products, providing properties for identification, description, value, and links to service and category.';
+    }
+
     public static function getColumns()
     {
         return [

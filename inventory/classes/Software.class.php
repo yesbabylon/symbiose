@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class Software extends Model {
 
+    public static function getDescription() {
+        return 'The software includes its name, description, edition, and version, along with details regarding the software model, instance, server, service, and customer ownership.';
+    }
+
     public static function getColumns()
     {
         return [

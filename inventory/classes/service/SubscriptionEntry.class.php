@@ -11,6 +11,11 @@ use sale\subscription\SubscriptionEntry as SaleSubscriptionEntry;
 
 class SubscriptionEntry extends SaleSubscriptionEntry {
 
+    public static function getDescription() {
+        return 'Subscription entries describe the process of invoicing the client for the service.
+        They are associated with both the customer and the service provider.';
+    }
+
     public static function getColumns(): array {
         return [
 
@@ -70,6 +75,6 @@ class SubscriptionEntry extends SaleSubscriptionEntry {
     }
 
     public static function calcSubscriptionId($self): array {
-        return self::calcFromSubscription($self, 'id');
+        return self::calcFromSubscription($self, 'subscription_id');
     }
 }

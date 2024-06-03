@@ -12,6 +12,10 @@ use inventory\Product;
 
 class Service extends Model {
 
+    public static function getDescription() {
+        return 'This class manages services comprehensively, handling billing, renewal, product-client association, provider linkage, documentation, and access/software management.';
+    }
+
     public static function getColumns()
     {
         return [

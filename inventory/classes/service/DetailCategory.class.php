@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class DetailCategory extends Model {
 
+    public static function getDescription() {
+        return 'DetailCategory organizes and manages categories of details related to services or products, enabling efficient classification and organization of information.';
+    }
+
     public static function getColumns()
     {
         return [

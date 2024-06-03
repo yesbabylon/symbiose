@@ -12,6 +12,10 @@ use equal\orm\Model;
 class Server extends Model {
 
 
+    public static function getDescription() {
+        return 'The Server includes its name, description, type, access, instances, associated products, IP addresses, and installed software.';
+    }
+
     public static function getColumns()
     {
         return [
