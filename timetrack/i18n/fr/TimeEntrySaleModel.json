@@ -1,0 +1,60 @@
+{
+    "name": "Modèle de vente",
+    "plural": "Modèles de vente",
+    "description": "Un modèle de vente (de saisie des temps) permet de définir quel prix (et produit) doit être utilisé pour les saisies de temps d'un projet donné.",
+    "model": {
+        "origin": {
+            "label": "Origine",
+            "description": "Origine de la création de cette saisie de temps.",
+            "selection": {
+                "project": "Projet",
+                "backlog": "Backlog",
+                "email": "E-mail",
+                "support": "Support"
+            },
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit à assigner aux saisies de temps.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Prix à assigner aux saisies de temps.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix unitaire à assigner aux saisies de temps.",
+            "help": ""
+        },
+        "projects_ids": {
+            "label": "Projets",
+            "description": "Projets appliquant le modèle de vente.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Modèle de vente",
+            "description": "Formulaire de modification par défaut d'un modèle de vente.",
+            "layout": {
+                "section.projects": {
+                    "label": "Projets",
+                    "help": ""
+                },
+                "section.details": {
+                    "label": "Détails",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Modèles de vente",
+            "description": "Liste des modèles de vente.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

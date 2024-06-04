@@ -34,8 +34,8 @@
             {
                 "sections": [
                     {
-                        "id": "section.info",
-                        "label": "Info",
+                        "id": "section.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [

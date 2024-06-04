@@ -1,0 +1,112 @@
+{
+    "name": "Entrée de temps",
+    "plural": "Entrées de temps",
+    "description": "Les entrées de temps sont utilisées pour enregistrer les tâches effectuées par les employés sur les projets des clients et la durée qui y est consacrée.",
+    "model": {
+        "description": {
+            "label": "Description courte",
+            "description": "Brève description de l'entrée.",
+            "help": ""
+        },
+        "detailed_description": {
+            "label": "Description",
+            "description": "Description de l'entrée.",
+            "help": ""
+        },
+        "date": {
+            "label": "Date",
+            "description": "Date de réalisation de l'entrée.",
+            "help": ""
+        },
+        "time_start": {
+            "label": "Début",
+            "description": "Temps de commencement de réalisation de l'entrée.",
+            "help": ""
+        },
+        "time_end": {
+            "label": "Fin",
+            "description": "Temps de fin de réalisation de l'entrée.",
+            "help": ""
+        },
+        "duration": {
+            "label": "Durée",
+            "description": "Durée de réalisation de l'entrée.",
+            "help": ""
+        },
+        "user_id": {
+            "label": "Utilisateur",
+            "description": "Utilisateur qui a réalisé l'entrée.",
+            "help": ""
+        },
+        "origin": {
+            "label": "Origine",
+            "description": "À quoi la tâche réalisée est une réponse.",
+            "selection": {
+                "project": "Projet",
+                "backlog": "Backlog",
+                "email": "E-mail",
+                "support": "Support"
+            },
+            "help": ""
+        },
+        "ticket_id": {
+            "label": "Id ticket",
+            "description": "Id du ticket de support.",
+            "help": "Projet: fait référence à une tâche de gestion de projet.\nBacklog: fait référence à une (ou plusieurs) entrée du backlog associé au projet.\nE-mail: fait référence à une conversation électronique spécifique.\nSupport: fait référence à un ticket de support spécifique."
+        },
+        "ticket_link": {
+            "label": "Lien ticket",
+            "description": "Lien du ticket de support.",
+            "help": ""
+        },
+        "reference": {
+            "label": "Référence",
+            "description": "Référence completant l'origine.",
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Saisie du temps",
+            "description": "Formulaire de modification par défaut d'une saisie de temps.",
+            "actions": {
+                "action.transition.ready": {
+                    "label": "Prête",
+                    "help": ""
+                },
+                "action.transition.refuse": {
+                    "label": "Refuser",
+                    "help": ""
+                },
+                "action.transition.validate": {
+                    "label": "Valider",
+                    "help": ""
+                },
+                "action.transition.bill": {
+                    "label": "Facturer",
+                    "help": ""
+                }
+            },
+            "layout": {
+                "section.details": {
+                    "label": "Détails",
+                    "help": ""
+                },
+                "section.sale": {
+                    "label": "Vente",
+                    "help": ""
+                },
+                "section.description": {
+                    "label": "Description",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Saisies de temps",
+            "description": "Liste des saisies de temps.",
+            "layout": {}
+        }
+    },
+    "error": {}
+}

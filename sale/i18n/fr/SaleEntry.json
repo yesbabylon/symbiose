@@ -1,0 +1,125 @@
+{
+    "name": "Sale entry",
+    "plural": "Sale entries",
+    "description": "Sale entries are used to describe sales.",
+    "model": {
+        "code": {
+            "label": "Code",
+            "description": "Code unique de l'entrée.",
+            "help": ""
+        },
+        "description": {
+            "label": "Description",
+            "description": "Description de l'entrée.",
+            "help": ""
+        },
+        "detailed_description": {
+            "label": "Description détaillée",
+            "description": "Description détaillée de l'entrée.",
+            "help": ""
+        },
+        "has_receivable": {
+            "label": "A un percevable",
+            "description": "L'entée de vente est liée à un percevable.",
+            "help": ""
+        },
+        "receivable_id": {
+            "label": "Percevable",
+            "description": "Percevable lié à l'entrée de vente.",
+            "help": ""
+        },
+        "is_billable": {
+            "label": "Est facturable",
+            "description": "Est-ce que l'entrée peut-être facturé au client.",
+            "help": ""
+        },
+        "customer_id": {
+            "label": "Client",
+            "description": "Le client sujet de la vente.",
+            "help": ""
+        },
+        "product_id": {
+            "label": "Produit",
+            "description": "Produit vendu.",
+            "help": ""
+        },
+        "price_id": {
+            "label": "Prix",
+            "description": "Prix de vente.",
+            "help": ""
+        },
+        "unit_price": {
+            "label": "Prix unitaire",
+            "description": "Prix unitaire des produits vendus.",
+            "help": ""
+        },
+        "qty": {
+            "label": "Quantité",
+            "description": "Quantité de produits vendus.",
+            "help": ""
+        },
+        "free_qty": {
+            "label": "Gratuités",
+            "description": "Quantité gratuite de produit.",
+            "help": ""
+        },
+        "discount": {
+            "label": "Remise",
+            "description": "Montant total de la remise à appliquer, le cas échéant.",
+            "help": ""
+        },
+        "subscription_id": {
+            "label": "Abonnement",
+            "description": "Abonnement à l'origine de l'entrée.",
+            "help": ""
+        },
+        "project_id": {
+            "label": "Projet",
+            "description": "Projet à l'origine de l'entrée.",
+            "help": ""
+        },
+        "receivable_name": {
+            "label": "Nom du percevable",
+            "description": "Nom donné au percevable généré.",
+            "help": ""
+        },
+        "status": {
+            "label": "Status",
+            "description": "Status de l'entrée.",
+            "selection": {
+                "pending": "En cours",
+                "ready": "Prête",
+                "validated": "Validée",
+                "billed": "Facturée"
+            },
+            "help": ""
+        }
+    },
+    "view": {
+        "form.default": {
+            "name": "Entrée de vente",
+            "description": "Formulaire de modification par défaut d'une entrée de vente.",
+            "actions": {
+                "action.transition.bill": {
+                    "label": "Facturer",
+                    "help": ""
+                }
+            },
+            "layout": {
+                "section.sale": {
+                    "label": "Vente",
+                    "help": ""
+                },
+                "section.billing": {
+                    "label": "Facturation",
+                    "help": ""
+                }
+            }
+        },
+        "list.default": {
+            "name": "Entrées de vente",
+            "description": "Liste des entrées de vente.",
+            "layout": {}
+        }
+    }
+}
