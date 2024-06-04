@@ -32,7 +32,7 @@ if (!$pack) {
 }
 
 
-for ($i = 1; $i <= 8; $i++) {
+for ($i = 1; $i < 8; $i++) {
 
     // read json file
     $data = file_get_contents(dirname(__DIR__) . "/init/modules/Module" . $i . ".json");
