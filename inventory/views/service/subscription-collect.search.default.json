@@ -7,8 +7,8 @@
             "view": "search.default"
         },
         "update": {
-            "item.product": {
-                "before": [
+            "item.expired": {
+                "after": [
                     {
                         "type": "field",
                         "value": "service_id",
