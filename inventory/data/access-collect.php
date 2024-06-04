@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the Discope property management software.
-    Author: Yesbabylon SRL, 2020-2022
-    License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 use equal\orm\Domain;
@@ -77,41 +77,44 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 //   Add conditions to the domain to consider advanced parameters
-$domain = $params['domain'];
+$domain = [];
 
 if(isset($params['username']) && strlen($params['username']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['username', 'ilike','%'.$params['username'].'%']);
+    $domain = ['username', 'ilike','%'.$params['username'].'%'];
 }
 
 if(isset($params['access_type']) && strlen($params['access_type']) > 0 && $params['access_type']!= 'all') {
-    $domain = Domain::conditionAdd($domain, ['access_type', '=', $params['access_type']]);
+    $domain = ['access_type', '=', $params['access_type']];
 }
 
 if(isset($params['host']) && strlen($params['host']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['host', 'ilike','%'.$params['host'].'%']);
+    $domain = ['host', 'ilike','%'.$params['host'].'%'];
 }
 
 if(isset($params['url']) && strlen($params['url']) > 0 ) {
-    $domain = Domain::conditionAdd($domain, ['url', 'ilike','%'.$params['url'].'%']);
+    $domain = ['url', 'ilike','%'.$params['url'].'%'];
 }
 
 if(isset($params['server_id']) && $params['server_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['server_id', '=', $params['server_id']]);
+    $domain = ['server_id', '=', $params['server_id']];
 }
 
 if(isset($params['software_id']) && $params['software_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['software_id', '=', $params['software_id']]);
+    $domain = ['software_id', '=', $params['software_id']];
 }
 
 if(isset($params['instance_id']) && $params['instance_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['instance_id', '=', $params['instance_id']]);
+    $domain = ['instance_id', '=', $params['instance_id']];
 }
 
 if(isset($params['service_id']) && $params['service_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['service_id', '=', $params['service_id']]);
+    $domain = ['service_id', '=', $params['service_id']];
 }
 
-$params['domain'] = $domain;
+$params['domain'] = (new Domain($params['domain']))
+    ->merge(new Domain($domain))
+    ->toArray();
+
 $result = eQual::run('get', 'model_collect', $params, true);
 
 $context->httpResponse()
