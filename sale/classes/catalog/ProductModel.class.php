@@ -4,7 +4,9 @@
     Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class ProductModel extends Model {
@@ -14,13 +16,14 @@ class ProductModel extends Model {
     }
 
     public static function getDescription() {
-        return "Product Models act as common denominator for products variants (referred to as \"Products\").\n
-         These objects are used for catalogs generation: for instance, if a picture is related to a Product, it is associated on the Product Model level.\n
-         A Product Model has at minimum one variant, which means at minimum one SKU.\n";
+        return "Product Models act as common denominator for products variants (referred to as \"Products\")."
+            ." These objects are used for catalogs generation: for instance, if a picture is related to a Product, it is associated on the Product Model level."
+            ." A Product Model has at minimum one variant, which means at minimum one SKU.";
     }
 
     public static function getColumns() {
         return [
+
             'name' => [
                 'type'              => 'string',
                 'description'       => "Name of the product model (used for all variants).",
@@ -37,12 +40,14 @@ class ProductModel extends Model {
 
             'selling_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule',
+                'description'       => 'Accounting rule to use in case of sell.'
             ],
 
             'buying_accounting_rule_id' => [
                 'type'              => 'many2one',
-                'foreign_object'    => 'finance\accounting\AccountingRule'
+                'foreign_object'    => 'finance\accounting\AccountingRule',
+                'description'       => 'Accounting rule to use in case of purchase.'
             ],
 
             'stat_section_id' => [
@@ -53,7 +58,7 @@ class ProductModel extends Model {
 
             'can_buy' => [
                 'type'              => 'boolean',
-                'description'       => "Can this product be purchassed?",
+                'description'       => "Can this product be purchased?",
                 'default'           => false,
                 'onupdate'          => 'onupdateCanBuy'
             ],
@@ -82,6 +87,7 @@ class ProductModel extends Model {
 
             'type' => [
                 'type'              => 'string',
+                'description'       => 'Is the product a consumable or a service.',
                 'selection'         => [
                     'consumable',
                     'service'
@@ -92,6 +98,7 @@ class ProductModel extends Model {
 
             'consumable_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the consumable product storable.',
                 'selection'         => [
                     'simple',
                     'storable'
@@ -101,6 +108,7 @@ class ProductModel extends Model {
 
             'service_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the service product schedulable.',
                 'selection'         => [
                     'simple',
                     'schedulable'
@@ -111,6 +119,7 @@ class ProductModel extends Model {
 
             'schedule_type' => [
                 'type'              => 'string',
+                'description'       => 'Is the service schedulable on a specific time or on a time range.',
                 'selection'         => [
                     'time',
                     'timerange'
@@ -134,6 +143,7 @@ class ProductModel extends Model {
 
             'tracking_type' => [
                 'type'              => 'string',
+                'description'       => 'How is the stored consumable product tracked.',
                 'selection'         => [
                     'none',
                     'batch',
@@ -162,6 +172,7 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'product_models_ids',
+                'description'       => 'Linked groups.',
                 'rel_table'         => 'sale_catalog_product_rel_productmodel_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'productmodel_id',
@@ -172,6 +183,7 @@ class ProductModel extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Category',
                 'foreign_field'     => 'product_models_ids',
+                'description'       => 'Linked categories',
                 'rel_table'         => 'sale_product_rel_productmodel_category',
                 'rel_foreign_key'   => 'category_id',
                 'rel_local_key'     => 'productmodel_id'
@@ -182,6 +194,13 @@ class ProductModel extends Model {
                 'foreign_object'    => 'sale\catalog\Product',
                 'foreign_field'     => 'product_model_id',
                 'description'       => "Product variants that are related to this model.",
+            ],
+
+            'options_ids' => [
+                'type'              => 'one2many',
+                'foreign_object'    => 'sale\catalog\Option',
+                'foreign_field'     => 'product_model_id',
+                'description'       => "Product options that are related to this model.",
             ]
 
         ];
@@ -233,5 +252,4 @@ class ProductModel extends Model {
             }
         }
     }
-
 }

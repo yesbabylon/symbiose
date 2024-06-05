@@ -9,6 +9,51 @@
             {
                 "sections": [
                     {
+                        "rows": [
+                            {
+                                "columns": [
+                                    {
+                                        "width": "66%",
+                                        "items": [
+                                            {
+                                                "type": "field",
+                                                "value": "name",
+                                                "width": "66%",
+                                                "widget": {
+                                                    "heading": true
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "33%",
+                                        "items": [
+                                            {
+                                                "type": "label",
+                                                "width": "15%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "value": "is_paid",
+                                                "width": "33%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Amount Due",
+                                                "value": "due_amount",
+                                                "width": "50%"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sections": [
+                    {
                         "label": "General Info",
                         "id": "section.funding_section",
                         "rows": [
@@ -19,18 +64,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
-                                                "label": "Invoice",
-                                                "value": "invoice_id",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "value": "payment_reference",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "value": "name",
                                                 "width": "50%"
                                             },
                                             {
@@ -40,18 +74,26 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "value": "is_paid",
+                                                "label": "Invoice",
+                                                "value": "invoice_id",
                                                 "width": "50%"
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "width": "50%",
+                                        "items": [
                                             {
-                                                "type": "field",
-                                                "label": "Amount Due",
-                                                "value": "due_amount",
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {
                                                 "type": "field",
                                                 "value": "due_date",
+                                                "width": "50%"
+                                            },
+                                            {
+                                                "type": "label",
                                                 "width": "50%"
                                             },
                                             {

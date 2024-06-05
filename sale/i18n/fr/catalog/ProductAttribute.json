@@ -8,6 +8,11 @@
 			"help": "Le produit auquel appartient cet attribut.",
 			"description": ""
 		},
+		"product_model_id": {
+			"label": "Modèle de produit",
+			"help": "Le modèle de produit auquel appartient cet attribut.",
+			"description": ""
+		},
 		"option_id": {
 			"label": "Option",
 			"help": "Option de produit à laquelle cet attribut se rapporte.",

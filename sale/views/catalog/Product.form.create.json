@@ -16,6 +16,13 @@
             "section.pack_lines",
             "section.prices",
             "section.attributes"
-        ]
+        ],
+        "update": {
+            "item.product_model_id": {
+                "attributes": {
+                    "readonly": false
+                }
+            }
+        }
     }
 }

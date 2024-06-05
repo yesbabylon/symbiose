@@ -1,13 +1,20 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\pay;
+
 use equal\orm\Model;
 
 class PaymentTerms extends Model {
+
+    public static function getDescription() {
+        return 'Payment terms of an invoice specify the conditions under which your organisation will accept payment from customers.'
+            .' They include the payment due date, any discounts for early payment, and penalties for late payment.';
+    }
 
     public static function getColumns() {
 

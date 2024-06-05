@@ -53,6 +53,7 @@
                                         ]
                                     },
                                     {
+                                        "id": "column.middle-empty",
                                         "width": "25%",
                                         "items": [
                                             {

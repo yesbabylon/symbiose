@@ -11,14 +11,12 @@ use symbiose\setting\Setting;
 use finance\accounting\AccountChartLine;
 use finance\accounting\AccountingEntry;
 use finance\accounting\AccountingRuleLine;
-use inventory\Product;
+use sale\catalog\Product;
 use sale\customer\Customer;
 use sale\pay\Funding;
 use sale\receivable\Receivable;
 
 class Invoice extends \finance\accounting\Invoice {
-
-    protected static $invoice_editable_fields = ['payment_status', 'customer_ref'];
 
     public static function getName() {
         return 'Sale invoice';
@@ -41,6 +39,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             'invoice_purpose' => [
                 'type'              => 'string',
+                'description'       => 'Is the invoice concerning a sale to a customer or a buy from a supplier.',
                 'default'           => 'sell',
                 'visible'           => false
             ],
@@ -156,7 +155,7 @@ class Invoice extends \finance\accounting\Invoice {
 
             $format = Setting::get_value('sale', 'invoice', 'sequence_format', '%2d{year}-%05d{sequence}');
             $year = Setting::get_value('sale', 'invoice', 'fiscal_year', date('Y'));
-            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, $organisation_id);
+            $sequence = Setting::fetch_and_add('sale', 'invoice', 'sequence', 1, compact('organisation_id'));
 
             if($sequence) {
                 $result[$id] = Setting::parse_format($format, [
@@ -291,17 +290,18 @@ class Invoice extends \finance\accounting\Invoice {
         } catch(\Exception $e) {
             trigger_error("PHP::unable to create invoice accounting entries: {$e->getMessage()}", QN_REPORT_ERROR);
         }
+    }
 
+    public static function onafterInvoice($self) {
+        // Force computing the invoice number that was set to null in onbeforeInvoice
+        $self->read(['invoice_number', 'due_date']);
+
+        // Funding must be created here because it needs the due_date force computed above
         try {
             $self->do('create_funding');
         } catch(\Exception $e) {
             trigger_error("PHP::unable to create funding: {$e->getMessage()}", QN_REPORT_ERROR);
         }
-    }
-
-    public static function onafterInvoice($self) {
-        // Force computing the invoice number that was set to null in onbeforeInvoice
-        $self->read(['invoice_number', 'funding_id', 'due_date']);
     }
 
     public static function onafterCancelProforma($self) {
@@ -669,9 +669,9 @@ class Invoice extends \finance\accounting\Invoice {
      * Create the funding according to the invoice.
      */
     public static function doCreateFunding($self) {
-        $self->read(['id', 'price', 'payment_reference', 'due_date','funding_id']);
-        foreach($self as $invoice) {
+        $self->read(['id', 'price', 'payment_reference', 'due_date', 'funding_id']);
 
+        foreach($self as $invoice) {
             $funding = Funding::create([
                 'description'         => 'Sold Invoice',
                 'invoice_id'          => $invoice['id'],
@@ -681,11 +681,10 @@ class Invoice extends \finance\accounting\Invoice {
                 'payment_reference'   => $invoice['payment_reference'],
                 'due_date'            => $invoice['due_date']
             ])
-            ->first();
+                ->first();
 
             Invoice::id($invoice['id'])
                 ->update(['funding_id' => $funding['id']]);
         }
-
     }
 }

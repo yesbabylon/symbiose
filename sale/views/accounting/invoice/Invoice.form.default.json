@@ -1,6 +1,6 @@
 {
     "name": "Invoice",
-    "description": "An invoice is a legal document issued by a seller to a buyer that relates to a sale, and is part of the accounting system.",
+    "description": "Invoice default form.",
     "access": {
         "groups": ["sale.default.user"]
     },
@@ -145,6 +145,11 @@
                         "width": "33%"
                     }
                 ]
+            },
+            "item.emission_date": {
+                "attributes": {
+                    "visible": ["status", "<>", "proforma"]
+                }
             },
             "item.invoice_lines_ids": {
                 "attributes": {
