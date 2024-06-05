@@ -1,0 +1,65 @@
+[
+    {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1200,
+                "customer_id": 1200,
+                "type_id": 3,
+                "legal_name": "Hestoria S.A.",
+                "short_name": "Hestoria",
+                "website": "https://hestoria.com",
+                "has_vat": true,
+                "vat_number": "BE0123456789",
+                "bank_account_iban": "BE68539007547034",
+                "bank_account_bic": "KREDBEBB",
+                "address_street": "Rue de la Loi 42",
+                "address_city": "Brussels",
+                "address_zip": "1000",
+                "address_state": "",
+                "address_country": "Belgium",
+                "email": "contact@hestoria.com",
+                "phone": "+3221244961",
+                "mobile": "+32481143125"
+            }
+        ]
+    },
+    {
+        "name": "sale\\customer\\Customer",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1200,
+                "partner_identity_id": 1200,
+                "type_id": 3,
+                "legal_name": "Hestoria S.A.",
+                "has_vat": true,
+                "vat_number": "BE0123456789",
+                "address_street": "Rue de la Loi 42",
+                "address_city": "Brussels",
+                "address_zip": "1000",
+                "address_state": "",
+                "address_country": "Belgium",
+                "email": "contact@hestoria.com",
+                "phone": "+3221244961",
+                "mobile": "+32481143125"
+            }
+        ]
+    },
+    {
+        "name": "timetrack\\Project",
+        "lang": "en",
+        "data": [
+            {
+                "id": 1,
+                "name": "Wordpress website hestoria.com",
+                "description": "Wordpress website with domain name hestoria.com",
+                "customer_id": 1200,
+                "instance_id": null,
+                "time_entry_sale_model_id": 1,
+                "receivable_queue_id": null
+            }
+        ]
+    }
+]

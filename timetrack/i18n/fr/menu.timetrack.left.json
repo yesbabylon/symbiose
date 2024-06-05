@@ -1,0 +1,44 @@
+{
+    "name": "Timetrack menu de gauche",
+    "view": {
+        "time_entries": {
+            "label": "Saisies de temps"
+        },
+        "time_entries.new": {
+            "label": "Nouvelle"
+        },
+        "time_entries.all": {
+            "label": "Toutes"
+        },
+        "time_entries.ready": {
+            "label": "À valider"
+        },
+        "time_entries.billable": {
+            "label": "À facturer"
+        },
+        "time_entries.billed": {
+            "label": "Facturées"
+        },
+        "time_entries.archived": {
+            "label": "Archivées"
+        },
+        "projects": {
+            "label": "Projets"
+        },
+        "projects.new": {
+            "label": "Nouveau"
+        },
+        "projects.all": {
+            "label": "Tous"
+        },
+        "projects.archived": {
+            "label": "Archivés"
+        },
+        "settings": {
+            "label": "Paramètres"
+        },
+        "settings.time_entry_sale_model": {
+            "label": "Modèles de vente"
+        }
+    }
+}

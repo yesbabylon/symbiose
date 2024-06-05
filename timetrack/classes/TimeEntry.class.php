@@ -27,6 +27,10 @@ class TimeEntry extends SaleEntry {
 
         return [
 
+            /**
+             * Override SaleEntry columns
+             */
+
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
@@ -96,13 +100,21 @@ class TimeEntry extends SaleEntry {
                 'store'          => true
             ],
 
+            'qty' => [
+                'type'           => 'computed',
+                'result_type'    => 'float',
+                'description'    => 'Quantity in hours based on duration.',
+                'function'       => 'calcQty',
+                'store'          => true
+            ],
+
             /**
              * Specific TimeEntry columns
              */
 
             'date'       => [
                 'type'           => 'date',
-                'description'    => 'Date of the entry',
+                'description'    => 'Date of the entry.',
                 'default'        => function() { return time(); },
             ],
 
@@ -130,13 +142,6 @@ class TimeEntry extends SaleEntry {
                 'onupdate'       => 'onupdateDuration'
             ],
 
-            'qty' => [
-                'type'           => 'computed',
-                'result_type'    => 'float',
-                'function'       => 'calcQty',
-                'description'    => 'Quantity in hours based on duration.'
-            ],
-
             'user_id' => [
                 'type'           => 'many2one',
                 'foreign_object' => 'core\User',
@@ -156,7 +161,7 @@ class TimeEntry extends SaleEntry {
                 'description'    => 'Origin of the time entry: what the task performed is a response to.',
                 'help'           => "Project: refers to a Project Management task.\n
                                      Backlog: refers to one (or more) entry from the backlog associated with the project.\n
-                                     E-mail: refers to a specific email conversation\n
+                                     E-mail: refers to a specific email conversation.\n
                                      Support: refers to a specific support ticket.",
                 'default'        => 'project'
             ],
@@ -182,8 +187,7 @@ class TimeEntry extends SaleEntry {
             'reference' => [
                 'type'           => 'string',
                 'dependents'     => ['name'],
-                'description'    => 'Email or backlog reference.',
-                'visible'        => ['origin', 'in', ['backlog', 'email']]
+                'description'    => 'Reference completing the origin.'
             ]
 
         ];
@@ -257,9 +261,6 @@ class TimeEntry extends SaleEntry {
         $result = [];
 
         if(isset($event['origin'])) {
-            if(!in_array($event['origin'], ['backlog', 'email'])) {
-                $result['reference'] = null;
-            }
             if($event['origin'] != 'support') {
                 $result['ticket_id'] = null;
                 $result['ticket_link'] = null;
@@ -301,7 +302,7 @@ class TimeEntry extends SaleEntry {
     public static function onupdateProjectId($self): void {
         $self->read(['object_id', 'object_class', 'project_id']);
         foreach($self as $id => $entry) {
-            if($entry['object_id'] != $entry['project_id'] || $entry['object_id'] != Project::getType()) {
+            if($entry['object_id'] != $entry['project_id'] || $entry['object_class'] != Project::getType()) {
                 self::id($id)->update([
                         'object_id'     => $entry['project_id'],
                         'object_class'  => Project::getType()

@@ -24,49 +24,51 @@ class TimeEntrySaleModel extends Model {
         return [
 
             'name' => [
-                'type'            => 'string',
-                'description'     => 'Name of the sale model.',
-                'required'        => true,
-                'unique'          => true,
-                'multilang'       => true
+                'type'              => 'string',
+                'description'       => 'Name of the sale model.',
+                'required'          => true,
+                'unique'            => true,
+                'multilang'         => true
             ],
 
             'origin' => [
-                'type'            => 'string',
-                'selection'       => [
-                    'project' => 'Project',
-                    'backlog' => 'Backlog',
-                    'email'   => 'E-mail',
-                    'support' => 'Support ticket',
+                'type'              => 'string',
+                'selection'         => [
+                    'project'   => 'Project',
+                    'backlog'   => 'Backlog',
+                    'email'     => 'E-mail',
+                    'support'   => 'Support ticket',
                 ],
-                'description'     => 'Origin of the this time entry creation.',
-                'default'         => 'project'
+                'description'       => 'Origin of the this time entry creation.',
+                'default'           => 'project'
             ],
 
             'product_id' => [
-                'type'            => 'many2one',
-                'foreign_object'  => 'sale\catalog\Product',
-                'description'     => 'The product to assign to TimeEntry.'
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\catalog\Product',
+                'description'       => 'The product to assign to TimeEntry.'
             ],
 
             'price_id' => [
-                'type'            => 'many2one',
-                'foreign_object'  => 'sale\price\Price',
-                'description'     => 'The price to assign to TimeEntry.',
-                'onupdate'        => 'onupdatePriceId',
-                'domain'           => ['product_id', '=', 'object.product_id']
+                'type'              => 'many2one',
+                'foreign_object'    => 'sale\price\Price',
+                'description'       => 'The price to assign to TimeEntry.',
+                'onupdate'          => 'onupdatePriceId',
+                'domain'            => ['product_id', '=', 'object.product_id']
             ],
 
             'unit_price' => [
-                'type'            => 'float',
-                'usage'           => 'amount/money:4',
-                'description'     => 'Change to assign a custom unit price.'
+                'type'              => 'float',
+                'usage'             => 'amount/money:4',
+                'description'       => 'The unit price to assign to TimeEntry.',
+                'help'              => 'Change to assign a custom unit price.'
             ],
 
             'projects_ids' => [
-                'type'            => 'one2many',
-                'foreign_object'  => 'timetrack\Project',
-                'foreign_field'   => 'time_entry_sale_model_id'
+                'type'              => 'one2many',
+                'foreign_object'    => 'timetrack\Project',
+                'foreign_field'     => 'time_entry_sale_model_id',
+                'description'       => 'Projects applying the sale model.'
             ]
 
         ];
