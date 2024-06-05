@@ -19,11 +19,10 @@
                 "code": "sequence",
                 "title": "Current sequence for booking numbering",
                 "package": "sale",
-                "form_control": "input",
                 "section_id": 7,
+                "is_sequence": true,
                 "description":"Current sequence for booking numbering.",
-                "help": "",
-                "type": "integer"
+                "help": ""
             },
             {
                 "id": 1013,
@@ -63,11 +62,10 @@
                 "code": "sequence",
                 "title": "Invoices sequence",
                 "package": "sale",
-                "form_control": "input",
                 "section_id": 6,
+                "is_sequence": true,
                 "description":"Sequence for the invoice.",
-                "help": "Sequence for the invoice.",
-                "type": "integer"
+                "help": "Sequence for the invoice."
             },
             {
                 "id": 1050,
