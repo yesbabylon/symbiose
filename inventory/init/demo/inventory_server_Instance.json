@@ -6,7 +6,7 @@
             {
                 "id": 1,
                 "name": "YB website",
-                "type": "prod",
+                "instance_type": "prod",
                 "version": "production",
                 "branch": "1.0",
                 "url": "https://yesbabylon.com",
@@ -15,7 +15,7 @@
             {
                 "id": 2,
                 "name": "YB website staging",
-                "type": "prod",
+                "instance_type": "prod",
                 "version": "staging",
                 "branch": "dev-1.1",
                 "url": "https://dev.yesbabylon.com",
@@ -25,7 +25,7 @@
                 "id": 3,
                 "name": "Calendar management ",
                 "version": "development",
-                "type": "dev",
+                "instance_type": "dev",
                 "branch": "master",
                 "server_id": 2
             }

@@ -1,20 +1,28 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class PackLine extends Model {
 
+    public static function getName() {
+        return 'Pack line';
+    }
+
+    public static function getDescription() {
+        return 'A Pack Line corresponds to the relation between a \'pack\' product (bundle) and another product that it includes.'
+            .' It is equivalent of M2M table between Product and itself.';
+    }
+
     public static function getColumns() {
-        /**
-         * A Pack Line corresponds to the relation between a 'pack' product (bundle) and another product that it includes.
-         * It is equivalent of M2M table between Product and itself.
-         */
         return [
+
             'name' => [
                 'type'              => 'computed',
                 'function'          => 'sale\catalog\PackLine::calcName',

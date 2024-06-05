@@ -5,6 +5,7 @@
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 namespace sale\catalog;
+
 use equal\orm\Model;
 
 class Product extends Model {
@@ -14,9 +15,9 @@ class Product extends Model {
     }
 
     public static function getDescription() {
-        return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model.\n
-         Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model).\n
-         A SKU code identifies a single product with all its specific characteristics.\n";
+        return "A Product is a variant of a Product Model. There is always at least one Product for a given Product Model."
+            ." Within the organisation, a product is always referenced by a SKU code (assigned to each variant of a Product Model)."
+            ." A SKU code identifies a single product with all its specific characteristics.";
     }
 
     public static function getColumns() {
@@ -130,7 +131,7 @@ class Product extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'boolean',
                 'function'          => 'calcCanBuy',
-                'description'       => "Can this product be purchassed? (from model)",
+                'description'       => "Can this product be purchased? (from model)",
                 'help'              => "Field can_buy is adapted when related value is changed in parent ProductModel.",
                 'store'             => true,
                 'readonly'          => true
@@ -150,6 +151,7 @@ class Product extends Model {
                 'type'              => 'many2many',
                 'foreign_object'    => 'sale\catalog\Group',
                 'foreign_field'     => 'products_ids',
+                'description'       => 'Linked groups.',
                 'rel_table'         => 'sale_catalog_product_rel_product_group',
                 'rel_foreign_key'   => 'group_id',
                 'rel_local_key'     => 'product_id'
@@ -237,4 +239,10 @@ class Product extends Model {
         }
     }
 
+    public function getUnique() {
+        return [
+            ['sku'],
+            ['label', 'product_model_id']
+        ];
+    }
 }

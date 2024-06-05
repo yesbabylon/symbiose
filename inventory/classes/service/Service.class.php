@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2021
-    Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 namespace inventory\service;
@@ -11,6 +11,10 @@ use equal\orm\Model;
 use inventory\Product;
 
 class Service extends Model {
+
+    public static function getDescription() {
+        return 'This class manages services comprehensively, handling billing, renewal, product-client association, provider linkage, documentation, and access/software management.';
+    }
 
     public static function getColumns()
     {
@@ -72,7 +76,7 @@ class Service extends Model {
                 'type'              => 'computed',
                 'result_type'       => 'many2one',
                 'foreign_object'    => 'sale\customer\Customer',
-                'description'       => 'The customer of the service product.',
+                'description'       => 'The customer associated with the product.',
                 'function'          => 'calcCustomerId',
                 'visible'           => ['is_internal', '=', false],
                 'store'             => true,
@@ -96,7 +100,7 @@ class Service extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\service\Detail',
                 'foreign_field'     => 'service_id',
-                'description'       => 'Details about the service.'
+                'description'       => 'List of details about the service.'
             ],
 
             'subscriptions_ids' => [
@@ -110,14 +114,14 @@ class Service extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Access',
                 'foreign_field'     => 'service_id',
-                'description'       => 'Access about to the service.'
+                'description'       => 'Access to connect to the service.'
             ],
 
             'softwares_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => 'inventory\Software',
                 'foreign_field'     => 'service_id',
-                'description'       => 'Access about to the service.'
+                'description'       => 'Software associated with the service.'
             ],
 
         ];

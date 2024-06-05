@@ -1,14 +1,20 @@
 <?php
 /*
     This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
-    Some Rights Reserved, Yesbabylon SRL, 2020-2021
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
     Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
+
 namespace sale\pay;
+
 use equal\orm\Model;
 use core\setting\Setting;
 
 class Funding extends Model {
+
+    public static function getDescription() {
+        return 'A funding is an amount of money that a customer ows to your organisation. It can be an installment or an invoice.';
+    }
 
     public static function getColumns() {
 
@@ -17,6 +23,7 @@ class Funding extends Model {
             'name' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
+                'description'       => 'Display name of funding.',
                 'function'          => 'calcName',
                 'store'             => true
             ],
@@ -29,7 +36,8 @@ class Funding extends Model {
             'payments_ids' => [
                 'type'              => 'one2many',
                 'foreign_object'    => Payment::getType(),
-                'foreign_field'     => 'funding_id'
+                'foreign_field'     => 'funding_id',
+                'description'       => 'Customer payments of to the funding.'
             ],
 
             'funding_type' => [

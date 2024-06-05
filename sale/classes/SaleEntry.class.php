@@ -25,7 +25,7 @@ class SaleEntry extends Model {
             'code' => [
                 'type'              => 'computed',
                 'result_type'       => 'string',
-                'description'       => 'Entry code',
+                'description'       => 'Entry code.',
                 'function'          => 'calcCode'
             ],
 

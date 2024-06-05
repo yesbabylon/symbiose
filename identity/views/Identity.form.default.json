@@ -226,6 +226,12 @@
                                                 "label": "Contact",
                                                 "value": "contact_id",
                                                 "width": "100%"
+                                            },
+                                            {
+                                                "type": "field",
+                                                "label": "Customer contact",
+                                                "value": "customer_contact_id",
+                                                "width": "100%"
                                             }
                                         ]
                                     }

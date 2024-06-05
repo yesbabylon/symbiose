@@ -5,25 +5,20 @@
         "data": [
             {
                 "id": 1,
-                "name": "Wordpress",
-                "version": "6.01",
+                "software_model_id": 1,
                 "instance_id": 1,
                 "server_id": 1,
                 "service_id": 3
             },
             {
                 "id": 2,
-                "name": "Application management drive",
-                "edition": "beta",
-                "version": "1.0",
+                "software_model_id": 2,
                 "server_id": 2,
                 "customer_id": 2
             },
             {
                 "id": 3,
-                "name": "Edition picture",
-                "edition": "Pro",
-                "version": "1.2",
+                "software_model_id": 3,
                 "server_id": 2,
                 "customer_id": 1
             }

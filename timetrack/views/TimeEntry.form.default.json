@@ -60,12 +60,18 @@
             ]
         }
     ],
+    "header": {
+        "actions": {
+            "ACTION.SAVE": [
+                { "id": "SAVE_AND_VIEW" }
+            ]
+        }
+    },
     "layout": {
         "groups": [
             {
                 "sections": [
                     {
-                        "id": "section.time-entry-general",
                         "rows": [
                             {
                                 "columns": [
@@ -74,6 +80,7 @@
                                         "items": [
                                             {
                                                 "type": "field",
+                                                "label": "Short description",
                                                 "value": "description",
                                                 "width": "100%",
                                                 "widget": {
@@ -120,8 +127,8 @@
             {
                 "sections": [
                     {
-                        "id": "section.time-entry-details",
-                        "label": "Info",
+                        "id": "section.details",
+                        "label": "Details",
                         "rows": [
                             {
                                 "columns": [
@@ -136,21 +143,21 @@
                                             },
                                             {
                                                 "type": "field",
-                                                "label": "Ticket ID",
-                                                "value": "ticket_id",
-                                                "width": "33%"
-                                            },
-                                            {
-                                                "type": "field",
                                                 "label": "Reference",
                                                 "value": "reference",
                                                 "width": "66%"
                                             },
                                             {
                                                 "type": "field",
+                                                "label": "Ticket ID",
+                                                "value": "ticket_id",
+                                                "width": "25%"
+                                            },
+                                            {
+                                                "type": "field",
                                                 "label": "Ticket link",
                                                 "value": "ticket_link",
-                                                "width": "100%",
+                                                "width": "75%",
                                                 "readonly": true
                                             }
                                         ]
@@ -193,8 +200,9 @@
                         ]
                     },
                     {
-                        "id": "section.time-entry-sale-details",
+                        "id": "section.sale",
                         "label": "Sale",
+                        "visible": ["state", "<>", "draft"],
                         "rows": [
                             {
                                 "columns": [
@@ -232,10 +240,7 @@
                                                 "type": "field",
                                                 "value": "unit_price",
                                                 "label": "Unit price",
-                                                "width": "25%",
-                                                "widget": {
-                                                    "readonly": true
-                                                }
+                                                "width": "25%"
                                             },
                                             {
                                                 "type": "field",
@@ -290,8 +295,8 @@
                         ]
                     },
                     {
-                        "id": "section.time-entry-extra-details",
-                        "label": "Extra details",
+                        "id": "section.description",
+                        "label": "Description",
                         "rows": [
                             {
                                 "columns": [
@@ -301,7 +306,7 @@
                                             {
                                                 "type": "field",
                                                 "value": "detailed_description",
-                                                "label": "Detailed description",
+                                                "label": "Description",
                                                 "width": "100%"
                                             }
                                         ]

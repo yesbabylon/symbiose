@@ -29,7 +29,8 @@
             },
             {
                 "type": "field",
-                "value": "type",
+                "label" :"Type",
+                "value": "accounting_chart_line_type",
                 "width": "15%"
             },
             {
