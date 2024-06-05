@@ -91,16 +91,6 @@
                                                 "type": "field",
                                                 "value": "due_date",
                                                 "width": "50%"
-                                            },
-                                            {
-                                                "type": "label",
-                                                "width": "50%"
-                                            },
-                                            {
-                                                "type": "field",
-                                                "label": "Payment Deadline",
-                                                "value": "payment_deadline_id",
-                                                "width": "50%"
                                             }
                                         ]
                                     }
