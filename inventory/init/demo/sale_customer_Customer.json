@@ -1,5 +1,65 @@
 [
     {
+        "name": "identity\\Identity",
+        "lang": "en",
+        "data": [
+            {
+                "id": 3,
+                "type_id": 1,
+                "has_vat": false,
+                "nationality": "BE",
+                "has_parent": false,
+                "firstname": "Jean",
+                "lastname": "dubois",
+                "lang_id": 2,
+                "address_street": "bd du souverain",
+                "address_city": "Brussels",
+                "address_zip": "1030",
+                "address_state": "Brussels",
+                "address_country": "BE",
+                "email": "jeandubois@gmail.com",
+                "phone": "0477777758",
+                "customer_id": 1,
+                "is_organisation": false,
+                "organisation_id": 1
+            },
+            {
+                "id": 4,
+                "type_id": 3,
+                "legal_name": "Belgian Investment Company",
+                "has_vat": true,
+                "vat_number": "BE123456789",
+                "nationality": "BE",
+                "has_parent": false,
+                "lang_id": 2,
+                "address_street": "Rue de la reine",
+                "address_city": "Bruxelles",
+                "address_zip": "1100",
+                "address_state": "Bruxelles",
+                "address_country": "BE",
+                "customer_id": 2,
+                "is_organisation": false,
+                "organisation_id": 1
+            },
+            {
+                "id": 5,
+                "type_id": 1,
+                "has_vat": false,
+                "nationality": "BE",
+                "has_parent": false,
+                "firstname": "Jean",
+                "lastname": "Martin",
+                "lang_id": 1,
+                "address_street": "rue de palace",
+                "address_country": "BE",
+                "email": "jeanmartinmartin@gmail.com",
+                "customer_id": 3,
+                "is_organisation": false,
+                "organisation_id": 1
+            }
+        ]
+    },
+    {
         "name": "sale\\customer\\Customer",
         "lang": "en",
         "data": [
@@ -8,7 +68,7 @@
                 "organisation_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 8,
+                "partner_identity_id": 3,
                 "relationship": "customer",
                 "type_id": 1,
                 "firstname": "Jean",
@@ -29,7 +89,7 @@
                 "organisation_id": 1,
                 "is_internal": true,
                 "owner_identity_id": 1,
-                "partner_identity_id": 10,
+                "partner_identity_id": 4,
                 "relationship": "customer",
                 "type_id": 3,
                 "has_vat": true,

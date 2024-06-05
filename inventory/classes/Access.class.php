@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class Access extends Model {
 
+    public static function getDescription() {
+        return 'The access details encompass the access type (e.g., HTTP, SSH), along with associated URL components like the IP address or hostname, and connection port for the server, services, instance, and software.';
+    }
+
     const MAP_PORTS = [
         'http'      => '80',
         'https'     => '443',

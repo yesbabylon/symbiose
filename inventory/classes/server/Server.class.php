@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the eQual framework <http://www.github.com/cedricfrancoys/equal>
-    Some Rights Reserved, Cedric Francoys, 2010-2024
-    Licensed under GNU GPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 namespace inventory\server;
@@ -11,6 +11,10 @@ use equal\orm\Model;
 
 class Server extends Model {
 
+
+    public static function getDescription() {
+        return 'The Server includes its name, description, type, access, instances, associated products, IP addresses, and installed software.';
+    }
 
     public static function getColumns()
     {

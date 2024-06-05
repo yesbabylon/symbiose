@@ -1,8 +1,8 @@
 <?php
 /*
-    This file is part of the Discope property management software.
-    Author: Yesbabylon SRL, 2020-2022
-    License: GNU AGPL 3 license <http://www.gnu.org/licenses/>
+    This file is part of Symbiose Community Edition <https://github.com/yesbabylon/symbiose>
+    Some Rights Reserved, Yesbabylon SRL, 2020-2024
+    Licensed under GNU AGPL 3 license <http://www.gnu.org/licenses/>
 */
 
 use equal\orm\Domain;
@@ -68,42 +68,45 @@ list($params, $providers) = eQual::announce([
 $context = $providers['context'];
 
 //   Add conditions to the domain to consider advanced parameters
-$domain = $params['domain'];
+$domain = [];
 
 
 if(isset($params['server_type']) && strlen($params['server_type']) > 0 && $params['server_type']!= 'all') {
-    $domain = Domain::conditionAdd($domain, ['server_type', '=', $params['server_type']]);
+    $domain = ['server_type', '=', $params['server_type']];
 }
 
 if(isset($params['product_id']) && $params['product_id'] > 0) {
-    $domain = Domain::conditionAdd($domain, ['product_id', '=', $params['product_id']]);
+    $domain = ['product_id', '=', $params['product_id']];
 }
 
 if(isset($params['access_id']) && $params['access_id'] > 0) {
     $servers_ids = [];
     $servers_ids = Server::search(['accesses_ids', 'contains', $params['access_id']])->ids();
-    $domain = Domain::conditionAdd($domain, ['id', 'in', $servers_ids]);
+    $domain = ['id', 'in', $servers_ids];
 }
 
 if(isset($params['software_id']) && $params['software_id'] > 0) {
     $servers_ids = [];
     $servers_ids = Server::search(['softwares_ids', 'contains', $params['software_id']])->ids();
-    $domain = Domain::conditionAdd($domain, ['id', 'in', $servers_ids]);
+    $domain = ['id', 'in', $servers_ids];
 }
 
 if(isset($params['instance_id']) && $params['instance_id'] > 0) {
     $servers_ids = [];
     $servers_ids = Server::search(['instances_ids', 'contains', $params['instance_id']])->ids();
-    $domain = Domain::conditionAdd($domain, ['id', 'in', $servers_ids]);
+    $domain = ['id', 'in', $servers_ids];
 }
 
 if(isset($params['ip_address_id']) && $params['ip_address_id'] > 0) {
     $servers_ids = [];
     $servers_ids = Server::search(['ip_address_ids', 'contains', $params['ip_address_id']])->ids();
-    $domain = Domain::conditionAdd($domain, ['id', 'in', $servers_ids]);
+    $domain = ['id', 'in', $servers_ids];
 }
 
-$params['domain'] = $domain;
+$params['domain'] = (new Domain($params['domain']))
+    ->merge(new Domain($domain))
+    ->toArray();
+
 $result = eQual::run('get', 'model_collect', $params, true);
 
 $context->httpResponse()
