@@ -37,7 +37,7 @@ class Funding extends Model {
                 'type'              => 'one2many',
                 'foreign_object'    => Payment::getType(),
                 'foreign_field'     => 'funding_id',
-                'description'       => 'Customer payments of to the funding.'
+                'description'       => 'Customer payments of the funding.'
             ],
 
             'funding_type' => [
@@ -46,22 +46,16 @@ class Funding extends Model {
                     'installment',
                     'invoice'
                 ],
-                'default'           => 'installment',
-                'description'       => "Deadlines are installment except for last one: final invoice."
-            ],
-
-            'order' => [
-                'type'              => 'integer',
-                'description'       => 'Order by which the funding have to be sorted when presented.',
-                'default'           => 0
+                'default'           => 'invoice',
+                'description'       => "Type of funding, is it a simple installment or is it linked to an specific invoice."
             ],
 
             'due_amount' => [
                 'type'              => 'float',
                 'usage'             => 'amount/money:2',
-                'description'       => 'Amount expected for the funding (computed based on VAT incl. price).',
+                'description'       => 'Amount expected for the funding.',
                 'required'          => true,
-                'onupdate'          => 'onupdateDueAmount'
+                'dependents'        => ['name']
             ],
 
             'due_date' => [
@@ -72,7 +66,7 @@ class Funding extends Model {
             'issue_date' => [
                 'type'              => 'date',
                 'description'       => "Date at which the request for payment has to be issued.",
-                "default"           => time()
+                'default'           => time()
             ],
 
             'paid_amount' => [
@@ -98,19 +92,11 @@ class Funding extends Model {
                 'description'       => "Share of the payment over the total due amount."
             ],
 
-            'payment_deadline_id' => [
-                'type'              => 'many2one',
-                'foreign_object'    => 'sale\pay\PaymentDeadline',
-                'description'       => "The deadline model used for creating the funding, if any.",
-                'onupdate'          => 'onupdatePaymentDeadlineId',
-                'default'           => 1
-            ],
-
             'invoice_id' => [
                 'type'              => 'many2one',
                 'foreign_object'    => 'sale\accounting\invoice\Invoice',
                 'description'       => 'The invoice targeted by the funding, if any.',
-                'help'              => 'As a convention, this field is set when a funding relates to an invoice: either because the funding has been invoiced (downpayment or balance invoice), or because it is an installment (deduced from the due amount)'
+                'help'              => 'As a convention, this field is set when a funding relates to an invoice: either because the funding has been invoiced (downpayment or balance invoice), or because it is an installment (deduced from the due amount).'
             ],
 
             'payment_reference' => [
@@ -118,83 +104,47 @@ class Funding extends Model {
                 'description'       => 'Message for identifying the purpose of the transaction.',
                 'default'           => ''
             ]
+
         ];
     }
 
-
-    public static function calcName($om, $oids, $lang) {
+    public static function calcName($self) {
         $result = [];
-        $fundings = $om->read(get_called_class(), $oids, ['payment_deadline_id.name', 'due_amount'], $lang);
+        $self->read(['due_amount', 'invoice_id' => ['name']]);
+        foreach($self as $id => $funding) {
+            $result[$id] = Setting::format_number_currency($funding['due_amount']);
 
-        if($fundings > 0) {
-            foreach($fundings as $oid => $funding) {
-                $result[$oid] = Setting::format_number_currency($funding['due_amount']).'    '.$funding['payment_deadline_id.name'];
+            if($funding['invoice_id']['name']) {
+                $result[$id] .= '    '.$funding['invoice_id']['name'];
             }
         }
+
         return $result;
     }
 
-    public static function calcPaidAmount($om, $oids, $lang) {
+    public static function calcPaidAmount($self) {
         $result = [];
-        $fundings = $om->read(self::getType(), $oids, ['payments_ids.amount'], $lang);
-        if($fundings > 0) {
-            foreach($fundings as $fid => $funding) {
-                $result[$fid] = array_reduce($funding['payments_ids.amount'], function ($c, $funding) {
-                    return $c + $funding['amount'];
-                }, 0);
-            }
+        $self->read(['payments_ids' => ['amount']]);
+        foreach($self as $id => $funding) {
+            $result[$id] = array_reduce($funding['payments_ids']->get(true), function ($c, $a) {
+                return $c + $a['amount'];
+            }, 0);
         }
+
         return $result;
     }
 
-    public static function calcIsPaid($om, $oids, $lang) {
+    public static function calcIsPaid($self) {
         $result = [];
-        $fundings = $om->read(self::getType(), $oids, ['due_amount', 'paid_amount'], $lang);
-        if($fundings > 0) {
-            foreach($fundings as $fid => $funding) {
-                $result[$fid] = false;
-                if($funding['paid_amount'] >= $funding['due_amount'] && $funding['due_amount'] > 0) {
-                    $result[$fid] = true;
-                }
-            }
+        $self->read(['due_amount', 'paid_amount']);
+        foreach($self as $id => $funding) {
+            $result[$id] = $funding['paid_amount'] >= $funding['due_amount'] && $funding['due_amount'] > 0;
         }
+
         return $result;
     }
 
-    public static function onupdateDueAmount($om, $oids, $values, $lang) {
-        // reset the name
-        $om->update(self::getType(), $oids, ['name' => null], $lang);
-    }
-
-    /**
-     * Update the description according to the deadline, when set.
-     *
-     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
-     * @param  array                        $oids       List of objects identifiers.
-     * @param  array                        $values     Associative array holding the new values to be assigned.
-     * @param  string                       $lang       Language in which multilang fields are being updated.
-     */
-    public static function onupdatePaymentDeadlineId($om, $oids, $values, $lang) {
-        $fundings = $om->read(self::getType(), $oids, ['payment_deadline_id.name'], $lang);
-        if($fundings > 0) {
-            foreach($fundings as $oid => $funding) {
-                $om->update(self::getType(), $oid, ['description' => $funding['payment_deadline_id.name']], $lang);
-            }
-        }
-    }
-
-    /**
-     * Check wether an object can be updated, and perform some additional operations if necessary.
-     * This method can be overridden to define a more precise set of tests.
-     *
-     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
-     * @param  array                        $oids       List of objects identifiers.
-     * @param  array                        $values     Associative array holding the new values to be assigned.
-     * @param  string                       $lang       Language in which multilang fields are being updated.
-     * @return array    Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be updated.
-     */
-    public static function canupdate($om, $oids, $values, $lang) {
-        // handle exceptions for fields that can always be updated
+    public static function canupdate($self, $values) {
         $allowed = ['is_paid', 'invoice_id'];
         $count_non_allowed = 0;
 
@@ -205,49 +155,31 @@ class Funding extends Model {
         }
 
         if($count_non_allowed > 0) {
-            $fundings = $om->read(self::getType(), $oids, ['is_paid', 'due_amount', 'paid_amount', 'payments_ids'], $lang);
-            if($fundings > 0) {
-                foreach($fundings as $funding) {
-                    if($funding['is_paid'] && $funding['due_amount'] == $funding['paid_amount'] && count($funding['payments_ids'])) {
-                        return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been fully paid.']];
-                    }
+            $self->read(['is_paid', 'due_amount', 'paid_amount', 'payments_ids']);
+            foreach($self as $funding) {
+                if($funding['is_paid'] && $funding['due_amount'] == $funding['paid_amount'] && count($funding['payments_ids'])) {
+                    return ['is_paid' => ['non_editable' => 'No change is allowed once the funding has been fully paid.']];
                 }
             }
         }
-        return parent::canupdate($om, $oids, $values, $lang);
+
+        return parent::canupdate($self, $values);
     }
 
-    /**
-     * Check wether the identity can be deleted.
-     *
-     * @param  \equal\orm\ObjectManager    $om        ObjectManager instance.
-     * @param  array                       $ids       List of objects identifiers.
-     * @return array                       Returns an associative array mapping fields with their error messages. An empty array means that object has been successfully processed and can be deleted.
-     */
-    public static function candelete($om, $ids) {
-        $fundings = $om->read(self::getType(), $ids, [ 'is_paid', 'paid_amount', 'invoice_id', 'invoice_id.status', 'payments_ids' ]);
-
-        if($fundings > 0) {
-            foreach($fundings as $id => $funding) {
-                if( $funding['is_paid'] || $funding['paid_amount'] != 0 || ($funding['payments_ids'] && count($funding['payments_ids']) > 0) ) {
-                    return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
-                }
-                if( !is_null($funding['invoice_id']) && $funding['invoice_id.status'] == 'invoice' ) {
-                    return ['invoice_id' => ['non_removable_funding' => 'Funding relating to an invoice cannot be deleted.']];
-                }
+    public static function candelete($self) {
+        $self->read(['is_paid', 'paid_amount', 'invoice_id' => ['status'], 'payments_ids']);
+        foreach($self as $funding) {
+            if($funding['is_paid'] || $funding['paid_amount'] != 0 || count($funding['payments_ids']) > 0) {
+                return ['payments_ids' => ['non_removable_funding' => 'Funding paid or partially paid cannot be deleted.']];
+            }
+            if(isset($funding['invoice_id']['status']) && $funding['invoice_id']['status'] == 'invoice') {
+                return ['invoice_id' => ['non_removable_funding' => 'Funding relating to an invoice cannot be deleted.']];
             }
         }
-        return parent::candelete($om, $ids);
+
+        return parent::candelete($self);
     }
 
-    /**
-     * Hook invoked before object deletion for performing object-specific additional operations.
-     * Remove the scheduled tasks related to the deleted fundings.
-     *
-     * @param  \equal\orm\ObjectManager     $om         ObjectManager instance.
-     * @param  array                        $oids       List of objects identifiers.
-     * @return void
-     */
     public static function ondelete($om, $oids) {
         $cron = $om->getContainer()->get('cron');
 
@@ -258,16 +190,7 @@ class Funding extends Model {
         parent::ondelete($om, $oids);
     }
 
-    /**
-     * Signature for single object change from views.
-     *
-     * @param  \equal\orm\ObjectManager     $om        Object Manager instance.
-     * @param  Array                        $event     Associative array holding changed fields as keys, and their related new values.
-     * @param  Array                        $values    Copy of the current (partial) state of the object (fields depend on the view).
-     * @param  String                       $lang      Language (char 2) in which multilang field are to be processed.
-     * @return Array    Associative array mapping fields with their resulting values.
-     */
-    public static function onchange($om, $event, $values, $lang='en') {
+    public static function onchange($event, $values) {
         $result = [];
 
         // if 'is_paid' is set manually, adapt 'paid_mount' consequently
@@ -287,7 +210,7 @@ class Funding extends Model {
      *  as 10000000 % 97 = 76
      *  we do (aaa * 76 + bbbbbbb) % 97
      */
-    public static function _get_payment_reference($prefix, $suffix) {
+    protected static function _get_payment_reference($prefix, $suffix) {
         $a = intval($prefix);
         $b = intval($suffix);
         $control = ((76*$a) + $b ) % 97;

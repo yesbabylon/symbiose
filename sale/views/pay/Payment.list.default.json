@@ -4,18 +4,21 @@
     "access": {
         "groups": ["sale.default.user"]
      },
+    "operations": {
+        "total": {
+            "amount": {
+                "operation": "SUM",
+                "usage": "amount/money:2"
+            }
+        }
+    },
     "layout": {
         "items": [
             {
                 "type": "field",
-                "label": "Partner",
-                "value": "partner_id",
+                "label": "Customer",
+                "value": "customer_id",
                 "width": "25%"
-            },
-            {
-                "type": "field",
-                "value": "amount",
-                "width": "15%"
             },
             {
                 "type": "field",
@@ -31,6 +34,11 @@
                 "type": "field",
                 "value": "payment_method",
                 "width": "20%"
+            },
+            {
+                "type": "field",
+                "value": "amount",
+                "width": "15%"
             }
         ]
     }
