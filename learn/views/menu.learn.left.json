@@ -1,0 +1,21 @@
+{
+  "name": "Learn menu",
+  "search": false,
+  "layout": {
+    "items": [
+      {
+        "id": "item.course",
+        "type": "entry",
+        "label": "Courses",
+        "icon": "school",
+        "description": "List of courses",
+        "context": {
+          "entity": "learn\\Course",
+          "view": "list.default",
+          "order": "id",
+          "sort": "asc"
+        }
+      }
+    ]
+  }
+}

@@ -1,26 +1,41 @@
 {
-    "name": "Chapters list",
-    "description": "",
-    "layout": {
-        "items": [
-            {
-                "type": "field",
-                "value": "identifier",
-                "width": "15%",
-                "widget": {
-                    "readonly": true
-                }
-            },
-            {
-                "type": "field",
-                "value": "order",
-                "width": "15%"
-            },
-            {
-                "type": "field",
-                "value": "name",
-                "width": "15%"
-            }
-        ]
-    }
+  "name": "Chapters list",
+  "description": "",
+  "layout": {
+    "items": [
+      {
+        "type": "field",
+        "value": "identifier",
+        "width": "5%",
+        "widget": {
+          "readonly": true
+        }
+      },
+      {
+        "type": "field",
+        "value": "name",
+        "width": "40%"
+      },
+      {
+        "type": "field",
+        "value": "description",
+        "width": "40%"
+      },
+      {
+        "type": "field",
+        "value": "order",
+        "width": "5%"
+      },
+      {
+        "type": "field",
+        "value": "duration",
+        "width": "5%"
+      },
+      {
+        "type": "field",
+        "value": "page_count",
+        "width": "5%"
+      }
+    ]
+  }
 }
