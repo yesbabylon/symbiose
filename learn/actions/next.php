@@ -5,6 +5,8 @@ use learn\UserAccess;
 use learn\Module;
 use learn\Chapter;
 
+// AlexisVS: Todo: Test this code
+
 list($params, $providers) = announce([
     'description' => "Handle action from user when performing a click to see next page of a given module.",
     'params' => [
@@ -39,7 +41,7 @@ list($context, $orm, $auth) = [$providers['context'], $providers['orm'], $provid
     Retrieve current user id
 */
 
-// Todo: check if user is logged in for WordPress !!!!
+// Todo: AlexisVS: This code below check if user is logged in for WordPress !!!!
 //if(!isset($_COOKIE) || !isset($_COOKIE["wp_lms_user"]) || !is_numeric($_COOKIE["wp_lms_user"])) {
 //    throw new Exception('unknown_user', QN_ERROR_NOT_ALLOWED);
 //}
@@ -74,7 +76,7 @@ if (!$chapter) {
 $status_ids = UserStatus::search([['user_id', '=', $user_id], ['module_id', '=', $params['module_id']]])->ids();
 
 if (!count($status_ids)) {
-    // first status recording for user_id:module_id
+    // first status recording for user_id: module_id
     UserStatus::create([
         'user_id' => $user_id,
         'module_id' => $params['module_id'],
@@ -97,13 +99,13 @@ if (!count($status_ids)) {
 
     // on last page or exceeded pages, set pack as complete
     if ($params['chapter_index'] + 1 >= $module['chapter_count'] && $params['page_index'] + 1 >= $chapter['page_count']) {
-        // is it the first time we detect completeness ?
+        // is it the first time we detect completeness?
         if (!$status['is_complete']) {
             // mark the program as complete for current user
             UserStatus::ids($status_ids)->update(['is_complete' => true]);
             $access = UserAccess::search([['course_id', '=', $status['course_id']], ['user_id', '=', $user_id]])->read(['is_complete'])->first();
             if ($access && $access['is_complete']) {
-                // send an email to offer the user to participate to anonymous survey
+                // Send email offers the user to participate in an anonymous survey
                 run('do', 'learn_survey', [
                     'course_id' => $status['course_id'],
                     'user_id' => $user_id

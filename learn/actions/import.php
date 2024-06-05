@@ -32,9 +32,7 @@ if (!$pack) {
 }
 
 
-for ($i = 1; $i < 8; $i++) {
-
-    // read json file
+for ($i = 1; $i <= 8; $i++) {
     $data = file_get_contents(dirname(__DIR__) . "/init/modules/Module" . $i . ".json");
 
     $module = json_decode($data, true);
@@ -44,7 +42,8 @@ for ($i = 1; $i < 8; $i++) {
         'title' => $module['title'],
         'description' => $module['description'],
         'duration' => $module['duration'],
-        'course_id' => 1
+        'course_id' => 1,
+        'order' => $module['identifier']
     ])->first();
 
     foreach ($module['chapters'] as $chapter_index => $chapter) {
