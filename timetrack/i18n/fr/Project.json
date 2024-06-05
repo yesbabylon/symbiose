@@ -1,7 +1,7 @@
 {
     "name": "Project",
     "plural": "Projects",
-    "description": "Un projet organise les entrées de temps et permet de configurer un modèle de vente pour appliquer automatiquement les champs liés à la vente d'une entrée de temps.",
+    "description": "Un projet organise les saisies de temps et permet de configurer un modèle de vente pour appliquer automatiquement les champs liés à la vente d'une entrée de temps.",
     "model": {
         "description": {
             "label": "Description",

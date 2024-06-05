@@ -1,7 +1,7 @@
 {
-    "name": "Entrée de temps",
-    "plural": "Entrées de temps",
-    "description": "Les entrées de temps sont utilisées pour enregistrer les tâches effectuées par les employés sur les projets des clients et la durée qui y est consacrée.",
+    "name": "Saisie de temps",
+    "plural": "Saisies de temps",
+    "description": "Les saisies de temps sont utilisées pour enregistrer les tâches effectuées par les employés sur les projets des clients et la durée qui y est consacrée.",
     "model": {
         "description": {
             "label": "Description courte",
